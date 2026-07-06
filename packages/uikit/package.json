@@ -20,6 +20,14 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
+    "./icons": {
+      "@thenamespace/source": {
+        "types": "./src/icons.ts",
+        "import": "./src/icons.ts"
+      },
+      "types": "./dist/icons.d.mts",
+      "import": "./dist/icons.mjs"
+    },
     "./styles.css": {
       "@thenamespace/source": "./src/styles/globals.css",
       "style": "./dist/styles.css",
@@ -38,7 +46,8 @@
   },
   "dependencies": {
     "@heroui/react": "^3.2.1",
-    "@heroui/styles": "^3.2.1"
+    "@heroui/styles": "^3.2.1",
+    "@hugeicons/react": "^1.1.9"
   },
   "devDependencies": {
     "@types/react": "catalog:",

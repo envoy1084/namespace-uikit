@@ -11,6 +11,7 @@ export default defineConfig({
   ],
   deps: {
     neverBundle: [
+      "@hugeicons/react",
       "@heroui/react",
       "react",
       "react-dom",
@@ -22,7 +23,10 @@ export default defineConfig({
     enabled: true,
     sourcemap: true,
   },
-  entry: ["src/index.ts"],
+  entry: {
+    icons: "src/icons.ts",
+    index: "src/index.ts",
+  },
   failOnWarn: true,
   fixedExtension: true,
   format: ["esm"],
