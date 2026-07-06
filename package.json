@@ -1,19 +1,26 @@
 {
   "name": "@repo/source",
   "version": "0.0.0",
-  "private": "true",
+  "private": true,
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
+    "build": "turbo run build",
     "commitlint:edit": "commitlint --strict --edit",
     "commitlint:last": "commitlint --strict --last",
     "commitlint:range": "node scripts/commitlint-range.mjs",
-    "format": "oxfmt . --write --no-error-on-unmatched-pattern",
-    "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
-    "lint": "oxlint . --no-error-on-unmatched-pattern",
-    "lint:check": "pnpm lint",
-    "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern",
-    "prepare": "lefthook install"
+    "dev": "turbo run dev",
+    "format": "turbo run format //#root:format",
+    "format:check": "turbo run format:check //#root:format:check",
+    "lint": "turbo run lint //#root:lint",
+    "lint:check": "turbo run lint //#root:lint",
+    "lint:fix": "turbo run lint:fix //#root:lint:fix",
+    "prepare": "lefthook install",
+    "root:format": "oxfmt package.json pnpm-workspace.yaml turbo.json tsconfig.json commitlint.config.ts oxfmt.config.ts oxlint.config.ts lefthook.yml --write --no-error-on-unmatched-pattern",
+    "root:format:check": "oxfmt package.json pnpm-workspace.yaml turbo.json tsconfig.json commitlint.config.ts oxfmt.config.ts oxlint.config.ts lefthook.yml --check --no-error-on-unmatched-pattern",
+    "root:lint": "oxlint commitlint.config.ts oxfmt.config.ts oxlint.config.ts --no-error-on-unmatched-pattern",
+    "root:lint:fix": "oxlint commitlint.config.ts oxfmt.config.ts oxlint.config.ts --fix --no-error-on-unmatched-pattern",
+    "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
     "@commitlint/cli": "catalog:",
@@ -25,6 +32,8 @@
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
     "tsdown": "catalog:",
+    "turbo": "catalog:",
     "typescript": "catalog:"
-  }
+  },
+  "packageManager": "pnpm@11.7.0"
 }

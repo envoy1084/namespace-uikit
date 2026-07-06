@@ -15,10 +15,15 @@
     "format": "oxfmt . --write --no-error-on-unmatched-pattern",
     "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
     "lint": "oxlint . --no-error-on-unmatched-pattern",
-    "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern"
+    "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern",
+    "typecheck": "tsc -p tsconfig.json --pretty false"
   },
   "dependencies": {
     "oxfmt": "catalog:",
     "oxlint": "catalog:"
+  },
+  "devDependencies": {
+    "@repo/tsconfig": "workspace:*",
+    "typescript": "catalog:"
   }
 }
