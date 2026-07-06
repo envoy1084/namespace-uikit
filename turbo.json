@@ -1,48 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
-    "//#root:format": {
-      "cache": false,
-      "inputs": [
-        "$TURBO_ROOT$/package.json",
-        "$TURBO_ROOT$/pnpm-workspace.yaml",
-        "$TURBO_ROOT$/turbo.json",
-        "$TURBO_ROOT$/tsconfig.json",
-        "$TURBO_ROOT$/commitlint.config.ts",
-        "$TURBO_ROOT$/oxfmt.config.ts",
-        "$TURBO_ROOT$/oxlint.config.ts",
-        "$TURBO_ROOT$/lefthook.yml"
-      ]
-    },
-    "//#root:format:check": {
-      "inputs": [
-        "$TURBO_ROOT$/package.json",
-        "$TURBO_ROOT$/pnpm-workspace.yaml",
-        "$TURBO_ROOT$/turbo.json",
-        "$TURBO_ROOT$/tsconfig.json",
-        "$TURBO_ROOT$/commitlint.config.ts",
-        "$TURBO_ROOT$/oxfmt.config.ts",
-        "$TURBO_ROOT$/oxlint.config.ts",
-        "$TURBO_ROOT$/lefthook.yml"
-      ],
-      "outputs": []
-    },
-    "//#root:lint": {
-      "inputs": [
-        "$TURBO_ROOT$/commitlint.config.ts",
-        "$TURBO_ROOT$/oxfmt.config.ts",
-        "$TURBO_ROOT$/oxlint.config.ts"
-      ],
-      "outputs": []
-    },
-    "//#root:lint:fix": {
-      "cache": false,
-      "inputs": [
-        "$TURBO_ROOT$/commitlint.config.ts",
-        "$TURBO_ROOT$/oxfmt.config.ts",
-        "$TURBO_ROOT$/oxlint.config.ts"
-      ]
-    },
     "transit": {
       "dependsOn": ["^transit"]
     },

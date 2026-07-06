@@ -71,6 +71,7 @@ export default defineConfig({
     sortScripts: true,
   },
   ignorePatterns: [
+    "**/.agents/**",
     "**/node_modules/**",
     "**/dist/**",
     "**/build/**",
