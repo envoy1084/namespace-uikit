@@ -1,0 +1,24 @@
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - "@repo/*"
+blockExoticSubdeps: true
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "internal/*"
+allowBuilds:
+  lefthook: true
+catalog:
+  "@commitlint/cli": "21.0.1"
+  "@commitlint/config-conventional": "21.0.1"
+  "lefthook": "2.1.9"
+  "oxfmt": "0.56.0"
+  "oxlint": "1.71.0"
+  "react": "19.2.7"
+  "react-dom": "19.2.7"
+  "@types/react": "19.2.17"
+  "@types/react-dom": "19.2.3"
+  "typescript": "6.0.3"
+  "tsx": "4.22.4"
+  "tsdown": "0.22.3"
+  "@types/node": "26.0.1"
