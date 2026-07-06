@@ -11,28 +11,31 @@ export function XProfileDemo() {
         <div className="flex items-center gap-3">
           <Avatar size="sm">
             <Avatar.Image
-              alt="HeroUI"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/heroui_isotipo.png"
+              alt="Namespace"
+              src="https://pbs.twimg.com/profile_images/1987571645599346689/lmCqz52H_400x400.jpg"
             />
             <Avatar.Fallback>H</Avatar.Fallback>
           </Avatar>
           <div className="flex h-full flex-col items-start justify-center">
             <div className="flex items-center gap-0.5">
-              <span className="text-sm leading-4 font-semibold">HeroUI</span>
+              <span className="text-sm leading-4 font-semibold">Namespace</span>
               <VerifiedBadgeIcon height={18} width={18} />
             </div>
-            <span className="text-muted text-sm tracking-tight">@hero_ui</span>
+            <span className="text-muted text-sm tracking-tight">
+              @namespace_eth
+            </span>
           </div>
         </div>
       </Card.Header>
       <Card.Content className="flex-row text-left">
         <p className="pl-px text-sm font-medium">
-          Building the future of UI for web & mobile.&nbsp;
+          Growing ENS through Partnerships, Integrations, and making Subname
+          registrations easy for humans and agents.
+          <br />
           <br />
           <span aria-label="confetti" role="img">
-            🚀
+            🥷
           </span>
-          &nbsp;(YC S24)&nbsp;
         </p>
       </Card.Content>
       <Card.Footer className="gap-2">

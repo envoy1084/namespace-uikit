@@ -28,6 +28,7 @@ export const PreviewColumn = forwardRef<HTMLDivElement, PreviewColumnProps>(
       <div
         ref={ref}
         className={`border-border bg-background text-foreground flex flex-1 flex-col rounded-2xl border ${theme} ${className}`}
+        data-colors-demo-theme={theme}
         data-theme={theme}
       >
         {/* Header */}

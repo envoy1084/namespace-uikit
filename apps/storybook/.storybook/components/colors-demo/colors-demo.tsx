@@ -82,12 +82,13 @@ export function ColorsDemo() {
       const lightCss = buildThemeCssVars(colors, "light");
       const darkCss = buildThemeCssVars(colors, "dark");
 
-      // Generate CSS with high specificity selectors
+      // Scope generated variables to the color demo previews so they cannot
+      // override normal component stories.
       styleRef.current.textContent = `
-        .light, [data-theme="light"] {
+        [data-colors-demo-theme="light"] {
           ${lightCss};
         }
-        .dark, [data-theme="dark"] {
+        [data-colors-demo-theme="dark"] {
           ${darkCss};
         }
       `;

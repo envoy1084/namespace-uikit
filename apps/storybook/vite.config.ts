@@ -4,6 +4,15 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@thenamespace/uikit/styles.css": new URL(
+        "../../packages/uikit/src/styles/globals.css",
+        import.meta.url,
+      ).pathname,
+    },
+    conditions: ["@thenamespace/source"],
+  },
   optimizeDeps: {
     include: ["@mdx-js/react"],
     exclude: ["sb-vite"],
