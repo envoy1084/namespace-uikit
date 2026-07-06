@@ -1,43 +1,56 @@
 @import "@heroui/styles";
 
+:root {
+  /* Namespace Brand Palette */
+  --ns-black-950: #1f1f1f;
+  --ns-black-600: #363636;
+  --ns-black-300: #878787;
+  --ns-black-200: #bcbcbc;
+  --ns-black-100: #dadada;
+  --ns-off-white-50: #f4f4f4;
+  --ns-white-0: #ffffff;
+  --ns-skylume: #5474f6;
+  --ns-danger: #ff6262;
+}
+
 :root,
 .light,
 .default,
 [data-theme="light"],
 [data-theme="default"] {
   /* Theme Colors (Light Mode) */
-  --accent: oklch(0 0 0);
-  --accent-foreground: oklch(99.11% 0 0);
-  --background: oklch(97.02% 0 0);
-  --border: oklch(90% 0 0);
-  --danger: oklch(0.573 0.2249 21.97);
-  --danger-foreground: oklch(98% 0.02 21.97);
-  --default: oklch(94% 0 0);
-  --default-foreground: oklch(21.03% 0.0059 0);
-  --field-background: oklch(100% 0 0);
+  --accent: var(--ns-skylume);
+  --accent-foreground: var(--ns-white-0);
+  --background: var(--ns-off-white-50);
+  --border: var(--ns-black-100);
+  --danger: var(--ns-danger);
+  --danger-foreground: var(--ns-black-950);
+  --default: var(--ns-off-white-50);
+  --default-foreground: var(--ns-black-950);
+  --field-background: var(--ns-white-0);
   --field-border: transparent;
-  --field-foreground: oklch(21.03% 0 0);
-  --field-placeholder: oklch(55.17% 0 0);
-  --focus: oklch(0 0 0);
-  --foreground: oklch(21.03% 0 0);
-  --muted: oklch(55.17% 0 0);
-  --overlay: oklch(100% 0 0);
-  --overlay-foreground: oklch(21.03% 0 0);
-  --scrollbar: oklch(87.1% 0 0);
-  --segment: oklch(100% 0 0);
-  --segment-foreground: oklch(21.03% 0 0);
-  --separator: oklch(92% 0 0);
-  --success: oklch(0.6277 0.1604 153.06);
-  --success-foreground: oklch(98% 0.016 153.06);
-  --surface: oklch(100% 0 0);
-  --surface-foreground: oklch(21.03% 0 0);
-  --surface-secondary: oklch(95.24% 0 0);
-  --surface-secondary-foreground: oklch(21.03% 0 0);
-  --surface-tertiary: oklch(93.73% 0 0);
-  --surface-tertiary-foreground: oklch(21.03% 0 0);
-  --warning: oklch(0.8446 0.1525 80.6);
-  --warning-foreground: oklch(15% 0.0457 80.6);
-  --accent-soft-foreground: oklch(0 0 0);
+  --field-foreground: var(--ns-black-950);
+  --field-placeholder: var(--ns-black-300);
+  --focus: var(--ns-skylume);
+  --foreground: var(--ns-black-950);
+  --muted: var(--ns-black-300);
+  --overlay: var(--ns-white-0);
+  --overlay-foreground: var(--ns-black-950);
+  --scrollbar: var(--ns-black-200);
+  --segment: var(--ns-white-0);
+  --segment-foreground: var(--ns-black-950);
+  --separator: var(--ns-black-100);
+  --success: var(--ns-skylume);
+  --success-foreground: var(--ns-white-0);
+  --surface: var(--ns-white-0);
+  --surface-foreground: var(--ns-black-950);
+  --surface-secondary: var(--ns-off-white-50);
+  --surface-secondary-foreground: var(--ns-black-950);
+  --surface-tertiary: var(--ns-black-100);
+  --surface-tertiary-foreground: var(--ns-black-950);
+  --warning: var(--ns-black-100);
+  --warning-foreground: var(--ns-black-950);
+  --accent-soft-foreground: var(--ns-skylume);
 
   /* Border Radius */
   --radius: 0.5rem;
@@ -52,36 +65,36 @@
 [data-theme="dark"] {
   color-scheme: dark;
   /* Theme Colors (Dark Mode) */
-  --accent: oklch(0.9848 0 0);
-  --accent-foreground: oklch(15% 0 0);
-  --background: oklch(12% 0 0);
-  --border: oklch(28% 0 0);
-  --danger: oklch(0.7044 0.1872 23.19);
-  --danger-foreground: oklch(15% 0.05 23.19);
-  --default: oklch(27.4% 0 0);
-  --default-foreground: oklch(99.11% 0 0);
-  --field-background: oklch(21.03% 0 0);
+  --accent: var(--ns-skylume);
+  --accent-foreground: var(--ns-white-0);
+  --background: var(--ns-black-950);
+  --border: #ffffff1a;
+  --danger: var(--ns-danger);
+  --danger-foreground: var(--ns-black-950);
+  --default: var(--ns-black-600);
+  --default-foreground: var(--ns-white-0);
+  --field-background: var(--ns-black-600);
   --field-border: transparent;
-  --field-foreground: oklch(99.11% 0 0);
-  --field-placeholder: oklch(70.5% 0 0);
-  --focus: oklch(0.9848 0 0);
-  --foreground: oklch(99.11% 0 0);
-  --muted: oklch(70.5% 0 0);
-  --overlay: oklch(21.03% 0 0);
-  --overlay-foreground: oklch(99.11% 0 0);
-  --scrollbar: oklch(70.5% 0 0);
-  --segment: oklch(39.64% 0 0);
-  --segment-foreground: oklch(99.11% 0 0);
-  --separator: oklch(25% 0 0);
-  --success: oklch(0.6514 0.1321 156.22);
-  --success-foreground: oklch(15% 0.0396 156.22);
-  --surface: oklch(21.03% 0 0);
-  --surface-foreground: oklch(99.11% 0 0);
-  --surface-secondary: oklch(25.7% 0 0);
-  --surface-secondary-foreground: oklch(99.11% 0 0);
-  --surface-tertiary: oklch(27.21% 0 0);
-  --surface-tertiary-foreground: oklch(99.11% 0 0);
-  --warning: oklch(0.8803 0.1348 86.06);
-  --warning-foreground: oklch(15% 0.0404 86.06);
-  --accent-soft-foreground: oklch(0.9848 0 0);
+  --field-foreground: var(--ns-white-0);
+  --field-placeholder: #ffffff9a;
+  --focus: var(--ns-skylume);
+  --foreground: var(--ns-white-0);
+  --muted: #ffffffb2;
+  --overlay: var(--ns-black-600);
+  --overlay-foreground: var(--ns-white-0);
+  --scrollbar: #ffffff33;
+  --segment: var(--ns-black-600);
+  --segment-foreground: var(--ns-white-0);
+  --separator: #ffffff1a;
+  --success: var(--ns-skylume);
+  --success-foreground: var(--ns-white-0);
+  --surface: var(--ns-black-950);
+  --surface-foreground: var(--ns-white-0);
+  --surface-secondary: var(--ns-black-600);
+  --surface-secondary-foreground: var(--ns-white-0);
+  --surface-tertiary: #ffffff1a;
+  --surface-tertiary-foreground: var(--ns-white-0);
+  --warning: var(--ns-black-200);
+  --warning-foreground: var(--ns-black-950);
+  --accent-soft-foreground: var(--ns-skylume);
 }
