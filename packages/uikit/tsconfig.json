@@ -1,0 +1,9 @@
+{
+  "extends": "@repo/tsconfig/react-library.json",
+  "compilerOptions": {
+    "outDir": "../../dist/typecheck/packages/uikit",
+    "rootDir": "src",
+    "tsBuildInfoFile": "../../dist/typecheck/packages/uikit/tsconfig.tsbuildinfo"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}

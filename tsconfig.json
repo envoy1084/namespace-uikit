@@ -8,6 +8,9 @@
     },
     {
       "path": "./internal/oxc"
+    },
+    {
+      "path": "./packages/uikit"
     }
   ]
 }

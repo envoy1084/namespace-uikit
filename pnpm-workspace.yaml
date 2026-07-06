@@ -9,6 +9,7 @@ packages:
 allowBuilds:
   lefthook: true
 catalog:
+  "@heroui/react": "3.2.1"
   "@commitlint/cli": "21.0.1"
   "@commitlint/config-conventional": "21.0.1"
   "lefthook": "2.1.9"
@@ -16,6 +17,7 @@ catalog:
   "oxlint": "1.71.0"
   "react": "19.2.7"
   "react-dom": "19.2.7"
+  "tailwindcss": "4.3.2"
   "@types/react": "19.2.17"
   "@types/react-dom": "19.2.3"
   "typescript": "6.0.3"
