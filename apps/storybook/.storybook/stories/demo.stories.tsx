@@ -1,8 +1,8 @@
-import type { Meta } from "@storybook/react";
+import type {Meta} from "@storybook/react";
 
 import React from "react";
 
-import { DemoComponents } from "./demos";
+import {DemoComponents} from "./demos";
 
 const meta: Meta = {
   title: "Components Demo",
@@ -21,7 +21,7 @@ Components.parameters = {
   docs: {
     description: {
       story:
-        "A comprehensive showcase of Namespace UI components in action. These demos demonstrate real-world usage patterns and component combinations.",
+        "A comprehensive showcase of HeroUI components in action. These demos demonstrate real-world usage patterns and component combinations.",
     },
   },
 };

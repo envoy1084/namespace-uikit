@@ -1,7 +1,6 @@
+import {FloppyDisk} from "@gravity-ui/icons";
+import {Avatar, Button, Card, CloseButton} from "@heroui/react";
 import React from "react";
-
-import { FloppyDisk } from "@gravity-ui/icons";
-import { Avatar, Button, Card, CloseButton } from "@thenamespace/uikit";
 
 export function AlertDialogDemo() {
   return (
@@ -13,9 +12,7 @@ export function AlertDialogDemo() {
           </Avatar.Fallback>
         </Avatar>
         <Card.Title>Unsaved changes</Card.Title>
-        <Card.Description>
-          Do you want to save or discard changes?
-        </Card.Description>
+        <Card.Description>Do you want to save or discard changes?</Card.Description>
         <CloseButton className="absolute top-3 right-3" />
       </Card.Header>
       <Card.Footer className="flex w-full items-center gap-2 px-0.5 pt-3">

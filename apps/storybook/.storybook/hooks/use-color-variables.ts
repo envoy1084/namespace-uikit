@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import type {ColorVariable, OklchColor} from "../utils/oklch-utils";
 
-import type { ColorVariable, OklchColor } from "../utils/oklch-utils";
-import { COLOR_VARIABLES, formatOklch, parseOklch } from "../utils/oklch-utils";
+import {useCallback, useEffect, useState} from "react";
+
+import {COLOR_VARIABLES, formatOklch, parseOklch} from "../utils/oklch-utils";
 
 export interface ColorVariableValue {
   name: string;
@@ -24,11 +25,7 @@ function getCssVariableValue(element: Element, variableName: string): string {
 /**
  * Set a CSS custom property value on an element
  */
-function setCssVariableValue(
-  element: HTMLElement,
-  variableName: string,
-  value: string,
-): void {
+function setCssVariableValue(element: HTMLElement, variableName: string, value: string): void {
   element.style.setProperty(variableName, value);
 }
 
@@ -46,22 +43,20 @@ export function useColorVariables(containerRef?: React.RefObject<HTMLElement>) {
   const readVariables = useCallback(() => {
     const element = containerRef?.current || document.documentElement;
 
-    const values: ColorVariableValue[] = COLOR_VARIABLES.map(
-      (variable: ColorVariable) => {
-        const rawValue = getCssVariableValue(element, variable.name);
-        const computedValue = rawValue || "unset";
-        const oklch = parseOklch(computedValue);
+    const values: ColorVariableValue[] = COLOR_VARIABLES.map((variable: ColorVariable) => {
+      const rawValue = getCssVariableValue(element, variable.name);
+      const computedValue = rawValue || "unset";
+      const oklch = parseOklch(computedValue);
 
-        return {
-          name: variable.name,
-          label: variable.label,
-          category: variable.category,
-          rawValue,
-          computedValue,
-          oklch,
-        };
-      },
-    );
+      return {
+        name: variable.name,
+        label: variable.label,
+        category: variable.category,
+        rawValue,
+        computedValue,
+        oklch,
+      };
+    });
 
     setVariables(values);
   }, [containerRef]);
@@ -98,15 +93,15 @@ export function useColorVariables(containerRef?: React.RefObject<HTMLElement>) {
 
       // Update gray-based colors with chroma adjustment
       const grayColors = [
-        { name: "--background", l: 0.9702, baseC: 0 },
-        { name: "--surface", l: 1, baseC: 0 },
-        { name: "--muted", l: 0.5517, baseC: 0.0138 },
-        { name: "--default", l: 0.94, baseC: 0.001 },
-        { name: "--border", l: 0.9, baseC: 0.004 },
-        { name: "--separator", l: 0.92, baseC: 0.004 },
+        {name: "--background", l: 0.9702, baseC: 0},
+        {name: "--surface", l: 1, baseC: 0},
+        {name: "--muted", l: 0.5517, baseC: 0.0138},
+        {name: "--default", l: 0.94, baseC: 0.001},
+        {name: "--border", l: 0.9, baseC: 0.004},
+        {name: "--separator", l: 0.92, baseC: 0.004},
       ];
 
-      grayColors.forEach(({ baseC, l, name }) => {
+      grayColors.forEach(({baseC, l, name}) => {
         const adjustedChroma = baseC * (chroma / 0.114); // Normalize to default chroma
         const oklch: OklchColor = {
           l,

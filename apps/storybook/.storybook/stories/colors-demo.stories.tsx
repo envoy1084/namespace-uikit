@@ -1,8 +1,8 @@
-import type { Meta } from "@storybook/react";
+import type {Meta} from "@storybook/react";
 
 import React from "react";
 
-import { ColorsDemo } from "../components/colors-demo";
+import {ColorsDemo} from "../components/colors-demo";
 
 const meta: Meta = {
   title: "Colors Demo",
@@ -21,7 +21,7 @@ Default.parameters = {
   docs: {
     description: {
       story:
-        "An interactive color palette generator showcasing Namespace UI's color system. Adjust the base tone and gray chroma to see how colors change across light and dark themes.",
+        "An interactive color palette generator showcasing HeroUI's color system. Adjust the base tone and gray chroma to see how colors change across light and dark themes.",
     },
   },
 };

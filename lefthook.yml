@@ -9,11 +9,16 @@ pre-commit:
       glob: "*.{ts,tsx,js,jsx,mjs,cjs,json,jsonc,md,yml,yaml}"
       exclude:
         - "pnpm-lock.yaml"
+        - "apps/storybook/.storybook/**"
+        - "apps/storybook/src/components/**/*.stories.tsx"
       run: pnpm exec oxfmt --write --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
 
     lint:
       glob: "*.{ts,tsx,js,jsx,mjs,cjs}"
+      exclude:
+        - "apps/storybook/.storybook/**"
+        - "apps/storybook/src/components/**/*.stories.tsx"
       run: pnpm exec oxlint --fix --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
 

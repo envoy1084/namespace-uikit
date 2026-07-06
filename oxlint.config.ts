@@ -6,6 +6,13 @@ export default defineConfig({
     perf: "error",
     suspicious: "error",
   },
+  ignorePatterns: [
+    ".storybook/**",
+    "apps/storybook/.storybook/stories/**",
+    "apps/storybook/.storybook/**",
+    "src/components/**/*.stories.tsx",
+    "apps/storybook/src/components/**/*.stories.tsx",
+  ],
   plugins: [
     "eslint",
     "typescript",

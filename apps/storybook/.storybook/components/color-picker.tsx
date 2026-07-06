@@ -4,17 +4,9 @@ import type {
   ColorSpace,
 } from "react-aria-components";
 
-import React, { useState } from "react";
-
-import { ChevronLeft, ChevronRight, Shuffle } from "@gravity-ui/icons";
-import {
-  Button,
-  InputGroup,
-  ListBox,
-  Popover,
-  Select,
-  parseColor,
-} from "@thenamespace/uikit";
+import {ChevronLeft, ChevronRight, Shuffle} from "@gravity-ui/icons";
+import {Button, InputGroup, ListBox, Popover, Select, parseColor} from "@heroui/react";
+import React, {useState} from "react";
 import {
   ColorArea as AriaColorArea,
   ColorField as AriaColorField,
@@ -28,11 +20,11 @@ import {
   Label,
   SliderTrack,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
+import {tv} from "tailwind-variants";
 
-import { cn } from "../utils/cn";
-import { composeTailwindRenderProps } from "../utils/compose-tw-render";
-import { focusRing } from "../utils/focus";
+import {cn} from "../utils/cn";
+import {composeTailwindRenderProps} from "../utils/compose-tw-render";
+import {focusRing} from "../utils/focus";
 
 /* -------------------------------------------------------------------------------------------------
  * Styles
@@ -111,11 +103,11 @@ interface ColorSwatchProps {
   className?: string;
 }
 
-function ColorSwatch({ className }: ColorSwatchProps) {
+function ColorSwatch({className}: ColorSwatchProps) {
   return (
     <AriaColorSwatch
       className={cn(colorSwatchStyles(), className)}
-      style={({ color }) => ({
+      style={({color}) => ({
         background: color.toString("css"),
       })}
     />
@@ -128,33 +120,12 @@ function ColorSwatch({ className }: ColorSwatchProps) {
 
 interface ColorAreaProps {
   colorSpace?: ColorSpace;
-  xChannel?:
-    | "hue"
-    | "saturation"
-    | "brightness"
-    | "lightness"
-    | "red"
-    | "green"
-    | "blue"
-    | "alpha";
-  yChannel?:
-    | "hue"
-    | "saturation"
-    | "brightness"
-    | "lightness"
-    | "red"
-    | "green"
-    | "blue"
-    | "alpha";
+  xChannel?: "hue" | "saturation" | "brightness" | "lightness" | "red" | "green" | "blue" | "alpha";
+  yChannel?: "hue" | "saturation" | "brightness" | "lightness" | "red" | "green" | "blue" | "alpha";
   className?: string;
 }
 
-function ColorArea({
-  className,
-  colorSpace = "hsb",
-  xChannel,
-  yChannel,
-}: ColorAreaProps) {
+function ColorArea({className, colorSpace = "hsb", xChannel, yChannel}: ColorAreaProps) {
   return (
     <AriaColorArea
       className={composeTailwindRenderProps(className, colorAreaStyles())}
@@ -164,7 +135,7 @@ function ColorArea({
     >
       <ColorThumb
         className={colorThumbStyles}
-        style={({ color }) => ({
+        style={({color}) => ({
           background: color.toString("css"),
         })}
       />
@@ -177,15 +148,7 @@ function ColorArea({
  * -----------------------------------------------------------------------------------------------*/
 
 interface ColorSliderProps {
-  channel:
-    | "hue"
-    | "saturation"
-    | "brightness"
-    | "lightness"
-    | "red"
-    | "green"
-    | "blue"
-    | "alpha";
+  channel: "hue" | "saturation" | "brightness" | "lightness" | "red" | "green" | "blue" | "alpha";
   colorSpace?: ColorSpace;
   orientation?: "horizontal" | "vertical";
   label?: string;
@@ -207,17 +170,14 @@ function ColorSlider({
       orientation={orientation}
     >
       <SliderTrack
-        className={colorSliderTrackStyles({ orientation })}
-        style={({ defaultStyle }) => ({
+        className={colorSliderTrackStyles({orientation})}
+        style={({defaultStyle}) => ({
           background: `${defaultStyle.background}`,
         })}
       >
         <ColorThumb
-          className={cn(
-            colorThumbStyles(),
-            orientation === "horizontal" ? "top-1/2" : "left-1/2",
-          )}
-          style={({ color }) => ({
+          className={cn(colorThumbStyles(), orientation === "horizontal" ? "top-1/2" : "left-1/2")}
+          style={({color}) => ({
             background: color.toString("css"),
           })}
         />
@@ -232,34 +192,19 @@ function ColorSlider({
 
 interface ColorFieldProps {
   label?: string;
-  channel?:
-    | "hue"
-    | "saturation"
-    | "brightness"
-    | "lightness"
-    | "red"
-    | "green"
-    | "blue"
-    | "alpha";
+  channel?: "hue" | "saturation" | "brightness" | "lightness" | "red" | "green" | "blue" | "alpha";
   colorSpace?: ColorSpace;
   className?: string;
 }
 
-function ColorField({
-  channel,
-  className,
-  colorSpace,
-  label,
-}: ColorFieldProps) {
+function ColorField({channel, className, colorSpace, label}: ColorFieldProps) {
   return (
     <AriaColorField
       channel={channel}
       className={cn(colorFieldStyles(), className)}
       colorSpace={colorSpace}
     >
-      {label ? (
-        <Label className="text-foreground text-sm font-medium">{label}</Label>
-      ) : null}
+      {label ? <Label className="text-sm font-medium text-foreground">{label}</Label> : null}
       <Input className={colorFieldInputStyles} />
     </AriaColorField>
   );
@@ -269,10 +214,7 @@ function ColorField({
  * ColorPicker
  * -----------------------------------------------------------------------------------------------*/
 
-export interface ColorPickerProps extends Omit<
-  AriaColorPickerProps,
-  "children"
-> {
+export interface ColorPickerProps extends Omit<AriaColorPickerProps, "children"> {
   /** Label for the trigger button */
   label?: string;
   /** Custom children for the popover content */
@@ -311,7 +253,7 @@ const handleParseColor = (color: string | Color) => {
     }
 
     return color;
-  } catch {
+  } catch (error) {
     return parseColor("#006FEE");
   }
 };
@@ -332,15 +274,10 @@ export default function ColorPicker({
   value: controlledValue,
   ...props
 }: ColorPickerProps) {
-  const [colorFormat, setColorFormat] = useState<"hex" | "hsl" | "rgb" | "hsb">(
-    "hex",
-  );
+  const [colorFormat, setColorFormat] = useState<"hex" | "hsl" | "rgb" | "hsb">("hex");
 
   // Chunk swatches into pages of 8
-  const swatchPages = React.useMemo(
-    () => chunkArray(swatches, SWATCHES_PER_PAGE),
-    [swatches],
-  );
+  const swatchPages = React.useMemo(() => chunkArray(swatches, SWATCHES_PER_PAGE), [swatches]);
   const totalPages = swatchPages.length;
 
   // Safely parse color - react-aria doesn't support OKLCH or other modern color formats
@@ -353,11 +290,7 @@ export default function ColorPicker({
     // Check for unsupported color formats (oklch, oklab, lab, lch, etc.)
     const unsupportedFormats = ["oklch", "oklab", "lab(", "lch(", "color("];
 
-    if (
-      unsupportedFormats.some((format) =>
-        defaultValue.toLowerCase().startsWith(format),
-      )
-    ) {
+    if (unsupportedFormats.some((format) => defaultValue.toLowerCase().startsWith(format))) {
       return parseColor("#006FEE"); // Fallback to default blue
     }
 
@@ -373,18 +306,14 @@ export default function ColorPicker({
   const [internalColor, setInternalColor] = useState<Color>(safeDefaultValue);
 
   // Use controlled value if provided, otherwise use internal state
-  const color = controlledValue
-    ? handleParseColor(controlledValue)
-    : internalColor;
+  const color = controlledValue ? handleParseColor(controlledValue) : internalColor;
 
   // Calculate initial swatch page based on current color - using lazy initializer
   const [swatchPage, setSwatchPage] = useState(() => {
     const currentColorHex =
       (controlledValue as string | undefined)?.toLowerCase() ??
       safeDefaultValue.toString("hex").toLowerCase();
-    const swatchIndex = swatches.findIndex(
-      (s) => s.toLowerCase() === currentColorHex,
-    );
+    const swatchIndex = swatches.findIndex((s) => s.toLowerCase() === currentColorHex);
 
     return swatchIndex !== -1 ? Math.floor(swatchIndex / SWATCHES_PER_PAGE) : 0;
   });
@@ -414,22 +343,17 @@ export default function ColorPicker({
     const randomHue = Math.floor(Math.random() * 360);
     const randomSaturation = 50 + Math.floor(Math.random() * 50); // 50-100%
     const randomLightness = 40 + Math.floor(Math.random() * 30); // 40-70%
-    const randomColor = parseColor(
-      `hsl(${randomHue}, ${randomSaturation}%, ${randomLightness}%)`,
-    );
+    const randomColor = parseColor(`hsl(${randomHue}, ${randomSaturation}%, ${randomLightness}%)`);
 
     handleColorChange(randomColor);
   };
 
   return (
     <AriaColorPicker value={color} onChange={handleColorChange} {...props}>
-      {({ color: selectedColor }) => (
+      {({color}) => (
         <Popover>
           <Popover.Trigger>{trigger}</Popover.Trigger>
-          <Popover.Content
-            className={cn("w-[248px]", popoverClassName)}
-            placement="top"
-          >
+          <Popover.Content className={cn("w-[248px]", popoverClassName)} placement="top">
             <Popover.Dialog className="flex flex-col gap-2 px-2 pt-4 pb-2">
               {children ?? (
                 <>
@@ -464,12 +388,12 @@ export default function ColorPicker({
                                 {pageSwatches.map((swatch) => (
                                   <ColorSwatchPickerItem
                                     key={swatch}
-                                    className="data-selected:ring-foreground size-4 rounded-full transition-all data-selected:ring-2 data-selected:ring-offset-1"
+                                    className="size-4 rounded-full transition-all data-selected:ring-2 data-selected:ring-foreground data-selected:ring-offset-1"
                                     color={swatch}
                                   >
                                     <AriaColorSwatch
                                       className="size-full cursor-pointer rounded-full"
-                                      style={{ background: swatch }}
+                                      style={{background: swatch}}
                                     />
                                   </ColorSwatchPickerItem>
                                 ))}
@@ -492,19 +416,11 @@ export default function ColorPicker({
                   ) : null}
 
                   {/* Color Area */}
-                  <ColorArea
-                    colorSpace="hsb"
-                    xChannel="saturation"
-                    yChannel="brightness"
-                  />
+                  <ColorArea colorSpace="hsb" xChannel="saturation" yChannel="brightness" />
 
                   {/* Hue Slider with Shuffle */}
                   <div className="flex items-center gap-2">
-                    <ColorSlider
-                      channel="hue"
-                      className="h-5 flex-1"
-                      colorSpace="hsb"
-                    />
+                    <ColorSlider channel="hue" className="h-5 flex-1" colorSpace="hsb" />
                     {showShuffle ? (
                       <Button
                         isIconOnly
@@ -527,17 +443,15 @@ export default function ColorPicker({
                       <InputGroup.Input
                         readOnly
                         className="w-full flex-1 px-4 text-sm"
-                        value={selectedColor.toString(colorFormat)}
+                        value={color.toString(colorFormat)}
                       />
-                      <InputGroup.Suffix className="border-separator border-l px-0">
+                      <InputGroup.Suffix className="border-l border-separator px-0">
                         <Select
                           aria-label="Color format"
                           value={colorFormat}
                           onChange={(key) => {
                             if (key) {
-                              setColorFormat(
-                                key as "hex" | "hsl" | "rgb" | "hsb",
-                              );
+                              setColorFormat(key as "hex" | "hsl" | "rgb" | "hsb");
                             }
                           }}
                         >
@@ -580,4 +494,4 @@ export default function ColorPicker({
  * -----------------------------------------------------------------------------------------------*/
 
 // eslint-disable-next-line react-refresh/only-export-components
-export { ColorArea, ColorField, ColorSlider, ColorSwatch, parseColor };
+export {ColorArea, ColorField, ColorSlider, ColorSwatch, parseColor};

@@ -2,10 +2,8 @@
 @import "@thenamespace/uikit/styles.css";
 
 @source "../.storybook/**/*.{ts,tsx,mdx}";
-@source "../src/**/*.{ts,tsx,mdx}";
-@source "../../packages/uikit/src/**/*.{ts,tsx}";
-
-@source "../../react/src/components/**/*.{ts,tsx,js,jsx}";
+@source "../src/components/**/*.{ts,tsx,js,jsx}";
+@source "../../../packages/uikit/src/**/*.{ts,tsx}";
 
 /* Important: This source is important to make sure storybook styles are compiled */
 

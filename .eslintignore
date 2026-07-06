@@ -1,0 +1,5 @@
+.storybook/**
+apps/storybook/.storybook/stories/**
+apps/storybook/.storybook/**
+src/components/**/*.stories.tsx
+apps/storybook/src/components/**/*.stories.tsx

@@ -1,6 +1,6 @@
-import { create, themes as storybookThemes } from "storybook/theming";
+import {create, themes as storybookThemes} from "storybook/theming";
 
-// Namespace UI Colors (OKLCH -> Hex approximation)
+// HeroUI Colors (OKLCH -> Hex approximation)
 const colors = {
   white: "#FFFFFF",
   black: "#000000",
@@ -57,8 +57,8 @@ const fontCode = [
 const lightTheme = create({
   ...storybookThemes.light,
   base: "light",
-  brandTitle: `<img src="/logo-dark.svg" style="width: 120px; height: auto;" alt="Namespace UI"/>`,
-  // brandUrl: "https://namespace.com",
+  brandTitle: `<img src="/logo-dark.svg" style="width: 120px; height: auto;" alt="HeroUI"/>`,
+  // brandUrl: "https://heroui.com",
   brandTarget: "_self",
   // Colors
   colorPrimary: colors.accent.DEFAULT,
@@ -91,8 +91,8 @@ const lightTheme = create({
 const darkTheme = create({
   ...storybookThemes.dark,
   base: "dark",
-  brandTitle: `<img src="/logo-light.svg" style="width: 120px; height: auto;" alt="Namespace UI"/>`,
-  // brandUrl: "https://namespace.com",
+  brandTitle: `<img src="/logo-light.svg" style="width: 120px; height: auto;" alt="HeroUI"/>`,
+  // brandUrl: "https://heroui.com",
   brandTarget: "_self",
   // Colors
   colorPrimary: colors.accent.DEFAULT,

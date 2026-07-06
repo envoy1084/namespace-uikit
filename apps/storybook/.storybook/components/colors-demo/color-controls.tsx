@@ -1,9 +1,8 @@
-import React, { useCallback, useRef } from "react";
+import {Label} from "@heroui/react";
+import React, {useCallback, useRef} from "react";
+import {tv} from "tailwind-variants";
 
-import { Label } from "@thenamespace/uikit";
-import { tv } from "tailwind-variants";
-
-import { cn } from "../../utils/cn";
+import {cn} from "../../utils/cn";
 
 /* -------------------------------------------------------------------------------------------------
  * Styles
@@ -34,7 +33,7 @@ interface HueSliderProps {
   className?: string;
 }
 
-function HueSlider({ chroma, className, onChange, value }: HueSliderProps) {
+function HueSlider({chroma, className, onChange, value}: HueSliderProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
 
@@ -42,10 +41,7 @@ function HueSlider({ chroma, className, onChange, value }: HueSliderProps) {
     (clientX: number) => {
       if (!trackRef.current) return value;
       const rect = trackRef.current.getBoundingClientRect();
-      const percentage = Math.max(
-        0,
-        Math.min(1, (clientX - rect.left) / rect.width),
-      );
+      const percentage = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
 
       return Math.round(percentage * 360);
     },
@@ -57,9 +53,9 @@ function HueSlider({ chroma, className, onChange, value }: HueSliderProps) {
       isDragging.current = true;
       onChange(getValueFromPosition(e.clientX));
 
-      const handleMouseMove = (moveEvent: MouseEvent) => {
+      const handleMouseMove = (e: MouseEvent) => {
         if (isDragging.current) {
-          onChange(getValueFromPosition(moveEvent.clientX));
+          onChange(getValueFromPosition(e.clientX));
         }
       };
 
@@ -157,7 +153,7 @@ interface ChromaSliderProps {
 // Max chroma for subtle gray tinting - 0.02 keeps colors professional without high contrast
 const MAX_CHROMA = 0.02;
 
-function ChromaSlider({ className, hue, onChange, value }: ChromaSliderProps) {
+function ChromaSlider({className, hue, onChange, value}: ChromaSliderProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
 
@@ -165,10 +161,7 @@ function ChromaSlider({ className, hue, onChange, value }: ChromaSliderProps) {
     (clientX: number) => {
       if (!trackRef.current) return value;
       const rect = trackRef.current.getBoundingClientRect();
-      const percentage = Math.max(
-        0,
-        Math.min(1, (clientX - rect.left) / rect.width),
-      );
+      const percentage = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
 
       // Round to 4 decimal places for finer control with smaller max
       return Math.round(percentage * MAX_CHROMA * 10000) / 10000;
@@ -181,9 +174,9 @@ function ChromaSlider({ className, hue, onChange, value }: ChromaSliderProps) {
       isDragging.current = true;
       onChange(getValueFromPosition(e.clientX));
 
-      const handleMouseMove = (moveEvent: MouseEvent) => {
+      const handleMouseMove = (e: MouseEvent) => {
         if (isDragging.current) {
-          onChange(getValueFromPosition(moveEvent.clientX));
+          onChange(getValueFromPosition(e.clientX));
         }
       };
 
@@ -282,9 +275,7 @@ export function ColorControls({
     <div className="flex items-center justify-start gap-8 p-4">
       {/* Base Tone Slider */}
       <div className="flex items-center gap-3">
-        <Label className="text-foreground text-sm font-medium whitespace-nowrap">
-          Base tone
-        </Label>
+        <Label className="text-sm font-medium whitespace-nowrap text-foreground">Base tone</Label>
         <HueSlider
           chroma={grayChroma}
           className="w-[240px]"
@@ -295,7 +286,7 @@ export function ColorControls({
 
       {/* Gray Chroma Slider */}
       <div className="flex items-center gap-3">
-        <Label className="text-foreground text-sm font-medium whitespace-nowrap">
+        <Label className="text-sm font-medium whitespace-nowrap text-foreground">
           Amount of color in gray
         </Label>
         <ChromaSlider

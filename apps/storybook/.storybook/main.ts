@@ -1,10 +1,31 @@
-import type { StorybookConfig } from "@storybook/react-vite";
+import type {StorybookConfig} from "@storybook/react-vite";
 
-import { dirname, join as pathJoin } from "path";
-import { fileURLToPath } from "url";
+import {readFileSync as fsReadFileSync} from "fs";
+import {dirname, join as pathJoin} from "path";
+import {fileURLToPath} from "url";
 
-const filename = fileURLToPath(import.meta.url);
-const storybookConfigDir = dirname(filename);
+import {sync as globSync} from "glob";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const componentStoryGlob = pathJoin(
+  __dirname,
+  "../src/components/**/*.stories.@(ts|tsx)",
+);
+
+export const getStories = () => {
+  const __STORYBOOK_READY_ONLY__ = process.env.STORYBOOK_READY_ONLY === "true";
+
+  if (!__STORYBOOK_READY_ONLY__) return [componentStoryGlob];
+
+  const readyStories = globSync(componentStoryGlob).filter((file) => {
+    const content = fsReadFileSync(file, "utf-8");
+
+    return /title:\s*["']Components/.test(content);
+  });
+
+  return readyStories;
+};
 
 const config: StorybookConfig = {
   addons: ["@storybook/addon-a11y", "@storybook/addon-docs"],
@@ -17,11 +38,13 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {},
   },
-  staticDirs: [pathJoin(storybookConfigDir, "../public")],
+  staticDirs: [pathJoin(__dirname, "../public")],
   stories: [
     "./welcome.mdx",
-    "./stories/**/*.stories.@(ts|tsx|mdx)",
-    "../src/**/*.stories.@(ts|tsx|mdx)",
+    "./stories/colors.stories.tsx",
+    "./stories/colors-demo.stories.tsx",
+    "./stories/demo.stories.tsx",
+    ...getStories(),
   ],
 };
 

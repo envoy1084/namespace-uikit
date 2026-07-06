@@ -44,14 +44,14 @@ export function parseOklch(colorString: string): OklchColor | null {
     alpha = alpha / 100;
   }
 
-  return { l, c, h, alpha };
+  return {l, c, h, alpha};
 }
 
 /**
  * Format an OklchColor object back to a CSS string
  */
 export function formatOklch(color: OklchColor, includeAlpha = false): string {
-  const { alpha, c, h, l } = color;
+  const {alpha, c, h, l} = color;
 
   if (includeAlpha && alpha !== undefined && alpha < 1) {
     return `oklch(${l.toFixed(4)} ${c.toFixed(4)} ${h.toFixed(2)} / ${alpha})`;
@@ -64,24 +64,21 @@ export function formatOklch(color: OklchColor, includeAlpha = false): string {
  * Create an Oklch color with modified hue
  */
 export function withHue(color: OklchColor, hue: number): OklchColor {
-  return { ...color, h: hue % 360 };
+  return {...color, h: hue % 360};
 }
 
 /**
  * Create an Oklch color with modified chroma
  */
 export function withChroma(color: OklchColor, chroma: number): OklchColor {
-  return { ...color, c: Math.max(0, chroma) };
+  return {...color, c: Math.max(0, chroma)};
 }
 
 /**
  * Create an Oklch color with modified lightness
  */
-export function withLightness(
-  color: OklchColor,
-  lightness: number,
-): OklchColor {
-  return { ...color, l: Math.max(0, Math.min(1, lightness)) };
+export function withLightness(color: OklchColor, lightness: number): OklchColor {
+  return {...color, l: Math.max(0, Math.min(1, lightness))};
 }
 
 /**
@@ -90,11 +87,7 @@ export function withLightness(
  * @param chroma - The chroma/saturation value
  * @param steps - Number of lightness steps to generate
  */
-export function generatePalette(
-  baseHue: number,
-  chroma: number,
-  steps = 10,
-): OklchColor[] {
+export function generatePalette(baseHue: number, chroma: number, steps = 10): OklchColor[] {
   const palette: OklchColor[] = [];
 
   for (let i = 0; i < steps; i++) {
@@ -113,9 +106,7 @@ export function generatePalette(
 /**
  * Calculate appropriate foreground color (black or white) for a given Oklch background
  */
-export function calculateForegroundColor(
-  bgColor: OklchColor,
-): "black" | "white" {
+export function calculateForegroundColor(bgColor: OklchColor): "black" | "white" {
   // Use lightness to determine foreground - simple threshold at 0.6
   return bgColor.l > 0.6 ? "black" : "white";
 }
@@ -125,107 +116,56 @@ export function calculateForegroundColor(
  * @param baseChroma - The base chroma value
  * @param grayAmount - Amount of color in gray (0-1, where 0 is pure gray)
  */
-export function adjustGrayChroma(
-  baseChroma: number,
-  grayAmount: number,
-): number {
+export function adjustGrayChroma(baseChroma: number, grayAmount: number): number {
   return baseChroma * grayAmount;
 }
 
 /**
- * List of CSS color variable names that use Oklch values in Namespace UI
+ * List of CSS color variable names that use Oklch values in HeroUI
  */
 export const COLOR_VARIABLES = [
   // Primitive colors
-  { name: "--white", label: "White", category: "primitive" },
-  { name: "--black", label: "Black", category: "primitive" },
-  { name: "--snow", label: "Snow", category: "primitive" },
-  { name: "--eclipse", label: "Eclipse", category: "primitive" },
+  {name: "--white", label: "White", category: "primitive"},
+  {name: "--black", label: "Black", category: "primitive"},
+  {name: "--snow", label: "Snow", category: "primitive"},
+  {name: "--eclipse", label: "Eclipse", category: "primitive"},
 
   // Base colors
-  { name: "--background", label: "Background", category: "base" },
-  { name: "--foreground", label: "Foreground", category: "base" },
-  { name: "--surface", label: "Surface", category: "surface" },
-  {
-    name: "--surface-foreground",
-    label: "Surface Foreground",
-    category: "surface",
-  },
-  {
-    name: "--surface-secondary",
-    label: "Surface Secondary",
-    category: "surface",
-  },
-  {
-    name: "--surface-secondary-foreground",
-    label: "Surface Secondary FG",
-    category: "surface",
-  },
-  {
-    name: "--surface-tertiary",
-    label: "Surface Tertiary",
-    category: "surface",
-  },
-  {
-    name: "--surface-tertiary-foreground",
-    label: "Surface Tertiary FG",
-    category: "surface",
-  },
-  { name: "--overlay", label: "Overlay", category: "overlay" },
-  {
-    name: "--overlay-foreground",
-    label: "Overlay Foreground",
-    category: "overlay",
-  },
+  {name: "--background", label: "Background", category: "base"},
+  {name: "--foreground", label: "Foreground", category: "base"},
+  {name: "--surface", label: "Surface", category: "surface"},
+  {name: "--surface-foreground", label: "Surface Foreground", category: "surface"},
+  {name: "--surface-secondary", label: "Surface Secondary", category: "surface"},
+  {name: "--surface-secondary-foreground", label: "Surface Secondary FG", category: "surface"},
+  {name: "--surface-tertiary", label: "Surface Tertiary", category: "surface"},
+  {name: "--surface-tertiary-foreground", label: "Surface Tertiary FG", category: "surface"},
+  {name: "--overlay", label: "Overlay", category: "overlay"},
+  {name: "--overlay-foreground", label: "Overlay Foreground", category: "overlay"},
 
   // Semantic colors
-  { name: "--muted", label: "Muted", category: "semantic" },
-  { name: "--default", label: "Default", category: "semantic" },
-  {
-    name: "--default-foreground",
-    label: "Default Foreground",
-    category: "semantic",
-  },
-  { name: "--accent", label: "Accent", category: "accent" },
-  {
-    name: "--accent-foreground",
-    label: "Accent Foreground",
-    category: "accent",
-  },
+  {name: "--muted", label: "Muted", category: "semantic"},
+  {name: "--default", label: "Default", category: "semantic"},
+  {name: "--default-foreground", label: "Default Foreground", category: "semantic"},
+  {name: "--accent", label: "Accent", category: "accent"},
+  {name: "--accent-foreground", label: "Accent Foreground", category: "accent"},
 
   // Status colors
-  { name: "--success", label: "Success", category: "status" },
-  {
-    name: "--success-foreground",
-    label: "Success Foreground",
-    category: "status",
-  },
-  { name: "--warning", label: "Warning", category: "status" },
-  {
-    name: "--warning-foreground",
-    label: "Warning Foreground",
-    category: "status",
-  },
-  { name: "--danger", label: "Danger", category: "status" },
-  {
-    name: "--danger-foreground",
-    label: "Danger Foreground",
-    category: "status",
-  },
+  {name: "--success", label: "Success", category: "status"},
+  {name: "--success-foreground", label: "Success Foreground", category: "status"},
+  {name: "--warning", label: "Warning", category: "status"},
+  {name: "--warning-foreground", label: "Warning Foreground", category: "status"},
+  {name: "--danger", label: "Danger", category: "status"},
+  {name: "--danger-foreground", label: "Danger Foreground", category: "status"},
 
   // Field colors
-  { name: "--field-background", label: "Field Background", category: "field" },
-  { name: "--field-foreground", label: "Field Foreground", category: "field" },
-  {
-    name: "--field-placeholder",
-    label: "Field Placeholder",
-    category: "field",
-  },
+  {name: "--field-background", label: "Field Background", category: "field"},
+  {name: "--field-foreground", label: "Field Foreground", category: "field"},
+  {name: "--field-placeholder", label: "Field Placeholder", category: "field"},
 
   // Border colors
-  { name: "--border", label: "Border", category: "border" },
-  { name: "--separator", label: "Separator", category: "border" },
-  { name: "--focus", label: "Focus", category: "border" },
+  {name: "--border", label: "Border", category: "border"},
+  {name: "--separator", label: "Separator", category: "border"},
+  {name: "--focus", label: "Focus", category: "border"},
 ] as const;
 
 export type ColorVariable = (typeof COLOR_VARIABLES)[number];
