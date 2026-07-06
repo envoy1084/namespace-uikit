@@ -33,8 +33,6 @@
   },
   "devDependencies": {
     "@heroui/react": "catalog:",
-    "@repo/tsconfig": "workspace:*",
-    "@repo/tsdown-config": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "react": "catalog:",

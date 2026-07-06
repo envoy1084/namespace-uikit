@@ -1,6 +1,7 @@
-import { createTsdownConfig } from "@repo/tsdown-config";
+import { defineConfig } from "tsdown";
 
-export default createTsdownConfig({
+export default defineConfig({
+  clean: true,
   deps: {
     neverBundle: [
       "@heroui/react",
@@ -10,6 +11,20 @@ export default createTsdownConfig({
       "tailwindcss",
     ],
   },
+  dts: {
+    enabled: true,
+    sourcemap: true,
+  },
   entry: ["src/index.ts"],
+  failOnWarn: true,
+  fixedExtension: true,
+  format: ["esm"],
+  hash: false,
+  nodeProtocol: true,
+  outDir: "dist",
   platform: "browser",
+  sourcemap: true,
+  target: ["es2022"],
+  treeshake: true,
+  unbundle: true,
 });

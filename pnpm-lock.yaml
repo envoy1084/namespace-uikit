@@ -59,15 +59,6 @@ importers:
       '@commitlint/config-conventional':
         specifier: 'catalog:'
         version: 21.0.1
-      '@repo/oxc':
-        specifier: workspace:*
-        version: link:internal/oxc
-      '@repo/tsconfig':
-        specifier: workspace:*
-        version: link:internal/tsconfig
-      '@repo/tsdown-config':
-        specifier: workspace:*
-        version: link:internal/tsdown
       lefthook:
         specifier: 'catalog:'
         version: 2.1.9
@@ -77,43 +68,9 @@ importers:
       oxlint:
         specifier: 'catalog:'
         version: 1.71.0
-      tsdown:
-        specifier: 'catalog:'
-        version: 0.22.3(typescript@6.0.3)
       turbo:
         specifier: 'catalog:'
         version: 2.10.3
-      typescript:
-        specifier: 'catalog:'
-        version: 6.0.3
-
-  internal/oxc:
-    dependencies:
-      oxfmt:
-        specifier: 'catalog:'
-        version: 0.56.0
-      oxlint:
-        specifier: 'catalog:'
-        version: 1.71.0
-    devDependencies:
-      '@repo/tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
-      typescript:
-        specifier: 'catalog:'
-        version: 6.0.3
-
-  internal/tsconfig: {}
-
-  internal/tsdown:
-    dependencies:
-      tsdown:
-        specifier: 'catalog:'
-        version: 0.22.3(typescript@6.0.3)
-    devDependencies:
-      '@repo/tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -123,12 +80,6 @@ importers:
       '@heroui/react':
         specifier: 'catalog:'
         version: 3.2.1(@react-spectrum/provider@3.11.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(tailwindcss@4.3.2)
-      '@repo/tsconfig':
-        specifier: workspace:*
-        version: link:../../internal/tsconfig
-      '@repo/tsdown-config':
-        specifier: workspace:*
-        version: link:../../internal/tsdown
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.17

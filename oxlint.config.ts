@@ -1,3 +1,19 @@
-import { baseOxLintConfig } from "@repo/oxc/lint";
+import { defineConfig } from "oxlint";
 
-export default baseOxLintConfig;
+export default defineConfig({
+  categories: {
+    correctness: "error",
+    perf: "error",
+    suspicious: "error",
+  },
+  plugins: [
+    "eslint",
+    "typescript",
+    "unicorn",
+    "oxc",
+    "import",
+    "jsdoc",
+    "node",
+    "promise",
+  ],
+});
