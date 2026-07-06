@@ -1,0 +1,407 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  letter-spacing: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.docs-app {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 18rem minmax(0, 1fr);
+}
+
+.docs-sidebar {
+  height: 100svh;
+  border-right: 1px solid var(--border);
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: auto;
+  padding: 1.25rem;
+  position: sticky;
+  top: 0;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.sidebar-brand a {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.sidebar-theme {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+.sidebar-nav,
+.sidebar-group {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.sidebar-nav {
+  padding-bottom: 1rem;
+}
+
+.sidebar-nav a {
+  border-radius: 0.5rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.925rem;
+  line-height: 1.3;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a[data-active="true"] {
+  background: var(--surface);
+  color: var(--foreground);
+}
+
+.sidebar-group {
+  margin-top: 0.75rem;
+}
+
+.sidebar-group > span {
+  color: var(--foreground);
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.docs-main {
+  min-width: 0;
+  width: min(75rem, 100%);
+  padding: 3rem 2rem 5rem;
+}
+
+.page-heading {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+.page-heading p,
+.page-heading span {
+  color: var(--muted);
+  margin: 0;
+}
+
+.page-heading p {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.page-heading h1 {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 720;
+  line-height: 1;
+}
+
+.component-heading {
+  margin-bottom: 2rem;
+}
+
+.component-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.back-link {
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.back-link:hover {
+  color: var(--foreground);
+}
+
+.category-stack {
+  display: grid;
+  gap: 4rem;
+}
+
+.category-section {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.category-section h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.component-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.component-card {
+  min-width: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.component-card-preview {
+  min-height: 13.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 1.25rem;
+}
+
+.component-card:hover .component-card-preview {
+  border-color: var(--foreground);
+}
+
+.component-card-copy {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.component-card-copy strong {
+  font-size: 1.15rem;
+  font-weight: 680;
+}
+
+.component-card-copy span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.example-stack {
+  display: grid;
+  gap: 2rem;
+}
+
+.component-example {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.component-example header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.component-example h2,
+.component-example p {
+  margin: 0;
+}
+
+.component-example h2 {
+  font-size: 1.5rem;
+  font-weight: 680;
+}
+
+.component-example p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.example-preview {
+  min-height: 23rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 2rem;
+}
+
+.component-example[data-size="wide"] .example-preview {
+  justify-content: stretch;
+}
+
+.preview-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.preview-stack {
+  width: min(100%, 22rem);
+  display: grid;
+  gap: 0.85rem;
+}
+
+.field-width {
+  width: min(100%, 18rem);
+}
+
+.field-wrapper {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.field-input {
+  width: 17.5rem;
+}
+
+.demo-listbox {
+  width: min(100%, 15rem);
+}
+
+.demo-table {
+  min-width: 42rem;
+}
+
+.demo-card {
+  width: min(100%, 25rem);
+}
+
+.form-demo {
+  width: min(100%, 18rem);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.accordion-demo {
+  width: min(100%, 28rem);
+}
+
+.disclosure-body {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface-secondary);
+  margin-top: 0.75rem;
+  padding: 1rem;
+}
+
+.separator-demo {
+  width: min(100%, 18rem);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.popover-demo {
+  max-width: 16rem;
+}
+
+.popover-demo p,
+.panel-copy,
+.type-demo-copy {
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.type-demo-heading {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.storybook-component-page,
+.storybook-components-overview {
+  min-height: 100svh;
+  width: min(78rem, 100%);
+  padding: 3rem 2rem 5rem;
+}
+
+.storybook-preview-empty {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 70rem) {
+  .docs-app {
+    grid-template-columns: 1fr;
+  }
+
+  .docs-sidebar {
+    height: auto;
+    max-height: 24rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+    position: static;
+  }
+
+  .docs-main {
+    padding: 2rem 1rem 4rem;
+  }
+
+  .component-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 44rem) {
+  .page-heading h1 {
+    font-size: 2.25rem;
+  }
+
+  .component-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .component-card-preview,
+  .example-preview {
+    min-height: 18rem;
+    padding: 1rem;
+  }
+}
