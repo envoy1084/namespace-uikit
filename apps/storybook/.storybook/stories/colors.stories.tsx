@@ -222,7 +222,7 @@ export const AllColors = () => {
           Color System
         </h1>
         <p className="text-muted">
-          HeroUI's color palette with CSS variables and computed values
+          Namespace's color palette with CSS variables and computed values
         </p>
       </div>
 
@@ -274,7 +274,7 @@ AllColors.parameters = {
   docs: {
     description: {
       story:
-        "A comprehensive overview of all color tokens available in the HeroUI design system. Each color shows its CSS variable name and computed value.",
+        "A comprehensive overview of all color tokens available in the Namespace design system. Each color shows its CSS variable name and computed value.",
     },
   },
 };

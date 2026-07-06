@@ -1,18 +1,18 @@
 import React from "react";
 
-interface HeroUILogoProps {
+interface NamespaceLogoProps {
   className?: string;
   size?: number;
   height?: number;
   width?: number;
 }
 
-export function HeroUILogo({
+export function NamespaceLogo({
   className,
   height,
   size = 26,
   width,
-}: HeroUILogoProps) {
+}: NamespaceLogoProps) {
   // Calculate dimensions based on original aspect ratio (140:44)
   const aspectRatio = 140 / 44;
   const svgHeight = height || size;
@@ -64,7 +64,7 @@ export function HeroUILogo({
           width: "1px",
         }}
       >
-        HeroUI
+        Namespace
       </span>
     </>
   );

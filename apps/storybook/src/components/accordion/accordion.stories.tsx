@@ -255,7 +255,7 @@ const categories = [
     title: "Usage",
     items: [
       {
-        title: "How do I use the HeroUI icon set?",
+        title: "How do I use the Namespace icon set?",
         content:
           "Browse our products, add items to your cart, and proceed to checkout. You'll need to provide shipping and payment information to complete your purchase.",
       },

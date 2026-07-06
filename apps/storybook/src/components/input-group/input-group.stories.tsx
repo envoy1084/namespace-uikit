@@ -137,7 +137,11 @@ export const WithPrefixAndSuffix: Story = {
 
 export const WithTextPrefix: Story = {
   render: () => (
-    <TextField className="w-[280px]" defaultValue="heroui.com" name="website">
+    <TextField
+      className="w-[280px]"
+      defaultValue="namespace.ninja"
+      name="website"
+    >
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Prefix>https://</InputGroup.Prefix>
@@ -149,7 +153,7 @@ export const WithTextPrefix: Story = {
 
 export const WithTextSuffix: Story = {
   render: () => (
-    <TextField className="w-[280px]" defaultValue="heroui" name="website">
+    <TextField className="w-[280px]" defaultValue="namespace" name="website">
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Input className="w-[280px]" />
@@ -161,7 +165,7 @@ export const WithTextSuffix: Story = {
 
 export const WithIconPrefixAndTextSuffix: Story = {
   render: () => (
-    <TextField className="w-[280px]" defaultValue="heroui" name="website">
+    <TextField className="w-[280px]" defaultValue="namespace" name="website">
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Prefix>
@@ -176,7 +180,11 @@ export const WithIconPrefixAndTextSuffix: Story = {
 
 export const WithCopySuffix: Story = {
   render: () => (
-    <TextField className="w-[280px]" defaultValue="heroui.com" name="website">
+    <TextField
+      className="w-[280px]"
+      defaultValue="namespace.ninja"
+      name="website"
+    >
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Input className="w-[280px]" />
@@ -192,7 +200,11 @@ export const WithCopySuffix: Story = {
 
 export const WithIconPrefixAndCopySuffix: Story = {
   render: () => (
-    <TextField className="w-[280px]" defaultValue="heroui.com" name="website">
+    <TextField
+      className="w-[280px]"
+      defaultValue="namespace.ninja"
+      name="website"
+    >
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Prefix>
@@ -538,7 +550,7 @@ export const AllVariations: Story = {
 
         <TextField
           className="w-[280px]"
-          defaultValue="heroui.com"
+          defaultValue="namespace.ninja"
           name="website1"
         >
           <Label>Website</Label>
@@ -548,7 +560,11 @@ export const AllVariations: Story = {
           </InputGroup>
         </TextField>
 
-        <TextField className="w-[280px]" defaultValue="heroui" name="website2">
+        <TextField
+          className="w-[280px]"
+          defaultValue="namespace"
+          name="website2"
+        >
           <Label>Website</Label>
           <InputGroup>
             <InputGroup.Input className="w-[280px]" />
@@ -556,7 +572,11 @@ export const AllVariations: Story = {
           </InputGroup>
         </TextField>
 
-        <TextField className="w-[280px]" defaultValue="heroui" name="website3">
+        <TextField
+          className="w-[280px]"
+          defaultValue="namespace"
+          name="website3"
+        >
           <Label>Website</Label>
           <InputGroup>
             <InputGroup.Prefix>
@@ -569,7 +589,7 @@ export const AllVariations: Story = {
 
         <TextField
           className="w-[280px]"
-          defaultValue="heroui.com"
+          defaultValue="namespace.ninja"
           name="website4"
         >
           <Label>Website</Label>
@@ -591,7 +611,7 @@ export const AllVariations: Story = {
 
         <TextField
           className="w-[280px]"
-          defaultValue="heroui.com"
+          defaultValue="namespace.ninja"
           name="website5"
         >
           <Label>Website</Label>

@@ -1,7 +1,7 @@
-export const THEME_ADDON_ID = "heroui-theme-addon";
-export const THEME_GLOBAL_TYPE_ID = "heroui-theme";
-export const THEME_PARAM_KEY = "heroui-theme";
-export const THEME_EVENT_NAME = "heroui-theme-changed";
+export const THEME_ADDON_ID = "namespace-theme-addon";
+export const THEME_GLOBAL_TYPE_ID = "namespace-theme";
+export const THEME_PARAM_KEY = "namespace-theme";
+export const THEME_EVENT_NAME = "namespace-theme-changed";
 
 export const THEME_VALUES = ["light", "dark"] as const;
 export type ThemeKey = (typeof THEME_VALUES)[number];

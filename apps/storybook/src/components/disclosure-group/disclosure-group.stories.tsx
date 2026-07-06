@@ -51,7 +51,7 @@ const Template = (props: DisclosureGroupProps) => {
           expandedKeys={expandedKeys}
           onExpandedChange={setExpandedKeys}
         >
-          <Disclosure aria-label="Preview HeroUI Native" id="preview">
+          <Disclosure aria-label="Preview Namespace Native" id="preview">
             <Disclosure.Heading>
               <Button
                 slot="trigger"
@@ -62,7 +62,7 @@ const Template = (props: DisclosureGroupProps) => {
               >
                 <div className="flex w-full items-center justify-start gap-2">
                   <Icon icon="gravity-ui:qr-code" />
-                  Preview HeroUI Native
+                  Preview Namespace Native
                 </div>
                 <Disclosure.Indicator className="text-muted" />
               </Button>
@@ -70,8 +70,8 @@ const Template = (props: DisclosureGroupProps) => {
             <Disclosure.Content>
               <Disclosure.Body className="mx-2 flex flex-col items-center gap-2 p-4 text-center">
                 <p className="text-muted text-sm">
-                  Scan this QR code with your camera app to preview the HeroUI
-                  native components.
+                  Scan this QR code with your camera app to preview the
+                  Namespace native components.
                 </p>
                 <img
                   alt="Expo Go QR Code"
@@ -93,7 +93,7 @@ const Template = (props: DisclosureGroupProps) => {
           </Disclosure>
           <Separator className="my-2" />
           <Disclosure id="download">
-            <Disclosure.Heading aria-label="Download HeroUI Native">
+            <Disclosure.Heading aria-label="Download Namespace Native">
               <Button
                 slot="trigger"
                 variant={
@@ -105,7 +105,7 @@ const Template = (props: DisclosureGroupProps) => {
               >
                 <div className="flex w-full items-center justify-start gap-2">
                   <Icon icon="tabler:brand-apple-filled" />
-                  Download HeroUI Native
+                  Download Namespace Native
                 </div>
                 <Disclosure.Indicator className="text-muted" />
               </Button>
@@ -113,8 +113,8 @@ const Template = (props: DisclosureGroupProps) => {
             <Disclosure.Content>
               <Disclosure.Body className="mx-2 flex flex-col items-center gap-2 p-4 text-center">
                 <p className="text-muted text-sm">
-                  Scan this QR code with your camera app to preview the HeroUI
-                  native components.
+                  Scan this QR code with your camera app to preview the
+                  Namespace native components.
                 </p>
                 <img
                   alt="Expo Go QR Code"
@@ -154,7 +154,7 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
     <div className="w-full max-w-md">
       <div className="bg-surface shadow-surface flex flex-col gap-4 rounded-3xl p-4">
         <div className="mb-2 flex items-center justify-between">
-          <h3 className="text-lg font-semibold">HeroUI Native</h3>
+          <h3 className="text-lg font-semibold">Namespace Native</h3>
           <div className="flex gap-2">
             <Button
               aria-label="Previous disclosure"
@@ -181,7 +181,7 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
           expandedKeys={expandedKeys}
           onExpandedChange={setExpandedKeys}
         >
-          <Disclosure aria-label="Preview HeroUI Native" id="preview">
+          <Disclosure aria-label="Preview Namespace Native" id="preview">
             <Disclosure.Heading>
               <Button
                 slot="trigger"
@@ -192,7 +192,7 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
               >
                 <div className="flex w-full items-center justify-start gap-2">
                   <Icon icon="gravity-ui:qr-code" />
-                  Preview HeroUI Native
+                  Preview Namespace Native
                 </div>
                 <Disclosure.Indicator className="text-muted" />
               </Button>
@@ -200,8 +200,8 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
             <Disclosure.Content>
               <Disclosure.Body className="mx-2 flex flex-col items-center gap-2 p-4 text-center">
                 <p className="text-muted text-sm">
-                  Scan this QR code with your camera app to preview the HeroUI
-                  native components.
+                  Scan this QR code with your camera app to preview the
+                  Namespace native components.
                 </p>
                 <img
                   alt="Expo Go QR Code"
@@ -223,7 +223,7 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
           </Disclosure>
           <Separator className="my-2" />
           <Disclosure id="download">
-            <Disclosure.Heading aria-label="Download HeroUI Native">
+            <Disclosure.Heading aria-label="Download Namespace Native">
               <Button
                 slot="trigger"
                 variant={
@@ -235,7 +235,7 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
               >
                 <div className="flex w-full items-center justify-start gap-2">
                   <Icon icon="tabler:brand-apple-filled" />
-                  Download HeroUI Native
+                  Download Namespace Native
                 </div>
                 <Disclosure.Indicator className="text-muted" />
               </Button>
@@ -243,8 +243,8 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
             <Disclosure.Content>
               <Disclosure.Body className="mx-2 flex flex-col items-center gap-2 p-4 text-center">
                 <p className="text-muted text-sm">
-                  Scan this QR code with your camera app to preview the HeroUI
-                  native components.
+                  Scan this QR code with your camera app to preview the
+                  Namespace native components.
                 </p>
                 <img
                   alt="Expo Go QR Code"

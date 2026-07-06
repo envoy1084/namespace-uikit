@@ -63,7 +63,7 @@ export const Default: Story = {
       <Card.Footer>
         <Link
           aria-label="Go to Acme Creator Hub (opens in new tab)"
-          href="https://heroui.com"
+          href="https://namespace.ninja"
           rel="noopener noreferrer"
           target="_blank"
         >

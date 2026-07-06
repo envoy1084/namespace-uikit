@@ -9,7 +9,7 @@ import type { ReactNode } from "react";
 export { ToastQueue, toast, toastQueue } from "@thenamespace/uikit";
 export type { ToastContentValue, ToastQueueOptions };
 
-export interface HeroUIToastOptions {
+export interface NamespaceToastOptions {
   actionProps?: ButtonProps;
   description?: ReactNode;
   indicator?: ReactNode;

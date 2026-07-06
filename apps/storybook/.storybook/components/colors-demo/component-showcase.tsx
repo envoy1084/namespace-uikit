@@ -30,14 +30,14 @@ import {
   Tabs,
 } from "@thenamespace/uikit";
 
-import { HeroUILogo } from "../heroui-logo";
+import { NamespaceLogo } from "../namespace-logo";
 
 export function ComponentShowcase() {
   return (
     <div>
       {/* Navigation */}
       <nav className="border-border flex items-end gap-4 border-b px-6 pt-4 pb-3 text-sm font-medium">
-        <HeroUILogo size={24} />
+        <NamespaceLogo size={24} />
         <a className="text-foreground hover:text-accent" href="#">
           Pricing
         </a>
@@ -57,7 +57,7 @@ export function ComponentShowcase() {
           <br />
         </h1>
         <p className="text-muted rounded-xl text-sm">
-          HeroUI is the modern UI library for web and mobile.
+          Namespace is the modern UI library for web and mobile.
         </p>
         {/* Buttons */}
         <div className="flex flex-wrap gap-2">
@@ -638,7 +638,7 @@ export function ComponentShowcase() {
                       <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                         <Icon className="size-5" icon="gravity-ui:rocket" />
                       </Modal.Icon>
-                      <Modal.Heading>Welcome to HeroUI</Modal.Heading>
+                      <Modal.Heading>Welcome to Namespace</Modal.Heading>
                     </Modal.Header>
                     <Modal.Body>
                       <p className="text-muted text-sm">
@@ -813,7 +813,7 @@ export function ComponentShowcase() {
                     <Button size="sm">Follow</Button>
                   </div>
                   <p className="text-muted text-sm">
-                    Design Engineer, @hero_ui lover 🎉
+                    Design Engineer, @namespace lover 🎉
                   </p>
                   <div className="flex gap-3">
                     <div className="flex gap-1">

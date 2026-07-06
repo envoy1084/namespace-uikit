@@ -11,7 +11,7 @@ export function AllowNotificationsDemo() {
             <Label className="w-fit text-sm font-medium">
               Allow notifications
             </Label>
-            <Description>Receive push notifications from HeroUI</Description>
+            <Description>Receive push notifications from Namespace</Description>
           </div>
           <Switch.Control>
             <Switch.Thumb />

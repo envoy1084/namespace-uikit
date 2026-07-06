@@ -46,14 +46,14 @@ const Template = (props: Disclosure["RootProps"]) => {
         <Disclosure.Heading>
           <Button slot="trigger" variant="secondary">
             <Icon icon="gravity-ui:qr-code" />
-            Preview HeroUI Native
+            Preview Namespace Native
             <Disclosure.Indicator />
           </Button>
         </Disclosure.Heading>
         <Disclosure.Content>
           <Disclosure.Body className="bg-surface shadow-surface flex flex-col items-center rounded-3xl p-2 p-4 text-center">
             <p className="text-muted text-sm">
-              Scan this QR code with your camera app to preview the HeroUI
+              Scan this QR code with your camera app to preview the Namespace
               native components.
             </p>
             <img

@@ -1539,7 +1539,7 @@ export const UserSelection: Story = {
       {
         id: "1",
         name: "Bob",
-        email: "bob@heroui.com",
+        email: "bob@namespace.ninja",
         avatarUrl:
           "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
         fallback: "B",
@@ -1547,7 +1547,7 @@ export const UserSelection: Story = {
       {
         id: "2",
         name: "Fred",
-        email: "fred@heroui.com",
+        email: "fred@namespace.ninja",
         avatarUrl:
           "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
         fallback: "F",
@@ -1555,7 +1555,7 @@ export const UserSelection: Story = {
       {
         id: "3",
         name: "Martha",
-        email: "martha@heroui.com",
+        email: "martha@namespace.ninja",
         avatarUrl:
           "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
         fallback: "M",
@@ -1563,7 +1563,7 @@ export const UserSelection: Story = {
       {
         id: "4",
         name: "John",
-        email: "john@heroui.com",
+        email: "john@namespace.ninja",
         avatarUrl:
           "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
         fallback: "J",
@@ -1571,7 +1571,7 @@ export const UserSelection: Story = {
       {
         id: "5",
         name: "Jane",
-        email: "jane@heroui.com",
+        email: "jane@namespace.ninja",
         avatarUrl:
           "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
         fallback: "J",
@@ -1664,7 +1664,7 @@ export const UserSelectionMultiple: Story = {
       {
         id: "1",
         name: "Bob",
-        email: "bob@heroui.com",
+        email: "bob@namespace.ninja",
         avatarUrl:
           "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
         fallback: "B",
@@ -1672,7 +1672,7 @@ export const UserSelectionMultiple: Story = {
       {
         id: "2",
         name: "Fred",
-        email: "fred@heroui.com",
+        email: "fred@namespace.ninja",
         avatarUrl:
           "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
         fallback: "F",
@@ -1680,7 +1680,7 @@ export const UserSelectionMultiple: Story = {
       {
         id: "3",
         name: "Martha",
-        email: "martha@heroui.com",
+        email: "martha@namespace.ninja",
         avatarUrl:
           "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
         fallback: "M",
@@ -1688,7 +1688,7 @@ export const UserSelectionMultiple: Story = {
       {
         id: "4",
         name: "John",
-        email: "john@heroui.com",
+        email: "john@namespace.ninja",
         avatarUrl:
           "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
         fallback: "J",
@@ -1696,7 +1696,7 @@ export const UserSelectionMultiple: Story = {
       {
         id: "5",
         name: "Jane",
-        email: "jane@heroui.com",
+        email: "jane@namespace.ninja",
         avatarUrl:
           "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
         fallback: "J",

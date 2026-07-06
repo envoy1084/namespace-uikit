@@ -15,11 +15,11 @@ import {
   ToastTitle,
   toast,
 } from "./index";
-import type { HeroUIToastOptions } from "./toast-queue";
+import type { NamespaceToastOptions } from "./toast-queue";
 
 type Placement = NonNullable<ToastVariants["placement"]>;
 
-interface ToastStoryProps extends Omit<HeroUIToastOptions, "variant"> {
+interface ToastStoryProps extends Omit<NamespaceToastOptions, "variant"> {
   placement?: Placement;
 }
 
@@ -70,7 +70,7 @@ const Template = () => {
                 onPress: () => toast.clear(),
                 variant: "tertiary",
               },
-              description: "Bob sent you an invitation to join HeroUI team",
+              description: "Bob sent you an invitation to join Namespace team",
               indicator: <Icon icon="gravity-ui:persons" />,
               variant: "default",
             });
@@ -101,7 +101,7 @@ const Template = () => {
                 className: "bg-success text-success-foreground",
                 onPress: noop,
               },
-              description: "You can continue using HeroUI Chat",
+              description: "You can continue using Namespace Chat",
             })
           }
         >

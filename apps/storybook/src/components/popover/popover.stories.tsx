@@ -101,7 +101,9 @@ const TemplateWithCustomContent = (props: Popover["ContentProps"]) => {
             </Avatar>
             <div className="flex flex-col gap-0">
               <p className="text-sm leading-5 font-medium">Zoe</p>
-              <p className="text-muted text-xs leading-none">zoe@heroui.com</p>
+              <p className="text-muted text-xs leading-none">
+                zoe@namespace.ninja
+              </p>
             </div>
           </div>
         </Popover.Trigger>
@@ -136,7 +138,7 @@ const TemplateWithCustomContent = (props: Popover["ContentProps"]) => {
             </Popover.Heading>
             <div>
               <p className="pl-px text-sm">
-                Design Engineer, @hero_ui lover she/her. SF Bay Area&nbsp;
+                Design Engineer, @namespace lover she/her. SF Bay Area&nbsp;
                 <span aria-label="confetti" role="img">
                   🎉
                 </span>

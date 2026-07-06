@@ -26,7 +26,7 @@ const updateManagerTheme = (theme: string) => {
 };
 
 // Register addon to hook into the manager lifecycle properly
-addons.register("heroui-theme-manager", (api) => {
+addons.register("namespace-theme-manager", (api) => {
   let lastTheme = DEFAULT_THEME;
 
   const applyTheme = (theme: string) => {

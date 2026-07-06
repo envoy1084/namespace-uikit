@@ -21,7 +21,7 @@ Components.parameters = {
   docs: {
     description: {
       story:
-        "A comprehensive showcase of HeroUI components in action. These demos demonstrate real-world usage patterns and component combinations.",
+        "A comprehensive showcase of Namespace components in action. These demos demonstrate real-world usage patterns and component combinations.",
     },
   },
 };
