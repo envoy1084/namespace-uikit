@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "turbo run build",
+    "check": "turbo run format:check lint typecheck build //#root:format:check //#root:lint",
     "commitlint:edit": "commitlint --strict --edit",
     "commitlint:last": "commitlint --strict --last",
     "commitlint:range": "node scripts/commitlint-range.mjs",

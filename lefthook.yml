@@ -7,6 +7,8 @@ pre-commit:
   commands:
     format:
       glob: "*.{ts,tsx,js,jsx,mjs,cjs,json,jsonc,md,yml,yaml}"
+      exclude:
+        - "pnpm-lock.yaml"
       run: pnpm exec oxfmt --write --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
 
@@ -14,3 +16,8 @@ pre-commit:
       glob: "*.{ts,tsx,js,jsx,mjs,cjs}"
       run: pnpm exec oxlint --fix --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
+
+pre-push:
+  commands:
+    check:
+      run: pnpm check
