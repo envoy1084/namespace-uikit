@@ -2,6 +2,13 @@ import { defineConfig } from "tsdown";
 
 export default defineConfig({
   clean: true,
+  copy: [
+    {
+      from: "src/styles/globals.css",
+      rename: "styles.css",
+      to: "dist",
+    },
+  ],
   deps: {
     neverBundle: [
       "@heroui/react",

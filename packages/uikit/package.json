@@ -20,6 +20,11 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
+    "./styles.css": {
+      "@repo/source": "./src/styles/globals.css",
+      "style": "./dist/styles.css",
+      "default": "./dist/styles.css"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -31,8 +36,11 @@
     "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern",
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },
+  "dependencies": {
+    "@heroui/styles": "^3.2.1"
+  },
   "devDependencies": {
-    "@heroui/react": "catalog:",
+    "@heroui/react": "^3.2.1",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "react": "catalog:",
