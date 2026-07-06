@@ -1,15 +1,14 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import {Button} from "../button";
-import {Description} from "../description";
-import {FieldError} from "../field-error";
-import {Form} from "../form";
-import {Label} from "../label";
-import {Spinner} from "../spinner";
-
-import {NumberField} from "./index";
+import { Button } from "../button";
+import { Description } from "../description";
+import { FieldError } from "../field-error";
+import { Form } from "../form";
+import { Label } from "../label";
+import { Spinner } from "../spinner";
+import { NumberField } from "./index";
 
 const meta: Meta<typeof NumberField> = {
   component: NumberField,
@@ -39,7 +38,12 @@ export const Default: Story = {
 export const Variants: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <NumberField defaultValue={100} minValue={0} name="primary-width" variant="primary">
+      <NumberField
+        defaultValue={100}
+        minValue={0}
+        name="primary-width"
+        variant="primary"
+      >
         <Label>Primary variant</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -47,7 +51,12 @@ export const Variants: Story = {
           <NumberField.IncrementButton />
         </NumberField.Group>
       </NumberField>
-      <NumberField defaultValue={100} minValue={0} name="secondary-width" variant="secondary">
+      <NumberField
+        defaultValue={100}
+        minValue={0}
+        name="secondary-width"
+        variant="secondary"
+      >
         <Label>Secondary variant</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -88,7 +97,7 @@ export const WithDescription: Story = {
       </NumberField>
       <NumberField
         defaultValue={0.5}
-        formatOptions={{style: "percent"}}
+        formatOptions={{ style: "percent" }}
         maxValue={1}
         minValue={0}
         name="percentage"
@@ -117,7 +126,13 @@ export const Required: Story = {
           <NumberField.IncrementButton />
         </NumberField.Group>
       </NumberField>
-      <NumberField isRequired defaultValue={1} maxValue={10} minValue={1} name="rating">
+      <NumberField
+        isRequired
+        defaultValue={1}
+        maxValue={10}
+        minValue={1}
+        name="rating"
+      >
         <Label>Rating</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -144,7 +159,7 @@ export const Invalid: Story = {
       </NumberField>
       <NumberField
         isInvalid
-        formatOptions={{style: "percent"}}
+        formatOptions={{ style: "percent" }}
         maxValue={1}
         minValue={0}
         name="percentage"
@@ -178,7 +193,7 @@ export const Disabled: Story = {
       <NumberField
         isDisabled
         defaultValue={0.5}
-        formatOptions={{style: "percent"}}
+        formatOptions={{ style: "percent" }}
         maxValue={1}
         minValue={0}
         name="percentage"
@@ -202,7 +217,12 @@ export const Controlled: Story = {
 
     return (
       <div className="flex flex-col gap-4">
-        <NumberField minValue={0} name="width" value={value} onChange={setValue}>
+        <NumberField
+          minValue={0}
+          name="width"
+          value={value}
+          onChange={setValue}
+        >
           <Label>Width</Label>
           <NumberField.Group>
             <NumberField.DecrementButton />
@@ -233,7 +253,7 @@ export const WithValidation: Story = {
       <div className="flex flex-col gap-4">
         <NumberField
           isRequired
-          formatOptions={{style: "percent"}}
+          formatOptions={{ style: "percent" }}
           isInvalid={isInvalid}
           maxValue={1}
           minValue={0}
@@ -262,7 +282,13 @@ export const WithValidation: Story = {
 export const WithStep: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <NumberField defaultValue={0} maxValue={100} minValue={0} name="step1" step={1}>
+      <NumberField
+        defaultValue={0}
+        maxValue={100}
+        minValue={0}
+        name="step1"
+        step={1}
+      >
         <Label>Step: 1</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -271,7 +297,13 @@ export const WithStep: Story = {
         </NumberField.Group>
         <Description>Increments by 1</Description>
       </NumberField>
-      <NumberField defaultValue={0} maxValue={100} minValue={0} name="step5" step={5}>
+      <NumberField
+        defaultValue={0}
+        maxValue={100}
+        minValue={0}
+        name="step5"
+        step={5}
+      >
         <Label>Step: 5</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -280,7 +312,13 @@ export const WithStep: Story = {
         </NumberField.Group>
         <Description>Increments by 5</Description>
       </NumberField>
-      <NumberField defaultValue={0} maxValue={100} minValue={0} name="step10" step={10}>
+      <NumberField
+        defaultValue={0}
+        maxValue={100}
+        minValue={0}
+        name="step10"
+        step={10}
+      >
         <Label>Step: 10</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -333,7 +371,7 @@ export const WithFormatOptions: Story = {
       </NumberField>
       <NumberField
         defaultValue={0.5}
-        formatOptions={{style: "percent"}}
+        formatOptions={{ style: "percent" }}
         maxValue={1}
         minValue={0}
         name="percentage"
@@ -394,7 +432,12 @@ export const CustomIcons: Story = {
         <Label>Width (Custom Icons)</Label>
         <NumberField.Group>
           <NumberField.DecrementButton>
-            <svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 clipRule="evenodd"
                 d="M6.75 11a4.25 4.25 0 1 0 0-8.5a4.25 4.25 0 0 0 0 8.5m0 1.5a5.73 5.73 0 0 0 3.501-1.188l2.719 2.718a.75.75 0 1 0 1.06-1.06l-2.718-2.719A5.75 5.75 0 1 0 6.75 12.5m-2-6.5a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5z"
@@ -405,7 +448,12 @@ export const CustomIcons: Story = {
           </NumberField.DecrementButton>
           <NumberField.Input className="w-[120px]" />
           <NumberField.IncrementButton>
-            <svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 clipRule="evenodd"
                 d="M6.75 11a4.25 4.25 0 1 0 0-8.5a4.25 4.25 0 0 0 0 8.5m0 1.5a5.73 5.73 0 0 0 3.501-1.188l2.719 2.718a.75.75 0 1 0 1.06-1.06l-2.718-2.719A5.75 5.75 0 1 0 6.75 12.5m.75-7.75a.75.75 0 0 0-1.5 0V6H4.75a.75.75 0 0 0 0 1.5H6v1.25a.75.75 0 0 0 1.5 0V7.5h1.25a.75.75 0 0 0 0-1.5H7.5z"
@@ -436,7 +484,7 @@ export const WithChevrons: Story = {
       <Label>Number field with chevrons</Label>
       <NumberField.Group className="flex">
         <NumberField.Input className="flex-1" />
-        <div className="flex h-full flex-col border-l border-field-placeholder/15">
+        <div className="border-field-placeholder/15 flex h-full flex-col border-l">
           <NumberField.IncrementButton className="flex h-1/2 w-6 items-center justify-center rounded-none border-0 pt-0.5 text-sm">
             <svg
               aria-hidden="true"
@@ -485,7 +533,12 @@ export const FormExample: Story = {
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
 
-      if (value === undefined || value === null || value < 1 || value > STOCK_AVAILABLE) {
+      if (
+        value === undefined ||
+        value === null ||
+        value < 1 ||
+        value > STOCK_AVAILABLE
+      ) {
         return;
       }
 
@@ -494,7 +547,7 @@ export const FormExample: Story = {
       // Simulate API call
       setTimeout(() => {
         // eslint-disable-next-line no-console
-        console.log("Order submitted:", {quantity: value});
+        console.log("Order submitted:", { quantity: value });
         setValue(undefined);
         setIsSubmitting(false);
       }, 1500);
@@ -526,7 +579,9 @@ export const FormExample: Story = {
         </NumberField>
         <Button
           className="w-full"
-          isDisabled={value === undefined || value < 1 || value > STOCK_AVAILABLE}
+          isDisabled={
+            value === undefined || value < 1 || value > STOCK_AVAILABLE
+          }
           isPending={isSubmitting}
           type="submit"
           variant="primary"

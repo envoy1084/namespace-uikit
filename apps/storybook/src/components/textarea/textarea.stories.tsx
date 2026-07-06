@@ -1,10 +1,9 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import {Surface} from "../surface";
-
-import {TextArea} from "./index";
+import { Surface } from "../surface";
+import { TextArea } from "./index";
 
 export default {
   argTypes: {},
@@ -25,7 +24,11 @@ export const Variants: Story = {
   render: () => (
     <div className="flex w-[280px] flex-col gap-2">
       <TextArea fullWidth placeholder="Primary textarea" variant="primary" />
-      <TextArea fullWidth placeholder="Secondary textarea" variant="secondary" />
+      <TextArea
+        fullWidth
+        placeholder="Secondary textarea"
+        variant="secondary"
+      />
     </div>
   ),
 };
@@ -35,7 +38,11 @@ export const FullWidth: Story = {
     <div className="w-[400px] space-y-3">
       <TextArea fullWidth placeholder="Full width textarea" />
       <Surface className="w-full rounded-3xl p-6">
-        <TextArea fullWidth placeholder="Full width textarea on surface" variant="secondary" />
+        <TextArea
+          fullWidth
+          placeholder="Full width textarea on surface"
+          variant="secondary"
+        />
       </Surface>
     </div>
   ),

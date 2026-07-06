@@ -1,12 +1,11 @@
-import type {ScrollShadowVisibility} from ".";
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-import {Button} from "../button";
-import {Card} from "../card";
-
-import {ScrollShadow} from ".";
+import type { ScrollShadowVisibility } from ".";
+import { ScrollShadow } from ".";
+import { Button } from "../button";
+import { Card } from "../card";
 
 const meta: Meta<typeof ScrollShadow> = {
   title: "Components/Utilities/ScrollShadow",
@@ -24,11 +23,12 @@ type Story = StoryObj<typeof ScrollShadow>;
 
 const LoremContent = () => (
   <div className="space-y-4">
-    {Array.from({length: 10}).map((_, idx) => (
+    {Array.from({ length: 10 }).map((_, idx) => (
       <p key={`scroll-shadow-lorem-content-${idx}`}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus non risus
-        hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed porttitor quam. Morbi
-        accumsan cursus enim, sed ultricies sapien.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar
+        risus non risus hendrerit venenatis. Pellentesque sit amet hendrerit
+        risus, sed porttitor quam. Morbi accumsan cursus enim, sed ultricies
+        sapien.
       </p>
     ))}
   </div>
@@ -47,7 +47,7 @@ const LoremCards = () => {
 
   return (
     <div className="flex flex-row gap-4">
-      {Array.from({length: 10}).map((_, idx) => (
+      {Array.from({ length: 10 }).map((_, idx) => (
         <Card
           key={`scroll-shadow-lorem-cards-${idx}`}
           className="flex min-w-[200px] flex-row gap-3 p-1"
@@ -61,7 +61,9 @@ const LoremCards = () => {
           />
           <div className="flex flex-1 flex-col justify-center gap-1">
             <Card.Title className="text-sm">Bridging the Future</Card.Title>
-            <Card.Description className="text-xs">Today, 6:30 PM</Card.Description>
+            <Card.Description className="text-xs">
+              Today, 6:30 PM
+            </Card.Description>
           </div>
         </Card>
       ))}
@@ -109,7 +111,11 @@ export const Orientation: Story = {
       <div>
         <h4 className="mb-2 text-sm font-semibold">Vertical</h4>
         <Card className="w-full p-0 sm:max-w-sm">
-          <ScrollShadow className="max-h-[240px] p-4" orientation="vertical" {...args}>
+          <ScrollShadow
+            className="max-h-[240px] p-4"
+            orientation="vertical"
+            {...args}
+          >
             <LoremContent />
           </ScrollShadow>
         </Card>
@@ -170,14 +176,18 @@ export const CustomSize: Story = {
 
 export const VisibilityChange: Story = {
   render: (args) => {
-    const [verticalState, setVerticalState] = useState<ScrollShadowVisibility>("none");
-    const [horizontalState, setHorizontalState] = useState<ScrollShadowVisibility>("none");
+    const [verticalState, setVerticalState] =
+      useState<ScrollShadowVisibility>("none");
+    const [horizontalState, setHorizontalState] =
+      useState<ScrollShadowVisibility>("none");
 
     return (
       <>
         <div className="mb-4 flex flex-col gap-4">
-          <div className="rounded bg-default p-4">
-            <p className="text-sm font-semibold">Vertical Shadow State: {verticalState}</p>
+          <div className="bg-default rounded p-4">
+            <p className="text-sm font-semibold">
+              Vertical Shadow State: {verticalState}
+            </p>
           </div>
           <div className="w-full p-0 sm:max-w-sm">
             <ScrollShadow
@@ -192,14 +202,18 @@ export const VisibilityChange: Story = {
         </div>
 
         <div className="flex flex-col gap-4">
-          <div className="rounded bg-default p-4">
-            <p className="text-sm font-semibold">Horizontal Shadow State: {horizontalState}</p>
+          <div className="bg-default rounded p-4">
+            <p className="text-sm font-semibold">
+              Horizontal Shadow State: {horizontalState}
+            </p>
           </div>
           <div className="w-full p-0 sm:max-w-sm">
             <ScrollShadow
               className="p-4"
               orientation="horizontal"
-              onVisibilityChange={(visibility) => setHorizontalState(visibility)}
+              onVisibilityChange={(visibility) =>
+                setHorizontalState(visibility)
+              }
               {...args}
             >
               <LoremCards />

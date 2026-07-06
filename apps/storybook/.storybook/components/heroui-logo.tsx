@@ -7,7 +7,12 @@ interface HeroUILogoProps {
   width?: number;
 }
 
-export function HeroUILogo({className, height, size = 26, width}: HeroUILogoProps) {
+export function HeroUILogo({
+  className,
+  height,
+  size = 26,
+  width,
+}: HeroUILogoProps) {
   // Calculate dimensions based on original aspect ratio (140:44)
   const aspectRatio = 140 / 44;
   const svgHeight = height || size;

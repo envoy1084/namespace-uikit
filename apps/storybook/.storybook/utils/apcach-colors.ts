@@ -2,7 +2,7 @@
  * Color calculation utilities using apcach for APCA-based contrast calculations
  * Aligned with HeroUI theme system - starts with defaults from variables.css and applies hue/chroma adjustments
  */
-import {formatRgb, parse} from "culori";
+import { formatRgb, parse } from "culori";
 
 /* -------------------------------------------------------------------------------------------------
  * Default Theme Values (from packages/styles/themes/default/variables.css)
@@ -16,40 +16,40 @@ const WARNING_HUE_DARK = 76.34; // Warning hue for dark theme (different from li
 // Default theme values from variables.css - these are the baseline that will be adjusted
 const DEFAULT_THEME_VALUES = {
   light: {
-    background: {l: 0.9702, c: 0, h: 0},
-    foreground: {l: 0.2103, c: 0.0059, h: 285.89},
-    surface: {l: 1, c: 0, h: 0}, // Pure white (var(--white): oklch(100% 0 0))
-    surfaceSecondary: {l: 0.9524, c: 0.0013, h: 286.37},
-    surfaceTertiary: {l: 0.9373, c: 0.0013, h: 286.37},
-    overlay: {l: 1, c: 0, h: 0}, // Pure white (var(--white): oklch(100% 0 0))
-    muted: {l: 0.5517, c: 0.0138, h: 285.94},
-    scrollbar: {l: 0.871, c: 0.006, h: 286.286},
-    default: {l: 0.94, c: 0.001, h: 286.375},
-    accent: {l: 0.6204, c: 0.195, h: 253.83},
-    border: {l: 0.9, c: 0.004, h: 286.32},
-    separator: {l: 0.92, c: 0.004, h: 286.32},
-    segment: {l: 1, c: 0, h: 0}, // Pure white (var(--white): oklch(100% 0 0))
-    success: {l: 0.7329, c: 0.1935, h: 150.81},
-    warning: {l: 0.7819, c: 0.1585, h: 72.33},
-    danger: {l: 0.6532, c: 0.2328, h: 25.74},
+    background: { l: 0.9702, c: 0, h: 0 },
+    foreground: { l: 0.2103, c: 0.0059, h: 285.89 },
+    surface: { l: 1, c: 0, h: 0 }, // Pure white (var(--white): oklch(100% 0 0))
+    surfaceSecondary: { l: 0.9524, c: 0.0013, h: 286.37 },
+    surfaceTertiary: { l: 0.9373, c: 0.0013, h: 286.37 },
+    overlay: { l: 1, c: 0, h: 0 }, // Pure white (var(--white): oklch(100% 0 0))
+    muted: { l: 0.5517, c: 0.0138, h: 285.94 },
+    scrollbar: { l: 0.871, c: 0.006, h: 286.286 },
+    default: { l: 0.94, c: 0.001, h: 286.375 },
+    accent: { l: 0.6204, c: 0.195, h: 253.83 },
+    border: { l: 0.9, c: 0.004, h: 286.32 },
+    separator: { l: 0.92, c: 0.004, h: 286.32 },
+    segment: { l: 1, c: 0, h: 0 }, // Pure white (var(--white): oklch(100% 0 0))
+    success: { l: 0.7329, c: 0.1935, h: 150.81 },
+    warning: { l: 0.7819, c: 0.1585, h: 72.33 },
+    danger: { l: 0.6532, c: 0.2328, h: 25.74 },
   },
   dark: {
-    background: {l: 0.12, c: 0.005, h: 285.823},
-    foreground: {l: 0.9911, c: 0, h: 0}, // var(--snow): oklch(0.9911 0 0)
-    surface: {l: 0.2103, c: 0.0059, h: 285.89},
-    surfaceSecondary: {l: 0.257, c: 0.0037, h: 286.14},
-    surfaceTertiary: {l: 0.2721, c: 0.0024, h: 247.91},
-    overlay: {l: 0.2103, c: 0.0059, h: 285.89},
-    muted: {l: 0.705, c: 0.015, h: 286.067},
-    scrollbar: {l: 0.705, c: 0.015, h: 286.067},
-    default: {l: 0.274, c: 0.006, h: 286.033},
-    accent: {l: 0.6204, c: 0.195, h: 253.83}, // Same as light
-    border: {l: 0.28, c: 0.006, h: 286.033},
-    separator: {l: 0.25, c: 0.006, h: 286.033},
-    segment: {l: 0.3964, c: 0.01, h: 285.93},
-    success: {l: 0.7329, c: 0.1935, h: 150.81}, // Same as light
-    warning: {l: 0.8203, c: 0.1388, h: WARNING_HUE_DARK},
-    danger: {l: 0.594, c: 0.1967, h: 24.63},
+    background: { l: 0.12, c: 0.005, h: 285.823 },
+    foreground: { l: 0.9911, c: 0, h: 0 }, // var(--snow): oklch(0.9911 0 0)
+    surface: { l: 0.2103, c: 0.0059, h: 285.89 },
+    surfaceSecondary: { l: 0.257, c: 0.0037, h: 286.14 },
+    surfaceTertiary: { l: 0.2721, c: 0.0024, h: 247.91 },
+    overlay: { l: 0.2103, c: 0.0059, h: 285.89 },
+    muted: { l: 0.705, c: 0.015, h: 286.067 },
+    scrollbar: { l: 0.705, c: 0.015, h: 286.067 },
+    default: { l: 0.274, c: 0.006, h: 286.033 },
+    accent: { l: 0.6204, c: 0.195, h: 253.83 }, // Same as light
+    border: { l: 0.28, c: 0.006, h: 286.033 },
+    separator: { l: 0.25, c: 0.006, h: 286.033 },
+    segment: { l: 0.3964, c: 0.01, h: 285.93 },
+    success: { l: 0.7329, c: 0.1935, h: 150.81 }, // Same as light
+    warning: { l: 0.8203, c: 0.1388, h: WARNING_HUE_DARK },
+    danger: { l: 0.594, c: 0.1967, h: 24.63 },
   },
 };
 
@@ -123,26 +123,26 @@ export interface GeneratedColors {
  * Adjust hue of a color object, keeping lightness and chroma
  */
 function adjustHue(
-  color: {l: number; c: number; h: number},
+  color: { l: number; c: number; h: number },
   newHue: number,
-): {l: number; c: number; h: number} {
-  return {...color, h: newHue};
+): { l: number; c: number; h: number } {
+  return { ...color, h: newHue };
 }
 
 /**
  * Adjust chroma of a color object, keeping lightness and hue
  */
 function adjustChroma(
-  color: {l: number; c: number; h: number},
+  color: { l: number; c: number; h: number },
   newChroma: number,
-): {l: number; c: number; h: number} {
-  return {...color, c: Math.max(0, newChroma)};
+): { l: number; c: number; h: number } {
+  return { ...color, c: Math.max(0, newChroma) };
 }
 
 /**
  * Format a color object to OKLCH string
  */
-function formatOklch(color: {l: number; c: number; h: number}): string {
+function formatOklch(color: { l: number; c: number; h: number }): string {
   return `oklch(${color.l * 100}% ${color.c} ${color.h})`;
 }
 
@@ -150,8 +150,8 @@ function formatOklch(color: {l: number; c: number; h: number}): string {
  * Parse an OKLCH string or handle CSS variable references
  */
 function parseOklchValue(
-  value: string | {l: number; c: number; h: number},
-): {l: number; c: number; h: number} | null {
+  value: string | { l: number; c: number; h: number },
+): { l: number; c: number; h: number } | null {
   if (typeof value === "string") {
     // If it's a CSS variable reference, return null (will be handled separately)
     if (value.startsWith("var(")) {
@@ -161,11 +161,13 @@ function parseOklchValue(
     const match = value.match(/oklch\(([0-9.]+)%?\s+([0-9.]+)\s+([0-9.]+)\)/);
 
     if (match) {
-      const l = match[1].includes("%") ? parseFloat(match[1]) / 100 : parseFloat(match[1]);
+      const l = match[1].includes("%")
+        ? parseFloat(match[1]) / 100
+        : parseFloat(match[1]);
       const c = parseFloat(match[2]);
       const h = parseFloat(match[3]);
 
-      return {l, c, h};
+      return { l, c, h };
     }
 
     return null;
@@ -178,7 +180,10 @@ function parseOklchValue(
  * Calculate a blended hue for semantic colors based on the base hue
  * This creates cohesion while maintaining semantic meaning
  */
-function calculateSemanticHue(semanticDefaultHue: number, baseHue: number): number {
+function calculateSemanticHue(
+  semanticDefaultHue: number,
+  baseHue: number,
+): number {
   const hueOffset = (baseHue - DEFAULT_BASE_HUE) * SEMANTIC_HUE_BLEND_FACTOR;
   let newHue = semanticDefaultHue + hueOffset;
 
@@ -197,7 +202,7 @@ function generateSemanticColor(
   config: typeof SEMANTIC_COLORS.success,
   baseHue: number,
   grayChroma: number,
-): {color: ThemeColor; foreground: ThemeColor} {
+): { color: ThemeColor; foreground: ThemeColor } {
   // Calculate blended hue
   const adjustedHue = calculateSemanticHue(config.hue, baseHue);
 
@@ -263,24 +268,30 @@ export function oklchToRgb(oklchString: string): string {
  * Generate all theme colors based on hue and chroma adjustments to defaults
  * Starts with values from variables.css and applies hue/chroma adjustments
  */
-export function generateThemeColors(hue: number, chroma: number): GeneratedColors {
+export function generateThemeColors(
+  hue: number,
+  chroma: number,
+): GeneratedColors {
   // Helper to create ThemeColor from adjusted color values
   const createThemeColor = (
     name: string,
-    lightValue: string | {l: number; c: number; h: number},
-    darkValue: string | {l: number; c: number; h: number},
+    lightValue: string | { l: number; c: number; h: number },
+    darkValue: string | { l: number; c: number; h: number },
   ): ThemeColor => {
     // Handle CSS variable references (like var(--white), var(--eclipse))
     if (typeof lightValue === "string" && lightValue.startsWith("var(")) {
       return {
         name,
         oklchLight: lightValue,
-        oklchDark: typeof darkValue === "string" ? darkValue : formatOklch(darkValue),
+        oklchDark:
+          typeof darkValue === "string" ? darkValue : formatOklch(darkValue),
       };
     }
 
-    const lightColor = typeof lightValue === "string" ? parseOklchValue(lightValue) : lightValue;
-    const darkColor = typeof darkValue === "string" ? parseOklchValue(darkValue) : darkValue;
+    const lightColor =
+      typeof lightValue === "string" ? parseOklchValue(lightValue) : lightValue;
+    const darkColor =
+      typeof darkValue === "string" ? parseOklchValue(darkValue) : darkValue;
 
     return {
       name,
@@ -304,15 +315,23 @@ export function generateThemeColors(hue: number, chroma: number): GeneratedColor
   // --background: Apply hue and chroma adjustments
   const background: ThemeColor = {
     name: "--background",
-    oklchLight: formatOklch(adjustChroma(adjustHue(defaultsLight.background, hue), chroma)),
-    oklchDark: formatOklch(adjustChroma(adjustHue(defaultsDark.background, hue), chroma)),
+    oklchLight: formatOklch(
+      adjustChroma(adjustHue(defaultsLight.background, hue), chroma),
+    ),
+    oklchDark: formatOklch(
+      adjustChroma(adjustHue(defaultsDark.background, hue), chroma),
+    ),
   };
 
   // --foreground: Uses CSS variables (eclipse/snow), no adjustment needed
   const foreground: ThemeColor = {
     name: "--foreground",
-    oklchLight: formatOklch(adjustChroma(adjustHue(defaultsLight.foreground, hue), chroma)),
-    oklchDark: formatOklch(adjustChroma(adjustHue(defaultsDark.foreground, hue), chroma)),
+    oklchLight: formatOklch(
+      adjustChroma(adjustHue(defaultsLight.foreground, hue), chroma),
+    ),
+    oklchDark: formatOklch(
+      adjustChroma(adjustHue(defaultsDark.foreground, hue), chroma),
+    ),
   };
 
   // --accent: Keep original chroma but adjust hue
@@ -332,15 +351,23 @@ export function generateThemeColors(hue: number, chroma: number): GeneratedColor
   // --muted: Apply hue and chroma adjustments
   const muted: ThemeColor = {
     name: "--muted",
-    oklchLight: formatOklch(adjustChroma(adjustHue(defaultsLight.muted, hue), chroma)),
-    oklchDark: formatOklch(adjustChroma(adjustHue(defaultsDark.muted, hue), chroma)),
+    oklchLight: formatOklch(
+      adjustChroma(adjustHue(defaultsLight.muted, hue), chroma),
+    ),
+    oklchDark: formatOklch(
+      adjustChroma(adjustHue(defaultsDark.muted, hue), chroma),
+    ),
   };
 
   // --default: Apply hue and chroma adjustments
   const defaultColor: ThemeColor = {
     name: "--default",
-    oklchLight: formatOklch(adjustChroma(adjustHue(defaultsLight.default, hue), chroma)),
-    oklchDark: formatOklch(adjustChroma(adjustHue(defaultsDark.default, hue), chroma)),
+    oklchLight: formatOklch(
+      adjustChroma(adjustHue(defaultsLight.default, hue), chroma),
+    ),
+    oklchDark: formatOklch(
+      adjustChroma(adjustHue(defaultsDark.default, hue), chroma),
+    ),
   };
 
   // --default-foreground: Uses CSS variables (eclipse/snow), adjust hue for eclipse
@@ -353,15 +380,22 @@ export function generateThemeColors(hue: number, chroma: number): GeneratedColor
   // --surface: Apply hue and chroma adjustments
   const surfaceColor: ThemeColor = {
     name: "--surface",
-    oklchLight: formatOklch(adjustChroma(adjustHue(defaultsLight.surface, hue), chroma * 0.5)),
-    oklchDark: formatOklch(adjustChroma(adjustHue(defaultsDark.surface, hue), chroma * 2)),
+    oklchLight: formatOklch(
+      adjustChroma(adjustHue(defaultsLight.surface, hue), chroma * 0.5),
+    ),
+    oklchDark: formatOklch(
+      adjustChroma(adjustHue(defaultsDark.surface, hue), chroma * 2),
+    ),
   };
 
   // --surface-secondary: Apply hue and chroma adjustments
   const surfaceSecondaryColor: ThemeColor = {
     name: "--surface-secondary",
     oklchLight: formatOklch(
-      adjustChroma(adjustHue(defaultsLight.surfaceSecondary, hue), chroma * 0.8),
+      adjustChroma(
+        adjustHue(defaultsLight.surfaceSecondary, hue),
+        chroma * 0.8,
+      ),
     ),
     oklchDark: formatOklch(
       adjustChroma(adjustHue(defaultsDark.surfaceSecondary, hue), chroma * 1.5),
@@ -371,8 +405,12 @@ export function generateThemeColors(hue: number, chroma: number): GeneratedColor
   // --surface-secondary-foreground: Uses foreground value
   const surfaceSecondaryForeground: ThemeColor = {
     name: "--surface-secondary-foreground",
-    oklchLight: formatOklch(adjustChroma(adjustHue(defaultsLight.foreground, hue), chroma)),
-    oklchDark: formatOklch(adjustChroma(adjustHue(defaultsDark.foreground, hue), chroma)),
+    oklchLight: formatOklch(
+      adjustChroma(adjustHue(defaultsLight.foreground, hue), chroma),
+    ),
+    oklchDark: formatOklch(
+      adjustChroma(adjustHue(defaultsDark.foreground, hue), chroma),
+    ),
   };
 
   // --surface-tertiary: Apply hue and chroma adjustments
@@ -389,49 +427,88 @@ export function generateThemeColors(hue: number, chroma: number): GeneratedColor
   // --surface-tertiary-foreground: Uses foreground value
   const surfaceTertiaryForeground: ThemeColor = {
     name: "--surface-tertiary-foreground",
-    oklchLight: formatOklch(adjustChroma(adjustHue(defaultsLight.foreground, hue), chroma)),
-    oklchDark: formatOklch(adjustChroma(adjustHue(defaultsDark.foreground, hue), chroma)),
+    oklchLight: formatOklch(
+      adjustChroma(adjustHue(defaultsLight.foreground, hue), chroma),
+    ),
+    oklchDark: formatOklch(
+      adjustChroma(adjustHue(defaultsDark.foreground, hue), chroma),
+    ),
   };
 
   // --overlay: Apply hue and chroma adjustments
   const overlayColor: ThemeColor = {
     name: "--overlay",
-    oklchLight: formatOklch(adjustChroma(adjustHue(defaultsLight.overlay, hue), chroma * 0.3)),
-    oklchDark: formatOklch(adjustChroma(adjustHue(defaultsDark.overlay, hue), chroma * 2)),
+    oklchLight: formatOklch(
+      adjustChroma(adjustHue(defaultsLight.overlay, hue), chroma * 0.3),
+    ),
+    oklchDark: formatOklch(
+      adjustChroma(adjustHue(defaultsDark.overlay, hue), chroma * 2),
+    ),
   };
 
   // --scrollbar: Apply hue and chroma adjustments
   const scrollbar: ThemeColor = {
     name: "--scrollbar",
-    oklchLight: formatOklch(adjustChroma(adjustHue(defaultsLight.scrollbar, hue), chroma)),
-    oklchDark: formatOklch(adjustChroma(adjustHue(defaultsDark.scrollbar, hue), chroma)),
+    oklchLight: formatOklch(
+      adjustChroma(adjustHue(defaultsLight.scrollbar, hue), chroma),
+    ),
+    oklchDark: formatOklch(
+      adjustChroma(adjustHue(defaultsDark.scrollbar, hue), chroma),
+    ),
   };
 
   // --segment: Apply hue and chroma adjustments
   const segment: ThemeColor = {
     name: "--segment",
-    oklchLight: formatOklch(adjustChroma(adjustHue(defaultsLight.segment, hue), chroma)),
-    oklchDark: formatOklch(adjustChroma(adjustHue(defaultsDark.segment, hue), chroma)),
+    oklchLight: formatOklch(
+      adjustChroma(adjustHue(defaultsLight.segment, hue), chroma),
+    ),
+    oklchDark: formatOklch(
+      adjustChroma(adjustHue(defaultsDark.segment, hue), chroma),
+    ),
   };
 
   // --border: Apply hue and chroma adjustments
   const border: ThemeColor = {
     name: "--border",
-    oklchLight: formatOklch(adjustChroma(adjustHue(defaultsLight.border, hue), chroma)),
-    oklchDark: formatOklch(adjustChroma(adjustHue(defaultsDark.border, hue), chroma)),
+    oklchLight: formatOklch(
+      adjustChroma(adjustHue(defaultsLight.border, hue), chroma),
+    ),
+    oklchDark: formatOklch(
+      adjustChroma(adjustHue(defaultsDark.border, hue), chroma),
+    ),
   };
 
   // --separator: Apply hue and chroma adjustments
   const separator: ThemeColor = {
     name: "--separator",
-    oklchLight: formatOklch(adjustChroma(adjustHue(defaultsLight.separator, hue), chroma)),
-    oklchDark: formatOklch(adjustChroma(adjustHue(defaultsDark.separator, hue), chroma)),
+    oklchLight: formatOklch(
+      adjustChroma(adjustHue(defaultsLight.separator, hue), chroma),
+    ),
+    oklchDark: formatOklch(
+      adjustChroma(adjustHue(defaultsDark.separator, hue), chroma),
+    ),
   };
 
   // Generate semantic colors with base hue blending
-  const successColors = generateSemanticColor("success", SEMANTIC_COLORS.success, hue, chroma);
-  const warningColors = generateSemanticColor("warning", SEMANTIC_COLORS.warning, hue, chroma);
-  const dangerColors = generateSemanticColor("danger", SEMANTIC_COLORS.danger, hue, chroma);
+  const successColors = generateSemanticColor(
+    "success",
+    SEMANTIC_COLORS.success,
+    hue,
+    chroma,
+  );
+  const warningColors = generateSemanticColor(
+    "warning",
+    SEMANTIC_COLORS.warning,
+    hue,
+    chroma,
+  );
+  const dangerColors = generateSemanticColor(
+    "danger",
+    SEMANTIC_COLORS.danger,
+    hue,
+    chroma,
+  );
 
   return {
     background,
@@ -465,11 +542,15 @@ export function generateThemeColors(hue: number, chroma: number): GeneratedColor
  * Build CSS variables string for a theme
  * Only generates variables that exist in variables.css
  */
-export function buildThemeCssVars(colors: GeneratedColors, theme: "light" | "dark"): string {
+export function buildThemeCssVars(
+  colors: GeneratedColors,
+  theme: "light" | "dark",
+): string {
   const isLight = theme === "light";
   const vars: string[] = [];
 
-  const getValue = (color: ThemeColor) => (isLight ? color.oklchLight : color.oklchDark);
+  const getValue = (color: ThemeColor) =>
+    isLight ? color.oklchLight : color.oklchDark;
 
   // Background and foreground
   vars.push(`--background: ${getValue(colors.background)}`);
@@ -489,10 +570,16 @@ export function buildThemeCssVars(colors: GeneratedColors, theme: "light" | "dar
   const accentValue = getValue(colors.accent);
   const accentFgValue = getValue(colors.accentForeground);
 
-  vars.push(`--color-accent-hover: color-mix(in oklab, ${accentValue} 90%, ${accentFgValue} 10%)`);
-  vars.push(`--color-accent-soft: color-mix(in oklab, ${accentValue} 15%, transparent)`);
+  vars.push(
+    `--color-accent-hover: color-mix(in oklab, ${accentValue} 90%, ${accentFgValue} 10%)`,
+  );
+  vars.push(
+    `--color-accent-soft: color-mix(in oklab, ${accentValue} 15%, transparent)`,
+  );
   vars.push(`--color-accent-soft-foreground: ${accentValue}`);
-  vars.push(`--color-accent-soft-hover: color-mix(in oklab, ${accentValue} 20%, transparent)`);
+  vars.push(
+    `--color-accent-soft-hover: color-mix(in oklab, ${accentValue} 20%, transparent)`,
+  );
 
   // Muted
   vars.push(`--muted: ${getValue(colors.muted)}`);
@@ -506,7 +593,9 @@ export function buildThemeCssVars(colors: GeneratedColors, theme: "light" | "dar
 
   // Default foreground
   vars.push(`--default-foreground: ${getValue(colors.defaultForeground)}`);
-  vars.push(`--color-default-foreground: ${getValue(colors.defaultForeground)}`);
+  vars.push(
+    `--color-default-foreground: ${getValue(colors.defaultForeground)}`,
+  );
 
   // Default hover (calculated in theme.css)
   const defaultValue = getValue(colors.default);
@@ -524,14 +613,22 @@ export function buildThemeCssVars(colors: GeneratedColors, theme: "light" | "dar
   // Surface secondary
   vars.push(`--surface-secondary: ${getValue(colors.surfaceSecondary)}`);
   vars.push(`--color-surface-secondary: ${getValue(colors.surfaceSecondary)}`);
-  vars.push(`--surface-secondary-foreground: ${getValue(colors.surfaceSecondaryForeground)}`);
-  vars.push(`--color-surface-secondary-foreground: ${getValue(colors.surfaceSecondaryForeground)}`);
+  vars.push(
+    `--surface-secondary-foreground: ${getValue(colors.surfaceSecondaryForeground)}`,
+  );
+  vars.push(
+    `--color-surface-secondary-foreground: ${getValue(colors.surfaceSecondaryForeground)}`,
+  );
 
   // Surface tertiary
   vars.push(`--surface-tertiary: ${getValue(colors.surfaceTertiary)}`);
   vars.push(`--color-surface-tertiary: ${getValue(colors.surfaceTertiary)}`);
-  vars.push(`--surface-tertiary-foreground: ${getValue(colors.surfaceTertiaryForeground)}`);
-  vars.push(`--color-surface-tertiary-foreground: ${getValue(colors.surfaceTertiaryForeground)}`);
+  vars.push(
+    `--surface-tertiary-foreground: ${getValue(colors.surfaceTertiaryForeground)}`,
+  );
+  vars.push(
+    `--color-surface-tertiary-foreground: ${getValue(colors.surfaceTertiaryForeground)}`,
+  );
 
   // Overlay (tooltips, popovers, modals)
   vars.push(`--overlay: ${getValue(colors.overlay)}`);
@@ -562,7 +659,9 @@ export function buildThemeCssVars(colors: GeneratedColors, theme: "light" | "dar
   vars.push(`--success: ${getValue(colors.success)}`);
   vars.push(`--color-success: ${getValue(colors.success)}`);
   vars.push(`--success-foreground: ${getValue(colors.successForeground)}`);
-  vars.push(`--color-success-foreground: ${getValue(colors.successForeground)}`);
+  vars.push(
+    `--color-success-foreground: ${getValue(colors.successForeground)}`,
+  );
 
   // Success soft variants using color-mix (calculated in theme.css)
   const successValue = getValue(colors.success);
@@ -570,14 +669,20 @@ export function buildThemeCssVars(colors: GeneratedColors, theme: "light" | "dar
   vars.push(
     `--color-success-hover: color-mix(in oklab, ${successValue} 90%, ${getValue(colors.successForeground)} 10%)`,
   );
-  vars.push(`--color-success-soft: color-mix(in oklab, ${successValue} 15%, transparent)`);
+  vars.push(
+    `--color-success-soft: color-mix(in oklab, ${successValue} 15%, transparent)`,
+  );
   vars.push(`--color-success-soft-foreground: ${successValue}`);
-  vars.push(`--color-success-soft-hover: color-mix(in oklab, ${successValue} 20%, transparent)`);
+  vars.push(
+    `--color-success-soft-hover: color-mix(in oklab, ${successValue} 20%, transparent)`,
+  );
 
   vars.push(`--warning: ${getValue(colors.warning)}`);
   vars.push(`--color-warning: ${getValue(colors.warning)}`);
   vars.push(`--warning-foreground: ${getValue(colors.warningForeground)}`);
-  vars.push(`--color-warning-foreground: ${getValue(colors.warningForeground)}`);
+  vars.push(
+    `--color-warning-foreground: ${getValue(colors.warningForeground)}`,
+  );
 
   // Warning soft variants (calculated in theme.css)
   const warningValue = getValue(colors.warning);
@@ -585,9 +690,13 @@ export function buildThemeCssVars(colors: GeneratedColors, theme: "light" | "dar
   vars.push(
     `--color-warning-hover: color-mix(in oklab, ${warningValue} 90%, ${getValue(colors.warningForeground)} 10%)`,
   );
-  vars.push(`--color-warning-soft: color-mix(in oklab, ${warningValue} 15%, transparent)`);
+  vars.push(
+    `--color-warning-soft: color-mix(in oklab, ${warningValue} 15%, transparent)`,
+  );
   vars.push(`--color-warning-soft-foreground: ${warningValue}`);
-  vars.push(`--color-warning-soft-hover: color-mix(in oklab, ${warningValue} 20%, transparent)`);
+  vars.push(
+    `--color-warning-soft-hover: color-mix(in oklab, ${warningValue} 20%, transparent)`,
+  );
 
   vars.push(`--danger: ${getValue(colors.danger)}`);
   vars.push(`--color-danger: ${getValue(colors.danger)}`);
@@ -600,9 +709,13 @@ export function buildThemeCssVars(colors: GeneratedColors, theme: "light" | "dar
   vars.push(
     `--color-danger-hover: color-mix(in oklab, ${dangerValue} 90%, ${getValue(colors.dangerForeground)} 10%)`,
   );
-  vars.push(`--color-danger-soft: color-mix(in oklab, ${dangerValue} 15%, transparent)`);
+  vars.push(
+    `--color-danger-soft: color-mix(in oklab, ${dangerValue} 15%, transparent)`,
+  );
   vars.push(`--color-danger-soft-foreground: ${dangerValue}`);
-  vars.push(`--color-danger-soft-hover: color-mix(in oklab, ${dangerValue} 20%, transparent)`);
+  vars.push(
+    `--color-danger-soft-hover: color-mix(in oklab, ${dangerValue} 20%, transparent)`,
+  );
 
   return vars.join(";\n  ");
 }
@@ -613,34 +726,41 @@ export function buildThemeCssVars(colors: GeneratedColors, theme: "light" | "dar
 export function getColorVariablesArray(
   colors: GeneratedColors,
   theme: "light" | "dark",
-): Array<{name: string; value: string}> {
+): Array<{ name: string; value: string }> {
   const isLight = theme === "light";
-  const getValue = (color: ThemeColor) => (isLight ? color.oklchLight : color.oklchDark);
+  const getValue = (color: ThemeColor) =>
+    isLight ? color.oklchLight : color.oklchDark;
 
   return [
-    {name: "--background", value: getValue(colors.background)},
-    {name: "--foreground", value: getValue(colors.foreground)},
-    {name: "--surface", value: getValue(colors.surface)},
-    {name: "--surface-secondary", value: getValue(colors.surfaceSecondary)},
-    {name: "--surface-secondary-foreground", value: getValue(colors.surfaceSecondaryForeground)},
-    {name: "--surface-tertiary", value: getValue(colors.surfaceTertiary)},
-    {name: "--surface-tertiary-foreground", value: getValue(colors.surfaceTertiaryForeground)},
-    {name: "--overlay", value: getValue(colors.overlay)},
-    {name: "--default", value: getValue(colors.default)},
-    {name: "--default-foreground", value: getValue(colors.defaultForeground)},
-    {name: "--accent", value: getValue(colors.accent)},
-    {name: "--accent-foreground", value: getValue(colors.accentForeground)},
-    {name: "--muted", value: getValue(colors.muted)},
-    {name: "--scrollbar", value: getValue(colors.scrollbar)},
-    {name: "--segment", value: getValue(colors.segment)},
-    {name: "--border", value: getValue(colors.border)},
-    {name: "--separator", value: getValue(colors.separator)},
+    { name: "--background", value: getValue(colors.background) },
+    { name: "--foreground", value: getValue(colors.foreground) },
+    { name: "--surface", value: getValue(colors.surface) },
+    { name: "--surface-secondary", value: getValue(colors.surfaceSecondary) },
+    {
+      name: "--surface-secondary-foreground",
+      value: getValue(colors.surfaceSecondaryForeground),
+    },
+    { name: "--surface-tertiary", value: getValue(colors.surfaceTertiary) },
+    {
+      name: "--surface-tertiary-foreground",
+      value: getValue(colors.surfaceTertiaryForeground),
+    },
+    { name: "--overlay", value: getValue(colors.overlay) },
+    { name: "--default", value: getValue(colors.default) },
+    { name: "--default-foreground", value: getValue(colors.defaultForeground) },
+    { name: "--accent", value: getValue(colors.accent) },
+    { name: "--accent-foreground", value: getValue(colors.accentForeground) },
+    { name: "--muted", value: getValue(colors.muted) },
+    { name: "--scrollbar", value: getValue(colors.scrollbar) },
+    { name: "--segment", value: getValue(colors.segment) },
+    { name: "--border", value: getValue(colors.border) },
+    { name: "--separator", value: getValue(colors.separator) },
     // Semantic colors
-    {name: "--success", value: getValue(colors.success)},
-    {name: "--success-foreground", value: getValue(colors.successForeground)},
-    {name: "--warning", value: getValue(colors.warning)},
-    {name: "--warning-foreground", value: getValue(colors.warningForeground)},
-    {name: "--danger", value: getValue(colors.danger)},
-    {name: "--danger-foreground", value: getValue(colors.dangerForeground)},
+    { name: "--success", value: getValue(colors.success) },
+    { name: "--success-foreground", value: getValue(colors.successForeground) },
+    { name: "--warning", value: getValue(colors.warning) },
+    { name: "--warning-foreground", value: getValue(colors.warningForeground) },
+    { name: "--danger", value: getValue(colors.danger) },
+    { name: "--danger-foreground", value: getValue(colors.dangerForeground) },
   ];
 }

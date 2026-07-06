@@ -1,17 +1,18 @@
-import type {Preview} from "@storybook/react";
+import type { Preview } from "@storybook/react";
 
-import {withInternationalization} from "./addons/i18n/decorator";
-import {i18nGlobalType} from "./addons/i18n/preview";
-import {withReactScan} from "./addons/react-scan/decorator";
-import {reactScanGlobalType} from "./addons/react-scan/preview";
-import {withReduceMotion} from "./addons/reduce-motion/decorator";
-import {reduceMotionGlobalType} from "./addons/reduce-motion/preview";
-import {withReactStrictMode} from "./addons/strict-mode/decorator";
-import {strictModeGlobalType} from "./addons/strict-mode/preview";
-import {withTheme} from "./addons/theme/decorator";
-import {themeGlobalType} from "./addons/theme/preview";
-import {DocsContainer} from "./components/docs-container";
+import { withInternationalization } from "./addons/i18n/decorator";
+import { i18nGlobalType } from "./addons/i18n/preview";
+import { withReactScan } from "./addons/react-scan/decorator";
+import { reactScanGlobalType } from "./addons/react-scan/preview";
+import { withReduceMotion } from "./addons/reduce-motion/decorator";
+import { reduceMotionGlobalType } from "./addons/reduce-motion/preview";
+import { withReactStrictMode } from "./addons/strict-mode/decorator";
+import { strictModeGlobalType } from "./addons/strict-mode/preview";
+import { withTheme } from "./addons/theme/decorator";
+import { themeGlobalType } from "./addons/theme/preview";
+import { DocsContainer } from "./components/docs-container";
 
+// oxlint-disable-next-line import/no-unassigned-import
 import "./globals.css";
 
 const parameters: Preview["parameters"] = {

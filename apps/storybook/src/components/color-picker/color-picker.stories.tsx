@@ -1,21 +1,21 @@
-import type {ColorChannel, ColorSpace} from "../rac";
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
-import {parseColor} from "react-aria-components/ColorArea";
 
-import {Button} from "../button";
-import {ColorArea} from "../color-area";
-import {ColorField} from "../color-field";
-import {ColorSlider} from "../color-slider";
-import {ColorSwatch} from "../color-swatch";
-import {ColorSwatchPicker} from "../color-swatch-picker";
-import {Label} from "../label";
-import {ListBox} from "../list-box";
-import {Select} from "../select";
+import { Icon } from "@iconify/react";
+import { parseColor } from "react-aria-components/ColorArea";
 
-import {ColorPicker} from "./index";
+import { Button } from "../button";
+import { ColorArea } from "../color-area";
+import { ColorField } from "../color-field";
+import { ColorSlider } from "../color-slider";
+import { ColorSwatch } from "../color-swatch";
+import { ColorSwatchPicker } from "../color-swatch-picker";
+import { Label } from "../label";
+import { ListBox } from "../list-box";
+import type { ColorChannel, ColorSpace } from "../rac";
+import { Select } from "../select";
+import { ColorPicker } from "./index";
 
 const colorPresets = [
   "#ef4444", // red-500
@@ -79,7 +79,11 @@ export const Controlled: Story = {
       const randomSaturation = 50 + Math.floor(Math.random() * 50); // 50-100%
       const randomLightness = 40 + Math.floor(Math.random() * 30); // 40-70%
 
-      setColor(parseColor(`hsl(${randomHue}, ${randomSaturation}%, ${randomLightness}%)`));
+      setColor(
+        parseColor(
+          `hsl(${randomHue}, ${randomSaturation}%, ${randomLightness}%)`,
+        ),
+      );
     };
 
     return (
@@ -137,7 +141,7 @@ export const Controlled: Story = {
             </ColorField>
           </ColorPicker.Popover>
         </ColorPicker>
-        <p className="w-60 text-sm text-muted">
+        <p className="text-muted w-60 text-sm">
           Selected: <span className="font-medium">{color.toString("hex")}</span>
         </p>
       </div>
@@ -301,22 +305,24 @@ export const WithSliders: Story = {
             </Select.Popover>
           </Select>
           <div className="flex flex-col gap-2">
-            {colorChannelsByColorSpace[colorSpace].map((channel: ColorChannel) => (
-              // @ts-expect-error - TypeScript can't correlate dynamic colorSpace with channel type
-              <ColorSlider
-                key={channel}
-                aria-label={channel}
-                channel={channel}
-                className="gap-1 px-1"
-                colorSpace={colorSpace}
-              >
-                <Label>{channel}</Label>
-                <ColorSlider.Output className="text-muted" />
-                <ColorSlider.Track>
-                  <ColorSlider.Thumb />
-                </ColorSlider.Track>
-              </ColorSlider>
-            ))}
+            {colorChannelsByColorSpace[colorSpace].map(
+              (channel: ColorChannel) => (
+                // @ts-expect-error - TypeScript can't correlate dynamic colorSpace with channel type
+                <ColorSlider
+                  key={channel}
+                  aria-label={channel}
+                  channel={channel}
+                  className="gap-1 px-1"
+                  colorSpace={colorSpace}
+                >
+                  <Label>{channel}</Label>
+                  <ColorSlider.Output className="text-muted" />
+                  <ColorSlider.Track>
+                    <ColorSlider.Thumb />
+                  </ColorSlider.Track>
+                </ColorSlider>
+              ),
+            )}
           </div>
         </ColorPicker.Popover>
       </ColorPicker>

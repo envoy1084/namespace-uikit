@@ -1,10 +1,13 @@
-import type {Ref, SVGProps} from "react";
+import type { Ref, SVGProps } from "react";
+import React, { forwardRef, memo, useId } from "react";
 
-import React, {forwardRef, memo, useId} from "react";
-import {cn} from "tailwind-variants";
+import { cn } from "tailwind-variants";
 
-const AppleIconRender = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => {
-  const {className, ...restProps} = props;
+const AppleIconRender = (
+  props: SVGProps<SVGSVGElement>,
+  ref: Ref<SVGSVGElement>,
+) => {
+  const { className, ...restProps } = props;
 
   return (
     <svg
@@ -30,8 +33,11 @@ const AppleIconRender = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>
 
 export const AppleIcon = memo(forwardRef(AppleIconRender));
 
-const GoogleIconRender = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => {
-  const {className, ...restProps} = props;
+const GoogleIconRender = (
+  props: SVGProps<SVGSVGElement>,
+  ref: Ref<SVGSVGElement>,
+) => {
+  const { className, ...restProps } = props;
 
   return (
     <svg
@@ -73,8 +79,11 @@ const GoogleIconRender = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement
 
 export const GoogleIcon = memo(forwardRef(GoogleIconRender));
 
-const VerifiedBadgeIconRender = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => {
-  const {className, ...restProps} = props;
+const VerifiedBadgeIconRender = (
+  props: SVGProps<SVGSVGElement>,
+  ref: Ref<SVGSVGElement>,
+) => {
+  const { className, ...restProps } = props;
 
   const uid = useId();
   const filterId = `verified-badge-filter-${uid}`;
@@ -102,7 +111,7 @@ const VerifiedBadgeIconRender = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVG
         d="M13.9844 3.40625L14.2471 3.65625L14.6055 3.60645L18.0098 3.13281L18.5977 6.48145L18.6611 6.84375L18.9873 7.01562L22.0059 8.60156L20.4941 11.6963L20.332 12.0283L20.4961 12.3594L22.002 15.3994L18.9873 16.9844L18.6611 17.1562L18.5977 17.5186L18.0098 20.8662L14.6055 20.3936L14.2471 20.3438L13.9844 20.5938L11.5 22.9629L9.01562 20.5938L8.75293 20.3438L8.39453 20.3936L4.98926 20.8662L4.40234 17.5186L4.33887 17.1562L4.0127 16.9844L0.99707 15.3994L2.50391 12.3594L2.66797 12.0283L2.50586 11.6963L0.993164 8.60156L4.0127 7.01562L4.33887 6.84375L4.40234 6.48145L4.98926 3.13281L8.39453 3.60645L8.75293 3.65625L9.01562 3.40625L11.5 1.03613L13.9844 3.40625Z"
         stroke="#D4D4D8"
         strokeWidth="1.5"
-        style={{mixBlendMode: "overlay" as const}}
+        style={{ mixBlendMode: "overlay" as const }}
       />
       <g filter={`url(#${filterId})`}>
         <path
@@ -133,7 +142,11 @@ const VerifiedBadgeIconRender = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVG
             type="matrix"
             values="0 0 0 0 0.785986 0 0 0 0 0.532335 0 0 0 0 0.21662 0 0 0 1 0"
           />
-          <feBlend in2="BackgroundImageFix" mode="normal" result="effect1_dropShadow_1_1856" />
+          <feBlend
+            in2="BackgroundImageFix"
+            mode="normal"
+            result="effect1_dropShadow_1_1856"
+          />
           <feColorMatrix
             in="SourceAlpha"
             result="hardAlpha"

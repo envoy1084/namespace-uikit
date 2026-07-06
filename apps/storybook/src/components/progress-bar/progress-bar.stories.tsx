@@ -1,10 +1,9 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import {Label} from "../label";
-
-import {ProgressBar} from "./index";
+import { Label } from "../label";
+import { ProgressBar } from "./index";
 
 const meta: Meta<typeof ProgressBar> = {
   argTypes: {
@@ -140,7 +139,7 @@ export const CustomValue: Story = {
   render: (args) => {
     return (
       <ProgressBar
-        formatOptions={{style: "currency", currency: "USD"}}
+        formatOptions={{ style: "currency", currency: "USD" }}
         maxValue={1000}
         minValue={0}
         value={750}

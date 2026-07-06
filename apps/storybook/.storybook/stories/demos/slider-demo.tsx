@@ -1,5 +1,6 @@
-import {Label, Slider} from "@heroui/react";
 import React from "react";
+
+import { Label, Slider } from "@thenamespace/uikit";
 
 export function SliderDemo() {
   return (
@@ -7,7 +8,7 @@ export function SliderDemo() {
       <Slider
         className="w-full max-w-xs"
         defaultValue={250}
-        formatOptions={{currency: "USD", style: "currency"}}
+        formatOptions={{ currency: "USD", style: "currency" }}
         maxValue={500}
         minValue={0}
         step={10}

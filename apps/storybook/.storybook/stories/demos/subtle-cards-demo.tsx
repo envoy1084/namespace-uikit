@@ -1,6 +1,7 @@
-import {Avatar, Card} from "@heroui/react";
 import React from "react";
-import {tv} from "tailwind-variants";
+
+import { Avatar, Card } from "@thenamespace/uikit";
+import { tv } from "tailwind-variants";
 
 const cardStyles = tv({
   slots: {
@@ -13,7 +14,7 @@ const cardStyles = tv({
 });
 
 export function SubtleCardsDemo() {
-  const {avatar, card, cardContent, footer, footerAvatar} = cardStyles();
+  const { avatar, card, cardContent, footer, footerAvatar } = cardStyles();
 
   return (
     <div className="flex w-full flex-row gap-4">
@@ -29,7 +30,7 @@ export function SubtleCardsDemo() {
         </Card.Header>
         <Card.Content className={cardContent()}>
           <p className="text-sm font-medium">Indie Hackers</p>
-          <p className="text-sm text-muted">148 members</p>
+          <p className="text-muted text-sm">148 members</p>
         </Card.Content>
         <Card.Footer className={footer()}>
           <Avatar className={footerAvatar()}>
@@ -39,7 +40,7 @@ export function SubtleCardsDemo() {
             />
             <Avatar.Fallback>JK</Avatar.Fallback>
           </Avatar>
-          <p className="text-xs text-muted">By John</p>
+          <p className="text-muted text-xs">By John</p>
         </Card.Footer>
       </Card>
       <Card className={card()}>
@@ -54,7 +55,7 @@ export function SubtleCardsDemo() {
         </Card.Header>
         <Card.Content className={cardContent()}>
           <p className="text-sm font-medium">AI Builders</p>
-          <p className="text-sm text-muted">362 members</p>
+          <p className="text-muted text-sm">362 members</p>
         </Card.Content>
         <Card.Footer className={footer()}>
           <Avatar className={footerAvatar()}>
@@ -64,7 +65,7 @@ export function SubtleCardsDemo() {
             />
             <Avatar.Fallback>M</Avatar.Fallback>
           </Avatar>
-          <p className="text-xs text-muted">By Martha</p>
+          <p className="text-muted text-xs">By Martha</p>
         </Card.Footer>
       </Card>
     </div>

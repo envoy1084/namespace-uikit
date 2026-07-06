@@ -1,13 +1,13 @@
-import type {Key} from "../";
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
-import React, {useMemo, useState} from "react";
+import React, { useMemo, useState } from "react";
 
-import {Avatar, Description, EmptyState, ErrorMessage, Label, Tag} from "../";
-import {useListData} from "../../";
+import { Icon } from "@iconify/react";
 
-import {TagGroup} from "./";
+import type { Key } from "../";
+import { Avatar, Description, EmptyState, ErrorMessage, Label, Tag } from "../";
+import { useListData } from "../../";
+import { TagGroup } from "./";
 
 const meta: Meta<typeof TagGroup> = {
   component: TagGroup,
@@ -132,7 +132,9 @@ export const Disabled: Story = {
 
 export const SelectionModes: Story = {
   render: () => {
-    const [singleSelected, setSingleSelected] = useState<Iterable<Key>>(new Set(["news"]));
+    const [singleSelected, setSingleSelected] = useState<Iterable<Key>>(
+      new Set(["news"]),
+    );
     const [multipleSelected, setMultipleSelected] = useState<Iterable<Key>>(
       new Set(["news", "travel"]),
     );
@@ -175,7 +177,9 @@ export const SelectionModes: Story = {
 
 export const Controlled: Story = {
   render: () => {
-    const [selected, setSelected] = useState<Iterable<Key>>(new Set(["news", "travel"]));
+    const [selected, setSelected] = useState<Iterable<Key>>(
+      new Set(["news", "travel"]),
+    );
 
     return (
       <div className="flex flex-col gap-3">
@@ -192,7 +196,10 @@ export const Controlled: Story = {
             <Tag id="shopping">Shopping</Tag>
           </TagGroup.List>
           <Description>
-            Selected: {Array.from(selected).length > 0 ? Array.from(selected).join(", ") : "None"}
+            Selected:{" "}
+            {Array.from(selected).length > 0
+              ? Array.from(selected).join(", ")
+              : "None"}
           </Description>
         </TagGroup>
       </div>
@@ -204,7 +211,10 @@ export const WithErrorMessage: Story = {
   render: () => {
     const [selected, setSelected] = useState<Iterable<Key>>(new Set());
 
-    const isInvalid = useMemo(() => Array.from(selected).length === 0, [selected]);
+    const isInvalid = useMemo(
+      () => Array.from(selected).length === 0,
+      [selected],
+    );
 
     return (
       <TagGroup
@@ -225,7 +235,9 @@ export const WithErrorMessage: Story = {
             ? "Select at least one category"
             : "Selected: " + Array.from(selected).join(", ")}
         </Description>
-        {!!isInvalid && <ErrorMessage>Please select at least one category</ErrorMessage>}
+        {!!isInvalid && (
+          <ErrorMessage>Please select at least one category</ErrorMessage>
+        )}
       </TagGroup>
     );
   },
@@ -290,20 +302,20 @@ export const WithPrefix: Story = {
 
 export const WithRemoveButton: Story = {
   render: () => {
-    type Tag = {id: string; name: string};
+    type Tag = { id: string; name: string };
 
     const [tags, setTags] = useState<Tag[]>([
-      {id: "news", name: "News"},
-      {id: "travel", name: "Travel"},
-      {id: "gaming", name: "Gaming"},
-      {id: "shopping", name: "Shopping"},
+      { id: "news", name: "News" },
+      { id: "travel", name: "Travel" },
+      { id: "gaming", name: "Gaming" },
+      { id: "shopping", name: "Shopping" },
     ]);
 
     const [frameworks, setFrameworks] = useState<Tag[]>([
-      {id: "react", name: "React"},
-      {id: "vue", name: "Vue"},
-      {id: "angular", name: "Angular"},
-      {id: "svelte", name: "Svelte"},
+      { id: "react", name: "React" },
+      { id: "vue", name: "Vue" },
+      { id: "angular", name: "Angular" },
+      { id: "svelte", name: "Svelte" },
     ]);
 
     const onRemoveTags = (keys: Set<Key>) => {
@@ -321,7 +333,9 @@ export const WithRemoveButton: Story = {
             <Label>Default Remove Button</Label>
             <TagGroup.List
               items={tags}
-              renderEmptyState={() => <EmptyState className="p-1">No categories found</EmptyState>}
+              renderEmptyState={() => (
+                <EmptyState className="p-1">No categories found</EmptyState>
+              )}
             >
               {(tag) => (
                 <Tag key={tag.name} id={tag.id} textValue={tag.name}>
@@ -338,7 +352,9 @@ export const WithRemoveButton: Story = {
             <Label>Custom Remove Button (Render Props)</Label>
             <TagGroup.List
               items={frameworks}
-              renderEmptyState={() => <EmptyState className="p-1">No frameworks found</EmptyState>}
+              renderEmptyState={() => (
+                <EmptyState className="p-1">No frameworks found</EmptyState>
+              )}
             >
               {(tag) => (
                 <Tag key={tag.id} id={tag.id} textValue={tag.name}>
@@ -355,7 +371,9 @@ export const WithRemoveButton: Story = {
                 </Tag>
               )}
             </TagGroup.List>
-            <Description>Custom remove button with icon using render props</Description>
+            <Description>
+              Custom remove button with icon using render props
+            </Description>
           </TagGroup>
         </div>
 
@@ -364,7 +382,9 @@ export const WithRemoveButton: Story = {
             <Label>Custom Remove Button (Compound Component)</Label>
             <TagGroup.List
               items={frameworks}
-              renderEmptyState={() => <EmptyState className="p-1">No frameworks found</EmptyState>}
+              renderEmptyState={() => (
+                <EmptyState className="p-1">No frameworks found</EmptyState>
+              )}
             >
               {(tag) => (
                 <Tag key={tag.id} id={tag.id} textValue={tag.name}>
@@ -375,7 +395,9 @@ export const WithRemoveButton: Story = {
                 </Tag>
               )}
             </TagGroup.List>
-            <Description>Custom remove button using compound component pattern</Description>
+            <Description>
+              Custom remove button using compound component pattern
+            </Description>
           </TagGroup>
         </div>
       </div>
@@ -397,37 +419,43 @@ export const WithListData: Story = {
         {
           id: "fred",
           name: "Fred",
-          avatar: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+          avatar:
+            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
           fallback: "F",
         },
         {
           id: "michael",
           name: "Michael",
-          avatar: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+          avatar:
+            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
           fallback: "M",
         },
         {
           id: "jane",
           name: "Jane",
-          avatar: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+          avatar:
+            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
           fallback: "J",
         },
         {
           id: "alice",
           name: "Alice",
-          avatar: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+          avatar:
+            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
           fallback: "A",
         },
         {
           id: "bob",
           name: "Bob",
-          avatar: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+          avatar:
+            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
           fallback: "B",
         },
         {
           id: "charlie",
           name: "Charlie",
-          avatar: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
+          avatar:
+            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
           fallback: "C",
         },
       ],
@@ -450,7 +478,9 @@ export const WithListData: Story = {
           <Label>Team Members</Label>
           <TagGroup.List
             items={list.items}
-            renderEmptyState={() => <EmptyState className="p-1">No team members</EmptyState>}
+            renderEmptyState={() => (
+              <EmptyState className="p-1">No team members</EmptyState>
+            )}
           >
             {(user) => (
               <Tag key={user.id} id={user.id} textValue={user.name}>
@@ -464,31 +494,32 @@ export const WithListData: Story = {
           </TagGroup.List>
           <Description>Select team members for your project</Description>
         </TagGroup>
-        {list.selectedKeys !== "all" && Array.from(list.selectedKeys).length > 0 && (
-          <div className="mt-4 flex flex-col gap-2">
-            <p className="text-sm font-medium text-muted">Selected:</p>
-            <div className="flex flex-wrap gap-2">
-              {Array.from(list.selectedKeys).map((key) => {
-                const user = list.getItem(key);
+        {list.selectedKeys !== "all" &&
+          Array.from(list.selectedKeys).length > 0 && (
+            <div className="mt-4 flex flex-col gap-2">
+              <p className="text-muted text-sm font-medium">Selected:</p>
+              <div className="flex flex-wrap gap-2">
+                {Array.from(list.selectedKeys).map((key) => {
+                  const user = list.getItem(key);
 
-                if (!user) return null;
+                  if (!user) return null;
 
-                return (
-                  <div
-                    key={`${user.id}-selected`}
-                    className="flex items-center gap-2 rounded-lg bg-surface-tertiary px-2 py-1"
-                  >
-                    <Avatar className="size-4" size="sm">
-                      <Avatar.Image src={user.avatar} />
-                      <Avatar.Fallback>{user.fallback}</Avatar.Fallback>
-                    </Avatar>
-                    <span className="text-sm">{user.name}</span>
-                  </div>
-                );
-              })}
+                  return (
+                    <div
+                      key={`${user.id}-selected`}
+                      className="bg-surface-tertiary flex items-center gap-2 rounded-lg px-2 py-1"
+                    >
+                      <Avatar className="size-4" size="sm">
+                        <Avatar.Image src={user.avatar} />
+                        <Avatar.Fallback>{user.fallback}</Avatar.Fallback>
+                      </Avatar>
+                      <span className="text-sm">{user.name}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     );
   },

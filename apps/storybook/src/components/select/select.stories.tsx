@@ -1,24 +1,24 @@
-import type {Key} from "../rac";
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
-import {useAsyncList} from "@react-stately/data";
 import React from "react";
 
-import {Avatar, AvatarFallback, AvatarImage} from "../avatar";
-import {Button} from "../button";
-import {Chip} from "../chip";
-import {Description} from "../description";
-import {FieldError} from "../field-error";
-import {Form} from "../form";
-import {Header} from "../header";
-import {Label} from "../label";
-import {ListBox} from "../list-box";
-import {Collection, ListBoxLoadMoreItem} from "../rac";
-import {Separator} from "../separator";
-import {Spinner} from "../spinner";
+import { Icon } from "@iconify/react";
+import { useAsyncList } from "@react-stately/data";
 
-import {Select} from "./index";
+import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
+import { Button } from "../button";
+import { Chip } from "../chip";
+import { Description } from "../description";
+import { FieldError } from "../field-error";
+import { Form } from "../form";
+import { Header } from "../header";
+import { Label } from "../label";
+import { ListBox } from "../list-box";
+import type { Key } from "../rac";
+import { Collection, ListBoxLoadMoreItem } from "../rac";
+import { Separator } from "../separator";
+import { Spinner } from "../spinner";
+import { Select } from "./index";
 
 const meta: Meta<typeof Select> = {
   component: Select,
@@ -31,6 +31,19 @@ const meta: Meta<typeof Select> = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+const handleSelectRequiredSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  const formData = new FormData(e.currentTarget);
+  const data: Record<string, string> = {};
+
+  // Convert FormData to plain object
+  formData.forEach((value, key) => {
+    data[key] = value.toString();
+  });
+
+  alert("Form submitted successfully!");
+};
 
 export const Default: Story = {
   render: () => (
@@ -94,7 +107,11 @@ export const Variants: Story = {
           </ListBox>
         </Select.Popover>
       </Select>
-      <Select className="w-[256px]" placeholder="Select one" variant="secondary">
+      <Select
+        className="w-[256px]"
+        placeholder="Select one"
+        variant="secondary"
+      >
         <Label>Secondary variant</Label>
         <Select.Trigger>
           <Select.Value />
@@ -190,7 +207,11 @@ export const WithDescription: Story = {
 
 export const MultipleSelect: Story = {
   render: () => (
-    <Select className="w-[256px]" placeholder="Select countries" selectionMode="multiple">
+    <Select
+      className="w-[256px]"
+      placeholder="Select countries"
+      selectionMode="multiple"
+    >
       <Label>Countries to Visit</Label>
       <Select.Trigger>
         <Select.Value />
@@ -317,7 +338,11 @@ export const WithSections: Story = {
 
 export const WithDisabledOptions: Story = {
   render: () => (
-    <Select className="w-[256px]" disabledKeys={["cat", "kangaroo"]} placeholder="Select an animal">
+    <Select
+      className="w-[256px]"
+      disabledKeys={["cat", "kangaroo"]}
+      placeholder="Select an animal"
+    >
       <Label>Animal</Label>
       <Select.Trigger>
         <Select.Value />
@@ -399,22 +424,17 @@ export const CustomIndicator: Story = {
 
 export const Required: Story = {
   render: () => {
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const formData = new FormData(e.currentTarget);
-      const data: Record<string, string> = {};
-
-      // Convert FormData to plain object
-      formData.forEach((value, key) => {
-        data[key] = value.toString();
-      });
-
-      alert("Form submitted successfully!");
-    };
-
     return (
-      <Form className="flex w-[256px] flex-col gap-4" onSubmit={onSubmit}>
-        <Select isRequired className="w-full" name="state" placeholder="Select one">
+      <Form
+        className="flex w-[256px] flex-col gap-4"
+        onSubmit={handleSelectRequiredSubmit}
+      >
+        <Select
+          isRequired
+          className="w-full"
+          name="state"
+          placeholder="Select one"
+        >
           <Label>State</Label>
           <Select.Trigger>
             <Select.Value />
@@ -450,7 +470,12 @@ export const Required: Story = {
           </Select.Popover>
           <FieldError />
         </Select>
-        <Select isRequired className="w-full" name="country" placeholder="Select a country">
+        <Select
+          isRequired
+          className="w-full"
+          name="country"
+          placeholder="Select a country"
+        >
           <Label>Country</Label>
           <Select.Trigger>
             <Select.Value />
@@ -499,35 +524,40 @@ export const CustomValue: Story = {
         id: "1",
         name: "Bob",
         email: "bob@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
         fallback: "B",
       },
       {
         id: "2",
         name: "Fred",
         email: "fred@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
         fallback: "F",
       },
       {
         id: "3",
         name: "Martha",
         email: "martha@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
         fallback: "M",
       },
       {
         id: "4",
         name: "John",
         email: "john@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
         fallback: "J",
       },
       {
         id: "5",
         name: "Jane",
         email: "jane@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
         fallback: "J",
       },
     ];
@@ -537,7 +567,7 @@ export const CustomValue: Story = {
         <Label>User</Label>
         <Select.Trigger>
           <Select.Value>
-            {({defaultChildren, isPlaceholder, state}) => {
+            {({ defaultChildren, isPlaceholder, state }) => {
               if (isPlaceholder || state.selectedItems.length === 0) {
                 return defaultChildren;
               }
@@ -548,7 +578,9 @@ export const CustomValue: Story = {
                 return `${selectedItems.length} users selected`;
               }
 
-              const selectedItem = users.find((user) => user.id === selectedItems[0].key);
+              const selectedItem = users.find(
+                (user) => user.id === selectedItems[0].key,
+              );
 
               if (!selectedItem) {
                 return defaultChildren;
@@ -596,35 +628,40 @@ export const CustomValueMultiple: Story = {
         id: "1",
         name: "Bob",
         email: "bob@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
         fallback: "B",
       },
       {
         id: "2",
         name: "Fred",
         email: "fred@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
         fallback: "F",
       },
       {
         id: "3",
         name: "Martha",
         email: "martha@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
         fallback: "M",
       },
       {
         id: "4",
         name: "John",
         email: "john@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
         fallback: "J",
       },
       {
         id: "5",
         name: "Jane",
         email: "jane@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
         fallback: "J",
       },
     ];
@@ -639,15 +676,19 @@ export const CustomValueMultiple: Story = {
         <Label>Users</Label>
         <Select.Trigger>
           <Select.Value className="no-truncate flex flex-wrap gap-2">
-            {({defaultChildren, isPlaceholder, state}) => {
+            {({ defaultChildren, isPlaceholder, state }) => {
               if (isPlaceholder || state.selectedItems.length === 0) {
                 return defaultChildren;
               }
 
-              const selectedItemsKeys = state.selectedItems.map((item) => item.key);
+              const selectedItemsKeys = state.selectedItems.map(
+                (item) => item.key,
+              );
 
               return selectedItemsKeys.map((selectedItemKey) => {
-                const selectedItem = users.find((user) => user.id === selectedItemKey);
+                const selectedItem = users.find(
+                  (user) => user.id === selectedItemKey,
+                );
 
                 if (!selectedItem) {
                   return null;
@@ -737,16 +778,22 @@ export const Controlled: Story = {
           </Select.Trigger>
           <Select.Popover>
             <ListBox>
-              {states.map((state) => (
-                <ListBox.Item key={state.id} id={state.id} textValue={state.name}>
-                  {state.name}
+              {states.map((stateItem) => (
+                <ListBox.Item
+                  key={stateItem.id}
+                  id={stateItem.id}
+                  textValue={stateItem.name}
+                >
+                  {stateItem.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
               ))}
             </ListBox>
           </Select.Popover>
         </Select>
-        <p className="text-sm text-muted">Selected: {selectedState?.name || "None"}</p>
+        <p className="text-muted text-sm">
+          Selected: {selectedState?.name || "None"}
+        </p>
       </div>
     );
   },
@@ -754,7 +801,10 @@ export const Controlled: Story = {
 
 export const ControlledMultiple: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState<Key[]>(["california", "texas"]);
+    const [selected, setSelected] = React.useState<Key[]>([
+      "california",
+      "texas",
+    ]);
 
     return (
       <div className="space-y-4">
@@ -799,7 +849,7 @@ export const ControlledMultiple: Story = {
             </ListBox>
           </Select.Popover>
         </Select>
-        <p className="text-sm text-muted">
+        <p className="text-muted text-sm">
           Selected: {selected.length > 0 ? selected.join(", ") : "None"}
         </p>
       </div>
@@ -853,8 +903,12 @@ export const ControlledOpenState: Story = {
             </ListBox>
           </Select.Popover>
         </Select>
-        <Button onPress={() => setIsOpen(!isOpen)}>{isOpen ? "Close" : "Open"} Select</Button>
-        <p className="text-sm text-muted">Select is {isOpen ? "open" : "closed"}</p>
+        <Button onPress={() => setIsOpen(!isOpen)}>
+          {isOpen ? "Close" : "Open"} Select
+        </Button>
+        <p className="text-muted text-sm">
+          Select is {isOpen ? "open" : "closed"}
+        </p>
       </div>
     );
   },
@@ -867,8 +921,10 @@ interface Pokemon {
 export const AsynchronousLoading: Story = {
   render: () => {
     const list = useAsyncList<Pokemon>({
-      async load({cursor, signal}) {
-        const res = await fetch(cursor || `https://pokeapi.co/api/v2/pokemon`, {signal});
+      async load({ cursor, signal }) {
+        const res = await fetch(cursor || `https://pokeapi.co/api/v2/pokemon`, {
+          signal,
+        });
         const json = await res.json();
 
         return {
@@ -901,7 +957,7 @@ export const AsynchronousLoading: Story = {
             >
               <div className="flex items-center justify-center gap-2 py-2">
                 <Spinner size="sm" />
-                <span className="text-sm text-muted">Loading more...</span>
+                <span className="text-muted text-sm">Loading more...</span>
               </div>
             </ListBoxLoadMoreItem>
           </ListBox>
@@ -914,7 +970,12 @@ export const AsynchronousLoading: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <Select isDisabled className="w-[256px]" defaultValue="california" placeholder="Select one">
+      <Select
+        isDisabled
+        className="w-[256px]"
+        defaultValue="california"
+        placeholder="Select one"
+      >
         <Label>State</Label>
         <Select.Trigger>
           <Select.Value />

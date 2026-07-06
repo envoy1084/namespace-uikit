@@ -1,28 +1,36 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-import {ColorSwatch} from "../color-swatch";
-import {Label} from "../label";
-import {parseColor} from "../rac";
-
-import {ColorSlider} from "./index";
+import { ColorSwatch } from "../color-swatch";
+import { Label } from "../label";
+import { parseColor } from "../rac";
+import { ColorSlider } from "./index";
 
 const meta: Meta<typeof ColorSlider> = {
   argTypes: {
     isDisabled: {
-      control: {type: "boolean"},
+      control: { type: "boolean" },
     },
     colorSpace: {
-      control: {type: "select"},
+      control: { type: "select" },
       options: ["hsl", "hsb", "rgb"],
     },
     channel: {
-      control: {type: "select"},
-      options: ["hue", "saturation", "brightness", "lightness", "alpha", "red", "green", "blue"],
+      control: { type: "select" },
+      options: [
+        "hue",
+        "saturation",
+        "brightness",
+        "lightness",
+        "alpha",
+        "red",
+        "green",
+        "blue",
+      ],
     },
     orientation: {
-      control: {type: "select"},
+      control: { type: "select" },
       options: ["horizontal", "vertical"],
     },
   },
@@ -132,21 +140,36 @@ export const RGBChannels: Story = {
 
     return (
       <div className="flex flex-col gap-4">
-        <ColorSlider channel="red" colorSpace="rgb" value={color} onChange={setColor}>
+        <ColorSlider
+          channel="red"
+          colorSpace="rgb"
+          value={color}
+          onChange={setColor}
+        >
           <Label>Red</Label>
           <ColorSlider.Output />
           <ColorSlider.Track>
             <ColorSlider.Thumb />
           </ColorSlider.Track>
         </ColorSlider>
-        <ColorSlider channel="green" colorSpace="rgb" value={color} onChange={setColor}>
+        <ColorSlider
+          channel="green"
+          colorSpace="rgb"
+          value={color}
+          onChange={setColor}
+        >
           <Label>Green</Label>
           <ColorSlider.Output />
           <ColorSlider.Track>
             <ColorSlider.Thumb />
           </ColorSlider.Track>
         </ColorSlider>
-        <ColorSlider channel="blue" colorSpace="rgb" value={color} onChange={setColor}>
+        <ColorSlider
+          channel="blue"
+          colorSpace="rgb"
+          value={color}
+          onChange={setColor}
+        >
           <Label>Blue</Label>
           <ColorSlider.Output />
           <ColorSlider.Track>
@@ -169,17 +192,29 @@ export const Vertical: Story = {
   render: (_args) => {
     return (
       <>
-        <ColorSlider channel="hue" defaultValue="hsl(0, 100%, 50%)" orientation="vertical">
+        <ColorSlider
+          channel="hue"
+          defaultValue="hsl(0, 100%, 50%)"
+          orientation="vertical"
+        >
           <ColorSlider.Track>
             <ColorSlider.Thumb />
           </ColorSlider.Track>
         </ColorSlider>
-        <ColorSlider channel="saturation" defaultValue="hsl(0, 100%, 50%)" orientation="vertical">
+        <ColorSlider
+          channel="saturation"
+          defaultValue="hsl(0, 100%, 50%)"
+          orientation="vertical"
+        >
           <ColorSlider.Track>
             <ColorSlider.Thumb />
           </ColorSlider.Track>
         </ColorSlider>
-        <ColorSlider channel="lightness" defaultValue="hsl(0, 100%, 50%)" orientation="vertical">
+        <ColorSlider
+          channel="lightness"
+          defaultValue="hsl(0, 100%, 50%)"
+          orientation="vertical"
+        >
           <ColorSlider.Track>
             <ColorSlider.Thumb />
           </ColorSlider.Track>
@@ -239,8 +274,9 @@ export const Controlled: Story = {
         </div>
         <div className="mt-3 flex w-[350px] items-center gap-3">
           <ColorSwatch color={color} size="lg" />
-          <p className="text-sm text-muted">
-            Current color: <span className="font-mono">{color.toString("hsl")}</span>
+          <p className="text-muted text-sm">
+            Current color:{" "}
+            <span className="font-mono">{color.toString("hsl")}</span>
           </p>
         </div>
       </div>

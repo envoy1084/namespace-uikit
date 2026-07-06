@@ -1,18 +1,18 @@
-import type {Selection} from "@react-types/shared";
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Selection } from "@react-types/shared";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import * as React from "react";
 
-import {Avatar} from "../avatar";
-import {Button} from "../button";
-import {Description} from "../description";
-import {Header} from "../header";
-import {Kbd} from "../kbd";
-import {Label} from "../label";
-import {Separator} from "../separator";
+import { Icon } from "@iconify/react";
 
-import {Dropdown} from "./index";
+import { Avatar } from "../avatar";
+import { Button } from "../button";
+import { Description } from "../description";
+import { Header } from "../header";
+import { Kbd } from "../kbd";
+import { Label } from "../label";
+import { Separator } from "../separator";
+import { Dropdown } from "./index";
 
 const meta: Meta<typeof Dropdown> = {
   component: Dropdown,
@@ -47,7 +47,11 @@ export const Default: Story = {
           </Dropdown.Section>
           <Separator />
           <Dropdown.Section>
-            <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
+            <Dropdown.Item
+              id="delete-file"
+              textValue="Delete file"
+              variant="danger"
+            >
               <Label>Delete file</Label>
             </Dropdown.Item>
           </Dropdown.Section>
@@ -59,7 +63,9 @@ export const Default: Story = {
 
 export const WithSingleSelection: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState<Selection>(new Set(["apple"]));
+    const [selected, setSelected] = React.useState<Selection>(
+      new Set(["apple"]),
+    );
 
     return (
       <Dropdown>
@@ -104,10 +110,17 @@ export const WithSingleSelection: Story = {
 
 export const SingleWithCustomIndicator: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState<Selection>(new Set(["apple"]));
+    const [selected, setSelected] = React.useState<Selection>(
+      new Set(["apple"]),
+    );
 
     const CustomCheckmarkIcon = (
-      <svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        height="16"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path
           className="text-accent"
           clipRule="evenodd"
@@ -133,32 +146,38 @@ export const SingleWithCustomIndicator: Story = {
               <Header>Select a fruit</Header>
               <Dropdown.Item id="apple" textValue="Apple">
                 <Dropdown.ItemIndicator>
-                  {({isSelected}) => (isSelected ? CustomCheckmarkIcon : null)}
+                  {({ isSelected }) =>
+                    isSelected ? CustomCheckmarkIcon : null
+                  }
                 </Dropdown.ItemIndicator>
                 <Label>Apple</Label>
               </Dropdown.Item>
               <Dropdown.Item id="banana" textValue="Banana">
                 <Dropdown.ItemIndicator>
-                  {({isSelected}) => (isSelected ? CustomCheckmarkIcon : null)}
+                  {({ isSelected }) =>
+                    isSelected ? CustomCheckmarkIcon : null
+                  }
                 </Dropdown.ItemIndicator>
                 <Label>Banana</Label>
               </Dropdown.Item>
               <Dropdown.Item id="cherry" textValue="Cherry">
                 <Dropdown.ItemIndicator>
-                  {({isSelected}) => (isSelected ? CustomCheckmarkIcon : null)}
+                  {({ isSelected }) =>
+                    isSelected ? CustomCheckmarkIcon : null
+                  }
                 </Dropdown.ItemIndicator>
                 <Label>Cherry</Label>
               </Dropdown.Item>
             </Dropdown.Section>
             <Dropdown.Item id="orange" textValue="Orange">
               <Dropdown.ItemIndicator>
-                {({isSelected}) => (isSelected ? CustomCheckmarkIcon : null)}
+                {({ isSelected }) => (isSelected ? CustomCheckmarkIcon : null)}
               </Dropdown.ItemIndicator>
               <Label>Orange</Label>
             </Dropdown.Item>
             <Dropdown.Item id="pear" textValue="Pear">
               <Dropdown.ItemIndicator>
-                {({isSelected}) => (isSelected ? CustomCheckmarkIcon : null)}
+                {({ isSelected }) => (isSelected ? CustomCheckmarkIcon : null)}
               </Dropdown.ItemIndicator>
               <Label>Pear</Label>
             </Dropdown.Item>
@@ -171,7 +190,9 @@ export const SingleWithCustomIndicator: Story = {
 
 export const WithMultipleSelection: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState<Selection>(new Set(["apple"]));
+    const [selected, setSelected] = React.useState<Selection>(
+      new Set(["apple"]),
+    );
 
     return (
       <Dropdown>
@@ -216,8 +237,12 @@ export const WithMultipleSelection: Story = {
 
 export const WithSectionLevelSelection: Story = {
   render: () => {
-    const [textStyles, setTextStyles] = React.useState<Selection>(new Set(["bold", "italic"]));
-    const [textAlignment, setTextAlignment] = React.useState<Selection>(new Set(["left"]));
+    const [textStyles, setTextStyles] = React.useState<Selection>(
+      new Set(["bold", "italic"]),
+    );
+    const [textAlignment, setTextAlignment] = React.useState<Selection>(
+      new Set(["left"]),
+    );
 
     return (
       <Dropdown>
@@ -373,7 +398,10 @@ export const WithIcons: Story = {
       <Dropdown.Popover>
         <Dropdown.Menu onAction={(key) => alert(`Selected: ${key}`)}>
           <Dropdown.Item id="new-file" textValue="New file">
-            <Icon className="size-4 shrink-0 text-muted" icon="gravity-ui:square-plus" />
+            <Icon
+              className="text-muted size-4 shrink-0"
+              icon="gravity-ui:square-plus"
+            />
             <Label>New file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
               <Kbd.Abbr keyValue="command" />
@@ -381,7 +409,10 @@ export const WithIcons: Story = {
             </Kbd>
           </Dropdown.Item>
           <Dropdown.Item id="open-file" textValue="Open file">
-            <Icon className="size-4 shrink-0 text-muted" icon="gravity-ui:folder-open" />
+            <Icon
+              className="text-muted size-4 shrink-0"
+              icon="gravity-ui:folder-open"
+            />
             <Label>Open file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
               <Kbd.Abbr keyValue="command" />
@@ -389,15 +420,25 @@ export const WithIcons: Story = {
             </Kbd>
           </Dropdown.Item>
           <Dropdown.Item id="save-file" textValue="Save file">
-            <Icon className="size-4 shrink-0 text-muted" icon="gravity-ui:floppy-disk" />
+            <Icon
+              className="text-muted size-4 shrink-0"
+              icon="gravity-ui:floppy-disk"
+            />
             <Label>Save file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
               <Kbd.Abbr keyValue="command" />
               <Kbd.Content>S</Kbd.Content>
             </Kbd>
           </Dropdown.Item>
-          <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
-            <Icon className="size-4 shrink-0 text-danger" icon="gravity-ui:trash-bin" />
+          <Dropdown.Item
+            id="delete-file"
+            textValue="Delete file"
+            variant="danger"
+          >
+            <Icon
+              className="text-danger size-4 shrink-0"
+              icon="gravity-ui:trash-bin"
+            />
             <Label>Delete file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
               <Kbd.Abbr keyValue="command" />
@@ -428,7 +469,11 @@ export const LongPressTrigger: Story = {
           <Dropdown.Item id="save-file" textValue="Save file">
             <Label>Save file</Label>
           </Dropdown.Item>
-          <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
+          <Dropdown.Item
+            id="delete-file"
+            textValue="Delete file"
+            variant="danger"
+          >
             <Label>Delete file</Label>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -447,7 +492,10 @@ export const WithDescriptions: Story = {
         <Dropdown.Menu onAction={(key) => alert(`Selected: ${key}`)}>
           <Dropdown.Item id="new-file" textValue="New file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon className="size-4 shrink-0 text-muted" icon="gravity-ui:square-plus" />
+              <Icon
+                className="text-muted size-4 shrink-0"
+                icon="gravity-ui:square-plus"
+              />
             </div>
             <div className="flex flex-col">
               <Label>New file</Label>
@@ -460,7 +508,10 @@ export const WithDescriptions: Story = {
           </Dropdown.Item>
           <Dropdown.Item id="open-file" textValue="Open file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon className="size-4 shrink-0 text-muted" icon="gravity-ui:folder-open" />
+              <Icon
+                className="text-muted size-4 shrink-0"
+                icon="gravity-ui:folder-open"
+              />
             </div>
             <div className="flex flex-col">
               <Label>Open file</Label>
@@ -473,7 +524,10 @@ export const WithDescriptions: Story = {
           </Dropdown.Item>
           <Dropdown.Item id="save-file" textValue="Save file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon className="size-4 shrink-0 text-muted" icon="gravity-ui:floppy-disk" />
+              <Icon
+                className="text-muted size-4 shrink-0"
+                icon="gravity-ui:floppy-disk"
+              />
             </div>
             <div className="flex flex-col">
               <Label>Save file</Label>
@@ -484,9 +538,16 @@ export const WithDescriptions: Story = {
               <Kbd.Content>S</Kbd.Content>
             </Kbd>
           </Dropdown.Item>
-          <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
+          <Dropdown.Item
+            id="delete-file"
+            textValue="Delete file"
+            variant="danger"
+          >
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon className="size-4 shrink-0 text-danger" icon="gravity-ui:trash-bin" />
+              <Icon
+                className="text-danger size-4 shrink-0"
+                icon="gravity-ui:trash-bin"
+              />
             </div>
             <div className="flex flex-col">
               <Label>Delete file</Label>
@@ -519,7 +580,10 @@ export const WithSections: Story = {
             <Header>Actions</Header>
             <Dropdown.Item id="new-file" textValue="New file">
               <div className="flex h-8 items-start justify-center pt-px">
-                <Icon className="size-4 shrink-0 text-muted" icon="gravity-ui:square-plus" />
+                <Icon
+                  className="text-muted size-4 shrink-0"
+                  icon="gravity-ui:square-plus"
+                />
               </div>
               <div className="flex flex-col">
                 <Label>New file</Label>
@@ -532,7 +596,10 @@ export const WithSections: Story = {
             </Dropdown.Item>
             <Dropdown.Item id="edit-file" textValue="Edit file">
               <div className="flex h-8 items-start justify-center pt-px">
-                <Icon className="size-4 shrink-0 text-muted" icon="gravity-ui:pencil" />
+                <Icon
+                  className="text-muted size-4 shrink-0"
+                  icon="gravity-ui:pencil"
+                />
               </div>
               <div className="flex flex-col">
                 <Label>Edit file</Label>
@@ -547,9 +614,16 @@ export const WithSections: Story = {
           <Separator />
           <Dropdown.Section>
             <Header>Danger zone</Header>
-            <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
+            <Dropdown.Item
+              id="delete-file"
+              textValue="Delete file"
+              variant="danger"
+            >
               <div className="flex h-8 items-start justify-center pt-px">
-                <Icon className="size-4 shrink-0 text-danger" icon="gravity-ui:trash-bin" />
+                <Icon
+                  className="text-danger size-4 shrink-0"
+                  icon="gravity-ui:trash-bin"
+                />
               </div>
               <div className="flex flex-col">
                 <Label>Delete file</Label>
@@ -575,12 +649,18 @@ export const WithDisabledItems: Story = {
         <Icon className="outline-none" icon="gravity-ui:bars" />
       </Button>
       <Dropdown.Popover className="min-w-[220px]">
-        <Dropdown.Menu disabledKeys={["delete-file"]} onAction={(key) => alert(`Selected: ${key}`)}>
+        <Dropdown.Menu
+          disabledKeys={["delete-file"]}
+          onAction={(key) => alert(`Selected: ${key}`)}
+        >
           <Dropdown.Section>
             <Header>Actions</Header>
             <Dropdown.Item id="new-file" textValue="New file">
               <div className="flex h-8 items-start justify-center pt-px">
-                <Icon className="size-4 shrink-0 text-muted" icon="gravity-ui:square-plus" />
+                <Icon
+                  className="text-muted size-4 shrink-0"
+                  icon="gravity-ui:square-plus"
+                />
               </div>
               <div className="flex flex-col">
                 <Label>New file</Label>
@@ -593,7 +673,10 @@ export const WithDisabledItems: Story = {
             </Dropdown.Item>
             <Dropdown.Item id="edit-file" textValue="Edit file">
               <div className="flex h-8 items-start justify-center pt-px">
-                <Icon className="size-4 shrink-0 text-muted" icon="gravity-ui:pencil" />
+                <Icon
+                  className="text-muted size-4 shrink-0"
+                  icon="gravity-ui:pencil"
+                />
               </div>
               <div className="flex flex-col">
                 <Label>Edit file</Label>
@@ -608,9 +691,16 @@ export const WithDisabledItems: Story = {
           <Separator />
           <Dropdown.Section>
             <Header>Danger zone</Header>
-            <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
+            <Dropdown.Item
+              id="delete-file"
+              textValue="Delete file"
+              variant="danger"
+            >
               <div className="flex h-8 items-start justify-center pt-px">
-                <Icon className="size-4 shrink-0 text-danger" icon="gravity-ui:trash-bin" />
+                <Icon
+                  className="text-danger size-4 shrink-0"
+                  icon="gravity-ui:trash-bin"
+                />
               </div>
               <div className="flex flex-col">
                 <Label>Delete file</Label>
@@ -705,7 +795,10 @@ export const WithCustomSubmenuIndicator: Story = {
             <Dropdown.Item id="share" textValue="Share">
               <Label>More options</Label>
               <Dropdown.SubmenuIndicator>
-                <Icon className="size-3.5 text-muted" icon="gravity-ui:arrow-right" />
+                <Icon
+                  className="text-muted size-3.5"
+                  icon="gravity-ui:arrow-right"
+                />
               </Dropdown.SubmenuIndicator>
             </Dropdown.Item>
             <Dropdown.Popover>
@@ -721,7 +814,7 @@ export const WithCustomSubmenuIndicator: Story = {
                     <Label>Email</Label>
                     <Dropdown.SubmenuIndicator>
                       <svg
-                        className="size-3.5 text-muted"
+                        className="text-muted size-3.5"
                         fill="none"
                         stroke="currentColor"
                         strokeLinecap="round"
@@ -771,7 +864,9 @@ export const WithCustomSubmenuIndicator: Story = {
 
 export const Controlled: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState<Selection>(new Set(["bold"]));
+    const [selected, setSelected] = React.useState<Selection>(
+      new Set(["bold"]),
+    );
 
     const selectedItems = Array.from(selected);
 
@@ -802,8 +897,9 @@ export const Controlled: Story = {
             </Dropdown.Menu>
           </Dropdown.Popover>
         </Dropdown>
-        <p className="text-sm text-muted">
-          Selected: {selectedItems.length > 0 ? selectedItems.join(", ") : "None"}
+        <p className="text-muted text-sm">
+          Selected:{" "}
+          {selectedItems.length > 0 ? selectedItems.join(", ") : "None"}
         </p>
       </div>
     );
@@ -816,7 +912,7 @@ export const ControlledOpenState: Story = {
 
     return (
       <div className="min-w-sm space-y-4">
-        <p className="text-sm text-muted">
+        <p className="text-muted text-sm">
           Dropdown is: <strong>{open ? "open" : "closed"}</strong>
         </p>
         <Dropdown isOpen={open} onOpenChange={setOpen}>
@@ -834,7 +930,11 @@ export const ControlledOpenState: Story = {
               <Dropdown.Item id="save-file" textValue="Save file">
                 <Label>Save file</Label>
               </Dropdown.Item>
-              <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
+              <Dropdown.Item
+                id="delete-file"
+                textValue="Delete file"
+                variant="danger"
+              >
                 <Label>Delete file</Label>
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -869,7 +969,9 @@ export const CustomTrigger: Story = {
             </Avatar>
             <div className="flex flex-col gap-0">
               <p className="text-sm leading-5 font-medium">Jane Doe</p>
-              <p className="text-xs leading-none text-muted">jane@example.com</p>
+              <p className="text-muted text-xs leading-none">
+                jane@example.com
+              </p>
             </div>
           </div>
         </div>
@@ -883,19 +985,22 @@ export const CustomTrigger: Story = {
           <Dropdown.Item id="settings" textValue="Settings">
             <div className="flex w-full items-center justify-between gap-2">
               <Label>Settings</Label>
-              <Icon className="size-3.5 text-muted" icon="gravity-ui:gear" />
+              <Icon className="text-muted size-3.5" icon="gravity-ui:gear" />
             </div>
           </Dropdown.Item>
           <Dropdown.Item id="new-project" textValue="New project">
             <div className="flex w-full items-center justify-between gap-2">
               <Label>Create Team</Label>
-              <Icon className="size-3.5 text-muted" icon="gravity-ui:persons" />
+              <Icon className="text-muted size-3.5" icon="gravity-ui:persons" />
             </div>
           </Dropdown.Item>
           <Dropdown.Item id="logout" textValue="Logout" variant="danger">
             <div className="flex w-full items-center justify-between gap-2">
               <Label>Log Out</Label>
-              <Icon className="size-3.5 text-danger" icon="gravity-ui:arrow-right-from-square" />
+              <Icon
+                className="text-danger size-3.5"
+                icon="gravity-ui:arrow-right-from-square"
+              />
             </div>
           </Dropdown.Item>
         </Dropdown.Menu>

@@ -1,18 +1,17 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import {Label} from "../label";
-
-import {Slider} from "./index";
+import { Label } from "../label";
+import { Slider } from "./index";
 
 const meta: Meta<typeof Slider> = {
   argTypes: {
     isDisabled: {
-      control: {type: "boolean"},
+      control: { type: "boolean" },
     },
     orientation: {
-      control: {type: "select"},
+      control: { type: "select" },
       options: ["horizontal", "vertical"],
     },
   },
@@ -91,7 +90,7 @@ export const Range: Story = {
     return (
       <Slider
         defaultValue={[100, 500]}
-        formatOptions={{style: "currency", currency: "USD"}}
+        formatOptions={{ style: "currency", currency: "USD" }}
         maxValue={1000}
         minValue={0}
         step={50}
@@ -100,7 +99,7 @@ export const Range: Story = {
         <Label>Price Range</Label>
         <Slider.Output />
         <Slider.Track>
-          {({state}) => (
+          {({ state }) => (
             <>
               <Slider.Fill />
               {state.values.map((_, i) => (

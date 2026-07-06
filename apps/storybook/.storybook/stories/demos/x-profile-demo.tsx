@@ -1,7 +1,8 @@
-import {Avatar, Card} from "@heroui/react";
 import React from "react";
 
-import {VerifiedBadgeIcon} from "./components/icons";
+import { Avatar, Card } from "@thenamespace/uikit";
+
+import { VerifiedBadgeIcon } from "./components/icons";
 
 export function XProfileDemo() {
   return (
@@ -20,7 +21,7 @@ export function XProfileDemo() {
               <span className="text-sm leading-4 font-semibold">HeroUI</span>
               <VerifiedBadgeIcon height={18} width={18} />
             </div>
-            <span className="text-sm tracking-tight text-muted">@hero_ui</span>
+            <span className="text-muted text-sm tracking-tight">@hero_ui</span>
           </div>
         </div>
       </Card.Header>
@@ -37,11 +38,11 @@ export function XProfileDemo() {
       <Card.Footer className="gap-2">
         <div className="flex gap-1">
           <p className="text-sm font-semibold">4</p>
-          <p className="text-sm text-muted">Following</p>
+          <p className="text-muted text-sm">Following</p>
         </div>
         <div className="flex gap-1">
           <p className="text-sm font-semibold">97.1K</p>
-          <p className="text-sm text-muted">Followers</p>
+          <p className="text-muted text-sm">Followers</p>
         </div>
       </Card.Footer>
     </Card>

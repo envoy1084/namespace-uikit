@@ -1,9 +1,10 @@
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-import {ToggleButton} from "./index";
+import { Icon } from "@iconify/react";
+
+import { ToggleButton } from "./index";
 
 export default {
   argTypes: {
@@ -30,23 +31,27 @@ const defaultArgs: ToggleButton["RootProps"] = {
   size: "md",
 };
 
-const Template = ({isDisabled, size, variant}: ToggleButton["RootProps"]) => (
+const Template = ({ isDisabled, size, variant }: ToggleButton["RootProps"]) => (
   <div className="flex gap-3">
     <ToggleButton isDisabled={isDisabled} size={size} variant={variant}>
       <Icon icon="gravity-ui:heart" />
       Like
     </ToggleButton>
-    <ToggleButton isDisabled={isDisabled} size={size} variant={variant ?? "ghost"}>
+    <ToggleButton
+      isDisabled={isDisabled}
+      size={size}
+      variant={variant ?? "ghost"}
+    >
       <Icon icon="gravity-ui:heart" />
       Like
     </ToggleButton>
   </div>
 );
 
-const VariantsTemplate = ({isDisabled, size}: ToggleButton["RootProps"]) => (
+const VariantsTemplate = ({ isDisabled, size }: ToggleButton["RootProps"]) => (
   <div className="flex flex-col gap-4">
     <div className="flex flex-col gap-2">
-      <p className="text-sm font-medium text-muted">Default</p>
+      <p className="text-muted text-sm font-medium">Default</p>
       <div className="flex gap-3">
         <ToggleButton isDisabled={isDisabled} size={size}>
           <Icon icon="gravity-ui:heart" />
@@ -59,13 +64,18 @@ const VariantsTemplate = ({isDisabled, size}: ToggleButton["RootProps"]) => (
       </div>
     </div>
     <div className="flex flex-col gap-2">
-      <p className="text-sm font-medium text-muted">Ghost</p>
+      <p className="text-muted text-sm font-medium">Ghost</p>
       <div className="flex gap-3">
         <ToggleButton isDisabled={isDisabled} size={size} variant="ghost">
           <Icon icon="gravity-ui:heart" />
           Like
         </ToggleButton>
-        <ToggleButton defaultSelected isDisabled={isDisabled} size={size} variant="ghost">
+        <ToggleButton
+          defaultSelected
+          isDisabled={isDisabled}
+          size={size}
+          variant="ghost"
+        >
           <Icon icon="gravity-ui:heart-fill" />
           Like
         </ToggleButton>
@@ -104,12 +114,26 @@ const SizesTemplate = () => (
   </div>
 );
 
-const IconOnlyTemplate = ({isDisabled, size, variant}: ToggleButton["RootProps"]) => (
+const IconOnlyTemplate = ({
+  isDisabled,
+  size,
+  variant,
+}: ToggleButton["RootProps"]) => (
   <div className="flex gap-3">
-    <ToggleButton isIconOnly isDisabled={isDisabled} size={size} variant={variant}>
+    <ToggleButton
+      isIconOnly
+      isDisabled={isDisabled}
+      size={size}
+      variant={variant}
+    >
       <Icon icon="gravity-ui:heart" />
     </ToggleButton>
-    <ToggleButton isIconOnly isDisabled={isDisabled} size={size} variant={variant ?? "ghost"}>
+    <ToggleButton
+      isIconOnly
+      isDisabled={isDisabled}
+      size={size}
+      variant={variant ?? "ghost"}
+    >
       <Icon icon="gravity-ui:bookmark" />
     </ToggleButton>
   </div>
@@ -122,16 +146,21 @@ const ControlledTemplate = () => {
     <div className="flex flex-col gap-4">
       <div className="flex gap-3">
         <ToggleButton isSelected={isSelected} onChange={setIsSelected}>
-          {({isSelected: selected}) => (
+          {({ isSelected: selected }) => (
             <>
-              <Icon icon={selected ? "gravity-ui:heart-fill" : "gravity-ui:heart"} />
+              <Icon
+                icon={selected ? "gravity-ui:heart-fill" : "gravity-ui:heart"}
+              />
               {selected ? "Liked" : "Like"}
             </>
           )}
         </ToggleButton>
       </div>
-      <p className="text-sm text-muted">
-        Status: <span className="font-medium">{isSelected ? "Selected" : "Not selected"}</span>
+      <p className="text-muted text-sm">
+        Status:{" "}
+        <span className="font-medium">
+          {isSelected ? "Selected" : "Not selected"}
+        </span>
       </p>
     </div>
   );
@@ -158,23 +187,42 @@ const RealWorldTemplate = () => {
   return (
     <div className="flex items-center gap-2">
       <ToggleButton isSelected={liked} size="sm" onChange={setLiked}>
-        {({isSelected}) => (
+        {({ isSelected }) => (
           <>
-            <Icon icon={isSelected ? "gravity-ui:heart-fill" : "gravity-ui:heart"} />
+            <Icon
+              icon={isSelected ? "gravity-ui:heart-fill" : "gravity-ui:heart"}
+            />
             Like
           </>
         )}
       </ToggleButton>
-      <ToggleButton isSelected={bookmarked} size="sm" variant="ghost" onChange={setBookmarked}>
-        {({isSelected}) => (
+      <ToggleButton
+        isSelected={bookmarked}
+        size="sm"
+        variant="ghost"
+        onChange={setBookmarked}
+      >
+        {({ isSelected }) => (
           <>
-            <Icon icon={isSelected ? "gravity-ui:bookmark-fill" : "gravity-ui:bookmark"} />
+            <Icon
+              icon={
+                isSelected ? "gravity-ui:bookmark-fill" : "gravity-ui:bookmark"
+              }
+            />
             Save
           </>
         )}
       </ToggleButton>
-      <ToggleButton isIconOnly isSelected={pinned} size="sm" variant="ghost" onChange={setPinned}>
-        {({isSelected}) => <Icon icon={isSelected ? "gravity-ui:pin-fill" : "gravity-ui:pin"} />}
+      <ToggleButton
+        isIconOnly
+        isSelected={pinned}
+        size="sm"
+        variant="ghost"
+        onChange={setPinned}
+      >
+        {({ isSelected }) => (
+          <Icon icon={isSelected ? "gravity-ui:pin-fill" : "gravity-ui:pin"} />
+        )}
       </ToggleButton>
     </div>
   );

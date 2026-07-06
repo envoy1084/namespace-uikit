@@ -1,9 +1,9 @@
-import type {SkeletonProps} from "./index";
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
 import React from "react";
 
-import {Skeleton} from "./index";
+import type { SkeletonProps } from "./index";
+import { Skeleton } from "./index";
 
 export default {
   argTypes: {
@@ -22,7 +22,7 @@ export default {
 const defaultArgs: SkeletonProps = {};
 
 const Template = (props: SkeletonProps) => (
-  <div className="bg-surface-1 w-[200px] space-y-5 rounded-3xl p-4 shadow-surface">
+  <div className="bg-surface-1 shadow-surface w-[200px] space-y-5 rounded-3xl p-4">
     <Skeleton className="h-24 rounded-xl" {...props} />
     <div className="space-y-3">
       <Skeleton className="h-3 w-3/5 rounded-lg" {...props} />

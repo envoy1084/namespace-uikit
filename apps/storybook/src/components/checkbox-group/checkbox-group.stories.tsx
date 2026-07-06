@@ -1,15 +1,14 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import {Button} from "../button";
-import {Checkbox} from "../checkbox";
-import {Description} from "../description";
-import {FieldError} from "../field-error";
-import {Form} from "../form";
-import {Label} from "../label";
-
-import {CheckboxGroup} from "./index";
+import { Button } from "../button";
+import { Checkbox } from "../checkbox";
+import { Description } from "../description";
+import { FieldError } from "../field-error";
+import { Form } from "../form";
+import { Label } from "../label";
+import { CheckboxGroup } from "./index";
 
 export default {
   argTypes: {},
@@ -67,7 +66,7 @@ export const WithCustomIndicator: Story = {
         <Checkbox.Content>
           <Checkbox.Control>
             <Checkbox.Indicator>
-              {({isSelected}) =>
+              {({ isSelected }) =>
                 isSelected ? (
                   <svg
                     aria-hidden="true"
@@ -91,7 +90,7 @@ export const WithCustomIndicator: Story = {
         <Checkbox.Content>
           <Checkbox.Control>
             <Checkbox.Indicator>
-              {({isSelected}) =>
+              {({ isSelected }) =>
                 isSelected ? (
                   <svg
                     aria-hidden="true"
@@ -123,7 +122,9 @@ export const Indeterminate: Story = {
     return (
       <div>
         <Checkbox
-          isIndeterminate={selected.length > 0 && selected.length < allOptions.length}
+          isIndeterminate={
+            selected.length > 0 && selected.length < allOptions.length
+          }
           isSelected={selected.length === allOptions.length}
           name="select-all"
           onChange={(isSelected: boolean) => {
@@ -211,7 +212,9 @@ export const Validation: Story = {
               Push notifications
             </Checkbox.Content>
           </Checkbox>
-          <FieldError>Please select at least one notification method.</FieldError>
+          <FieldError>
+            Please select at least one notification method.
+          </FieldError>
         </CheckboxGroup>
         <Button type="submit">Submit</Button>
       </Form>
@@ -255,7 +258,9 @@ export const Controlled: Story = {
             Writing
           </Checkbox.Content>
         </Checkbox>
-        <Label className="my-4 text-sm text-muted">Selected: {selected.join(", ") || "None"}</Label>
+        <Label className="text-muted my-4 text-sm">
+          Selected: {selected.join(", ") || "None"}
+        </Label>
       </CheckboxGroup>
     );
   },

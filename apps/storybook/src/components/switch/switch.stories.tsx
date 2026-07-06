@@ -1,12 +1,12 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
 
-import {Description} from "../description";
-import {FieldError} from "../field-error";
+import { Icon } from "@iconify/react";
 
-import {Switch} from "./index";
+import { Description } from "../description";
+import { FieldError } from "../field-error";
+import { Switch } from "./index";
 
 export default {
   argTypes: {},
@@ -84,7 +84,9 @@ export const Controlled: Story = {
             Enable notifications
           </Switch.Content>
         </Switch>
-        <p className="text-sm text-muted">Switch is {isSelected ? "on" : "off"}</p>
+        <p className="text-muted text-sm">
+          Switch is {isSelected ? "on" : "off"}
+        </p>
       </div>
     );
   },
@@ -121,7 +123,9 @@ export const Validation: Story = {
     <Switch
       isRequired
       name="terms-switch"
-      validate={(isSelected) => (isSelected ? true : "You must accept to continue")}
+      validate={(isSelected) =>
+        isSelected ? true : "You must accept to continue"
+      }
     >
       <Switch.Content>
         <Switch.Control>
@@ -197,7 +201,7 @@ export const WithDescription: Story = {
 export const WithCustomStyles: Story = {
   render: () => (
     <Switch aria-label="Power">
-      {({isSelected}) => (
+      {({ isSelected }) => (
         <Switch.Content>
           <Switch.Control
             className={`h-[31px] w-[51px] bg-blue-500 ${isSelected ? "bg-cyan-500 shadow-[0_0_12px_rgba(6,182,212,0.5)]" : ""}`}
@@ -258,9 +262,11 @@ export const WithIcons: Story = {
       <div className="flex gap-3">
         {Object.entries(icons).map(([key, value]) => (
           <Switch key={key} defaultSelected aria-label={key} size="lg">
-            {({isSelected}) => (
+            {({ isSelected }) => (
               <Switch.Content>
-                <Switch.Control className={isSelected ? value.selectedControlClass : ""}>
+                <Switch.Control
+                  className={isSelected ? value.selectedControlClass : ""}
+                >
                   <Switch.Thumb>
                     <Switch.Icon>
                       <Icon
@@ -282,7 +288,7 @@ export const WithIcons: Story = {
 export const RenderProps: Story = {
   render: () => (
     <Switch>
-      {({isSelected}) => (
+      {({ isSelected }) => (
         <Switch.Content>
           <Switch.Control>
             <Switch.Thumb />

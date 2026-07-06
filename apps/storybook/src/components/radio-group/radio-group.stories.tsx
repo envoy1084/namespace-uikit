@@ -1,17 +1,17 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
-import {cx} from "tailwind-variants";
 
-import {Button} from "../button";
-import {Description} from "../description";
-import {FieldError} from "../field-error";
-import {Form} from "../form";
-import {Label} from "../label";
-import {Radio} from "../radio";
+import { Icon } from "@iconify/react";
+import { cx } from "tailwind-variants";
 
-import {RadioGroup} from "./index";
+import { Button } from "../button";
+import { Description } from "../description";
+import { FieldError } from "../field-error";
+import { Form } from "../form";
+import { Label } from "../label";
+import { Radio } from "../radio";
+import { RadioGroup } from "./index";
 
 export default {
   argTypes: {},
@@ -66,8 +66,12 @@ export const Variants: Story = {
   render: () => (
     <div className="flex flex-col gap-8 px-4">
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-muted">Primary variant</p>
-        <RadioGroup defaultValue="option1" name="primary-plan" variant="primary">
+        <p className="text-muted text-sm font-medium">Primary variant</p>
+        <RadioGroup
+          defaultValue="option1"
+          name="primary-plan"
+          variant="primary"
+        >
           <Radio value="option1">
             <Radio.Content>
               <Radio.Control>
@@ -89,8 +93,12 @@ export const Variants: Story = {
         </RadioGroup>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-muted">Secondary variant</p>
-        <RadioGroup defaultValue="option1" name="secondary-plan" variant="secondary">
+        <p className="text-muted text-sm font-medium">Secondary variant</p>
+        <RadioGroup
+          defaultValue="option1"
+          name="secondary-plan"
+          variant="secondary"
+        >
           <Radio value="option1">
             <Radio.Content>
               <Radio.Control>
@@ -98,7 +106,9 @@ export const Variants: Story = {
               </Radio.Control>
               Option 1
             </Radio.Content>
-            <Description>Lower emphasis variant for use in surfaces</Description>
+            <Description>
+              Lower emphasis variant for use in surfaces
+            </Description>
           </Radio>
           <Radio value="option2">
             <Radio.Content>
@@ -153,9 +163,11 @@ export const WithCustomIndicator: Story = {
           <Radio.Content>
             <Radio.Control>
               <Radio.Indicator>
-                {({isSelected}) =>
+                {({ isSelected }) =>
                   isSelected ? (
-                    <span className="text-xs leading-none text-background">✓</span>
+                    <span className="text-background text-xs leading-none">
+                      ✓
+                    </span>
                   ) : null
                 }
               </Radio.Indicator>
@@ -168,9 +180,11 @@ export const WithCustomIndicator: Story = {
           <Radio.Content>
             <Radio.Control>
               <Radio.Indicator>
-                {({isSelected}) =>
+                {({ isSelected }) =>
                   isSelected ? (
-                    <span className="text-xs leading-none text-background">✓</span>
+                    <span className="text-background text-xs leading-none">
+                      ✓
+                    </span>
                   ) : null
                 }
               </Radio.Indicator>
@@ -183,9 +197,11 @@ export const WithCustomIndicator: Story = {
           <Radio.Content>
             <Radio.Control>
               <Radio.Indicator>
-                {({isSelected}) =>
+                {({ isSelected }) =>
                   isSelected ? (
-                    <span className="text-xs leading-none text-background">✓</span>
+                    <span className="text-background text-xs leading-none">
+                      ✓
+                    </span>
                   ) : null
                 }
               </Radio.Indicator>
@@ -203,7 +219,11 @@ export const Orientation: Story = {
   render: () => (
     <div className="flex flex-col gap-4 px-4">
       <Label>Subscription plan</Label>
-      <RadioGroup defaultValue="pro" name="plan-orientation" orientation="horizontal">
+      <RadioGroup
+        defaultValue="pro"
+        name="plan-orientation"
+        orientation="horizontal"
+      >
         <Radio value="starter">
           <Radio.Content>
             <Radio.Control>
@@ -323,7 +343,7 @@ export const Controlled: Story = {
             <Description>Share access with up to 10 teammates</Description>
           </Radio>
         </RadioGroup>
-        <p className="mt-2 text-sm text-muted">
+        <p className="text-muted mt-2 text-sm">
           Selected plan: <span className="font-medium">{value}</span>
         </p>
       </div>
@@ -371,7 +391,7 @@ export const Uncontrolled: Story = {
             <Description>Share access with up to 10 teammates</Description>
           </Radio>
         </RadioGroup>
-        <p className="mt-2 text-sm text-muted">
+        <p className="text-muted mt-2 text-sm">
           Last chosen plan: <span className="font-medium">{selection}</span>
         </p>
       </div>
@@ -384,7 +404,9 @@ export const Disabled: Story = {
     <div className="px-4">
       <RadioGroup isDisabled defaultValue="pro" name="plan-disabled">
         <Label>Subscription plan</Label>
-        <Description>Plan changes are temporarily paused while we roll out updates.</Description>
+        <Description>
+          Plan changes are temporarily paused while we roll out updates.
+        </Description>
         <Radio value="starter">
           <Radio.Content>
             <Radio.Control>
@@ -482,7 +504,9 @@ export const DeliveryAndPaymentExample: Story = {
                       <span>{option.title}</span>
                       <Description>{option.description}</Description>
                     </div>
-                    <span className="text-sm font-semibold">{option.price}</span>
+                    <span className="text-sm font-semibold">
+                      {option.price}
+                    </span>
                   </Radio.Content>
                 </Radio>
               ))}
@@ -506,7 +530,7 @@ export const DeliveryAndPaymentExample: Story = {
                     <Radio.Control className="absolute top-3 right-4 size-5">
                       <Radio.Indicator />
                     </Radio.Control>
-                    <Icon className="size-6 text-accent" icon={option.icon} />
+                    <Icon className="text-accent size-6" icon={option.icon} />
                     <div className="flex flex-col gap-1">
                       <span>{option.title}</span>
                       <Description>{option.description}</Description>

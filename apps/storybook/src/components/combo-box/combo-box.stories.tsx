@@ -1,25 +1,25 @@
-import type {Key} from "../rac";
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
-import {useAsyncList} from "@react-stately/data";
 import React from "react";
 
-import {Avatar, AvatarFallback, AvatarImage} from "../avatar";
-import {Button} from "../button";
-import {Description} from "../description";
-import {EmptyState} from "../empty-state";
-import {FieldError} from "../field-error";
-import {Form} from "../form";
-import {Header} from "../header";
-import {Input} from "../input";
-import {Label} from "../label";
-import {ListBox} from "../list-box";
-import {Collection, ListBoxLoadMoreItem} from "../rac";
-import {Separator} from "../separator";
-import {Spinner} from "../spinner";
+import { Icon } from "@iconify/react";
+import { useAsyncList } from "@react-stately/data";
 
-import {ComboBox} from "./index";
+import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
+import { Button } from "../button";
+import { Description } from "../description";
+import { EmptyState } from "../empty-state";
+import { FieldError } from "../field-error";
+import { Form } from "../form";
+import { Header } from "../header";
+import { Input } from "../input";
+import { Label } from "../label";
+import { ListBox } from "../list-box";
+import type { Key } from "../rac";
+import { Collection, ListBoxLoadMoreItem } from "../rac";
+import { Separator } from "../separator";
+import { Spinner } from "../spinner";
+import { ComboBox } from "./index";
 
 const meta: Meta<typeof ComboBox> = {
   component: ComboBox,
@@ -32,6 +32,18 @@ const meta: Meta<typeof ComboBox> = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+const handleComboBoxRequiredSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  const formData = new FormData(e.currentTarget);
+  const data: Record<string, string> = {};
+
+  formData.forEach((value, key) => {
+    data[key] = value.toString();
+  });
+
+  alert("Form submitted successfully!");
+};
 
 export const Default: Story = {
   render: () => (
@@ -363,20 +375,11 @@ export const CustomIndicator: Story = {
 
 export const Required: Story = {
   render: () => {
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const formData = new FormData(e.currentTarget);
-      const data: Record<string, string> = {};
-
-      formData.forEach((value, key) => {
-        data[key] = value.toString();
-      });
-
-      alert("Form submitted successfully!");
-    };
-
     return (
-      <Form className="flex w-[256px] flex-col gap-4" onSubmit={onSubmit}>
+      <Form
+        className="flex w-[256px] flex-col gap-4"
+        onSubmit={handleComboBoxRequiredSubmit}
+      >
         <ComboBox isRequired className="w-full" name="animal">
           <Label>Favorite Animal</Label>
           <ComboBox.InputGroup>
@@ -426,35 +429,40 @@ export const CustomValue: Story = {
         id: "1",
         name: "Bob",
         email: "bob@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
         fallback: "B",
       },
       {
         id: "2",
         name: "Fred",
         email: "fred@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
         fallback: "F",
       },
       {
         id: "3",
         name: "Martha",
         email: "martha@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
         fallback: "M",
       },
       {
         id: "4",
         name: "John",
         email: "john@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
         fallback: "J",
       },
       {
         id: "5",
         name: "Jane",
         email: "jane@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
         fallback: "J",
       },
     ];
@@ -532,7 +540,11 @@ export const Controlled: Story = {
           <ComboBox.Popover>
             <ListBox>
               {animals.map((animal) => (
-                <ListBox.Item key={animal.id} id={animal.id} textValue={animal.name}>
+                <ListBox.Item
+                  key={animal.id}
+                  id={animal.id}
+                  textValue={animal.name}
+                >
                   {animal.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
@@ -540,7 +552,9 @@ export const Controlled: Story = {
             </ListBox>
           </ComboBox.Popover>
         </ComboBox>
-        <p className="text-sm text-muted">Selected: {selectedAnimal?.name || "None"}</p>
+        <p className="text-muted text-sm">
+          Selected: {selectedAnimal?.name || "None"}
+        </p>
       </div>
     );
   },
@@ -552,7 +566,11 @@ export const ControlledInputValue: Story = {
 
     return (
       <div className="space-y-2">
-        <ComboBox className="w-[256px]" inputValue={inputValue} onInputChange={setInputValue}>
+        <ComboBox
+          className="w-[256px]"
+          inputValue={inputValue}
+          onInputChange={setInputValue}
+        >
           <Label>Search (controlled input)</Label>
           <ComboBox.InputGroup>
             <Input placeholder="Type to search..." />
@@ -587,7 +605,9 @@ export const ControlledInputValue: Story = {
             </ListBox>
           </ComboBox.Popover>
         </ComboBox>
-        <p className="text-sm text-muted">Input value: {inputValue || "(empty)"}</p>
+        <p className="text-muted text-sm">
+          Input value: {inputValue || "(empty)"}
+        </p>
       </div>
     );
   },
@@ -600,7 +620,7 @@ interface Character {
 export const AsynchronousLoading: Story = {
   render: () => {
     const list = useAsyncList<Character>({
-      async load({cursor, filterText, signal}) {
+      async load({ cursor, filterText, signal }) {
         if (cursor) {
           cursor = cursor.replace(/^http:\/\//i, "https://");
         }
@@ -661,11 +681,11 @@ export const AsynchronousLoading: Story = {
 export const CustomFiltering: Story = {
   render: () => {
     const animals = [
-      {id: "cat", name: "Cat"},
-      {id: "dog", name: "Dog"},
-      {id: "bird", name: "Bird"},
-      {id: "fish", name: "Fish"},
-      {id: "hamster", name: "Hamster"},
+      { id: "cat", name: "Cat" },
+      { id: "dog", name: "Dog" },
+      { id: "bird", name: "Bird" },
+      { id: "fish", name: "Fish" },
+      { id: "hamster", name: "Hamster" },
     ];
 
     return (
@@ -685,7 +705,11 @@ export const CustomFiltering: Story = {
         <ComboBox.Popover>
           <ListBox>
             {animals.map((animal) => (
-              <ListBox.Item key={animal.id} id={animal.id} textValue={animal.name}>
+              <ListBox.Item
+                key={animal.id}
+                id={animal.id}
+                textValue={animal.name}
+              >
                 {animal.name}
                 <ListBox.ItemIndicator />
               </ListBox.Item>
@@ -733,7 +757,9 @@ export const AllowsCustomValue: Story = {
           </ListBox.Item>
         </ListBox>
       </ComboBox.Popover>
-      <Description>You can type any animal name, even if it's not in the list</Description>
+      <Description>
+        You can type any animal name, even if it's not in the list
+      </Description>
     </ComboBox>
   ),
 };
@@ -782,7 +808,7 @@ export const MenuTrigger: Story = {
   render: () => (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-muted">Focus (default)</p>
+        <p className="text-muted text-sm font-medium">Focus (default)</p>
         <ComboBox className="w-[256px]" menuTrigger="focus">
           <Label>Favorite Animal</Label>
           <ComboBox.InputGroup>
@@ -822,7 +848,7 @@ export const MenuTrigger: Story = {
       </div>
 
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-muted">Input</p>
+        <p className="text-muted text-sm font-medium">Input</p>
         <ComboBox className="w-[256px]" menuTrigger="input">
           <Label>Favorite Animal</Label>
           <ComboBox.InputGroup>
@@ -857,12 +883,14 @@ export const MenuTrigger: Story = {
               </ListBox.Item>
             </ListBox>
           </ComboBox.Popover>
-          <Description>Popover opens when the user edits the input text</Description>
+          <Description>
+            Popover opens when the user edits the input text
+          </Description>
         </ComboBox>
       </div>
 
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-muted">Manual</p>
+        <p className="text-muted text-sm font-medium">Manual</p>
         <ComboBox className="w-[256px]" menuTrigger="manual">
           <Label>Favorite Animal</Label>
           <ComboBox.InputGroup>
@@ -898,7 +926,8 @@ export const MenuTrigger: Story = {
             </ListBox>
           </ComboBox.Popover>
           <Description>
-            Popover only opens when the trigger button is pressed or arrow keys are used
+            Popover only opens when the trigger button is pressed or arrow keys
+            are used
           </Description>
         </ComboBox>
       </div>

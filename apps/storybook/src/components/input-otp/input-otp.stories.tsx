@@ -1,15 +1,14 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import {Button} from "../button";
-import {Description} from "../description";
-import {Form} from "../form";
-import {Label} from "../label";
-import {Link} from "../link";
-import {Spinner} from "../spinner";
-
-import {InputOTP, REGEXP_ONLY_CHARS} from "./index";
+import { Button } from "../button";
+import { Description } from "../description";
+import { Form } from "../form";
+import { Label } from "../label";
+import { Link } from "../link";
+import { Spinner } from "../spinner";
+import { InputOTP, REGEXP_ONLY_CHARS } from "./index";
 
 const meta: Meta<typeof InputOTP> = {
   argTypes: {
@@ -38,7 +37,9 @@ export const Default: Story = {
     <div className="flex w-[280px] flex-col gap-2">
       <div className="flex flex-col gap-1">
         <Label>Verify account</Label>
-        <p className="text-sm text-muted">We&apos;ve sent a code to a****@gmail.com</p>
+        <p className="text-muted text-sm">
+          We&apos;ve sent a code to a****@gmail.com
+        </p>
       </div>
       <InputOTP {...args} maxLength={6}>
         <InputOTP.Group>
@@ -54,7 +55,7 @@ export const Default: Story = {
         </InputOTP.Group>
       </InputOTP>
       <div className="flex items-center gap-[5px] px-1 pt-1">
-        <p className="text-sm text-muted">Didn&apos;t receive a code?</p>
+        <p className="text-muted text-sm">Didn&apos;t receive a code?</p>
         <Link className="text-foreground" underline="always">
           Resend
         </Link>
@@ -187,7 +188,7 @@ export const Controlled: Story = {
             <>
               Value: {value} ({value.length}/6) •{" "}
               <button
-                className="font-medium text-foreground underline"
+                className="text-foreground font-medium underline"
                 onClick={() => setValue("")}
               >
                 Clear
@@ -255,7 +256,11 @@ export const WithValidation: Story = {
               <InputOTP.Slot index={5} />
             </InputOTP.Group>
           </InputOTP>
-          <span className="field-error" data-visible={isInvalid} id="code-error">
+          <span
+            className="field-error"
+            data-visible={isInvalid}
+            id="code-error"
+          >
             Invalid code. Please try again.
           </span>
           <Button isDisabled={value.length !== 6} type="submit">
@@ -372,7 +377,9 @@ export const FormExample: Story = {
       <Form className="flex w-[280px] flex-col gap-4" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
           <Label>Two-factor authentication</Label>
-          <Description>Enter the 6-digit code from your authenticator app</Description>
+          <Description>
+            Enter the 6-digit code from your authenticator app
+          </Description>
           <InputOTP
             {...args}
             isInvalid={!!error}
@@ -416,8 +423,8 @@ export const FormExample: Story = {
           )}
         </Button>
         <div className="flex items-center justify-center gap-1">
-          <p className="text-sm text-muted">Having trouble?</p>
-          <Link className="text-sm text-foreground" underline="always">
+          <p className="text-muted text-sm">Having trouble?</p>
+          <Link className="text-foreground text-sm" underline="always">
             Use backup code
           </Link>
         </div>

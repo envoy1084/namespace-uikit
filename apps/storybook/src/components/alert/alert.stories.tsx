@@ -1,10 +1,9 @@
 import React from "react";
 
-import {Button} from "../button";
-import {CloseButton} from "../close-button";
-import {Spinner} from "../spinner";
-
-import {Alert} from "./index";
+import { Button } from "../button";
+import { CloseButton } from "../close-button";
+import { Spinner } from "../spinner";
+import { Alert } from "./index";
 
 export default {
   argTypes: {},
@@ -25,8 +24,8 @@ const Template = () => (
       <Alert.Content>
         <Alert.Title>New features available</Alert.Title>
         <Alert.Description>
-          Check out our latest updates including dark mode support and improved accessibility
-          features.
+          Check out our latest updates including dark mode support and improved
+          accessibility features.
         </Alert.Description>
       </Alert.Content>
     </Alert>
@@ -37,8 +36,8 @@ const Template = () => (
       <Alert.Content>
         <Alert.Title>Update available</Alert.Title>
         <Alert.Description>
-          A new version of the application is available. Please refresh to get the latest features
-          and bug fixes.
+          A new version of the application is available. Please refresh to get
+          the latest features and bug fixes.
         </Alert.Description>
         <Button className="mt-2 sm:hidden" size="sm" variant="primary">
           Refresh
@@ -55,8 +54,8 @@ const Template = () => (
       <Alert.Content>
         <Alert.Title>Payment successful</Alert.Title>
         <Alert.Description>
-          Your payment of $49.99 has been processed. A confirmation email has been sent to your
-          inbox.
+          Your payment of $49.99 has been processed. A confirmation email has
+          been sent to your inbox.
         </Alert.Description>
         <Button className="mt-2 sm:hidden" size="sm" variant="secondary">
           View Receipt
@@ -73,8 +72,8 @@ const Template = () => (
       <Alert.Content>
         <Alert.Title>Storage almost full</Alert.Title>
         <Alert.Description>
-          You're using 90% of your storage quota. Consider upgrading your plan or removing unused
-          files to avoid service interruption.
+          You're using 90% of your storage quota. Consider upgrading your plan
+          or removing unused files to avoid service interruption.
         </Alert.Description>
         <Button className="mt-2 sm:hidden" size="sm" variant="secondary">
           Manage Storage
@@ -135,8 +134,8 @@ const Template = () => (
       <Alert.Content>
         <Alert.Title>Scheduled maintenance</Alert.Title>
         <Alert.Description>
-          Our services will be unavailable on Sunday, March 15th from 2:00 AM to 6:00 AM UTC for
-          scheduled maintenance.
+          Our services will be unavailable on Sunday, March 15th from 2:00 AM to
+          6:00 AM UTC for scheduled maintenance.
         </Alert.Description>
       </Alert.Content>
     </Alert>

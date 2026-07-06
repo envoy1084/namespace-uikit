@@ -1,9 +1,15 @@
-import type {Decorator} from "@storybook/react";
+import type { Decorator } from "@storybook/react";
 
-import React, {useEffect} from "react";
-import {addons, useGlobals} from "storybook/preview-api";
+import React, { useEffect } from "react";
 
-import {THEME_ADDON_ID, THEME_EVENT_NAME, THEME_GLOBAL_TYPE_ID, ensureThemeKey} from "./constants";
+import { addons, useGlobals } from "storybook/preview-api";
+
+import {
+  THEME_ADDON_ID,
+  THEME_EVENT_NAME,
+  THEME_GLOBAL_TYPE_ID,
+  ensureThemeKey,
+} from "./constants";
 
 /** Update preview iframe with theme (only preview uses CSS selectors) */
 const updatePreviewTheme = (theme: string) => {
@@ -17,7 +23,9 @@ const updatePreviewTheme = (theme: string) => {
 export const withTheme: Decorator = (Story, context) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks -- Storybook decorators are valid hook consumers
   const [globals] = useGlobals();
-  const theme = ensureThemeKey(globals[THEME_GLOBAL_TYPE_ID] as string | undefined);
+  const theme = ensureThemeKey(
+    globals[THEME_GLOBAL_TYPE_ID] as string | undefined,
+  );
 
   // Update theme in memory and apply to preview/docs
   // eslint-disable-next-line react-hooks/rules-of-hooks -- Storybook decorators are valid hook consumers
@@ -28,7 +36,7 @@ export const withTheme: Decorator = (Story, context) => {
     const channel = addons.getChannel();
 
     if (channel) {
-      channel.emit(THEME_EVENT_NAME, {theme}, {source: THEME_ADDON_ID});
+      channel.emit(THEME_EVENT_NAME, { theme }, { source: THEME_ADDON_ID });
     }
   }, [theme]);
 

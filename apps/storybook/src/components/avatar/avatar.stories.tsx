@@ -1,12 +1,12 @@
-import type {AvatarRootProps, AvatarVariants} from "./index";
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
 
-import {Separator} from "../separator";
+import { Icon } from "@iconify/react";
 
-import {Avatar} from "./index";
+import { Separator } from "../separator";
+import type { AvatarRootProps, AvatarVariants } from "./index";
+import { Avatar } from "./index";
 
 export default {
   argTypes: {
@@ -59,32 +59,37 @@ const users = [
 const circles = [
   {
     id: 1,
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
     name: "R",
   },
   {
     id: 2,
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
     name: "O",
   },
   {
     id: 3,
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
     name: "G",
   },
   {
     id: 4,
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/white.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/white.jpg",
     name: "W",
   },
   {
     id: 5,
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
     name: "B",
   },
 ];
 
-const Template = ({color, size}: Avatar["RootProps"]) => (
+const Template = ({ color, size }: Avatar["RootProps"]) => (
   <div className="flex items-start gap-4">
     <div className="flex flex-col gap-4">
       <Avatar color={color} size={size}>
@@ -107,7 +112,10 @@ const Template = ({color, size}: Avatar["RootProps"]) => (
 
     <div className="flex flex-col gap-4">
       <Avatar color={color} size={size}>
-        <Avatar.Image alt="John Doe" src="https://img.heroui.chat/image/avatar?w=400&h=400&u=3" />
+        <Avatar.Image
+          alt="John Doe"
+          src="https://img.heroui.chat/image/avatar?w=400&h=400&u=3"
+        />
         <Avatar.Fallback delayMs={600}>JD</Avatar.Fallback>
       </Avatar>
       <Avatar color={color} size={size}>
@@ -125,7 +133,10 @@ const Template = ({color, size}: Avatar["RootProps"]) => (
         <Avatar.Fallback delayMs={600}>JG</Avatar.Fallback>
       </Avatar>
       <Avatar color={color} size={size}>
-        <Avatar.Image alt="Paul" src="https://img.heroui.chat/image/avatar?w=400&h=400&u=8" />
+        <Avatar.Image
+          alt="Paul"
+          src="https://img.heroui.chat/image/avatar?w=400&h=400&u=8"
+        />
         <Avatar.Fallback delayMs={600}>PG</Avatar.Fallback>
       </Avatar>
     </div>
@@ -248,23 +259,23 @@ const AvatarGroupTemplate = () => {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-center -space-x-2">
         {users.map((user) => (
-          <Avatar key={user.id} className="ring-2 ring-background">
+          <Avatar key={user.id} className="ring-background ring-2">
             <Avatar.Image src={user.image_url} />
             <Avatar.Fallback>{user.name.charAt(0)}</Avatar.Fallback>
           </Avatar>
         ))}
-        <Avatar className="ring-2 ring-background">
+        <Avatar className="ring-background ring-2">
           <Avatar.Fallback className="border-none">+5</Avatar.Fallback>
         </Avatar>
       </div>
       <div className="flex items-center justify-center -space-x-2">
         {circles.map((circle) => (
-          <Avatar key={circle.id} className="ring-2 ring-background">
+          <Avatar key={circle.id} className="ring-background ring-2">
             <Avatar.Image src={circle.image_url} />
             <Avatar.Fallback>{circle.name}</Avatar.Fallback>
           </Avatar>
         ))}
-        <Avatar className="ring-2 ring-background">
+        <Avatar className="ring-background ring-2">
           <Avatar.Fallback className="border-none">+5</Avatar.Fallback>
         </Avatar>
       </div>
@@ -298,15 +309,24 @@ export const Sizes = {
   render: () => (
     <div className="flex items-center gap-4">
       <Avatar size="sm">
-        <Avatar.Image alt="Small" src="https://img.heroui.chat/image/avatar?w=400&h=400&u=3" />
+        <Avatar.Image
+          alt="Small"
+          src="https://img.heroui.chat/image/avatar?w=400&h=400&u=3"
+        />
         <Avatar.Fallback>SM</Avatar.Fallback>
       </Avatar>
       <Avatar size="md">
-        <Avatar.Image alt="Medium" src="https://img.heroui.chat/image/avatar?w=400&h=400&u=4" />
+        <Avatar.Image
+          alt="Medium"
+          src="https://img.heroui.chat/image/avatar?w=400&h=400&u=4"
+        />
         <Avatar.Fallback>MD</Avatar.Fallback>
       </Avatar>
       <Avatar size="lg">
-        <Avatar.Image alt="Large" src="https://img.heroui.chat/image/avatar?w=400&h=400&u=5" />
+        <Avatar.Image
+          alt="Large"
+          src="https://img.heroui.chat/image/avatar?w=400&h=400&u=5"
+        />
         <Avatar.Fallback>LG</Avatar.Fallback>
       </Avatar>
     </div>
@@ -316,10 +336,14 @@ export const Sizes = {
 const VariantsTemplate = (props: AvatarRootProps) => {
   const colors = ["accent", "default", "success", "warning", "danger"] as const;
   const variants = [
-    {label: "letter", type: "letter", content: "AG"},
-    {label: "letter soft", type: "letter-soft", content: "AG"},
-    {label: "icon", type: "icon", content: <Icon icon="gravity-ui:person" />},
-    {label: "icon soft", type: "icon-soft", content: <Icon icon="gravity-ui:person" />},
+    { label: "letter", type: "letter", content: "AG" },
+    { label: "letter soft", type: "letter-soft", content: "AG" },
+    { label: "icon", type: "icon", content: <Icon icon="gravity-ui:person" /> },
+    {
+      label: "icon soft",
+      type: "icon-soft",
+      content: <Icon icon="gravity-ui:person" />,
+    },
     {
       label: "img",
       type: "img",
@@ -339,8 +363,11 @@ const VariantsTemplate = (props: AvatarRootProps) => {
       <div className="flex items-center gap-3">
         <div className="w-24 shrink-0" />
         {colors.map((color) => (
-          <div key={color} className="flex w-20 shrink-0 items-center justify-center">
-            <span className="text-xs text-muted capitalize">{color}</span>
+          <div
+            key={color}
+            className="flex w-20 shrink-0 items-center justify-center"
+          >
+            <span className="text-muted text-xs capitalize">{color}</span>
           </div>
         ))}
       </div>
@@ -350,9 +377,14 @@ const VariantsTemplate = (props: AvatarRootProps) => {
       {/* Variant rows */}
       {variants.map((variant) => (
         <div key={variant.label} className="flex items-center gap-3">
-          <div className="w-24 shrink-0 text-sm text-muted">{variant.label}</div>
+          <div className="text-muted w-24 shrink-0 text-sm">
+            {variant.label}
+          </div>
           {colors.map((color, colorIndex) => (
-            <div key={color} className="flex w-20 shrink-0 items-center justify-center">
+            <div
+              key={color}
+              className="flex w-20 shrink-0 items-center justify-center"
+            >
               <Avatar
                 {...props}
                 color={color}
@@ -362,9 +394,15 @@ const VariantsTemplate = (props: AvatarRootProps) => {
                   <>
                     <Avatar.Image
                       alt={`Avatar ${color}`}
-                      src={Array.isArray(variant.content) ? variant.content[colorIndex] : ""}
+                      src={
+                        Array.isArray(variant.content)
+                          ? variant.content[colorIndex]
+                          : ""
+                      }
                     />
-                    <Avatar.Fallback>{color.charAt(0).toUpperCase()}</Avatar.Fallback>
+                    <Avatar.Fallback>
+                      {color.charAt(0).toUpperCase()}
+                    </Avatar.Fallback>
                   </>
                 ) : (
                   <Avatar.Fallback>{variant.content}</Avatar.Fallback>

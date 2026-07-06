@@ -1,4 +1,4 @@
-import {create, themes as storybookThemes} from "storybook/theming";
+import { create, themes as storybookThemes } from "storybook/theming";
 
 // HeroUI Colors (OKLCH -> Hex approximation)
 const colors = {

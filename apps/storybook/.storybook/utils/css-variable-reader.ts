@@ -3,33 +3,36 @@
  * Reads CSS variable values from the DOM and resolves variable references
  */
 
-import {parseOklch} from "./oklch-utils";
+import { parseOklch } from "./oklch-utils";
 
 /**
  * Theme values structure matching DEFAULT_THEME_VALUES format
  */
 export interface ThemeValues {
-  background: {l: number; c: number; h: number};
-  foreground: {l: number; c: number; h: number};
-  surface: {l: number; c: number; h: number};
-  overlay: {l: number; c: number; h: number};
-  muted: {l: number; c: number; h: number};
-  scrollbar: {l: number; c: number; h: number};
-  default: {l: number; c: number; h: number};
-  accent: {l: number; c: number; h: number};
-  border: {l: number; c: number; h: number};
-  separator: {l: number; c: number; h: number};
-  segment: {l: number; c: number; h: number};
-  success: {l: number; c: number; h: number};
-  warning: {l: number; c: number; h: number};
-  danger: {l: number; c: number; h: number};
+  background: { l: number; c: number; h: number };
+  foreground: { l: number; c: number; h: number };
+  surface: { l: number; c: number; h: number };
+  overlay: { l: number; c: number; h: number };
+  muted: { l: number; c: number; h: number };
+  scrollbar: { l: number; c: number; h: number };
+  default: { l: number; c: number; h: number };
+  accent: { l: number; c: number; h: number };
+  border: { l: number; c: number; h: number };
+  separator: { l: number; c: number; h: number };
+  segment: { l: number; c: number; h: number };
+  success: { l: number; c: number; h: number };
+  warning: { l: number; c: number; h: number };
+  danger: { l: number; c: number; h: number };
 }
 
 /**
  * Read a CSS variable value from an element
  * Handles theme-specific selectors by reading from the appropriate element context
  */
-export function readCssVariable(element: HTMLElement, variableName: string): string {
+export function readCssVariable(
+  element: HTMLElement,
+  variableName: string,
+): string {
   // Get computed style from the element
   const computedStyle = getComputedStyle(element);
   const value = computedStyle.getPropertyValue(variableName).trim();
@@ -47,11 +50,15 @@ export function resolveCssVariable(
   theme: "light" | "dark",
   visited: Set<string> = new Set(),
 ): string | null {
+  void theme;
+
   // Prevent infinite loops
   if (visited.has(variableName)) {
     if (process.env.NODE_ENV === "development") {
       // eslint-disable-next-line no-console
-      console.warn(`Circular reference detected for CSS variable: ${variableName}`);
+      console.warn(
+        `Circular reference detected for CSS variable: ${variableName}`,
+      );
     }
 
     return null;
@@ -103,7 +110,9 @@ export function resolveCssVariable(
  * Parse OKLCH value and convert to {l, c, h} format
  * Handles percentage format (12% -> 0.12) and decimal format (0.12 -> 0.12)
  */
-function parseOklchToObject(value: string): {l: number; c: number; h: number} | null {
+function parseOklchToObject(
+  value: string,
+): { l: number; c: number; h: number } | null {
   const oklch = parseOklch(value);
 
   if (!oklch) {
@@ -144,7 +153,9 @@ export function readDefaultThemeValues(
   htmlElement.offsetHeight;
 
   // Verify CSS variables are available by checking a primitive variable
-  const testValue = getComputedStyle(htmlElement).getPropertyValue("--white").trim();
+  const testValue = getComputedStyle(htmlElement)
+    .getPropertyValue("--white")
+    .trim();
 
   if (!testValue && process.env.NODE_ENV === "development") {
     // eslint-disable-next-line no-console
@@ -155,32 +166,56 @@ export function readDefaultThemeValues(
 
   try {
     // Read all required CSS variables from the html element
-    const backgroundValue = resolveCssVariable(htmlElement, "--background", theme);
-    const foregroundValue = resolveCssVariable(htmlElement, "--foreground", theme);
+    const backgroundValue = resolveCssVariable(
+      htmlElement,
+      "--background",
+      theme,
+    );
+    const foregroundValue = resolveCssVariable(
+      htmlElement,
+      "--foreground",
+      theme,
+    );
     const surfaceValue = resolveCssVariable(htmlElement, "--surface", theme);
     const overlayValue = resolveCssVariable(htmlElement, "--overlay", theme);
     const mutedValue = resolveCssVariable(htmlElement, "--muted", theme);
-    const scrollbarValue = resolveCssVariable(htmlElement, "--scrollbar", theme);
+    const scrollbarValue = resolveCssVariable(
+      htmlElement,
+      "--scrollbar",
+      theme,
+    );
     const defaultValue = resolveCssVariable(htmlElement, "--default", theme);
     const accentValue = resolveCssVariable(htmlElement, "--accent", theme);
     const borderValue = resolveCssVariable(htmlElement, "--border", theme);
-    const separatorValue = resolveCssVariable(htmlElement, "--separator", theme);
+    const separatorValue = resolveCssVariable(
+      htmlElement,
+      "--separator",
+      theme,
+    );
     const segmentValue = resolveCssVariable(htmlElement, "--segment", theme);
     const successValue = resolveCssVariable(htmlElement, "--success", theme);
     const warningValue = resolveCssVariable(htmlElement, "--warning", theme);
     const dangerValue = resolveCssVariable(htmlElement, "--danger", theme);
 
     // Parse all values to OKLCH objects
-    const background = backgroundValue ? parseOklchToObject(backgroundValue) : null;
-    const foreground = foregroundValue ? parseOklchToObject(foregroundValue) : null;
+    const background = backgroundValue
+      ? parseOklchToObject(backgroundValue)
+      : null;
+    const foreground = foregroundValue
+      ? parseOklchToObject(foregroundValue)
+      : null;
     const surface = surfaceValue ? parseOklchToObject(surfaceValue) : null;
     const overlay = overlayValue ? parseOklchToObject(overlayValue) : null;
     const muted = mutedValue ? parseOklchToObject(mutedValue) : null;
-    const scrollbar = scrollbarValue ? parseOklchToObject(scrollbarValue) : null;
+    const scrollbar = scrollbarValue
+      ? parseOklchToObject(scrollbarValue)
+      : null;
     const defaultColor = defaultValue ? parseOklchToObject(defaultValue) : null;
     const accent = accentValue ? parseOklchToObject(accentValue) : null;
     const border = borderValue ? parseOklchToObject(borderValue) : null;
-    const separator = separatorValue ? parseOklchToObject(separatorValue) : null;
+    const separator = separatorValue
+      ? parseOklchToObject(separatorValue)
+      : null;
     const segment = segmentValue ? parseOklchToObject(segmentValue) : null;
     const success = successValue ? parseOklchToObject(successValue) : null;
     const warning = warningValue ? parseOklchToObject(warningValue) : null;

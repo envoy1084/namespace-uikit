@@ -1,5 +1,6 @@
-import {Description, Label, Switch} from "@heroui/react";
 import React from "react";
+
+import { Description, Label, Switch } from "@thenamespace/uikit";
 
 export function AllowNotificationsDemo() {
   return (
@@ -7,7 +8,9 @@ export function AllowNotificationsDemo() {
       <Switch defaultSelected>
         <div className="flex gap-8 p-4">
           <div className="-mt-0.5 flex flex-col justify-start gap-1">
-            <Label className="w-fit text-sm font-medium">Allow notifications</Label>
+            <Label className="w-fit text-sm font-medium">
+              Allow notifications
+            </Label>
             <Description>Receive push notifications from HeroUI</Description>
           </div>
           <Switch.Control>

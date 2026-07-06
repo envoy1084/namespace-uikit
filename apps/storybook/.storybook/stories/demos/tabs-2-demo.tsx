@@ -1,6 +1,7 @@
-import {Comment, Envelope} from "@gravity-ui/icons";
-import {Tabs} from "@heroui/react";
 import React from "react";
+
+import { Comment, Envelope } from "@gravity-ui/icons";
+import { Tabs } from "@thenamespace/uikit";
 
 export function TabsDemo2() {
   return (

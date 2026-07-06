@@ -1,10 +1,11 @@
-import type {CloseButtonProps} from "./index";
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-import {CloseButton} from "./index";
+import { Icon } from "@iconify/react";
+
+import type { CloseButtonProps } from "./index";
+import { CloseButton } from "./index";
 
 export default {
   argTypes: {

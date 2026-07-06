@@ -1,16 +1,15 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import {Button} from "../button";
-import {Description} from "../description";
-import {FieldError} from "../field-error";
-import {Form} from "../form";
-import {Kbd} from "../kbd";
-import {Label} from "../label";
-import {Spinner} from "../spinner";
-
-import {SearchField} from "./index";
+import { Button } from "../button";
+import { Description } from "../description";
+import { FieldError } from "../field-error";
+import { Form } from "../form";
+import { Kbd } from "../kbd";
+import { Label } from "../label";
+import { Spinner } from "../spinner";
+import { SearchField } from "./index";
 
 const meta: Meta<typeof SearchField> = {
   component: SearchField,
@@ -82,7 +81,10 @@ export const WithDescription: Story = {
         <Label>Search products</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input className="w-[280px]" placeholder="Search products..." />
+          <SearchField.Input
+            className="w-[280px]"
+            placeholder="Search products..."
+          />
           <SearchField.ClearButton />
         </SearchField.Group>
         <Description>Enter keywords to search for products</Description>
@@ -91,7 +93,10 @@ export const WithDescription: Story = {
         <Label>Search users</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input className="w-[280px]" placeholder="Search users..." />
+          <SearchField.Input
+            className="w-[280px]"
+            placeholder="Search users..."
+          />
           <SearchField.ClearButton />
         </SearchField.Group>
         <Description>Search by name, email, or username</Description>
@@ -115,7 +120,10 @@ export const Required: Story = {
         <Label>Search query</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input className="w-[280px]" placeholder="Enter search query..." />
+          <SearchField.Input
+            className="w-[280px]"
+            placeholder="Enter search query..."
+          />
           <SearchField.ClearButton />
         </SearchField.Group>
         <Description>Minimum 3 characters required</Description>
@@ -140,7 +148,11 @@ export const Invalid: Story = {
         <Label>Search</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input className="w-[280px]" placeholder="Search..." value="invalid@query" />
+          <SearchField.Input
+            className="w-[280px]"
+            placeholder="Search..."
+            value="invalid@query"
+          />
           <SearchField.ClearButton />
         </SearchField.Group>
         <FieldError>Invalid characters in search query</FieldError>
@@ -240,7 +252,12 @@ export const CustomIcons: Story = {
         <Label>Search (Custom Icons)</Label>
         <SearchField.Group>
           <SearchField.SearchIcon>
-            <svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 clipRule="evenodd"
                 d="M12.5 4c0 .174-.071.513-.885.888S9.538 5.5 8 5.5s-2.799-.237-3.615-.612C3.57 4.513 3.5 4.174 3.5 4s.071-.513.885-.888S6.462 2.5 8 2.5s2.799.237 3.615.612c.814.375.885.714.885.888m-1.448 2.66C10.158 6.888 9.115 7 8 7s-2.158-.113-3.052-.34l1.98 2.905c.21.308.322.672.322 1.044v3.37q.088.02.25.021c.422 0 .749-.14.95-.316c.185-.162.3-.38.3-.684v-2.39c0-.373.112-.737.322-1.045zM8 1c3.314 0 6 1 6 3a3.24 3.24 0 0 1-.563 1.826l-3.125 4.584a.35.35 0 0 0-.062.2V13c0 1.5-1.25 2.5-2.75 2.5s-1.75-1-1.75-1v-3.89a.35.35 0 0 0-.061-.2L2.563 5.826A3.24 3.24 0 0 1 2 4c0-2 2.686-3 6-3m-.88 12.936q-.015-.008-.013-.01z"
@@ -251,7 +268,12 @@ export const CustomIcons: Story = {
           </SearchField.SearchIcon>
           <SearchField.Input className="w-[280px]" placeholder="Search..." />
           <SearchField.ClearButton>
-            <svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 clipRule="evenodd"
                 d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14M6.53 5.47a.75.75 0 0 0-1.06 1.06L6.94 8L5.47 9.47a.75.75 0 1 0 1.06 1.06L8 9.06l1.47 1.47a.75.75 0 1 0 1.06-1.06L9.06 8l1.47-1.47a.75.75 0 1 0-1.06-1.06L8 6.94z"
@@ -286,7 +308,7 @@ export const FormExample: Story = {
       // Simulate API call
       setTimeout(() => {
         // eslint-disable-next-line no-console
-        console.log("Search submitted:", {query: value});
+        console.log("Search submitted:", { query: value });
         setValue("");
         setIsSubmitting(false);
       }, 1500);
@@ -304,13 +326,20 @@ export const FormExample: Story = {
           <Label>Search products</Label>
           <SearchField.Group>
             <SearchField.SearchIcon />
-            <SearchField.Input className="w-full" placeholder="Search products..." />
+            <SearchField.Input
+              className="w-full"
+              placeholder="Search products..."
+            />
             <SearchField.ClearButton />
           </SearchField.Group>
           {isInvalid ? (
-            <FieldError>Search query must be at least {MIN_LENGTH} characters</FieldError>
+            <FieldError>
+              Search query must be at least {MIN_LENGTH} characters
+            </FieldError>
           ) : (
-            <Description>Enter at least {MIN_LENGTH} characters to search</Description>
+            <Description>
+              Enter at least {MIN_LENGTH} characters to search
+            </Description>
           )}
         </SearchField>
         <Button
@@ -368,10 +397,16 @@ export const WithKeyboardShortcut: Story = {
             <Label>Search</Label>
             <SearchField.Group>
               <SearchField.SearchIcon />
-              <SearchField.Input ref={inputRef} className="w-[280px]" placeholder="Search..." />
+              <SearchField.Input
+                ref={inputRef}
+                className="w-[280px]"
+                placeholder="Search..."
+              />
               <SearchField.ClearButton />
             </SearchField.Group>
-            <Description>Use keyboard shortcut to quickly focus this field</Description>
+            <Description>
+              Use keyboard shortcut to quickly focus this field
+            </Description>
           </SearchField>
         </div>
         <div className="text-default-500 flex items-center gap-2 text-sm">

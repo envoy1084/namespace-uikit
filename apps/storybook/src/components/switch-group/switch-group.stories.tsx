@@ -1,11 +1,10 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import {Button} from "../button";
-import {Switch} from "../switch";
-
-import {SwitchGroup} from "./index";
+import { Button } from "../button";
+import { Switch } from "../switch";
+import { SwitchGroup } from "./index";
 
 export default {
   argTypes: {},
@@ -17,6 +16,17 @@ export default {
 } as Meta<typeof SwitchGroup>;
 
 type Story = StoryObj<typeof SwitchGroup>;
+
+const handleSwitchGroupSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  const formData = new FormData(e.target as HTMLFormElement);
+
+  alert(
+    `Form submitted with:\n${Array.from(formData.entries())
+      .map(([key, value]) => `${key}: ${value}`)
+      .join("\n")}`,
+  );
+};
 
 export const Default: Story = {
   render: () => (
@@ -82,19 +92,8 @@ export const Horizontal: Story = {
 
 export const Form: Story = {
   render: function FormExample() {
-    const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      const formData = new FormData(e.target as HTMLFormElement);
-
-      alert(
-        `Form submitted with:\n${Array.from(formData.entries())
-          .map(([key, value]) => `${key}: ${value}`)
-          .join("\n")}`,
-      );
-    };
-
     return (
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-4" onSubmit={handleSwitchGroupSubmit}>
         <SwitchGroup>
           <Switch name="notifications" value="on">
             <Switch.Content>

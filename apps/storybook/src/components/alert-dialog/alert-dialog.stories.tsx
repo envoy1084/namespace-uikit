@@ -1,12 +1,12 @@
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
-import React, {useCallback, useRef, useState} from "react";
+import React, { useCallback, useRef, useState } from "react";
 
-import {useOverlayState} from "../../hooks/use-overlay-state";
-import {Button} from "../button";
+import { Icon } from "@iconify/react";
 
-import {AlertDialog} from "./index";
+import { useOverlayState } from "../../hooks/use-overlay-state";
+import { Button } from "../button";
+import { AlertDialog } from "./index";
 
 export default {
   argTypes: {},
@@ -28,12 +28,14 @@ export const Default = () => {
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
-              <AlertDialog.Heading>Delete project permanently?</AlertDialog.Heading>
+              <AlertDialog.Heading>
+                Delete project permanently?
+              </AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                This will permanently delete <strong>My Awesome Project</strong> and all of its
-                data. This action cannot be undone.
+                This will permanently delete <strong>My Awesome Project</strong>{" "}
+                and all of its data. This action cannot be undone.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>
@@ -101,33 +103,38 @@ export const Statuses = () => {
 
   return (
     <div className="flex flex-wrap gap-4">
-      {examples.map(({actions, body, classNames, header, status, trigger}) => (
-        <AlertDialog key={status}>
-          <Button className={classNames}>{trigger}</Button>
-          <AlertDialog.Backdrop>
-            <AlertDialog.Container>
-              <AlertDialog.Dialog className="sm:max-w-[400px]">
-                <AlertDialog.CloseTrigger />
-                <AlertDialog.Header>
-                  <AlertDialog.Icon status={status} />
-                  <AlertDialog.Heading>{header}</AlertDialog.Heading>
-                </AlertDialog.Header>
-                <AlertDialog.Body>
-                  <p>{body}</p>
-                </AlertDialog.Body>
-                <AlertDialog.Footer>
-                  <Button slot="close" variant="tertiary">
-                    {actions.cancel}
-                  </Button>
-                  <Button slot="close" variant={status === "danger" ? "danger" : "primary"}>
-                    {actions.confirm}
-                  </Button>
-                </AlertDialog.Footer>
-              </AlertDialog.Dialog>
-            </AlertDialog.Container>
-          </AlertDialog.Backdrop>
-        </AlertDialog>
-      ))}
+      {examples.map(
+        ({ actions, body, classNames, header, status, trigger }) => (
+          <AlertDialog key={status}>
+            <Button className={classNames}>{trigger}</Button>
+            <AlertDialog.Backdrop>
+              <AlertDialog.Container>
+                <AlertDialog.Dialog className="sm:max-w-[400px]">
+                  <AlertDialog.CloseTrigger />
+                  <AlertDialog.Header>
+                    <AlertDialog.Icon status={status} />
+                    <AlertDialog.Heading>{header}</AlertDialog.Heading>
+                  </AlertDialog.Header>
+                  <AlertDialog.Body>
+                    <p>{body}</p>
+                  </AlertDialog.Body>
+                  <AlertDialog.Footer>
+                    <Button slot="close" variant="tertiary">
+                      {actions.cancel}
+                    </Button>
+                    <Button
+                      slot="close"
+                      variant={status === "danger" ? "danger" : "primary"}
+                    >
+                      {actions.confirm}
+                    </Button>
+                  </AlertDialog.Footer>
+                </AlertDialog.Dialog>
+              </AlertDialog.Container>
+            </AlertDialog.Backdrop>
+          </AlertDialog>
+        ),
+      )}
     </div>
   );
 };
@@ -183,7 +190,9 @@ export const Sizes = () => {
     <div className="flex flex-wrap gap-4">
       {sizes.map((size) => (
         <AlertDialog key={size}>
-          <Button variant="secondary">{size.charAt(0).toUpperCase() + size.slice(1)}</Button>
+          <Button variant="secondary">
+            {size.charAt(0).toUpperCase() + size.slice(1)}
+          </Button>
           <AlertDialog.Backdrop>
             <AlertDialog.Container size={size}>
               <AlertDialog.Dialog>
@@ -200,16 +209,20 @@ export const Sizes = () => {
                   <p>
                     {size === "cover" ? (
                       <>
-                        This alert dialog uses the <code>cover</code> size variant. It spans the
-                        full screen with margins: 16px on mobile and 40px on desktop. Maintains
-                        rounded corners and standard padding. Perfect for critical confirmations
-                        that need maximum width while preserving alert dialog aesthetics.
+                        This alert dialog uses the <code>cover</code> size
+                        variant. It spans the full screen with margins: 16px on
+                        mobile and 40px on desktop. Maintains rounded corners
+                        and standard padding. Perfect for critical confirmations
+                        that need maximum width while preserving alert dialog
+                        aesthetics.
                       </>
                     ) : (
                       <>
-                        This alert dialog uses the <code>{size}</code> size variant. On mobile
-                        devices, all sizes adapt to near full-width for optimal viewing. On desktop,
-                        each size provides a different maximum width to suit various content needs.
+                        This alert dialog uses the <code>{size}</code> size
+                        variant. On mobile devices, all sizes adapt to near
+                        full-width for optimal viewing. On desktop, each size
+                        provides a different maximum width to suit various
+                        content needs.
                       </>
                     )}
                   </p>
@@ -236,7 +249,9 @@ export const BackdropVariants = () => {
     <div className="flex flex-wrap gap-4">
       {variants.map((variant) => (
         <AlertDialog key={variant}>
-          <Button variant="secondary">{variant.charAt(0).toUpperCase() + variant.slice(1)}</Button>
+          <Button variant="secondary">
+            {variant.charAt(0).toUpperCase() + variant.slice(1)}
+          </Button>
           <AlertDialog.Backdrop variant={variant}>
             <AlertDialog.Container>
               <AlertDialog.Dialog className="sm:max-w-[400px]">
@@ -244,7 +259,8 @@ export const BackdropVariants = () => {
                 <AlertDialog.Header>
                   <AlertDialog.Icon status="accent" />
                   <AlertDialog.Heading>
-                    Backdrop: {variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    Backdrop:{" "}
+                    {variant.charAt(0).toUpperCase() + variant.slice(1)}
                   </AlertDialog.Heading>
                 </AlertDialog.Header>
                 <AlertDialog.Body>
@@ -286,8 +302,8 @@ export const CustomIcon = () => (
           </AlertDialog.Header>
           <AlertDialog.Body>
             <p>
-              We'll send a password reset link to your email address. You'll need to create a new
-              password to regain access to your account.
+              We'll send a password reset link to your email address. You'll
+              need to create a new password to regain access to your account.
             </p>
           </AlertDialog.Body>
           <AlertDialog.Footer>
@@ -316,13 +332,16 @@ export const CustomBackdrop = () => (
             <AlertDialog.Icon status="danger">
               <Icon className="size-5" icon="gravity-ui:triangle-exclamation" />
             </AlertDialog.Icon>
-            <AlertDialog.Heading>Permanently delete your account?</AlertDialog.Heading>
+            <AlertDialog.Heading>
+              Permanently delete your account?
+            </AlertDialog.Heading>
           </AlertDialog.Header>
           <AlertDialog.Body>
             <p>
-              This action cannot be undone. All your data, settings, and content will be permanently
-              removed from our servers. The dramatic red backdrop emphasizes the severity and
-              irreversibility of this decision.
+              This action cannot be undone. All your data, settings, and content
+              will be permanently removed from our servers. The dramatic red
+              backdrop emphasizes the severity and irreversibility of this
+              decision.
             </p>
           </AlertDialog.Body>
           <AlertDialog.Footer className="flex-col-reverse">
@@ -343,10 +362,11 @@ export const DismissBehavior = () => (
   <div className="flex max-w-sm flex-col gap-6">
     <div className="flex flex-col gap-2">
       <h3 className="text-lg font-semibold">isDismissable</h3>
-      <p className="text-sm text-muted">
-        Controls whether the alert dialog can be dismissed by clicking the overlay backdrop. Alert
-        dialogs typically require explicit action, so this defaults to <code>false</code>. Set to{" "}
-        <code>true</code> for less critical confirmations.
+      <p className="text-muted text-sm">
+        Controls whether the alert dialog can be dismissed by clicking the
+        overlay backdrop. Alert dialogs typically require explicit action, so
+        this defaults to <code>false</code>. Set to <code>true</code> for less
+        critical confirmations.
       </p>
       <AlertDialog>
         <Button variant="secondary">Open Alert Dialog</Button>
@@ -359,14 +379,14 @@ export const DismissBehavior = () => (
                   <Icon className="size-5" icon="gravity-ui:circle-info" />
                 </AlertDialog.Icon>
                 <AlertDialog.Heading>isDismissable = false</AlertDialog.Heading>
-                <p className="text-sm leading-5 text-muted">
+                <p className="text-muted text-sm leading-5">
                   Clicking the backdrop won't close this alert dialog
                 </p>
               </AlertDialog.Header>
               <AlertDialog.Body>
                 <p>
-                  Try clicking outside this alert dialog on the overlay - it won't close. You must
-                  use the action buttons to dismiss it.
+                  Try clicking outside this alert dialog on the overlay - it
+                  won't close. You must use the action buttons to dismiss it.
                 </p>
               </AlertDialog.Body>
               <AlertDialog.Footer>
@@ -383,10 +403,10 @@ export const DismissBehavior = () => (
 
     <div className="flex flex-col gap-2">
       <h3 className="text-lg font-semibold">isKeyboardDismissDisabled</h3>
-      <p className="text-sm text-muted">
-        Controls whether the ESC key can dismiss the alert dialog. Alert dialogs typically require
-        explicit action, so this defaults to <code>true</code>. When set to <code>false</code>, the
-        ESC key will be enabled.
+      <p className="text-muted text-sm">
+        Controls whether the ESC key can dismiss the alert dialog. Alert dialogs
+        typically require explicit action, so this defaults to <code>true</code>
+        . When set to <code>false</code>, the ESC key will be enabled.
       </p>
       <AlertDialog>
         <Button variant="secondary">Open Alert Dialog</Button>
@@ -398,13 +418,17 @@ export const DismissBehavior = () => (
                 <AlertDialog.Icon status="accent">
                   <Icon className="size-5" icon="gravity-ui:circle-info" />
                 </AlertDialog.Icon>
-                <AlertDialog.Heading>isKeyboardDismissDisabled = true</AlertDialog.Heading>
-                <p className="text-sm leading-5 text-muted">ESC key is disabled</p>
+                <AlertDialog.Heading>
+                  isKeyboardDismissDisabled = true
+                </AlertDialog.Heading>
+                <p className="text-muted text-sm leading-5">
+                  ESC key is disabled
+                </p>
               </AlertDialog.Header>
               <AlertDialog.Body>
                 <p>
-                  Press ESC - nothing happens. You must use the action buttons to dismiss this alert
-                  dialog.
+                  Press ESC - nothing happens. You must use the action buttons
+                  to dismiss this alert dialog.
                 </p>
               </AlertDialog.Body>
               <AlertDialog.Footer>
@@ -425,9 +449,10 @@ export const CloseMethods = () => (
   <div className="flex max-w-2xl flex-col gap-8">
     <div className="flex flex-col gap-2">
       <h3 className="text-lg font-semibold">Using slot="close"</h3>
-      <p className="text-sm text-muted">
-        The simplest way to close a dialog. Add <code>slot="close"</code> to any Button component
-        within the dialog. When clicked, it will automatically close the dialog.
+      <p className="text-muted text-sm">
+        The simplest way to close a dialog. Add <code>slot="close"</code> to any
+        Button component within the dialog. When clicked, it will automatically
+        close the dialog.
       </p>
       <AlertDialog>
         <Button variant="secondary">Open Dialog</Button>
@@ -440,8 +465,9 @@ export const CloseMethods = () => (
               </AlertDialog.Header>
               <AlertDialog.Body>
                 <p>
-                  Click either button below - both have <code>slot="close"</code> and will close the
-                  dialog automatically.
+                  Click either button below - both have{" "}
+                  <code>slot="close"</code> and will close the dialog
+                  automatically.
                 </p>
               </AlertDialog.Body>
               <AlertDialog.Footer>
@@ -458,10 +484,10 @@ export const CloseMethods = () => (
 
     <div className="flex flex-col gap-2">
       <h3 className="text-lg font-semibold">Using Dialog render props</h3>
-      <p className="text-sm text-muted">
-        Access the <code>close</code> method from the Dialog's render props. This gives you full
-        control over when and how to close the dialog, allowing you to add custom logic before
-        closing.
+      <p className="text-muted text-sm">
+        Access the <code>close</code> method from the Dialog's render props.
+        This gives you full control over when and how to close the dialog,
+        allowing you to add custom logic before closing.
       </p>
       <AlertDialog>
         <Button variant="secondary">Open Dialog</Button>
@@ -472,16 +498,22 @@ export const CloseMethods = () => (
                 <>
                   <AlertDialog.Header>
                     <AlertDialog.Icon status="success" />
-                    <AlertDialog.Heading>Using Dialog render props</AlertDialog.Heading>
+                    <AlertDialog.Heading>
+                      Using Dialog render props
+                    </AlertDialog.Heading>
                   </AlertDialog.Header>
                   <AlertDialog.Body>
                     <p>
-                      The buttons below use the <code>close</code> method from render props. You can
-                      add validation or other logic before calling <code>renderProps.close()</code>.
+                      The buttons below use the <code>close</code> method from
+                      render props. You can add validation or other logic before
+                      calling <code>renderProps.close()</code>.
                     </p>
                   </AlertDialog.Body>
                   <AlertDialog.Footer>
-                    <Button variant="tertiary" onPress={() => renderProps.close()}>
+                    <Button
+                      variant="tertiary"
+                      onPress={() => renderProps.close()}
+                    >
                       Cancel
                     </Button>
                     <Button onPress={() => renderProps.close()}>Confirm</Button>
@@ -504,25 +536,36 @@ export const Controlled = () => {
   return (
     <div className="flex max-w-md flex-col gap-8">
       <div className="flex flex-col gap-3">
-        <h3 className="text-lg font-semibold text-foreground">With React.useState()</h3>
-        <p className="text-sm leading-relaxed text-pretty text-muted">
-          Control the alert dialog using React's <code className="text-foreground">useState</code>{" "}
-          hook for simple state management. Perfect for basic use cases.
+        <h3 className="text-foreground text-lg font-semibold">
+          With React.useState()
+        </h3>
+        <p className="text-muted text-sm leading-relaxed text-pretty">
+          Control the alert dialog using React's{" "}
+          <code className="text-foreground">useState</code> hook for simple
+          state management. Perfect for basic use cases.
         </p>
-        <div className="flex flex-col items-start gap-3 rounded-2xl bg-surface p-4 shadow-sm">
+        <div className="bg-surface flex flex-col items-start gap-3 rounded-2xl p-4 shadow-sm">
           <div className="flex w-full items-center justify-between">
-            <p className="text-xs text-muted">
+            <p className="text-muted text-xs">
               Status:{" "}
-              <span className="font-mono font-medium text-foreground">
+              <span className="text-foreground font-mono font-medium">
                 {isOpen ? "open" : "closed"}
               </span>
             </p>
           </div>
           <div className="flex gap-2">
-            <Button size="sm" variant="secondary" onPress={() => setIsOpen(true)}>
+            <Button
+              size="sm"
+              variant="secondary"
+              onPress={() => setIsOpen(true)}
+            >
               Open Dialog
             </Button>
-            <Button size="sm" variant="tertiary" onPress={() => setIsOpen(!isOpen)}>
+            <Button
+              size="sm"
+              variant="tertiary"
+              onPress={() => setIsOpen(!isOpen)}
+            >
               Toggle
             </Button>
           </div>
@@ -534,12 +577,15 @@ export const Controlled = () => {
               <AlertDialog.CloseTrigger />
               <AlertDialog.Header>
                 <AlertDialog.Icon status="accent" />
-                <AlertDialog.Heading>Controlled with useState()</AlertDialog.Heading>
+                <AlertDialog.Heading>
+                  Controlled with useState()
+                </AlertDialog.Heading>
               </AlertDialog.Header>
               <AlertDialog.Body>
                 <p>
-                  This alert dialog is controlled by React's <code>useState</code> hook. Pass{" "}
-                  <code>isOpen</code> and <code>onOpenChange</code> props to manage the dialog state
+                  This alert dialog is controlled by React's{" "}
+                  <code>useState</code> hook. Pass <code>isOpen</code> and{" "}
+                  <code>onOpenChange</code> props to manage the dialog state
                   externally.
                 </p>
               </AlertDialog.Body>
@@ -555,17 +601,19 @@ export const Controlled = () => {
       </div>
 
       <div className="flex flex-col gap-3">
-        <h3 className="text-lg font-semibold text-foreground">With useOverlayState()</h3>
-        <p className="text-sm leading-relaxed text-pretty text-muted">
-          Use the <code className="text-foreground">useOverlayState</code> hook for a cleaner API
-          with convenient methods like <code>open()</code>, <code>close()</code>, and{" "}
-          <code>toggle()</code>.
+        <h3 className="text-foreground text-lg font-semibold">
+          With useOverlayState()
+        </h3>
+        <p className="text-muted text-sm leading-relaxed text-pretty">
+          Use the <code className="text-foreground">useOverlayState</code> hook
+          for a cleaner API with convenient methods like <code>open()</code>,{" "}
+          <code>close()</code>, and <code>toggle()</code>.
         </p>
-        <div className="flex flex-col items-start gap-3 rounded-2xl bg-surface p-4 shadow-sm">
+        <div className="bg-surface flex flex-col items-start gap-3 rounded-2xl p-4 shadow-sm">
           <div className="flex w-full items-center justify-between">
-            <p className="text-xs text-muted">
+            <p className="text-muted text-xs">
               Status:{" "}
-              <span className="font-mono font-medium text-foreground">
+              <span className="text-foreground font-mono font-medium">
                 {state.isOpen ? "open" : "closed"}
               </span>
             </p>
@@ -580,20 +628,25 @@ export const Controlled = () => {
           </div>
         </div>
 
-        <AlertDialog.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
+        <AlertDialog.Backdrop
+          isOpen={state.isOpen}
+          onOpenChange={state.setOpen}
+        >
           <AlertDialog.Container>
             <AlertDialog.Dialog className="sm:max-w-[400px]">
               <AlertDialog.CloseTrigger />
               <AlertDialog.Header>
                 <AlertDialog.Icon status="success" />
-                <AlertDialog.Heading>Controlled with useOverlayState()</AlertDialog.Heading>
+                <AlertDialog.Heading>
+                  Controlled with useOverlayState()
+                </AlertDialog.Heading>
               </AlertDialog.Header>
               <AlertDialog.Body>
                 <p>
-                  The <code>useOverlayState</code> hook provides dedicated methods for common
-                  operations. No need to manually create callbacks—just use{" "}
-                  <code>state.open()</code>, <code>state.close()</code>, or{" "}
-                  <code>state.toggle()</code>.
+                  The <code>useOverlayState</code> hook provides dedicated
+                  methods for common operations. No need to manually create
+                  callbacks—just use <code>state.open()</code>,{" "}
+                  <code>state.close()</code>, or <code>state.toggle()</code>.
                 </p>
               </AlertDialog.Body>
               <AlertDialog.Footer>
@@ -612,13 +665,13 @@ export const Controlled = () => {
 
 export const CustomTrigger = () => (
   <AlertDialog>
-    <AlertDialog.Trigger className="group flex items-center gap-3 rounded-2xl bg-surface p-4 shadow-xs select-none hover:bg-surface-secondary">
-      <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-danger-soft text-danger-soft-foreground">
+    <AlertDialog.Trigger className="group bg-surface hover:bg-surface-secondary flex items-center gap-3 rounded-2xl p-4 shadow-xs select-none">
+      <div className="bg-danger-soft text-danger-soft-foreground flex size-12 shrink-0 items-center justify-center rounded-xl">
         <Icon className="size-6" icon="gravity-ui:trash-bin" />
       </div>
       <div className="flex flex-1 flex-col gap-0.5">
         <p className="text-sm font-semibold">Delete Item</p>
-        <p className="text-xs text-muted">Permanently remove this item</p>
+        <p className="text-muted text-xs">Permanently remove this item</p>
       </div>
     </AlertDialog.Trigger>
     <AlertDialog.Backdrop>
@@ -633,8 +686,9 @@ export const CustomTrigger = () => (
           </AlertDialog.Header>
           <AlertDialog.Body>
             <p>
-              Use <code>AlertDialog.Trigger</code> to create custom trigger elements beyond standard
-              buttons. This example shows a card-style trigger with icons and descriptive text.
+              Use <code>AlertDialog.Trigger</code> to create custom trigger
+              elements beyond standard buttons. This example shows a card-style
+              trigger with icons and descriptive text.
             </p>
           </AlertDialog.Body>
           <AlertDialog.Footer>
@@ -709,7 +763,7 @@ export const CustomAnimations = () => {
 
   return (
     <div className="flex flex-wrap gap-4">
-      {animations.map(({classNames, description, icon, name}) => (
+      {animations.map(({ classNames, description, icon, name }) => (
         <AlertDialog key={name}>
           <Button variant="secondary">{name}</Button>
           <AlertDialog.Backdrop className={classNames.backdrop}>
@@ -742,7 +796,9 @@ export const CustomAnimations = () => {
 
 export const CustomPortal = () => {
   const portalRef = useRef<HTMLDivElement>(null);
-  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
+  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(
+    null,
+  );
 
   const setPortalRef = useCallback((node: HTMLDivElement | null) => {
     portalRef.current = node;
@@ -753,23 +809,30 @@ export const CustomPortal = () => {
     <div className="flex flex-col gap-4">
       <div>
         <p className="text-sm">
-          Render alert dialogs inside a custom container instead of <code>document.body</code>
+          Render alert dialogs inside a custom container instead of{" "}
+          <code>document.body</code>
         </p>
-        <p className="text-sm text-muted">
-          Apply <code className="rounded px-1 py-0.5 text-xs">transform: translateZ(0)</code> to the
-          container to create a new stacking context.
+        <p className="text-muted text-sm">
+          Apply{" "}
+          <code className="rounded px-1 py-0.5 text-xs">
+            transform: translateZ(0)
+          </code>{" "}
+          to the container to create a new stacking context.
         </p>
       </div>
       <div
         ref={setPortalRef}
-        className="relative flex h-[380px] items-center justify-center overflow-hidden rounded bg-muted/20"
+        className="bg-muted/20 relative flex h-[380px] items-center justify-center overflow-hidden rounded"
         // new stacking context
-        style={{transform: "translate(0)"}}
+        style={{ transform: "translate(0)" }}
       >
         {!!portalContainer && (
           <AlertDialog>
             <Button>Open Alert Dialog</Button>
-            <AlertDialog.Backdrop className="h-full" UNSTABLE_portalContainer={portalContainer}>
+            <AlertDialog.Backdrop
+              className="h-full"
+              UNSTABLE_portalContainer={portalContainer}
+            >
               <AlertDialog.Container className="h-full max-h-full">
                 <AlertDialog.Dialog className="h-full max-h-full sm:max-w-md">
                   <AlertDialog.CloseTrigger />
@@ -778,20 +841,23 @@ export const CustomPortal = () => {
                     <AlertDialog.Heading>Custom Portal</AlertDialog.Heading>
                   </AlertDialog.Header>
                   <AlertDialog.Body>
-                    <p className="text-sm text-muted">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                      nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    <p className="text-muted text-sm">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
-                    <p className="text-sm text-muted">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                      nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    <p className="text-muted text-sm">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
-                    <p className="text-sm text-muted">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                      nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    <p className="text-muted text-sm">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                   </AlertDialog.Body>
                   <AlertDialog.Footer>

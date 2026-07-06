@@ -1,9 +1,9 @@
-import type {ColorSwatchProps} from "./index";
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
 import React from "react";
 
-import {ColorSwatch} from "./index";
+import type { ColorSwatchProps } from "./index";
+import { ColorSwatch } from "./index";
 
 export default {
   argTypes: {
@@ -75,11 +75,31 @@ const TransparencyTemplate = (_props: ColorSwatchProps) => (
 
 const WithColorNameTemplate = (_props: ColorSwatchProps) => (
   <div className="flex items-center gap-3">
-    <ColorSwatch aria-label="Primary color" color="#0485F7" colorName="Primary blue" />
-    <ColorSwatch aria-label="Danger color" color="#EF4444" colorName="Danger red" />
-    <ColorSwatch aria-label="Warning color" color="#F59E0B" colorName="Warning amber" />
-    <ColorSwatch aria-label="Success color" color="#10B981" colorName="Success green" />
-    <ColorSwatch aria-label="Accent color" color="#D946EF" colorName="Accent fuchsia" />
+    <ColorSwatch
+      aria-label="Primary color"
+      color="#0485F7"
+      colorName="Primary blue"
+    />
+    <ColorSwatch
+      aria-label="Danger color"
+      color="#EF4444"
+      colorName="Danger red"
+    />
+    <ColorSwatch
+      aria-label="Warning color"
+      color="#F59E0B"
+      colorName="Warning amber"
+    />
+    <ColorSwatch
+      aria-label="Success color"
+      color="#10B981"
+      colorName="Success green"
+    />
+    <ColorSwatch
+      aria-label="Accent color"
+      color="#D946EF"
+      colorName="Accent fuchsia"
+    />
   </div>
 );
 
@@ -90,14 +110,14 @@ const StyleRenderPropsTemplate = (_props: ColorSwatchProps) => {
     <div className="flex flex-col gap-6">
       {/* Custom border using render props */}
       <div className="flex flex-col gap-2">
-        <h3 className="text-sm font-semibold text-muted">Custom Border</h3>
+        <h3 className="text-muted text-sm font-semibold">Custom Border</h3>
         <div className="flex items-center gap-3">
           {colors.map((color) => (
             <ColorSwatch
               key={color}
               color={color}
               size="lg"
-              style={({color: c}) => ({
+              style={({ color: c }) => ({
                 boxShadow: `0 0 0 3px ${c.toString("css")}40`,
               })}
             />
@@ -107,14 +127,14 @@ const StyleRenderPropsTemplate = (_props: ColorSwatchProps) => {
 
       {/* Custom shadow using render props */}
       <div className="flex flex-col gap-2">
-        <h3 className="text-sm font-semibold text-muted">Custom Shadow</h3>
+        <h3 className="text-muted text-sm font-semibold">Custom Shadow</h3>
         <div className="flex items-center gap-3">
           {colors.map((color) => (
             <ColorSwatch
               key={color}
               color={color}
               size="lg"
-              style={({color: c}) => ({
+              style={({ color: c }) => ({
                 boxShadow: `0 4px 14px ${c.toString("css")}80`,
               })}
             />
@@ -124,14 +144,14 @@ const StyleRenderPropsTemplate = (_props: ColorSwatchProps) => {
 
       {/* Outline style using render props */}
       <div className="flex flex-col gap-2">
-        <h3 className="text-sm font-semibold text-muted">Outline Style</h3>
+        <h3 className="text-muted text-sm font-semibold">Outline Style</h3>
         <div className="flex items-center gap-3">
           {colors.map((color) => (
             <ColorSwatch
               key={color}
               color={color}
               size="lg"
-              style={({color: c}) => ({
+              style={({ color: c }) => ({
                 boxShadow: `inset 0 0 0 2px ${c.toString("css")}, inset 0 0 0 4px white`,
               })}
             />
@@ -151,13 +171,20 @@ const AllVariantsTemplate = (_props: ColorSwatchProps) => {
     <div className="flex flex-col gap-6">
       {shapes.map((shape) => (
         <div key={shape} className="flex flex-col gap-3">
-          <h3 className="text-sm font-semibold text-muted capitalize">{shape}</h3>
+          <h3 className="text-muted text-sm font-semibold capitalize">
+            {shape}
+          </h3>
           <div className="flex flex-col gap-3">
             {sizes.map((size) => (
               <div key={size} className="flex items-center gap-3">
-                <div className="w-12 text-sm text-muted">{size}</div>
+                <div className="text-muted w-12 text-sm">{size}</div>
                 {colors.map((color) => (
-                  <ColorSwatch key={color} color={color} shape={shape} size={size} />
+                  <ColorSwatch
+                    key={color}
+                    color={color}
+                    shape={shape}
+                    size={size}
+                  />
                 ))}
               </div>
             ))}

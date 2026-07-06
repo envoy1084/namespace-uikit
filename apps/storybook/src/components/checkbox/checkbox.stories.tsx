@@ -1,15 +1,15 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
-import {cx} from "tailwind-variants";
 
-import {CheckboxGroup} from "../checkbox-group";
-import {Description} from "../description";
-import {FieldError} from "../field-error";
-import {Label} from "../label";
+import { Icon } from "@iconify/react";
+import { cx } from "tailwind-variants";
 
-import {Checkbox} from "./index";
+import { CheckboxGroup } from "../checkbox-group";
+import { Description } from "../description";
+import { FieldError } from "../field-error";
+import { Label } from "../label";
+import { Checkbox } from "./index";
 
 export default {
   argTypes: {},
@@ -39,7 +39,7 @@ export const Variants: Story = {
   render: () => (
     <div className="flex flex-col gap-4 px-4">
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-muted">Primary variant</p>
+        <p className="text-muted text-sm font-medium">Primary variant</p>
         <Checkbox name="primary" variant="primary">
           <Checkbox.Content>
             <Checkbox.Control>
@@ -51,7 +51,7 @@ export const Variants: Story = {
         </Checkbox>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-muted">Secondary variant</p>
+        <p className="text-muted text-sm font-medium">Secondary variant</p>
         <Checkbox name="secondary" variant="secondary">
           <Checkbox.Content>
             <Checkbox.Control>
@@ -87,7 +87,7 @@ export const WithCustomIndicator: Story = {
         <Checkbox.Content>
           <Checkbox.Control>
             <Checkbox.Indicator>
-              {({isSelected}) =>
+              {({ isSelected }) =>
                 isSelected ? (
                   <svg viewBox="0 0 24 24">
                     <path
@@ -106,7 +106,7 @@ export const WithCustomIndicator: Story = {
         <Checkbox.Content>
           <Checkbox.Control>
             <Checkbox.Indicator>
-              {({isSelected}) =>
+              {({ isSelected }) =>
                 isSelected ? (
                   <svg fill="none" viewBox="0 0 24 24">
                     <path
@@ -135,9 +135,13 @@ export const WithCustomIndicator: Story = {
         <Checkbox.Content>
           <Checkbox.Control>
             <Checkbox.Indicator>
-              {({isIndeterminate}) =>
+              {({ isIndeterminate }) =>
                 isIndeterminate ? (
-                  <svg stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
+                  <svg
+                    stroke="currentColor"
+                    strokeWidth={3}
+                    viewBox="0 0 24 24"
+                  >
                     <line x1="21" x2="3" y1="12" y2="12" />
                   </svg>
                 ) : null
@@ -199,7 +203,11 @@ export const Controlled: Story = {
 
     return (
       <div className="flex flex-col gap-3 px-4">
-        <Checkbox id="notifications" isSelected={isSelected} onChange={setIsSelected}>
+        <Checkbox
+          id="notifications"
+          isSelected={isSelected}
+          onChange={setIsSelected}
+        >
           <Checkbox.Content>
             <Checkbox.Control>
               <Checkbox.Indicator />
@@ -207,8 +215,11 @@ export const Controlled: Story = {
             Email notifications
           </Checkbox.Content>
         </Checkbox>
-        <p className="mt-2 text-sm text-muted">
-          Status: <span className="font-medium">{isSelected ? "Enabled" : "Disabled"}</span>
+        <p className="text-muted mt-2 text-sm">
+          Status:{" "}
+          <span className="font-medium">
+            {isSelected ? "Enabled" : "Disabled"}
+          </span>
         </p>
       </div>
     );
@@ -218,7 +229,7 @@ export const Controlled: Story = {
 export const RenderProps: Story = {
   render: () => (
     <Checkbox id="terms">
-      {({isSelected}) => (
+      {({ isSelected }) => (
         <>
           <Checkbox.Content>
             <Checkbox.Control>
@@ -227,7 +238,9 @@ export const RenderProps: Story = {
             {isSelected ? "Terms accepted" : "Accept terms"}
           </Checkbox.Content>
           <Description>
-            {isSelected ? "Thank you for accepting" : "Please read and accept the terms"}
+            {isSelected
+              ? "Thank you for accepting"
+              : "Please read and accept the terms"}
           </Description>
         </>
       )}
@@ -254,7 +267,9 @@ export const Validation: Story = {
     <Checkbox
       isRequired
       name="newsletter"
-      validate={(isSelected) => (isSelected ? true : "Please subscribe to continue")}
+      validate={(isSelected) =>
+        isSelected ? true : "Please subscribe to continue"
+      }
     >
       <Checkbox.Content>
         <Checkbox.Control>
@@ -352,7 +367,11 @@ export const FeaturesAndAddOnsExample: Story = {
             <Description>Choose how you want to receive updates</Description>
             <div className="flex flex-col gap-2">
               {addOns.map((addon) => (
-                <Checkbox key={addon.value} id={addon.value} value={addon.value}>
+                <Checkbox
+                  key={addon.value}
+                  id={addon.value}
+                  value={addon.value}
+                >
                   <Checkbox.Content
                     className={cx(
                       "group relative flex w-full flex-row items-start justify-start gap-4 rounded-3xl bg-surface-tertiary px-5 py-4 transition-all",
@@ -362,7 +381,7 @@ export const FeaturesAndAddOnsExample: Story = {
                     <Checkbox.Control className="absolute top-3 right-4 size-5 rounded-full before:rounded-full">
                       <Checkbox.Indicator />
                     </Checkbox.Control>
-                    <Icon className="size-5 text-accent" icon={addon.icon} />
+                    <Icon className="text-accent size-5" icon={addon.icon} />
                     <div className="flex flex-col gap-1">
                       <span>{addon.title}</span>
                       <Description>{addon.description}</Description>

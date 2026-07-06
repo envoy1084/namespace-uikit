@@ -1,8 +1,8 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import {Separator} from "./index";
+import { Separator } from "./index";
 
 const meta: Meta<typeof Separator> = {
   title: "Components/Layout/Separator",
@@ -12,7 +12,7 @@ const meta: Meta<typeof Separator> = {
   },
   argTypes: {
     orientation: {
-      control: {type: "radio"},
+      control: { type: "radio" },
       options: ["horizontal", "vertical"],
     },
   },
@@ -26,7 +26,9 @@ export const Default: Story = {
     <div className="max-w-md">
       <div className="space-y-1">
         <h4 className="text-medium font-medium">HeroUI v3 Components</h4>
-        <p className="text-small text-default-400">Beautiful, fast and modern React UI library.</p>
+        <p className="text-small text-default-400">
+          Beautiful, fast and modern React UI library.
+        </p>
       </div>
       <Separator className="my-4" />
       <div className="text-small flex h-5 items-center space-x-4">
@@ -54,12 +56,14 @@ export const Vertical: Story = {
 
 const items = [
   {
-    iconUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/3dicons/bell-small.png",
+    iconUrl:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/3dicons/bell-small.png",
     subtitle: "Receive account activity updates",
     title: "Set Up Notifications",
   },
   {
-    iconUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/3dicons/compass-small.png",
+    iconUrl:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/3dicons/compass-small.png",
     subtitle: "Connect your browser to your account",
     title: "Set up Browser Extension",
   },
@@ -73,14 +77,14 @@ const items = [
 
 export const WithContent: Story = {
   render: () => (
-    <div className="max-w-md space-y-4 rounded-3xl bg-surface p-4 shadow-surface">
+    <div className="bg-surface shadow-surface max-w-md space-y-4 rounded-3xl p-4">
       {items.map((item, index) => (
         <div key={index}>
           <div className="flex items-center gap-3">
             <img alt={item.title} className="size-12" src={item.iconUrl} />
             <div className="flex-1 space-y-0">
               <h4 className="text-small font-medium">{item.title}</h4>
-              <p className="text-sm text-muted">{item.subtitle}</p>
+              <p className="text-muted text-sm">{item.subtitle}</p>
             </div>
           </div>
           {index < items.length - 1 && <Separator className="my-4" />}

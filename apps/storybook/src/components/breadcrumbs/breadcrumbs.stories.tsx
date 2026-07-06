@@ -1,9 +1,10 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
 
-import {Breadcrumbs, BreadcrumbsItem} from "./index";
+import { Icon } from "@iconify/react";
+
+import { Breadcrumbs, BreadcrumbsItem } from "./index";
 
 const meta: Meta<typeof Breadcrumbs> = {
   component: Breadcrumbs,

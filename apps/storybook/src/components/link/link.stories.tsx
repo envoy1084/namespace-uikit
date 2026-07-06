@@ -1,12 +1,11 @@
-import type {LinkProps} from "./index";
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
 import React from "react";
 
-import {buttonVariants} from "../button/index";
-import {ExternalLinkIcon} from "../icons";
-
-import {Link} from "./index";
+import { buttonVariants } from "../button/index";
+import { ExternalLinkIcon } from "../icons";
+import type { LinkProps } from "./index";
+import { Link } from "./index";
 
 export default {
   argTypes: {},
@@ -78,7 +77,7 @@ const IconPlacementTemplate = (_props: Link["RootProps"]) => (
 const UnderlineVariantsTemplate = (_props: LinkProps) => (
   <div className="flex flex-col gap-6">
     <div className="flex flex-col gap-2">
-      <p className="text-sm text-muted">Default hover underline</p>
+      <p className="text-muted text-sm">Default hover underline</p>
       <Link href="#">
         Hover to see the underline
         <Link.Icon />
@@ -86,7 +85,7 @@ const UnderlineVariantsTemplate = (_props: LinkProps) => (
     </div>
 
     <div className="flex flex-col gap-2">
-      <p className="text-sm text-muted">Always visible underline</p>
+      <p className="text-muted text-sm">Always visible underline</p>
       <Link className="underline" href="#">
         Underline always visible
         <Link.Icon />
@@ -94,7 +93,7 @@ const UnderlineVariantsTemplate = (_props: LinkProps) => (
     </div>
 
     <div className="flex flex-col gap-2">
-      <p className="text-sm text-muted">No underline</p>
+      <p className="text-muted text-sm">No underline</p>
       <Link className="no-underline" href="#">
         Link without any underline
         <Link.Icon />
@@ -102,7 +101,7 @@ const UnderlineVariantsTemplate = (_props: LinkProps) => (
     </div>
 
     <div className="flex flex-col gap-2">
-      <p className="text-sm text-muted">Changing the underline offset</p>
+      <p className="text-muted text-sm">Changing the underline offset</p>
       <div className="flex flex-col gap-3">
         <Link className="underline-offset-1" href="#">
           Offset 1 (1px space)

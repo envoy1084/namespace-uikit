@@ -1,12 +1,12 @@
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
 
-import {Button} from "../button";
-import {Chip} from "../chip";
+import { Icon } from "@iconify/react";
 
-import {Disclosure} from "./index";
+import { Button } from "../button";
+import { Chip } from "../chip";
+import { Disclosure } from "./index";
 
 export default {
   argTypes: {
@@ -38,7 +38,11 @@ const Template = (props: Disclosure["RootProps"]) => {
 
   return (
     <div className="w-full max-w-md text-center">
-      <Disclosure {...props} isExpanded={isExpanded} onExpandedChange={setIsExpanded}>
+      <Disclosure
+        {...props}
+        isExpanded={isExpanded}
+        onExpandedChange={setIsExpanded}
+      >
         <Disclosure.Heading>
           <Button slot="trigger" variant="secondary">
             <Icon icon="gravity-ui:qr-code" />
@@ -47,16 +51,19 @@ const Template = (props: Disclosure["RootProps"]) => {
           </Button>
         </Disclosure.Heading>
         <Disclosure.Content>
-          <Disclosure.Body className="flex flex-col items-center rounded-3xl bg-surface p-2 p-4 text-center shadow-surface">
-            <p className="text-sm text-muted">
-              Scan this QR code with your camera app to preview the HeroUI native components.
+          <Disclosure.Body className="bg-surface shadow-surface flex flex-col items-center rounded-3xl p-2 p-4 text-center">
+            <p className="text-muted text-sm">
+              Scan this QR code with your camera app to preview the HeroUI
+              native components.
             </p>
             <img
               alt="Expo Go QR Code"
               className="aspect-square w-full max-w-54 object-cover"
               src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/qr-code-native.png"
             />
-            <p className="text-sm text-muted">Expo must be installed on your device.</p>
+            <p className="text-muted text-sm">
+              Expo must be installed on your device.
+            </p>
             <Button className="mt-4" variant="primary">
               <Icon icon="tabler:brand-apple-filled" />
               Download on App Store
@@ -81,7 +88,11 @@ const ControlledTemplate = (props: Disclosure["RootProps"]) => {
           State: {isExpanded ? "Expanded" : "Collapsed"}
         </Chip>
       </div>
-      <Disclosure {...props} isExpanded={isExpanded} onExpandedChange={setIsExpanded}>
+      <Disclosure
+        {...props}
+        isExpanded={isExpanded}
+        onExpandedChange={setIsExpanded}
+      >
         <Disclosure.Trigger className="mb-2 flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 text-left hover:bg-gray-50">
           <span>Toggle content</span>
           <Icon
@@ -92,8 +103,8 @@ const ControlledTemplate = (props: Disclosure["RootProps"]) => {
         <Disclosure.Content>
           <Disclosure.Body className="rounded-lg border p-4">
             <p className="text-sm">
-              This disclosure is controlled from outside. You can toggle it using the button above
-              or by clicking the trigger.
+              This disclosure is controlled from outside. You can toggle it
+              using the button above or by clicking the trigger.
             </p>
           </Disclosure.Body>
         </Disclosure.Content>
@@ -107,7 +118,11 @@ const ProductDetailsTemplate = (props: Disclosure["RootProps"]) => {
 
   return (
     <div className="w-full max-w-md">
-      <Disclosure {...props} isExpanded={isExpanded} onExpandedChange={setIsExpanded}>
+      <Disclosure
+        {...props}
+        isExpanded={isExpanded}
+        onExpandedChange={setIsExpanded}
+      >
         <Disclosure.Trigger className="flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 text-left hover:bg-gray-50">
           <span className="flex items-center gap-2">
             <Icon icon="gravity-ui:box" />
@@ -115,7 +130,9 @@ const ProductDetailsTemplate = (props: Disclosure["RootProps"]) => {
           </span>
           <Icon
             className="size-4 transition-transform duration-200"
-            icon={isExpanded ? "gravity-ui:chevron-up" : "gravity-ui:chevron-down"}
+            icon={
+              isExpanded ? "gravity-ui:chevron-up" : "gravity-ui:chevron-down"
+            }
           />
         </Disclosure.Trigger>
         <Disclosure.Content>

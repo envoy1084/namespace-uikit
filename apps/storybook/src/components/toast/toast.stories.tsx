@@ -1,12 +1,11 @@
-import type {ToastContentValue, ToastVariants} from "./index";
-import type {HeroUIToastOptions} from "./toast-queue";
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
 
-import {Button} from "../button";
+import { Icon } from "@iconify/react";
 
+import { Button } from "../button";
+import type { ToastContentValue, ToastVariants } from "./index";
 import {
   Toast,
   ToastContent,
@@ -16,6 +15,7 @@ import {
   ToastTitle,
   toast,
 } from "./index";
+import type { HeroUIToastOptions } from "./toast-queue";
 
 type Placement = NonNullable<ToastVariants["placement"]>;
 
@@ -27,7 +27,14 @@ const meta: Meta<ToastStoryProps> = {
   argTypes: {
     placement: {
       control: "radio",
-      options: ["top start", "top", "top end", "bottom start", "bottom", "bottom end"],
+      options: [
+        "top start",
+        "top",
+        "top end",
+        "bottom start",
+        "bottom",
+        "bottom end",
+      ],
     },
     timeout: {
       control: "number",
@@ -76,7 +83,7 @@ const Template = () => {
           variant="secondary"
           onPress={() =>
             toast.info("You have 2 credits left", {
-              actionProps: {children: "Upgrade", onPress: noop},
+              actionProps: { children: "Upgrade", onPress: noop },
               description: "Get a paid plan for more credits",
             })
           }
@@ -122,7 +129,11 @@ const Template = () => {
           variant="danger-soft"
           onPress={() =>
             toast.danger("Storage is full", {
-              actionProps: {children: "Remove", onPress: noop, variant: "danger"},
+              actionProps: {
+                children: "Remove",
+                onPress: noop,
+                variant: "danger",
+              },
               description:
                 "Remove files to release space. Adding more text to demonstrate longer content display",
               indicator: <Icon icon="gravity-ui:hard-drive" />,
@@ -141,11 +152,18 @@ export const Default = {
   render: Template,
 };
 
-const placements = ["top start", "top", "top end", "bottom start", "bottom", "bottom end"] as const;
+const placements = [
+  "top start",
+  "top",
+  "top end",
+  "bottom start",
+  "bottom",
+  "bottom end",
+] as const;
 
 // Create a separate queue for each placement
 const placementQueues = Object.fromEntries(
-  placements.map((p) => [p, new ToastQueue({maxVisibleToasts: 3})]),
+  placements.map((p) => [p, new ToastQueue({ maxVisibleToasts: 3 })]),
 ) as Record<Placement, ToastQueue>;
 
 const PlacementsTemplate = () => {
@@ -165,7 +183,12 @@ const PlacementsTemplate = () => {
       ))}
       <div className="flex max-w-xs flex-wrap justify-center gap-2">
         {placements.map((p) => (
-          <Button key={p} size="sm" variant="secondary" onPress={() => showToast(p)}>
+          <Button
+            key={p}
+            size="sm"
+            variant="secondary"
+            onPress={() => showToast(p)}
+          >
             {p}
           </Button>
         ))}
@@ -184,13 +207,25 @@ const SimpleToastTemplate = () => {
     <div className="flex h-full max-w-xl flex-col items-center justify-center">
       <Toast.Provider placement="bottom" />
       <div className="flex w-full flex-wrap items-center justify-center gap-4">
-        <Button size="sm" variant="secondary" onPress={() => toast("Simple message")}>
+        <Button
+          size="sm"
+          variant="secondary"
+          onPress={() => toast("Simple message")}
+        >
           Default
         </Button>
-        <Button size="sm" variant="secondary" onPress={() => toast.success("Operation completed")}>
+        <Button
+          size="sm"
+          variant="secondary"
+          onPress={() => toast.success("Operation completed")}
+        >
           Success
         </Button>
-        <Button size="sm" variant="secondary" onPress={() => toast.info("New update available")}>
+        <Button
+          size="sm"
+          variant="secondary"
+          onPress={() => toast.info("New update available")}
+        >
           Info
         </Button>
         <Button
@@ -200,7 +235,11 @@ const SimpleToastTemplate = () => {
         >
           Warning
         </Button>
-        <Button size="sm" variant="secondary" onPress={() => toast.danger("Something went wrong")}>
+        <Button
+          size="sm"
+          variant="secondary"
+          onPress={() => toast.danger("Something went wrong")}
+        >
           Error
         </Button>
       </div>
@@ -212,38 +251,44 @@ export const SimpleToast = {
   render: SimpleToastTemplate,
 };
 
+const uploadFile = (): Promise<{ filename: string; size: number }> => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve({ filename: "document.pdf", size: 1024 }), 2000);
+  });
+};
+
+const createEvent = (): Promise<never> => {
+  return new Promise((_, reject) => {
+    setTimeout(
+      () => reject(new Error("Network error. Please try again.")),
+      2000,
+    );
+  });
+};
+
+const saveData = (): Promise<{ count: number }> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (Math.random() > 0.5) {
+        resolve({ count: 42 });
+      } else {
+        reject(new Error("Failed to save data"));
+      }
+    }, 2000);
+  });
+};
+
+const fetchUser = (): Promise<{ name: string; email: string }> => {
+  return new Promise((resolve) => {
+    setTimeout(
+      () => resolve({ name: "John Doe", email: "john@example.com" }),
+      2000,
+    );
+  });
+};
+
 // Promise Toast - Async operations with loading/success/error states
 const PromiseToastTemplate = () => {
-  const uploadFile = (): Promise<{filename: string; size: number}> => {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve({filename: "document.pdf", size: 1024}), 2000);
-    });
-  };
-
-  const createEvent = (): Promise<never> => {
-    return new Promise((_, reject) => {
-      setTimeout(() => reject(new Error("Network error. Please try again.")), 2000);
-    });
-  };
-
-  const saveData = (): Promise<{count: number}> => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (Math.random() > 0.5) {
-          resolve({count: 42});
-        } else {
-          reject(new Error("Failed to save data"));
-        }
-      }, 2000);
-    });
-  };
-
-  const fetchUser = (): Promise<{name: string; email: string}> => {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve({name: "John Doe", email: "john@example.com"}), 2000);
-    });
-  };
-
   return (
     <div className="flex h-full max-w-xl flex-col items-center justify-center">
       <Toast.Provider placement="bottom" />
@@ -255,7 +300,8 @@ const PromiseToastTemplate = () => {
             toast.promise(uploadFile(), {
               error: "Failed to upload file",
               loading: "Uploading file...",
-              success: (data) => `File ${data.filename} uploaded (${data.size}KB)`,
+              success: (data) =>
+                `File ${data.filename} uploaded (${data.size}KB)`,
             });
           }}
         >
@@ -408,14 +454,14 @@ export const LoadingState = {
 
 // With Callbacks - Timeout and onClose
 const WithCallbacksTemplate = () => {
-  const [closedHistory, setClosedHistory] = React.useState<Array<{message: string; time: string}>>(
-    [],
-  );
+  const [closedHistory, setClosedHistory] = React.useState<
+    Array<{ message: string; time: string }>
+  >([]);
 
   const addToHistory = (message: string) => {
     const time = new Date().toLocaleTimeString();
 
-    setClosedHistory((prev) => [{message, time}, ...prev].slice(0, 5));
+    setClosedHistory((prev) => [{ message, time }, ...prev].slice(0, 5));
   };
 
   return (
@@ -497,23 +543,25 @@ const WithCallbacksTemplate = () => {
             </Button>
           )}
         </div>
-        <div className="min-h-[120px] space-y-2 rounded-lg border border-border bg-surface p-4">
+        <div className="border-border bg-surface min-h-[120px] space-y-2 rounded-lg border p-4">
           {closedHistory.length === 0 ? (
-            <p className="text-sm text-muted">No toasts closed yet. Try closing one above!</p>
+            <p className="text-muted text-sm">
+              No toasts closed yet. Try closing one above!
+            </p>
           ) : (
             closedHistory.map((item, index) => (
               <div
                 key={`${item.time}-${index}`}
-                className="flex animate-in items-start justify-between gap-3 rounded-md border border-border bg-default px-3 py-2 text-sm duration-200 fade-in slide-in-from-top-2"
+                className="animate-in border-border bg-default fade-in slide-in-from-top-2 flex items-start justify-between gap-3 rounded-md border px-3 py-2 text-sm duration-200"
                 style={{
                   animationDelay: `${index * 50}ms`,
                 }}
               >
                 <div className="flex-1">
                   <span className="font-medium">{item.message}</span>
-                  <span className="ml-2 text-xs text-muted">({item.time})</span>
+                  <span className="text-muted ml-2 text-xs">({item.time})</span>
                 </div>
-                <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-success/10 text-success">
+                <div className="bg-success/10 text-success flex h-5 w-5 shrink-0 items-center justify-center rounded-full">
                   <svg
                     className="size-3"
                     fill="none"
@@ -521,7 +569,11 @@ const WithCallbacksTemplate = () => {
                     strokeWidth="2"
                     viewBox="0 0 24 24"
                   >
-                    <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
+                    <path
+                      d="M5 13l4 4L19 7"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 </div>
               </div>
@@ -544,21 +596,26 @@ const CustomToastTemplate = () => {
   return (
     <div className="flex h-full max-w-xl flex-col items-center justify-center">
       <Toast.Provider placement="bottom" queue={customQueue}>
-        {({toast: toastItem}) => {
+        {({ toast: toastItem }) => {
           const content = toastItem.content as ToastContentValue;
 
           return (
             <Toast
-              className="rounded-xl border border-border"
+              className="border-border rounded-xl border"
               toast={toastItem}
               variant={content.variant}
             >
               <ToastContent>
                 <div className="flex items-center gap-2">
-                  <ToastIndicator className="text-accent" variant={content.variant} />
+                  <ToastIndicator
+                    className="text-accent"
+                    variant={content.variant}
+                  />
                   <div className="flex flex-col pr-6">
                     {content.title ? (
-                      <ToastTitle className="text-accent">{content.title}</ToastTitle>
+                      <ToastTitle className="text-accent">
+                        {content.title}
+                      </ToastTitle>
                     ) : null}
                     {content.description ? (
                       <ToastDescription>{content.description}</ToastDescription>
@@ -594,9 +651,9 @@ export const CustomToast = {
 
 // Custom Queue - Multiple queue instances
 const CustomQueueTemplate = () => {
-  const notificationQueue = new ToastQueue({maxVisibleToasts: 2});
-  const errorQueue = new ToastQueue({maxVisibleToasts: 3});
-  const successQueue = new ToastQueue({maxVisibleToasts: 1});
+  const notificationQueue = new ToastQueue({ maxVisibleToasts: 2 });
+  const errorQueue = new ToastQueue({ maxVisibleToasts: 3 });
+  const successQueue = new ToastQueue({ maxVisibleToasts: 1 });
 
   return (
     <div className="flex h-full max-w-4xl items-center justify-center gap-4">

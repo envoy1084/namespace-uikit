@@ -1,30 +1,30 @@
-import type {Key} from "@heroui/react";
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
+import type { Key } from "@thenamespace/uikit";
 
-import {Icon} from "@iconify/react";
-import {useAsyncList} from "@react-stately/data";
-import React, {useState} from "react";
-import {useFilter} from "react-aria-components/Autocomplete";
-import {ListLayout, Virtualizer} from "react-aria-components/Virtualizer";
-import {cn} from "tailwind-variants";
+import React, { useState } from "react";
 
-import {Avatar, AvatarFallback, AvatarImage} from "../avatar";
-import {Button} from "../button";
-import {Description} from "../description";
-import {EmptyState} from "../empty-state";
-import {FieldError} from "../field-error";
-import {Form} from "../form";
-import {Header} from "../header";
-import {Label} from "../label";
-import {ListBox} from "../list-box";
-import {SearchField} from "../search-field";
-import {Separator} from "../separator";
-import {Spinner} from "../spinner";
-import {Surface} from "../surface";
-import {Tag} from "../tag";
-import {TagGroup} from "../tag-group";
+import { Icon } from "@iconify/react";
+import { useAsyncList } from "@react-stately/data";
+import { useFilter } from "react-aria-components/Autocomplete";
+import { ListLayout, Virtualizer } from "react-aria-components/Virtualizer";
+import { cn } from "tailwind-variants";
 
-import {Autocomplete} from "./index";
+import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
+import { Button } from "../button";
+import { Description } from "../description";
+import { EmptyState } from "../empty-state";
+import { FieldError } from "../field-error";
+import { Form } from "../form";
+import { Header } from "../header";
+import { Label } from "../label";
+import { ListBox } from "../list-box";
+import { SearchField } from "../search-field";
+import { Separator } from "../separator";
+import { Spinner } from "../spinner";
+import { Surface } from "../surface";
+import { Tag } from "../tag";
+import { TagGroup } from "../tag-group";
+import { Autocomplete } from "./index";
 
 const meta: Meta<typeof Autocomplete> = {
   component: Autocomplete,
@@ -38,18 +38,33 @@ const meta: Meta<typeof Autocomplete> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const handleAutocompleteRequiredSubmit = (
+  e: React.FormEvent<HTMLFormElement>,
+) => {
+  e.preventDefault();
+  const formData = new FormData(e.currentTarget);
+  const data: Record<string, string> = {};
+
+  // Convert FormData to plain object
+  formData.forEach((value, key) => {
+    data[key] = value.toString();
+  });
+
+  alert("Form submitted successfully!");
+};
+
 export const Default: Story = {
   render: () => {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const items = [
-      {id: "cat", name: "Cat"},
-      {id: "dog", name: "Dog"},
-      {id: "elephant", name: "Elephant"},
-      {id: "lion", name: "Lion"},
-      {id: "tiger", name: "Tiger"},
-      {id: "giraffe", name: "Giraffe"},
+      { id: "cat", name: "Cat" },
+      { id: "dog", name: "Dog" },
+      { id: "elephant", name: "Elephant" },
+      { id: "lion", name: "Lion" },
+      { id: "tiger", name: "Tiger" },
+      { id: "giraffe", name: "Giraffe" },
     ];
 
     return (
@@ -74,7 +89,9 @@ export const Default: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+            <ListBox
+              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
+            >
               {items.map((item) => (
                 <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                   {item.name}
@@ -92,15 +109,15 @@ export const Default: Story = {
 export const WithClearButton: Story = {
   render: () => {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const items = [
-      {id: "cat", name: "Cat"},
-      {id: "dog", name: "Dog"},
-      {id: "elephant", name: "Elephant"},
-      {id: "lion", name: "Lion"},
-      {id: "tiger", name: "Tiger"},
-      {id: "giraffe", name: "Giraffe"},
+      { id: "cat", name: "Cat" },
+      { id: "dog", name: "Dog" },
+      { id: "elephant", name: "Elephant" },
+      { id: "lion", name: "Lion" },
+      { id: "tiger", name: "Tiger" },
+      { id: "giraffe", name: "Giraffe" },
     ];
 
     return (
@@ -126,7 +143,9 @@ export const WithClearButton: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+            <ListBox
+              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
+            >
               {items.map((item) => (
                 <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                   {item.name}
@@ -146,15 +165,15 @@ export const WithOnClearCallback: Story = {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
     const [clearCount, setClearCount] = useState(0);
     const [lastClearedAt, setLastClearedAt] = useState<string | null>(null);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const items = [
-      {id: "cat", name: "Cat"},
-      {id: "dog", name: "Dog"},
-      {id: "elephant", name: "Elephant"},
-      {id: "lion", name: "Lion"},
-      {id: "tiger", name: "Tiger"},
-      {id: "giraffe", name: "Giraffe"},
+      { id: "cat", name: "Cat" },
+      { id: "dog", name: "Dog" },
+      { id: "elephant", name: "Elephant" },
+      { id: "lion", name: "Lion" },
+      { id: "tiger", name: "Tiger" },
+      { id: "giraffe", name: "Giraffe" },
     ];
 
     const handleClear = () => {
@@ -191,9 +210,17 @@ export const WithOnClearCallback: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+              <ListBox
+                renderEmptyState={() => (
+                  <EmptyState>No results found</EmptyState>
+                )}
+              >
                 {items.map((item) => (
-                  <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
+                  <ListBox.Item
+                    key={item.id}
+                    id={item.id}
+                    textValue={item.name}
+                  >
                     {item.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -202,9 +229,9 @@ export const WithOnClearCallback: Story = {
             </Autocomplete.Filter>
           </Autocomplete.Popover>
         </Autocomplete>
-        <div className="space-y-2 rounded-xl border border-border p-4">
+        <div className="border-border space-y-2 rounded-xl border p-4">
           <p className="text-sm font-medium">onClear Callback Info:</p>
-          <div className="space-y-1 text-sm text-muted">
+          <div className="text-muted space-y-1 text-sm">
             <p>Clear button clicked: {clearCount} time(s)</p>
             {!!lastClearedAt && <p>Last cleared at: {lastClearedAt}</p>}
             {!!selectedItem && (
@@ -213,7 +240,9 @@ export const WithOnClearCallback: Story = {
               </p>
             )}
             {!selectedItem && (
-              <p className="text-muted">No selection (click clear to see the callback)</p>
+              <p className="text-muted">
+                No selection (click clear to see the callback)
+              </p>
             )}
           </div>
         </div>
@@ -228,13 +257,13 @@ export const Variants: Story = {
     const [selectedKey2, setSelectedKey2] = useState<Key | null>(null);
     const [selectedKeys1, setSelectedKeys1] = useState<Key[]>([]);
     const [selectedKeys2, setSelectedKeys2] = useState<Key[]>([]);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const items = [
-      {id: "option1", name: "Option 1"},
-      {id: "option2", name: "Option 2"},
-      {id: "option3", name: "Option 3"},
-      {id: "option4", name: "Option 4"},
+      { id: "option1", name: "Option 1" },
+      { id: "option2", name: "Option 2" },
+      { id: "option3", name: "Option 3" },
+      { id: "option4", name: "Option 4" },
     ];
 
     const onRemoveTags1 = (keys: Set<Key>) => {
@@ -273,9 +302,17 @@ export const Variants: Story = {
                       <SearchField.ClearButton />
                     </SearchField.Group>
                   </SearchField>
-                  <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+                  <ListBox
+                    renderEmptyState={() => (
+                      <EmptyState>No results found</EmptyState>
+                    )}
+                  >
                     {items.map((item) => (
-                      <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
+                      <ListBox.Item
+                        key={item.id}
+                        id={item.id}
+                        textValue={item.name}
+                      >
                         {item.name}
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
@@ -307,9 +344,17 @@ export const Variants: Story = {
                       <SearchField.ClearButton />
                     </SearchField.Group>
                   </SearchField>
-                  <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+                  <ListBox
+                    renderEmptyState={() => (
+                      <EmptyState>No results found</EmptyState>
+                    )}
+                  >
                     {items.map((item) => (
-                      <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
+                      <ListBox.Item
+                        key={item.id}
+                        id={item.id}
+                        textValue={item.name}
+                      >
                         {item.name}
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
@@ -334,18 +379,22 @@ export const Variants: Story = {
               <Label>Primary variant</Label>
               <Autocomplete.Trigger>
                 <Autocomplete.Value>
-                  {({defaultChildren, isPlaceholder, state}) => {
+                  {({ defaultChildren, isPlaceholder, state }) => {
                     if (isPlaceholder || state.selectedItems.length === 0) {
                       return defaultChildren;
                     }
 
-                    const selectedItemsKeys = state.selectedItems.map((item) => item.key);
+                    const selectedItemsKeys = state.selectedItems.map(
+                      (item) => item.key,
+                    );
 
                     return (
                       <TagGroup size="sm" onRemove={onRemoveTags1}>
                         <TagGroup.List>
                           {selectedItemsKeys.map((selectedItemKey) => {
-                            const item = items.find((s) => s.id === selectedItemKey);
+                            const item = items.find(
+                              (s) => s.id === selectedItemKey,
+                            );
 
                             if (!item) return null;
 
@@ -372,9 +421,17 @@ export const Variants: Story = {
                       <SearchField.ClearButton />
                     </SearchField.Group>
                   </SearchField>
-                  <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+                  <ListBox
+                    renderEmptyState={() => (
+                      <EmptyState>No results found</EmptyState>
+                    )}
+                  >
                     {items.map((item) => (
-                      <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
+                      <ListBox.Item
+                        key={item.id}
+                        id={item.id}
+                        textValue={item.name}
+                      >
                         {item.name}
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
@@ -394,18 +451,26 @@ export const Variants: Story = {
               <Label>Secondary variant</Label>
               <Autocomplete.Trigger>
                 <Autocomplete.Value>
-                  {({defaultChildren, isPlaceholder, state}) => {
+                  {({ defaultChildren, isPlaceholder, state }) => {
                     if (isPlaceholder || state.selectedItems.length === 0) {
                       return defaultChildren;
                     }
 
-                    const selectedItemsKeys = state.selectedItems.map((item) => item.key);
+                    const selectedItemsKeys = state.selectedItems.map(
+                      (item) => item.key,
+                    );
 
                     return (
-                      <TagGroup size="sm" variant="surface" onRemove={onRemoveTags2}>
+                      <TagGroup
+                        size="sm"
+                        variant="surface"
+                        onRemove={onRemoveTags2}
+                      >
                         <TagGroup.List>
                           {selectedItemsKeys.map((selectedItemKey) => {
-                            const item = items.find((s) => s.id === selectedItemKey);
+                            const item = items.find(
+                              (s) => s.id === selectedItemKey,
+                            );
 
                             if (!item) return null;
 
@@ -432,9 +497,17 @@ export const Variants: Story = {
                       <SearchField.ClearButton />
                     </SearchField.Group>
                   </SearchField>
-                  <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+                  <ListBox
+                    renderEmptyState={() => (
+                      <EmptyState>No results found</EmptyState>
+                    )}
+                  >
                     {items.map((item) => (
-                      <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
+                      <ListBox.Item
+                        key={item.id}
+                        id={item.id}
+                        textValue={item.name}
+                      >
                         {item.name}
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
@@ -453,15 +526,15 @@ export const Variants: Story = {
 export const MultipleSelect: Story = {
   render: () => {
     const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const items = [
-      {id: "california", name: "California"},
-      {id: "texas", name: "Texas"},
-      {id: "florida", name: "Florida"},
-      {id: "new-york", name: "New York"},
-      {id: "illinois", name: "Illinois"},
-      {id: "pennsylvania", name: "Pennsylvania"},
+      { id: "california", name: "California" },
+      { id: "texas", name: "Texas" },
+      { id: "florida", name: "Florida" },
+      { id: "new-york", name: "New York" },
+      { id: "illinois", name: "Illinois" },
+      { id: "pennsylvania", name: "Pennsylvania" },
     ];
 
     const onRemoveTags = (keys: Set<Key>) => {
@@ -479,12 +552,14 @@ export const MultipleSelect: Story = {
         <Label>States</Label>
         <Autocomplete.Trigger>
           <Autocomplete.Value>
-            {({defaultChildren, isPlaceholder, state}) => {
+            {({ defaultChildren, isPlaceholder, state }) => {
               if (isPlaceholder || state.selectedItems.length === 0) {
                 return defaultChildren;
               }
 
-              const selectedItemsKeys = state.selectedItems.map((item) => item.key);
+              const selectedItemsKeys = state.selectedItems.map(
+                (item) => item.key,
+              );
 
               return (
                 <TagGroup size="sm" onRemove={onRemoveTags}>
@@ -517,7 +592,9 @@ export const MultipleSelect: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+            <ListBox
+              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
+            >
               {items.map((item) => (
                 <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                   {item.name}
@@ -535,15 +612,15 @@ export const MultipleSelect: Story = {
 export const FullWidth: Story = {
   render: () => {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const items = [
-      {id: "florida", name: "Florida"},
-      {id: "delaware", name: "Delaware"},
-      {id: "california", name: "California"},
-      {id: "texas", name: "Texas"},
-      {id: "new-york", name: "New York"},
-      {id: "washington", name: "Washington"},
+      { id: "florida", name: "Florida" },
+      { id: "delaware", name: "Delaware" },
+      { id: "california", name: "California" },
+      { id: "texas", name: "Texas" },
+      { id: "new-york", name: "New York" },
+      { id: "washington", name: "Washington" },
     ];
 
     return (
@@ -571,9 +648,17 @@ export const FullWidth: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+              <ListBox
+                renderEmptyState={() => (
+                  <EmptyState>No results found</EmptyState>
+                )}
+              >
                 {items.map((item) => (
-                  <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
+                  <ListBox.Item
+                    key={item.id}
+                    id={item.id}
+                    textValue={item.name}
+                  >
                     {item.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -590,15 +675,15 @@ export const FullWidth: Story = {
 export const WithDescription: Story = {
   render: () => {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const items = [
-      {id: "florida", name: "Florida"},
-      {id: "delaware", name: "Delaware"},
-      {id: "california", name: "California"},
-      {id: "texas", name: "Texas"},
-      {id: "new-york", name: "New York"},
-      {id: "washington", name: "Washington"},
+      { id: "florida", name: "Florida" },
+      { id: "delaware", name: "Delaware" },
+      { id: "california", name: "California" },
+      { id: "texas", name: "Texas" },
+      { id: "new-york", name: "New York" },
+      { id: "washington", name: "Washington" },
     ];
 
     return (
@@ -624,7 +709,9 @@ export const WithDescription: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+            <ListBox
+              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
+            >
               {items.map((item) => (
                 <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                   {item.name}
@@ -643,7 +730,7 @@ export const WithDescription: Story = {
 export const WithSections: Story = {
   render: () => {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     return (
       <Autocomplete
@@ -668,7 +755,9 @@ export const WithSections: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+            <ListBox
+              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
+            >
               <ListBox.Section>
                 <Header>North America</Header>
                 <ListBox.Item id="usa" textValue="United States">
@@ -739,7 +828,7 @@ export const WithSections: Story = {
 export const WithDisabledOptions: Story = {
   render: () => {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     return (
       <Autocomplete
@@ -765,7 +854,9 @@ export const WithDisabledOptions: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+            <ListBox
+              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
+            >
               <ListBox.Item id="dog" textValue="Dog">
                 Dog
                 <ListBox.ItemIndicator />
@@ -801,15 +892,15 @@ export const WithDisabledOptions: Story = {
 export const CustomIndicator: Story = {
   render: () => {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const items = [
-      {id: "florida", name: "Florida"},
-      {id: "delaware", name: "Delaware"},
-      {id: "california", name: "California"},
-      {id: "texas", name: "Texas"},
-      {id: "new-york", name: "New York"},
-      {id: "washington", name: "Washington"},
+      { id: "florida", name: "Florida" },
+      { id: "delaware", name: "Delaware" },
+      { id: "california", name: "California" },
+      { id: "texas", name: "Texas" },
+      { id: "new-york", name: "New York" },
+      { id: "washington", name: "Washington" },
     ];
 
     return (
@@ -837,7 +928,9 @@ export const CustomIndicator: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+            <ListBox
+              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
+            >
               {items.map((item) => (
                 <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                   {item.name}
@@ -854,41 +947,31 @@ export const CustomIndicator: Story = {
 
 export const Required: Story = {
   render: () => {
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const formData = new FormData(e.currentTarget);
-      const data: Record<string, string> = {};
-
-      // Convert FormData to plain object
-      formData.forEach((value, key) => {
-        data[key] = value.toString();
-      });
-
-      alert("Form submitted successfully!");
-    };
-
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const states = [
-      {id: "florida", name: "Florida"},
-      {id: "delaware", name: "Delaware"},
-      {id: "california", name: "California"},
-      {id: "texas", name: "Texas"},
-      {id: "new-york", name: "New York"},
-      {id: "washington", name: "Washington"},
+      { id: "florida", name: "Florida" },
+      { id: "delaware", name: "Delaware" },
+      { id: "california", name: "California" },
+      { id: "texas", name: "Texas" },
+      { id: "new-york", name: "New York" },
+      { id: "washington", name: "Washington" },
     ];
 
     const countries = [
-      {id: "usa", name: "United States"},
-      {id: "canada", name: "Canada"},
-      {id: "mexico", name: "Mexico"},
-      {id: "uk", name: "United Kingdom"},
-      {id: "france", name: "France"},
-      {id: "germany", name: "Germany"},
+      { id: "usa", name: "United States" },
+      { id: "canada", name: "Canada" },
+      { id: "mexico", name: "Mexico" },
+      { id: "uk", name: "United Kingdom" },
+      { id: "france", name: "France" },
+      { id: "germany", name: "Germany" },
     ];
 
     return (
-      <Form className="flex w-[256px] flex-col gap-4" onSubmit={onSubmit}>
+      <Form
+        className="flex w-[256px] flex-col gap-4"
+        onSubmit={handleAutocompleteRequiredSubmit}
+      >
         <Autocomplete
           isRequired
           className="w-full"
@@ -911,10 +994,18 @@ export const Required: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
-                {states.map((state) => (
-                  <ListBox.Item key={state.id} id={state.id} textValue={state.name}>
-                    {state.name}
+              <ListBox
+                renderEmptyState={() => (
+                  <EmptyState>No results found</EmptyState>
+                )}
+              >
+                {states.map((stateItem) => (
+                  <ListBox.Item
+                    key={stateItem.id}
+                    id={stateItem.id}
+                    textValue={stateItem.name}
+                  >
+                    {stateItem.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
                 ))}
@@ -945,9 +1036,17 @@ export const Required: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+              <ListBox
+                renderEmptyState={() => (
+                  <EmptyState>No results found</EmptyState>
+                )}
+              >
                 {countries.map((country) => (
-                  <ListBox.Item key={country.id} id={country.id} textValue={country.name}>
+                  <ListBox.Item
+                    key={country.id}
+                    id={country.id}
+                    textValue={country.name}
+                  >
                     {country.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -966,16 +1065,16 @@ export const Required: Story = {
 export const Controlled: Story = {
   render: () => {
     const states = [
-      {id: "california", name: "California"},
-      {id: "texas", name: "Texas"},
-      {id: "florida", name: "Florida"},
-      {id: "new-york", name: "New York"},
-      {id: "illinois", name: "Illinois"},
-      {id: "pennsylvania", name: "Pennsylvania"},
+      { id: "california", name: "California" },
+      { id: "texas", name: "Texas" },
+      { id: "florida", name: "Florida" },
+      { id: "new-york", name: "New York" },
+      { id: "illinois", name: "Illinois" },
+      { id: "pennsylvania", name: "Pennsylvania" },
     ];
 
     const [state, setState] = React.useState<Key | null>("california");
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const selectedState = states.find((s) => s.id === state);
 
@@ -1003,10 +1102,18 @@ export const Controlled: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
-                {states.map((state) => (
-                  <ListBox.Item key={state.id} id={state.id} textValue={state.name}>
-                    {state.name}
+              <ListBox
+                renderEmptyState={() => (
+                  <EmptyState>No results found</EmptyState>
+                )}
+              >
+                {states.map((stateItem) => (
+                  <ListBox.Item
+                    key={stateItem.id}
+                    id={stateItem.id}
+                    textValue={stateItem.name}
+                  >
+                    {stateItem.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
                 ))}
@@ -1014,7 +1121,9 @@ export const Controlled: Story = {
             </Autocomplete.Filter>
           </Autocomplete.Popover>
         </Autocomplete>
-        <p className="text-sm text-muted">Selected: {selectedState?.name || "None"}</p>
+        <p className="text-muted text-sm">
+          Selected: {selectedState?.name || "None"}
+        </p>
       </div>
     );
   },
@@ -1023,15 +1132,15 @@ export const Controlled: Story = {
 export const ControlledOpenState: Story = {
   render: () => {
     const [isOpen, setIsOpen] = React.useState(false);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const items = [
-      {id: "florida", name: "Florida"},
-      {id: "delaware", name: "Delaware"},
-      {id: "california", name: "California"},
-      {id: "texas", name: "Texas"},
-      {id: "new-york", name: "New York"},
-      {id: "washington", name: "Washington"},
+      { id: "florida", name: "Florida" },
+      { id: "delaware", name: "Delaware" },
+      { id: "california", name: "California" },
+      { id: "texas", name: "Texas" },
+      { id: "new-york", name: "New York" },
+      { id: "washington", name: "Washington" },
     ];
 
     return (
@@ -1058,9 +1167,17 @@ export const ControlledOpenState: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+              <ListBox
+                renderEmptyState={() => (
+                  <EmptyState>No results found</EmptyState>
+                )}
+              >
                 {items.map((item) => (
-                  <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
+                  <ListBox.Item
+                    key={item.id}
+                    id={item.id}
+                    textValue={item.name}
+                  >
                     {item.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -1069,8 +1186,12 @@ export const ControlledOpenState: Story = {
             </Autocomplete.Filter>
           </Autocomplete.Popover>
         </Autocomplete>
-        <Button onPress={() => setIsOpen(!isOpen)}>{isOpen ? "Close" : "Open"} Autocomplete</Button>
-        <p className="text-sm text-muted">Autocomplete is {isOpen ? "open" : "closed"}</p>
+        <Button onPress={() => setIsOpen(!isOpen)}>
+          {isOpen ? "Close" : "Open"} Autocomplete
+        </Button>
+        <p className="text-muted text-sm">
+          Autocomplete is {isOpen ? "open" : "closed"}
+        </p>
       </div>
     );
   },
@@ -1083,10 +1204,13 @@ interface Pokemon {
 export const AsynchronousFiltering: Story = {
   render: () => {
     const list = useAsyncList<Pokemon>({
-      async load({filterText, signal}) {
-        const res = await fetch(`https://swapi.py4e.com/api/people/?search=${filterText}`, {
-          signal,
-        });
+      async load({ filterText, signal }) {
+        const res = await fetch(
+          `https://swapi.py4e.com/api/people/?search=${filterText}`,
+          {
+            signal,
+          },
+        );
 
         const json = await res.json();
 
@@ -1110,8 +1234,16 @@ export const AsynchronousFiltering: Story = {
           <Autocomplete.Indicator />
         </Autocomplete.Trigger>
         <Autocomplete.Popover>
-          <Autocomplete.Filter inputValue={list.filterText} onInputChange={list.setFilterText}>
-            <SearchField autoFocus className="sticky top-0 z-10" name="search" variant="secondary">
+          <Autocomplete.Filter
+            inputValue={list.filterText}
+            onInputChange={list.setFilterText}
+          >
+            <SearchField
+              autoFocus
+              className="sticky top-0 z-10"
+              name="search"
+              variant="secondary"
+            >
               <SearchField.Group>
                 <SearchField.SearchIcon />
                 <SearchField.Input placeholder="Search characters..." />
@@ -1122,7 +1254,9 @@ export const AsynchronousFiltering: Story = {
                   })}
                 />
                 <SearchField.ClearButton
-                  className={cn({"pointer-events-none opacity-0": !!list.isLoading})}
+                  className={cn({
+                    "pointer-events-none opacity-0": !!list.isLoading,
+                  })}
                 />
               </SearchField.Group>
             </SearchField>
@@ -1200,7 +1334,8 @@ function generateUsers(n: number): User[] {
 
   for (let i = 0; i < n; i++) {
     const firstName = firstNames[i % firstNames.length]!;
-    const lastName = lastNames[Math.floor(i / firstNames.length) % lastNames.length]!;
+    const lastName =
+      lastNames[Math.floor(i / firstNames.length) % lastNames.length]!;
     const name = `${firstName} ${lastName}`;
 
     users.push({
@@ -1217,7 +1352,7 @@ export const Virtualization: Story = {
   render: () => {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const allUsers = React.useMemo(() => generateUsers(1000), []);
 
@@ -1225,7 +1360,8 @@ export const Virtualization: Story = {
       if (!searchQuery) return allUsers;
 
       return allUsers.filter(
-        (user) => contains(user.name, searchQuery) || contains(user.email, searchQuery),
+        (user) =>
+          contains(user.name, searchQuery) || contains(user.email, searchQuery),
       );
     }, [allUsers, contains, searchQuery]);
 
@@ -1245,18 +1381,28 @@ export const Virtualization: Story = {
           <Autocomplete.Indicator />
         </Autocomplete.Trigger>
         <Autocomplete.Popover>
-          <Autocomplete.Filter inputValue={searchQuery} onInputChange={setSearchQuery}>
-            <SearchField autoFocus className="sticky top-0 z-10" name="search" variant="secondary">
+          <Autocomplete.Filter
+            inputValue={searchQuery}
+            onInputChange={setSearchQuery}
+          >
+            <SearchField
+              autoFocus
+              className="sticky top-0 z-10"
+              name="search"
+              variant="secondary"
+            >
               <SearchField.Group>
                 <SearchField.SearchIcon />
                 <SearchField.Input placeholder="Search users..." />
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <Virtualizer layout={ListLayout} layoutOptions={{rowHeight: 50}}>
+            <Virtualizer layout={ListLayout} layoutOptions={{ rowHeight: 50 }}>
               <ListBox
                 items={filteredUsers}
-                renderEmptyState={() => <EmptyState>No results found</EmptyState>}
+                renderEmptyState={() => (
+                  <EmptyState>No results found</EmptyState>
+                )}
               >
                 {(user) => (
                   <ListBox.Item id={user.id} textValue={user.name}>
@@ -1278,24 +1424,24 @@ export const Virtualization: Story = {
 
 export const Disabled: Story = {
   render: () => {
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const items = [
-      {id: "florida", name: "Florida"},
-      {id: "delaware", name: "Delaware"},
-      {id: "california", name: "California"},
-      {id: "texas", name: "Texas"},
-      {id: "new-york", name: "New York"},
-      {id: "washington", name: "Washington"},
+      { id: "florida", name: "Florida" },
+      { id: "delaware", name: "Delaware" },
+      { id: "california", name: "California" },
+      { id: "texas", name: "Texas" },
+      { id: "new-york", name: "New York" },
+      { id: "washington", name: "Washington" },
     ];
 
     const countries = [
-      {id: "argentina", name: "Argentina"},
-      {id: "venezuela", name: "Venezuela"},
-      {id: "japan", name: "Japan"},
-      {id: "france", name: "France"},
-      {id: "italy", name: "Italy"},
-      {id: "spain", name: "Spain"},
+      { id: "argentina", name: "Argentina" },
+      { id: "venezuela", name: "Venezuela" },
+      { id: "japan", name: "Japan" },
+      { id: "france", name: "France" },
+      { id: "italy", name: "Italy" },
+      { id: "spain", name: "Spain" },
     ];
 
     return (
@@ -1322,9 +1468,17 @@ export const Disabled: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+              <ListBox
+                renderEmptyState={() => (
+                  <EmptyState>No results found</EmptyState>
+                )}
+              >
                 {items.map((item) => (
-                  <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
+                  <ListBox.Item
+                    key={item.id}
+                    id={item.id}
+                    textValue={item.name}
+                  >
                     {item.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -1355,9 +1509,17 @@ export const Disabled: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+              <ListBox
+                renderEmptyState={() => (
+                  <EmptyState>No results found</EmptyState>
+                )}
+              >
                 {countries.map((country) => (
-                  <ListBox.Item key={country.id} id={country.id} textValue={country.name}>
+                  <ListBox.Item
+                    key={country.id}
+                    id={country.id}
+                    textValue={country.name}
+                  >
                     {country.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -1378,41 +1540,46 @@ export const UserSelection: Story = {
         id: "1",
         name: "Bob",
         email: "bob@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
         fallback: "B",
       },
       {
         id: "2",
         name: "Fred",
         email: "fred@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
         fallback: "F",
       },
       {
         id: "3",
         name: "Martha",
         email: "martha@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
         fallback: "M",
       },
       {
         id: "4",
         name: "John",
         email: "john@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
         fallback: "J",
       },
       {
         id: "5",
         name: "Jane",
         email: "jane@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
         fallback: "J",
       },
     ];
 
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     return (
       <Autocomplete
@@ -1425,7 +1592,7 @@ export const UserSelection: Story = {
         <Label>User</Label>
         <Autocomplete.Trigger>
           <Autocomplete.Value>
-            {({defaultChildren, isPlaceholder, state}) => {
+            {({ defaultChildren, isPlaceholder, state }) => {
               if (isPlaceholder || state.selectedItems.length === 0) {
                 return defaultChildren;
               }
@@ -1436,7 +1603,9 @@ export const UserSelection: Story = {
                 return `${selectedItems.length} users selected`;
               }
 
-              const selectedItem = users.find((user) => user.id === selectedItems[0].key);
+              const selectedItem = users.find(
+                (user) => user.id === selectedItems[0].key,
+              );
 
               if (!selectedItem) {
                 return defaultChildren;
@@ -1465,7 +1634,9 @@ export const UserSelection: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+            <ListBox
+              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
+            >
               {users.map((user) => (
                 <ListBox.Item key={user.id} id={user.id} textValue={user.name}>
                   <Avatar size="sm">
@@ -1494,41 +1665,46 @@ export const UserSelectionMultiple: Story = {
         id: "1",
         name: "Bob",
         email: "bob@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
         fallback: "B",
       },
       {
         id: "2",
         name: "Fred",
         email: "fred@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
         fallback: "F",
       },
       {
         id: "3",
         name: "Martha",
         email: "martha@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
         fallback: "M",
       },
       {
         id: "4",
         name: "John",
         email: "john@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
         fallback: "J",
       },
       {
         id: "5",
         name: "Jane",
         email: "jane@heroui.com",
-        avatarUrl: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+        avatarUrl:
+          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
         fallback: "J",
       },
     ];
 
     const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const onRemoveTags = (keys: Set<Key>) => {
       setSelectedKeys((prev) => prev.filter((key) => !keys.has(key)));
@@ -1546,18 +1722,22 @@ export const UserSelectionMultiple: Story = {
         <Label>Users</Label>
         <Autocomplete.Trigger>
           <Autocomplete.Value>
-            {({defaultChildren, isPlaceholder, state}) => {
+            {({ defaultChildren, isPlaceholder, state }) => {
               if (isPlaceholder || state.selectedItems.length === 0) {
                 return defaultChildren;
               }
 
-              const selectedItemsKeys = state.selectedItems.map((item) => item.key);
+              const selectedItemsKeys = state.selectedItems.map(
+                (item) => item.key,
+              );
 
               return (
                 <TagGroup size="sm" onRemove={onRemoveTags}>
                   <TagGroup.List>
                     {selectedItemsKeys.map((selectedItemKey) => {
-                      const selectedItem = users.find((user) => user.id === selectedItemKey);
+                      const selectedItem = users.find(
+                        (user) => user.id === selectedItemKey,
+                      );
 
                       if (!selectedItem) {
                         return null;
@@ -1567,7 +1747,9 @@ export const UserSelectionMultiple: Story = {
                         <Tag key={selectedItem.id} id={selectedItem.id}>
                           <Avatar className="size-4" size="sm">
                             <AvatarImage src={selectedItem.avatarUrl} />
-                            <AvatarFallback>{selectedItem.fallback}</AvatarFallback>
+                            <AvatarFallback>
+                              {selectedItem.fallback}
+                            </AvatarFallback>
                           </Avatar>
                           <span>{selectedItem.name}</span>
                         </Tag>
@@ -1590,7 +1772,9 @@ export const UserSelectionMultiple: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+            <ListBox
+              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
+            >
               {users.map((user) => (
                 <ListBox.Item key={user.id} id={user.id} textValue={user.name}>
                   <Avatar size="sm">
@@ -1620,21 +1804,21 @@ interface City {
 export const LocationSearch: Story = {
   render: () => {
     const allCities: City[] = [
-      {name: "New York", country: "USA"},
-      {name: "Los Angeles", country: "USA"},
-      {name: "Chicago", country: "USA"},
-      {name: "London", country: "UK"},
-      {name: "Paris", country: "France"},
-      {name: "Tokyo", country: "Japan"},
-      {name: "Sydney", country: "Australia"},
-      {name: "Toronto", country: "Canada"},
-      {name: "Berlin", country: "Germany"},
-      {name: "Madrid", country: "Spain"},
+      { name: "New York", country: "USA" },
+      { name: "Los Angeles", country: "USA" },
+      { name: "Chicago", country: "USA" },
+      { name: "London", country: "UK" },
+      { name: "Paris", country: "France" },
+      { name: "Tokyo", country: "Japan" },
+      { name: "Sydney", country: "Australia" },
+      { name: "Toronto", country: "Canada" },
+      { name: "Berlin", country: "Germany" },
+      { name: "Madrid", country: "Spain" },
     ];
 
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     // Simulate async filtering
     const customFilter = (text: string, inputValue: string) => {
@@ -1670,11 +1854,17 @@ export const LocationSearch: Story = {
             </SearchField>
             <ListBox
               renderEmptyState={() => (
-                <EmptyState>{isLoading ? "Searching..." : "No cities found"}</EmptyState>
+                <EmptyState>
+                  {isLoading ? "Searching..." : "No cities found"}
+                </EmptyState>
               )}
             >
               {allCities.map((city) => (
-                <ListBox.Item key={city.name} id={city.name} textValue={city.name}>
+                <ListBox.Item
+                  key={city.name}
+                  id={city.name}
+                  textValue={city.name}
+                >
                   <div className="flex flex-col">
                     <Label>{city.name}</Label>
                     <Description>{city.country}</Description>
@@ -1693,18 +1883,18 @@ export const LocationSearch: Story = {
 export const TagGroupSelection: Story = {
   render: () => {
     const tags = [
-      {id: "react", name: "React"},
-      {id: "typescript", name: "TypeScript"},
-      {id: "javascript", name: "JavaScript"},
-      {id: "nodejs", name: "Node.js"},
-      {id: "python", name: "Python"},
-      {id: "vue", name: "Vue"},
-      {id: "angular", name: "Angular"},
-      {id: "nextjs", name: "Next.js"},
+      { id: "react", name: "React" },
+      { id: "typescript", name: "TypeScript" },
+      { id: "javascript", name: "JavaScript" },
+      { id: "nodejs", name: "Node.js" },
+      { id: "python", name: "Python" },
+      { id: "vue", name: "Vue" },
+      { id: "angular", name: "Angular" },
+      { id: "nextjs", name: "Next.js" },
     ];
 
     const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const onRemoveTags = (keys: Set<Key>) => {
       setSelectedKeys((prev) => prev.filter((key) => !keys.has(key)));
@@ -1721,12 +1911,14 @@ export const TagGroupSelection: Story = {
         <Label>Tags</Label>
         <Autocomplete.Trigger>
           <Autocomplete.Value>
-            {({defaultChildren, isPlaceholder, state}) => {
+            {({ defaultChildren, isPlaceholder, state }) => {
               if (isPlaceholder || state.selectedItems.length === 0) {
                 return defaultChildren;
               }
 
-              const selectedItemsKeys = state.selectedItems.map((item) => item.key);
+              const selectedItemsKeys = state.selectedItems.map(
+                (item) => item.key,
+              );
 
               return (
                 <TagGroup size="sm" onRemove={onRemoveTags}>
@@ -1759,7 +1951,9 @@ export const TagGroupSelection: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox renderEmptyState={() => <EmptyState>No tags found</EmptyState>}>
+            <ListBox
+              renderEmptyState={() => <EmptyState>No tags found</EmptyState>}
+            >
               {tags.map((tag) => (
                 <ListBox.Item key={tag.id} id={tag.id} textValue={tag.name}>
                   {tag.name}
@@ -1777,15 +1971,27 @@ export const TagGroupSelection: Story = {
 export const EmailRecipients: Story = {
   render: () => {
     const emails = [
-      {id: "alice@example.com", name: "Alice Johnson", email: "alice@example.com"},
-      {id: "bob@example.com", name: "Bob Smith", email: "bob@example.com"},
-      {id: "charlie@example.com", name: "Charlie Brown", email: "charlie@example.com"},
-      {id: "diana@example.com", name: "Diana Prince", email: "diana@example.com"},
-      {id: "eve@example.com", name: "Eve Wilson", email: "eve@example.com"},
+      {
+        id: "alice@example.com",
+        name: "Alice Johnson",
+        email: "alice@example.com",
+      },
+      { id: "bob@example.com", name: "Bob Smith", email: "bob@example.com" },
+      {
+        id: "charlie@example.com",
+        name: "Charlie Brown",
+        email: "charlie@example.com",
+      },
+      {
+        id: "diana@example.com",
+        name: "Diana Prince",
+        email: "diana@example.com",
+      },
+      { id: "eve@example.com", name: "Eve Wilson", email: "eve@example.com" },
     ];
 
     const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
-    const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     const onRemoveTags = (keys: Set<Key>) => {
       setSelectedKeys((prev) => prev.filter((key) => !keys.has(key)));
@@ -1802,18 +2008,22 @@ export const EmailRecipients: Story = {
         <Label>To</Label>
         <Autocomplete.Trigger>
           <Autocomplete.Value>
-            {({defaultChildren, isPlaceholder, state}) => {
+            {({ defaultChildren, isPlaceholder, state }) => {
               if (isPlaceholder || state.selectedItems.length === 0) {
                 return defaultChildren;
               }
 
-              const selectedItemsKeys = state.selectedItems.map((item) => item.key);
+              const selectedItemsKeys = state.selectedItems.map(
+                (item) => item.key,
+              );
 
               return (
                 <TagGroup size="sm" onRemove={onRemoveTags}>
                   <TagGroup.List>
                     {selectedItemsKeys.map((selectedItemKey) => {
-                      const email = emails.find((e) => e.id === selectedItemKey);
+                      const email = emails.find(
+                        (e) => e.id === selectedItemKey,
+                      );
 
                       if (!email) return null;
 
@@ -1840,9 +2050,17 @@ export const EmailRecipients: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox renderEmptyState={() => <EmptyState>No recipients found</EmptyState>}>
+            <ListBox
+              renderEmptyState={() => (
+                <EmptyState>No recipients found</EmptyState>
+              )}
+            >
               {emails.map((email) => (
-                <ListBox.Item key={email.id} id={email.id} textValue={email.email}>
+                <ListBox.Item
+                  key={email.id}
+                  id={email.id}
+                  textValue={email.email}
+                >
                   <div className="flex flex-col">
                     <Label>{email.name}</Label>
                     <Description>{email.email}</Description>

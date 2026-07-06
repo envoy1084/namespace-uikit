@@ -1,18 +1,18 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
 
-import {Button} from "../button";
-import {Description} from "../description";
-import {FieldError} from "../field-error";
-import {Form} from "../form";
-import {Input} from "../input";
-import {Label} from "../label";
-import {TextArea} from "../textarea";
-import {TextField} from "../textfield";
+import { Icon } from "@iconify/react";
 
-import {Fieldset} from "./index";
+import { Button } from "../button";
+import { Description } from "../description";
+import { FieldError } from "../field-error";
+import { Form } from "../form";
+import { Input } from "../input";
+import { Label } from "../label";
+import { TextArea } from "../textarea";
+import { TextField } from "../textfield";
+import { Fieldset } from "./index";
 
 const meta: Meta<typeof Fieldset> = {
   component: Fieldset,
@@ -26,23 +26,23 @@ const meta: Meta<typeof Fieldset> = {
 export default meta;
 type Story = StoryObj<typeof Fieldset>;
 
+const handleFieldsetSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  const formData = new FormData(e.currentTarget);
+  const data: Record<string, string> = {};
+
+  // Convert FormData to plain object
+  formData.forEach((value, key) => {
+    data[key] = value.toString();
+  });
+
+  alert("Form submitted successfully!");
+};
+
 export const Default: Story = {
   render: () => {
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const formData = new FormData(e.currentTarget);
-      const data: Record<string, string> = {};
-
-      // Convert FormData to plain object
-      formData.forEach((value, key) => {
-        data[key] = value.toString();
-      });
-
-      alert("Form submitted successfully!");
-    };
-
     return (
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={handleFieldsetSubmit}>
         <Fieldset className="w-96">
           <Fieldset.Legend>Profile Settings</Fieldset.Legend>
           <Description>Update your profile information.</Description>

@@ -1,5 +1,6 @@
-import {Label, ListBox, Select} from "@heroui/react";
 import React from "react";
+
+import { Label, ListBox, Select } from "@thenamespace/uikit";
 
 export function SelectDemo() {
   return (

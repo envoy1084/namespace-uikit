@@ -1,15 +1,15 @@
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
 
-import {Button} from "../button";
-import {ButtonGroup} from "../button-group";
-import {Separator} from "../separator";
-import {ToggleButton} from "../toggle-button";
-import {ToggleButtonGroup} from "../toggle-button-group";
+import { Icon } from "@iconify/react";
 
-import {Toolbar} from "./index";
+import { Button } from "../button";
+import { ButtonGroup } from "../button-group";
+import { Separator } from "../separator";
+import { ToggleButton } from "../toggle-button";
+import { ToggleButtonGroup } from "../toggle-button-group";
+import { Toolbar } from "./index";
 
 const meta: Meta<typeof Toolbar> = {
   argTypes: {

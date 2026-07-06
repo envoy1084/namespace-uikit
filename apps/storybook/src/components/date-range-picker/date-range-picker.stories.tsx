@@ -1,19 +1,19 @@
-import type {DateValue} from "@internationalized/date";
-import type {Meta, StoryObj} from "@storybook/react";
+import type { DateValue } from "@internationalized/date";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
-import {getLocalTimeZone, today} from "@internationalized/date";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-import {Button} from "../button";
-import {DateField} from "../date-field";
-import {Description} from "../description";
-import {FieldError} from "../field-error";
-import {Form} from "../form";
-import {Label} from "../label";
-import {RangeCalendar} from "../range-calendar";
+import { Icon } from "@iconify/react";
+import { getLocalTimeZone, today } from "@internationalized/date";
 
-import {DateRangePicker} from "./index";
+import { Button } from "../button";
+import { DateField } from "../date-field";
+import { Description } from "../description";
+import { FieldError } from "../field-error";
+import { Form } from "../form";
+import { Label } from "../label";
+import { RangeCalendar } from "../range-calendar";
+import { DateRangePicker } from "./index";
 
 const meta: Meta<typeof DateRangePicker> = {
   component: DateRangePicker,
@@ -52,13 +52,17 @@ const RangeCalendarContent = () => (
     </RangeCalendar.Grid>
     <RangeCalendar.YearPickerGrid>
       <RangeCalendar.YearPickerGridBody>
-        {({year}) => <RangeCalendar.YearPickerCell year={year} />}
+        {({ year }) => <RangeCalendar.YearPickerCell year={year} />}
       </RangeCalendar.YearPickerGridBody>
     </RangeCalendar.YearPickerGrid>
   </RangeCalendar>
 );
 
-const DateRangePickerField = ({showDescription = false}: {showDescription?: boolean}) => (
+const DateRangePickerField = ({
+  showDescription = false,
+}: {
+  showDescription?: boolean;
+}) => (
   <>
     <Label>Trip dates</Label>
     <DateField.Group fullWidth>
@@ -75,7 +79,9 @@ const DateRangePickerField = ({showDescription = false}: {showDescription?: bool
         </DateRangePicker.Trigger>
       </DateField.Suffix>
     </DateField.Group>
-    {showDescription ? <Description>Select your check-in and check-out dates.</Description> : null}
+    {showDescription ? (
+      <Description>Select your check-in and check-out dates.</Description>
+    ) : null}
     <DateRangePicker.Popover>
       <RangeCalendarContent />
     </DateRangePicker.Popover>
@@ -84,7 +90,11 @@ const DateRangePickerField = ({showDescription = false}: {showDescription?: bool
 
 export const Default: Story = {
   render: () => (
-    <DateRangePicker className="w-[320px]" endName="endDate" startName="startDate">
+    <DateRangePicker
+      className="w-[320px]"
+      endName="endDate"
+      startName="startDate"
+    >
       <DateRangePickerField />
     </DateRangePicker>
   ),
@@ -93,7 +103,10 @@ export const Default: Story = {
 export const Controlled: Story = {
   render: () => {
     const start = today(getLocalTimeZone());
-    const [value, setValue] = useState<DateRange | null>({end: start.add({days: 4}), start});
+    const [value, setValue] = useState<DateRange | null>({
+      end: start.add({ days: 4 }),
+      start,
+    });
 
     return (
       <div className="flex w-[320px] flex-col gap-2">
@@ -107,7 +120,9 @@ export const Controlled: Story = {
         </DateRangePicker>
         <Description>
           Current value:{" "}
-          {value ? `${value.start.toString()} -> ${value.end.toString()}` : "(empty)"}
+          {value
+            ? `${value.start.toString()} -> ${value.end.toString()}`
+            : "(empty)"}
         </Description>
       </div>
     );
@@ -124,7 +139,7 @@ export const Disabled: Story = {
         className="w-[320px]"
         endName="endDate"
         startName="startDate"
-        value={{end: start.add({days: 4}), start}}
+        value={{ end: start.add({ days: 4 }), start }}
       >
         <DateRangePickerField />
       </DateRangePicker>
@@ -137,7 +152,9 @@ export const WithValidation: Story = {
     const [value, setValue] = useState<DateRange | null>(null);
     const currentDate = today(getLocalTimeZone());
     const isInvalid =
-      value != null && (value.start.compare(currentDate) < 0 || value.end.compare(value.start) < 0);
+      value != null &&
+      (value.start.compare(currentDate) < 0 ||
+        value.end.compare(value.start) < 0);
 
     return (
       <DateRangePicker
@@ -180,7 +197,11 @@ export const WithValidation: Story = {
 
 export const WithCustomIndicator: Story = {
   render: () => (
-    <DateRangePicker className="w-[320px]" endName="endDate" startName="startDate">
+    <DateRangePicker
+      className="w-[320px]"
+      endName="endDate"
+      startName="startDate"
+    >
       <Label>Trip dates</Label>
       <DateField.Group fullWidth>
         <DateField.Input slot="start">
@@ -214,7 +235,9 @@ export const FormExample: Story = {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const currentDate = today(getLocalTimeZone());
     const isInvalid =
-      value != null && (value.start.compare(currentDate) < 0 || value.end.compare(value.start) < 0);
+      value != null &&
+      (value.start.compare(currentDate) < 0 ||
+        value.end.compare(value.start) < 0);
 
     const handleSubmit = (event: React.FormEvent) => {
       event.preventDefault();

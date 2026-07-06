@@ -1,8 +1,8 @@
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
 import React from "react";
 
-import {ColorsDemo} from "../components/colors-demo";
+import { ColorsDemo } from "../components/colors-demo";
 
 const meta: Meta = {
   title: "Colors Demo",

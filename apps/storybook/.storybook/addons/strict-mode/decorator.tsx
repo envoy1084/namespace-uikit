@@ -1,9 +1,10 @@
-import type {Decorator} from "@storybook/react";
+import type { Decorator } from "@storybook/react";
 
-import React, {StrictMode} from "react";
-import {useGlobals} from "storybook/preview-api";
+import React, { StrictMode } from "react";
 
-import {STRICT_MODE_GLOBAL_TYPE_ID} from "./constants";
+import { useGlobals } from "storybook/preview-api";
+
+import { STRICT_MODE_GLOBAL_TYPE_ID } from "./constants";
 
 export const withReactStrictMode: Decorator = (Story) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks -- Storybook decorators are valid hook consumers

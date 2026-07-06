@@ -1,4 +1,4 @@
-import {addons} from "storybook/manager-api";
+import { addons } from "storybook/manager-api";
 
 import {
   DEFAULT_THEME,
@@ -6,28 +6,28 @@ import {
   THEME_GLOBAL_TYPE_ID,
   ensureThemeKey,
 } from "../../addons/theme/constants";
-import {themes} from "../../styles/theme";
+import { themes } from "../../styles/theme";
+
+const updateManagerTheme = (theme: string) => {
+  const selectedTheme = themes[theme as keyof typeof themes] || themes.light;
+
+  // Get current config to preserve other settings
+  const currentConfig = (addons as any).getConfig?.() || {};
+
+  addons.setConfig({
+    ...currentConfig,
+    theme: selectedTheme,
+    enableShortcuts: currentConfig.enableShortcuts ?? false,
+    sidebar: {
+      ...currentConfig.sidebar,
+      showRoots: currentConfig.sidebar?.showRoots ?? false,
+    },
+  });
+};
 
 // Register addon to hook into the manager lifecycle properly
 addons.register("heroui-theme-manager", (api) => {
   let lastTheme = DEFAULT_THEME;
-
-  const updateManagerTheme = (theme: string) => {
-    const selectedTheme = themes[theme as keyof typeof themes] || themes.light;
-
-    // Get current config to preserve other settings
-    const currentConfig = (addons as any).getConfig?.() || {};
-
-    addons.setConfig({
-      ...currentConfig,
-      theme: selectedTheme,
-      enableShortcuts: currentConfig.enableShortcuts ?? false,
-      sidebar: {
-        ...currentConfig.sidebar,
-        showRoots: currentConfig.sidebar?.showRoots ?? false,
-      },
-    });
-  };
 
   const applyTheme = (theme: string) => {
     const next = ensureThemeKey(theme);
@@ -51,16 +51,21 @@ addons.register("heroui-theme-manager", (api) => {
     applyTheme(DEFAULT_THEME);
 
     // Listen for custom theme event
-    channel.on(THEME_EVENT_NAME, (event: {theme: string}) => {
+    channel.on(THEME_EVENT_NAME, (event: { theme: string }) => {
       applyTheme(event?.theme);
     });
 
     // Listen for globals updates
-    channel.on("GLOBALS_UPDATED", (payload: {globals?: Record<string, unknown>}) => {
-      const theme = payload?.globals?.[THEME_GLOBAL_TYPE_ID] as string | undefined;
+    channel.on(
+      "GLOBALS_UPDATED",
+      (payload: { globals?: Record<string, unknown> }) => {
+        const theme = payload?.globals?.[THEME_GLOBAL_TYPE_ID] as
+          | string
+          | undefined;
 
-      if (theme) applyTheme(theme);
-    });
+        if (theme) applyTheme(theme);
+      },
+    );
 
     // Replay on lifecycle events to override defaults
     const replayEvents = [
@@ -85,7 +90,7 @@ addons.register("heroui-theme-manager", (api) => {
       if (initialGlobalTheme) {
         applyTheme(initialGlobalTheme as string);
       }
-    } catch (e) {
+    } catch {
       // ignore
     }
   };

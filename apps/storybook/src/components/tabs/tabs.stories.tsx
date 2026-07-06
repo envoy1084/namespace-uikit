@@ -1,10 +1,11 @@
-import type {Key} from "../rac";
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
-import {cn} from "tailwind-variants";
 
-import {Tabs} from "./index";
+import { cn } from "tailwind-variants";
+
+import type { Key } from "../rac";
+import { Tabs } from "./index";
 
 const meta = {
   argTypes: {},
@@ -79,7 +80,9 @@ const VerticalTemplate = (args: Story["args"]) => {
         </Tabs.ListContainer>
         <Tabs.Panel className="px-4" id="account">
           <h3 className="mb-2 font-semibold">Account Settings</h3>
-          <p className="text-sm text-gray-600">Manage your account information and preferences.</p>
+          <p className="text-sm text-gray-600">
+            Manage your account information and preferences.
+          </p>
         </Tabs.Panel>
         <Tabs.Panel className="px-4" id="security">
           <h3 className="mb-2 font-semibold">Security Settings</h3>
@@ -174,7 +177,11 @@ const ControlledSelectionTemplate = (args: Story["args"]) => {
   return (
     <div className="w-[600px]">
       <p className="my-2">Selected: {selectedKey}</p>
-      <Tabs selectedKey={selectedKey} onSelectionChange={setSelectedKey} {...args}>
+      <Tabs
+        selectedKey={selectedKey}
+        onSelectionChange={setSelectedKey}
+        {...args}
+      >
         <Tabs.ListContainer>
           <Tabs.List aria-label="Tabs with controlled options">
             <Tabs.Tab id="active">
@@ -212,7 +219,7 @@ const CustomStyleTemplate = (args: Story["args"]) => {
         <Tabs.ListContainer>
           <Tabs.List
             aria-label="Options"
-            className="w-fit *:h-6 *:w-fit *:px-3 *:text-sm *:font-normal *:data-[selected=true]:text-accent-foreground"
+            className="*:data-[selected=true]:text-accent-foreground w-fit *:h-6 *:w-fit *:px-3 *:text-sm *:font-normal"
           >
             <Tabs.Tab id="daily">
               Daily
@@ -333,7 +340,9 @@ const SecondaryVerticalTemplate = (args: Story["args"]) => {
         </Tabs.ListContainer>
         <Tabs.Panel className="px-4" id="account">
           <h3 className="mb-2 font-semibold">Account Settings</h3>
-          <p className="text-sm text-gray-600">Manage your account information and preferences.</p>
+          <p className="text-sm text-gray-600">
+            Manage your account information and preferences.
+          </p>
         </Tabs.Panel>
         <Tabs.Panel className="px-4" id="security">
           <h3 className="mb-2 font-semibold">Security Settings</h3>
@@ -403,7 +412,11 @@ const Showcase1Template = (args: Story["args"]) => {
             />
           ))}
         </div>
-        <Tabs {...args} defaultSelectedKey={DEFAULT_ZOOM} onSelectionChange={setSelectedZoom}>
+        <Tabs
+          {...args}
+          defaultSelectedKey={DEFAULT_ZOOM}
+          onSelectionChange={setSelectedZoom}
+        >
           <Tabs.ListContainer className="scrollbar-hide my-4 w-full max-w-full overflow-x-auto sm:my-6">
             <Tabs.List
               aria-label="Options"
@@ -429,7 +442,7 @@ const Showcase1Template = (args: Story["args"]) => {
               aria-hidden={selectedZoom !== key}
               data-selected={selectedZoom === key}
               className={cn(
-                "absolute top-1/2 left-1/2 origin-center -translate-x-1/2 -translate-y-1/2 scale-75 text-[21px] font-medium text-foreground opacity-0 transition-[scale,opacity] duration-[300ms] ease-[cubic-bezier(0.33,1,0.68,1)] ease-in-out-quad data-[selected=true]:scale-100 data-[selected=true]:opacity-100 data-[selected=true]:delay-200",
+                "text-foreground ease-in-out-quad absolute top-1/2 left-1/2 origin-center -translate-x-1/2 -translate-y-1/2 scale-75 text-[21px] font-medium opacity-0 transition-[scale,opacity] duration-[300ms] ease-[cubic-bezier(0.33,1,0.68,1)] data-[selected=true]:scale-100 data-[selected=true]:opacity-100 data-[selected=true]:delay-200",
                 {
                   "sr-only": selectedZoom !== key,
                 },
@@ -439,8 +452,12 @@ const Showcase1Template = (args: Story["args"]) => {
             </p>
           ))}
         </div>
-        <footer className="mt-4 w-full px-4 text-center text-xs text-muted/30 sm:text-sm">
-          <a href="https://www.apple.com/iphone-17-pro/" rel="noopener noreferrer" target="_blank">
+        <footer className="text-muted/30 mt-4 w-full px-4 text-center text-xs sm:text-sm">
+          <a
+            href="https://www.apple.com/iphone-17-pro/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             Showcase based on Apple&apos;s iPhone 17 Pro camera zoom showcase
           </a>
         </footer>

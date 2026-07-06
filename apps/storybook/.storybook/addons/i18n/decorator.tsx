@@ -1,9 +1,10 @@
-import type {Decorator} from "@storybook/react";
+import type { Decorator } from "@storybook/react";
 
-import React, {useEffect} from "react";
-import {useGlobals} from "storybook/preview-api";
+import React, { useEffect } from "react";
 
-import {DEFAULT_LOCALE, I18N_GLOBAL_TYPE_ID, LOCALES} from "./constants";
+import { useGlobals } from "storybook/preview-api";
+
+import { DEFAULT_LOCALE, I18N_GLOBAL_TYPE_ID, LOCALES } from "./constants";
 
 export const withInternationalization: Decorator = (Story) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks -- Storybook decorators are valid hook consumers

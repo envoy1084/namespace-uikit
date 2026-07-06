@@ -1,5 +1,6 @@
-import {Button} from "@heroui/react";
 import React from "react";
+
+import { Button } from "@thenamespace/uikit";
 
 export const ButtonsDemo = () => {
   return (

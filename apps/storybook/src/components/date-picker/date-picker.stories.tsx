@@ -1,19 +1,19 @@
-import type {DateValue} from "@internationalized/date";
-import type {Meta, StoryObj} from "@storybook/react";
+import type { DateValue } from "@internationalized/date";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
-import {getLocalTimeZone, today} from "@internationalized/date";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-import {Button} from "../button";
-import {Calendar} from "../calendar";
-import {DateField} from "../date-field";
-import {Description} from "../description";
-import {FieldError} from "../field-error";
-import {Form} from "../form";
-import {Label} from "../label";
+import { Icon } from "@iconify/react";
+import { getLocalTimeZone, today } from "@internationalized/date";
 
-import {DatePicker} from "./index";
+import { Button } from "../button";
+import { Calendar } from "../calendar";
+import { DateField } from "../date-field";
+import { Description } from "../description";
+import { FieldError } from "../field-error";
+import { Form } from "../form";
+import { Label } from "../label";
+import { DatePicker } from "./index";
 
 const meta: Meta<typeof DatePicker> = {
   component: DatePicker,
@@ -41,28 +41,38 @@ const CalendarContent = () => (
       <Calendar.GridHeader>
         {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
       </Calendar.GridHeader>
-      <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
+      <Calendar.GridBody>
+        {(date) => <Calendar.Cell date={date} />}
+      </Calendar.GridBody>
     </Calendar.Grid>
     <Calendar.YearPickerGrid>
       <Calendar.YearPickerGridBody>
-        {({year}) => <Calendar.YearPickerCell year={year} />}
+        {({ year }) => <Calendar.YearPickerCell year={year} />}
       </Calendar.YearPickerGridBody>
     </Calendar.YearPickerGrid>
   </Calendar>
 );
 
-const DatePickerField = ({showDescription = false}: {showDescription?: boolean}) => (
+const DatePickerField = ({
+  showDescription = false,
+}: {
+  showDescription?: boolean;
+}) => (
   <>
     <Label>Date</Label>
     <DateField.Group fullWidth>
-      <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
+      <DateField.Input>
+        {(segment) => <DateField.Segment segment={segment} />}
+      </DateField.Input>
       <DateField.Suffix>
         <DatePicker.Trigger>
           <DatePicker.TriggerIndicator />
         </DatePicker.Trigger>
       </DateField.Suffix>
     </DateField.Group>
-    {showDescription ? <Description>Select a date from the calendar.</Description> : null}
+    {showDescription ? (
+      <Description>Select a date from the calendar.</Description>
+    ) : null}
     <DatePicker.Popover>
       <CalendarContent />
     </DatePicker.Popover>
@@ -79,14 +89,18 @@ export const Default: Story = {
 
 export const Controlled: Story = {
   render: () => {
-    const [value, setValue] = useState<DateValue | null>(today(getLocalTimeZone()));
+    const [value, setValue] = useState<DateValue | null>(
+      today(getLocalTimeZone()),
+    );
 
     return (
       <div className="flex w-64 flex-col gap-2">
         <DatePicker name="date" value={value} onChange={setValue}>
           <DatePickerField showDescription />
         </DatePicker>
-        <Description>Current value: {value ? value.toString() : "(empty)"}</Description>
+        <Description>
+          Current value: {value ? value.toString() : "(empty)"}
+        </Description>
       </div>
     );
   },
@@ -94,7 +108,12 @@ export const Controlled: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <DatePicker isDisabled className="w-64" name="date" value={today(getLocalTimeZone())}>
+    <DatePicker
+      isDisabled
+      className="w-64"
+      name="date"
+      value={today(getLocalTimeZone())}
+    >
       <DatePickerField />
     </DatePicker>
   ),
@@ -118,7 +137,9 @@ export const WithValidation: Story = {
       >
         <Label>Appointment date</Label>
         <DateField.Group fullWidth>
-          <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
+          <DateField.Input>
+            {(segment) => <DateField.Segment segment={segment} />}
+          </DateField.Input>
           <DateField.Suffix>
             <DatePicker.Trigger>
               <DatePicker.TriggerIndicator />
@@ -143,7 +164,9 @@ export const WithCustomIndicator: Story = {
     <DatePicker className="w-64" name="date">
       <Label>Date</Label>
       <DateField.Group fullWidth>
-        <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
+        <DateField.Input>
+          {(segment) => <DateField.Segment segment={segment} />}
+        </DateField.Input>
         <DateField.Suffix>
           <DatePicker.Trigger>
             <DatePicker.TriggerIndicator>
@@ -152,7 +175,9 @@ export const WithCustomIndicator: Story = {
           </DatePicker.Trigger>
         </DateField.Suffix>
       </DateField.Group>
-      <Description>Use a custom trigger icon while keeping DatePicker behavior.</Description>
+      <Description>
+        Use a custom trigger icon while keeping DatePicker behavior.
+      </Description>
       <DatePicker.Popover>
         <CalendarContent />
       </DatePicker.Popover>

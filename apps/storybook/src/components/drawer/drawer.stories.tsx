@@ -1,14 +1,14 @@
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
 
-import {Button} from "../button";
-import {Input} from "../input";
-import {Label} from "../label";
-import {TextField} from "../textfield";
+import { Icon } from "@iconify/react";
 
-import {Drawer} from "./index";
+import { Button } from "../button";
+import { Input } from "../input";
+import { Label } from "../label";
+import { TextField } from "../textfield";
+import { Drawer } from "./index";
 
 export default {
   argTypes: {},
@@ -32,8 +32,9 @@ export const Default = () => {
             </Drawer.Header>
             <Drawer.Body>
               <p>
-                This is a bottom drawer built with React Aria's Modal component. It slides up from
-                the bottom of the screen with a smooth CSS transition.
+                This is a bottom drawer built with React Aria's Modal component.
+                It slides up from the bottom of the screen with a smooth CSS
+                transition.
               </p>
             </Drawer.Body>
             <Drawer.Footer>
@@ -66,12 +67,14 @@ export const Placements = () => {
                 {placement === "bottom" && <Drawer.Handle />}
                 <Drawer.Header>
                   <Drawer.Heading>
-                    {placement.charAt(0).toUpperCase() + placement.slice(1)} Drawer
+                    {placement.charAt(0).toUpperCase() + placement.slice(1)}{" "}
+                    Drawer
                   </Drawer.Heading>
                 </Drawer.Header>
                 <Drawer.Body>
                   <p>
-                    This drawer slides in from the <strong>{placement}</strong> edge of the screen.
+                    This drawer slides in from the <strong>{placement}</strong>{" "}
+                    edge of the screen.
                   </p>
                 </Drawer.Body>
                 <Drawer.Footer>
@@ -97,7 +100,9 @@ export const BackdropVariants = () => {
     <div className="flex flex-wrap gap-4">
       {variants.map((variant) => (
         <Drawer key={variant}>
-          <Button variant="secondary">{variant.charAt(0).toUpperCase() + variant.slice(1)}</Button>
+          <Button variant="secondary">
+            {variant.charAt(0).toUpperCase() + variant.slice(1)}
+          </Button>
           <Drawer.Backdrop variant={variant}>
             <Drawer.Content>
               <Drawer.Dialog>
@@ -105,12 +110,14 @@ export const BackdropVariants = () => {
                 <Drawer.CloseTrigger />
                 <Drawer.Header>
                   <Drawer.Heading>
-                    Backdrop: {variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    Backdrop:{" "}
+                    {variant.charAt(0).toUpperCase() + variant.slice(1)}
                   </Drawer.Heading>
                 </Drawer.Header>
                 <Drawer.Body>
                   <p>
-                    This drawer uses the <code>{variant}</code> backdrop variant.
+                    This drawer uses the <code>{variant}</code> backdrop
+                    variant.
                   </p>
                 </Drawer.Body>
                 <Drawer.Footer>
@@ -149,7 +156,10 @@ export const WithForm = () => (
               </TextField>
               <TextField className="w-full" name="bio">
                 <Label>Bio</Label>
-                <Input placeholder="Tell us about yourself" variant="secondary" />
+                <Input
+                  placeholder="Tell us about yourself"
+                  variant="secondary"
+                />
               </TextField>
             </form>
           </Drawer.Body>
@@ -177,11 +187,12 @@ export const WithScrollableContent = () => (
             <Drawer.Heading>Terms & Conditions</Drawer.Heading>
           </Drawer.Header>
           <Drawer.Body>
-            {Array.from({length: 20}).map((_, i) => (
+            {Array.from({ length: 20 }).map((_, i) => (
               <p key={i} className="mb-3">
-                Paragraph {i + 1}: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet hendrerit risus,
-                sed porttitor quam.
+                Paragraph {i + 1}: Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit. Nullam pulvinar risus non risus hendrerit
+                venenatis. Pellentesque sit amet hendrerit risus, sed porttitor
+                quam.
               </p>
             ))}
           </Drawer.Body>
@@ -199,12 +210,12 @@ export const WithScrollableContent = () => (
 
 export const NavigationDrawer = () => {
   const navItems = [
-    {icon: "gravity-ui:house", label: "Home"},
-    {icon: "gravity-ui:magnifier", label: "Search"},
-    {icon: "gravity-ui:bell", label: "Notifications"},
-    {icon: "gravity-ui:envelope", label: "Messages"},
-    {icon: "gravity-ui:person", label: "Profile"},
-    {icon: "gravity-ui:gear", label: "Settings"},
+    { icon: "gravity-ui:house", label: "Home" },
+    { icon: "gravity-ui:magnifier", label: "Search" },
+    { icon: "gravity-ui:bell", label: "Notifications" },
+    { icon: "gravity-ui:envelope", label: "Messages" },
+    { icon: "gravity-ui:person", label: "Profile" },
+    { icon: "gravity-ui:gear", label: "Settings" },
   ];
 
   return (
@@ -225,10 +236,10 @@ export const NavigationDrawer = () => {
                 {navItems.map((item) => (
                   <button
                     key={item.label}
-                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
+                    className="text-foreground hover:bg-default flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors"
                     type="button"
                   >
-                    <Icon className="size-5 text-muted" icon={item.icon} />
+                    <Icon className="text-muted size-5" icon={item.icon} />
                     {item.label}
                   </button>
                 ))}
@@ -252,8 +263,8 @@ export const NonDismissable = () => (
           </Drawer.Header>
           <Drawer.Body>
             <p>
-              This drawer cannot be dismissed by clicking outside. You must use one of the buttons
-              below.
+              This drawer cannot be dismissed by clicking outside. You must use
+              one of the buttons below.
             </p>
           </Drawer.Body>
           <Drawer.Footer>
@@ -277,9 +288,9 @@ export const Controlled = () => {
         <Button variant="secondary" onPress={() => setIsOpen(true)}>
           Open Drawer
         </Button>
-        <p className="text-sm text-muted">
+        <p className="text-muted text-sm">
           Status:{" "}
-          <span className="font-mono font-medium text-foreground">
+          <span className="text-foreground font-mono font-medium">
             {isOpen ? "open" : "closed"}
           </span>
         </p>

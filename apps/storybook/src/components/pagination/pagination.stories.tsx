@@ -1,12 +1,12 @@
-import type {PaginationProps} from "./index";
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
 
-import {Separator} from "../separator";
+import { Icon } from "@iconify/react";
 
-import {Pagination} from "./index";
+import { Separator } from "../separator";
+import type { PaginationProps } from "./index";
+import { Pagination } from "./index";
 
 export default {
   argTypes: {
@@ -73,7 +73,9 @@ const SizesTemplate = (props: PaginationProps) => {
       {sizes.map((size, index) => (
         <React.Fragment key={size}>
           <div className="flex flex-col gap-2">
-            <span className="text-sm font-semibold text-muted capitalize">{size}</span>
+            <span className="text-muted text-sm font-semibold capitalize">
+              {size}
+            </span>
             <Pagination {...props} size={size}>
               <Pagination.Content>
                 <Pagination.Item>
@@ -330,7 +332,10 @@ const ControlledTemplate = (props: PaginationProps) => {
         </Pagination.Summary>
         <Pagination.Content>
           <Pagination.Item>
-            <Pagination.Previous isDisabled={page === 1} onPress={() => setPage((p) => p - 1)}>
+            <Pagination.Previous
+              isDisabled={page === 1}
+              onPress={() => setPage((p) => p - 1)}
+            >
               <Pagination.PreviousIcon />
               <span>Previous</span>
             </Pagination.Previous>
@@ -342,14 +347,20 @@ const ControlledTemplate = (props: PaginationProps) => {
               </Pagination.Item>
             ) : (
               <Pagination.Item key={p}>
-                <Pagination.Link isActive={p === page} onPress={() => setPage(p)}>
+                <Pagination.Link
+                  isActive={p === page}
+                  onPress={() => setPage(p)}
+                >
                   {p}
                 </Pagination.Link>
               </Pagination.Item>
             ),
           )}
           <Pagination.Item>
-            <Pagination.Next isDisabled={page === totalPages} onPress={() => setPage((p) => p + 1)}>
+            <Pagination.Next
+              isDisabled={page === totalPages}
+              onPress={() => setPage((p) => p + 1)}
+            >
               <span>Next</span>
               <Pagination.NextIcon />
             </Pagination.Next>

@@ -1,20 +1,20 @@
-import type {Meta, StoryObj} from "@storybook/react";
-import type {Selection, SortDescriptor} from "react-aria-components/Table";
+import type { Meta, StoryObj } from "@storybook/react";
+import type { Selection, SortDescriptor } from "react-aria-components/Table";
 
-import {cn} from "@heroui/styles";
-import {Icon} from "@iconify/react";
 import React from "react";
-import {TableLayout, Virtualizer} from "react-aria-components/Virtualizer";
 
-import {Avatar} from "../avatar";
-import {Button} from "../button";
-import {Checkbox} from "../checkbox";
-import {Chip} from "../chip";
-import {EmptyState} from "../empty-state";
-import {Pagination} from "../pagination";
-import {Spinner} from "../spinner";
+import { Icon } from "@iconify/react";
+import { cn } from "@thenamespace/uikit";
+import { TableLayout, Virtualizer } from "react-aria-components/Virtualizer";
 
-import {Table} from "./index";
+import { Avatar } from "../avatar";
+import { Button } from "../button";
+import { Checkbox } from "../checkbox";
+import { Chip } from "../chip";
+import { EmptyState } from "../empty-state";
+import { Pagination } from "../pagination";
+import { Spinner } from "../spinner";
+import { Table } from "./index";
 
 export default {
   component: Table,
@@ -44,10 +44,57 @@ interface User {
   email: string;
 }
 
+type ExpandableRow = {
+  children: ExpandableRow[];
+  date: string;
+  id: string;
+  title: string;
+  type: string;
+};
+
+function renderExpandableRow(item: ExpandableRow) {
+  return (
+    <Table.Row id={item.id} textValue={item.title}>
+      <Table.Cell textValue={item.title}>
+        {({ hasChildItems, isDisabled, isExpanded, isTreeColumn }) => (
+          <span className="flex items-center gap-1">
+            {hasChildItems && isTreeColumn ? (
+              <Button
+                isIconOnly
+                aria-label="Toggle row"
+                isDisabled={isDisabled}
+                size="sm"
+                slot="chevron"
+                variant="ghost"
+              >
+                <Icon
+                  aria-hidden
+                  icon="gravity-ui:chevron-right"
+                  className={cn(
+                    "text-muted size-4 transition-transform duration-150",
+                    isExpanded ? "rotate-90" : "",
+                  )}
+                />
+              </Button>
+            ) : null}
+            <span>{item.title}</span>
+          </span>
+        )}
+      </Table.Cell>
+      <Table.Cell>{item.type}</Table.Cell>
+      <Table.Cell>{item.date}</Table.Cell>
+      <Table.Collection items={item.children}>
+        {renderExpandableRow}
+      </Table.Collection>
+    </Table.Row>
+  );
+}
+
 const users: User[] = [
   {
     email: "kate@acme.com",
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
     id: 4586932,
     name: "Kate Moore",
     role: "Chief Executive Officer",
@@ -55,7 +102,8 @@ const users: User[] = [
   },
   {
     email: "john@acme.com",
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
     id: 5273849,
     name: "John Smith",
     role: "Chief Technology Officer",
@@ -63,7 +111,8 @@ const users: User[] = [
   },
   {
     email: "sara@acme.com",
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
     id: 7492836,
     name: "Sara Johnson",
     role: "Chief Marketing Officer",
@@ -71,7 +120,8 @@ const users: User[] = [
   },
   {
     email: "michael@acme.com",
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
     id: 8293746,
     name: "Michael Brown",
     role: "Chief Financial Officer",
@@ -79,7 +129,8 @@ const users: User[] = [
   },
   {
     email: "emily@acme.com",
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
     id: 1234567,
     name: "Emily Davis",
     role: "Product Manager",
@@ -87,7 +138,8 @@ const users: User[] = [
   },
   {
     email: "davis@acme.com",
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
     id: 9876543,
     name: "Davis Wilson",
     role: "Lead Designer",
@@ -95,7 +147,8 @@ const users: User[] = [
   },
   {
     email: "olivia@acme.com",
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
     id: 3456789,
     name: "Olivia Martinez",
     role: "Frontend Engineer",
@@ -103,7 +156,8 @@ const users: User[] = [
   },
   {
     email: "james@acme.com",
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
     id: 4567890,
     name: "James Taylor",
     role: "Backend Engineer",
@@ -111,7 +165,8 @@ const users: User[] = [
   },
   {
     email: "sophia@acme.com",
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
     id: 5678901,
     name: "Sophia Anderson",
     role: "QA Engineer",
@@ -119,7 +174,8 @@ const users: User[] = [
   },
   {
     email: "liam@acme.com",
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
     id: 6789012,
     name: "Liam Thomas",
     role: "DevOps Engineer",
@@ -127,7 +183,8 @@ const users: User[] = [
   },
   {
     email: "ava@acme.com",
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
     id: 7890123,
     name: "Ava Jackson",
     role: "Data Analyst",
@@ -135,7 +192,8 @@ const users: User[] = [
   },
   {
     email: "noah@acme.com",
-    image_url: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
+    image_url:
+      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
     id: 8901234,
     name: "Noah White",
     role: "Security Engineer",
@@ -144,16 +202,16 @@ const users: User[] = [
 ];
 
 const columns = [
-  {id: "name", isRowHeader: true, name: "Name"},
-  {id: "role", name: "Role"},
-  {id: "status", name: "Status"},
-  {id: "email", name: "Email"},
+  { id: "name", isRowHeader: true, name: "Name" },
+  { id: "role", name: "Role" },
+  { id: "status", name: "Status" },
+  { id: "email", name: "Email" },
 ];
 
 /* -------------------------------------------------------------------------------------------------
  * Wrapper
  * -----------------------------------------------------------------------------------------------*/
-const Wrapper = ({children}: {children: React.ReactNode}) => (
+const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <div className="w-full max-w-4xl">{children}</div>
 );
 
@@ -175,12 +233,24 @@ function usePagination<T>(items: T[], rowsPerPage = ROWS_PER_PAGE) {
   const start = (page - 1) * rowsPerPage + 1;
   const end = Math.min(page * rowsPerPage, items.length);
 
-  return {end, page, paginatedItems, setPage, start, total: items.length, totalPages};
+  return {
+    end,
+    page,
+    paginatedItems,
+    setPage,
+    start,
+    total: items.length,
+    totalPages,
+  };
 }
 
-function TablePaginationFooter({pagination}: {pagination: ReturnType<typeof usePagination>}) {
-  const {end, page, setPage, start, total, totalPages} = pagination;
-  const pages = Array.from({length: totalPages}, (_, i) => i + 1);
+function TablePaginationFooter({
+  pagination,
+}: {
+  pagination: ReturnType<typeof usePagination>;
+}) {
+  const { end, page, setPage, start, total, totalPages } = pagination;
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <Pagination size="sm">
@@ -231,7 +301,11 @@ const statusColorMap: Record<string, "success" | "danger" | "warning"> = {
 /**
  * Shared template for Default and SecondaryVariant stories.
  */
-function DefaultTableTemplate({variant = "primary"}: {variant?: "primary" | "secondary"}) {
+function DefaultTableTemplate({
+  variant = "primary",
+}: {
+  variant?: "primary" | "secondary";
+}) {
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set());
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "name",
@@ -239,7 +313,7 @@ function DefaultTableTemplate({variant = "primary"}: {variant?: "primary" | "sec
   });
 
   const sortedUsers = React.useMemo(() => {
-    return [...users].sort((a, b) => {
+    return [...users].toSorted((a, b) => {
       const col = sortDescriptor.column as keyof User;
       const first = String(a[col]);
       const second = String(b[col]);
@@ -278,29 +352,34 @@ function DefaultTableTemplate({variant = "primary"}: {variant?: "primary" | "sec
                   </Checkbox.Content>
                 </Checkbox>
               </Table.Column>
-              <Table.Column allowsSorting isRowHeader className="after:hidden" id="id">
-                {({sortDirection}) => (
+              <Table.Column
+                allowsSorting
+                isRowHeader
+                className="after:hidden"
+                id="id"
+              >
+                {({ sortDirection }) => (
                   <Table.SortableColumnHeader sortDirection={sortDirection}>
                     Worker ID
                   </Table.SortableColumnHeader>
                 )}
               </Table.Column>
               <Table.Column allowsSorting id="name">
-                {({sortDirection}) => (
+                {({ sortDirection }) => (
                   <Table.SortableColumnHeader sortDirection={sortDirection}>
                     Member
                   </Table.SortableColumnHeader>
                 )}
               </Table.Column>
               <Table.Column allowsSorting id="role">
-                {({sortDirection}) => (
+                {({ sortDirection }) => (
                   <Table.SortableColumnHeader sortDirection={sortDirection}>
                     Role
                   </Table.SortableColumnHeader>
                 )}
               </Table.Column>
               <Table.Column allowsSorting id="status">
-                {({sortDirection}) => (
+                {({ sortDirection }) => (
                   <Table.SortableColumnHeader sortDirection={sortDirection}>
                     Status
                   </Table.SortableColumnHeader>
@@ -328,7 +407,10 @@ function DefaultTableTemplate({variant = "primary"}: {variant?: "primary" | "sec
                     <div className="flex items-center gap-2">
                       #{user.id.toString()}{" "}
                       <Button isIconOnly size="sm" variant="ghost">
-                        <Icon className="size-4 text-muted" icon="gravity-ui:copy" />
+                        <Icon
+                          className="text-muted size-4"
+                          icon="gravity-ui:copy"
+                        />
                       </Button>
                     </div>
                   </Table.Cell>
@@ -345,13 +427,17 @@ function DefaultTableTemplate({variant = "primary"}: {variant?: "primary" | "sec
                       </Avatar>
                       <div className="flex flex-col">
                         <span className="text-xs">{user.name}</span>
-                        <span className="text-xs text-muted">{user.email}</span>
+                        <span className="text-muted text-xs">{user.email}</span>
                       </div>
                     </div>
                   </Table.Cell>
                   <Table.Cell className="min-w-52">{user.role}</Table.Cell>
                   <Table.Cell className="min-w-25">
-                    <Chip color={statusColorMap[user.status]} size="sm" variant="soft">
+                    <Chip
+                      color={statusColorMap[user.status]}
+                      size="sm"
+                      variant="soft"
+                    >
                       {user.status}
                     </Chip>
                   </Table.Cell>
@@ -388,7 +474,7 @@ export const Default: Story = {
   args: {
     variant: "primary",
   },
-  render: ({variant}) => <DefaultTableTemplate variant={variant} />,
+  render: ({ variant }) => <DefaultTableTemplate variant={variant} />,
 };
 
 /**
@@ -405,14 +491,18 @@ export const EmptyStateDemo: Story = {
   args: {
     variant: "primary",
   },
-  render: ({variant}) => (
+  render: ({ variant }) => (
     <Wrapper>
       <Table className="min-h-[200px] min-w-[600px]" variant={variant}>
         <Table.ScrollContainer>
           <Table.Content aria-label="Empty state" className="h-full">
             <Table.Header>
               {columns.map((col) => (
-                <Table.Column key={col.id} id={col.id} isRowHeader={col.isRowHeader}>
+                <Table.Column
+                  key={col.id}
+                  id={col.id}
+                  isRowHeader={col.isRowHeader}
+                >
                   {col.name}
                 </Table.Column>
               ))}
@@ -420,8 +510,8 @@ export const EmptyStateDemo: Story = {
             <Table.Body
               renderEmptyState={() => (
                 <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 text-center">
-                  <Icon className="size-6 text-muted" icon="gravity-ui:tray" />
-                  <span className="text-sm text-muted">No results found</span>
+                  <Icon className="text-muted size-6" icon="gravity-ui:tray" />
+                  <span className="text-muted text-sm">No results found</span>
                 </EmptyState>
               )}
             >
@@ -447,17 +537,24 @@ export const DynamicCollection: Story = {
       <Wrapper>
         <Table>
           <Table.ScrollContainer>
-            <Table.Content aria-label="Dynamic collection" className="min-w-[600px]">
+            <Table.Content
+              aria-label="Dynamic collection"
+              className="min-w-[600px]"
+            >
               <Table.Header columns={columns}>
                 {(column) => (
-                  <Table.Column isRowHeader={column.isRowHeader}>{column.name}</Table.Column>
+                  <Table.Column isRowHeader={column.isRowHeader}>
+                    {column.name}
+                  </Table.Column>
                 )}
               </Table.Header>
               <Table.Body items={pagination.paginatedItems}>
                 {(user) => (
                   <Table.Row>
                     <Table.Collection items={columns}>
-                      {(column) => <Table.Cell>{user[column.id as keyof User]}</Table.Cell>}
+                      {(column) => (
+                        <Table.Cell>{user[column.id as keyof User]}</Table.Cell>
+                      )}
                     </Table.Collection>
                   </Table.Row>
                 )}
@@ -504,7 +601,9 @@ const DynamicWithSelectionTemplate = () => {
               </Table.Column>
               <Table.Collection items={columns}>
                 {(column) => (
-                  <Table.Column isRowHeader={column.isRowHeader}>{column.name}</Table.Column>
+                  <Table.Column isRowHeader={column.isRowHeader}>
+                    {column.name}
+                  </Table.Column>
                 )}
               </Table.Collection>
             </Table.Header>
@@ -554,7 +653,12 @@ export const ColumnResizing: Story = {
         <Table.ResizableContainer>
           <Table.Content aria-label="Column resizing" className="min-w-[700px]">
             <Table.Header>
-              <Table.Column isRowHeader defaultWidth="1fr" id="name" minWidth={160}>
+              <Table.Column
+                isRowHeader
+                defaultWidth="1fr"
+                id="name"
+                minWidth={160}
+              >
                 Name
                 <Table.ColumnResizer />
               </Table.Column>
@@ -576,7 +680,11 @@ export const ColumnResizing: Story = {
                   <Table.Cell>{user.name}</Table.Cell>
                   <Table.Cell>{user.role}</Table.Cell>
                   <Table.Cell>
-                    <Chip color={statusColorMap[user.status]} size="sm" variant="soft">
+                    <Chip
+                      color={statusColorMap[user.status]}
+                      size="sm"
+                      variant="soft"
+                    >
                       {user.status}
                     </Chip>
                   </Table.Cell>
@@ -598,7 +706,9 @@ export const ColumnResizing: Story = {
 const ITEMS_PER_PAGE = 6;
 
 function useAsyncUsers() {
-  const [items, setItems] = React.useState<User[]>(() => users.slice(0, ITEMS_PER_PAGE));
+  const [items, setItems] = React.useState<User[]>(() =>
+    users.slice(0, ITEMS_PER_PAGE),
+  );
   const [isLoading, setIsLoading] = React.useState(false);
   const isLoadingRef = React.useRef(false);
   const hasMore = items.length < users.length;
@@ -617,24 +727,28 @@ function useAsyncUsers() {
     }, 1500);
   }, [hasMore]);
 
-  return {hasMore, isLoading, items, loadMore};
+  return { hasMore, isLoading, items, loadMore };
 }
 
 export const AsyncLoading: Story = {
   args: {
     variant: "primary",
   },
-  render: ({variant}) => {
-    const {hasMore, isLoading, items, loadMore} = useAsyncUsers();
+  render: ({ variant }) => {
+    const { hasMore, isLoading, items, loadMore } = useAsyncUsers();
 
     return (
       <Wrapper>
         <Table variant={variant}>
           <Table.ScrollContainer className="h-[280px] overflow-y-auto">
             <Table.Content aria-label="Async loading" className="min-w-[600px]">
-              <Table.Header className="sticky top-0 z-10 bg-surface-secondary">
+              <Table.Header className="bg-surface-secondary sticky top-0 z-10">
                 {columns.map((col) => (
-                  <Table.Column key={col.id} id={col.id} isRowHeader={col.isRowHeader}>
+                  <Table.Column
+                    key={col.id}
+                    id={col.id}
+                    isRowHeader={col.isRowHeader}
+                  >
                     {col.name}
                   </Table.Column>
                 ))}
@@ -646,7 +760,11 @@ export const AsyncLoading: Story = {
                       <Table.Cell>{user.name}</Table.Cell>
                       <Table.Cell>{user.role}</Table.Cell>
                       <Table.Cell>
-                        <Chip color={statusColorMap[user.status]} size="sm" variant="soft">
+                        <Chip
+                          color={statusColorMap[user.status]}
+                          size="sm"
+                          variant="soft"
+                        >
                           {user.status}
                         </Chip>
                       </Table.Cell>
@@ -655,7 +773,11 @@ export const AsyncLoading: Story = {
                   )}
                 </Table.Collection>
                 {!!hasMore && (
-                  <Table.LoadMore isLoading={isLoading} scrollOffset={0} onLoadMore={loadMore}>
+                  <Table.LoadMore
+                    isLoading={isLoading}
+                    scrollOffset={0}
+                    onLoadMore={loadMore}
+                  >
                     <Table.LoadMoreContent>
                       <Spinner size="md" />
                     </Table.LoadMoreContent>
@@ -734,14 +856,15 @@ export const Virtualization: Story = {
     ];
 
     function generateUsers(n: number): User[] {
-      const users: User[] = [];
+      const generatedUsers: User[] = [];
 
       for (let i = 0; i < n; i++) {
         const firstName = firstNames[i % firstNames.length];
-        const lastName = lastNames[Math.floor(i / firstNames.length) % lastNames.length];
+        const lastName =
+          lastNames[Math.floor(i / firstNames.length) % lastNames.length];
         const name = `${firstName} ${lastName}`;
 
-        users.push({
+        generatedUsers.push({
           id: i + 1,
           name,
           image_url: `https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg`,
@@ -751,7 +874,7 @@ export const Virtualization: Story = {
         });
       }
 
-      return users;
+      return generatedUsers;
     }
 
     const virtualizedUsers = generateUsers(1000);
@@ -768,7 +891,7 @@ export const Virtualization: Story = {
           <Table.ScrollContainer>
             <Table.Content
               aria-label="Virtualized table with 1000 rows"
-              className="h-[500px] min-w-[700px] overflow-auto scrollbar"
+              className="scrollbar h-[500px] min-w-[700px] overflow-auto"
             >
               <Table.Header className="h-full w-full">
                 <Table.Column isRowHeader id="name" minWidth={160}>
@@ -800,21 +923,25 @@ export const Virtualization: Story = {
 
 export const ExpandableRows: Story = {
   render: () => {
-    type Row = {
-      children: Row[];
-      date: string;
-      id: string;
-      title: string;
-      type: string;
-    };
-
-    const data: Row[] = [
+    const data: ExpandableRow[] = [
       {
         children: [
           {
             children: [
-              {children: [], date: "7/10/2025", id: "3", title: "Weekly Report", type: "File"},
-              {children: [], date: "8/20/2025", id: "4", title: "Budget", type: "File"},
+              {
+                children: [],
+                date: "7/10/2025",
+                id: "3",
+                title: "Weekly Report",
+                type: "File",
+              },
+              {
+                children: [],
+                date: "8/20/2025",
+                id: "4",
+                title: "Budget",
+                type: "File",
+              },
             ],
             date: "8/2/2025",
             id: "2",
@@ -829,8 +956,20 @@ export const ExpandableRows: Story = {
       },
       {
         children: [
-          {children: [], date: "1/23/2026", id: "6", title: "Image 1", type: "File"},
-          {children: [], date: "2/3/2026", id: "7", title: "Image 2", type: "File"},
+          {
+            children: [],
+            date: "1/23/2026",
+            id: "6",
+            title: "Image 1",
+            type: "File",
+          },
+          {
+            children: [],
+            date: "2/3/2026",
+            id: "7",
+            title: "Image 2",
+            type: "File",
+          },
         ],
         date: "2/3/2026",
         id: "5",
@@ -839,43 +978,9 @@ export const ExpandableRows: Story = {
       },
     ];
 
-    const [expandedKeys, setExpandedKeys] = React.useState<Selection>(() => new Set(["1"]));
-
-    const renderExpandableRow = (item: Row) => {
-      return (
-        <Table.Row id={item.id} textValue={item.title}>
-          <Table.Cell textValue={item.title}>
-            {({hasChildItems, isDisabled, isExpanded, isTreeColumn}) => (
-              <span className="flex items-center gap-1">
-                {hasChildItems && isTreeColumn ? (
-                  <Button
-                    isIconOnly
-                    aria-label="Toggle row"
-                    isDisabled={isDisabled}
-                    size="sm"
-                    slot="chevron"
-                    variant="ghost"
-                  >
-                    <Icon
-                      aria-hidden
-                      icon="gravity-ui:chevron-right"
-                      className={cn(
-                        "size-4 text-muted transition-transform duration-150",
-                        isExpanded ? "rotate-90" : "",
-                      )}
-                    />
-                  </Button>
-                ) : null}
-                <span>{item.title}</span>
-              </span>
-            )}
-          </Table.Cell>
-          <Table.Cell>{item.type}</Table.Cell>
-          <Table.Cell>{item.date}</Table.Cell>
-          <Table.Collection items={item.children}>{renderExpandableRow}</Table.Collection>
-        </Table.Row>
-      );
-    };
+    const [expandedKeys, setExpandedKeys] = React.useState<Selection>(
+      () => new Set(["1"]),
+    );
 
     return (
       <Wrapper>

@@ -1,8 +1,8 @@
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
 import React from "react";
 
-import {DemoComponents} from "./demos";
+import { DemoComponents } from "./demos";
 
 const meta: Meta = {
   title: "Components Demo",

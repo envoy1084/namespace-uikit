@@ -1,13 +1,13 @@
-import type {BadgeProps} from "./index";
-import type {Meta} from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
 import React from "react";
 
-import {Avatar} from "../avatar";
-import {Separator} from "../separator";
+import { Icon } from "@iconify/react";
 
-import {Badge} from "./index";
+import { Avatar } from "../avatar";
+import { Separator } from "../separator";
+import type { BadgeProps } from "./index";
+import { Badge } from "./index";
 
 export default {
   argTypes: {
@@ -35,7 +35,8 @@ export default {
   title: "Components/Data Display/Badge",
 } as Meta<typeof Badge>;
 
-const AVATAR_URL = "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg";
+const AVATAR_URL =
+  "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg";
 
 const defaultArgs: BadgeProps = {
   color: "accent",
@@ -64,7 +65,7 @@ const SizesTemplate = (props: BadgeProps) => (
           99+
         </Badge>
       </Badge.Anchor>
-      <span className="text-xs text-muted">Large</span>
+      <span className="text-muted text-xs">Large</span>
     </div>
     <div className="flex flex-col items-center gap-2">
       <Badge.Anchor>
@@ -75,7 +76,7 @@ const SizesTemplate = (props: BadgeProps) => (
           99+
         </Badge>
       </Badge.Anchor>
-      <span className="text-xs text-muted">Medium</span>
+      <span className="text-muted text-xs">Medium</span>
     </div>
     <div className="flex flex-col items-center gap-2">
       <Badge.Anchor>
@@ -86,7 +87,7 @@ const SizesTemplate = (props: BadgeProps) => (
           99+
         </Badge>
       </Badge.Anchor>
-      <span className="text-xs text-muted">Small</span>
+      <span className="text-muted text-xs">Small</span>
     </div>
   </div>
 );
@@ -104,7 +105,7 @@ const ColorsTemplate = (props: BadgeProps) => {
             </Avatar>
             <Badge {...props} color={color} />
           </Badge.Anchor>
-          <span className="text-xs text-muted capitalize">{color}</span>
+          <span className="text-muted text-xs capitalize">{color}</span>
         </div>
       ))}
     </div>
@@ -122,7 +123,7 @@ const WithContentTemplate = (props: BadgeProps) => (
           5
         </Badge>
       </Badge.Anchor>
-      <span className="text-xs text-muted">Number</span>
+      <span className="text-muted text-xs">Number</span>
     </div>
     <div className="flex flex-col items-center gap-2">
       <Badge.Anchor>
@@ -133,7 +134,7 @@ const WithContentTemplate = (props: BadgeProps) => (
           New
         </Badge>
       </Badge.Anchor>
-      <span className="text-xs text-muted">Text</span>
+      <span className="text-muted text-xs">Text</span>
     </div>
     <div className="flex flex-col items-center gap-2">
       <Badge.Anchor>
@@ -144,7 +145,7 @@ const WithContentTemplate = (props: BadgeProps) => (
           99+
         </Badge>
       </Badge.Anchor>
-      <span className="text-xs text-muted">Overflow</span>
+      <span className="text-muted text-xs">Overflow</span>
     </div>
     <div className="flex flex-col items-center gap-2">
       <Badge.Anchor>
@@ -155,13 +156,18 @@ const WithContentTemplate = (props: BadgeProps) => (
           <Icon icon="gravity-ui:bell" />
         </Badge>
       </Badge.Anchor>
-      <span className="text-xs text-muted">Icon</span>
+      <span className="text-muted text-xs">Icon</span>
     </div>
   </div>
 );
 
 const PlacementsTemplate = () => {
-  const placements = ["top-right", "top-left", "bottom-right", "bottom-left"] as const;
+  const placements = [
+    "top-right",
+    "top-left",
+    "bottom-right",
+    "bottom-left",
+  ] as const;
 
   return (
     <div className="flex items-center gap-8">
@@ -173,7 +179,7 @@ const PlacementsTemplate = () => {
             </Avatar>
             <Badge color="accent" placement={placement} size="sm" />
           </Badge.Anchor>
-          <span className="text-xs text-muted">{placement}</span>
+          <span className="text-muted text-xs">{placement}</span>
         </div>
       ))}
     </div>
@@ -189,7 +195,9 @@ const VariantsTemplate = () => {
       {variants.map((variant, index) => (
         <React.Fragment key={variant}>
           <div className="flex flex-col gap-4">
-            <h3 className="text-sm font-semibold text-muted capitalize">{variant}</h3>
+            <h3 className="text-muted text-sm font-semibold capitalize">
+              {variant}
+            </h3>
             <div className="flex items-center gap-8">
               {colors.map((color) => (
                 <div key={color} className="flex flex-col items-center gap-2">
@@ -201,7 +209,7 @@ const VariantsTemplate = () => {
                       5
                     </Badge>
                   </Badge.Anchor>
-                  <span className="text-xs text-muted capitalize">{color}</span>
+                  <span className="text-muted text-xs capitalize">{color}</span>
                 </div>
               ))}
             </div>
@@ -219,7 +227,7 @@ const DotBadgeTemplate = () => {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">
-        <h3 className="text-sm font-semibold text-muted">Status Indicators</h3>
+        <h3 className="text-muted text-sm font-semibold">Status Indicators</h3>
         <div className="flex items-center gap-8">
           {colors.map((color) => (
             <Badge.Anchor key={color}>
@@ -233,7 +241,7 @@ const DotBadgeTemplate = () => {
       </div>
       <Separator />
       <div className="flex flex-col gap-4">
-        <h3 className="text-sm font-semibold text-muted">Sizes</h3>
+        <h3 className="text-muted text-sm font-semibold">Sizes</h3>
         <div className="flex items-center gap-8">
           <div className="flex flex-col items-center gap-2">
             <Badge.Anchor>
@@ -242,7 +250,7 @@ const DotBadgeTemplate = () => {
               </Avatar>
               <Badge color="success" placement="bottom-right" size="lg" />
             </Badge.Anchor>
-            <span className="text-xs text-muted">Large</span>
+            <span className="text-muted text-xs">Large</span>
           </div>
           <div className="flex flex-col items-center gap-2">
             <Badge.Anchor>
@@ -251,7 +259,7 @@ const DotBadgeTemplate = () => {
               </Avatar>
               <Badge color="success" placement="bottom-right" size="md" />
             </Badge.Anchor>
-            <span className="text-xs text-muted">Medium</span>
+            <span className="text-muted text-xs">Medium</span>
           </div>
           <div className="flex flex-col items-center gap-2">
             <Badge.Anchor>
@@ -260,7 +268,7 @@ const DotBadgeTemplate = () => {
               </Avatar>
               <Badge color="success" placement="bottom-right" size="sm" />
             </Badge.Anchor>
-            <span className="text-xs text-muted">Small</span>
+            <span className="text-muted text-xs">Small</span>
           </div>
         </div>
       </div>

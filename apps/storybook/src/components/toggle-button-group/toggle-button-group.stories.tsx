@@ -1,12 +1,12 @@
-import type {Key} from "../rac";
-import type {Meta, StoryObj} from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {Icon} from "@iconify/react";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-import {ToggleButton} from "../toggle-button";
+import { Icon } from "@iconify/react";
 
-import {ToggleButtonGroup} from "./";
+import type { Key } from "../rac";
+import { ToggleButton } from "../toggle-button";
+import { ToggleButtonGroup } from "./";
 
 const meta: Meta<typeof ToggleButtonGroup> = {
   argTypes: {
@@ -70,7 +70,7 @@ export const Sizes: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">Small</p>
+        <p className="text-muted text-sm">Small</p>
         <ToggleButtonGroup selectionMode="multiple" size="sm">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
             <Icon icon="gravity-ui:bold" />
@@ -83,14 +83,18 @@ export const Sizes: Story = {
             <ToggleButtonGroup.Separator />
             <Icon icon="gravity-ui:underline" />
           </ToggleButton>
-          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
+          <ToggleButton
+            isIconOnly
+            aria-label="Strikethrough"
+            id="strikethrough"
+          >
             <ToggleButtonGroup.Separator />
             <Icon icon="gravity-ui:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">Medium (default)</p>
+        <p className="text-muted text-sm">Medium (default)</p>
         <ToggleButtonGroup selectionMode="multiple" size="md">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
             <Icon icon="gravity-ui:bold" />
@@ -103,14 +107,18 @@ export const Sizes: Story = {
             <ToggleButtonGroup.Separator />
             <Icon icon="gravity-ui:underline" />
           </ToggleButton>
-          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
+          <ToggleButton
+            isIconOnly
+            aria-label="Strikethrough"
+            id="strikethrough"
+          >
             <ToggleButtonGroup.Separator />
             <Icon icon="gravity-ui:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">Large</p>
+        <p className="text-muted text-sm">Large</p>
         <ToggleButtonGroup selectionMode="multiple" size="lg">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
             <Icon icon="gravity-ui:bold" />
@@ -123,7 +131,11 @@ export const Sizes: Story = {
             <ToggleButtonGroup.Separator />
             <Icon icon="gravity-ui:underline" />
           </ToggleButton>
-          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
+          <ToggleButton
+            isIconOnly
+            aria-label="Strikethrough"
+            id="strikethrough"
+          >
             <ToggleButtonGroup.Separator />
             <Icon icon="gravity-ui:strikethrough" />
           </ToggleButton>
@@ -137,7 +149,7 @@ export const Orientation: Story = {
   render: () => (
     <div className="flex items-start gap-8">
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">Horizontal</p>
+        <p className="text-muted text-sm">Horizontal</p>
         <ToggleButtonGroup orientation="horizontal" selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
             <Icon icon="gravity-ui:bold" />
@@ -153,7 +165,7 @@ export const Orientation: Story = {
         </ToggleButtonGroup>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">Vertical</p>
+        <p className="text-muted text-sm">Vertical</p>
         <ToggleButtonGroup orientation="vertical" selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
             <Icon icon="gravity-ui:bold" />
@@ -176,7 +188,7 @@ export const AttachedVsDetached: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">Attached (default)</p>
+        <p className="text-muted text-sm">Attached (default)</p>
         <ToggleButtonGroup selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
             <Icon icon="gravity-ui:bold" />
@@ -189,14 +201,18 @@ export const AttachedVsDetached: Story = {
             <ToggleButtonGroup.Separator />
             <Icon icon="gravity-ui:underline" />
           </ToggleButton>
-          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
+          <ToggleButton
+            isIconOnly
+            aria-label="Strikethrough"
+            id="strikethrough"
+          >
             <ToggleButtonGroup.Separator />
             <Icon icon="gravity-ui:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">Detached</p>
+        <p className="text-muted text-sm">Detached</p>
         <ToggleButtonGroup isDetached selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
             <Icon icon="gravity-ui:bold" />
@@ -207,7 +223,11 @@ export const AttachedVsDetached: Story = {
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <Icon icon="gravity-ui:underline" />
           </ToggleButton>
-          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
+          <ToggleButton
+            isIconOnly
+            aria-label="Strikethrough"
+            id="strikethrough"
+          >
             <Icon icon="gravity-ui:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
@@ -260,8 +280,11 @@ export const SelectionMode: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">Single selection</p>
-        <ToggleButtonGroup defaultSelectedKeys={["center"]} selectionMode="single">
+        <p className="text-muted text-sm">Single selection</p>
+        <ToggleButtonGroup
+          defaultSelectedKeys={["center"]}
+          selectionMode="single"
+        >
           <ToggleButton id="left">
             <Icon icon="gravity-ui:text-align-left" />
             Left
@@ -279,8 +302,11 @@ export const SelectionMode: Story = {
         </ToggleButtonGroup>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">Multiple selection</p>
-        <ToggleButtonGroup defaultSelectedKeys={["bold", "underline"]} selectionMode="multiple">
+        <p className="text-muted text-sm">Multiple selection</p>
+        <ToggleButtonGroup
+          defaultSelectedKeys={["bold", "underline"]}
+          selectionMode="multiple"
+        >
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
             <Icon icon="gravity-ui:bold" />
           </ToggleButton>
@@ -292,7 +318,11 @@ export const SelectionMode: Story = {
             <ToggleButtonGroup.Separator />
             <Icon icon="gravity-ui:underline" />
           </ToggleButton>
-          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
+          <ToggleButton
+            isIconOnly
+            aria-label="Strikethrough"
+            id="strikethrough"
+          >
             <ToggleButtonGroup.Separator />
             <Icon icon="gravity-ui:strikethrough" />
           </ToggleButton>
@@ -324,12 +354,16 @@ export const Controlled: Story = {
             <ToggleButtonGroup.Separator />
             <Icon icon="gravity-ui:underline" />
           </ToggleButton>
-          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
+          <ToggleButton
+            isIconOnly
+            aria-label="Strikethrough"
+            id="strikethrough"
+          >
             <ToggleButtonGroup.Separator />
             <Icon icon="gravity-ui:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
-        <p className="text-sm text-muted">
+        <p className="text-muted text-sm">
           Selected:{" "}
           <span className="font-medium">
             {selectedKeys.size > 0 ? [...selectedKeys].join(", ") : "None"}
@@ -344,7 +378,7 @@ export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">All buttons disabled</p>
+        <p className="text-muted text-sm">All buttons disabled</p>
         <ToggleButtonGroup isDisabled selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
             <Icon icon="gravity-ui:bold" />
@@ -360,7 +394,7 @@ export const Disabled: Story = {
         </ToggleButtonGroup>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">Individual button disabled</p>
+        <p className="text-muted text-sm">Individual button disabled</p>
         <ToggleButtonGroup selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
             <Icon icon="gravity-ui:bold" />
@@ -401,7 +435,10 @@ export const WithoutSeparator: Story = {
 export const WithLabels: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
-      <ToggleButtonGroup defaultSelectedKeys={["italic"]} selectionMode="multiple">
+      <ToggleButtonGroup
+        defaultSelectedKeys={["italic"]}
+        selectionMode="multiple"
+      >
         <ToggleButton id="bold">
           <Icon icon="gravity-ui:bold" />
           Bold
@@ -424,13 +461,15 @@ export const WithLabels: Story = {
 export const Examples: Story = {
   render: function ExamplesStory() {
     const [alignment, setAlignment] = useState(new Set<Key>(["left"]));
-    const [formatting, setFormatting] = useState(new Set<Key>(["bold", "underline"]));
+    const [formatting, setFormatting] = useState(
+      new Set<Key>(["bold", "underline"]),
+    );
 
     return (
       <div className="flex flex-col items-start gap-8">
         {/* Text formatting toolbar */}
         <div className="flex flex-col gap-2">
-          <p className="text-sm text-muted">Text formatting toolbar</p>
+          <p className="text-muted text-sm">Text formatting toolbar</p>
           <div className="flex gap-2">
             <ToggleButtonGroup
               selectedKeys={formatting}
@@ -448,7 +487,11 @@ export const Examples: Story = {
                 <ToggleButtonGroup.Separator />
                 <Icon icon="gravity-ui:underline" />
               </ToggleButton>
-              <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
+              <ToggleButton
+                isIconOnly
+                aria-label="Strikethrough"
+                id="strikethrough"
+              >
                 <ToggleButtonGroup.Separator />
                 <Icon icon="gravity-ui:strikethrough" />
               </ToggleButton>
@@ -476,7 +519,7 @@ export const Examples: Story = {
 
         {/* View mode switcher */}
         <div className="flex flex-col gap-2">
-          <p className="text-sm text-muted">View mode switcher</p>
+          <p className="text-muted text-sm">View mode switcher</p>
           <ToggleButtonGroup
             disallowEmptySelection
             defaultSelectedKeys={["grid"]}
@@ -499,7 +542,7 @@ export const Examples: Story = {
 
         {/* Vertical toolbar */}
         <div className="flex flex-col gap-2">
-          <p className="text-sm text-muted">Vertical toolbar</p>
+          <p className="text-muted text-sm">Vertical toolbar</p>
           <ToggleButtonGroup orientation="vertical" selectionMode="multiple">
             <ToggleButton isIconOnly aria-label="Bold" id="bold">
               <Icon icon="gravity-ui:bold" />
