@@ -1,6 +1,6 @@
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
-  - "@repo/*"
+  - "@thenamespace/*"
 blockExoticSubdeps: true
 packages:
   - "apps/*"

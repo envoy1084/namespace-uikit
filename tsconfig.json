@@ -4,7 +4,7 @@
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "composite": true,
-    "customConditions": ["@repo/source"],
+    "customConditions": ["@thenamespace/source"],
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
