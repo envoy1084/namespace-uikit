@@ -17,6 +17,7 @@
     "lint:check": "pnpm lint",
     "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern",
     "prepare": "lefthook install",
+    "sync-theme": "pnpm --filter @thenamespace/storybook sync-theme",
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
