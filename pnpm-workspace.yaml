@@ -9,6 +9,10 @@ allowBuilds:
   lefthook: true
 catalog:
   "@heroui/react": "3.2.1"
+  "@tailwindcss/vite": "4.3.2"
+  "@tanstack/react-router": "1.170.17"
+  "@tanstack/router-cli": "1.167.18"
+  "@tanstack/router-plugin": "1.168.19"
   "@commitlint/cli": "21.0.1"
   "@commitlint/config-conventional": "21.0.1"
   "lefthook": "2.1.9"
@@ -24,3 +28,5 @@ catalog:
   "tsdown": "0.22.3"
   "turbo": "2.10.3"
   "@types/node": "26.0.1"
+  "@vitejs/plugin-react": "6.0.3"
+  "vite": "8.1.3"

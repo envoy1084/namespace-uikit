@@ -81,5 +81,6 @@ export default defineConfig({
     "**/coverage/**",
     "**/storybook-static/**",
     "**/route-tree.gen.ts",
+    "**/routeTree.gen.ts",
   ],
 });
