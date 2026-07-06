@@ -11,6 +11,7 @@ export default defineConfig({
   ],
   deps: {
     neverBundle: [
+      "@hugeicons/core-free-icons",
       "@hugeicons/react",
       "@heroui/react",
       "react",
