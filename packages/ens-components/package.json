@@ -59,6 +59,8 @@
   "peerDependencies": {
     "react": ">=19.2.7 <20",
     "react-dom": ">=19.2.7 <20",
-    "tailwindcss": ">=4.3.2 <5"
+    "tailwindcss": ">=4.3.2 <5",
+    "viem": ">=2.55.0 <3",
+    "wagmi": ">=3.7.1 <4"
   }
 }

@@ -1,22 +1,4 @@
-import { readdirSync } from "node:fs";
-import { basename, extname } from "node:path";
-
 import { defineConfig } from "tsdown";
-
-const componentEntries = Object.fromEntries(
-  readdirSync("src/components", { withFileTypes: true })
-    .filter(
-      (entry) =>
-        entry.isFile() &&
-        entry.name.endsWith(".ts") &&
-        entry.name !== "index.ts",
-    )
-    .map((entry) => {
-      const name = basename(entry.name, extname(entry.name));
-
-      return [`components/${name}`, `src/components/${entry.name}`];
-    }),
-);
 
 export default defineConfig({
   clean: true,
@@ -29,9 +11,7 @@ export default defineConfig({
   ],
   deps: {
     neverBundle: [
-      "@hugeicons/core-free-icons",
-      "@hugeicons/react",
-      "@heroui/react",
+      "@thenamespace/uikit",
       "react",
       "react-dom",
       "react/jsx-runtime",
@@ -43,11 +23,7 @@ export default defineConfig({
     sourcemap: true,
   },
   entry: {
-    ...componentEntries,
-    hooks: "src/hooks.ts",
-    icons: "src/icons.ts",
     index: "src/index.ts",
-    utils: "src/utils.ts",
   },
   failOnWarn: true,
   fixedExtension: true,
