@@ -1,0 +1,64 @@
+{
+  "name": "@thenamespace/ens-components",
+  "version": "0.1.0",
+  "private": "true",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "@thenamespace/source": {
+        "types": "./src/index.ts",
+        "import": "./src/index.ts"
+      },
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./styles": {
+      "@thenamespace/source": "./src/styles/globals.css",
+      "style": "./dist/styles.css",
+      "default": "./dist/styles.css"
+    },
+    "./styles.css": {
+      "@thenamespace/source": "./src/styles/globals.css",
+      "style": "./dist/styles.css",
+      "default": "./dist/styles.css"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown --config tsdown.config.ts",
+    "dev": "tsdown --config tsdown.config.ts --watch",
+    "format": "oxfmt . --write --no-error-on-unmatched-pattern",
+    "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
+    "lint": "oxlint . --no-error-on-unmatched-pattern",
+    "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern",
+    "typecheck": "tsc -p tsconfig.json --pretty false"
+  },
+  "dependencies": {
+    "@thenamespace/uikit": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "26.0.1",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": ">=19.2.7 <20",
+    "react-dom": ">=19.2.7 <20",
+    "tailwindcss": ">=4.3.2 <5"
+  }
+}

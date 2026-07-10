@@ -8,7 +8,11 @@
   ],
   "commit": false,
   "fixed": [],
-  "ignore": ["@thenamespace/storybook"],
+  "ignore": [
+    "@thenamespace/storybook",
+    "@thenamespace/ens-components",
+    "@thenamespace/demo"
+  ],
   "linked": [],
   "updateInternalDependencies": "patch"
 }
