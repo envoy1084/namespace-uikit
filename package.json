@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "build": "turbo run build",
+    "changeset": "changeset",
     "check": "pnpm format:check && pnpm lint && turbo run typecheck build",
+    "ci:publish": "turbo run build --filter=@thenamespace/uikit && changeset publish",
+    "ci:version": "changeset version",
     "commitlint:edit": "commitlint --strict --edit",
     "commitlint:last": "commitlint --strict --last",
     "commitlint:range": "node scripts/commitlint-range.mjs",
@@ -21,9 +24,11 @@
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@commitlint/cli": "catalog:",
-    "@commitlint/config-conventional": "catalog:",
-    "lefthook": "catalog:",
+    "@changesets/changelog-github": "0.7.0",
+    "@changesets/cli": "2.31.0",
+    "@commitlint/cli": "21.0.1",
+    "@commitlint/config-conventional": "21.0.1",
+    "lefthook": "2.1.9",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
     "turbo": "catalog:",

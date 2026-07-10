@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config/schema.json",
+  "access": "public",
+  "baseBranch": "main",
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "thenamespace/uikit" }
+  ],
+  "commit": false,
+  "fixed": [],
+  "ignore": ["@thenamespace/storybook"],
+  "linked": [],
+  "updateInternalDependencies": "patch"
+}

@@ -34,7 +34,7 @@
     "stripInternal": true,
     "target": "ES2022",
     "tsBuildInfoFile": "../../dist/typecheck/packages/uikit/tsconfig.tsbuildinfo",
-    "types": ["react", "react-dom"],
+    "types": ["react", "react-dom", "node"],
     "verbatimModuleSyntax": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]
