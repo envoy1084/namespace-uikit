@@ -78,6 +78,7 @@ export * from "./progress-bar";
 export * from "./progress-circle";
 export * from "./rac";
 export * from "./radio";
+export * from "./radio-button-group";
 export * from "./radio-group";
 export * from "./range-calendar";
 export * from "./scroll-shadow";

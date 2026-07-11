@@ -241,6 +241,14 @@
       "types": "./dist/components/native-select.d.mts",
       "import": "./dist/components/native-select.mjs"
     },
+    "./radio-button-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/radio-button-group/index.ts",
+        "import": "./src/components/radio-button-group/index.ts"
+      },
+      "types": "./dist/components/radio-button-group.d.mts",
+      "import": "./dist/components/radio-button-group.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

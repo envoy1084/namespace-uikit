@@ -102,6 +102,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/radio-button-group.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/globals.css",
       rename: "styles.css",
       to: "dist",
@@ -160,6 +164,8 @@ export default defineConfig({
       "src/components/checkbox-button-group/index.ts",
     "components/inline-select": "src/components/inline-select/index.ts",
     "components/native-select": "src/components/native-select/index.ts",
+    "components/radio-button-group":
+      "src/components/radio-button-group/index.ts",
     "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",
