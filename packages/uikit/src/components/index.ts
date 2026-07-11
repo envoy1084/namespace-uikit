@@ -57,6 +57,7 @@ export * from "./charts/bar-chart";
 export * from "./charts/composed-chart";
 export * from "./charts/line-chart";
 export * from "./charts/pie-chart";
+export * from "./charts/radar-chart";
 export * from "./pagination";
 export * from "./popover";
 export * from "./progress-bar";

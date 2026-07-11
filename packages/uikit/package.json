@@ -121,6 +121,14 @@
       "types": "./dist/components/pie-chart.d.mts",
       "import": "./dist/components/pie-chart.mjs"
     },
+    "./radar-chart": {
+      "@thenamespace/source": {
+        "types": "./src/components/charts/radar-chart/index.ts",
+        "import": "./src/components/charts/radar-chart/index.ts"
+      },
+      "types": "./dist/components/radar-chart.d.mts",
+      "import": "./dist/components/radar-chart.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

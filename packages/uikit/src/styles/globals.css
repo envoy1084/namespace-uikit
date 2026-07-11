@@ -4,6 +4,7 @@
 @import "./components/composed-chart.css";
 @import "./components/line-chart.css";
 @import "./components/pie-chart.css";
+@import "./components/radar-chart.css";
 @import "./components/number-stepper.css";
 @import "./components/chart-tooltip.css";
 
