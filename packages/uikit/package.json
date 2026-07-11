@@ -137,6 +137,14 @@
       "types": "./dist/components/radial-chart.d.mts",
       "import": "./dist/components/radial-chart.mjs"
     },
+    "./number-value": {
+      "@thenamespace/source": {
+        "types": "./src/components/number-value/index.ts",
+        "import": "./src/components/number-value/index.ts"
+      },
+      "types": "./dist/components/number-value.d.mts",
+      "import": "./dist/components/number-value.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

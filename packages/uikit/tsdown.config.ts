@@ -50,6 +50,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/number-value.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/globals.css",
       rename: "styles.css",
       to: "dist",
@@ -91,6 +95,7 @@ export default defineConfig({
     "components/pie-chart": "src/components/charts/pie-chart/index.ts",
     "components/radar-chart": "src/components/charts/radar-chart/index.ts",
     "components/radial-chart": "src/components/charts/radial-chart/index.ts",
+    "components/number-value": "src/components/number-value/index.ts",
     "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",

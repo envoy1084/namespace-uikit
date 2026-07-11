@@ -6,6 +6,7 @@
 @import "./components/pie-chart.css";
 @import "./components/radar-chart.css";
 @import "./components/radial-chart.css";
+@import "./components/number-value.css";
 @import "./components/number-stepper.css";
 @import "./components/chart-tooltip.css";
 

@@ -59,6 +59,7 @@ export * from "./components/charts/line-chart";
 export * from "./components/charts/pie-chart";
 export * from "./components/charts/radar-chart";
 export * from "./components/charts/radial-chart";
+export * from "./components/number-value";
 export * from "./components/pagination";
 export * from "./components/popover";
 export * from "./components/progress-bar";
