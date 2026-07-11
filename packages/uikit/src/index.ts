@@ -15,6 +15,7 @@ export * from "./components/cell-select";
 export * from "./components/cell-slider";
 export * from "./components/cell-switch";
 export * from "./components/checkbox";
+export * from "./components/checkbox-button-group";
 export * from "./components/checkbox-group";
 export * from "./components/chip";
 export * from "./components/close-button";

@@ -217,6 +217,14 @@
       "types": "./dist/components/cell-switch.d.mts",
       "import": "./dist/components/cell-switch.mjs"
     },
+    "./checkbox-button-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/checkbox-button-group/index.ts",
+        "import": "./src/components/checkbox-button-group/index.ts"
+      },
+      "types": "./dist/components/checkbox-button-group.d.mts",
+      "import": "./dist/components/checkbox-button-group.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

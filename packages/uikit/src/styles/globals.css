@@ -16,6 +16,7 @@
 @import "./components/cell-select.css";
 @import "./components/cell-slider.css";
 @import "./components/cell-switch.css";
+@import "./components/checkbox-button-group.css";
 @import "./components/number-stepper.css";
 @import "./components/chart-tooltip.css";
 
