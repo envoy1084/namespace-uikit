@@ -54,7 +54,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [ ] [KPI docs](https://heroui.pro/docs/react/components/kpi) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-kpi-key-performance-indicator--docs)
 - [ ] [KPI Group docs](https://heroui.pro/docs/react/components/kpi-group) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-kpigroup--docs)
 - [ ] [Widget docs](https://heroui.pro/docs/react/components/widget) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-widget--docs)
-- [ ] [List View docs](https://heroui.pro/docs/react/components/list-view) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-listview--docs)
+- [x] [List View docs](https://heroui.pro/docs/react/components/list-view) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-listview--docs)
 - [ ] [File Tree docs](https://heroui.pro/docs/react/components/file-tree) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-filetree--docs)
 - [ ] [Timeline docs](https://heroui.pro/docs/react/components/timeline) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-timeline--docs)
 - [ ] [Kanban docs](https://heroui.pro/docs/react/components/kanban) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-kanban--docs)

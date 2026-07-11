@@ -22,6 +22,10 @@ export default defineConfig({
   clean: true,
   copy: [
     {
+      from: "src/styles/components/action-bar.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/area-chart.css",
       to: "dist/components",
     },
@@ -98,6 +102,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/list-view.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/native-select.css",
       to: "dist/components",
     },
@@ -151,6 +159,7 @@ export default defineConfig({
       "react-dom",
       "react/jsx-runtime",
       "react-resizable-panels",
+      "motion",
       "recharts",
       "tailwindcss",
     ],

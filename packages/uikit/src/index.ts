@@ -1,4 +1,5 @@
 export * from "./components/accordion";
+export * from "./components/action-bar";
 export * from "./components/alert";
 export * from "./components/alert-dialog";
 export * from "./components/autocomplete";
@@ -51,6 +52,7 @@ export * from "./components/link";
 export * from "./components/list-box";
 export * from "./components/list-box-item";
 export * from "./components/list-box-section";
+export * from "./components/list-view";
 export * from "./components/menu";
 export * from "./components/menu-item";
 export * from "./components/menu-section";
