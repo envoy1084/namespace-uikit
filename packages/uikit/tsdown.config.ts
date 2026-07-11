@@ -22,6 +22,10 @@ export default defineConfig({
   clean: true,
   copy: [
     {
+      from: "src/styles/components/area-chart.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/globals.css",
       rename: "styles.css",
       to: "dist",
@@ -45,6 +49,7 @@ export default defineConfig({
       "react-aria-components",
       "react-dom",
       "react/jsx-runtime",
+      "recharts",
       "tailwindcss",
     ],
   },
@@ -54,6 +59,7 @@ export default defineConfig({
   },
   entry: {
     ...componentEntries,
+    "components/area-chart": "src/components/charts/area-chart/index.ts",
     "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",

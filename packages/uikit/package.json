@@ -81,6 +81,14 @@
       "types": "./dist/components/chart-tooltip.d.mts",
       "import": "./dist/components/chart-tooltip.mjs"
     },
+    "./area-chart": {
+      "@thenamespace/source": {
+        "types": "./src/components/charts/area-chart/index.ts",
+        "import": "./src/components/charts/area-chart/index.ts"
+      },
+      "types": "./dist/components/area-chart.d.mts",
+      "import": "./dist/components/area-chart.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",
@@ -119,7 +127,8 @@
     "@hugeicons/core-free-icons": "^4.2.2",
     "@hugeicons/react": "^1.1.9",
     "@number-flow/react": "0.6.1",
-    "react-aria-components": "1.18.0"
+    "react-aria-components": "1.18.0",
+    "recharts": "3.9.2"
   },
   "devDependencies": {
     "@types/node": "26.0.1",

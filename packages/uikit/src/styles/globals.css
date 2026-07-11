@@ -1,4 +1,5 @@
 @import "@heroui/styles";
+@import "./components/area-chart.css";
 @import "./components/number-stepper.css";
 @import "./components/chart-tooltip.css";
 
