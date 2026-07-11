@@ -73,6 +73,14 @@
       "types": "./dist/components/number-stepper.d.mts",
       "import": "./dist/components/number-stepper.mjs"
     },
+    "./chart-tooltip": {
+      "@thenamespace/source": {
+        "types": "./src/components/charts/chart-tooltip/index.ts",
+        "import": "./src/components/charts/chart-tooltip/index.ts"
+      },
+      "types": "./dist/components/chart-tooltip.d.mts",
+      "import": "./dist/components/chart-tooltip.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

@@ -27,6 +27,10 @@ export default defineConfig({
       to: "dist",
     },
     {
+      from: "src/styles/components/chart-tooltip.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/number-stepper.css",
       to: "dist/components",
     },
@@ -50,6 +54,7 @@ export default defineConfig({
   },
   entry: {
     ...componentEntries,
+    "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",
     icons: "src/icons.ts",

@@ -9,7 +9,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 
 ## Phase 1 — Charts and shared visualization primitives
 
-- [ ] [Chart Tooltip docs](https://heroui.pro/docs/react/components/chart-tooltip) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-charttooltip--docs)
+- [x] [Chart Tooltip docs](https://heroui.pro/docs/react/components/chart-tooltip) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-charttooltip--docs)
 - [ ] [Area Chart docs](https://heroui.pro/docs/react/components/area-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-areachart--docs)
 - [ ] [Bar Chart docs](https://heroui.pro/docs/react/components/bar-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-barchart--docs)
 - [ ] [Line Chart docs](https://heroui.pro/docs/react/components/line-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-linechart--docs)

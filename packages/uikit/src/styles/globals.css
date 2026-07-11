@@ -1,5 +1,6 @@
 @import "@heroui/styles";
 @import "./components/number-stepper.css";
+@import "./components/chart-tooltip.css";
 
 @layer theme {
   :root,
@@ -7,6 +8,12 @@
   .default,
   [data-theme="light"],
   [data-theme="default"] {
+    --chart-1: oklch(from var(--accent) calc(l - 0.24) c h);
+    --chart-2: oklch(from var(--accent) calc(l - 0.12) c h);
+    --chart-3: var(--accent);
+    --chart-4: oklch(from var(--accent) calc(l + 0.12) c h);
+    --chart-5: oklch(from var(--accent) calc(l + 0.24) c h);
+
     /* Theme Colors (Light Mode) */
     --accent: oklch(23.929% 0.00003 271.152);
     --accent-foreground: oklch(99.11% 0 0);

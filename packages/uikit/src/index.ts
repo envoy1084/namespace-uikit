@@ -51,6 +51,7 @@ export * from "./components/meter";
 export * from "./components/modal";
 export * from "./components/number-field";
 export * from "./components/forms/number-stepper";
+export * from "./components/charts/chart-tooltip";
 export * from "./components/pagination";
 export * from "./components/popover";
 export * from "./components/progress-bar";

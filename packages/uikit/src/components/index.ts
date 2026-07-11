@@ -51,6 +51,7 @@ export * from "./meter";
 export * from "./modal";
 export * from "./number-field";
 export * from "./forms/number-stepper";
+export * from "./charts/chart-tooltip";
 export * from "./pagination";
 export * from "./popover";
 export * from "./progress-bar";
