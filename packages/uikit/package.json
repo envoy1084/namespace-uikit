@@ -233,6 +233,14 @@
       "types": "./dist/components/inline-select.d.mts",
       "import": "./dist/components/inline-select.mjs"
     },
+    "./native-select": {
+      "@thenamespace/source": {
+        "types": "./src/components/native-select/index.ts",
+        "import": "./src/components/native-select/index.ts"
+      },
+      "types": "./dist/components/native-select.d.mts",
+      "import": "./dist/components/native-select.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

@@ -55,6 +55,7 @@ export * from "./menu-item";
 export * from "./menu-section";
 export * from "./meter";
 export * from "./modal";
+export * from "./native-select";
 export * from "./number-field";
 export * from "./forms/number-stepper";
 export * from "./charts/chart-tooltip";
