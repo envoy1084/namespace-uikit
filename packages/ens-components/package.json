@@ -10,6 +10,10 @@
     "**/*.css"
   ],
   "types": "./dist/index.d.mts",
+  "imports": {
+    "#/components": "./src/components/index.ts",
+    "#/*": "./src/*"
+  },
   "exports": {
     ".": {
       "@thenamespace/source": {
@@ -44,7 +48,8 @@
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },
   "dependencies": {
-    "@thenamespace/uikit": "workspace:*"
+    "@thenamespace/uikit": "workspace:*",
+    "usehooks-ts": "3.1.1"
   },
   "devDependencies": {
     "@types/node": "26.0.1",

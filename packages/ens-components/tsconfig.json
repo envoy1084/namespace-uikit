@@ -26,6 +26,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "../../dist/typecheck/packages/uikit",
+    "paths": {
+      "#/*": ["./src/*"]
+    },
     "resolveJsonModule": true,
     "rootDir": "src",
     "skipLibCheck": true,

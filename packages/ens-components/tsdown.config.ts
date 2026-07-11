@@ -1,8 +1,15 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
+  alias: {
+    "#/": "./src/",
+  },
   clean: true,
   copy: [
+    {
+      from: "src/assets/*",
+      to: "dist/assets",
+    },
     {
       from: "src/styles/globals.css",
       rename: "styles.css",

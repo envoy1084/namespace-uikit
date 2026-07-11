@@ -4,7 +4,18 @@ import viteReact from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 const config = defineConfig({
-  resolve: { tsconfigPaths: true },
+  optimizeDeps: {
+    exclude: ["@thenamespace/ens-components", "@thenamespace/uikit"],
+  },
+  resolve: {
+    conditions: [
+      "@thenamespace/source",
+      "module",
+      "browser",
+      "development|production",
+    ],
+    tsconfigPaths: true,
+  },
   plugins: [
     tailwindcss(),
     tanstackRouter({ target: "react", autoCodeSplitting: true }),

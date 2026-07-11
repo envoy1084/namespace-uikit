@@ -1,3 +1,7 @@
 @import "tailwindcss";
 @import "@thenamespace/ens-components/styles.css";
 @import "@rainbow-me/rainbowkit/styles.css";
+
+/* Scan linked package source during development and package output after publishing. */
+@source "../../../packages/ens-components/src";
+@source "../../../packages/uikit/src";
