@@ -106,6 +106,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/drop-zone.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/globals.css",
       rename: "styles.css",
       to: "dist",
@@ -166,6 +170,7 @@ export default defineConfig({
     "components/native-select": "src/components/native-select/index.ts",
     "components/radio-button-group":
       "src/components/radio-button-group/index.ts",
+    "components/drop-zone": "src/components/drop-zone/index.ts",
     "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",

@@ -249,6 +249,14 @@
       "types": "./dist/components/radio-button-group.d.mts",
       "import": "./dist/components/radio-button-group.mjs"
     },
+    "./drop-zone": {
+      "@thenamespace/source": {
+        "types": "./src/components/drop-zone/index.ts",
+        "import": "./src/components/drop-zone/index.ts"
+      },
+      "types": "./dist/components/drop-zone.d.mts",
+      "import": "./dist/components/drop-zone.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

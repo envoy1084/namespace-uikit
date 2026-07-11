@@ -34,6 +34,7 @@ export * from "./components/disclosure";
 export * from "./components/disclosure-group";
 export * from "./components/drawer";
 export * from "./components/dropdown";
+export * from "./components/drop-zone";
 export * from "./components/empty-state";
 export * from "./components/error-message";
 export * from "./components/field-error";

@@ -20,6 +20,7 @@
 @import "./components/inline-select.css";
 @import "./components/native-select.css";
 @import "./components/radio-button-group.css";
+@import "./components/drop-zone.css";
 @import "./components/number-stepper.css";
 @import "./components/chart-tooltip.css";
 
