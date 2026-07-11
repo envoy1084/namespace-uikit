@@ -26,13 +26,19 @@ export default defineConfig({
       rename: "styles.css",
       to: "dist",
     },
+    {
+      from: "src/styles/components/number-stepper.css",
+      to: "dist/components",
+    },
   ],
   deps: {
     neverBundle: [
       "@hugeicons/core-free-icons",
       "@hugeicons/react",
       "@heroui/react",
+      "@number-flow/react",
       "react",
+      "react-aria-components",
       "react-dom",
       "react/jsx-runtime",
       "tailwindcss",
@@ -44,6 +50,7 @@ export default defineConfig({
   },
   entry: {
     ...componentEntries,
+    "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",
     icons: "src/icons.ts",
     index: "src/index.ts",

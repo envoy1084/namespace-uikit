@@ -1,4 +1,5 @@
 @import "@heroui/styles";
+@import "./components/number-stepper.css";
 
 @layer theme {
   :root,

@@ -65,6 +65,14 @@
       "types": "./dist/utils.d.mts",
       "import": "./dist/utils.mjs"
     },
+    "./number-stepper": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/number-stepper/index.ts",
+        "import": "./src/components/forms/number-stepper/index.ts"
+      },
+      "types": "./dist/components/number-stepper.d.mts",
+      "import": "./dist/components/number-stepper.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",
@@ -101,7 +109,9 @@
     "@heroui/react": "^3.2.1",
     "@heroui/styles": "^3.2.1",
     "@hugeicons/core-free-icons": "^4.2.2",
-    "@hugeicons/react": "^1.1.9"
+    "@hugeicons/react": "^1.1.9",
+    "@number-flow/react": "0.6.1",
+    "react-aria-components": "1.18.0"
   },
   "devDependencies": {
     "@types/node": "26.0.1",
