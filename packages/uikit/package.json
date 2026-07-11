@@ -89,6 +89,14 @@
       "types": "./dist/components/area-chart.d.mts",
       "import": "./dist/components/area-chart.mjs"
     },
+    "./bar-chart": {
+      "@thenamespace/source": {
+        "types": "./src/components/charts/bar-chart/index.ts",
+        "import": "./src/components/charts/bar-chart/index.ts"
+      },
+      "types": "./dist/components/bar-chart.d.mts",
+      "import": "./dist/components/bar-chart.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",
