@@ -153,6 +153,14 @@
       "types": "./dist/components/pressable-feedback.d.mts",
       "import": "./dist/components/pressable-feedback.mjs"
     },
+    "./trend-chip": {
+      "@thenamespace/source": {
+        "types": "./src/components/trend-chip/index.ts",
+        "import": "./src/components/trend-chip/index.ts"
+      },
+      "types": "./dist/components/trend-chip.d.mts",
+      "import": "./dist/components/trend-chip.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

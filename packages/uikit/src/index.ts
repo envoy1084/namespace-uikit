@@ -61,6 +61,7 @@ export * from "./components/charts/radar-chart";
 export * from "./components/charts/radial-chart";
 export * from "./components/number-value";
 export * from "./components/pressable-feedback";
+export * from "./components/trend-chip";
 export * from "./components/pagination";
 export * from "./components/popover";
 export * from "./components/progress-bar";

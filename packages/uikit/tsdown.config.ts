@@ -58,6 +58,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/trend-chip.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/globals.css",
       rename: "styles.css",
       to: "dist",
@@ -102,6 +106,7 @@ export default defineConfig({
     "components/number-value": "src/components/number-value/index.ts",
     "components/pressable-feedback":
       "src/components/pressable-feedback/index.ts",
+    "components/trend-chip": "src/components/trend-chip/index.ts",
     "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",
