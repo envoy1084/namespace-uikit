@@ -61,11 +61,11 @@ export interface RechartsPayloadEntry {
   value?: number | string;
 }
 
-export interface ChartTooltipContentProps extends Omit<
-  ChartTooltipRootProps,
-  "children"
-> {
+export interface ChartTooltipContentProps {
+  active?: boolean;
+  className?: string;
   hideHeader?: boolean;
+  indicator?: ChartTooltipIndicatorVariant;
   label?: number | string;
   labelFormatter?: (label: number | string) => ReactNode;
   payload?: RechartsPayloadEntry[];
@@ -74,22 +74,21 @@ export interface ChartTooltipContentProps extends Omit<
 
 function ChartTooltipContent({
   active,
+  className,
   hideHeader = false,
   indicator = "dot",
   label,
   labelFormatter,
   payload,
   valueFormatter,
-  ...props
 }: ChartTooltipContentProps): ReactElement | null {
   if (!active || !payload?.length) return null;
+  const resolvedLabel = labelFormatter ? labelFormatter(label ?? "") : label;
 
   return (
-    <ChartTooltipRoot active indicator={indicator} {...props}>
-      {!hideHeader && label !== undefined ? (
-        <ChartTooltipHeader>
-          {labelFormatter ? labelFormatter(label) : label}
-        </ChartTooltipHeader>
+    <ChartTooltipRoot active className={className} indicator={indicator}>
+      {!hideHeader && resolvedLabel !== undefined && resolvedLabel !== "" ? (
+        <ChartTooltipHeader>{resolvedLabel}</ChartTooltipHeader>
       ) : null}
       {payload.map((entry, index) => {
         const name = entry.name ?? entry.dataKey ?? "";
@@ -97,19 +96,12 @@ function ChartTooltipContent({
         const payloadColor =
           typeof entry.payload?.["fill"] === "string"
             ? entry.payload["fill"]
-            : typeof entry.payload?.["stroke"] === "string"
-              ? entry.payload["stroke"]
-              : undefined;
-        const color =
-          entry.color ??
-          entry.fill ??
-          entry.stroke ??
-          payloadColor ??
-          `var(--chart-${(index % 5) + 1})`;
+            : undefined;
+        const color = entry.stroke ?? entry.color ?? entry.fill ?? payloadColor;
 
         return (
           <ChartTooltipItem key={`${String(entry.dataKey ?? name)}-${index}`}>
-            <ChartTooltipIndicator color={color} />
+            <ChartTooltipIndicator {...(color ? { color } : {})} />
             <ChartTooltipLabel>{name}</ChartTooltipLabel>
             <ChartTooltipValue>
               {valueFormatter ? valueFormatter(value) : value}
