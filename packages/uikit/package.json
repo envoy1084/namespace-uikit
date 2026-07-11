@@ -161,6 +161,14 @@
       "types": "./dist/components/trend-chip.d.mts",
       "import": "./dist/components/trend-chip.mjs"
     },
+    "./rating": {
+      "@thenamespace/source": {
+        "types": "./src/components/rating/index.ts",
+        "import": "./src/components/rating/index.ts"
+      },
+      "types": "./dist/components/rating.d.mts",
+      "import": "./dist/components/rating.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",
