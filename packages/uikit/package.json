@@ -129,6 +129,14 @@
       "types": "./dist/components/radar-chart.d.mts",
       "import": "./dist/components/radar-chart.mjs"
     },
+    "./radial-chart": {
+      "@thenamespace/source": {
+        "types": "./src/components/charts/radial-chart/index.ts",
+        "import": "./src/components/charts/radial-chart/index.ts"
+      },
+      "types": "./dist/components/radial-chart.d.mts",
+      "import": "./dist/components/radial-chart.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

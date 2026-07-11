@@ -16,7 +16,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] [Composed Chart docs](https://heroui.pro/docs/react/components/composed-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-composedchart--docs)
 - [x] [Pie Chart docs](https://heroui.pro/docs/react/components/pie-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-piechart--docs)
 - [x] [Radar Chart docs](https://heroui.pro/docs/react/components/radar-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-radarchart--docs)
-- [ ] [Radial Chart docs](https://heroui.pro/docs/react/components/radial-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-radialchart--docs)
+- [x] [Radial Chart docs](https://heroui.pro/docs/react/components/radial-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-radialchart--docs)
 
 ## Phase 2 — Small shared primitives
 

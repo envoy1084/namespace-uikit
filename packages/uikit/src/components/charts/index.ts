@@ -5,3 +5,4 @@ export * from "./composed-chart";
 export * from "./line-chart";
 export * from "./pie-chart";
 export * from "./radar-chart";
+export * from "./radial-chart";
