@@ -257,6 +257,14 @@
       "types": "./dist/components/drop-zone.d.mts",
       "import": "./dist/components/drop-zone.mjs"
     },
+    "./rich-text-editor": {
+      "@thenamespace/source": {
+        "types": "./src/components/rich-text-editor/index.ts",
+        "import": "./src/components/rich-text-editor/index.ts"
+      },
+      "types": "./dist/components/rich-text-editor.d.mts",
+      "import": "./dist/components/rich-text-editor.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",
@@ -295,6 +303,15 @@
     "@hugeicons/core-free-icons": "^4.2.2",
     "@hugeicons/react": "^1.1.9",
     "@number-flow/react": "0.6.1",
+    "@tiptap/core": "^3.27.3",
+    "@tiptap/extension-character-count": "^3.27.3",
+    "@tiptap/extension-link": "^3.27.3",
+    "@tiptap/extension-placeholder": "^3.27.3",
+    "@tiptap/extension-underline": "^3.27.3",
+    "@tiptap/pm": "^3.27.3",
+    "@tiptap/react": "^3.27.3",
+    "@tiptap/starter-kit": "^3.27.3",
+    "@tiptap/suggestion": "^3.27.3",
     "react-aria-components": "1.18.0",
     "react-resizable-panels": "4.12.1",
     "recharts": "3.9.2"

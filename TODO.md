@@ -39,7 +39,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] [Native Select docs](https://heroui.pro/docs/react/components/native-select) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-nativeselect--docs)
 - [x] [Radio Button Group docs](https://heroui.pro/docs/react/components/radio-button-group) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-radiobuttongroup--docs)
 - [x] [Drop Zone docs](https://heroui.pro/docs/react/components/drop-zone) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-dropzone--docs)
-- [ ] [Rich Text Editor docs](https://heroui.pro/docs/react/components/rich-text-editor) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-richtexteditor--docs)
+- [x] [Rich Text Editor docs](https://heroui.pro/docs/react/components/rich-text-editor) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-richtexteditor--docs)
 
 ## Phase 4 — Data display and dashboard composition
 
