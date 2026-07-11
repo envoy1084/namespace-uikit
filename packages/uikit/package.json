@@ -201,6 +201,14 @@
       "types": "./dist/components/cell-select.d.mts",
       "import": "./dist/components/cell-select.mjs"
     },
+    "./cell-slider": {
+      "@thenamespace/source": {
+        "types": "./src/components/cell-slider/index.ts",
+        "import": "./src/components/cell-slider/index.ts"
+      },
+      "types": "./dist/components/cell-slider.d.mts",
+      "import": "./dist/components/cell-slider.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

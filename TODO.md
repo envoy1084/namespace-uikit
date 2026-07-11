@@ -32,7 +32,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] [Number Stepper docs](https://heroui.pro/docs/react/components/number-stepper) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-numberstepper--docs) — implementation and stories added; final catalog-wide visual audit remains
 - [x] [Cell Color Picker docs](https://heroui.pro/docs/react/components/cell-color-picker) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellcolorpicker--docs)
 - [x] [Cell Select docs](https://heroui.pro/docs/react/components/cell-select) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellselect--docs)
-- [ ] [Cell Slider docs](https://heroui.pro/docs/react/components/cell-slider) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellslider--docs)
+- [x] [Cell Slider docs](https://heroui.pro/docs/react/components/cell-slider) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellslider--docs)
 - [ ] [Cell Switch docs](https://heroui.pro/docs/react/components/cell-switch) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellswitch--docs)
 - [ ] [Checkbox Button Group docs](https://heroui.pro/docs/react/components/checkbox-button-group) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-checkboxbuttongroup--docs)
 - [ ] [Inline Select docs](https://heroui.pro/docs/react/components/inline-select) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-inlineselect--docs)

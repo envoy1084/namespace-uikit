@@ -12,6 +12,7 @@ export * from "./calendar-year-picker";
 export * from "./card";
 export * from "./cell-color-picker";
 export * from "./cell-select";
+export * from "./cell-slider";
 export * from "./checkbox";
 export * from "./checkbox-group";
 export * from "./chip";
