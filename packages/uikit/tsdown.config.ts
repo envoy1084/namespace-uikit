@@ -66,6 +66,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/emoji-reaction-button.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/globals.css",
       rename: "styles.css",
       to: "dist",
@@ -112,6 +116,8 @@ export default defineConfig({
       "src/components/pressable-feedback/index.ts",
     "components/trend-chip": "src/components/trend-chip/index.ts",
     "components/rating": "src/components/rating/index.ts",
+    "components/emoji-reaction-button":
+      "src/components/emoji-reaction-button/index.ts",
     "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",

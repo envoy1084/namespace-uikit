@@ -63,6 +63,7 @@ export * from "./number-value";
 export * from "./pressable-feedback";
 export * from "./trend-chip";
 export * from "./rating";
+export * from "./emoji-reaction-button";
 export * from "./pagination";
 export * from "./popover";
 export * from "./progress-bar";

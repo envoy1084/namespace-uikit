@@ -24,7 +24,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] [Pressable Feedback docs](https://heroui.pro/docs/react/components/pressable-feedback) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-pressablefeedback--docs)
 - [x] [Trend Chip docs](https://heroui.pro/docs/react/components/trend-chip) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-trendchip--docs)
 - [x] [Rating docs](https://heroui.pro/docs/react/components/rating) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-rating--docs)
-- [ ] [Emoji Reaction Button docs](https://heroui.pro/docs/react/components/emoji-reaction-button) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-emojireactionbutton--docs)
+- [x] [Emoji Reaction Button docs](https://heroui.pro/docs/react/components/emoji-reaction-button) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-emojireactionbutton--docs)
 - [ ] [Resizable docs](https://heroui.pro/docs/react/components/resizable) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-resizable--docs)
 
 ## Phase 3 — Forms
