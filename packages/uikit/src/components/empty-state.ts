@@ -1,1 +1,1 @@
-export * from "@heroui/react/empty-state";
+export * from "./empty-state/index";

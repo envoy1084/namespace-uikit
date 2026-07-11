@@ -21,6 +21,7 @@
 @import "./components/native-select.css";
 @import "./components/radio-button-group.css";
 @import "./components/drop-zone.css";
+@import "./components/empty-state.css";
 @import "./components/rich-text-editor.css";
 @import "./components/number-stepper.css";
 @import "./components/chart-tooltip.css";

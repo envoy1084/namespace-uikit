@@ -110,6 +110,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/empty-state.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/rich-text-editor.css",
       to: "dist/components",
     },

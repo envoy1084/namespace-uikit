@@ -1,1 +1,1 @@
-export * from "@thenamespace/uikit";
+export * from "@thenamespace/uikit/empty-state";
