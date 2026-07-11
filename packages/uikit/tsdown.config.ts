@@ -30,6 +30,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/composed-chart.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/line-chart.css",
       to: "dist/components",
     },
@@ -69,6 +73,8 @@ export default defineConfig({
     ...componentEntries,
     "components/area-chart": "src/components/charts/area-chart/index.ts",
     "components/bar-chart": "src/components/charts/bar-chart/index.ts",
+    "components/composed-chart":
+      "src/components/charts/composed-chart/index.ts",
     "components/line-chart": "src/components/charts/line-chart/index.ts",
     "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",

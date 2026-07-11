@@ -54,6 +54,7 @@ export * from "./forms/number-stepper";
 export * from "./charts/chart-tooltip";
 export * from "./charts/area-chart";
 export * from "./charts/bar-chart";
+export * from "./charts/composed-chart";
 export * from "./charts/line-chart";
 export * from "./pagination";
 export * from "./popover";

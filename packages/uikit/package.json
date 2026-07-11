@@ -97,6 +97,14 @@
       "types": "./dist/components/bar-chart.d.mts",
       "import": "./dist/components/bar-chart.mjs"
     },
+    "./composed-chart": {
+      "@thenamespace/source": {
+        "types": "./src/components/charts/composed-chart/index.ts",
+        "import": "./src/components/charts/composed-chart/index.ts"
+      },
+      "types": "./dist/components/composed-chart.d.mts",
+      "import": "./dist/components/composed-chart.mjs"
+    },
     "./line-chart": {
       "@thenamespace/source": {
         "types": "./src/components/charts/line-chart/index.ts",

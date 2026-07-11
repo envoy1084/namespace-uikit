@@ -13,7 +13,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] [Area Chart docs](https://heroui.pro/docs/react/components/area-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-areachart--docs)
 - [x] [Bar Chart docs](https://heroui.pro/docs/react/components/bar-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-barchart--docs)
 - [x] [Line Chart docs](https://heroui.pro/docs/react/components/line-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-linechart--docs)
-- [ ] [Composed Chart docs](https://heroui.pro/docs/react/components/composed-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-composedchart--docs)
+- [x] [Composed Chart docs](https://heroui.pro/docs/react/components/composed-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-composedchart--docs)
 - [ ] [Pie Chart docs](https://heroui.pro/docs/react/components/pie-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-piechart--docs)
 - [ ] [Radar Chart docs](https://heroui.pro/docs/react/components/radar-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-radarchart--docs)
 - [ ] [Radial Chart docs](https://heroui.pro/docs/react/components/radial-chart) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-charts-radialchart--docs)
