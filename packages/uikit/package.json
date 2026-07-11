@@ -113,6 +113,14 @@
       "types": "./dist/components/line-chart.d.mts",
       "import": "./dist/components/line-chart.mjs"
     },
+    "./pie-chart": {
+      "@thenamespace/source": {
+        "types": "./src/components/charts/pie-chart/index.ts",
+        "import": "./src/components/charts/pie-chart/index.ts"
+      },
+      "types": "./dist/components/pie-chart.d.mts",
+      "import": "./dist/components/pie-chart.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

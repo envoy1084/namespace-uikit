@@ -38,6 +38,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/pie-chart.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/globals.css",
       rename: "styles.css",
       to: "dist",
@@ -76,6 +80,7 @@ export default defineConfig({
     "components/composed-chart":
       "src/components/charts/composed-chart/index.ts",
     "components/line-chart": "src/components/charts/line-chart/index.ts",
+    "components/pie-chart": "src/components/charts/pie-chart/index.ts",
     "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",
