@@ -60,6 +60,7 @@ export * from "./charts/pie-chart";
 export * from "./charts/radar-chart";
 export * from "./charts/radial-chart";
 export * from "./number-value";
+export * from "./pressable-feedback";
 export * from "./pagination";
 export * from "./popover";
 export * from "./progress-bar";
