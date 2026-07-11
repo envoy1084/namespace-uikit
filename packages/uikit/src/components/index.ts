@@ -13,6 +13,7 @@ export * from "./card";
 export * from "./cell-color-picker";
 export * from "./cell-select";
 export * from "./cell-slider";
+export * from "./cell-switch";
 export * from "./checkbox";
 export * from "./checkbox-group";
 export * from "./chip";

@@ -86,6 +86,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/cell-switch.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/globals.css",
       rename: "styles.css",
       to: "dist",
@@ -139,6 +143,7 @@ export default defineConfig({
     "components/cell-color-picker": "src/components/cell-color-picker/index.ts",
     "components/cell-select": "src/components/cell-select/index.ts",
     "components/cell-slider": "src/components/cell-slider/index.ts",
+    "components/cell-switch": "src/components/cell-switch/index.ts",
     "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",

@@ -33,7 +33,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] [Cell Color Picker docs](https://heroui.pro/docs/react/components/cell-color-picker) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellcolorpicker--docs)
 - [x] [Cell Select docs](https://heroui.pro/docs/react/components/cell-select) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellselect--docs)
 - [x] [Cell Slider docs](https://heroui.pro/docs/react/components/cell-slider) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellslider--docs)
-- [ ] [Cell Switch docs](https://heroui.pro/docs/react/components/cell-switch) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellswitch--docs)
+- [x] [Cell Switch docs](https://heroui.pro/docs/react/components/cell-switch) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellswitch--docs)
 - [ ] [Checkbox Button Group docs](https://heroui.pro/docs/react/components/checkbox-button-group) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-checkboxbuttongroup--docs)
 - [ ] [Inline Select docs](https://heroui.pro/docs/react/components/inline-select) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-inlineselect--docs)
 - [ ] [Native Select docs](https://heroui.pro/docs/react/components/native-select) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-nativeselect--docs)

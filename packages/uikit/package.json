@@ -209,6 +209,14 @@
       "types": "./dist/components/cell-slider.d.mts",
       "import": "./dist/components/cell-slider.mjs"
     },
+    "./cell-switch": {
+      "@thenamespace/source": {
+        "types": "./src/components/cell-switch/index.ts",
+        "import": "./src/components/cell-switch/index.ts"
+      },
+      "types": "./dist/components/cell-switch.d.mts",
+      "import": "./dist/components/cell-switch.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",
