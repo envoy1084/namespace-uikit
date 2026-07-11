@@ -30,7 +30,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 ## Phase 3 — Forms
 
 - [x] [Number Stepper docs](https://heroui.pro/docs/react/components/number-stepper) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-numberstepper--docs) — implementation and stories added; final catalog-wide visual audit remains
-- [ ] [Cell Color Picker docs](https://heroui.pro/docs/react/components/cell-color-picker) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellcolorpicker--docs)
+- [x] [Cell Color Picker docs](https://heroui.pro/docs/react/components/cell-color-picker) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellcolorpicker--docs)
 - [ ] [Cell Select docs](https://heroui.pro/docs/react/components/cell-select) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellselect--docs)
 - [ ] [Cell Slider docs](https://heroui.pro/docs/react/components/cell-slider) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellslider--docs)
 - [ ] [Cell Switch docs](https://heroui.pro/docs/react/components/cell-switch) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-cellswitch--docs)

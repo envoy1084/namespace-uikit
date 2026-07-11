@@ -185,6 +185,14 @@
       "types": "./dist/components/resizable.d.mts",
       "import": "./dist/components/resizable.mjs"
     },
+    "./cell-color-picker": {
+      "@thenamespace/source": {
+        "types": "./src/components/cell-color-picker/index.ts",
+        "import": "./src/components/cell-color-picker/index.ts"
+      },
+      "types": "./dist/components/cell-color-picker.d.mts",
+      "import": "./dist/components/cell-color-picker.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

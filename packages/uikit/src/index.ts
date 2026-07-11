@@ -10,6 +10,7 @@ export * from "./components/button-group";
 export * from "./components/calendar";
 export * from "./components/calendar-year-picker";
 export * from "./components/card";
+export * from "./components/cell-color-picker";
 export * from "./components/checkbox";
 export * from "./components/checkbox-group";
 export * from "./components/chip";

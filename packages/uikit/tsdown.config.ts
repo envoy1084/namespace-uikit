@@ -74,6 +74,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/cell-color-picker.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/globals.css",
       rename: "styles.css",
       to: "dist",
@@ -124,6 +128,7 @@ export default defineConfig({
     "components/emoji-reaction-button":
       "src/components/emoji-reaction-button/index.ts",
     "components/resizable": "src/components/resizable/index.ts",
+    "components/cell-color-picker": "src/components/cell-color-picker/index.ts",
     "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",

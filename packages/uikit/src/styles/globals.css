@@ -12,6 +12,7 @@
 @import "./components/rating.css";
 @import "./components/emoji-reaction-button.css";
 @import "./components/resizable.css";
+@import "./components/cell-color-picker.css";
 @import "./components/number-stepper.css";
 @import "./components/chart-tooltip.css";
 
