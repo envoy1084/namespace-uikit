@@ -225,6 +225,14 @@
       "types": "./dist/components/checkbox-button-group.d.mts",
       "import": "./dist/components/checkbox-button-group.mjs"
     },
+    "./inline-select": {
+      "@thenamespace/source": {
+        "types": "./src/components/inline-select/index.ts",
+        "import": "./src/components/inline-select/index.ts"
+      },
+      "types": "./dist/components/inline-select.d.mts",
+      "import": "./dist/components/inline-select.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",

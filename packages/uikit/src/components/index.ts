@@ -43,6 +43,7 @@ export * from "./header";
 export * from "./input";
 export * from "./input-group";
 export * from "./input-otp";
+export * from "./inline-select";
 export * from "./kbd";
 export * from "./label";
 export * from "./link";

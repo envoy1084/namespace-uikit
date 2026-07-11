@@ -43,6 +43,7 @@ export * from "./components/header";
 export * from "./components/input";
 export * from "./components/input-group";
 export * from "./components/input-otp";
+export * from "./components/inline-select";
 export * from "./components/kbd";
 export * from "./components/label";
 export * from "./components/link";
