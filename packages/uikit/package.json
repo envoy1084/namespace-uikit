@@ -193,6 +193,14 @@
       "types": "./dist/components/cell-color-picker.d.mts",
       "import": "./dist/components/cell-color-picker.mjs"
     },
+    "./cell-select": {
+      "@thenamespace/source": {
+        "types": "./src/components/cell-select/index.ts",
+        "import": "./src/components/cell-select/index.ts"
+      },
+      "types": "./dist/components/cell-select.d.mts",
+      "import": "./dist/components/cell-select.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",
