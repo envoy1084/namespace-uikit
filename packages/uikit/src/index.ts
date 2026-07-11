@@ -64,6 +64,7 @@ export * from "./components/pressable-feedback";
 export * from "./components/trend-chip";
 export * from "./components/rating";
 export * from "./components/emoji-reaction-button";
+export * from "./components/resizable";
 export * from "./components/pagination";
 export * from "./components/popover";
 export * from "./components/progress-bar";

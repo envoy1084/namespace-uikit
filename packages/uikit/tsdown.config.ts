@@ -70,6 +70,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/resizable.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/globals.css",
       rename: "styles.css",
       to: "dist",
@@ -93,6 +97,7 @@ export default defineConfig({
       "react-aria-components",
       "react-dom",
       "react/jsx-runtime",
+      "react-resizable-panels",
       "recharts",
       "tailwindcss",
     ],
@@ -118,6 +123,7 @@ export default defineConfig({
     "components/rating": "src/components/rating/index.ts",
     "components/emoji-reaction-button":
       "src/components/emoji-reaction-button/index.ts",
+    "components/resizable": "src/components/resizable/index.ts",
     "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",

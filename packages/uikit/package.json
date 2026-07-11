@@ -177,6 +177,14 @@
       "types": "./dist/components/emoji-reaction-button.d.mts",
       "import": "./dist/components/emoji-reaction-button.mjs"
     },
+    "./resizable": {
+      "@thenamespace/source": {
+        "types": "./src/components/resizable/index.ts",
+        "import": "./src/components/resizable/index.ts"
+      },
+      "types": "./dist/components/resizable.d.mts",
+      "import": "./dist/components/resizable.mjs"
+    },
     "./*": {
       "@thenamespace/source": {
         "types": "./src/components/*.ts",
@@ -216,6 +224,7 @@
     "@hugeicons/react": "^1.1.9",
     "@number-flow/react": "0.6.1",
     "react-aria-components": "1.18.0",
+    "react-resizable-panels": "4.12.1",
     "recharts": "3.9.2"
   },
   "devDependencies": {
