@@ -30,6 +30,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/line-chart.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/globals.css",
       rename: "styles.css",
       to: "dist",
@@ -65,6 +69,7 @@ export default defineConfig({
     ...componentEntries,
     "components/area-chart": "src/components/charts/area-chart/index.ts",
     "components/bar-chart": "src/components/charts/bar-chart/index.ts",
+    "components/line-chart": "src/components/charts/line-chart/index.ts",
     "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
     "components/number-stepper": "src/components/forms/number-stepper/index.ts",
     hooks: "src/hooks.ts",
