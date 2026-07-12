@@ -1,0 +1,131 @@
+{
+  "name": "@thenamespace/uikit",
+  "version": "0.1.0",
+  "description": "Namespace-themed React components, hooks, utilities, and icons.",
+  "keywords": [
+    "accessibility",
+    "components",
+    "design-system",
+    "heroui",
+    "namespace",
+    "react",
+    "tailwindcss",
+    "typescript",
+    "ui-kit"
+  ],
+  "homepage": "https://github.com/thenamespace/uikit/tree/main/packages/uikit#readme",
+  "bugs": { "url": "https://github.com/thenamespace/uikit/issues" },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thenamespace/uikit.git",
+    "directory": "packages/uikit"
+  },
+  "files": ["dist", "src"],
+  "type": "module",
+  "sideEffects": ["**/*.css"],
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "@thenamespace/source": {
+        "types": "./src/index.ts",
+        "import": "./src/index.ts"
+      },
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./icons": {
+      "@thenamespace/source": {
+        "types": "./src/icons.ts",
+        "import": "./src/icons.ts"
+      },
+      "types": "./dist/icons.d.mts",
+      "import": "./dist/icons.mjs"
+    },
+    "./hooks": {
+      "@thenamespace/source": {
+        "types": "./src/hooks.ts",
+        "import": "./src/hooks.ts"
+      },
+      "types": "./dist/hooks.d.mts",
+      "import": "./dist/hooks.mjs"
+    },
+    "./utils": {
+      "@thenamespace/source": {
+        "types": "./src/utils.ts",
+        "import": "./src/utils.ts"
+      },
+      "types": "./dist/utils.d.mts",
+      "import": "./dist/utils.mjs"
+    },
+    "./styles": {
+      "@thenamespace/source": "./src/styles/globals.css",
+      "style": "./dist/styles.css",
+      "default": "./dist/styles.css"
+    },
+    "./styles.css": {
+      "@thenamespace/source": "./src/styles/globals.css",
+      "style": "./dist/styles.css",
+      "default": "./dist/styles.css"
+    }
+  },
+  "publishConfig": { "access": "public" },
+  "scripts": {
+    "build": "pnpm generate:package && tsdown --config tsdown.config.ts",
+    "check:package": "node scripts/generate-package-exports.mjs --check",
+    "dev": "pnpm generate:package && tsdown --config tsdown.config.ts --watch",
+    "format": "oxfmt . --write --no-error-on-unmatched-pattern",
+    "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
+    "generate:package": "node scripts/generate-package-exports.mjs",
+    "lint": "oxlint . --no-error-on-unmatched-pattern",
+    "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern",
+    "prepack": "pnpm generate:package",
+    "typecheck": "tsc -p tsconfig.json --pretty false"
+  },
+  "dependencies": {
+    "@heroui/react": "^3.2.1",
+    "@heroui/styles": "^3.2.1",
+    "@hugeicons/core-free-icons": "^4.2.2",
+    "@hugeicons/react": "^1.1.9",
+    "@internationalized/date": "^3.12.2",
+    "@number-flow/react": "0.6.1",
+    "@react-stately/data": "3.16.1",
+    "@tiptap/core": "^3.27.3",
+    "@tiptap/extension-character-count": "^3.27.3",
+    "@tiptap/extension-link": "^3.27.3",
+    "@tiptap/extension-placeholder": "^3.27.3",
+    "@tiptap/extension-underline": "^3.27.3",
+    "@tiptap/pm": "^3.27.3",
+    "@tiptap/react": "^3.27.3",
+    "@tiptap/starter-kit": "^3.27.3",
+    "@tiptap/suggestion": "^3.27.3",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
+    "maplibre-gl": "5.24.0",
+    "marked": "^18.0.6",
+    "motion": "^12.42.2",
+    "react-aria-components": "1.18.0",
+    "react-markdown": "^10.1.0",
+    "react-resizable-panels": "4.12.1",
+    "recharts": "3.9.2",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0",
+    "shiki": "^4.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "26.0.1",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": ">=19.2.7 <20",
+    "react-dom": ">=19.2.7 <20",
+    "tailwindcss": ">=4.3.2 <5"
+  }
+}

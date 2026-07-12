@@ -118,7 +118,9 @@ Public component imports intentionally remain one level deep regardless of their
 source group. For example, `src/components/date-and-time/agenda.tsx` is published
 as `@thenamespace/uikit/agenda`, not `@thenamespace/uikit/date-and-time/agenda`.
 When adding a component, place it in the appropriate domain and export it from
-that domain's `index.ts`. Run `pnpm generate:exports` from this package (or simply
-run the build) to regenerate the flat source and distribution mappings in
-`package.json`. The generator validates duplicate component names, and the build
-discovers grouped component entries automatically.
+that domain's `index.ts`. Edit `package.template.json` for package metadata and
+fixed exports, then run `pnpm generate:package` from this package (or simply run
+the build) to construct `package.json` with the flat source and distribution
+mappings. The generator validates duplicate component names, and the build
+discovers grouped component entries automatically. The current generated version
+is preserved so Changesets version bumps remain intact during release builds.

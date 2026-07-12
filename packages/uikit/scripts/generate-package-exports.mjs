@@ -7,6 +7,7 @@ const packageRoot = path.resolve(
   "..",
 );
 const componentsRoot = path.join(packageRoot, "src/components");
+const packageTemplatePath = path.join(packageRoot, "package.template.json");
 const packageJsonPath = path.join(packageRoot, "package.json");
 const isCheck = process.argv.includes("--check");
 
@@ -59,8 +60,21 @@ const componentExport = ({ group, name }) => ({
   import: `./dist/components/${name}.mjs`,
 });
 
-const packageJsonSource = await readFile(packageJsonPath, "utf8");
-const packageJson = JSON.parse(packageJsonSource);
+const packageTemplateSource = await readFile(packageTemplatePath, "utf8");
+const packageJson = JSON.parse(packageTemplateSource);
+const packageJsonSource = await readFile(packageJsonPath, "utf8").catch(
+  () => "",
+);
+const currentPackageJson = packageJsonSource
+  ? JSON.parse(packageJsonSource)
+  : undefined;
+
+// Changesets updates the publish manifest directly. Keep its release version
+// when reconstructing the rest of the generated manifest before a build.
+if (currentPackageJson?.version) {
+  packageJson.version = currentPackageJson.version;
+}
+
 const components = await readComponents();
 const fixedExports = packageJson.exports;
 const requiredFixedExports = [
@@ -102,15 +116,13 @@ const generatedSource = `${JSON.stringify(packageJson, null, 2)}\n`;
 
 if (isCheck) {
   if (generatedSource !== packageJsonSource) {
-    throw new Error(
-      "package.json component exports are stale. Run `pnpm generate:exports`.",
-    );
+    throw new Error("package.json is stale. Run `pnpm generate:package`.");
   }
 
   console.log(`Verified ${components.length} component exports.`);
 } else if (generatedSource === packageJsonSource) {
-  console.log(`Component exports are up to date (${components.length}).`);
+  console.log(`package.json is up to date (${components.length} components).`);
 } else {
   await writeFile(packageJsonPath, generatedSource);
-  console.log(`Generated ${components.length} component exports.`);
+  console.log(`Generated package.json with ${components.length} components.`);
 }

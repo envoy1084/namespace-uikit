@@ -1277,15 +1277,15 @@
     "access": "public"
   },
   "scripts": {
-    "build": "pnpm generate:exports && tsdown --config tsdown.config.ts",
-    "check:exports": "node scripts/generate-package-exports.mjs --check",
-    "dev": "pnpm generate:exports && tsdown --config tsdown.config.ts --watch",
+    "build": "pnpm generate:package && tsdown --config tsdown.config.ts",
+    "check:package": "node scripts/generate-package-exports.mjs --check",
+    "dev": "pnpm generate:package && tsdown --config tsdown.config.ts --watch",
     "format": "oxfmt . --write --no-error-on-unmatched-pattern",
     "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
-    "generate:exports": "node scripts/generate-package-exports.mjs",
+    "generate:package": "node scripts/generate-package-exports.mjs",
     "lint": "oxlint . --no-error-on-unmatched-pattern",
     "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern",
-    "prepack": "pnpm generate:exports",
+    "prepack": "pnpm generate:package",
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },
   "dependencies": {
