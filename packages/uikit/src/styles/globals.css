@@ -6,6 +6,7 @@
 @import "./components/chat-attachment.css";
 @import "./components/chat-conversation.css";
 @import "./components/chat-loader.css";
+@import "./components/chat-list-view.css";
 @import "./components/chat-message.css";
 @import "./components/chat-message-actions.css";
 @import "./components/chat-source.css";

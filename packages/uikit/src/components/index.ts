@@ -15,6 +15,7 @@ export * from "./calendar-year-picker";
 export * from "./chat-attachment";
 export * from "./chat-conversation";
 export * from "./chat-loader";
+export * from "./chat-list-view";
 export * from "./chat-message";
 export * from "./chat-message-actions";
 export * from "./chat-source";

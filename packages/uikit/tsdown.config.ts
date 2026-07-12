@@ -50,6 +50,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/chat-list-view.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/chat-message.css",
       to: "dist/components",
     },

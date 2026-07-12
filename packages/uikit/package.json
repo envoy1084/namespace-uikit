@@ -201,6 +201,14 @@
       "types": "./dist/components/chat-conversation.d.mts",
       "import": "./dist/components/chat-conversation.mjs"
     },
+    "./chat-list-view": {
+      "@thenamespace/source": {
+        "types": "./src/components/chat-list-view/index.ts",
+        "import": "./src/components/chat-list-view/index.ts"
+      },
+      "types": "./dist/components/chat-list-view.d.mts",
+      "import": "./dist/components/chat-list-view.mjs"
+    },
     "./chat-source": {
       "@thenamespace/source": {
         "types": "./src/components/chat-source/index.ts",
