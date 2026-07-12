@@ -185,6 +185,14 @@
       "types": "./dist/components/markdown.d.mts",
       "import": "./dist/components/markdown.mjs"
     },
+    "./chat-attachment": {
+      "@thenamespace/source": {
+        "types": "./src/components/chat-attachment/index.ts",
+        "import": "./src/components/chat-attachment/index.ts"
+      },
+      "types": "./dist/components/chat-attachment.d.mts",
+      "import": "./dist/components/chat-attachment.mjs"
+    },
     "./rating": {
       "@thenamespace/source": {
         "types": "./src/components/rating/index.ts",
