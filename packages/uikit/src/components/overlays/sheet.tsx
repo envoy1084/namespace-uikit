@@ -28,6 +28,7 @@ export type SheetSnapPoint = number | string;
 interface SheetContextValue {
   close: () => void;
   isDetached: boolean;
+  isDismissable: boolean;
   open: () => void;
   placement: SheetPlacement;
   snapPoints: SheetSnapPoint[] | undefined;
@@ -128,11 +129,12 @@ function SheetRootBase({
     () => ({
       close: () => setOpen(false),
       isDetached,
+      isDismissable,
       open: () => setOpen(true),
       placement,
       snapPoints,
     }),
-    [isDetached, placement, setOpen, snapPoints],
+    [isDetached, isDismissable, placement, setOpen, snapPoints],
   );
   const rootProps = {
     activeSnapPoint,
@@ -238,8 +240,8 @@ export const SheetContent: ForwardRefExoticComponent<SheetContentProps> =
     { children, className, style, ...props },
     ref,
   ) {
-    const { isDetached, placement, snapPoints } = useSheetContext();
-    const { close } = useSheetContext();
+    const { close, isDetached, isDismissable, placement, snapPoints } =
+      useSheetContext();
 
     return (
       <Vaul.Content
@@ -258,7 +260,9 @@ export const SheetContent: ForwardRefExoticComponent<SheetContentProps> =
         role="presentation"
         style={style as CSSProperties}
       >
-        <button aria-label="Dismiss" className="sr-only" onClick={close} />
+        {isDismissable ? (
+          <button aria-label="Dismiss" className="sr-only" onClick={close} />
+        ) : null}
         {children}
       </Vaul.Content>
     );
