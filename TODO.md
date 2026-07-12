@@ -92,9 +92,9 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 
 ## Final audit
 
-- [ ] Every component and documented compound part is exported from the package root and a component subpath.
-- [ ] Every documented CSS class and state selector is present.
+- [x] Every component and documented compound part is exported from the package root and a component subpath.
+- [x] Every documented CSS class and state selector is present.
 - [x] Every reference Storybook story has a matching local story.
-- [ ] Every component has light-mode and dark-mode visual comparison evidence.
+- [x] Every component has light-mode and dark-mode visual comparison evidence.
 - [ ] Keyboard, focus, disabled, controlled, and responsive interactions are verified where applicable.
 - [ ] UIKit typecheck, lint, build, pack inspection, and Storybook production build pass.
