@@ -299,7 +299,14 @@
     height: auto;
     margin: 0;
     opacity: 1;
+    background: transparent;
     border-radius: 0;
+  }
+
+  .sheet__handle [data-vaul-handle-hitarea] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .sheet__handle:active {

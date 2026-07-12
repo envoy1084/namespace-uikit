@@ -352,11 +352,9 @@ export const SheetHandle: ForwardRefExoticComponent<SheetHandleProps> =
         data-slot="sheet-handle"
         ref={ref}
       >
-        <span data-slot="sheet-handle-hitarea">
-          {children ?? (
-            <span className="sheet__handle-bar" data-slot="sheet-handle-bar" />
-          )}
-        </span>
+        {children ?? (
+          <span className="sheet__handle-bar" data-slot="sheet-handle-bar" />
+        )}
       </Vaul.Handle>
     );
   });
