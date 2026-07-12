@@ -132,8 +132,8 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] Kanban stories match official boards and group backgrounds; dragging does not add an incorrect hamburger icon.
 - [x] Map component and all 12 stories match official tooltips, controls, markers, overlays, layouts, lifecycle behavior, controlled viewport updates, and light/dark states.
 - [x] Timeline Centered Milestones pill colors and all subsequent stories match the official Storybook.
-- [ ] Sheet positions, widths, responsive behavior, and story trigger variants match the official Storybook.
-- [ ] EmojiPicker navigation scrolls to emoji groups and includes the official complete emoji set.
+- [x] Sheet positions, widths, responsive behavior, and story trigger variants match the official Storybook.
+- [x] EmojiPicker navigation scrolls to emoji groups and includes the official complete emoji set.
 
 ### AI components and stories
 
