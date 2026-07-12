@@ -23,6 +23,7 @@ export * from "./checkbox-button-group";
 export * from "./checkbox-group";
 export * from "./chip";
 export * from "./close-button";
+export * from "./code-block";
 export * from "./color-area";
 export * from "./color-field";
 export * from "./color-picker";

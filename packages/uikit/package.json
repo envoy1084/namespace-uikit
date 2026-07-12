@@ -169,6 +169,14 @@
       "types": "./dist/components/text-shimmer.d.mts",
       "import": "./dist/components/text-shimmer.mjs"
     },
+    "./code-block": {
+      "@thenamespace/source": {
+        "types": "./src/components/code-block/index.ts",
+        "import": "./src/components/code-block/index.ts"
+      },
+      "types": "./dist/components/code-block.d.mts",
+      "import": "./dist/components/code-block.mjs"
+    },
     "./rating": {
       "@thenamespace/source": {
         "types": "./src/components/rating/index.ts",

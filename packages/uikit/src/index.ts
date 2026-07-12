@@ -23,6 +23,7 @@ export * from "./components/checkbox-button-group";
 export * from "./components/checkbox-group";
 export * from "./components/chip";
 export * from "./components/close-button";
+export * from "./components/code-block";
 export * from "./components/color-area";
 export * from "./components/color-field";
 export * from "./components/color-picker";

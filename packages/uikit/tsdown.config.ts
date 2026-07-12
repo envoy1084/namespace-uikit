@@ -42,6 +42,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/code-block.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/context-menu.css",
       to: "dist/components",
     },
@@ -261,6 +265,7 @@ export default defineConfig({
       "embla-carousel-react",
       "motion",
       "recharts",
+      "shiki",
       "tailwindcss",
     ],
   },
