@@ -86,6 +86,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/navbar.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/segment.css",
       to: "dist/components",
     },

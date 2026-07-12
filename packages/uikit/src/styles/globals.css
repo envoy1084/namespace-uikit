@@ -40,6 +40,7 @@
 @import "./components/timeline.css";
 @import "./components/kanban.css";
 @import "./components/map.css";
+@import "./components/navbar.css";
 @import "./components/segment.css";
 @import "./components/stepper.css";
 @import "./components/rich-text-editor.css";
