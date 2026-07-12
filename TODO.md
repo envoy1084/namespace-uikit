@@ -137,11 +137,11 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 
 ### AI components and stories
 
-- [ ] ChatAttachment stories use the standard Hugeicons icon set.
-- [ ] ChatLoader dots match the official size, spacing, timing, and animation.
-- [ ] ChatSource stories include stacked favicons and use the correct Hugeicons.
-- [ ] ChatTool code typography and spacing between code blocks match the official Storybook.
-- [ ] PromptInput stories restore model selection and replace incorrect or emoji icons with the official iconography.
+- [x] ChatAttachment stories use the standard Hugeicons icon set.
+- [x] ChatLoader dots match the official size, spacing, timing, and animation.
+- [x] ChatSource stories include stacked favicons and use the correct Hugeicons.
+- [x] ChatTool code typography and spacing between code blocks match the official Storybook.
+- [x] PromptInput stories restore model selection and replace incorrect or emoji icons with the official iconography.
 
 ### Form and interaction components
 
