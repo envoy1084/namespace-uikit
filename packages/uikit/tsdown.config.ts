@@ -82,6 +82,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/stepper.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/area-chart.css",
       to: "dist/components",
     },

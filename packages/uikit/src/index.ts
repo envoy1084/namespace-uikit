@@ -105,6 +105,7 @@ export * from "./components/separator";
 export * from "./components/skeleton";
 export * from "./components/slider";
 export * from "./components/spinner";
+export * from "./components/stepper";
 export * from "./components/surface";
 export * from "./components/switch";
 export * from "./components/switch-group";

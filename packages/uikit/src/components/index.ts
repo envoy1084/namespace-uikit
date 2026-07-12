@@ -105,6 +105,7 @@ export * from "./separator";
 export * from "./skeleton";
 export * from "./slider";
 export * from "./spinner";
+export * from "./stepper";
 export * from "./surface";
 export * from "./switch";
 export * from "./switch-group";
