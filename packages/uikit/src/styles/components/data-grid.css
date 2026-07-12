@@ -1,5 +1,11 @@
 @layer components {
-.data-grid { --data-grid-selection-column-width: 40px; --data-grid-tree-toggle-size: 24px; --data-grid-tree-gap: 4px; position: relative; width: 100%; }
+.data-grid { --data-grid-selection-column-width: 40px; --data-grid-drag-handle-column-width: 32px; --data-grid-tree-toggle-size: 24px; --data-grid-tree-gap: 4px; position: relative; width: 100%; }
+.data-grid__drag-handle-column, .data-grid__drag-handle-cell { width: var(--data-grid-drag-handle-column-width); padding-inline: 0; }
+.data-grid__drag-handle-column::after { content: none; }
+.data-grid__drag-handle { display: flex; width: 100%; height: 100%; align-items: center; justify-content: center; border: 0; padding: 0; background: transparent; color: var(--muted); line-height: 1; cursor: grab; outline: none; }
+.data-grid__drag-handle:hover, .data-grid__drag-handle[data-hovered="true"] { color: var(--foreground); }
+.data-grid__drag-handle:active, .data-grid__drag-handle[data-pressed="true"] { cursor: grabbing; }
+.data-grid__drag-handle:focus-visible, .data-grid__drag-handle[data-focus-visible="true"] { box-shadow: inset 0 0 0 2px var(--focus); }
 .data-grid__selection-column, .data-grid__selection-cell { padding-inline-end: 0; width: var(--data-grid-selection-column-width); }
 .data-grid__selection-column::after { content: none; }
 .data-grid__sort-icon { display: inline-flex; flex-shrink: 0; height: .75rem; margin-inline-start: .25rem; transition: rotate .1s ease-out; width: .75rem; }

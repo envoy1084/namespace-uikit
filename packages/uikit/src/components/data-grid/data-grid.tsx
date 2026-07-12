@@ -240,6 +240,7 @@ function DataGridInner<T extends object>({
   });
   const activeDragHooks =
     dragAndDropHooks ?? (onReorder ? reorderHooks : undefined);
+  const hasDragHandle = !!activeDragHooks;
   const hasTree = typeof getChildren === "function";
   const hierarchyColumn =
     treeColumn ??
@@ -271,8 +272,8 @@ function DataGridInner<T extends object>({
     scroller.addEventListener("scroll", update, { passive: true });
     return () => scroller.removeEventListener("scroll", update);
   }, [hasPinnedEnd, hasPinnedStart]);
-  let startOffset =
-    showSelectionCheckboxes && selectionMode !== "none" ? 40 : 0;
+  let startOffset = hasDragHandle ? 32 : 0;
+  if (showSelectionCheckboxes && selectionMode !== "none") startOffset += 40;
   const endOffsets = new Map<string, number>();
   let endOffset = 0;
   const reversedColumns = [...columns];
@@ -303,6 +304,20 @@ function DataGridInner<T extends object>({
     const children = getChildren?.(item) ?? [];
     return (
       <Table.Row id={getRowId(item)}>
+        {hasDragHandle ? (
+          <Table.Cell className="data-grid__drag-handle-cell">
+            <Button
+              isIconOnly
+              aria-label="Drag row"
+              className="data-grid__drag-handle"
+              size="sm"
+              slot="drag"
+              variant="ghost"
+            >
+              ≡
+            </Button>
+          </Table.Cell>
+        ) : null}
         {showSelectionCheckboxes && selectionMode !== "none" ? (
           <Table.Cell
             {...(hasPinnedStart
@@ -411,6 +426,16 @@ function DataGridInner<T extends object>({
       aria-label={ariaLabel}
     >
       <Table.Header>
+        {hasDragHandle ? (
+          <Table.Column
+            className="data-grid__drag-handle-column"
+            maxWidth={32}
+            minWidth={32}
+            width={32}
+          >
+            <span className="sr-only">Reorder</span>
+          </Table.Column>
+        ) : null}
         {showSelectionCheckboxes && selectionMode !== "none" ? (
           <Table.Column
             className="data-grid__selection-column"

@@ -193,6 +193,7 @@ export function SheetBackdrop({
       className={
         cn(
           "sheet__backdrop",
+          `sheet__backdrop--${variant}`,
           typeof className === "string" ? className : undefined,
         ) ?? "sheet__backdrop"
       }

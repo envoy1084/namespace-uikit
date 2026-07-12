@@ -32,10 +32,12 @@ import {
 
 export type KanbanSize = "lg" | "md" | "sm";
 interface KanbanContextValue {
+  cardClass: string;
   cardContentClass: string;
   cardListClass: string;
 }
 const Context = createContext<KanbanContextValue>({
+  cardClass: "kanban__card--md",
   cardContentClass: "kanban__card-content--md",
   cardListClass: "kanban__card-list--md",
 });
@@ -62,6 +64,7 @@ export function KanbanRoot({
   const context = useMemo(
     () => ({
       cardContentClass: `kanban__card-content--${size}`,
+      cardClass: `kanban__card--${size}`,
       cardListClass: `kanban__card-list--${size}`,
     }),
     [size],
@@ -240,7 +243,10 @@ export function KanbanCard<T extends object = object>({
   return (
     <GridListItem
       {...props}
-      className={mergeClassName(className, "kanban__card")}
+      className={mergeClassName(
+        className,
+        cn("kanban__card", context.cardClass) ?? "kanban__card",
+      )}
       data-slot="kanban-card"
     >
       {(renderProps) => (

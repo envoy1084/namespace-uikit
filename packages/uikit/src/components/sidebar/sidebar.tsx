@@ -419,7 +419,7 @@ export const SidebarMenuLabel = ({
 }: ComponentPropsWithRef<"span">): ReactElement => (
   <span
     {...props}
-    className={cn("sidebar__menu-label", className)}
+    className={cn("sidebar__menu-label sidebar__menu-label-text", className)}
     data-sidebar="label"
     data-slot="sidebar-menu-label"
   />

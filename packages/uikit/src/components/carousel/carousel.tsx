@@ -130,11 +130,18 @@ function CarouselContent({
   className,
   ...props
 }: ComponentPropsWithRef<"div">): ReactElement {
-  const { emblaRef, setViewportWrapper } = useCarousel();
+  const { emblaRef, setViewportWrapper, type } = useCarousel();
   return (
     <div className="carousel__viewport-wrapper" ref={setViewportWrapper}>
       <div className="carousel__viewport" ref={emblaRef}>
-        <div {...props} className={cn("carousel__content", className)}>
+        <div
+          {...props}
+          className={cn(
+            "carousel__content",
+            `carousel__content--${type}`,
+            className,
+          )}
+        >
           {children}
         </div>
       </div>
@@ -145,11 +152,12 @@ function CarouselItem({
   className,
   ...props
 }: ComponentPropsWithRef<"div">): ReactElement {
+  const { type } = useCarousel();
   return (
     <div
       {...props}
       aria-roledescription="slide"
-      className={cn("carousel__item", className)}
+      className={cn("carousel__item", `carousel__item--${type}`, className)}
       role="group"
     />
   );
@@ -182,7 +190,10 @@ function CarouselPrevious({
     <Button
       {...props}
       aria-label={props["aria-label"] ?? "Previous slide"}
-      className={cn("carousel__previous", className) ?? "carousel__previous"}
+      className={
+        cn("carousel__previous", `carousel__previous--${type}`, className) ??
+        "carousel__previous"
+      }
       isDisabled={!canScrollPrev}
       isIconOnly
       onPress={scrollPrev}
@@ -206,7 +217,10 @@ function CarouselNext({
     <Button
       {...props}
       aria-label={props["aria-label"] ?? "Next slide"}
-      className={cn("carousel__next", className) ?? "carousel__next"}
+      className={
+        cn("carousel__next", `carousel__next--${type}`, className) ??
+        "carousel__next"
+      }
       isDisabled={!canScrollNext}
       isIconOnly
       onPress={scrollNext}
@@ -267,12 +281,14 @@ function CarouselThumbnails({
   style,
   ...props
 }: CarouselThumbnailsProps): ReactElement {
+  const { type } = useCarousel();
   return (
     <div
       {...props}
       aria-label="Slide thumbnails"
       className={cn(
         "carousel__thumbnails",
+        `carousel__thumbnails--${type}`,
         hideScrollBar && "carousel__thumbnails--hide-scrollbar",
         className,
       )}
