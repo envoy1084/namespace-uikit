@@ -98,6 +98,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/sheet.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/sidebar.css",
       to: "dist/components",
     },
