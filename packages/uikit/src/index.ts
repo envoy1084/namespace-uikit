@@ -46,6 +46,7 @@ export * from "./components/fieldset";
 export * from "./components/form";
 export * from "./components/floating-toc";
 export * from "./components/header";
+export * from "./components/hover-card";
 export * from "./components/input";
 export * from "./components/input-group";
 export * from "./components/input-otp";
