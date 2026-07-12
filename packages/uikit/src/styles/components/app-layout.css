@@ -1,5 +1,6 @@
 @layer components {
   .app-layout {
+    background-color: var(--background);
     display: flex;
     min-height: 100svh;
     width: 100%;
