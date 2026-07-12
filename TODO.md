@@ -96,5 +96,5 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] Every documented CSS class and state selector is present.
 - [x] Every reference Storybook story has a matching local story.
 - [x] Every component has light-mode and dark-mode visual comparison evidence.
-- [ ] Keyboard, focus, disabled, controlled, and responsive interactions are verified where applicable.
-- [ ] UIKit typecheck, lint, build, pack inspection, and Storybook production build pass.
+- [x] Keyboard, focus, disabled, controlled, and responsive interactions are verified where applicable.
+- [x] UIKit typecheck, lint, build, pack inspection, and Storybook production build pass.
