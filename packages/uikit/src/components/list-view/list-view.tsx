@@ -70,7 +70,6 @@ function ListViewRoot<T extends object>({
     : undefined;
   const grid = (
     <GridList
-      {...props}
       ref={ref}
       className={(state) =>
         cn(
@@ -85,6 +84,7 @@ function ListViewRoot<T extends object>({
       {...(selectionMode === "none"
         ? {}
         : { selectionBehavior, selectionMode })}
+      {...props}
     >
       {children}
     </GridList>
@@ -116,7 +116,6 @@ function ListViewItem({
   const { selectionMode, variant } = useContext(ListViewContext);
   return (
     <GridListItem
-      {...props}
       className={(state) =>
         cn(
           "list-view__item",
@@ -124,6 +123,7 @@ function ListViewItem({
         ) ?? "list-view__item"
       }
       data-slot="list-view-item"
+      {...props}
     >
       {({ selectionBehavior, selectionMode: currentMode }) => (
         <>
@@ -161,9 +161,9 @@ function ListViewItemContent({
 }: ComponentPropsWithRef<"div">): ReactElement {
   return (
     <div
-      {...props}
       className={cn("list-view__item-content", className)}
       data-slot="list-view-item-content"
+      {...props}
     >
       {children}
     </div>
@@ -176,9 +176,9 @@ function ListViewTitle({
 }: ComponentPropsWithRef<"span">): ReactElement {
   return (
     <span
-      {...props}
       className={cn("list-view__title", className)}
       data-slot="list-view-title"
+      {...props}
     >
       {children}
     </span>
@@ -191,9 +191,9 @@ function ListViewDescription({
 }: ComponentPropsWithRef<"span">): ReactElement {
   return (
     <span
-      {...props}
       className={cn("list-view__description", className)}
       data-slot="list-view-description"
+      {...props}
     >
       {children}
     </span>
@@ -206,9 +206,9 @@ function ListViewItemAction({
 }: ComponentPropsWithRef<"div">): ReactElement {
   return (
     <div
-      {...props}
       className={cn("list-view__item-action", className)}
       data-slot="list-view-item-action"
+      {...props}
     >
       {children}
     </div>
