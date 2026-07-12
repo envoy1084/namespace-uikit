@@ -8,21 +8,32 @@ import {
   Button,
   Chip,
   Dropdown,
+  Kbd,
   Label,
 } from "@thenamespace/uikit";
 import {
   Analytics01Icon,
+  ArrowDown01Icon,
+  AiBrain01Icon,
+  Activity01Icon,
+  Add01Icon,
+  Airplane01Icon,
   BookOpen01Icon,
+  CodeIcon,
   Copy01Icon,
   Delete02Icon,
   FolderOpenIcon,
+  File01Icon,
+  Globe02Icon,
   HelpCircleIcon,
   Home01Icon,
   HugeiconsIcon,
   Logout01Icon,
+  LibraryIcon,
   MoreVerticalIcon,
   Notification01Icon,
   ReceiptTextIcon,
+  Search01Icon,
   Settings01Icon,
   Task01Icon,
   UserMultipleIcon,
@@ -657,6 +668,456 @@ function ReducedMotionDemo() {
     </Sidebar.Provider>
   );
 }
+
+function SimpleNavigation({
+  current = "Dashboard",
+  showBadge = false,
+}: {
+  current?: string;
+  showBadge?: boolean;
+}) {
+  return (
+    <Sidebar.Menu aria-label="Navigation">
+      {collapsibleNav.map((item) => (
+        <Sidebar.MenuItem
+          id={item.label}
+          isCurrent={item.label === current}
+          key={item.label}
+          textValue={item.label}
+        >
+          <Sidebar.MenuIcon>
+            <HugeiconsIcon icon={item.icon} size={16} />
+          </Sidebar.MenuIcon>
+          <Sidebar.MenuLabel>{item.label}</Sidebar.MenuLabel>
+          {showBadge && "badge" in item ? (
+            <Sidebar.MenuChip>
+              <Chip color="success" size="sm" variant="soft">
+                {item.badge}
+              </Chip>
+            </Sidebar.MenuChip>
+          ) : null}
+        </Sidebar.MenuItem>
+      ))}
+    </Sidebar.Menu>
+  );
+}
+
+function FloatingVariantDemo() {
+  return (
+    <Sidebar.Provider collapsible="offcanvas" variant="floating">
+      <Sidebar>
+        <Sidebar.Header>
+          <div className="flex items-center gap-3 px-1 py-2">
+            <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
+              <span className="text-sm font-bold text-white">H</span>
+            </span>
+            <span
+              className="text-foreground text-sm font-semibold"
+              data-sidebar="label"
+            >
+              HeroUI
+            </span>
+          </div>
+        </Sidebar.Header>
+        <Sidebar.Content>
+          <Sidebar.Group>
+            <SimpleNavigation current="" />
+          </Sidebar.Group>
+        </Sidebar.Content>
+        <Sidebar.Rail />
+      </Sidebar>
+      <Sidebar.Main>
+        <div className="flex items-center gap-3 p-4">
+          <Sidebar.Trigger />
+          <Breadcrumbs className="min-w-0">
+            <Breadcrumbs.Item className="min-w-0 font-semibold">
+              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                <HugeiconsIcon icon={Home01Icon} size={16} />
+                <span className="truncate">Dashboard</span>
+              </span>
+            </Breadcrumbs.Item>
+          </Breadcrumbs>
+        </div>
+        <div className="p-6">
+          <p className="text-muted">
+            Floating sidebar with rounded corners and shadow
+          </p>
+        </div>
+      </Sidebar.Main>
+    </Sidebar.Provider>
+  );
+}
+
+function WithAvatarDemo() {
+  return (
+    <Sidebar.Provider collapsible="icon">
+      <Sidebar className="group">
+        <Sidebar.Header>
+          <div className="flex items-center gap-3 px-1 py-2">
+            <Avatar className="size-8 shrink-0">
+              <Avatar.Image
+                alt="Kate Moore"
+                src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue-light.jpg"
+              />
+              <Avatar.Fallback>KM</Avatar.Fallback>
+            </Avatar>
+            <div
+              className="flex min-w-0 flex-col group-data-[state=collapsed]:hidden"
+              data-sidebar="label"
+            >
+              <span className="text-foreground text-sm leading-tight font-medium">
+                Kate Moore
+              </span>
+              <span className="text-muted text-xs leading-tight">
+                kate@acme.com
+              </span>
+            </div>
+          </div>
+        </Sidebar.Header>
+        <Sidebar.Separator />
+        <Sidebar.Content>
+          <Sidebar.Group>
+            <SimpleNavigation showBadge />
+          </Sidebar.Group>
+        </Sidebar.Content>
+        <Sidebar.Separator />
+        <Sidebar.Footer>
+          <Sidebar.Menu aria-label="Footer actions">
+            <Sidebar.MenuItem href="#" id="help" textValue="Help & Information">
+              <Sidebar.MenuIcon>
+                <HugeiconsIcon icon={HelpCircleIcon} size={16} />
+              </Sidebar.MenuIcon>
+              <Sidebar.MenuLabel>Help & Information</Sidebar.MenuLabel>
+            </Sidebar.MenuItem>
+            <Sidebar.MenuItem href="#" id="logout" textValue="Log out">
+              <Sidebar.MenuIcon>
+                <HugeiconsIcon icon={Logout01Icon} size={16} />
+              </Sidebar.MenuIcon>
+              <Sidebar.MenuLabel>Log out</Sidebar.MenuLabel>
+            </Sidebar.MenuItem>
+          </Sidebar.Menu>
+        </Sidebar.Footer>
+        <Sidebar.Rail />
+      </Sidebar>
+      <Sidebar.Main>
+        <div className="flex items-center gap-3 p-4">
+          <Sidebar.Trigger />
+          <Breadcrumbs className="min-w-0">
+            <Breadcrumbs.Item className="min-w-0 font-semibold">
+              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                <HugeiconsIcon icon={UserMultipleIcon} size={16} />
+                <span className="truncate">Team</span>
+              </span>
+            </Breadcrumbs.Item>
+          </Breadcrumbs>
+        </div>
+        <div className="p-6">
+          <p className="text-muted">Main content area</p>
+        </div>
+      </Sidebar.Main>
+    </Sidebar.Provider>
+  );
+}
+
+const insetSections = [
+  {
+    label: "Platform",
+    items: [
+      { icon: CodeIcon, label: "Playground" },
+      { icon: AiBrain01Icon, label: "Models" },
+      { icon: BookOpen01Icon, label: "Documentation" },
+      { icon: Settings01Icon, label: "Settings" },
+    ],
+  },
+  {
+    label: "Projects",
+    items: [
+      { icon: Task01Icon, label: "Design Engineering" },
+      { icon: Globe02Icon, label: "Sales & Marketing" },
+      { icon: Airplane01Icon, label: "Travel" },
+    ],
+  },
+] as const;
+
+function InsetVariantDemo() {
+  return (
+    <Sidebar.Provider collapsible="offcanvas" variant="inset">
+      <Sidebar>
+        <Sidebar.Header>
+          <div className="flex items-center gap-3 px-1 py-2">
+            <span className="bg-foreground flex size-8 shrink-0 items-center justify-center rounded-lg">
+              <HugeiconsIcon
+                className="text-background size-4"
+                icon={AiBrain01Icon}
+              />
+            </span>
+            <span className="flex flex-col">
+              <span className="text-foreground text-sm leading-tight font-semibold">
+                HeroUI Inc.
+              </span>
+              <span className="text-muted text-xs leading-tight">
+                Enterprise
+              </span>
+            </span>
+          </div>
+        </Sidebar.Header>
+        <Sidebar.Content>
+          {insetSections.map((section, index) => (
+            <Fragment key={section.label}>
+              {index > 0 ? <Sidebar.Separator /> : null}
+              <Sidebar.Group>
+                <Sidebar.GroupLabel>{section.label}</Sidebar.GroupLabel>
+                <Sidebar.Menu aria-label={section.label}>
+                  {section.items.map((item) => (
+                    <Sidebar.MenuItem
+                      id={item.label.toLowerCase().replaceAll(" ", "-")}
+                      key={item.label}
+                      textValue={item.label}
+                    >
+                      <Sidebar.MenuIcon>
+                        <HugeiconsIcon icon={item.icon} size={16} />
+                      </Sidebar.MenuIcon>
+                      <Sidebar.MenuLabel>{item.label}</Sidebar.MenuLabel>
+                    </Sidebar.MenuItem>
+                  ))}
+                </Sidebar.Menu>
+              </Sidebar.Group>
+            </Fragment>
+          ))}
+        </Sidebar.Content>
+      </Sidebar>
+      <Sidebar.Main>
+        <div className="flex items-center gap-3 p-4">
+          <Sidebar.Trigger />
+          <Breadcrumbs className="min-w-0">
+            <Breadcrumbs.Item className="text-muted min-w-0" href="#">
+              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                <HugeiconsIcon icon={AiBrain01Icon} size={16} />
+                <span className="truncate">Build Your Application</span>
+              </span>
+            </Breadcrumbs.Item>
+            <Breadcrumbs.Item className="min-w-0 font-semibold">
+              <span>Data Fetching</span>
+            </Breadcrumbs.Item>
+          </Breadcrumbs>
+        </div>
+        <div className="grid gap-4 p-4 pt-0">
+          <div className="grid grid-cols-3 gap-4">
+            <div className="bg-surface rounded-xl border p-6" />
+            <div className="bg-surface rounded-xl border p-6" />
+            <div className="bg-surface rounded-xl border p-6" />
+          </div>
+          <div className="bg-surface min-h-[50vh] rounded-xl border p-6" />
+        </div>
+      </Sidebar.Main>
+    </Sidebar.Provider>
+  );
+}
+
+const compactMainNav = [
+  { icon: Search01Icon, isButton: true, label: "Search" },
+  { icon: Home01Icon, label: "Home" },
+  { icon: Activity01Icon, label: "Activity" },
+  { icon: Globe02Icon, label: "Browse" },
+] as const;
+const compactLibraryItems = ["Design Tokens", "Color Palette", "Typography"];
+
+function CompactWithUserMenuDemo() {
+  return (
+    <Sidebar.Provider>
+      <Sidebar style={{ "--spacing": "0.2rem" } as React.CSSProperties}>
+        <Sidebar.Header>
+          <div className="flex items-center gap-3 px-1 py-2">
+            <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-green-600">
+              <span className="text-sm font-bold text-white">H</span>
+            </span>
+            <span
+              className="text-foreground text-sm font-semibold"
+              data-sidebar="label"
+            >
+              HeroUI Labs
+            </span>
+          </div>
+        </Sidebar.Header>
+        <Sidebar.Content>
+          <Sidebar.Group>
+            <Sidebar.Menu aria-label="Main navigation">
+              {compactMainNav.map((item) => (
+                <Sidebar.MenuItem
+                  href={item.isButton ? undefined : "#"}
+                  id={`compact-user-menu-nav-${item.label}`}
+                  isCurrent={item.label === "Home"}
+                  key={item.label}
+                  textValue={item.label}
+                >
+                  <Sidebar.MenuIcon>
+                    <HugeiconsIcon icon={item.icon} size={16} />
+                  </Sidebar.MenuIcon>
+                  <Sidebar.MenuLabel>{item.label}</Sidebar.MenuLabel>
+                  {item.label === "Search" ? (
+                    <Sidebar.MenuChip>
+                      <Kbd className="text-xs">
+                        <Kbd.Abbr keyValue="command" />
+                        <Kbd.Content>K</Kbd.Content>
+                      </Kbd>
+                    </Sidebar.MenuChip>
+                  ) : null}
+                </Sidebar.MenuItem>
+              ))}
+            </Sidebar.Menu>
+          </Sidebar.Group>
+          <Sidebar.Group>
+            <Sidebar.GroupLabel>Spaces</Sidebar.GroupLabel>
+            <Sidebar.Menu
+              aria-label="Spaces"
+              defaultExpandedKeys={["compact-user-menu-my-library"]}
+            >
+              <Sidebar.MenuItem
+                id="compact-user-menu-my-library"
+                textValue="My library"
+              >
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={LibraryIcon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel>
+                  My library
+                  <Sidebar.MenuTrigger>
+                    <Sidebar.MenuIndicator />
+                  </Sidebar.MenuTrigger>
+                </Sidebar.MenuLabel>
+                <Sidebar.Submenu>
+                  {compactLibraryItems.map((item) => (
+                    <Sidebar.MenuItem
+                      href="#"
+                      id={`compact-user-menu-sp-${item}`}
+                      key={item}
+                      textValue={item}
+                    >
+                      <Sidebar.MenuIcon>
+                        <HugeiconsIcon icon={File01Icon} size={16} />
+                      </Sidebar.MenuIcon>
+                      <Sidebar.MenuLabel>{item}</Sidebar.MenuLabel>
+                    </Sidebar.MenuItem>
+                  ))}
+                </Sidebar.Submenu>
+              </Sidebar.MenuItem>
+              <Sidebar.MenuItem
+                href="#"
+                id="compact-user-menu-design-team"
+                textValue="Design team"
+              >
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={UserMultipleIcon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel>Design team</Sidebar.MenuLabel>
+              </Sidebar.MenuItem>
+              <Sidebar.MenuItem
+                id="compact-user-menu-add-space"
+                textValue="Add space"
+              >
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={Add01Icon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel className="text-muted">
+                  Add space
+                </Sidebar.MenuLabel>
+              </Sidebar.MenuItem>
+            </Sidebar.Menu>
+          </Sidebar.Group>
+        </Sidebar.Content>
+        <Sidebar.Separator />
+        <Sidebar.Footer className="px-2 pt-0 pb-2">
+          <Dropdown>
+            <Dropdown.Trigger className="hover:bg-default flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left outline-none">
+              <Avatar size="sm">
+                <Avatar.Image
+                  alt="Junior Garcia"
+                  src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg"
+                />
+                <Avatar.Fallback delayMs={600}>JG</Avatar.Fallback>
+              </Avatar>
+              <span
+                className="text-foreground text-sm font-medium"
+                data-sidebar="label"
+              >
+                Junior
+              </span>
+              <HugeiconsIcon
+                className="text-muted ml-auto size-3"
+                data-sidebar="label"
+                icon={ArrowDown01Icon}
+              />
+            </Dropdown.Trigger>
+            <Dropdown.Popover placement="top start">
+              <div className="px-3 pt-3 pb-1">
+                <div className="flex items-center gap-2">
+                  <Avatar size="sm">
+                    <Avatar.Image
+                      alt="Junior Garcia"
+                      src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg"
+                    />
+                    <Avatar.Fallback delayMs={600}>JG</Avatar.Fallback>
+                  </Avatar>
+                  <div className="flex flex-col gap-0">
+                    <p className="text-sm leading-5 font-medium">
+                      Junior Garcia
+                    </p>
+                    <p className="text-muted text-xs leading-none">
+                      junior@heroui.com
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <Dropdown.Menu>
+                <Dropdown.Item id="compact-user-menu-dd-dashboard">
+                  <Label>Dashboard</Label>
+                </Dropdown.Item>
+                <Dropdown.Item id="compact-user-menu-dd-profile">
+                  <Label>Profile</Label>
+                </Dropdown.Item>
+                <Dropdown.Item id="compact-user-menu-dd-settings">
+                  <Label>Settings</Label>
+                </Dropdown.Item>
+                <Dropdown.Item id="compact-user-menu-dd-create-team">
+                  <Label>Create Team</Label>
+                </Dropdown.Item>
+                <Dropdown.Item
+                  id="compact-user-menu-dd-logout"
+                  variant="danger"
+                >
+                  <Label>Log Out</Label>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown.Popover>
+          </Dropdown>
+        </Sidebar.Footer>
+        <Sidebar.Rail />
+      </Sidebar>
+      <Sidebar.Main>
+        <div className="flex items-center gap-3 p-4">
+          <Sidebar.Trigger />
+          <Breadcrumbs className="min-w-0">
+            <Breadcrumbs.Item className="min-w-0 font-semibold">
+              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                <HugeiconsIcon icon={Home01Icon} size={16} />
+                <span className="truncate">Home</span>
+              </span>
+            </Breadcrumbs.Item>
+          </Breadcrumbs>
+        </div>
+        <div className="p-6">
+          <p className="text-muted">
+            Compact sidebar with user dropdown menu. Uses{" "}
+            <code className="bg-default rounded px-1 py-0.5 text-xs">
+              --spacing: 0.2rem
+            </code>{" "}
+            for dense layout.
+          </p>
+        </div>
+      </Sidebar.Main>
+    </Sidebar.Provider>
+  );
+}
 export const Default: Story = { render: () => <Demo nested title="HeroUI" /> };
 export const RightSide: Story = {
   render: () => (
@@ -692,12 +1153,12 @@ export const ReducedMotion: Story = {
   render: () => <ReducedMotionDemo />,
 };
 export const FloatingVariant: Story = {
-  render: () => <Demo variant="floating" />,
+  render: () => <FloatingVariantDemo />,
 };
 export const WithAvatar: Story = {
-  render: () => <Demo title="Jordan's workspace" user />,
+  render: () => <WithAvatarDemo />,
 };
-export const InsetVariant: Story = { render: () => <Demo variant="inset" /> };
+export const InsetVariant: Story = { render: () => <InsetVariantDemo /> };
 export const IconOnly: Story = {
   render: () => <IconOnlyDemo />,
 };
@@ -705,18 +1166,7 @@ export const Complex: Story = {
   render: () => <Demo nested title="Teamspaces" user />,
 };
 export const CompactWithUserMenu: Story = {
-  render: () => (
-    <div
-      style={
-        {
-          "--sidebar-width": "216px",
-          "--spacing": ".22rem",
-        } as React.CSSProperties
-      }
-    >
-      <Demo title="Compact" user />
-    </div>
-  ),
+  render: () => <CompactWithUserMenuDemo />,
 };
 export const AgentHub: Story = {
   render: () => <Demo nested title="Agent Hub" user />,
