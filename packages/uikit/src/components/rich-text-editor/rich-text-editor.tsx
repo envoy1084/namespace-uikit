@@ -911,6 +911,7 @@ function RichTextEditorSuggestionMenu({
     );
     const plugin = Suggestion<RichTextEditorSuggestionItem>({
       char,
+      decorationClass: "rich-text-editor__suggestion-decoration",
       editor,
       pluginKey,
       items: ({ editor: current, query }) =>
@@ -982,12 +983,15 @@ function RichTextEditorSuggestionMenu({
       role="listbox"
       style={{ ...position, ...style }}
     >
-      <div className="rich-text-editor__suggestion-list" style={{ maxHeight }}>
+      <div
+        className="rich-text-editor__suggestion-list rich-text-editor__suggestion-menu-list"
+        style={{ maxHeight }}
+      >
         {menu.props.items.length ? (
           menu.props.items.map((item, index) => (
             <button
               aria-selected={index === selectedIndex}
-              className="rich-text-editor__suggestion-item"
+              className="rich-text-editor__suggestion-item rich-text-editor__suggestion-menu-item"
               key={item.id ?? item.title}
               role="option"
               type="button"
@@ -995,16 +999,16 @@ function RichTextEditorSuggestionMenu({
               onMouseEnter={() => updateSelectedIndex(index)}
             >
               {item.icon ? (
-                <span className="rich-text-editor__suggestion-icon">
+                <span className="rich-text-editor__suggestion-icon rich-text-editor__suggestion-menu-icon">
                   {item.icon}
                 </span>
               ) : null}
-              <span className="rich-text-editor__suggestion-content">
-                <span className="rich-text-editor__suggestion-title">
+              <span className="rich-text-editor__suggestion-content rich-text-editor__suggestion-menu-item-content">
+                <span className="rich-text-editor__suggestion-title rich-text-editor__suggestion-menu-title">
                   {item.title}
                 </span>
                 {item.description ? (
-                  <span className="rich-text-editor__suggestion-description">
+                  <span className="rich-text-editor__suggestion-description rich-text-editor__suggestion-menu-description">
                     {item.description}
                   </span>
                 ) : null}
@@ -1012,7 +1016,9 @@ function RichTextEditorSuggestionMenu({
             </button>
           ))
         ) : (
-          <div className="rich-text-editor__suggestion-empty">No results</div>
+          <div className="rich-text-editor__suggestion-empty rich-text-editor__suggestion-menu-empty">
+            No results
+          </div>
         )}
       </div>
     </div>
