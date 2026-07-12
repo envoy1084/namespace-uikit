@@ -1,14 +1,56 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { useMemo, useState } from "react";
+import type { Key } from "react";
+import { useMemo, useRef, useState } from "react";
 
+import {
+  ArrowDown01Icon,
+  ArrowRight01Icon,
+  ArrowTurnBackwardIcon,
+  ArrowTurnForwardIcon,
+  Basketball01Icon,
+  Bookmark01Icon,
+  Car01Icon,
+  Clock01Icon,
+  Copy01Icon,
+  CurrencyIcon,
+  Flag01Icon,
+  FlowerIcon,
+  HandPointingRight01Icon,
+  Idea01Icon,
+  Link01Icon,
+  Mail01Icon,
+  MoreHorizontalIcon,
+  Notification01Icon,
+  PinIcon,
+  SmileIcon,
+  SpoonAndForkIcon,
+  Task01Icon,
+  TextIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import { Button } from "@thenamespace/uikit/button";
+import { Description } from "@thenamespace/uikit/description";
+import {
+  EmojiPicker,
+  EMOJI_SKIN_TONES,
+} from "@thenamespace/uikit/emoji-picker";
+import { EmojiReactionButton } from "@thenamespace/uikit/emoji-reaction-button";
+import { EmptyState } from "@thenamespace/uikit/empty-state";
 import { Input } from "@thenamespace/uikit/input";
 import { Label } from "@thenamespace/uikit/label";
+import { ListBox } from "@thenamespace/uikit/list-box";
+import { ScrollShadow } from "@thenamespace/uikit/scroll-shadow";
 import { SearchField } from "@thenamespace/uikit/search-field";
+import { Separator } from "@thenamespace/uikit/separator";
 import { TextField } from "@thenamespace/uikit/textfield";
+import { Tooltip } from "@thenamespace/uikit/tooltip";
+import emojiDataSource from "emojibase-data/en/compact.json";
+import { Size } from "react-aria-components";
+import { ListLayout, Virtualizer } from "react-aria-components/Virtualizer";
 
 import { Sheet } from "./index";
+import { occupations } from "./occupations";
 
 const meta = {
   parameters: { layout: "centered" },
@@ -658,41 +700,281 @@ function NestedDemo() {
 
 export const Nested: Story = { render: () => <NestedDemo /> };
 
-const emojis = ["😀", "😍", "🥳", "🔥", "👏", "❤️", "👍", "🎉", "🚀", "✨"];
+const sheetEmojiData = emojiDataSource.filter(
+  (emoji) =>
+    typeof emoji.label === "string" &&
+    !emoji.label.startsWith("regional indicator"),
+);
+const sheetEmojiGroups = {
+  activities: 6,
+  "animals-nature": 3,
+  flags: 9,
+  "food-drink": 4,
+  objects: 7,
+  "people-body": 1,
+  "smileys-emotion": 0,
+  symbols: 8,
+  "travel-places": 5,
+} as const;
+const sheetEmojiCategories: Array<{
+  icon: IconSvgElement;
+  id: keyof typeof sheetEmojiGroups;
+  label: string;
+}> = [
+  { icon: SmileIcon, id: "smileys-emotion", label: "Smileys & Emotion" },
+  {
+    icon: HandPointingRight01Icon,
+    id: "people-body",
+    label: "People & Body",
+  },
+  { icon: FlowerIcon, id: "animals-nature", label: "Animals & Nature" },
+  { icon: SpoonAndForkIcon, id: "food-drink", label: "Food & Drink" },
+  { icon: Basketball01Icon, id: "activities", label: "Activities" },
+  { icon: Car01Icon, id: "travel-places", label: "Travel & Places" },
+  { icon: Idea01Icon, id: "objects", label: "Objects" },
+  { icon: CurrencyIcon, id: "symbols", label: "Symbols" },
+  { icon: Flag01Icon, id: "flags", label: "Flags" },
+];
 
-export const EmojiPickerSheet: Story = {
-  name: "Emoji Picker Sheet",
-  render: () => (
-    <Sheet isDetached snapPoints={["355px", 1]}>
+function SheetEmojiPicker({
+  onEmojiSelect,
+}: {
+  onEmojiSelect?: (emoji: string) => void;
+}) {
+  const [tone, setTone] = useState("default");
+  const gridRef = useRef<HTMLDivElement>(null);
+  const items = useMemo(() => {
+    const skinIndex =
+      EMOJI_SKIN_TONES.findIndex((item) => item.id === tone) - 1;
+    const data = sheetEmojiData.slice(0, 200);
+
+    if (skinIndex < 0) return data;
+
+    return data.map((emoji) => {
+      const skin = emoji.skins?.[skinIndex];
+
+      return skin ? Object.assign({}, emoji, { unicode: skin.unicode }) : emoji;
+    });
+  }, [tone]);
+  const groupStarts = useMemo(() => {
+    const starts: Partial<Record<keyof typeof sheetEmojiGroups, number>> = {};
+
+    for (const [id, group] of Object.entries(sheetEmojiGroups) as Array<
+      [keyof typeof sheetEmojiGroups, number]
+    >) {
+      const index = items.findIndex((emoji) => emoji.group === group);
+
+      if (index !== -1) starts[id] = index;
+    }
+
+    return starts;
+  }, [items]);
+
+  const scrollToGroup = (id: keyof typeof sheetEmojiGroups) => {
+    const grid = gridRef.current;
+    const index = groupStarts[id];
+
+    if (!grid || index === undefined) return;
+
+    const itemSize = 48;
+    const columns = Math.floor(grid.clientWidth / itemSize);
+
+    grid.scrollTo({
+      behavior: "smooth",
+      top: Math.floor(index / columns) * itemSize,
+    });
+  };
+
+  return (
+    <EmojiPicker
+      aria-label="Emoji sheet picker"
+      className="h-full min-h-0"
+      size="lg"
+      onSelectionChange={(key) => {
+        if (key != null) onEmojiSelect?.(String(key));
+      }}
+    >
+      <EmojiPicker.Content className="h-full">
+        <SearchField aria-label="Search emoji" variant="secondary">
+          <SearchField.Group>
+            <SearchField.SearchIcon />
+            <SearchField.Input placeholder="Search" />
+            <EmojiPicker.SkinTonePicker value={tone} onChange={setTone}>
+              <EmojiPicker.SkinToneTrigger className="mr-1" />
+              <EmojiPicker.SkinToneContent>
+                {EMOJI_SKIN_TONES.map((item) => (
+                  <EmojiPicker.SkinToneOption
+                    aria-label={item.label}
+                    id={item.id}
+                    key={item.id}
+                  >
+                    {item.emoji}
+                  </EmojiPicker.SkinToneOption>
+                ))}
+              </EmojiPicker.SkinToneContent>
+            </EmojiPicker.SkinTonePicker>
+          </SearchField.Group>
+        </SearchField>
+        <EmojiPicker.Grid
+          ref={gridRef}
+          items={items}
+          layoutOptions={{
+            maxItemSize: new Size(48, 48),
+            minItemSize: new Size(48, 48),
+          }}
+          renderEmptyState={() => (
+            <EmptyState className="flex h-full min-h-20 flex-1 flex-col items-center justify-center gap-2">
+              <HugeiconsIcon
+                aria-hidden
+                className="text-muted size-5"
+                icon={SmileIcon}
+              />
+              No emoji found.
+            </EmptyState>
+          )}
+        >
+          {(item) => (
+            <EmojiPicker.Item
+              id={String(item.unicode)}
+              textValue={`${item.label ?? ""} ${Array.isArray(item.tags) ? item.tags.join(" ") : ""}`}
+            >
+              {item.unicode}
+            </EmojiPicker.Item>
+          )}
+        </EmojiPicker.Grid>
+        <EmojiPicker.Footer>
+          <ScrollShadow hideScrollBar orientation="horizontal">
+            <div className="flex items-center gap-1 overflow-visible px-2 py-0.5 pr-3">
+              {sheetEmojiCategories.map(({ icon, id, label }) => (
+                <Tooltip delay={0} key={id}>
+                  <Button
+                    excludeFromTabOrder
+                    isIconOnly
+                    aria-label={label}
+                    className="hover:bg-muted/20 text-muted flex size-8 shrink-0 items-center justify-center rounded-full rounded-md"
+                    variant="ghost"
+                    onPress={() => scrollToGroup(id)}
+                  >
+                    <HugeiconsIcon aria-hidden icon={icon} size={16} />
+                  </Button>
+                  <Tooltip.Content placement="top">
+                    <p>{label}</p>
+                  </Tooltip.Content>
+                </Tooltip>
+              ))}
+            </div>
+          </ScrollShadow>
+        </EmojiPicker.Footer>
+      </EmojiPicker.Content>
+    </EmojiPicker>
+  );
+}
+
+function EmojiPickerSheetDemo() {
+  const emojiSheetSnapPoints = ["355px", 1];
+  const [activeSnapPoint, setActiveSnapPoint] = useState<
+    number | string | null
+  >(emojiSheetSnapPoints[0]!);
+  const [isOpen, setIsOpen] = useState(false);
+  const [emoji, setEmoji] = useState("😀");
+
+  return (
+    <Sheet
+      isDetached
+      activeSnapPoint={activeSnapPoint}
+      isOpen={isOpen}
+      snapPoints={emojiSheetSnapPoints}
+      onActiveSnapPointChange={setActiveSnapPoint}
+      onOpenChange={setIsOpen}
+    >
       <Sheet.Trigger>
-        <Button variant="secondary">😀 Emoji Picker</Button>
+        <Button variant="secondary">
+          <span className="text-lg">{emoji}</span> Emoji Picker
+        </Button>
       </Sheet.Trigger>
       <Sheet.Backdrop>
         <Sheet.Content className="mx-auto max-h-[95vh] max-w-[420px]">
           <Sheet.Dialog>
             <Sheet.Handle />
             <Sheet.Body className="min-h-0 overflow-hidden p-0">
-              <div className="grid grid-cols-5 gap-2 p-4">
-                {emojis.map((emoji) => (
-                  <Sheet.Close key={emoji}>
-                    <Button isIconOnly aria-label={emoji} variant="ghost">
-                      {emoji}
-                    </Button>
-                  </Sheet.Close>
-                ))}
-              </div>
+              <SheetEmojiPicker
+                onEmojiSelect={(value) => {
+                  setEmoji(value);
+                  setIsOpen(false);
+                }}
+              />
             </Sheet.Body>
           </Sheet.Dialog>
         </Sheet.Content>
       </Sheet.Backdrop>
     </Sheet>
-  ),
+  );
+}
+
+export const EmojiPickerSheet: Story = {
+  name: "Emoji Picker Sheet",
+  render: () => <EmojiPickerSheetDemo />,
 };
 
-export const SlackLikeMessageActions: Story = {
-  name: "Slack-like Message Actions",
-  render: () => (
-    <Sheet snapPoints={["355px", 1]}>
+function ActionIcon({ icon }: { icon: IconSvgElement }) {
+  return (
+    <HugeiconsIcon
+      aria-hidden
+      className="text-muted size-5 shrink-0"
+      icon={icon}
+      strokeWidth={2}
+    />
+  );
+}
+
+function SlackMessageActionsDemo() {
+  const sheetSnapPoints = ["355px", 1];
+  const [activeSnapPoint, setActiveSnapPoint] = useState<
+    number | string | null
+  >(sheetSnapPoints[0]!);
+  const [showMore, setShowMore] = useState(false);
+  const [reactions, setReactions] = useState<
+    Record<string, { count: number; selected: boolean }>
+  >({});
+  const quickReactions = ["🚀", "🙌", "👍", "🤔", "🙏"];
+  const toggleReaction = (emoji: string) => {
+    setReactions((current) => {
+      const reaction = current[emoji];
+
+      if (!reaction)
+        return { ...current, [emoji]: { count: 1, selected: true } };
+
+      const selected = !reaction.selected;
+      const count = selected ? reaction.count + 1 : reaction.count - 1;
+
+      if (count < 1) {
+        const next = { ...current };
+        delete next[emoji];
+        return next;
+      }
+
+      return { ...current, [emoji]: { count, selected } };
+    });
+  };
+  const addReaction = (key: Key | null) => {
+    if (key == null) return;
+
+    const emoji = String(key);
+    setReactions((current) => ({
+      ...current,
+      [emoji]: {
+        count: (current[emoji]?.count ?? 0) + 1,
+        selected: false,
+      },
+    }));
+  };
+
+  return (
+    <Sheet
+      activeSnapPoint={activeSnapPoint}
+      snapPoints={sheetSnapPoints}
+      onActiveSnapPointChange={setActiveSnapPoint}
+    >
       <Sheet.Trigger>
         <Button variant="secondary">Slack message actions</Button>
       </Sheet.Trigger>
@@ -700,52 +982,225 @@ export const SlackLikeMessageActions: Story = {
         <Sheet.Content className="mx-auto max-h-[95vh] max-w-[420px]">
           <Sheet.Dialog>
             <Sheet.Handle />
-            <Sheet.Body>
-              <div className="grid gap-2">
-                {[
-                  "Reply in thread",
-                  "Save for later",
-                  "Copy link",
-                  "Delete message",
-                ].map((action) => (
-                  <Button
-                    className="justify-start"
-                    key={action}
-                    variant="ghost"
+            <Sheet.Body className="px-0 pt-0">
+              <div className="flex items-center justify-center gap-2 px-4 pt-1 pb-3">
+                {quickReactions.map((emoji) => {
+                  const reaction = reactions[emoji];
+
+                  return (
+                    <EmojiReactionButton
+                      isSelected={reaction?.selected ?? false}
+                      key={emoji}
+                      size="lg"
+                      onChange={() => toggleReaction(emoji)}
+                    >
+                      <EmojiReactionButton.Emoji>
+                        {emoji}
+                      </EmojiReactionButton.Emoji>
+                      {reaction && reaction.count > 0 ? (
+                        <EmojiReactionButton.Count>
+                          {reaction.count}
+                        </EmojiReactionButton.Count>
+                      ) : null}
+                    </EmojiReactionButton>
+                  );
+                })}
+                <EmojiPicker
+                  aria-label="Add reaction"
+                  size="md"
+                  onSelectionChange={addReaction}
+                >
+                  <EmojiPicker.Trigger
+                    aria-label="Add reaction"
+                    className="emoji-reaction-button emoji-reaction-button--lg min-h-0 min-w-0"
                   >
-                    {action}
+                    <HugeiconsIcon aria-hidden icon={SmileIcon} size={20} />
+                  </EmojiPicker.Trigger>
+                  <EmojiPicker.Popover>
+                    <EmojiPicker.Content>
+                      <SearchField
+                        autoFocus
+                        aria-label="Search emoji"
+                        variant="secondary"
+                      >
+                        <SearchField.Group>
+                          <SearchField.SearchIcon />
+                          <SearchField.Input placeholder="Search emoji..." />
+                        </SearchField.Group>
+                      </SearchField>
+                      <EmojiPicker.Grid items={sheetEmojiData}>
+                        {(item) => (
+                          <EmojiPicker.Item
+                            id={String(item.unicode)}
+                            textValue={`${item.label ?? ""} ${item.tags?.join(" ") ?? ""}`}
+                          >
+                            {item.unicode}
+                          </EmojiPicker.Item>
+                        )}
+                      </EmojiPicker.Grid>
+                    </EmojiPicker.Content>
+                  </EmojiPicker.Popover>
+                </EmojiPicker>
+              </div>
+              <div className="grid grid-cols-3 gap-2 px-4 pb-3">
+                {[
+                  ["Reply", ArrowTurnBackwardIcon],
+                  ["Forward", ArrowTurnForwardIcon],
+                  ["Save", Bookmark01Icon],
+                ].map(([label, icon]) => (
+                  <Button
+                    className="flex h-auto w-full flex-col gap-1.5 rounded-xl py-3"
+                    key={label as string}
+                    variant="tertiary"
+                  >
+                    <HugeiconsIcon
+                      aria-hidden
+                      icon={icon as IconSvgElement}
+                      size={20}
+                    />
+                    <span className="text-xs font-medium">
+                      {label as string}
+                    </span>
                   </Button>
                 ))}
               </div>
+              <ListBox
+                aria-label="Message actions"
+                className="w-full"
+                selectionMode="none"
+                onAction={(key) => {
+                  if (key === "more-actions") setShowMore(!showMore);
+                }}
+              >
+                <ListBox.Section>
+                  <ListBox.Item id="mark-unread" textValue="Mark Unread">
+                    <ActionIcon icon={Mail01Icon} />
+                    <Label>Mark Unread</Label>
+                  </ListBox.Item>
+                  <ListBox.Item id="remind-me" textValue="Remind Me">
+                    <ActionIcon icon={Clock01Icon} />
+                    <Label>Remind Me</Label>
+                  </ListBox.Item>
+                  <ListBox.Item
+                    id="get-reply-notifications"
+                    textValue="Get Reply Notifications"
+                  >
+                    <ActionIcon icon={Notification01Icon} />
+                    <Label>Get Reply Notifications</Label>
+                  </ListBox.Item>
+                </ListBox.Section>
+                <Separator />
+                <ListBox.Section>
+                  <ListBox.Item id="copy-link" textValue="Copy Link to Message">
+                    <ActionIcon icon={Link01Icon} />
+                    <Label>Copy Link to Message</Label>
+                  </ListBox.Item>
+                  <ListBox.Item id="copy-message" textValue="Copy Message">
+                    <ActionIcon icon={Copy01Icon} />
+                    <Label>Copy Message</Label>
+                  </ListBox.Item>
+                </ListBox.Section>
+                <Separator />
+                <ListBox.Section>
+                  <ListBox.Item id="more-actions" textValue="More Actions">
+                    <ActionIcon icon={MoreHorizontalIcon} />
+                    <Label>More Actions</Label>
+                    <HugeiconsIcon
+                      aria-hidden
+                      className="text-muted ms-auto size-4 shrink-0"
+                      icon={showMore ? ArrowDown01Icon : ArrowRight01Icon}
+                    />
+                  </ListBox.Item>
+                  {showMore ? (
+                    <>
+                      <ListBox.Item id="add-to-list" textValue="Add to List">
+                        <ActionIcon icon={Task01Icon} />
+                        <Label>Add to List</Label>
+                      </ListBox.Item>
+                      <ListBox.Item
+                        id="pin-to-channel"
+                        textValue="Pin to Channel"
+                      >
+                        <ActionIcon icon={PinIcon} />
+                        <Label>Pin to Channel</Label>
+                      </ListBox.Item>
+                      <ListBox.Item id="select-text" textValue="Select Text">
+                        <ActionIcon icon={TextIcon} />
+                        <Label>Select Text</Label>
+                      </ListBox.Item>
+                      <ListBox.Item
+                        id="link-existing"
+                        textValue="Link existing..."
+                      >
+                        <ActionIcon icon={Link01Icon} />
+                        <div className="flex flex-col">
+                          <Label>Link existing...</Label>
+                          <Description>
+                            Links an existing issue or project in Linear
+                          </Description>
+                        </div>
+                      </ListBox.Item>
+                      <ListBox.Item
+                        id="turn-into-poll"
+                        textValue="Turn question into poll"
+                      >
+                        <ActionIcon icon={Task01Icon} />
+                        <div className="flex flex-col">
+                          <Label>Turn question into poll</Label>
+                          <Description>
+                            Turns a message into a Simple Poll question
+                          </Description>
+                        </div>
+                      </ListBox.Item>
+                    </>
+                  ) : null}
+                </ListBox.Section>
+              </ListBox>
             </Sheet.Body>
           </Sheet.Dialog>
         </Sheet.Content>
       </Sheet.Backdrop>
     </Sheet>
-  ),
+  );
+}
+
+export const SlackMessageActions: Story = {
+  name: "Slack-like Message Actions",
+  render: () => <SlackMessageActionsDemo />,
 };
 
 function ProfessionsPickerDemo() {
-  const occupations = [
-    "Designer",
-    "Developer",
-    "Product manager",
-    "Researcher",
-    "Writer",
-  ];
+  const occupationSnapPoints = ["355px", 1];
+  const [activeSnapPoint, setActiveSnapPoint] = useState<
+    number | string | null
+  >(occupationSnapPoints[0]!);
+  const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState("");
-  const filtered = useMemo(
-    () =>
-      occupations.filter((occupation) =>
-        occupation.toLowerCase().includes(query.toLowerCase()),
-      ),
-    [query],
-  );
+  const [selected, setSelected] = useState<string | null>(null);
+  const filtered = useMemo(() => {
+    const values = occupations.map((name, id) => ({ id, name }));
+
+    if (!query) return values;
+
+    const normalizedQuery = query.toLowerCase();
+
+    return values.filter((occupation) =>
+      occupation.name.toLowerCase().includes(normalizedQuery),
+    );
+  }, [query]);
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <Sheet snapPoints={["355px", 1]}>
+      <Sheet
+        activeSnapPoint={activeSnapPoint}
+        isOpen={isOpen}
+        snapPoints={occupationSnapPoints}
+        onActiveSnapPointChange={setActiveSnapPoint}
+        onOpenChange={(open) => {
+          setIsOpen(open);
+          if (!open) setQuery("");
+        }}
+      >
         <Sheet.Trigger>
           <Button variant="secondary">Choose Occupation</Button>
         </Sheet.Trigger>
@@ -758,24 +1213,55 @@ function ProfessionsPickerDemo() {
                   <SearchField
                     aria-label="Search occupations"
                     value={query}
+                    variant="secondary"
                     onChange={setQuery}
                   >
-                    <SearchField.Input placeholder="Search" />
+                    <SearchField.Group>
+                      <SearchField.SearchIcon />
+                      <SearchField.Input placeholder="Search" />
+                      <SearchField.ClearButton />
+                    </SearchField.Group>
                   </SearchField>
                 </div>
-                <div className="grid gap-1 p-3">
-                  {filtered.map((occupation) => (
-                    <Sheet.Close key={occupation}>
-                      <Button
-                        className="justify-start"
-                        variant="ghost"
-                        onPress={() => setSelected(occupation)}
-                      >
-                        {occupation}
-                      </Button>
-                    </Sheet.Close>
-                  ))}
-                </div>
+                {filtered.length === 0 ? (
+                  <EmptyState className="flex min-h-32 flex-1 flex-col items-center justify-center gap-2">
+                    <HugeiconsIcon
+                      aria-hidden
+                      className="text-muted size-5"
+                      icon={SmileIcon}
+                    />
+                    <p className="text-muted text-sm">No occupations found.</p>
+                  </EmptyState>
+                ) : (
+                  <Virtualizer
+                    layout={ListLayout}
+                    layoutOptions={{ padding: 12, rowHeight: 36 }}
+                  >
+                    <ListBox
+                      aria-label="Occupations"
+                      className="min-h-0 flex-1 overflow-y-auto p-0"
+                      items={filtered}
+                      selectionMode="single"
+                      onAction={(key) => {
+                        const occupation = occupations[Number(key)];
+
+                        if (occupation) {
+                          setSelected(occupation);
+                          setIsOpen(false);
+                        }
+                      }}
+                    >
+                      {(occupation) => (
+                        <ListBox.Item
+                          id={occupation.id}
+                          textValue={occupation.name}
+                        >
+                          <Label>{occupation.name}</Label>
+                        </ListBox.Item>
+                      )}
+                    </ListBox>
+                  </Virtualizer>
+                )}
               </Sheet.Body>
             </Sheet.Dialog>
           </Sheet.Content>
