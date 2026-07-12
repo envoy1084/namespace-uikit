@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import { ArrowUp02Icon, Icon } from "@thenamespace/uikit/icons";
+
 import { Card } from "../card";
 import { ChartTooltip } from "../chart-tooltip";
+import { Chip } from "../chip";
 import { BarChart } from "./index";
 
 const meta = {
@@ -81,9 +84,10 @@ export const Default: Story = {
             Units sold per month
           </Card.Description>
         </div>
-        <span className="bg-success/15 text-success inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs">
-          ↑ 12.5%
-        </span>
+        <Chip color="success" size="sm" variant="soft">
+          <Icon icon={ArrowUp02Icon} size={12} />
+          <Chip.Label>12.5%</Chip.Label>
+        </Chip>
       </Card.Header>
       <Card.Content>
         <BarChart data={sales} height={200}>

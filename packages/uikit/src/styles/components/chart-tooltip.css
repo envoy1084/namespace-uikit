@@ -1,6 +1,6 @@
 @layer components {
   .chart-tooltip {
-    @apply border-separator bg-overlay shadow-overlay flex min-w-[140px] flex-col gap-1.5 rounded border px-3 py-2 tabular-nums;
+    @apply border-separator bg-overlay shadow-overlay flex min-w-[140px] flex-col gap-1.5 rounded-lg border px-3 py-2 tabular-nums;
   }
 
   .chart-tooltip__header {
