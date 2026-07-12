@@ -515,7 +515,8 @@ function AgendaAllDaySection({
         gridTemplateColumns: `repeat(${Math.max(1, agenda.visibleDays.length)}, minmax(0, 1fr))`,
       }}
     >
-      <button
+      <Button
+        isIconOnly
         aria-label={
           agenda.isAllDayExpanded
             ? "Collapse all-day events"
@@ -523,11 +524,12 @@ function AgendaAllDaySection({
         }
         className="agenda__all-day-toggle"
         data-expanded={agenda.isAllDayExpanded || undefined}
-        type="button"
-        onClick={agenda.toggleAllDayExpanded}
+        size="sm"
+        variant="ghost"
+        onPress={agenda.toggleAllDayExpanded}
       >
         ⌄
-      </button>
+      </Button>
       {agenda.isAllDayExpanded
         ? children
         : agenda.allDayCountPerDay.map((count, index) => (
@@ -876,15 +878,16 @@ function AgendaMonthEvent({
 }): ReactElement {
   const agenda = useAgendaContext();
   return (
-    <button
-      className={cn("agenda__month-event", className)}
+    <Button
+      className={cn("agenda__month-event", className) ?? "agenda__month-event"}
       data-status={event.status ?? "confirmed"}
+      size="sm"
       style={{ "--agenda-event-accent": event.color } as CSSProperties}
-      type="button"
-      onClick={() => agenda.selectEvent(event.id)}
+      variant="ghost"
+      onPress={() => agenda.selectEvent(event.id)}
     >
       {children ?? event.title}
-    </button>
+    </Button>
   );
 }
 type AgendaComponent = typeof AgendaRoot & {
