@@ -76,7 +76,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 ## Phase 6 — AI building blocks and compositions
 
 - [x] [Text Shimmer docs](https://heroui.pro/docs/react/components/text-shimmer) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-textshimmer--docs) — implementation and reference story added; final catalog-wide visual audit remains
-- [ ] [Code Block docs](https://heroui.pro/docs/react/components/code-block) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-codeblock--docs)
+- [x] [Code Block docs](https://heroui.pro/docs/react/components/code-block) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-codeblock--docs) — implementation and reference story added; final catalog-wide visual audit remains
 - [ ] [Markdown docs](https://heroui.pro/docs/react/components/markdown) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-markdown--docs)
 - [ ] [Chat Attachment docs](https://heroui.pro/docs/react/components/chat-attachment) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-chatattachment--docs)
 - [ ] [Chat Source docs](https://heroui.pro/docs/react/components/chat-source) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-chatsource--docs)
