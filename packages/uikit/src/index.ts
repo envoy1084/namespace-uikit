@@ -117,6 +117,7 @@ export * from "./components/toggle-button-group";
 export * from "./components/toolbar";
 export * from "./components/tooltip";
 export * from "./components/typography";
+export * from "./components/widget";
 
 export * from "./heroui-icons";
 export * from "./hooks";

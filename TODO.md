@@ -53,7 +53,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] [Item Card Group docs](https://heroui.pro/docs/react/components/item-card-group) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-itemcardgroup--docs)
 - [x] [KPI docs](https://heroui.pro/docs/react/components/kpi) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-kpi-key-performance-indicator--docs)
 - [x] [KPI Group docs](https://heroui.pro/docs/react/components/kpi-group) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-kpigroup--docs)
-- [ ] [Widget docs](https://heroui.pro/docs/react/components/widget) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-widget--docs)
+- [x] [Widget docs](https://heroui.pro/docs/react/components/widget) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-widget--docs)
 - [x] [List View docs](https://heroui.pro/docs/react/components/list-view) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-listview--docs)
 - [ ] [File Tree docs](https://heroui.pro/docs/react/components/file-tree) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-filetree--docs)
 - [ ] [Timeline docs](https://heroui.pro/docs/react/components/timeline) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-timeline--docs)
