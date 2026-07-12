@@ -30,6 +30,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/carousel.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/area-chart.css",
       to: "dist/components",
     },
@@ -168,6 +172,9 @@ export default defineConfig({
       "react-dom",
       "react/jsx-runtime",
       "react-resizable-panels",
+      "embla-carousel",
+      "embla-carousel-autoplay",
+      "embla-carousel-react",
       "motion",
       "recharts",
       "tailwindcss",

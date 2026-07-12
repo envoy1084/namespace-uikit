@@ -11,6 +11,7 @@ export * from "./button";
 export * from "./button-group";
 export * from "./calendar";
 export * from "./calendar-year-picker";
+export * from "./carousel";
 export * from "./card";
 export * from "./cell-color-picker";
 export * from "./cell-select";
