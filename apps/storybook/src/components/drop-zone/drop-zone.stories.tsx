@@ -46,9 +46,11 @@ const colorFor = (format: string) =>
 function FileList({
   files,
   onRemove,
+  onRetry,
 }: {
   files: Upload[];
   onRemove: (id: string) => void;
+  onRetry?: (id: string) => void;
 }) {
   return (
     <DropZone.FileList>
@@ -82,7 +84,19 @@ function FileList({
                   </DropZone.FileProgressTrack>
                 </DropZone.FileProgress>
               ) : (
-                <DropZone.FileRetryTrigger>Try again</DropZone.FileRetryTrigger>
+                <>
+                  <DropZone.FileMeta>
+                    Something went wrong, please retry
+                  </DropZone.FileMeta>
+                  <Button
+                    className="mt-2 -ml-1"
+                    size="sm"
+                    variant="danger-soft"
+                    onPress={() => onRetry?.(file.id)}
+                  >
+                    Try again
+                  </Button>
+                </>
               )}
             </DropZone.FileInfo>
             <DropZone.FileRemoveTrigger
@@ -136,6 +150,15 @@ function UploadDemo({
           onRemove={(id) =>
             setFiles((all) => all.filter((file) => file.id !== id))
           }
+          onRetry={(id) =>
+            setFiles((all) =>
+              all.map((file) =>
+                file.id === id
+                  ? { ...file, progress: 0, status: "uploading" }
+                  : file,
+              ),
+            )
+          }
         />
       ) : null}
     </DropZone>
@@ -186,6 +209,15 @@ export const WithFileList: Story = {
           files={files}
           onRemove={(id) =>
             setFiles((all) => all.filter((file) => file.id !== id))
+          }
+          onRetry={(id) =>
+            setFiles((all) =>
+              all.map((file) =>
+                file.id === id
+                  ? { ...file, progress: 0, status: "uploading" }
+                  : file,
+              ),
+            )
           }
         />
       </DropZone>
