@@ -54,6 +54,7 @@ export * from "./input-group";
 export * from "./input-otp";
 export * from "./inline-select";
 export * from "./kbd";
+export * from "./kpi";
 export * from "./label";
 export * from "./link";
 export * from "./list-box";

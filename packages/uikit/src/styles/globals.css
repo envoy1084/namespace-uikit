@@ -6,6 +6,7 @@
 @import "./components/hover-card.css";
 @import "./components/item-card.css";
 @import "./components/item-card-group.css";
+@import "./components/kpi.css";
 @import "./components/area-chart.css";
 @import "./components/bar-chart.css";
 @import "./components/composed-chart.css";
