@@ -113,8 +113,8 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] Chart axes use the official typography weight across area, bar, composed, line, pie, radar, and radial charts.
 - [x] ChartTooltip matches official padding and radius in every tooltip variant.
 - [x] Bar Chart percentage chip uses the official dark-green text treatment.
-- [ ] TextShimmer animation timing, gradient, direction, and easing match the official Storybook.
-- [ ] ChainOfThought hover and disclosure text transitions animate like the official Storybook.
+- [x] TextShimmer animation timing, gradient, direction, and easing match the official Storybook.
+- [x] ChainOfThought hover and disclosure text transitions animate like the official Storybook.
 
 ### Dependent complex components
 
