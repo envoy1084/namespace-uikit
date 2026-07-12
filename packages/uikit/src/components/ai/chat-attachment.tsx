@@ -23,6 +23,8 @@ import {
 } from "react";
 
 import { CloseButton, cn } from "@heroui/react";
+import { File01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 export type ChatAttachmentMediaType =
   | "audio"
@@ -92,22 +94,6 @@ export interface ChatAttachmentPreviewProps {
   children?: ReactNode;
   className?: string;
 }
-const FileIcon = (): ReactElement => (
-  <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
-    <path
-      d="M6 3h8l4 4v14H6z"
-      stroke="currentColor"
-      strokeLinejoin="round"
-      strokeWidth="2"
-    />
-    <path
-      d="M14 3v5h4"
-      stroke="currentColor"
-      strokeLinejoin="round"
-      strokeWidth="2"
-    />
-  </svg>
-);
 export function ChatAttachmentPreview({
   children,
   className,
@@ -145,7 +131,7 @@ export function ChatAttachmentPreview({
         />
       ) : (
         <span className="chat-attachment__preview-fallback">
-          <FileIcon />
+          <HugeiconsIcon aria-hidden icon={File01Icon} strokeWidth={2} />
         </span>
       )}
     </div>

@@ -2,6 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useEffect, useRef, useState } from "react";
 
+import { ArrowUp01Icon, Attachment01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
 import {
   ChatAttachment,
   ChatAttachmentGroup,
@@ -115,13 +118,23 @@ function ComposerDemo() {
                           aria-label="Attach file"
                           tooltip="Attach file"
                         >
-                          📎
+                          <HugeiconsIcon
+                            aria-hidden
+                            icon={Attachment01Icon}
+                            strokeWidth={2}
+                          />
                         </PromptInput.Action>
                       )}
                     />
                   </PromptInput.ToolbarStart>
                   <PromptInput.ToolbarEnd>
-                    <PromptInput.Send aria-label="Send">↑</PromptInput.Send>
+                    <PromptInput.Send aria-label="Send">
+                      <HugeiconsIcon
+                        aria-hidden
+                        icon={ArrowUp01Icon}
+                        strokeWidth={2}
+                      />
+                    </PromptInput.Send>
                   </PromptInput.ToolbarEnd>
                 </PromptInput.Toolbar>
               </PromptInput.Shell>
