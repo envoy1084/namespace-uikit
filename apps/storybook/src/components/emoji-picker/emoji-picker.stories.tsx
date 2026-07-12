@@ -3,57 +3,121 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useMemo, useRef, useState } from "react";
 
 import {
-  Button,
-  ScrollShadow,
-  SearchField,
-  Tooltip,
-} from "@thenamespace/uikit";
+  Basketball01Icon,
+  Car01Icon,
+  Clock01Icon,
+  CurrencyIcon,
+  Flag01Icon,
+  FlowerIcon,
+  HandPointingRight01Icon,
+  Idea01Icon,
+  SmileIcon,
+  SpoonAndForkIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import { Button } from "@thenamespace/uikit/button";
+import { EmptyState } from "@thenamespace/uikit/empty-state";
+import { ScrollShadow } from "@thenamespace/uikit/scroll-shadow";
+import { SearchField } from "@thenamespace/uikit/search-field";
+import { Tooltip } from "@thenamespace/uikit/tooltip";
+import emojiDataSource from "emojibase-data/en/compact.json";
 
 import { EmojiPicker, EMOJI_SKIN_TONES } from "./index";
 
-interface EmojiItem {
-  category: string;
-  label: string;
-  tags: string[];
-  unicode: string;
-}
-const groups = [
-  [
-    "Smileys & Emotion",
-    "😀",
-    "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😋 😛 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 🤗 🤔 🫣 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪",
-  ],
-  [
-    "People & Body",
-    "👋",
-    "👋 🤚 🖐️ ✋ 🖖 👌 🤌 🤏 ✌️ 🤞 🫰 🤟 🤘 🤙 👈 👉 👆 👇 ☝️ 👍 👎 ✊ 👊 🤛 🤜 👏 🙌 🫶 👐 🤲 🤝 🙏",
-  ],
-  [
-    "Animals & Nature",
-    "🐶",
-    "🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐻‍❄️ 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐔 🐧 🐦 🦄 🐝 🦋 🌸 🌻 🌈",
-  ],
-  [
-    "Food & Drink",
-    "🍎",
-    "🍎 🍐 🍊 🍋 🍌 🍉 🍇 🍓 🫐 🍈 🍒 🍑 🥭 🍍 🥥 🥝 🍅 🥑 🍕 🍔 🍟 🍣 🍪 🎂 ☕",
-  ],
-] as const;
-const emojiItems: EmojiItem[] = groups.flatMap(([category, , values]) =>
-  values.split(" ").map((unicode) => ({
-    category,
-    label: `${category} ${unicode}`,
-    tags: [category.toLowerCase(), unicode],
-    unicode,
-  })),
+const emojiData = emojiDataSource.filter(
+  (emoji) =>
+    typeof emoji.label === "string" &&
+    !emoji.label.startsWith("regional indicator"),
 );
-function PickerContents() {
+
+const groupIds = {
+  activities: 6,
+  "animals-nature": 3,
+  flags: 9,
+  "food-drink": 4,
+  objects: 7,
+  "people-body": 1,
+  "smileys-emotion": 0,
+  symbols: 8,
+  "travel-places": 5,
+} as const;
+
+const categories: Array<{
+  icon: IconSvgElement;
+  id: "frequently-used" | keyof typeof groupIds;
+  label: string;
+}> = [
+  { icon: Clock01Icon, id: "frequently-used", label: "Frequently Used" },
+  { icon: SmileIcon, id: "smileys-emotion", label: "Smileys & Emotion" },
+  { icon: HandPointingRight01Icon, id: "people-body", label: "People & Body" },
+  { icon: FlowerIcon, id: "animals-nature", label: "Animals & Nature" },
+  { icon: SpoonAndForkIcon, id: "food-drink", label: "Food & Drink" },
+  { icon: Basketball01Icon, id: "activities", label: "Activities" },
+  { icon: Car01Icon, id: "travel-places", label: "Travel & Places" },
+  { icon: Idea01Icon, id: "objects", label: "Objects" },
+  { icon: CurrencyIcon, id: "symbols", label: "Symbols" },
+  { icon: Flag01Icon, id: "flags", label: "Flags" },
+];
+
+interface PickerContentsProps {
+  autoFocus?: boolean;
+}
+
+function PickerContents({ autoFocus = false }: PickerContentsProps) {
   const [tone, setTone] = useState("default");
   const gridRef = useRef<HTMLDivElement>(null);
-  const items = useMemo(() => emojiItems, []);
+  const items = useMemo(() => {
+    const skinIndex =
+      EMOJI_SKIN_TONES.findIndex((item) => item.id === tone) - 1;
+
+    if (skinIndex < 0) return emojiData;
+
+    return emojiData.map((emoji) => {
+      const skin = emoji.skins?.[skinIndex];
+
+      return skin ? Object.assign({}, emoji, { unicode: skin.unicode }) : emoji;
+    });
+  }, [tone]);
+  const groupStartIndices = useMemo(() => {
+    const indices: Partial<Record<keyof typeof groupIds, number>> = {};
+
+    for (const [id, group] of Object.entries(groupIds) as Array<
+      [keyof typeof groupIds, number]
+    >) {
+      const index = items.findIndex((emoji) => emoji.group === group);
+
+      if (index !== -1) indices[id] = index;
+    }
+
+    return indices;
+  }, [items]);
+
+  const scrollToGroup = (id: "frequently-used" | keyof typeof groupIds) => {
+    const grid = gridRef.current;
+
+    if (id === "frequently-used") {
+      grid?.scrollTo({ behavior: "smooth", top: 0 });
+      return;
+    }
+
+    const index = groupStartIndices[id];
+
+    if (!grid || index === undefined) return;
+
+    const itemSize = 38;
+    const columns = Math.floor(grid.clientWidth / itemSize);
+    const top = Math.floor(index / columns) * itemSize;
+
+    grid.scrollTo({ behavior: "smooth", top });
+  };
+
   return (
     <>
-      <SearchField autoFocus aria-label="Search emoji" variant="secondary">
+      <SearchField
+        autoFocus={autoFocus}
+        aria-label="Search emoji"
+        variant="secondary"
+      >
         <SearchField.Group>
           <SearchField.SearchIcon />
           <SearchField.Input placeholder="Search emoji..." />
@@ -76,12 +140,21 @@ function PickerContents() {
       <EmojiPicker.Grid
         ref={gridRef}
         items={items}
-        renderEmptyState={() => <span>No emoji found.</span>}
+        renderEmptyState={() => (
+          <EmptyState className="flex h-full min-h-20 flex-1 flex-col items-center justify-center gap-2">
+            <HugeiconsIcon
+              aria-hidden
+              className="text-muted size-5"
+              icon={SmileIcon}
+            />
+            No emoji found.
+          </EmptyState>
+        )}
       >
         {(item) => (
           <EmojiPicker.Item
-            id={item.unicode}
-            textValue={`${item.label} ${item.tags.join(" ")}`}
+            id={String(item.unicode)}
+            textValue={`${item.label ?? ""} ${Array.isArray(item.tags) ? item.tags.join(" ") : ""}`}
           >
             {item.unicode}
           </EmojiPicker.Item>
@@ -90,16 +163,22 @@ function PickerContents() {
       <EmojiPicker.Footer>
         <ScrollShadow hideScrollBar orientation="horizontal">
           <div className="flex items-center gap-1 overflow-visible px-2 py-0.5 pr-3">
-            {groups.map(([label, emoji]) => (
-              <Tooltip delay={0} key={label}>
+            {categories.map(({ icon, id, label }) => (
+              <Tooltip delay={0} key={id}>
                 <Button
                   excludeFromTabOrder
                   isIconOnly
                   aria-label={label}
-                  className="flex size-6 shrink-0 items-center justify-center rounded-md"
+                  className="hover:bg-muted/20 flex size-6 shrink-0 items-center justify-center rounded-full rounded-md"
                   variant="ghost"
+                  onPress={() => scrollToGroup(id)}
                 >
-                  <span className="text-base">{emoji}</span>
+                  <HugeiconsIcon
+                    aria-hidden
+                    icon={icon}
+                    size={16}
+                    strokeWidth={2}
+                  />
                 </Button>
                 <Tooltip.Content placement="top">
                   <p>{label}</p>
@@ -112,42 +191,50 @@ function PickerContents() {
     </>
   );
 }
-function DefaultDemo({ size = "md" }: { size?: "lg" | "md" | "sm" }) {
+
+function DefaultDemo() {
   return (
-    <EmojiPicker aria-label={`Emoji ${size}`} defaultValue="😀" size={size}>
+    <EmojiPicker aria-label="Emoji" defaultValue="😀">
       <EmojiPicker.Trigger className="text-xl">
         <EmojiPicker.Value />
       </EmojiPicker.Trigger>
       <EmojiPicker.Popover>
         <EmojiPicker.Content>
-          <PickerContents />
+          <PickerContents autoFocus />
         </EmojiPicker.Content>
       </EmojiPicker.Popover>
     </EmojiPicker>
   );
 }
-const meta = {
-  parameters: { layout: "centered" },
-  tags: ["autodocs"],
-  title: "Components/EmojiPicker",
-} satisfies Meta;
-export default meta;
-type Story = StoryObj<typeof meta>;
-export const Default: Story = { render: () => <DefaultDemo /> };
-export const Sizes: Story = {
-  render: () => (
+
+function SizesDemo() {
+  return (
     <div className="flex items-end gap-4">
       {(["sm", "md", "lg"] as const).map((size) => (
         <div className="flex flex-col items-center gap-2" key={size}>
           <span className="text-muted text-xs font-medium">{size}</span>
-          <DefaultDemo size={size} />
+          <EmojiPicker
+            aria-label={`Emoji ${size}`}
+            defaultValue="😎"
+            size={size}
+          >
+            <EmojiPicker.Trigger className="text-xl">
+              <EmojiPicker.Value />
+            </EmojiPicker.Trigger>
+            <EmojiPicker.Popover>
+              <EmojiPicker.Content>
+                <PickerContents autoFocus />
+              </EmojiPicker.Content>
+            </EmojiPicker.Popover>
+          </EmojiPicker>
         </div>
       ))}
     </div>
-  ),
-};
-export const Inline: Story = {
-  render: () => (
+  );
+}
+
+function InlineDemo() {
+  return (
     <EmojiPicker aria-label="Inline Emoji" size="md">
       <div className="emoji-picker__popover emoji-picker__popover--md relative">
         <EmojiPicker.Content>
@@ -155,20 +242,37 @@ export const Inline: Story = {
         </EmojiPicker.Content>
       </div>
     </EmojiPicker>
-  ),
-};
-export const CustomCategories: Story = {
-  name: "Custom Categories",
-  render: () => (
+  );
+}
+
+function CustomCategoriesDemo() {
+  return (
     <EmojiPicker aria-label="Emoji" defaultValue="😀">
       <EmojiPicker.Trigger className="text-xl">
         <EmojiPicker.Value />
       </EmojiPicker.Trigger>
       <EmojiPicker.Popover>
         <EmojiPicker.Content>
-          <PickerContents />
+          <PickerContents autoFocus />
         </EmojiPicker.Content>
       </EmojiPicker.Popover>
     </EmojiPicker>
-  ),
+  );
+}
+
+const meta = {
+  parameters: { layout: "centered" },
+  tags: ["autodocs"],
+  title: "Components/EmojiPicker",
+} satisfies Meta;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = { render: () => <DefaultDemo /> };
+export const Sizes: Story = { render: () => <SizesDemo /> };
+export const Inline: Story = { render: () => <InlineDemo /> };
+export const CustomCategories: Story = {
+  name: "Custom Categories",
+  render: () => <CustomCategoriesDemo />,
 };
