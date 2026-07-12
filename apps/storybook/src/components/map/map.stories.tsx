@@ -51,21 +51,47 @@ const MapFrame = ({
     </Map>
   </div>
 );
-const locations = [
+const storeLocations = [
   {
-    id: "downtown",
-    latitude: 30.2672,
-    longitude: -97.7431,
-    name: "Downtown Austin",
+    address: "NW 13th Ave",
+    color: "#4285f4",
+    distance: "0.8 mi",
+    latitude: 45.5265,
+    longitude: -122.6842,
+    name: "Pearl pickup",
+    orders: "31 ready",
+    status: "Open",
   },
   {
-    id: "south",
-    latitude: 30.2308,
-    longitude: -97.7596,
-    name: "South Congress",
+    address: "SW 3rd Ave",
+    color: "#22c55e",
+    distance: "1.6 mi",
+    latitude: 45.5181,
+    longitude: -122.6765,
+    name: "Downtown desk",
+    orders: "18 ready",
+    status: "Open",
   },
-  { id: "east", latitude: 30.2625, longitude: -97.7188, name: "East Austin" },
-  { id: "domain", latitude: 30.4014, longitude: -97.7254, name: "The Domain" },
+  {
+    address: "SE Hawthorne",
+    color: "#f97316",
+    distance: "2.4 mi",
+    latitude: 45.5128,
+    longitude: -122.6538,
+    name: "Hawthorne hub",
+    orders: "Queue full",
+    status: "Busy",
+  },
+  {
+    address: "NE Alberta",
+    color: "#8b5cf6",
+    distance: "3.1 mi",
+    latitude: 45.5591,
+    longitude: -122.6467,
+    name: "Alberta counter",
+    orders: "9 ready",
+    status: "Open",
+  },
 ];
 
 const defaultRoute: [number, number][] = [
@@ -259,35 +285,85 @@ export const Default: Story = {
   render: () => <DefaultMapDemo />,
 };
 
-export const StoreLocator: Story = {
-  render: () => (
-    <MapFrame>
-      {locations.map((location, index) => (
-        <Map.Marker
-          key={location.id}
-          latitude={location.latitude}
-          longitude={location.longitude}
-        >
-          <Map.MarkerContent>
-            <span className="bg-accent text-accent-foreground flex size-8 items-center justify-center rounded-full shadow-lg">
-              <Icon icon="lucide:store" />
-            </span>
-          </Map.MarkerContent>
-          <Map.MarkerPopup closeButton>
-            <div className="space-y-2">
-              <strong>{location.name}</strong>
-              <p className="text-muted m-0 text-xs">
-                Open today until {index % 2 ? "8 PM" : "9 PM"}
+function StoreLocatorDemo() {
+  const [selected, setSelected] = useState<
+    (typeof storeLocations)[number] | null
+  >(storeLocations[0]!);
+  return (
+    <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
+      <Map center={[-122.678, 45.538]} pitch={18} styles={styles} zoom={12.25}>
+        {storeLocations.map((location) => (
+          <Map.Marker
+            key={location.name}
+            latitude={location.latitude}
+            longitude={location.longitude}
+            onClick={() => setSelected(location)}
+          >
+            <Map.MarkerContent>
+              <Map.MarkerDot color={location.color} />
+              <Map.MarkerLabel>{location.name}</Map.MarkerLabel>
+            </Map.MarkerContent>
+            <Map.MarkerTooltip>
+              <span className="font-medium">{location.name}</span>
+              <span className="text-background/70 ml-1">{location.orders}</span>
+            </Map.MarkerTooltip>
+          </Map.Marker>
+        ))}
+        {selected ? (
+          <Map.Popup
+            closeButton
+            closeOnClick={false}
+            focusAfterOpen={false}
+            latitude={selected.latitude}
+            longitude={selected.longitude}
+            offset={18}
+            onClose={() => setSelected(null)}
+          >
+            <div className="space-y-1 pr-4 text-xs">
+              <p className="font-medium">{selected.name}</p>
+              <p className="text-muted">{selected.address}</p>
+              <p className="text-muted">
+                {selected.status} · {selected.orders}
               </p>
-              <Chip color="success" size="sm" variant="soft">
-                Pickup available
-              </Chip>
             </div>
-          </Map.MarkerPopup>
-        </Map.Marker>
-      ))}
-    </MapFrame>
-  ),
+          </Map.Popup>
+        ) : null}
+        <Map.Controls>
+          <Map.ZoomControl />
+          <Map.LocateControl />
+        </Map.Controls>
+      </Map>
+      <Card className="bg-overlay shadow-overlay absolute top-3 left-3 z-10 w-[240px] gap-3 p-4">
+        <Card.Header>
+          <Card.Title className="text-sm">Pickup network</Card.Title>
+          <Card.Description>4 locations near Portland</Card.Description>
+        </Card.Header>
+        <Card.Content className="gap-2">
+          {storeLocations.slice(0, 3).map((location) => (
+            <button
+              className="hover:bg-surface-tertiary flex items-center justify-between rounded-md px-2 py-1 text-left transition"
+              key={location.name}
+              type="button"
+              onClick={() => setSelected(location)}
+            >
+              <span className="flex items-center gap-2">
+                <span
+                  className="size-2 rounded-full"
+                  style={{ backgroundColor: location.color }}
+                />
+                <span className="text-xs font-medium">{location.name}</span>
+              </span>
+              <span className="text-muted text-xs">{location.distance}</span>
+            </button>
+          ))}
+        </Card.Content>
+      </Card>
+    </div>
+  );
+}
+
+export const StoreLocator: Story = {
+  render: () => <StoreLocatorDemo />,
 };
 
 const routes = [
