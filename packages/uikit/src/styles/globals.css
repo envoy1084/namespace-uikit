@@ -37,6 +37,7 @@
 @import "./components/file-tree.css";
 @import "./components/timeline.css";
 @import "./components/kanban.css";
+@import "./components/map.css";
 @import "./components/rich-text-editor.css";
 @import "./components/number-stepper.css";
 @import "./components/chart-tooltip.css";

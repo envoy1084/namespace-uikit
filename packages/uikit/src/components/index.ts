@@ -64,6 +64,7 @@ export * from "./list-box";
 export * from "./list-box-item";
 export * from "./list-box-section";
 export * from "./list-view";
+export * from "./map";
 export * from "./menu";
 export * from "./menu-item";
 export * from "./menu-section";
