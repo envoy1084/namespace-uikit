@@ -295,12 +295,12 @@ export function ChatConversationScrollButton({
         "chat-conversation__scroll-button"
       }
       data-slot="chat-conversation-scroll-button"
-      isDisabled={!visible || !!isDisabled}
       size="sm"
       variant="secondary"
       onPress={() => context.scrollToBottom("smooth")}
       {...props}
       {...(ariaLabel ? { "aria-label": ariaLabel } : {})}
+      {...(!visible || isDisabled ? { isDisabled: true } : {})}
     >
       <IconChevronDown className="size-4" />
     </Button>
