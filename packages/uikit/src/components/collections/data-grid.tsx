@@ -10,7 +10,16 @@ import type {
 import type { ReactElement, ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { Button, Checkbox, cn, IconChevronUp, Table } from "@heroui/react";
+import {
+  Button,
+  Checkbox,
+  cn,
+  IconChevronRight,
+  IconChevronUp,
+  Table,
+} from "@heroui/react";
+import { GripVerticalIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
   TableLayout,
   useDragAndDrop,
@@ -308,13 +317,16 @@ function DataGridInner<T extends object>({
           <Table.Cell className="data-grid__drag-handle-cell">
             <Button
               isIconOnly
-              aria-label="Drag row"
               className="data-grid__drag-handle"
               size="sm"
               slot="drag"
               variant="ghost"
             >
-              ≡
+              <HugeiconsIcon
+                className="size-4"
+                icon={GripVerticalIcon}
+                strokeWidth={2}
+              />
             </Button>
           </Table.Cell>
         ) : null}
@@ -375,12 +387,11 @@ function DataGridInner<T extends object>({
                           slot="chevron"
                           variant="ghost"
                         >
-                          <span
+                          <IconChevronRight
+                            aria-hidden="true"
                             className="data-grid__tree-toggle-icon"
                             data-expanded={isExpanded || undefined}
-                          >
-                            ›
-                          </span>
+                          />
                         </Button>
                       ) : (
                         <span
@@ -432,9 +443,7 @@ function DataGridInner<T extends object>({
             maxWidth={32}
             minWidth={32}
             width={32}
-          >
-            <span className="sr-only">Reorder</span>
-          </Table.Column>
+          />
         ) : null}
         {showSelectionCheckboxes && selectionMode !== "none" ? (
           <Table.Column
