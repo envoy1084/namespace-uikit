@@ -44,7 +44,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 ## Phase 4 — Data display and dashboard composition
 
 - [x] [Empty State docs](https://heroui.pro/docs/react/components/empty-state) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-emptystate--docs)
-- [ ] [Action Bar docs](https://heroui.pro/docs/react/components/action-bar) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-actionbar--docs)
+- [x] [Action Bar docs](https://heroui.pro/docs/react/components/action-bar) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-actionbar--docs)
 - [ ] [Agenda docs](https://heroui.pro/docs/react/components/agenda) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-agenda--docs)
 - [ ] [Carousel docs](https://heroui.pro/docs/react/components/carousel) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-carousel--docs)
 - [ ] [Floating TOC docs](https://heroui.pro/docs/react/components/floating-toc) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-floatingtoc--docs)
@@ -58,7 +58,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [ ] [File Tree docs](https://heroui.pro/docs/react/components/file-tree) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-filetree--docs)
 - [ ] [Timeline docs](https://heroui.pro/docs/react/components/timeline) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-timeline--docs)
 - [ ] [Kanban docs](https://heroui.pro/docs/react/components/kanban) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-kanban--docs)
-- [ ] [Data Grid docs](https://heroui.pro/docs/react/components/data-grid) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-datagrid--docs)
+- [x] [Data Grid docs](https://heroui.pro/docs/react/components/data-grid) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-datagrid--docs)
 - [ ] [Map docs](https://heroui.pro/docs/react/components/map) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-data-display-map--docs)
 
 ## Phase 5 — Navigation and overlays

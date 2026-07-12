@@ -30,6 +30,7 @@ export * from "./components/combo-box";
 export * from "./components/date-field";
 export * from "./components/date-picker";
 export * from "./components/date-range-picker";
+export * from "./components/data-grid";
 export * from "./components/description";
 export * from "./components/disclosure";
 export * from "./components/disclosure-group";

@@ -38,6 +38,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/data-grid.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/line-chart.css",
       to: "dist/components",
     },

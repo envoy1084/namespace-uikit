@@ -30,6 +30,7 @@ export * from "./combo-box";
 export * from "./date-field";
 export * from "./date-picker";
 export * from "./date-range-picker";
+export * from "./data-grid";
 export * from "./description";
 export * from "./disclosure";
 export * from "./disclosure-group";
