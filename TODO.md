@@ -88,7 +88,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [ ] [Chat Conversation docs](https://heroui.pro/docs/react/components/chat-conversation) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-chatconversation--docs)
 - [ ] [Chat List View docs](https://heroui.pro/docs/react/components/chat-list-view) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-chatlistview--docs)
 - [x] [Prompt Suggestion docs](https://heroui.pro/docs/react/components/prompt-suggestion) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-promptsuggestion--docs) — implementation and all reference stories added; final catalog-wide visual audit remains
-- [ ] [Prompt Input docs](https://heroui.pro/docs/react/components/prompt-input) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-promptinput--docs)
+- [x] [Prompt Input docs](https://heroui.pro/docs/react/components/prompt-input) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-promptinput--docs) — implementation and all reference stories added; final catalog-wide visual audit remains
 
 ## Final audit
 
