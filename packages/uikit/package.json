@@ -193,6 +193,14 @@
       "types": "./dist/components/chat-attachment.d.mts",
       "import": "./dist/components/chat-attachment.mjs"
     },
+    "./chat-source": {
+      "@thenamespace/source": {
+        "types": "./src/components/chat-source/index.ts",
+        "import": "./src/components/chat-source/index.ts"
+      },
+      "types": "./dist/components/chat-source.d.mts",
+      "import": "./dist/components/chat-source.mjs"
+    },
     "./prompt-input": {
       "@thenamespace/source": {
         "types": "./src/components/prompt-input/index.ts",
