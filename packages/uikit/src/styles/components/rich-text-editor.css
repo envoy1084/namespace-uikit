@@ -1,3 +1,4 @@
+@layer components {
 .rich-text-editor { color: var(--foreground); width: 100%; }
 .rich-text-editor__shell { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg, .75rem); box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 5%, transparent); overflow: hidden; }
 .rich-text-editor__toolbar { align-items: center; background: var(--surface); border-bottom: 1px solid var(--separator); display: flex; flex-wrap: wrap; gap: .125rem; min-height: 2.75rem; padding: .375rem .5rem; }
@@ -41,3 +42,4 @@
 .rich-text-editor[data-disabled="true"] { opacity: .55; }
 .rich-text-editor[data-disabled="true"] .rich-text-editor__content { cursor: not-allowed; }
 .rich-text-editor[data-readonly="true"] .rich-text-editor__toolbar { display: none; }
+}

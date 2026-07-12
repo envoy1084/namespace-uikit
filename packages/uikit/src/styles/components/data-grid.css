@@ -1,3 +1,4 @@
+@layer components {
 .data-grid { --data-grid-selection-column-width: 40px; --data-grid-tree-toggle-size: 24px; --data-grid-tree-gap: 4px; position: relative; width: 100%; }
 .data-grid__selection-column, .data-grid__selection-cell { padding-inline-end: 0; width: var(--data-grid-selection-column-width); }
 .data-grid__selection-column::after { content: none; }
@@ -17,3 +18,4 @@
 .data-grid__tree-toggle-icon { color: var(--muted); display: inline-block; transition: rotate .15s ease-out; }
 .data-grid__tree-toggle-icon[data-expanded] { rotate: 90deg; }
 .table__row:last-child .table__cell { border-bottom-width: 0; }
+}

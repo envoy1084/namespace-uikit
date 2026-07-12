@@ -1,3 +1,4 @@
+@layer components {
 .item-card-group { border-radius: calc(var(--radius) * 2); }
 .item-card-group > [data-slot="item-card"] { background-color: transparent; border: 0; border-radius: 0; box-shadow: none; }
 .item-card-group--default { background-color: var(--surface); box-shadow: var(--surface-shadow); }
@@ -15,3 +16,4 @@
 .item-card-group--grid .item-card-group__header { padding: 0; }
 .item-card-group--grid > [data-slot="item-card-group-header"] { grid-column: 1 / -1; }
 .item-card-group--grid > [data-slot="item-card"] { background-color: var(--surface); border-radius: calc(var(--radius) * 2); box-shadow: var(--surface-shadow); }
+}

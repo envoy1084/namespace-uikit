@@ -1,3 +1,4 @@
+@layer components {
 .list-view { min-height: 0; outline: none; position: relative; width: 100%; }
 .list-view--primary { background-color: var(--surface-secondary); border-radius: calc(var(--radius) * 2.5); padding: .25rem; }
 .list-view__item { align-items: center; cursor: var(--cursor-interactive, pointer); display: flex; font-size: .875rem; gap: .75rem; line-height: 1.25rem; outline: none; padding-block: .75rem; padding-inline: 1rem; -webkit-tap-highlight-color: transparent; }
@@ -22,3 +23,4 @@
 .list-view__item-action { flex-shrink: 0; margin-inline-start: auto; padding-inline-start: .5rem; }
 .list-view__empty-state { align-items: center; display: flex; justify-content: center; padding-block: 2rem; padding-inline: 1rem; }
 .list-view__load-more { align-items: center; display: flex; justify-content: center; padding-block: .75rem; }
+}

@@ -1,3 +1,4 @@
+@layer components {
 .kpi { border-radius: calc(var(--radius) * 2); display: flex; flex-direction: column; padding: 1rem; position: relative; }
 .kpi__header { align-items: center; display: flex; gap: .5rem; margin-bottom: .25rem; }
 .kpi__content { align-items: center; column-gap: .5rem; display: grid; flex: 1; grid-template-columns: 1fr auto; grid-template-rows: auto; }
@@ -17,3 +18,4 @@
 .kpi__separator { margin-inline: -1rem; width: calc(100% + 2rem); }
 .kpi__footer { margin-bottom: -.25rem; }
 .kpi__separator + .kpi__footer { margin-top: 0; }
+}

@@ -1,3 +1,4 @@
+@layer components {
 .drop-zone { --drop-zone-border-style: dashed; display: flex; flex-direction: column; gap: calc(var(--spacing) * 3); }
 .drop-zone__area { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(var(--spacing) * 2); border: 1px var(--drop-zone-border-style) var(--color-border-secondary); border-radius: calc(var(--radius) * 2); padding-inline: calc(var(--spacing) * 6); padding-block: calc(var(--spacing) * 8); text-align: center; outline: none; forced-color-adjust: none; transition: background-color .15s, border-color .15s; }
 .drop-zone__area[data-drop-target] { border-color: var(--color-accent); background-color: var(--accent-soft); }
@@ -35,3 +36,4 @@
 .drop-zone__file-remove-trigger { display: flex; cursor: var(--cursor-interactive); flex-shrink: 0; align-items: center; justify-content: center; border-radius: calc(var(--radius) * .75); background: transparent; padding: calc(var(--spacing) * 1); color: var(--muted); outline: none; transition: color .15s; }
 .drop-zone__file-remove-trigger svg { width: calc(var(--spacing) * 4); height: calc(var(--spacing) * 4); }
 .drop-zone__file-remove-trigger:hover { color: var(--foreground); }
+}

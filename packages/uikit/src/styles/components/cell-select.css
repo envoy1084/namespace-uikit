@@ -1,5 +1,7 @@
+@layer components {
 .cell-select {
   --cell-select-indicator-size: 0.75rem;
+}
 }
 
 .cell-select .cell-select__trigger {

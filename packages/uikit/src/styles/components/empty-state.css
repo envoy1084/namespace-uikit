@@ -1,3 +1,4 @@
+@layer components {
 .empty-state { align-items: center; display: flex; flex-direction: column; text-align: center; }
 .empty-state--sm { gap: .75rem; padding-block: 1.5rem; padding-inline: 1rem; }
 .empty-state--md { gap: 1rem; padding-block: 2rem; padding-inline: 1.5rem; }
@@ -18,3 +19,4 @@
 .empty-state__description { color: var(--muted); font-size: .875rem; line-height: 1.25rem; }
 .empty-state--sm .empty-state__description { font-size: .75rem; line-height: 1rem; }
 .empty-state__content { align-items: center; display: flex; flex-direction: column; gap: .5rem; }
+}

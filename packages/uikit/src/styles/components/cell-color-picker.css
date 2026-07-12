@@ -1,6 +1,8 @@
+@layer components {
 .cell-color-picker {
   --cell-color-picker-swatch-size: 1.25rem;
   display: flex;
+}
 }
 
 .cell-color-picker .cell-color-picker__trigger {

@@ -1,7 +1,9 @@
+@layer components {
 .radio-button-group {
   --radio-button-group-item-radius: var(--radius-2xl);
   display: flex;
   gap: calc(var(--spacing) * 3);
+}
 }
 
 .radio-button-group--grid {

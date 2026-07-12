@@ -1,7 +1,9 @@
+@layer components {
 .native-select {
   display: inline-flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 1);
+}
 }
 
 .native-select[data-invalid="true"] [data-slot="description"],

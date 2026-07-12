@@ -1,3 +1,4 @@
+@layer components {
 .carousel { position: relative; width: 100%; }
 .carousel:focus-visible { border-radius: var(--radius-lg); outline: 2px solid var(--focus); outline-offset: 2px; }
 .carousel__viewport-wrapper { position: relative; }
@@ -22,3 +23,4 @@
 .carousel__thumbnail { border: 2px solid transparent; border-radius: var(--radius-md); flex: 0 0 auto; height: 3.5rem; overflow: hidden; padding: 0; width: 3.5rem; }
 .carousel__thumbnail[data-selected] { border-color: var(--accent); }
 .carousel__thumbnail img { height: 100%; object-fit: cover; width: 100%; }
+}

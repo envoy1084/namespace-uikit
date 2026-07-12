@@ -1,7 +1,9 @@
+@layer components {
 .checkbox-button-group {
   --checkbox-button-group-item-radius: var(--radius-2xl);
   display: flex;
   gap: calc(var(--spacing) * 3);
+}
 }
 
 .checkbox-button-group--grid {

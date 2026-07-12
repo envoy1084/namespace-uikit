@@ -1,3 +1,4 @@
+@layer components {
 .agenda { --agenda-slot-height: 60px; --agenda-time-column-width: 58px; --agenda-day-header-height: 40px; --agenda-event-radius: .5rem; display: flex; flex-direction: column; height: 100%; overflow: hidden; user-select: none; }
 .agenda__header { align-items: center; display: flex; gap: .75rem; padding: 1rem 1rem .25rem; }
 .agenda__heading { color: var(--foreground); flex: 1; font-size: 1.25rem; font-variant-numeric: tabular-nums; font-weight: 500; line-height: 1.75rem; }
@@ -44,3 +45,4 @@
 .agenda__month-event { border-inline-start: 2px solid var(--agenda-event-accent, var(--accent)); color: var(--foreground); font-size: 11px; overflow: hidden; padding: .125rem .25rem; text-align: left; text-overflow: ellipsis; white-space: nowrap; }
 .agenda__month-more { color: var(--muted); font-size: 10px; padding: .125rem .25rem; }
 @media (max-width: 640px) { .agenda { --agenda-time-column-width: 44px; } .agenda__header { flex-wrap: wrap; } .agenda__heading { flex-basis: 50%; } .agenda__view-selector { order: 3; } .agenda__event-time { display: none; } }
+}
