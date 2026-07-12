@@ -44,6 +44,7 @@ export * from "./error-message";
 export * from "./field-error";
 export * from "./fieldset";
 export * from "./form";
+export * from "./floating-toc";
 export * from "./header";
 export * from "./input";
 export * from "./input-group";

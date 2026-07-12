@@ -2,6 +2,7 @@
 @import "./components/action-bar.css";
 @import "./components/agenda.css";
 @import "./components/carousel.css";
+@import "./components/floating-toc.css";
 @import "./components/area-chart.css";
 @import "./components/bar-chart.css";
 @import "./components/composed-chart.css";

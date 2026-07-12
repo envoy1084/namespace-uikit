@@ -47,7 +47,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] [Action Bar docs](https://heroui.pro/docs/react/components/action-bar) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-actionbar--docs)
 - [x] [Agenda docs](https://heroui.pro/docs/react/components/agenda) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-agenda--docs)
 - [x] [Carousel docs](https://heroui.pro/docs/react/components/carousel) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-carousel--docs)
-- [ ] [Floating TOC docs](https://heroui.pro/docs/react/components/floating-toc) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-floatingtoc--docs)
+- [x] [Floating TOC docs](https://heroui.pro/docs/react/components/floating-toc) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-floatingtoc--docs)
 - [ ] [Hover Card docs](https://heroui.pro/docs/react/components/hover-card) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-hovercard--docs)
 - [ ] [Item Card docs](https://heroui.pro/docs/react/components/item-card) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-itemcard--docs)
 - [ ] [Item Card Group docs](https://heroui.pro/docs/react/components/item-card-group) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-itemcardgroup--docs)
