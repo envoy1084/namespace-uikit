@@ -1,13 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import type { FormEvent, ReactNode } from "react";
+import { createContext, useContext, useRef, useState } from "react";
+
 import {
   Add01Icon,
+  ArrowRight01Icon,
   Attachment01Icon,
   Calendar03Icon,
   CancelCircleIcon,
   CircleCheckIcon,
   Clock01Icon,
   Comment01Icon,
+  Delete02Icon,
   FlashIcon,
   MoreHorizontalIcon,
 } from "@hugeicons/core-free-icons";
@@ -15,7 +20,15 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Avatar } from "@thenamespace/uikit/avatar";
 import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
+import { Dropdown } from "@thenamespace/uikit/dropdown";
+import { Header } from "@thenamespace/uikit/header";
+import { Input } from "@thenamespace/uikit/input";
+import { Label } from "@thenamespace/uikit/label";
+import { Modal } from "@thenamespace/uikit/modal";
 import { ProgressBar } from "@thenamespace/uikit/progress-bar";
+import { Separator } from "@thenamespace/uikit/separator";
+import { TextArea } from "@thenamespace/uikit/textarea";
+import { TextField } from "@thenamespace/uikit/textfield";
 
 import {
   Kanban,
@@ -176,6 +189,135 @@ const tickets: Ticket[] = [
   },
 ];
 
+let nextTicketId = 100;
+const AddTaskContext = createContext({ open: () => {} });
+
+function AddTaskProvider({
+  children,
+  column,
+  kanban,
+}: {
+  children: ReactNode;
+  column: Ticket["status"];
+  kanban: UseKanbanReturn<Ticket>;
+}) {
+  const [isOpen, setOpen] = useState(false);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const submit = (event: FormEvent) => {
+    event.preventDefault();
+    const title = titleRef.current?.value.trim();
+    const description = descriptionRef.current?.value.trim();
+    if (!title) return;
+    kanban.addItem({
+      description: description ?? "",
+      id: String(++nextTicketId),
+      status: column,
+      title,
+    });
+    setOpen(false);
+  };
+  return (
+    <AddTaskContext value={{ open: () => setOpen(true) }}>
+      {children}
+      <Modal>
+        <Modal.Backdrop isOpen={isOpen} onOpenChange={setOpen}>
+          <Modal.Container>
+            <Modal.Dialog className="sm:max-w-[380px]">
+              <Modal.CloseTrigger />
+              <Modal.Header>
+                <Modal.Heading>Add task to {column}</Modal.Heading>
+              </Modal.Header>
+              <Modal.Body className="flex flex-col gap-4 overflow-visible">
+                <form
+                  className="flex flex-col gap-4"
+                  id="add-task-form"
+                  onSubmit={submit}
+                >
+                  <TextField autoFocus name="title" variant="secondary">
+                    <Label>Title</Label>
+                    <Input ref={titleRef} placeholder="Task title" />
+                  </TextField>
+                  <TextField name="description" variant="secondary">
+                    <Label>Description</Label>
+                    <TextArea
+                      ref={descriptionRef}
+                      placeholder="Brief description"
+                      rows={3}
+                    />
+                  </TextField>
+                </form>
+              </Modal.Body>
+              <Modal.Footer className="gap-2">
+                <Button slot="close" variant="ghost">
+                  Cancel
+                </Button>
+                <Button form="add-task-form" type="submit">
+                  Add task
+                </Button>
+              </Modal.Footer>
+            </Modal.Dialog>
+          </Modal.Container>
+        </Modal.Backdrop>
+      </Modal>
+    </AddTaskContext>
+  );
+}
+
+const ticketColumns = ["Open", "In Progress", "Closed"] as const;
+function ColumnOptions({
+  column,
+  kanban,
+}: {
+  column: Ticket["status"];
+  kanban: UseKanbanReturn<Ticket>;
+}) {
+  const otherColumns = ticketColumns.filter((value) => value !== column);
+  const columnItems = kanban.list.items.filter(
+    (ticket) => ticket.status === column,
+  );
+  return (
+    <Dropdown>
+      <Button isIconOnly aria-label="More options" size="sm" variant="ghost">
+        <HugeiconsIcon icon={MoreHorizontalIcon} />
+      </Button>
+      <Dropdown.Popover>
+        <Dropdown.Menu>
+          <Dropdown.Section>
+            <Header>Column</Header>
+            <Dropdown.Item
+              textValue="Clear column"
+              onAction={() => {
+                for (const ticket of columnItems) kanban.removeItem(ticket.id);
+              }}
+            >
+              <HugeiconsIcon className="text-danger" icon={Delete02Icon} />
+              <Label className="text-danger">Clear all tasks</Label>
+            </Dropdown.Item>
+          </Dropdown.Section>
+          <Separator />
+          <Dropdown.Section>
+            <Header>Move all to</Header>
+            {otherColumns.map((destination) => (
+              <Dropdown.Item
+                key={destination}
+                textValue={`Move all to ${destination}`}
+                onAction={() => {
+                  for (const ticket of columnItems)
+                    kanban.moveItem(ticket.id, destination);
+                }}
+              >
+                <HugeiconsIcon icon={ArrowRight01Icon} />
+                <Label>{destination}</Label>
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Section>
+        </Dropdown.Menu>
+      </Dropdown.Popover>
+    </Dropdown>
+  );
+}
+
 function TicketCard({ ticket }: { ticket: Ticket }) {
   return (
     <>
@@ -277,6 +419,7 @@ function TicketColumn({
   column: Ticket["status"];
   kanban: UseKanbanReturn<Ticket>;
 }) {
+  const { open } = useContext(AddTaskContext);
   const { renderDropIndicator } = useKanbanDropIndicator({
     renderIndicator: (target) => <Kanban.DropIndicator target={target} />,
   });
@@ -297,17 +440,16 @@ function TicketColumn({
         <Kanban.ColumnTitle>{column}</Kanban.ColumnTitle>
         <Kanban.ColumnCount>{items.length}</Kanban.ColumnCount>
         <Kanban.ColumnActions>
-          <Button isIconOnly aria-label="Add task" size="sm" variant="ghost">
-            <HugeiconsIcon icon={Add01Icon} />
-          </Button>
           <Button
             isIconOnly
-            aria-label="More options"
+            aria-label="Add task"
             size="sm"
             variant="ghost"
+            onPress={open}
           >
-            <HugeiconsIcon icon={MoreHorizontalIcon} />
+            <HugeiconsIcon icon={Add01Icon} />
           </Button>
+          <ColumnOptions column={column} kanban={kanban} />
         </Kanban.ColumnActions>
       </Kanban.ColumnHeader>
       <Kanban.ColumnBody>
@@ -328,7 +470,7 @@ function TicketColumn({
           </Kanban.CardList>
         </Kanban.ScrollShadow>
         <div className="p-2">
-          <Button fullWidth variant="outline">
+          <Button fullWidth variant="outline" onPress={open}>
             <HugeiconsIcon icon={Add01Icon} />
             Add a task
           </Button>
@@ -350,7 +492,9 @@ function DefaultBoard() {
   return (
     <Kanban>
       {(["Open", "In Progress", "Closed"] as const).map((column) => (
-        <TicketColumn column={column} kanban={kanban} key={column} />
+        <AddTaskProvider column={column} kanban={kanban} key={column}>
+          <TicketColumn column={column} kanban={kanban} />
+        </AddTaskProvider>
       ))}
     </Kanban>
   );
@@ -1064,6 +1208,7 @@ function SizedTicketColumn({
   column: "In Progress" | "Open";
   kanban: UseKanbanReturn<Ticket>;
 }) {
+  const { open } = useContext(AddTaskContext);
   const { renderDropIndicator } = useKanbanDropIndicator({
     renderIndicator: (target) => <Kanban.DropIndicator target={target} />,
   });
@@ -1079,17 +1224,16 @@ function SizedTicketColumn({
         <Kanban.ColumnTitle>{column}</Kanban.ColumnTitle>
         <Kanban.ColumnCount>{items.length}</Kanban.ColumnCount>
         <Kanban.ColumnActions>
-          <Button isIconOnly aria-label="Add task" size="sm" variant="ghost">
-            <HugeiconsIcon icon={Add01Icon} />
-          </Button>
           <Button
             isIconOnly
-            aria-label="More options"
+            aria-label="Add task"
             size="sm"
             variant="ghost"
+            onPress={open}
           >
-            <HugeiconsIcon icon={MoreHorizontalIcon} />
+            <HugeiconsIcon icon={Add01Icon} />
           </Button>
+          <ColumnOptions column={column} kanban={kanban} />
         </Kanban.ColumnActions>
       </Kanban.ColumnHeader>
       <Kanban.ColumnBody>
@@ -1110,7 +1254,7 @@ function SizedTicketColumn({
           </Kanban.CardList>
         </Kanban.ScrollShadow>
         <div className="p-2">
-          <Button fullWidth variant="outline">
+          <Button fullWidth variant="outline" onPress={open}>
             <HugeiconsIcon icon={Add01Icon} />
             Add a task
           </Button>
@@ -1134,7 +1278,9 @@ function SizedBoard({ size }: { size: KanbanSize }) {
       <span className="text-muted text-xs font-medium">{size}</span>
       <Kanban size={size}>
         {(["Open", "In Progress"] as const).map((column) => (
-          <SizedTicketColumn column={column} kanban={kanban} key={column} />
+          <AddTaskProvider column={column} kanban={kanban} key={column}>
+            <SizedTicketColumn column={column} kanban={kanban} />
+          </AddTaskProvider>
         ))}
       </Kanban>
     </div>
