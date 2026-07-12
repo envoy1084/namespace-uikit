@@ -70,7 +70,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] [Navbar docs](https://heroui.pro/docs/react/components/navbar) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-navbar--docs) — implementation and all reference stories added; final catalog-wide visual audit remains
 - [x] [Sidebar docs](https://heroui.pro/docs/react/components/sidebar) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-sidebar--docs) — implementation and all reference stories added; final catalog-wide visual audit remains
 - [x] [AppLayout docs](https://heroui.pro/docs/react/components/app-layout) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-applayout--docs) — implementation and all reference stories added; final catalog-wide visual audit remains
-- [ ] [Emoji Picker docs](https://heroui.pro/docs/react/components/emoji-picker) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-emojipicker--docs)
+- [x] [Emoji Picker docs](https://heroui.pro/docs/react/components/emoji-picker) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-emojipicker--docs) — implementation and all reference stories added; final catalog-wide visual audit remains
 - [x] [Sheet docs](https://heroui.pro/docs/react/components/sheet) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-sheet--docs) — implementation and all reference stories added; final catalog-wide visual audit remains
 
 ## Phase 6 — AI building blocks and compositions

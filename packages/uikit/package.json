@@ -177,6 +177,14 @@
       "types": "./dist/components/emoji-reaction-button.d.mts",
       "import": "./dist/components/emoji-reaction-button.mjs"
     },
+    "./emoji-picker": {
+      "@thenamespace/source": {
+        "types": "./src/components/emoji-picker/index.ts",
+        "import": "./src/components/emoji-picker/index.ts"
+      },
+      "types": "./dist/components/emoji-picker.d.mts",
+      "import": "./dist/components/emoji-picker.mjs"
+    },
     "./resizable": {
       "@thenamespace/source": {
         "types": "./src/components/resizable/index.ts",
