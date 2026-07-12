@@ -4,6 +4,8 @@ import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 import { Children, createContext, isValidElement, useContext } from "react";
 
 import { cn } from "@heroui/react";
+import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 export type NativeSelectVariant = "primary" | "secondary";
 
@@ -108,18 +110,12 @@ function NativeSelectIndicator({
       data-slot="native-select-indicator"
     >
       {children ?? (
-        <svg
+        <HugeiconsIcon
           aria-hidden="true"
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="m6 9 6 6 6-6" />
-        </svg>
+          icon={ArrowDown01Icon}
+          size={16}
+          strokeWidth={2}
+        />
       )}
     </span>
   );

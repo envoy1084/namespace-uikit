@@ -59,17 +59,20 @@
   background-color: var(--field-hover);
 }
 
-.native-select__select:focus,
-.native-select__select:focus-visible {
+.native-select__select:focus {
   border-color: var(--color-field-border-focus);
   background-color: var(--color-field-focus);
   outline: none;
 }
 
-.native-select__select:focus-visible {
+.native-select__select:focus-visible:not(:focus),
+.native-select__select[data-focus-visible="true"] {
+  border-color: var(--color-field-border-focus);
+  background-color: var(--color-field-focus);
   box-shadow:
     0 0 0 2px var(--background),
     0 0 0 4px var(--focus);
+  outline: none;
 }
 
 .native-select[data-invalid="true"] .native-select__select,
@@ -128,8 +131,9 @@
   background-color: var(--color-default-hover);
 }
 
-.native-select--secondary .native-select__select:focus,
-.native-select--secondary .native-select__select:focus-visible {
+.native-select--secondary .native-select__select:focus-visible:not(:focus),
+.native-select--secondary .native-select__select[data-focus-visible="true"],
+.native-select--secondary .native-select__select:focus {
   background-color: var(--color-default);
 }
 
