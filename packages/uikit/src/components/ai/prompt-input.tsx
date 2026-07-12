@@ -24,6 +24,15 @@ import {
   TextArea,
   Tooltip,
 } from "@heroui/react";
+import {
+  AlertCircleIcon,
+  ArrowUp01Icon,
+  Cancel01Icon,
+  CornerDownRightIcon,
+  MoreHorizontalIcon,
+  StopIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Reorder, useDragControls } from "motion/react";
 
 export type PromptInputStatus = "error" | "ready" | "streaming" | "submitted";
@@ -295,11 +304,16 @@ const SendIcon = ({ status }: { status: PromptInputStatus }): ReactElement =>
   status === "submitted" ? (
     <Spinner color="current" size="sm" />
   ) : status === "streaming" ? (
-    <span aria-hidden>■</span>
+    <HugeiconsIcon aria-hidden icon={StopIcon} size={16} strokeWidth={2} />
   ) : status === "error" ? (
-    <span aria-hidden>!</span>
+    <HugeiconsIcon
+      aria-hidden
+      icon={AlertCircleIcon}
+      size={16}
+      strokeWidth={2}
+    />
   ) : (
-    <span aria-hidden>↑</span>
+    <HugeiconsIcon aria-hidden icon={ArrowUp01Icon} size={16} strokeWidth={2} />
   );
 export interface PromptInputSendProps extends ComponentPropsWithRef<
   typeof Button
@@ -620,7 +634,7 @@ export function PromptInputQueueItemAttachmentsOverflow({
 }
 type QueueButtonProps = ComponentPropsWithRef<typeof Button>;
 type QueueButton = (props: QueueButtonProps) => ReactElement;
-const queueButton = (slot: string, label: string, fallback: string) =>
+const queueButton = (slot: string, label: string, fallback: ReactNode) =>
   function QueueButton({
     children,
     isDisabled,
@@ -644,12 +658,17 @@ const queueButton = (slot: string, label: string, fallback: string) =>
 export const PromptInputQueueItemRemove: QueueButton = queueButton(
   "prompt-input-queue-item-remove",
   "Remove from queue",
-  "×",
+  <HugeiconsIcon aria-hidden icon={Cancel01Icon} size={16} strokeWidth={2} />,
 );
 export const PromptInputQueueItemMore: QueueButton = queueButton(
   "prompt-input-queue-item-more",
   "More queue actions",
-  "•••",
+  <HugeiconsIcon
+    aria-hidden
+    icon={MoreHorizontalIcon}
+    size={16}
+    strokeWidth={2}
+  />,
 );
 export function PromptInputQueueItemAction({
   children,
@@ -687,7 +706,13 @@ export function PromptInputQueueItemSteer({
     >
       {children ?? (
         <>
-          <span aria-hidden>↳</span>Steer
+          <HugeiconsIcon
+            aria-hidden
+            icon={CornerDownRightIcon}
+            size={16}
+            strokeWidth={2}
+          />
+          Steer
         </>
       )}
     </Button>
