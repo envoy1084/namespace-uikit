@@ -126,7 +126,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 ### Collections, data display, and overlays
 
 - [x] Carousel navigation dots match the official shape, spacing, active state, and interaction.
-- [ ] DataGrid stories match official data, selection count, badge colors, controls, and layouts.
+- [x] DataGrid stories match official data, selection count, badge colors, controls, and layouts.
 - [x] FileTree checkbox stories visibly identify selected items.
 - [x] FloatingTOC content typography matches the official weight.
 - [ ] Kanban stories match official boards and group backgrounds; dragging does not add an incorrect hamburger icon.
