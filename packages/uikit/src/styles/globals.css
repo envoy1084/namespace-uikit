@@ -4,6 +4,7 @@
 @import "./components/agenda.css";
 @import "./components/carousel.css";
 @import "./components/chat-attachment.css";
+@import "./components/chat-conversation.css";
 @import "./components/chat-loader.css";
 @import "./components/chat-message.css";
 @import "./components/chat-message-actions.css";
