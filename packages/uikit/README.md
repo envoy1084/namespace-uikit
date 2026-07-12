@@ -117,6 +117,8 @@ and component-owned helper hooks through its `index.ts`.
 Public component imports intentionally remain one level deep regardless of their
 source group. For example, `src/components/date-and-time/agenda.tsx` is published
 as `@thenamespace/uikit/agenda`, not `@thenamespace/uikit/date-and-time/agenda`.
-When adding a component, place it in the appropriate domain and add its flat
-source-condition mapping to `package.json`; the build discovers grouped component
-entries automatically.
+When adding a component, place it in the appropriate domain and export it from
+that domain's `index.ts`. Run `pnpm generate:exports` from this package (or simply
+run the build) to regenerate the flat source and distribution mappings in
+`package.json`. The generator validates duplicate component names, and the build
+discovers grouped component entries automatically.
