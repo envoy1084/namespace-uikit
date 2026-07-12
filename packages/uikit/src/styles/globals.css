@@ -35,6 +35,7 @@
 @import "./components/drop-zone.css";
 @import "./components/empty-state.css";
 @import "./components/file-tree.css";
+@import "./components/timeline.css";
 @import "./components/rich-text-editor.css";
 @import "./components/number-stepper.css";
 @import "./components/chart-tooltip.css";

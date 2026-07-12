@@ -112,6 +112,7 @@ export * from "./components/tag-group";
 export * from "./components/textarea";
 export * from "./components/textfield";
 export * from "./components/time-field";
+export * from "./components/timeline";
 export * from "./components/toast";
 export * from "./components/toggle-button";
 export * from "./components/toggle-button-group";
