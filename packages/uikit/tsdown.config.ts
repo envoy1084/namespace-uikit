@@ -98,6 +98,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/markdown.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/navbar.css",
       to: "dist/components",
     },
@@ -264,8 +268,12 @@ export default defineConfig({
       "embla-carousel-autoplay",
       "embla-carousel-react",
       "motion",
+      "marked",
+      "react-markdown",
       "recharts",
       "shiki",
+      "remark-gfm",
+      "remark-math",
       "tailwindcss",
     ],
   },

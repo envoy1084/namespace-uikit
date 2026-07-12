@@ -70,6 +70,7 @@ export * from "./list-box-item";
 export * from "./list-box-section";
 export * from "./list-view";
 export * from "./map";
+export * from "./markdown";
 export * from "./navbar";
 export * from "./menu";
 export * from "./menu-item";

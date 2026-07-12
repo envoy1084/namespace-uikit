@@ -177,6 +177,14 @@
       "types": "./dist/components/code-block.d.mts",
       "import": "./dist/components/code-block.mjs"
     },
+    "./markdown": {
+      "@thenamespace/source": {
+        "types": "./src/components/markdown/index.ts",
+        "import": "./src/components/markdown/index.ts"
+      },
+      "types": "./dist/components/markdown.d.mts",
+      "import": "./dist/components/markdown.mjs"
+    },
     "./rating": {
       "@thenamespace/source": {
         "types": "./src/components/rating/index.ts",
