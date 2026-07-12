@@ -16,7 +16,7 @@ import {
   useState,
 } from "react";
 
-import { Button, cn } from "@heroui/react";
+import { Button, cn, ToggleButton, ToggleButtonGroup } from "@heroui/react";
 import {
   getLocalTimeZone,
   isSameDay,
@@ -422,33 +422,39 @@ function AgendaTodayButton({
   );
 }
 function AgendaViewSelector({
+  children,
   className,
   size = "sm",
 }: {
+  children?: ReactNode;
   className?: string;
   size?: "lg" | "md" | "sm";
 }): ReactElement {
   const { setView, view } = useAgendaContext();
   return (
-    <div
+    <ToggleButtonGroup
       aria-label="Calendar view"
-      className={cn("agenda__view-selector", className)}
-      role="group"
+      className={
+        cn("agenda__view-selector", className) ?? "agenda__view-selector"
+      }
+      selectedKeys={new Set([view])}
+      selectionMode="single"
+      size={size}
+      onSelectionChange={(keys) => {
+        const next = [...keys][0];
+        if (next === "day" || next === "week" || next === "month") {
+          setView(next);
+        }
+      }}
     >
-      {(["day", "week", "month"] as const).map((item) => (
-        <Button
-          aria-pressed={view === item}
-          data-selected={view === item || undefined}
-          key={item}
-          size={size}
-          variant="ghost"
-          onPress={() => setView(item)}
-        >
-          {item[0]?.toUpperCase()}
-          {item.slice(1)}
-        </Button>
-      ))}
-    </div>
+      {children ??
+        (["day", "week", "month"] as const).map((item) => (
+          <ToggleButton id={item} key={item} variant="ghost">
+            {item[0]?.toUpperCase()}
+            {item.slice(1)}
+          </ToggleButton>
+        ))}
+    </ToggleButtonGroup>
   );
 }
 function AgendaDayHeader({ date }: { date: CalendarDate }): ReactElement {
