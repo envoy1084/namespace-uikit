@@ -1,6 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Icon } from "@iconify/react";
+import {
+  AddCircleIcon,
+  BadgeCheckIcon,
+  CheckmarkCircle02Icon,
+  Clock01Icon,
+  CreditCardIcon,
+  EyeIcon,
+  Flag02Icon,
+  GitCommitHorizontalIcon,
+  GitMergeIcon,
+  Mail01Icon,
+  Megaphone02Icon,
+  Message01Icon,
+  ReceiptTextIcon,
+  SecurityWarningIcon,
+  User02Icon,
+  ZapIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import { Avatar } from "@thenamespace/uikit/avatar";
 import { Card } from "@thenamespace/uikit/card";
 import { Chip } from "@thenamespace/uikit/chip";
@@ -19,13 +37,16 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const icons = [
-  "lucide:flag",
-  "lucide:circle-check",
-  "lucide:shield-alert",
-  "lucide:megaphone",
-  "lucide:clock",
-  "lucide:badge-check",
+  Flag02Icon,
+  CheckmarkCircle02Icon,
+  SecurityWarningIcon,
+  Megaphone02Icon,
+  Clock01Icon,
+  BadgeCheckIcon,
 ];
+const TimelineGlyph = ({ icon }: { icon: IconSvgElement }) => (
+  <HugeiconsIcon aria-hidden icon={icon} strokeWidth={2} />
+);
 const statuses: TimelineStatus[] = [
   "default",
   "current",
@@ -85,7 +106,7 @@ export const Default: Story = {
         {rollout.map(([title, description, label, time], index) => (
           <Timeline.Item align="center" key={title} status={statuses[index]}>
             <Timeline.Marker aria-hidden="true">
-              <Icon icon={icons[index]} />
+              <TimelineGlyph icon={icons[index]!} />
             </Timeline.Marker>
             <Timeline.Content>
               <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
@@ -127,62 +148,104 @@ export const Default: Story = {
 };
 
 const milestones = [
-  [
-    "Private beta",
-    "Jan 2026",
-    "Research",
-    "24 teams",
-    "Invited design partners to stress-test billing, permissions, and reporting workflows.",
-  ],
-  [
-    "Usage-based pricing",
-    "Mar 2026",
-    "Billing",
-    "3 plans",
-    "Metered plans went live for sandbox workspaces after invoice previews cleared review.",
-  ],
-  [
-    "Regional launch",
-    "May 2026",
-    "Expansion",
-    "2 regions",
-    "Opened the EU data boundary with local support coverage and a launch brief.",
-  ],
-  [
-    "Partner network",
-    "Aug 2026",
-    "Marketplace",
-    "8 partners",
-    "First integrations shipped with shared certification notes and co-marketing assets.",
-  ],
-  [
-    "Enterprise controls",
-    "Oct 2026",
-    "Governance",
-    "5 controls",
-    "Audit logs, SSO handoff, and incident exports were bundled into the admin rollout.",
-  ],
-  [
-    "Scale motion",
-    "Dec 2026",
-    "Adoption",
-    "12 touchpoints",
-    "Customer education, lifecycle emails, and release notes moved into one launch calendar.",
-  ],
-];
-const MilestoneContent = ({ milestone }: { milestone: string[] }) => (
+  {
+    description:
+      "Invited design partners to stress-test billing, permissions, and reporting workflows.",
+    icon: Flag02Icon,
+    metric: "24 teams",
+    tag: "Research",
+    tagColor: "default",
+    time: "Jan 2026",
+    title: "Private beta",
+  },
+  {
+    description:
+      "Metered plans went live for sandbox workspaces after invoice previews cleared review.",
+    icon: CheckmarkCircle02Icon,
+    metric: "3 plans",
+    tag: "Billing",
+    tagColor: "accent",
+    time: "Mar 2026",
+    title: "Usage-based pricing",
+  },
+  {
+    description: (
+      <>
+        Opened the EU data boundary with local support coverage and a{" "}
+        <Link className="text-xs" href="#">
+          launch brief
+        </Link>
+        .
+      </>
+    ),
+    icon: SecurityWarningIcon,
+    metric: "2 regions",
+    tag: "Expansion",
+    tagColor: "success",
+    time: "May 2026",
+    title: "Regional launch",
+  },
+  {
+    description:
+      "First integrations shipped with shared certification notes and co-marketing assets.",
+    icon: Megaphone02Icon,
+    metric: "8 partners",
+    tag: "Marketplace",
+    tagColor: "warning",
+    time: "Aug 2026",
+    title: "Partner network",
+  },
+  {
+    description:
+      "Audit logs, SSO handoff, and incident exports were bundled into the admin rollout.",
+    icon: Clock01Icon,
+    metric: "5 controls",
+    tag: "Governance",
+    tagColor: "default",
+    time: "Oct 2026",
+    title: "Enterprise controls",
+  },
+  {
+    description:
+      "Customer education, lifecycle emails, and release notes moved into one launch calendar.",
+    icon: BadgeCheckIcon,
+    metric: "12 touchpoints",
+    tag: "Adoption",
+    tagColor: "accent",
+    time: "Dec 2026",
+    title: "Scale motion",
+  },
+] as const;
+const MilestoneContent = ({
+  milestone,
+  order = "time-first",
+}: {
+  milestone: (typeof milestones)[number];
+  order?: "tag-first" | "time-first";
+}) => (
   <>
     <div className="flex flex-wrap items-center gap-2">
-      <time className="text-muted text-xs leading-5">{milestone[1]}</time>
-      <Chip size="sm" variant="soft">
-        {milestone[2]}
-      </Chip>
+      {order === "tag-first" ? (
+        <>
+          <Chip color={milestone.tagColor} size="sm" variant="soft">
+            {milestone.tag}
+          </Chip>
+          <time className="text-muted text-xs leading-5">{milestone.time}</time>
+        </>
+      ) : (
+        <>
+          <time className="text-muted text-xs leading-5">{milestone.time}</time>
+          <Chip color={milestone.tagColor} size="sm" variant="soft">
+            {milestone.tag}
+          </Chip>
+        </>
+      )}
     </div>
     <h3 className="text-foreground m-0 text-sm leading-5 font-medium">
-      {milestone[0]}
+      {milestone.title}
     </h3>
-    <p className="text-muted m-0 text-xs leading-5">{milestone[4]}</p>
-    <span className="text-muted text-xs leading-5">{milestone[3]}</span>
+    <p className="text-muted m-0 text-xs leading-5">{milestone.description}</p>
+    <span className="text-muted text-xs leading-5">{milestone.metric}</span>
   </>
 );
 export const CenteredMilestones: Story = {
@@ -197,10 +260,10 @@ export const CenteredMilestones: Story = {
       </div>
       <div className="sm:hidden">
         <Timeline density="compact" size="sm">
-          {milestones.map((milestone, index) => (
-            <Timeline.Item key={milestone[0]}>
+          {milestones.map((milestone) => (
+            <Timeline.Item key={milestone.title}>
               <Timeline.Marker>
-                <Icon icon={icons[index]} />
+                <TimelineGlyph icon={milestone.icon} />
               </Timeline.Marker>
               <Timeline.Content className="gap-1.5">
                 <MilestoneContent milestone={milestone} />
@@ -217,12 +280,15 @@ export const CenteredMilestones: Story = {
           size="sm"
         >
           {milestones.map((milestone, index) => (
-            <Timeline.Item key={milestone[0]}>
+            <Timeline.Item key={milestone.title}>
               <Timeline.Marker>
-                <Icon icon={icons[index]} />
+                <TimelineGlyph icon={milestone.icon} />
               </Timeline.Marker>
               <Timeline.Content className="max-w-[260px] gap-1.5">
-                <MilestoneContent milestone={milestone} />
+                <MilestoneContent
+                  milestone={milestone}
+                  order={index % 2 === 1 ? "tag-first" : "time-first"}
+                />
               </Timeline.Content>
             </Timeline.Item>
           ))}
@@ -360,14 +426,14 @@ export const CompactLog: Story = {
             status={item[2] as TimelineStatus}
           >
             <Timeline.Marker>
-              <Icon
+              <TimelineGlyph
                 icon={
                   [
-                    "lucide:shield-alert",
-                    "lucide:credit-card",
-                    "lucide:circle-check",
-                    "lucide:receipt",
-                  ][index]
+                    SecurityWarningIcon,
+                    CreditCardIcon,
+                    CheckmarkCircle02Icon,
+                    ReceiptTextIcon,
+                  ][index]!
                 }
               />
             </Timeline.Marker>
@@ -390,21 +456,16 @@ export const CompactLog: Story = {
 };
 
 const incident = [
-  ["Escalation acknowledged by Kaito Reed", "2:24 AM", "warning", "lucide:zap"],
-  [
-    "Incident channel joined by Mira Stone",
-    "2:23 AM",
-    "default",
-    "lucide:user",
-  ],
-  ["Customer update sent to finance-ops", "2:21 AM", "default", "lucide:mail"],
+  ["Escalation acknowledged by Kaito Reed", "2:24 AM", "warning", ZapIcon],
+  ["Incident channel joined by Mira Stone", "2:23 AM", "default", User02Icon],
+  ["Customer update sent to finance-ops", "2:21 AM", "default", Mail01Icon],
   [
     "Mitigation deployed to export-worker-3",
     "2:18 AM",
     "success",
-    "lucide:circle-check",
+    CheckmarkCircle02Icon,
   ],
-  ["Postmortem reminder scheduled", "2:14 AM", "muted", "lucide:clock"],
+  ["Postmortem reminder scheduled", "2:14 AM", "muted", Clock01Icon],
 ];
 export const IncidentResponse: Story = {
   render: () => (
@@ -418,7 +479,7 @@ export const IncidentResponse: Story = {
       <Timeline density="compact" size="sm">
         <Timeline.Item status="current">
           <Timeline.Marker>
-            <Icon icon="lucide:message-circle" />
+            <TimelineGlyph icon={Message01Icon} />
           </Timeline.Marker>
           <Timeline.Content className="gap-2.5">
             <div className="flex justify-between">
@@ -443,7 +504,7 @@ export const IncidentResponse: Story = {
             status={item[2] as TimelineStatus}
           >
             <Timeline.Marker>
-              <Icon icon={item[3]} />
+              <TimelineGlyph icon={item[3] as IconSvgElement} />
             </Timeline.Marker>
             <Timeline.Content>
               <div className="flex flex-col gap-1 sm:flex-row sm:justify-between">
@@ -554,25 +615,25 @@ const activity = [
     "Committed across 4 product workspaces",
     "Rina Sol",
     "success",
-    "lucide:git-commit-horizontal",
+    GitCommitHorizontalIcon,
   ],
   [
     "Merged a pull request in lumenforge/interface",
     "Theo Park",
     "current",
-    "lucide:git-merge",
+    GitMergeIcon,
   ],
   [
     "Opened 31 issues across 3 workspaces",
     "Iris Moon",
     "warning",
-    "lucide:circle-plus",
+    AddCircleIcon,
   ],
   [
     "Reviewed 51 pull requests in 4 workspaces",
     "Mara Voss",
     "default",
-    "lucide:eye",
+    EyeIcon,
   ],
 ];
 export const RepositoryActivity: Story = {
@@ -586,7 +647,7 @@ export const RepositoryActivity: Story = {
         {activity.map((item, index) => (
           <Timeline.Item key={item[0]} status={item[2] as TimelineStatus}>
             <Timeline.Marker>
-              <Icon icon={item[3]} />
+              <TimelineGlyph icon={item[3] as IconSvgElement} />
             </Timeline.Marker>
             <Timeline.Content className="gap-2.5">
               <div>
@@ -697,7 +758,7 @@ export const SplitContent: Story = {
               <span className="text-muted text-xs">{item[3]}</span>
             </Timeline.Content>
             <Timeline.Marker>
-              <Icon icon={icons[index]} />
+              <TimelineGlyph icon={icons[index]!} />
             </Timeline.Marker>
             <Timeline.Content className="max-w-[320px] gap-2" side="end">
               <h3 className="text-foreground m-0 text-sm font-medium">
