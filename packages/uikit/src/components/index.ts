@@ -43,6 +43,7 @@ export * from "./drawer";
 export * from "./dropdown";
 export * from "./drop-zone";
 export * from "./empty-state";
+export * from "./emoji-picker";
 export * from "./error-message";
 export * from "./field-error";
 export * from "./fieldset";

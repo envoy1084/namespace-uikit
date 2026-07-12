@@ -37,6 +37,7 @@
 @import "./components/radio-button-group.css";
 @import "./components/drop-zone.css";
 @import "./components/empty-state.css";
+@import "./components/emoji-picker.css";
 @import "./components/file-tree.css";
 @import "./components/timeline.css";
 @import "./components/kanban.css";

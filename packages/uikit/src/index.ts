@@ -43,6 +43,7 @@ export * from "./components/drawer";
 export * from "./components/dropdown";
 export * from "./components/drop-zone";
 export * from "./components/empty-state";
+export * from "./components/emoji-picker";
 export * from "./components/error-message";
 export * from "./components/field-error";
 export * from "./components/fieldset";
