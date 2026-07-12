@@ -67,7 +67,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] [Stepper docs](https://heroui.pro/docs/react/components/stepper) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-stepper--docs) — implementation and all reference stories added; final catalog-wide visual audit remains
 - [x] [Command docs](https://heroui.pro/docs/react/components/command) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-command--docs) — implementation and all reference stories added; final catalog-wide visual audit remains
 - [x] [Context Menu docs](https://heroui.pro/docs/react/components/context-menu) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-contextmenu--docs) — implementation and all reference stories added; final catalog-wide visual audit remains
-- [ ] [Navbar docs](https://heroui.pro/docs/react/components/navbar) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-navbar--docs)
+- [x] [Navbar docs](https://heroui.pro/docs/react/components/navbar) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-navbar--docs) — implementation and all reference stories added; final catalog-wide visual audit remains
 - [ ] [Sidebar docs](https://heroui.pro/docs/react/components/sidebar) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-sidebar--docs)
 - [ ] [AppLayout docs](https://heroui.pro/docs/react/components/app-layout) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-applayout--docs)
 - [ ] [Emoji Picker docs](https://heroui.pro/docs/react/components/emoji-picker) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-emojipicker--docs)
