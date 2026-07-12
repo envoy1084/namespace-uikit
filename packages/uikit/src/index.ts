@@ -27,6 +27,7 @@ export * from "./components/color-field";
 export * from "./components/color-picker";
 export * from "./components/color-slider";
 export * from "./components/color-swatch";
+export * from "./components/command";
 export * from "./components/color-swatch-picker";
 export * from "./components/combo-box";
 export * from "./components/date-field";

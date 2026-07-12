@@ -34,6 +34,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/command.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/floating-toc.css",
       to: "dist/components",
     },
