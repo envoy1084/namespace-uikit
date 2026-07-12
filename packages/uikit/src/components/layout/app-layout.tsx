@@ -14,15 +14,15 @@ import {
 
 import { Button, cn, Tooltip } from "@heroui/react";
 
-import { Resizable } from "./resizable";
-import { Sheet } from "./sheet";
 import {
   Sidebar,
   useSidebar,
   type SidebarCollapsible,
   type SidebarSide,
   type SidebarVariant,
-} from "./sidebar";
+} from "../navigation/sidebar";
+import { Sheet } from "../overlays/sheet";
+import { Resizable } from "./resizable";
 
 export interface AppLayoutContextValue {
   isAsideOpen: boolean;

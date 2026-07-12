@@ -139,257 +139,1125 @@
     },
     "./number-value": {
       "@thenamespace/source": {
-        "types": "./src/components/number-value.tsx",
-        "import": "./src/components/number-value.tsx"
+        "types": "./src/components/data-display/number-value.tsx",
+        "import": "./src/components/data-display/number-value.tsx"
       },
       "types": "./dist/components/number-value.d.mts",
       "import": "./dist/components/number-value.mjs"
     },
     "./pressable-feedback": {
       "@thenamespace/source": {
-        "types": "./src/components/pressable-feedback.tsx",
-        "import": "./src/components/pressable-feedback.tsx"
+        "types": "./src/components/buttons/pressable-feedback.tsx",
+        "import": "./src/components/buttons/pressable-feedback.tsx"
       },
       "types": "./dist/components/pressable-feedback.d.mts",
       "import": "./dist/components/pressable-feedback.mjs"
     },
     "./trend-chip": {
       "@thenamespace/source": {
-        "types": "./src/components/trend-chip.tsx",
-        "import": "./src/components/trend-chip.tsx"
+        "types": "./src/components/data-display/trend-chip.tsx",
+        "import": "./src/components/data-display/trend-chip.tsx"
       },
       "types": "./dist/components/trend-chip.d.mts",
       "import": "./dist/components/trend-chip.mjs"
     },
     "./text-shimmer": {
       "@thenamespace/source": {
-        "types": "./src/components/text-shimmer.tsx",
-        "import": "./src/components/text-shimmer.tsx"
+        "types": "./src/components/ai/text-shimmer.tsx",
+        "import": "./src/components/ai/text-shimmer.tsx"
       },
       "types": "./dist/components/text-shimmer.d.mts",
       "import": "./dist/components/text-shimmer.mjs"
     },
     "./code-block": {
       "@thenamespace/source": {
-        "types": "./src/components/code-block.tsx",
-        "import": "./src/components/code-block.tsx"
+        "types": "./src/components/ai/code-block.tsx",
+        "import": "./src/components/ai/code-block.tsx"
       },
       "types": "./dist/components/code-block.d.mts",
       "import": "./dist/components/code-block.mjs"
     },
     "./markdown": {
       "@thenamespace/source": {
-        "types": "./src/components/markdown.tsx",
-        "import": "./src/components/markdown.tsx"
+        "types": "./src/components/ai/markdown.tsx",
+        "import": "./src/components/ai/markdown.tsx"
       },
       "types": "./dist/components/markdown.d.mts",
       "import": "./dist/components/markdown.mjs"
     },
     "./chat-attachment": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-attachment.tsx",
-        "import": "./src/components/chat-attachment.tsx"
+        "types": "./src/components/ai/chat-attachment.tsx",
+        "import": "./src/components/ai/chat-attachment.tsx"
       },
       "types": "./dist/components/chat-attachment.d.mts",
       "import": "./dist/components/chat-attachment.mjs"
     },
     "./chat-conversation": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-conversation.tsx",
-        "import": "./src/components/chat-conversation.tsx"
+        "types": "./src/components/ai/chat-conversation.tsx",
+        "import": "./src/components/ai/chat-conversation.tsx"
       },
       "types": "./dist/components/chat-conversation.d.mts",
       "import": "./dist/components/chat-conversation.mjs"
     },
     "./chat-list-view": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-list-view.tsx",
-        "import": "./src/components/chat-list-view.tsx"
+        "types": "./src/components/ai/chat-list-view.tsx",
+        "import": "./src/components/ai/chat-list-view.tsx"
       },
       "types": "./dist/components/chat-list-view.d.mts",
       "import": "./dist/components/chat-list-view.mjs"
     },
     "./chat-source": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-source.tsx",
-        "import": "./src/components/chat-source.tsx"
+        "types": "./src/components/ai/chat-source.tsx",
+        "import": "./src/components/ai/chat-source.tsx"
       },
       "types": "./dist/components/chat-source.d.mts",
       "import": "./dist/components/chat-source.mjs"
     },
     "./chat-tool": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-tool.tsx",
-        "import": "./src/components/chat-tool.tsx"
+        "types": "./src/components/ai/chat-tool.tsx",
+        "import": "./src/components/ai/chat-tool.tsx"
       },
       "types": "./dist/components/chat-tool.d.mts",
       "import": "./dist/components/chat-tool.mjs"
     },
     "./chain-of-thought": {
       "@thenamespace/source": {
-        "types": "./src/components/chain-of-thought.tsx",
-        "import": "./src/components/chain-of-thought.tsx"
+        "types": "./src/components/ai/chain-of-thought.tsx",
+        "import": "./src/components/ai/chain-of-thought.tsx"
       },
       "types": "./dist/components/chain-of-thought.d.mts",
       "import": "./dist/components/chain-of-thought.mjs"
     },
     "./chat-message": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-message.tsx",
-        "import": "./src/components/chat-message.tsx"
+        "types": "./src/components/ai/chat-message.tsx",
+        "import": "./src/components/ai/chat-message.tsx"
       },
       "types": "./dist/components/chat-message.d.mts",
       "import": "./dist/components/chat-message.mjs"
     },
     "./chat-message-actions": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-message-actions.tsx",
-        "import": "./src/components/chat-message-actions.tsx"
+        "types": "./src/components/ai/chat-message-actions.tsx",
+        "import": "./src/components/ai/chat-message-actions.tsx"
       },
       "types": "./dist/components/chat-message-actions.d.mts",
       "import": "./dist/components/chat-message-actions.mjs"
     },
     "./chat-loader": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-loader.tsx",
-        "import": "./src/components/chat-loader.tsx"
+        "types": "./src/components/ai/chat-loader.tsx",
+        "import": "./src/components/ai/chat-loader.tsx"
       },
       "types": "./dist/components/chat-loader.d.mts",
       "import": "./dist/components/chat-loader.mjs"
     },
     "./prompt-input": {
       "@thenamespace/source": {
-        "types": "./src/components/prompt-input.tsx",
-        "import": "./src/components/prompt-input.tsx"
+        "types": "./src/components/ai/prompt-input.tsx",
+        "import": "./src/components/ai/prompt-input.tsx"
       },
       "types": "./dist/components/prompt-input.d.mts",
       "import": "./dist/components/prompt-input.mjs"
     },
     "./prompt-suggestion": {
       "@thenamespace/source": {
-        "types": "./src/components/prompt-suggestion.tsx",
-        "import": "./src/components/prompt-suggestion.tsx"
+        "types": "./src/components/ai/prompt-suggestion.tsx",
+        "import": "./src/components/ai/prompt-suggestion.tsx"
       },
       "types": "./dist/components/prompt-suggestion.d.mts",
       "import": "./dist/components/prompt-suggestion.mjs"
     },
     "./rating": {
       "@thenamespace/source": {
-        "types": "./src/components/rating.tsx",
-        "import": "./src/components/rating.tsx"
+        "types": "./src/components/data-display/rating.tsx",
+        "import": "./src/components/data-display/rating.tsx"
       },
       "types": "./dist/components/rating.d.mts",
       "import": "./dist/components/rating.mjs"
     },
     "./emoji-reaction-button": {
       "@thenamespace/source": {
-        "types": "./src/components/emoji-reaction-button.tsx",
-        "import": "./src/components/emoji-reaction-button.tsx"
+        "types": "./src/components/buttons/emoji-reaction-button.tsx",
+        "import": "./src/components/buttons/emoji-reaction-button.tsx"
       },
       "types": "./dist/components/emoji-reaction-button.d.mts",
       "import": "./dist/components/emoji-reaction-button.mjs"
     },
     "./emoji-picker": {
       "@thenamespace/source": {
-        "types": "./src/components/emoji-picker.tsx",
-        "import": "./src/components/emoji-picker.tsx"
+        "types": "./src/components/overlays/emoji-picker.tsx",
+        "import": "./src/components/overlays/emoji-picker.tsx"
       },
       "types": "./dist/components/emoji-picker.d.mts",
       "import": "./dist/components/emoji-picker.mjs"
     },
     "./resizable": {
       "@thenamespace/source": {
-        "types": "./src/components/resizable.tsx",
-        "import": "./src/components/resizable.tsx"
+        "types": "./src/components/layout/resizable.tsx",
+        "import": "./src/components/layout/resizable.tsx"
       },
       "types": "./dist/components/resizable.d.mts",
       "import": "./dist/components/resizable.mjs"
     },
     "./cell-color-picker": {
       "@thenamespace/source": {
-        "types": "./src/components/cell-color-picker.tsx",
-        "import": "./src/components/cell-color-picker.tsx"
+        "types": "./src/components/forms/cell-color-picker.tsx",
+        "import": "./src/components/forms/cell-color-picker.tsx"
       },
       "types": "./dist/components/cell-color-picker.d.mts",
       "import": "./dist/components/cell-color-picker.mjs"
     },
     "./cell-select": {
       "@thenamespace/source": {
-        "types": "./src/components/cell-select.tsx",
-        "import": "./src/components/cell-select.tsx"
+        "types": "./src/components/forms/cell-select.tsx",
+        "import": "./src/components/forms/cell-select.tsx"
       },
       "types": "./dist/components/cell-select.d.mts",
       "import": "./dist/components/cell-select.mjs"
     },
     "./cell-slider": {
       "@thenamespace/source": {
-        "types": "./src/components/cell-slider.tsx",
-        "import": "./src/components/cell-slider.tsx"
+        "types": "./src/components/forms/cell-slider.tsx",
+        "import": "./src/components/forms/cell-slider.tsx"
       },
       "types": "./dist/components/cell-slider.d.mts",
       "import": "./dist/components/cell-slider.mjs"
     },
     "./cell-switch": {
       "@thenamespace/source": {
-        "types": "./src/components/cell-switch.tsx",
-        "import": "./src/components/cell-switch.tsx"
+        "types": "./src/components/forms/cell-switch.tsx",
+        "import": "./src/components/forms/cell-switch.tsx"
       },
       "types": "./dist/components/cell-switch.d.mts",
       "import": "./dist/components/cell-switch.mjs"
     },
     "./checkbox-button-group": {
       "@thenamespace/source": {
-        "types": "./src/components/checkbox-button-group.tsx",
-        "import": "./src/components/checkbox-button-group.tsx"
+        "types": "./src/components/forms/checkbox-button-group.tsx",
+        "import": "./src/components/forms/checkbox-button-group.tsx"
       },
       "types": "./dist/components/checkbox-button-group.d.mts",
       "import": "./dist/components/checkbox-button-group.mjs"
     },
     "./inline-select": {
       "@thenamespace/source": {
-        "types": "./src/components/inline-select.tsx",
-        "import": "./src/components/inline-select.tsx"
+        "types": "./src/components/forms/inline-select.tsx",
+        "import": "./src/components/forms/inline-select.tsx"
       },
       "types": "./dist/components/inline-select.d.mts",
       "import": "./dist/components/inline-select.mjs"
     },
     "./native-select": {
       "@thenamespace/source": {
-        "types": "./src/components/native-select.tsx",
-        "import": "./src/components/native-select.tsx"
+        "types": "./src/components/forms/native-select.tsx",
+        "import": "./src/components/forms/native-select.tsx"
       },
       "types": "./dist/components/native-select.d.mts",
       "import": "./dist/components/native-select.mjs"
     },
     "./radio-button-group": {
       "@thenamespace/source": {
-        "types": "./src/components/radio-button-group.tsx",
-        "import": "./src/components/radio-button-group.tsx"
+        "types": "./src/components/buttons/radio-button-group.tsx",
+        "import": "./src/components/buttons/radio-button-group.tsx"
       },
       "types": "./dist/components/radio-button-group.d.mts",
       "import": "./dist/components/radio-button-group.mjs"
     },
     "./drop-zone": {
       "@thenamespace/source": {
-        "types": "./src/components/drop-zone.tsx",
-        "import": "./src/components/drop-zone.tsx"
+        "types": "./src/components/forms/drop-zone.tsx",
+        "import": "./src/components/forms/drop-zone.tsx"
       },
       "types": "./dist/components/drop-zone.d.mts",
       "import": "./dist/components/drop-zone.mjs"
     },
     "./rich-text-editor": {
       "@thenamespace/source": {
-        "types": "./src/components/rich-text-editor.tsx",
-        "import": "./src/components/rich-text-editor.tsx"
+        "types": "./src/components/forms/rich-text-editor.tsx",
+        "import": "./src/components/forms/rich-text-editor.tsx"
       },
       "types": "./dist/components/rich-text-editor.d.mts",
       "import": "./dist/components/rich-text-editor.mjs"
     },
-    "./*": {
+    "./action-bar": {
       "@thenamespace/source": {
-        "types": "./src/components/*.tsx",
-        "import": "./src/components/*.tsx"
+        "types": "./src/components/buttons/action-bar.tsx",
+        "import": "./src/components/buttons/action-bar.tsx"
       },
+      "types": "./dist/components/action-bar.d.mts",
+      "import": "./dist/components/action-bar.mjs"
+    },
+    "./button-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/buttons/button-group.tsx",
+        "import": "./src/components/buttons/button-group.tsx"
+      },
+      "types": "./dist/components/button-group.d.mts",
+      "import": "./dist/components/button-group.mjs"
+    },
+    "./button": {
+      "@thenamespace/source": {
+        "types": "./src/components/buttons/button.tsx",
+        "import": "./src/components/buttons/button.tsx"
+      },
+      "types": "./dist/components/button.d.mts",
+      "import": "./dist/components/button.mjs"
+    },
+    "./close-button": {
+      "@thenamespace/source": {
+        "types": "./src/components/buttons/close-button.tsx",
+        "import": "./src/components/buttons/close-button.tsx"
+      },
+      "types": "./dist/components/close-button.d.mts",
+      "import": "./dist/components/close-button.mjs"
+    },
+    "./segment": {
+      "@thenamespace/source": {
+        "types": "./src/components/buttons/segment.tsx",
+        "import": "./src/components/buttons/segment.tsx"
+      },
+      "types": "./dist/components/segment.d.mts",
+      "import": "./dist/components/segment.mjs"
+    },
+    "./toggle-button-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/buttons/toggle-button-group.tsx",
+        "import": "./src/components/buttons/toggle-button-group.tsx"
+      },
+      "types": "./dist/components/toggle-button-group.d.mts",
+      "import": "./dist/components/toggle-button-group.mjs"
+    },
+    "./toggle-button": {
+      "@thenamespace/source": {
+        "types": "./src/components/buttons/toggle-button.tsx",
+        "import": "./src/components/buttons/toggle-button.tsx"
+      },
+      "types": "./dist/components/toggle-button.d.mts",
+      "import": "./dist/components/toggle-button.mjs"
+    },
+    "./data-grid": {
+      "@thenamespace/source": {
+        "types": "./src/components/collections/data-grid.tsx",
+        "import": "./src/components/collections/data-grid.tsx"
+      },
+      "types": "./dist/components/data-grid.d.mts",
+      "import": "./dist/components/data-grid.mjs"
+    },
+    "./dropdown": {
+      "@thenamespace/source": {
+        "types": "./src/components/collections/dropdown.tsx",
+        "import": "./src/components/collections/dropdown.tsx"
+      },
+      "types": "./dist/components/dropdown.d.mts",
+      "import": "./dist/components/dropdown.mjs"
+    },
+    "./file-tree": {
+      "@thenamespace/source": {
+        "types": "./src/components/collections/file-tree.tsx",
+        "import": "./src/components/collections/file-tree.tsx"
+      },
+      "types": "./dist/components/file-tree.d.mts",
+      "import": "./dist/components/file-tree.mjs"
+    },
+    "./kanban": {
+      "@thenamespace/source": {
+        "types": "./src/components/collections/kanban.tsx",
+        "import": "./src/components/collections/kanban.tsx"
+      },
+      "types": "./dist/components/kanban.d.mts",
+      "import": "./dist/components/kanban.mjs"
+    },
+    "./list-box-item": {
+      "@thenamespace/source": {
+        "types": "./src/components/collections/list-box-item.tsx",
+        "import": "./src/components/collections/list-box-item.tsx"
+      },
+      "types": "./dist/components/list-box-item.d.mts",
+      "import": "./dist/components/list-box-item.mjs"
+    },
+    "./list-box-section": {
+      "@thenamespace/source": {
+        "types": "./src/components/collections/list-box-section.tsx",
+        "import": "./src/components/collections/list-box-section.tsx"
+      },
+      "types": "./dist/components/list-box-section.d.mts",
+      "import": "./dist/components/list-box-section.mjs"
+    },
+    "./list-box": {
+      "@thenamespace/source": {
+        "types": "./src/components/collections/list-box.tsx",
+        "import": "./src/components/collections/list-box.tsx"
+      },
+      "types": "./dist/components/list-box.d.mts",
+      "import": "./dist/components/list-box.mjs"
+    },
+    "./list-view": {
+      "@thenamespace/source": {
+        "types": "./src/components/collections/list-view.tsx",
+        "import": "./src/components/collections/list-view.tsx"
+      },
+      "types": "./dist/components/list-view.d.mts",
+      "import": "./dist/components/list-view.mjs"
+    },
+    "./tag-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/collections/tag-group.tsx",
+        "import": "./src/components/collections/tag-group.tsx"
+      },
+      "types": "./dist/components/tag-group.d.mts",
+      "import": "./dist/components/tag-group.mjs"
+    },
+    "./tag": {
+      "@thenamespace/source": {
+        "types": "./src/components/collections/tag.tsx",
+        "import": "./src/components/collections/tag.tsx"
+      },
+      "types": "./dist/components/tag.d.mts",
+      "import": "./dist/components/tag.mjs"
+    },
+    "./color-area": {
+      "@thenamespace/source": {
+        "types": "./src/components/colors/color-area.tsx",
+        "import": "./src/components/colors/color-area.tsx"
+      },
+      "types": "./dist/components/color-area.d.mts",
+      "import": "./dist/components/color-area.mjs"
+    },
+    "./color-field": {
+      "@thenamespace/source": {
+        "types": "./src/components/colors/color-field.tsx",
+        "import": "./src/components/colors/color-field.tsx"
+      },
+      "types": "./dist/components/color-field.d.mts",
+      "import": "./dist/components/color-field.mjs"
+    },
+    "./color-input-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/colors/color-input-group.tsx",
+        "import": "./src/components/colors/color-input-group.tsx"
+      },
+      "types": "./dist/components/color-input-group.d.mts",
+      "import": "./dist/components/color-input-group.mjs"
+    },
+    "./color-picker": {
+      "@thenamespace/source": {
+        "types": "./src/components/colors/color-picker.tsx",
+        "import": "./src/components/colors/color-picker.tsx"
+      },
+      "types": "./dist/components/color-picker.d.mts",
+      "import": "./dist/components/color-picker.mjs"
+    },
+    "./color-slider": {
+      "@thenamespace/source": {
+        "types": "./src/components/colors/color-slider.tsx",
+        "import": "./src/components/colors/color-slider.tsx"
+      },
+      "types": "./dist/components/color-slider.d.mts",
+      "import": "./dist/components/color-slider.mjs"
+    },
+    "./color-swatch-picker": {
+      "@thenamespace/source": {
+        "types": "./src/components/colors/color-swatch-picker.tsx",
+        "import": "./src/components/colors/color-swatch-picker.tsx"
+      },
+      "types": "./dist/components/color-swatch-picker.d.mts",
+      "import": "./dist/components/color-swatch-picker.mjs"
+    },
+    "./color-swatch": {
+      "@thenamespace/source": {
+        "types": "./src/components/colors/color-swatch.tsx",
+        "import": "./src/components/colors/color-swatch.tsx"
+      },
+      "types": "./dist/components/color-swatch.d.mts",
+      "import": "./dist/components/color-swatch.mjs"
+    },
+    "./avatar": {
+      "@thenamespace/source": {
+        "types": "./src/components/data-display/avatar.tsx",
+        "import": "./src/components/data-display/avatar.tsx"
+      },
+      "types": "./dist/components/avatar.d.mts",
+      "import": "./dist/components/avatar.mjs"
+    },
+    "./badge": {
+      "@thenamespace/source": {
+        "types": "./src/components/data-display/badge.tsx",
+        "import": "./src/components/data-display/badge.tsx"
+      },
+      "types": "./dist/components/badge.d.mts",
+      "import": "./dist/components/badge.mjs"
+    },
+    "./carousel": {
+      "@thenamespace/source": {
+        "types": "./src/components/data-display/carousel.tsx",
+        "import": "./src/components/data-display/carousel.tsx"
+      },
+      "types": "./dist/components/carousel.d.mts",
+      "import": "./dist/components/carousel.mjs"
+    },
+    "./chip": {
+      "@thenamespace/source": {
+        "types": "./src/components/data-display/chip.tsx",
+        "import": "./src/components/data-display/chip.tsx"
+      },
+      "types": "./dist/components/chip.d.mts",
+      "import": "./dist/components/chip.mjs"
+    },
+    "./item-card-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/data-display/item-card-group.tsx",
+        "import": "./src/components/data-display/item-card-group.tsx"
+      },
+      "types": "./dist/components/item-card-group.d.mts",
+      "import": "./dist/components/item-card-group.mjs"
+    },
+    "./item-card": {
+      "@thenamespace/source": {
+        "types": "./src/components/data-display/item-card.tsx",
+        "import": "./src/components/data-display/item-card.tsx"
+      },
+      "types": "./dist/components/item-card.d.mts",
+      "import": "./dist/components/item-card.mjs"
+    },
+    "./kpi-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/data-display/kpi-group.tsx",
+        "import": "./src/components/data-display/kpi-group.tsx"
+      },
+      "types": "./dist/components/kpi-group.d.mts",
+      "import": "./dist/components/kpi-group.mjs"
+    },
+    "./kpi": {
+      "@thenamespace/source": {
+        "types": "./src/components/data-display/kpi.tsx",
+        "import": "./src/components/data-display/kpi.tsx"
+      },
+      "types": "./dist/components/kpi.d.mts",
+      "import": "./dist/components/kpi.mjs"
+    },
+    "./map": {
+      "@thenamespace/source": {
+        "types": "./src/components/data-display/map.tsx",
+        "import": "./src/components/data-display/map.tsx"
+      },
+      "types": "./dist/components/map.d.mts",
+      "import": "./dist/components/map.mjs"
+    },
+    "./table": {
+      "@thenamespace/source": {
+        "types": "./src/components/data-display/table.tsx",
+        "import": "./src/components/data-display/table.tsx"
+      },
+      "types": "./dist/components/table.d.mts",
+      "import": "./dist/components/table.mjs"
+    },
+    "./timeline": {
+      "@thenamespace/source": {
+        "types": "./src/components/data-display/timeline.tsx",
+        "import": "./src/components/data-display/timeline.tsx"
+      },
+      "types": "./dist/components/timeline.d.mts",
+      "import": "./dist/components/timeline.mjs"
+    },
+    "./widget": {
+      "@thenamespace/source": {
+        "types": "./src/components/data-display/widget.tsx",
+        "import": "./src/components/data-display/widget.tsx"
+      },
+      "types": "./dist/components/widget.d.mts",
+      "import": "./dist/components/widget.mjs"
+    },
+    "./agenda": {
+      "@thenamespace/source": {
+        "types": "./src/components/date-and-time/agenda.tsx",
+        "import": "./src/components/date-and-time/agenda.tsx"
+      },
+      "types": "./dist/components/agenda.d.mts",
+      "import": "./dist/components/agenda.mjs"
+    },
+    "./calendar-year-picker": {
+      "@thenamespace/source": {
+        "types": "./src/components/date-and-time/calendar-year-picker.tsx",
+        "import": "./src/components/date-and-time/calendar-year-picker.tsx"
+      },
+      "types": "./dist/components/calendar-year-picker.d.mts",
+      "import": "./dist/components/calendar-year-picker.mjs"
+    },
+    "./calendar": {
+      "@thenamespace/source": {
+        "types": "./src/components/date-and-time/calendar.tsx",
+        "import": "./src/components/date-and-time/calendar.tsx"
+      },
+      "types": "./dist/components/calendar.d.mts",
+      "import": "./dist/components/calendar.mjs"
+    },
+    "./date-field": {
+      "@thenamespace/source": {
+        "types": "./src/components/date-and-time/date-field.tsx",
+        "import": "./src/components/date-and-time/date-field.tsx"
+      },
+      "types": "./dist/components/date-field.d.mts",
+      "import": "./dist/components/date-field.mjs"
+    },
+    "./date-input-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/date-and-time/date-input-group.tsx",
+        "import": "./src/components/date-and-time/date-input-group.tsx"
+      },
+      "types": "./dist/components/date-input-group.d.mts",
+      "import": "./dist/components/date-input-group.mjs"
+    },
+    "./date-picker": {
+      "@thenamespace/source": {
+        "types": "./src/components/date-and-time/date-picker.tsx",
+        "import": "./src/components/date-and-time/date-picker.tsx"
+      },
+      "types": "./dist/components/date-picker.d.mts",
+      "import": "./dist/components/date-picker.mjs"
+    },
+    "./date-range-picker": {
+      "@thenamespace/source": {
+        "types": "./src/components/date-and-time/date-range-picker.tsx",
+        "import": "./src/components/date-and-time/date-range-picker.tsx"
+      },
+      "types": "./dist/components/date-range-picker.d.mts",
+      "import": "./dist/components/date-range-picker.mjs"
+    },
+    "./range-calendar": {
+      "@thenamespace/source": {
+        "types": "./src/components/date-and-time/range-calendar.tsx",
+        "import": "./src/components/date-and-time/range-calendar.tsx"
+      },
+      "types": "./dist/components/range-calendar.d.mts",
+      "import": "./dist/components/range-calendar.mjs"
+    },
+    "./time-field": {
+      "@thenamespace/source": {
+        "types": "./src/components/date-and-time/time-field.tsx",
+        "import": "./src/components/date-and-time/time-field.tsx"
+      },
+      "types": "./dist/components/time-field.d.mts",
+      "import": "./dist/components/time-field.mjs"
+    },
+    "./alert": {
+      "@thenamespace/source": {
+        "types": "./src/components/feedback/alert.tsx",
+        "import": "./src/components/feedback/alert.tsx"
+      },
+      "types": "./dist/components/alert.d.mts",
+      "import": "./dist/components/alert.mjs"
+    },
+    "./empty-state": {
+      "@thenamespace/source": {
+        "types": "./src/components/feedback/empty-state.tsx",
+        "import": "./src/components/feedback/empty-state.tsx"
+      },
+      "types": "./dist/components/empty-state.d.mts",
+      "import": "./dist/components/empty-state.mjs"
+    },
+    "./meter": {
+      "@thenamespace/source": {
+        "types": "./src/components/feedback/meter.tsx",
+        "import": "./src/components/feedback/meter.tsx"
+      },
+      "types": "./dist/components/meter.d.mts",
+      "import": "./dist/components/meter.mjs"
+    },
+    "./progress-bar": {
+      "@thenamespace/source": {
+        "types": "./src/components/feedback/progress-bar.tsx",
+        "import": "./src/components/feedback/progress-bar.tsx"
+      },
+      "types": "./dist/components/progress-bar.d.mts",
+      "import": "./dist/components/progress-bar.mjs"
+    },
+    "./progress-circle": {
+      "@thenamespace/source": {
+        "types": "./src/components/feedback/progress-circle.tsx",
+        "import": "./src/components/feedback/progress-circle.tsx"
+      },
+      "types": "./dist/components/progress-circle.d.mts",
+      "import": "./dist/components/progress-circle.mjs"
+    },
+    "./skeleton": {
+      "@thenamespace/source": {
+        "types": "./src/components/feedback/skeleton.tsx",
+        "import": "./src/components/feedback/skeleton.tsx"
+      },
+      "types": "./dist/components/skeleton.d.mts",
+      "import": "./dist/components/skeleton.mjs"
+    },
+    "./spinner": {
+      "@thenamespace/source": {
+        "types": "./src/components/feedback/spinner.tsx",
+        "import": "./src/components/feedback/spinner.tsx"
+      },
+      "types": "./dist/components/spinner.d.mts",
+      "import": "./dist/components/spinner.mjs"
+    },
+    "./toast": {
+      "@thenamespace/source": {
+        "types": "./src/components/feedback/toast.tsx",
+        "import": "./src/components/feedback/toast.tsx"
+      },
+      "types": "./dist/components/toast.d.mts",
+      "import": "./dist/components/toast.mjs"
+    },
+    "./autocomplete": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/autocomplete.tsx",
+        "import": "./src/components/forms/autocomplete.tsx"
+      },
+      "types": "./dist/components/autocomplete.d.mts",
+      "import": "./dist/components/autocomplete.mjs"
+    },
+    "./checkbox-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/checkbox-group.tsx",
+        "import": "./src/components/forms/checkbox-group.tsx"
+      },
+      "types": "./dist/components/checkbox-group.d.mts",
+      "import": "./dist/components/checkbox-group.mjs"
+    },
+    "./checkbox": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/checkbox.tsx",
+        "import": "./src/components/forms/checkbox.tsx"
+      },
+      "types": "./dist/components/checkbox.d.mts",
+      "import": "./dist/components/checkbox.mjs"
+    },
+    "./combo-box": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/combo-box.tsx",
+        "import": "./src/components/forms/combo-box.tsx"
+      },
+      "types": "./dist/components/combo-box.d.mts",
+      "import": "./dist/components/combo-box.mjs"
+    },
+    "./description": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/description.tsx",
+        "import": "./src/components/forms/description.tsx"
+      },
+      "types": "./dist/components/description.d.mts",
+      "import": "./dist/components/description.mjs"
+    },
+    "./error-message": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/error-message.tsx",
+        "import": "./src/components/forms/error-message.tsx"
+      },
+      "types": "./dist/components/error-message.d.mts",
+      "import": "./dist/components/error-message.mjs"
+    },
+    "./field-error": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/field-error.tsx",
+        "import": "./src/components/forms/field-error.tsx"
+      },
+      "types": "./dist/components/field-error.d.mts",
+      "import": "./dist/components/field-error.mjs"
+    },
+    "./fieldset": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/fieldset.tsx",
+        "import": "./src/components/forms/fieldset.tsx"
+      },
+      "types": "./dist/components/fieldset.d.mts",
+      "import": "./dist/components/fieldset.mjs"
+    },
+    "./form": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/form.tsx",
+        "import": "./src/components/forms/form.tsx"
+      },
+      "types": "./dist/components/form.d.mts",
+      "import": "./dist/components/form.mjs"
+    },
+    "./input-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/input-group.tsx",
+        "import": "./src/components/forms/input-group.tsx"
+      },
+      "types": "./dist/components/input-group.d.mts",
+      "import": "./dist/components/input-group.mjs"
+    },
+    "./input-otp": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/input-otp.tsx",
+        "import": "./src/components/forms/input-otp.tsx"
+      },
+      "types": "./dist/components/input-otp.d.mts",
+      "import": "./dist/components/input-otp.mjs"
+    },
+    "./input": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/input.tsx",
+        "import": "./src/components/forms/input.tsx"
+      },
+      "types": "./dist/components/input.d.mts",
+      "import": "./dist/components/input.mjs"
+    },
+    "./label": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/label.tsx",
+        "import": "./src/components/forms/label.tsx"
+      },
+      "types": "./dist/components/label.d.mts",
+      "import": "./dist/components/label.mjs"
+    },
+    "./number-field": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/number-field.tsx",
+        "import": "./src/components/forms/number-field.tsx"
+      },
+      "types": "./dist/components/number-field.d.mts",
+      "import": "./dist/components/number-field.mjs"
+    },
+    "./radio-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/radio-group.tsx",
+        "import": "./src/components/forms/radio-group.tsx"
+      },
+      "types": "./dist/components/radio-group.d.mts",
+      "import": "./dist/components/radio-group.mjs"
+    },
+    "./radio": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/radio.tsx",
+        "import": "./src/components/forms/radio.tsx"
+      },
+      "types": "./dist/components/radio.d.mts",
+      "import": "./dist/components/radio.mjs"
+    },
+    "./search-field": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/search-field.tsx",
+        "import": "./src/components/forms/search-field.tsx"
+      },
+      "types": "./dist/components/search-field.d.mts",
+      "import": "./dist/components/search-field.mjs"
+    },
+    "./select": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/select.tsx",
+        "import": "./src/components/forms/select.tsx"
+      },
+      "types": "./dist/components/select.d.mts",
+      "import": "./dist/components/select.mjs"
+    },
+    "./slider": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/slider.tsx",
+        "import": "./src/components/forms/slider.tsx"
+      },
+      "types": "./dist/components/slider.d.mts",
+      "import": "./dist/components/slider.mjs"
+    },
+    "./switch-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/switch-group.tsx",
+        "import": "./src/components/forms/switch-group.tsx"
+      },
+      "types": "./dist/components/switch-group.d.mts",
+      "import": "./dist/components/switch-group.mjs"
+    },
+    "./switch": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/switch.tsx",
+        "import": "./src/components/forms/switch.tsx"
+      },
+      "types": "./dist/components/switch.d.mts",
+      "import": "./dist/components/switch.mjs"
+    },
+    "./textarea": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/textarea.tsx",
+        "import": "./src/components/forms/textarea.tsx"
+      },
+      "types": "./dist/components/textarea.d.mts",
+      "import": "./dist/components/textarea.mjs"
+    },
+    "./textfield": {
+      "@thenamespace/source": {
+        "types": "./src/components/forms/textfield.tsx",
+        "import": "./src/components/forms/textfield.tsx"
+      },
+      "types": "./dist/components/textfield.d.mts",
+      "import": "./dist/components/textfield.mjs"
+    },
+    "./app-layout": {
+      "@thenamespace/source": {
+        "types": "./src/components/layout/app-layout.tsx",
+        "import": "./src/components/layout/app-layout.tsx"
+      },
+      "types": "./dist/components/app-layout.d.mts",
+      "import": "./dist/components/app-layout.mjs"
+    },
+    "./card": {
+      "@thenamespace/source": {
+        "types": "./src/components/layout/card.tsx",
+        "import": "./src/components/layout/card.tsx"
+      },
+      "types": "./dist/components/card.d.mts",
+      "import": "./dist/components/card.mjs"
+    },
+    "./scroll-shadow": {
+      "@thenamespace/source": {
+        "types": "./src/components/layout/scroll-shadow.tsx",
+        "import": "./src/components/layout/scroll-shadow.tsx"
+      },
+      "types": "./dist/components/scroll-shadow.d.mts",
+      "import": "./dist/components/scroll-shadow.mjs"
+    },
+    "./separator": {
+      "@thenamespace/source": {
+        "types": "./src/components/layout/separator.tsx",
+        "import": "./src/components/layout/separator.tsx"
+      },
+      "types": "./dist/components/separator.d.mts",
+      "import": "./dist/components/separator.mjs"
+    },
+    "./surface": {
+      "@thenamespace/source": {
+        "types": "./src/components/layout/surface.tsx",
+        "import": "./src/components/layout/surface.tsx"
+      },
+      "types": "./dist/components/surface.d.mts",
+      "import": "./dist/components/surface.mjs"
+    },
+    "./toolbar": {
+      "@thenamespace/source": {
+        "types": "./src/components/layout/toolbar.tsx",
+        "import": "./src/components/layout/toolbar.tsx"
+      },
+      "types": "./dist/components/toolbar.d.mts",
+      "import": "./dist/components/toolbar.mjs"
+    },
+    "./accordion": {
+      "@thenamespace/source": {
+        "types": "./src/components/navigation/accordion.tsx",
+        "import": "./src/components/navigation/accordion.tsx"
+      },
+      "types": "./dist/components/accordion.d.mts",
+      "import": "./dist/components/accordion.mjs"
+    },
+    "./breadcrumbs": {
+      "@thenamespace/source": {
+        "types": "./src/components/navigation/breadcrumbs.tsx",
+        "import": "./src/components/navigation/breadcrumbs.tsx"
+      },
+      "types": "./dist/components/breadcrumbs.d.mts",
+      "import": "./dist/components/breadcrumbs.mjs"
+    },
+    "./disclosure-group": {
+      "@thenamespace/source": {
+        "types": "./src/components/navigation/disclosure-group.tsx",
+        "import": "./src/components/navigation/disclosure-group.tsx"
+      },
+      "types": "./dist/components/disclosure-group.d.mts",
+      "import": "./dist/components/disclosure-group.mjs"
+    },
+    "./disclosure": {
+      "@thenamespace/source": {
+        "types": "./src/components/navigation/disclosure.tsx",
+        "import": "./src/components/navigation/disclosure.tsx"
+      },
+      "types": "./dist/components/disclosure.d.mts",
+      "import": "./dist/components/disclosure.mjs"
+    },
+    "./floating-toc": {
+      "@thenamespace/source": {
+        "types": "./src/components/navigation/floating-toc.tsx",
+        "import": "./src/components/navigation/floating-toc.tsx"
+      },
+      "types": "./dist/components/floating-toc.d.mts",
+      "import": "./dist/components/floating-toc.mjs"
+    },
+    "./link": {
+      "@thenamespace/source": {
+        "types": "./src/components/navigation/link.tsx",
+        "import": "./src/components/navigation/link.tsx"
+      },
+      "types": "./dist/components/link.d.mts",
+      "import": "./dist/components/link.mjs"
+    },
+    "./navbar": {
+      "@thenamespace/source": {
+        "types": "./src/components/navigation/navbar.tsx",
+        "import": "./src/components/navigation/navbar.tsx"
+      },
+      "types": "./dist/components/navbar.d.mts",
+      "import": "./dist/components/navbar.mjs"
+    },
+    "./pagination": {
+      "@thenamespace/source": {
+        "types": "./src/components/navigation/pagination.tsx",
+        "import": "./src/components/navigation/pagination.tsx"
+      },
+      "types": "./dist/components/pagination.d.mts",
+      "import": "./dist/components/pagination.mjs"
+    },
+    "./sidebar": {
+      "@thenamespace/source": {
+        "types": "./src/components/navigation/sidebar.tsx",
+        "import": "./src/components/navigation/sidebar.tsx"
+      },
+      "types": "./dist/components/sidebar.d.mts",
+      "import": "./dist/components/sidebar.mjs"
+    },
+    "./stepper": {
+      "@thenamespace/source": {
+        "types": "./src/components/navigation/stepper.tsx",
+        "import": "./src/components/navigation/stepper.tsx"
+      },
+      "types": "./dist/components/stepper.d.mts",
+      "import": "./dist/components/stepper.mjs"
+    },
+    "./tabs": {
+      "@thenamespace/source": {
+        "types": "./src/components/navigation/tabs.tsx",
+        "import": "./src/components/navigation/tabs.tsx"
+      },
+      "types": "./dist/components/tabs.d.mts",
+      "import": "./dist/components/tabs.mjs"
+    },
+    "./alert-dialog": {
+      "@thenamespace/source": {
+        "types": "./src/components/overlays/alert-dialog.tsx",
+        "import": "./src/components/overlays/alert-dialog.tsx"
+      },
+      "types": "./dist/components/alert-dialog.d.mts",
+      "import": "./dist/components/alert-dialog.mjs"
+    },
+    "./command": {
+      "@thenamespace/source": {
+        "types": "./src/components/overlays/command.tsx",
+        "import": "./src/components/overlays/command.tsx"
+      },
+      "types": "./dist/components/command.d.mts",
+      "import": "./dist/components/command.mjs"
+    },
+    "./context-menu": {
+      "@thenamespace/source": {
+        "types": "./src/components/overlays/context-menu.tsx",
+        "import": "./src/components/overlays/context-menu.tsx"
+      },
+      "types": "./dist/components/context-menu.d.mts",
+      "import": "./dist/components/context-menu.mjs"
+    },
+    "./drawer": {
+      "@thenamespace/source": {
+        "types": "./src/components/overlays/drawer.tsx",
+        "import": "./src/components/overlays/drawer.tsx"
+      },
+      "types": "./dist/components/drawer.d.mts",
+      "import": "./dist/components/drawer.mjs"
+    },
+    "./hover-card": {
+      "@thenamespace/source": {
+        "types": "./src/components/overlays/hover-card.tsx",
+        "import": "./src/components/overlays/hover-card.tsx"
+      },
+      "types": "./dist/components/hover-card.d.mts",
+      "import": "./dist/components/hover-card.mjs"
+    },
+    "./menu-item": {
+      "@thenamespace/source": {
+        "types": "./src/components/overlays/menu-item.tsx",
+        "import": "./src/components/overlays/menu-item.tsx"
+      },
+      "types": "./dist/components/menu-item.d.mts",
+      "import": "./dist/components/menu-item.mjs"
+    },
+    "./menu-section": {
+      "@thenamespace/source": {
+        "types": "./src/components/overlays/menu-section.tsx",
+        "import": "./src/components/overlays/menu-section.tsx"
+      },
+      "types": "./dist/components/menu-section.d.mts",
+      "import": "./dist/components/menu-section.mjs"
+    },
+    "./menu": {
+      "@thenamespace/source": {
+        "types": "./src/components/overlays/menu.tsx",
+        "import": "./src/components/overlays/menu.tsx"
+      },
+      "types": "./dist/components/menu.d.mts",
+      "import": "./dist/components/menu.mjs"
+    },
+    "./modal": {
+      "@thenamespace/source": {
+        "types": "./src/components/overlays/modal.tsx",
+        "import": "./src/components/overlays/modal.tsx"
+      },
+      "types": "./dist/components/modal.d.mts",
+      "import": "./dist/components/modal.mjs"
+    },
+    "./popover": {
+      "@thenamespace/source": {
+        "types": "./src/components/overlays/popover.tsx",
+        "import": "./src/components/overlays/popover.tsx"
+      },
+      "types": "./dist/components/popover.d.mts",
+      "import": "./dist/components/popover.mjs"
+    },
+    "./sheet": {
+      "@thenamespace/source": {
+        "types": "./src/components/overlays/sheet.tsx",
+        "import": "./src/components/overlays/sheet.tsx"
+      },
+      "types": "./dist/components/sheet.d.mts",
+      "import": "./dist/components/sheet.mjs"
+    },
+    "./tooltip": {
+      "@thenamespace/source": {
+        "types": "./src/components/overlays/tooltip.tsx",
+        "import": "./src/components/overlays/tooltip.tsx"
+      },
+      "types": "./dist/components/tooltip.d.mts",
+      "import": "./dist/components/tooltip.mjs"
+    },
+    "./header": {
+      "@thenamespace/source": {
+        "types": "./src/components/typography/header.tsx",
+        "import": "./src/components/typography/header.tsx"
+      },
+      "types": "./dist/components/header.d.mts",
+      "import": "./dist/components/header.mjs"
+    },
+    "./kbd": {
+      "@thenamespace/source": {
+        "types": "./src/components/typography/kbd.tsx",
+        "import": "./src/components/typography/kbd.tsx"
+      },
+      "types": "./dist/components/kbd.d.mts",
+      "import": "./dist/components/kbd.mjs"
+    },
+    "./typography": {
+      "@thenamespace/source": {
+        "types": "./src/components/typography/typography.tsx",
+        "import": "./src/components/typography/typography.tsx"
+      },
+      "types": "./dist/components/typography.d.mts",
+      "import": "./dist/components/typography.mjs"
+    },
+    "./rac": {
+      "@thenamespace/source": {
+        "types": "./src/components/utilities/rac.tsx",
+        "import": "./src/components/utilities/rac.tsx"
+      },
+      "types": "./dist/components/rac.d.mts",
+      "import": "./dist/components/rac.mjs"
+    },
+    "./*": {
       "types": "./dist/components/*.d.mts",
       "import": "./dist/components/*.mjs"
     },

@@ -9,7 +9,7 @@ import {
   ListView,
   type ListViewRootProps,
   type ListViewItemProps,
-} from "./list-view";
+} from "../collections/list-view";
 
 export type ChatListViewDensity = "comfortable" | "compact";
 

@@ -108,4 +108,15 @@ For the three overlapping names `CircleDashedIcon`, `DangerIcon`, and `ExternalL
 - [HeroUI styling](https://www.heroui.com/docs/handbook/styling)
 - [HeroUI composition](https://www.heroui.com/docs/handbook/composition)
 
-Namespace UI Kit targets HeroUI v3. When HeroUI adds a component subpath, add the corresponding pass-through file under `src/components`; the build discovers component entry files automatically.
+Namespace UI Kit targets HeroUI v3. Component source is organized by domain under
+`src/components` (`ai`, `buttons`, `charts`, `collections`, `colors`,
+`data-display`, `date-and-time`, `feedback`, `forms`, `layout`, `navigation`,
+`overlays`, `typography`, and `utilities`). Each domain re-exports its components
+and component-owned helper hooks through its `index.ts`.
+
+Public component imports intentionally remain one level deep regardless of their
+source group. For example, `src/components/date-and-time/agenda.tsx` is published
+as `@thenamespace/uikit/agenda`, not `@thenamespace/uikit/date-and-time/agenda`.
+When adding a component, place it in the appropriate domain and add its flat
+source-condition mapping to `package.json`; the build discovers grouped component
+entries automatically.

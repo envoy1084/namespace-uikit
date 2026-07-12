@@ -27,7 +27,7 @@ import {
   TreeSection,
 } from "react-aria-components";
 
-import { Sheet } from "./sheet";
+import { Sheet } from "../overlays/sheet";
 
 export type SidebarSide = "left" | "right";
 export type SidebarVariant = "floating" | "inset" | "sidebar";

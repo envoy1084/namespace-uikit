@@ -5,17 +5,19 @@ import { defineConfig } from "tsdown";
 
 const componentEntries = Object.fromEntries(
   readdirSync("src/components", { withFileTypes: true })
-    .filter(
-      (entry) =>
-        entry.isFile() &&
-        entry.name.endsWith(".tsx") &&
-        entry.name !== "index.ts",
-    )
-    .map((entry) => {
-      const name = basename(entry.name, extname(entry.name));
+    .filter((entry) => entry.isDirectory())
+    .flatMap((group) =>
+      readdirSync(`src/components/${group.name}`, { withFileTypes: true })
+        .filter((entry) => entry.isFile() && entry.name.endsWith(".tsx"))
+        .map((entry) => {
+          const name = basename(entry.name, extname(entry.name));
 
-      return [`components/${name}`, `src/components/${entry.name}`];
-    }),
+          return [
+            `components/${name}`,
+            `src/components/${group.name}/${entry.name}`,
+          ];
+        }),
+    ),
 );
 
 export default defineConfig({
@@ -327,15 +329,6 @@ export default defineConfig({
   },
   entry: {
     ...componentEntries,
-    "components/area-chart": "src/components/charts/area-chart.tsx",
-    "components/bar-chart": "src/components/charts/bar-chart.tsx",
-    "components/chart-tooltip": "src/components/charts/chart-tooltip.tsx",
-    "components/composed-chart": "src/components/charts/composed-chart.tsx",
-    "components/line-chart": "src/components/charts/line-chart.tsx",
-    "components/number-stepper": "src/components/forms/number-stepper.tsx",
-    "components/pie-chart": "src/components/charts/pie-chart.tsx",
-    "components/radar-chart": "src/components/charts/radar-chart.tsx",
-    "components/radial-chart": "src/components/charts/radial-chart.tsx",
     hooks: "src/hooks.ts",
     icons: "src/icons.ts",
     index: "src/index.ts",

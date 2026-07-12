@@ -10,7 +10,7 @@ import {
 
 import { cn, Disclosure } from "@heroui/react";
 
-import { HoverCard } from "./hover-card";
+import { HoverCard } from "../overlays/hover-card";
 export type ChatSourceType = "document" | "url";
 interface SourceContext {
   description?: string | undefined;
