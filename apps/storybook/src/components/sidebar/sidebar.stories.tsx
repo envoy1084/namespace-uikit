@@ -11,6 +11,7 @@ import {
   Kbd,
   Label,
   Segment,
+  Tooltip,
 } from "@thenamespace/uikit";
 import {
   Analytics01Icon,
@@ -1508,6 +1509,719 @@ function ComplexDemo() {
     </Sidebar.Provider>
   );
 }
+
+const meetingChats = [
+  ["Call Prep Notes for Upco...", "4m"],
+  ["Q2 Marketing Strategy", "12m"],
+  ["Design System Migration", "1h"],
+  ["Sprint Retro Action Items", "3h"],
+] as const;
+
+function MeetingNotesDemo() {
+  return (
+    <Sidebar.Provider collapsible="offcanvas">
+      <Sidebar>
+        <Sidebar.Header>
+          <Button className="w-full justify-start" variant="tertiary">
+            <HugeiconsIcon icon={Search01Icon} size={16} />
+            <span>Search</span>
+            <Kbd className="ml-auto text-xs">
+              <Kbd.Abbr keyValue="command" />
+              <Kbd.Content>K</Kbd.Content>
+            </Kbd>
+          </Button>
+        </Sidebar.Header>
+        <Sidebar.Content>
+          <Sidebar.Group>
+            <Sidebar.Menu
+              aria-label="Main navigation"
+              defaultExpandedKeys={["meeting-chat"]}
+            >
+              <Sidebar.MenuItem href="#" id="meeting-home" textValue="Home">
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={Home01Icon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel>Home</Sidebar.MenuLabel>
+              </Sidebar.MenuItem>
+              <Sidebar.MenuItem
+                href="#"
+                id="meeting-shared"
+                textValue="Shared with me"
+              >
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={UserMultipleIcon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel>Shared with me</Sidebar.MenuLabel>
+              </Sidebar.MenuItem>
+              <Sidebar.MenuItem id="meeting-chat" textValue="Chat">
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={Notification01Icon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel>
+                  Chat
+                  <Sidebar.MenuTrigger>
+                    <Sidebar.MenuIndicator />
+                  </Sidebar.MenuTrigger>
+                </Sidebar.MenuLabel>
+                <Sidebar.Submenu>
+                  {meetingChats.map(([label, time]) => (
+                    <Sidebar.MenuItem
+                      href="#"
+                      id={`meeting-chat-${label}`}
+                      key={label}
+                      textValue={label}
+                    >
+                      <Sidebar.MenuLabel>{label}</Sidebar.MenuLabel>
+                      <Sidebar.MenuChip>{time}</Sidebar.MenuChip>
+                    </Sidebar.MenuItem>
+                  ))}
+                </Sidebar.Submenu>
+              </Sidebar.MenuItem>
+            </Sidebar.Menu>
+          </Sidebar.Group>
+          <Sidebar.Group>
+            <Sidebar.GroupLabel>Spaces</Sidebar.GroupLabel>
+            <Sidebar.Menu
+              aria-label="Spaces"
+              defaultExpandedKeys={["meeting-my-notes"]}
+            >
+              <Sidebar.MenuItem id="meeting-my-notes" textValue="My notes">
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={LibraryIcon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel>
+                  My notes
+                  <Sidebar.MenuTrigger>
+                    <Sidebar.MenuIndicator />
+                  </Sidebar.MenuTrigger>
+                </Sidebar.MenuLabel>
+                <Sidebar.Submenu>
+                  <Sidebar.MenuItem
+                    href="#"
+                    id="meeting-personal"
+                    textValue="Personal"
+                  >
+                    <Sidebar.MenuLabel>Personal</Sidebar.MenuLabel>
+                  </Sidebar.MenuItem>
+                </Sidebar.Submenu>
+              </Sidebar.MenuItem>
+              <Sidebar.MenuItem
+                href="#"
+                id="meeting-design-team"
+                textValue="Design team"
+              >
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={UserMultipleIcon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel>Design team</Sidebar.MenuLabel>
+              </Sidebar.MenuItem>
+              <Sidebar.MenuItem id="meeting-add-folder" textValue="Add folder">
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={Add01Icon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel className="text-muted">
+                  Add folder
+                </Sidebar.MenuLabel>
+              </Sidebar.MenuItem>
+            </Sidebar.Menu>
+          </Sidebar.Group>
+        </Sidebar.Content>
+        <Sidebar.Footer>
+          <div className="flex items-center gap-1">
+            <Button aria-label="Notes" isIconOnly size="sm" variant="ghost">
+              <HugeiconsIcon icon={File01Icon} size={16} />
+            </Button>
+            <Button aria-label="People" isIconOnly size="sm" variant="ghost">
+              <HugeiconsIcon icon={UserMultipleIcon} size={16} />
+            </Button>
+            <Button aria-label="Teams" isIconOnly size="sm" variant="ghost">
+              <HugeiconsIcon icon={Globe02Icon} size={16} />
+            </Button>
+          </div>
+          <Sidebar.Separator />
+          <Dropdown>
+            <Dropdown.Trigger
+              aria-label="Sarah"
+              className="w-full justify-start"
+            >
+              <Avatar className="size-7">
+                <Avatar.Fallback>Sarah</Avatar.Fallback>
+              </Avatar>
+            </Dropdown.Trigger>
+            <Dropdown.Popover placement="top start">
+              <Dropdown.Menu>
+                <Dropdown.Item id="profile">Profile</Dropdown.Item>
+                <Dropdown.Item id="logout" variant="danger">
+                  Log out
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown.Popover>
+          </Dropdown>
+        </Sidebar.Footer>
+      </Sidebar>
+      <Sidebar.Main>
+        <div className="flex items-center gap-3 p-4">
+          <Sidebar.Trigger />
+          <Breadcrumbs className="min-w-0">
+            <Breadcrumbs.Item className="min-w-0 font-semibold">
+              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                <HugeiconsIcon icon={Home01Icon} size={16} />
+                <span className="truncate">Home</span>
+              </span>
+            </Breadcrumbs.Item>
+          </Breadcrumbs>
+        </div>
+        <div className="p-6">
+          <p className="text-muted">
+            Meeting notes sidebar with search, spaces, and user menu. Uses
+            offcanvas collapsible mode.
+          </p>
+        </div>
+      </Sidebar.Main>
+    </Sidebar.Provider>
+  );
+}
+
+const agentHubNavigation = [
+  ["New Agent", AiBrain01Icon, true],
+  ["Search", Search01Icon, true],
+  ["Home", Home01Icon, false],
+  ["Activity", Activity01Icon, false],
+  ["Marketplace", Globe02Icon, false],
+] as const;
+const agentHubChats = [
+  "Refactor auth module",
+  "Debug payment flow",
+  "Write API docs",
+  "Review PR #482",
+  "Plan v3 migration",
+];
+
+function AgentHubContent() {
+  const { collapsible, isMobile, isOpen } = useSidebar();
+  const isCollapsed = collapsible === "icon" && !isMobile && !isOpen;
+
+  return (
+    <>
+      <Sidebar.Header>
+        <div className="flex items-center justify-between px-1 py-2">
+          <div className="flex items-center gap-3">
+            <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-violet-600">
+              <HugeiconsIcon
+                className="size-3.5 text-white"
+                icon={AiBrain01Icon}
+              />
+            </span>
+            <span
+              className="text-foreground text-sm font-semibold"
+              data-sidebar="label"
+            >
+              AgentHub
+            </span>
+          </div>
+          {!isCollapsed ? (
+            <div className="flex items-center" data-sidebar="label">
+              <button
+                className="text-foreground hover:bg-default flex items-center gap-0.5 rounded-md p-1"
+                type="button"
+              >
+                <HugeiconsIcon icon={Add01Icon} size={16} />
+              </button>
+            </div>
+          ) : null}
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>
+          <Sidebar.Menu aria-label="Main navigation">
+            {agentHubNavigation.map(([label, icon, isButton]) => (
+              <Sidebar.MenuItem
+                href={isButton ? undefined : "#"}
+                id={`agent-hub-nav-${label}`}
+                isCurrent={label === "Home"}
+                key={label}
+                textValue={label}
+                tooltipProps={{
+                  className: "bg-foreground text-background",
+                  content: label,
+                  delay: 250,
+                  placement: "right",
+                }}
+              >
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={icon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel>{label}</Sidebar.MenuLabel>
+                {label === "Search" ? (
+                  <Sidebar.MenuChip>
+                    <Kbd className="text-xs">
+                      <Kbd.Abbr keyValue="command" />
+                      <Kbd.Content>K</Kbd.Content>
+                    </Kbd>
+                  </Sidebar.MenuChip>
+                ) : null}
+              </Sidebar.MenuItem>
+            ))}
+          </Sidebar.Menu>
+        </Sidebar.Group>
+        <Sidebar.Group>
+          <Sidebar.GroupLabel>Recent chats</Sidebar.GroupLabel>
+          <Sidebar.Menu aria-label="Recent chats">
+            {agentHubChats.map((item) => (
+              <Sidebar.MenuItem
+                href="#"
+                id={`agent-hub-chat-${item}`}
+                key={item}
+                textValue={item}
+              >
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={AiBrain01Icon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel>{item}</Sidebar.MenuLabel>
+                <Sidebar.MenuActions className="ml-auto">
+                  <MoreActions label={item} />
+                </Sidebar.MenuActions>
+              </Sidebar.MenuItem>
+            ))}
+          </Sidebar.Menu>
+        </Sidebar.Group>
+        <Sidebar.Group>
+          <Sidebar.GroupLabel>
+            <span className="flex items-center gap-2">
+              Agents
+              <Chip size="sm" variant="soft">
+                Beta
+              </Chip>
+            </span>
+          </Sidebar.GroupLabel>
+          <Sidebar.Menu aria-label="Agents">
+            {[
+              ["Coder", CodeIcon],
+              ["Reviewer", Task01Icon],
+              ["Writer", File01Icon],
+              ["Add agent", Add01Icon],
+            ].map(([label, icon]) => (
+              <Sidebar.MenuItem
+                href={label === "Add agent" ? undefined : "#"}
+                id={`agent-hub-agent-${label}`}
+                key={label as string}
+                textValue={label as string}
+              >
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={icon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel
+                  className={label === "Add agent" ? "text-muted" : undefined}
+                >
+                  {label as string}
+                </Sidebar.MenuLabel>
+              </Sidebar.MenuItem>
+            ))}
+          </Sidebar.Menu>
+        </Sidebar.Group>
+        <Sidebar.Group>
+          <Sidebar.GroupLabel>
+            <span className="flex flex-1 items-center justify-between">
+              Workspaces
+              <Dropdown>
+                <Dropdown.Trigger
+                  aria-label="Workspaces section actions"
+                  className="text-muted hover:bg-default -mr-1 flex size-6 items-center justify-center rounded-md"
+                >
+                  <HugeiconsIcon icon={MoreVerticalIcon} size={16} />
+                </Dropdown.Trigger>
+                <Dropdown.Popover
+                  className="w-48"
+                  offset={6}
+                  placement="right top"
+                >
+                  <Dropdown.Menu aria-label="Workspaces section actions">
+                    <Dropdown.Item id="show">Show</Dropdown.Item>
+                    <Dropdown.Item id="new-workspace">
+                      New workspace
+                    </Dropdown.Item>
+                    <Dropdown.Item id="open-library">
+                      Open in Library
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown.Popover>
+              </Dropdown>
+            </span>
+          </Sidebar.GroupLabel>
+          <Sidebar.Menu
+            aria-label="Workspaces"
+            defaultExpandedKeys={["agent-hub-ws-personal"]}
+          >
+            <Sidebar.MenuItem id="agent-hub-ws-personal" textValue="Personal">
+              <Sidebar.MenuIcon>
+                <HugeiconsIcon icon={UserMultipleIcon} size={16} />
+              </Sidebar.MenuIcon>
+              <Sidebar.MenuLabel>
+                Personal
+                <Sidebar.MenuTrigger>
+                  <Sidebar.MenuIndicator />
+                </Sidebar.MenuTrigger>
+              </Sidebar.MenuLabel>
+              <Sidebar.Submenu>
+                {["Backend API", "Mobile app", "Tracker"].map((item) => (
+                  <Sidebar.MenuItem
+                    href="#"
+                    id={`agent-hub-ws-p-${item}`}
+                    isCurrent={item === "Backend API"}
+                    key={item}
+                    textValue={item}
+                  >
+                    <Sidebar.MenuIcon>
+                      <HugeiconsIcon icon={CodeIcon} size={16} />
+                    </Sidebar.MenuIcon>
+                    <Sidebar.MenuLabel>{item}</Sidebar.MenuLabel>
+                    <Sidebar.MenuActions className="ml-auto">
+                      <MoreActions label={item} />
+                    </Sidebar.MenuActions>
+                  </Sidebar.MenuItem>
+                ))}
+              </Sidebar.Submenu>
+            </Sidebar.MenuItem>
+            <Sidebar.MenuItem id="agent-hub-ws-team" textValue="Team">
+              <Sidebar.MenuIcon>
+                <HugeiconsIcon icon={UserMultipleIcon} size={16} />
+              </Sidebar.MenuIcon>
+              <Sidebar.MenuLabel>Team</Sidebar.MenuLabel>
+            </Sidebar.MenuItem>
+          </Sidebar.Menu>
+        </Sidebar.Group>
+        <Sidebar.Separator />
+        <Sidebar.Group>
+          <Sidebar.GroupLabel>Apps</Sidebar.GroupLabel>
+          <Sidebar.Menu aria-label="Apps">
+            <Sidebar.MenuItem href="#" id="agent-hub-app-docs" textValue="Docs">
+              <Sidebar.MenuIcon>
+                <HugeiconsIcon icon={BookOpen01Icon} size={16} />
+              </Sidebar.MenuIcon>
+              <Sidebar.MenuLabel>Docs</Sidebar.MenuLabel>
+            </Sidebar.MenuItem>
+            <Sidebar.MenuItem
+              href="#"
+              id="agent-hub-app-calendar"
+              textValue="Calendar"
+            >
+              <Sidebar.MenuIcon>
+                <HugeiconsIcon icon={Activity01Icon} size={16} />
+              </Sidebar.MenuIcon>
+              <Sidebar.MenuLabel>Calendar</Sidebar.MenuLabel>
+            </Sidebar.MenuItem>
+          </Sidebar.Menu>
+        </Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Separator />
+      <Sidebar.Footer className="gap-0">
+        {!isMobile ? (
+          <div className="flex items-center justify-center gap-2 px-2 py-2">
+            {!isCollapsed ? (
+              <Button
+                className="text-muted bg-surface shadow-surface flex h-9 flex-1 gap-2 text-sm"
+                size="sm"
+                variant="tertiary"
+              >
+                <HugeiconsIcon icon={AiBrain01Icon} size={16} />
+                <span>New chat</span>
+                <Kbd className="text-xs">
+                  <Kbd.Abbr keyValue="command" />
+                  <Kbd.Content>N</Kbd.Content>
+                </Kbd>
+              </Button>
+            ) : null}
+            <Button isIconOnly size="sm" variant="tertiary">
+              <HugeiconsIcon className="text-muted size-4" icon={Add01Icon} />
+            </Button>
+          </div>
+        ) : null}
+        <div className="px-2 pb-2">
+          <Dropdown>
+            <Dropdown.Trigger className="hover:bg-default flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left outline-none">
+              <Avatar size="sm">
+                <Avatar.Image
+                  alt="Junior Garcia"
+                  src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg"
+                />
+                <Avatar.Fallback delayMs={600}>JG</Avatar.Fallback>
+              </Avatar>
+              <span
+                className="text-foreground text-sm font-medium"
+                data-sidebar="label"
+              >
+                Junior
+              </span>
+              <HugeiconsIcon
+                className="text-muted ml-auto size-3"
+                data-sidebar="label"
+                icon={ArrowDown01Icon}
+              />
+            </Dropdown.Trigger>
+            <Dropdown.Popover placement="top start">
+              <Dropdown.Menu>
+                <Dropdown.Item id="agent-profile">Profile</Dropdown.Item>
+                <Dropdown.Item id="agent-settings">Settings</Dropdown.Item>
+                <Dropdown.Item id="agent-logout" variant="danger">
+                  Log out
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown.Popover>
+          </Dropdown>
+        </div>
+      </Sidebar.Footer>
+    </>
+  );
+}
+
+function AgentHubDemo() {
+  return (
+    <Sidebar.Provider>
+      <Sidebar style={{ "--spacing": "0.2rem" } as React.CSSProperties}>
+        <AgentHubContent />
+        <Sidebar.Rail />
+      </Sidebar>
+      <Sidebar.Main>
+        <div className="flex items-center gap-3 p-4">
+          <Sidebar.Trigger />
+          <Breadcrumbs className="min-w-0">
+            <Breadcrumbs.Item className="min-w-0 font-semibold">
+              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                <HugeiconsIcon icon={CodeIcon} size={16} />
+                <span className="truncate">Backend API</span>
+              </span>
+            </Breadcrumbs.Item>
+          </Breadcrumbs>
+        </div>
+        <div className="p-6">
+          <p className="text-muted">
+            Agent-focused sidebar for AI startups. Combines compact spacing,
+            workspaces, recent chats, and a user dropdown menu.
+          </p>
+        </div>
+      </Sidebar.Main>
+    </Sidebar.Provider>
+  );
+}
+
+const workspaceGroups = [
+  {
+    items: [
+      ["User naming preference refactor", "now"],
+      ["Agents sidebar keyboard expe...", "12m"],
+      ["Glass sidebar group by none op...", "33m"],
+      ["Cloud agent error message re...", "1h"],
+      ["UseApplicationProperty migrati...", undefined],
+      ["Glass test timing stabilization", undefined],
+      ["Flaky tests root cause", "10h"],
+    ],
+    label: "acme/platform",
+  },
+  {
+    items: [
+      ["Marketing pages responsiven...", "2h"],
+      ["Git & checkpoints automatic c...", "3h"],
+      ["Local server update process", undefined],
+      ["Performance audit for redesigne...", "1d"],
+      ["Localized page SEO", undefined],
+    ],
+    label: "acme/landing",
+  },
+  {
+    items: [
+      ["New page for natural language f...", "5h"],
+      ["Background worker retry handling", undefined],
+      ["Admin-only metric strip for inco...", undefined],
+    ],
+    label: "acme/backoffice",
+  },
+  {
+    items: [["Plugin schema verification", "2d"]],
+    label: "tools/plugins",
+  },
+  {
+    items: [
+      ["Light mode settings", undefined],
+      ["MCP server setup", "4h"],
+    ],
+    label: "compass",
+  },
+] as const;
+
+function AgentWorkspaceDemo() {
+  return (
+    <Sidebar.Provider>
+      <Sidebar style={{ "--spacing": "0.2rem" } as React.CSSProperties}>
+        <Sidebar.Header>
+          <Sidebar.Menu aria-label="Top actions" className="px-1 py-2">
+            <Sidebar.MenuItem id="aw-new-agent" textValue="New Agent">
+              <Sidebar.MenuIcon>
+                <HugeiconsIcon icon={AiBrain01Icon} size={16} />
+              </Sidebar.MenuIcon>
+              <Sidebar.MenuLabel>New Agent</Sidebar.MenuLabel>
+              <Sidebar.MenuChip>
+                <Kbd className="text-xs">
+                  <Kbd.Abbr keyValue="command" />
+                  <Kbd.Content>N</Kbd.Content>
+                </Kbd>
+              </Sidebar.MenuChip>
+            </Sidebar.MenuItem>
+            <Sidebar.MenuItem
+              href="#"
+              id="aw-marketplace"
+              isCurrent
+              textValue="Marketplace"
+            >
+              <Sidebar.MenuIcon>
+                <HugeiconsIcon icon={Globe02Icon} size={16} />
+              </Sidebar.MenuIcon>
+              <Sidebar.MenuLabel>Marketplace</Sidebar.MenuLabel>
+            </Sidebar.MenuItem>
+          </Sidebar.Menu>
+        </Sidebar.Header>
+        <Sidebar.Content>
+          {workspaceGroups.map((group) => (
+            <Sidebar.Group key={group.label}>
+              <Sidebar.GroupLabel>
+                <span className="flex flex-1 items-center justify-between">
+                  {group.label}
+                  <Tooltip delay={250}>
+                    <Tooltip.Trigger>
+                      <button
+                        aria-label={`New task in ${group.label}`}
+                        className="text-muted hover:bg-default -mr-1 flex size-5 items-center justify-center rounded-md"
+                        type="button"
+                      >
+                        <HugeiconsIcon icon={Add01Icon} size={14} />
+                      </button>
+                    </Tooltip.Trigger>
+                    <Tooltip.Content>New task</Tooltip.Content>
+                  </Tooltip>
+                </span>
+              </Sidebar.GroupLabel>
+              <Sidebar.Menu aria-label={group.label}>
+                {group.items.map(([label, timeAgo]) => (
+                  <Sidebar.MenuItem
+                    href="#"
+                    id={`aw-${group.label}-${label}`}
+                    key={label}
+                    textValue={label}
+                    tooltipProps={{
+                      className: "text-xs",
+                      content: (
+                        <div className="flex flex-col gap-1">
+                          <span className="font-medium">{label}</span>
+                          <span className="opacity-60">{group.label}</span>
+                        </div>
+                      ),
+                      delay: 500,
+                      placement: "right",
+                    }}
+                  >
+                    <Sidebar.MenuIcon>
+                      <span className="flex size-4 items-center justify-center">
+                        <span className="bg-muted size-1.5 rounded-full" />
+                      </span>
+                    </Sidebar.MenuIcon>
+                    <Sidebar.MenuLabel>{label}</Sidebar.MenuLabel>
+                    {timeAgo ? (
+                      <Sidebar.MenuChip>
+                        <span className="text-muted text-[10px] leading-none">
+                          {timeAgo}
+                        </span>
+                      </Sidebar.MenuChip>
+                    ) : null}
+                    <Sidebar.MenuActions className="ml-auto">
+                      <Sidebar.MenuAction aria-label={`Archive ${label}`}>
+                        <HugeiconsIcon icon={LibraryIcon} size={14} />
+                      </Sidebar.MenuAction>
+                      <Sidebar.MenuAction aria-label={`Delete ${label}`}>
+                        <HugeiconsIcon icon={Delete02Icon} size={14} />
+                      </Sidebar.MenuAction>
+                    </Sidebar.MenuActions>
+                  </Sidebar.MenuItem>
+                ))}
+              </Sidebar.Menu>
+            </Sidebar.Group>
+          ))}
+          <Sidebar.Group>
+            <Sidebar.Menu aria-label="Utility">
+              <Sidebar.MenuItem id="aw-more" textValue="More">
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={MoreVerticalIcon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel className="text-muted">
+                  More
+                </Sidebar.MenuLabel>
+              </Sidebar.MenuItem>
+              <Sidebar.MenuItem
+                href="#"
+                id="aw-open-workspace"
+                textValue="Open Workspace"
+              >
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={FolderOpenIcon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel>Open Workspace</Sidebar.MenuLabel>
+              </Sidebar.MenuItem>
+            </Sidebar.Menu>
+          </Sidebar.Group>
+        </Sidebar.Content>
+        <Sidebar.Footer className="px-2 pt-0 pb-2">
+          <Dropdown>
+            <Dropdown.Trigger className="hover:bg-default flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left outline-none">
+              <Avatar size="sm">
+                <Avatar.Image
+                  alt="Alex Chen"
+                  src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue-light.jpg"
+                />
+                <Avatar.Fallback delayMs={600}>AC</Avatar.Fallback>
+              </Avatar>
+              <div className="flex min-w-0 flex-col" data-sidebar="label">
+                <span className="text-foreground truncate text-sm leading-tight font-medium">
+                  Alex Chen
+                </span>
+                <span className="text-muted truncate text-xs leading-tight">
+                  Hero Labs
+                </span>
+              </div>
+            </Dropdown.Trigger>
+            <Dropdown.Popover placement="top start">
+              <Dropdown.Menu>
+                <Dropdown.Item id="aw-profile">Profile</Dropdown.Item>
+                <Dropdown.Item id="aw-settings">Settings</Dropdown.Item>
+                <Dropdown.Item id="aw-team">Create Team</Dropdown.Item>
+                <Dropdown.Item id="aw-logout" variant="danger">
+                  Log out
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown.Popover>
+          </Dropdown>
+        </Sidebar.Footer>
+        <Sidebar.Rail />
+      </Sidebar>
+      <Sidebar.Main>
+        <div className="flex items-center gap-3 p-4">
+          <Sidebar.Trigger />
+          <Breadcrumbs className="min-w-0">
+            <Breadcrumbs.Item className="min-w-0 font-semibold">
+              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                <HugeiconsIcon icon={CodeIcon} size={16} />
+                <span className="truncate">acme/platform</span>
+              </span>
+            </Breadcrumbs.Item>
+          </Breadcrumbs>
+        </div>
+        <div className="p-6">
+          <p className="text-muted">
+            Workspace sidebar with agent tasks grouped by repository. Mirrors
+            the pattern used by AI coding tools.
+          </p>
+        </div>
+      </Sidebar.Main>
+    </Sidebar.Provider>
+  );
+}
 export const Default: Story = { render: () => <Demo nested title="HeroUI" /> };
 export const RightSide: Story = {
   render: () => (
@@ -1559,13 +2273,11 @@ export const CompactWithUserMenu: Story = {
   render: () => <CompactWithUserMenuDemo />,
 };
 export const AgentHub: Story = {
-  render: () => <Demo nested title="Agent Hub" user />,
+  render: () => <AgentHubDemo />,
 };
 export const AgentWorkspace: Story = {
-  render: () => <Demo nested title="Agent Workspace" />,
+  render: () => <AgentWorkspaceDemo />,
 };
 export const MeetingNotes: Story = {
-  render: () => (
-    <Demo collapsible="offcanvas" nested title="Meeting Notes" user />
-  ),
+  render: () => <MeetingNotesDemo />,
 };
