@@ -3,6 +3,13 @@ import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 import { createContext, useContext } from "react";
 
 import { Button, cn, Disclosure } from "@heroui/react";
+import {
+  AlertCircleIcon,
+  CancelCircleIcon,
+  CheckmarkCircle02Icon,
+  Wrench01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 
 import { CodeBlock } from "./code-block";
 import { TextShimmer } from "./text-shimmer";
@@ -183,14 +190,14 @@ export function ChatToolStatusIcon({
   className?: string;
 }): ReactElement {
   const { state } = useContext(Context);
-  const symbol =
+  const icon: IconSvgElement =
     state === "output-available"
-      ? "✓"
+      ? CheckmarkCircle02Icon
       : state === "output-error"
-        ? "!"
+        ? CancelCircleIcon
         : state === "requires-action"
-          ? "◆"
-          : "◌";
+          ? AlertCircleIcon
+          : Wrench01Icon;
   return (
     <span
       className={cls(
@@ -199,7 +206,14 @@ export function ChatToolStatusIcon({
       )}
       data-slot="chat-tool-status"
     >
-      {children ?? symbol}
+      {children ?? (
+        <HugeiconsIcon
+          aria-hidden
+          className="size-3.5 shrink-0"
+          icon={icon}
+          strokeWidth={2}
+        />
+      )}
     </span>
   );
 }
