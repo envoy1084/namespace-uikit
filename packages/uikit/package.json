@@ -201,6 +201,14 @@
       "types": "./dist/components/chat-source.d.mts",
       "import": "./dist/components/chat-source.mjs"
     },
+    "./chat-message": {
+      "@thenamespace/source": {
+        "types": "./src/components/chat-message/index.ts",
+        "import": "./src/components/chat-message/index.ts"
+      },
+      "types": "./dist/components/chat-message.d.mts",
+      "import": "./dist/components/chat-message.mjs"
+    },
     "./prompt-input": {
       "@thenamespace/source": {
         "types": "./src/components/prompt-input/index.ts",
