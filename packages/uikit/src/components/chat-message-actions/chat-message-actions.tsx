@@ -126,6 +126,17 @@ export function ChatMessageActionsCopy({
   );
 }
 type ActionProps = ComponentPropsWithRef<typeof ChatMessage.Action>;
+export function ChatMessageActionsAction({
+  className,
+  ...props
+}: ActionProps): ReactElement {
+  return (
+    <ChatMessage.Action
+      className={cls("chat-message-actions__action", className)}
+      {...props}
+    />
+  );
+}
 const action = (Icon: (props: IconProps) => ReactElement) =>
   // oxlint-disable-next-line unicorn/consistent-function-scoping -- factory captures Icon.
   function Action({
@@ -153,6 +164,7 @@ export const ChatMessageActionsThumbsDown: (
   props: ActionProps,
 ) => ReactElement = action(ChatMessageActionsThumbsDownIcon);
 interface Component extends Function {
+  Action: typeof ChatMessageActionsAction;
   Root: typeof ChatMessageActionsRoot;
   Copy: typeof ChatMessageActionsCopy;
   CopyIcon: typeof ChatMessageActionsCopyIcon;
@@ -167,6 +179,7 @@ interface Component extends Function {
   ThumbsDownIcon: typeof ChatMessageActionsThumbsDownIcon;
 }
 export const ChatMessageActions = Object.assign(ChatMessageActionsRoot, {
+  Action: ChatMessageActionsAction,
   CopiedIcon: ChatMessageActionsCopiedIcon,
   Copy: ChatMessageActionsCopy,
   CopyIcon: ChatMessageActionsCopyIcon,
