@@ -49,6 +49,7 @@ export * from "./components/header";
 export * from "./components/hover-card";
 export * from "./components/input";
 export * from "./components/item-card";
+export * from "./components/item-card-group";
 export * from "./components/input-group";
 export * from "./components/input-otp";
 export * from "./components/inline-select";

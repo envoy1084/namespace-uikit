@@ -49,6 +49,7 @@ export * from "./header";
 export * from "./hover-card";
 export * from "./input";
 export * from "./item-card";
+export * from "./item-card-group";
 export * from "./input-group";
 export * from "./input-otp";
 export * from "./inline-select";
