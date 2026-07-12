@@ -98,3 +98,63 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] Every component has light-mode and dark-mode visual comparison evidence.
 - [x] Keyboard, focus, disabled, controlled, and responsive interactions are verified where applicable.
 - [x] UIKit typecheck, lint, build, pack inspection, and Storybook production build pass.
+
+## Visual parity follow-up audit
+
+### Shared foundations
+
+- [ ] Compare Storybook typography, font loading, antialiasing, and perceived weight with the official HeroUI Storybook before applying component-specific weight overrides.
+- [ ] Replace hardcoded SVGs, emoji, and mismatched icons throughout Storybook with HeroUI icons where available and Hugeicons otherwise.
+- [ ] Verify all follow-up fixes in light and dark mode, including hover, press, focus, disabled, animation, and responsive states where applicable.
+
+### Shared primitives and charts
+
+- [ ] Segment matches official active, inactive-hover, tint, separator, radius, and motion styles.
+- [ ] Chart axes use the official typography weight across area, bar, composed, line, pie, radar, and radial charts.
+- [ ] ChartTooltip matches official padding and radius in every tooltip variant.
+- [ ] Bar Chart percentage chip uses the official dark-green text treatment.
+- [ ] TextShimmer animation timing, gradient, direction, and easing match the official Storybook.
+- [ ] ChainOfThought hover and disclosure text transitions animate like the official Storybook.
+
+### Dependent complex components
+
+- [ ] Agenda composes the shared Segment component for its top view switcher and matches official behavior.
+- [ ] Navbar Search Docs uses the official input variant and user icon; Dashboard renders without errors.
+- [ ] Sidebar is re-audited for hover actions, menu icons, collapsed square icons, spacing, and all official states.
+- [ ] AppLayout is re-audited after Navbar and Sidebar fixes.
+
+### Collections, data display, and overlays
+
+- [ ] Carousel navigation dots match the official shape, spacing, active state, and interaction.
+- [ ] DataGrid stories match official data, selection count, badge colors, controls, and layouts.
+- [ ] FileTree checkbox stories visibly identify selected items.
+- [ ] FloatingTOC content typography matches the official weight.
+- [ ] Kanban stories match official boards and group backgrounds; dragging does not add an incorrect hamburger icon.
+- [ ] Map component and stories match official tooltips, controls, markers, overlays, and layouts.
+- [ ] Timeline Centered Milestones pill colors and all subsequent stories match the official Storybook.
+- [ ] Sheet positions, widths, responsive behavior, and story trigger variants match the official Storybook.
+- [ ] EmojiPicker navigation scrolls to emoji groups and includes the official complete emoji set.
+
+### AI components and stories
+
+- [ ] ChatAttachment stories use the standard Hugeicons icon set.
+- [ ] ChatLoader dots match the official size, spacing, timing, and animation.
+- [ ] ChatSource stories include stacked favicons and use the correct Hugeicons.
+- [ ] ChatTool code typography and spacing between code blocks match the official Storybook.
+- [ ] PromptInput stories restore model selection and replace incorrect or emoji icons with the official iconography.
+
+### Form and interaction components
+
+- [ ] PressableFeedback standalone highlight and final two card hover/press states match official behavior.
+- [ ] CellSelect uses the official Hugeicon.
+- [ ] CellSlider hover line is vertically centered and expands correctly while pressed.
+- [ ] DropZone file-list retry buttons use the official variant in regular and compact stories.
+- [ ] InlineSelect uses correctly sized Hugeicon chevrons.
+- [ ] NativeSelect does not retain an incorrect trigger focus treatment after selection or click.
+- [ ] RadioButtonGroup custom indicator, delivery/payment logos, and subscription-plan styling match official stories.
+- [ ] RichTextEditor component and stories are fully re-audited for radii, spacing, menus, controls, and states.
+
+### Completion gates
+
+- [ ] Every item above has official/local Storybook comparison evidence.
+- [ ] Formatting, lint, typecheck, UIKit build, Storybook production build, package pack, and flat-subpath consumer imports pass.
