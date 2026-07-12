@@ -321,6 +321,7 @@ export default defineConfig({
       "remark-gfm",
       "remark-math",
       "tailwindcss",
+      "vaul",
     ],
   },
   dts: {

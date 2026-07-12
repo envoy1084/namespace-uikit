@@ -1,50 +1,38 @@
 "use client";
+
 import type {
-  ComponentType,
+  ComponentProps,
   ComponentPropsWithRef,
   CSSProperties,
-  PointerEvent as ReactPointerEvent,
+  ForwardRefExoticComponent,
   ReactElement,
   ReactNode,
 } from "react";
-import {
-  cloneElement,
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { createContext, forwardRef, useContext, useMemo } from "react";
 
-import { CloseButton, cn, Drawer } from "@heroui/react";
+import { CloseButton, cn } from "@heroui/react";
+import { Dialog, Heading } from "react-aria-components";
+import { Drawer as Vaul } from "vaul";
 
 export type SheetPlacement = "bottom" | "left" | "right" | "top";
 export type SheetSnapPoint = number | string;
-interface ContextValue {
-  activeSnapPoint: SheetSnapPoint | null;
-  close: () => void;
+
+interface SheetContextValue {
   isDetached: boolean;
-  isDismissable: boolean;
-  isHandleOnly: boolean;
-  isOpen: boolean;
-  onDrag?:
-    | ((event: ReactPointerEvent<HTMLDivElement>, percentage: number) => void)
-    | undefined;
-  onRelease?:
-    | ((event: ReactPointerEvent<HTMLDivElement>, open: boolean) => void)
-    | undefined;
-  open: () => void;
   placement: SheetPlacement;
-  setActiveSnapPoint: (point: SheetSnapPoint | null) => void;
-  snapPoints?: SheetSnapPoint[] | undefined;
+  snapPoints: SheetSnapPoint[] | undefined;
 }
-const Context = createContext<ContextValue | null>(null);
-const useSheet = () => {
-  const value = useContext(Context);
-  if (!value) throw new Error("Sheet parts must be used inside Sheet");
+
+const SheetContext = createContext<SheetContextValue | null>(null);
+
+function useSheetContext(): SheetContextValue {
+  const value = useContext(SheetContext);
+
+  if (!value) throw new Error("Sheet parts must be used inside Sheet.Root");
+
   return value;
-};
+}
+
 export interface SheetRootProps {
   activeSnapPoint?: SheetSnapPoint | null;
   children?: ReactNode;
@@ -59,16 +47,20 @@ export interface SheetRootProps {
   isHandleOnly?: boolean;
   isModal?: boolean;
   isNested?: boolean;
+  isOpen?: boolean;
   noBodyStyles?: boolean;
   onActiveSnapPointChange?: (point: SheetSnapPoint | null) => void;
   onAnimationEnd?: (open: boolean) => void;
   onClose?: () => void;
   onDrag?: (
-    event: ReactPointerEvent<HTMLDivElement>,
+    event: React.PointerEvent<HTMLDivElement>,
     percentage: number,
   ) => void;
   onOpenChange?: (open: boolean) => void;
-  onRelease?: (event: ReactPointerEvent<HTMLDivElement>, open: boolean) => void;
+  onRelease?: (
+    event: React.PointerEvent<HTMLDivElement>,
+    open: boolean,
+  ) => void;
   placement?: SheetPlacement;
   preventScrollRestoration?: boolean;
   repositionInputs?: boolean;
@@ -78,16 +70,24 @@ export interface SheetRootProps {
   shouldScaleBackground?: boolean;
   snapPoints?: SheetSnapPoint[];
   snapToSequentialPoint?: boolean;
-  isOpen?: boolean;
 }
-export function SheetRoot({
+
+function SheetRootBase({
   activeSnapPoint,
   children,
-  defaultOpen = false,
+  closeThreshold,
+  container,
+  defaultOpen,
+  disablePreventScroll,
+  fadeFromIndex,
   isDetached = false,
   isDismissable = true,
-  isHandleOnly = false,
+  isFixed,
+  isHandleOnly,
+  isModal,
+  isNested = false,
   isOpen,
+  noBodyStyles,
   onActiveSnapPointChange,
   onAnimationEnd,
   onClose,
@@ -95,338 +95,265 @@ export function SheetRoot({
   onOpenChange,
   onRelease,
   placement = "bottom",
+  preventScrollRestoration,
+  repositionInputs,
+  scrollLockTimeout,
+  setBackgroundColorOnScale,
+  shouldAutoFocus,
+  shouldScaleBackground,
   snapPoints,
+  snapToSequentialPoint,
 }: SheetRootProps): ReactElement {
-  const [localOpen, setLocalOpen] = useState(defaultOpen),
-    openState = isOpen ?? localOpen;
-  const initial = activeSnapPoint ?? snapPoints?.[0] ?? null;
-  const [localSnap, setLocalSnap] = useState<SheetSnapPoint | null>(initial),
-    snap = activeSnapPoint === undefined ? localSnap : activeSnapPoint;
-  const setOpen = useCallback(
-    (value: boolean) => {
-      if (isOpen === undefined) setLocalOpen(value);
-      onOpenChange?.(value);
-      if (!value) onClose?.();
-      setTimeout(() => onAnimationEnd?.(value), 200);
-    },
-    [isOpen, onAnimationEnd, onClose, onOpenChange],
+  const Root = isNested ? Vaul.NestedRoot : Vaul.Root;
+  const context = useMemo(
+    () => ({ isDetached, placement, snapPoints }),
+    [isDetached, placement, snapPoints],
   );
-  const setSnap = useCallback(
-    (point: SheetSnapPoint | null) => {
-      if (activeSnapPoint === undefined) setLocalSnap(point);
-      onActiveSnapPointChange?.(point);
-    },
-    [activeSnapPoint, onActiveSnapPointChange],
-  );
-  const value = useMemo(
-    () => ({
-      activeSnapPoint: snap,
-      close: () => setOpen(false),
-      isDetached,
-      isDismissable,
-      isHandleOnly,
-      isOpen: openState,
-      onDrag,
-      onRelease,
-      open: () => setOpen(true),
-      placement,
-      setActiveSnapPoint: setSnap,
-      snapPoints,
-    }),
-    [
-      snap,
-      isDetached,
-      isDismissable,
-      isHandleOnly,
-      onDrag,
-      onRelease,
-      openState,
-      placement,
-      setOpen,
-      setSnap,
-      snapPoints,
-    ],
-  );
+  const rootProps = {
+    activeSnapPoint,
+    autoFocus: shouldAutoFocus,
+    closeThreshold,
+    container,
+    defaultOpen,
+    direction: placement,
+    disablePreventScroll,
+    dismissible: isDismissable,
+    fadeFromIndex,
+    fixed: isFixed,
+    handleOnly: isHandleOnly,
+    modal: isModal,
+    noBodyStyles,
+    onAnimationEnd,
+    onClose,
+    onDrag,
+    onOpenChange,
+    onRelease,
+    open: isOpen,
+    preventScrollRestoration,
+    repositionInputs,
+    scrollLockTimeout,
+    setActiveSnapPoint: onActiveSnapPointChange,
+    setBackgroundColorOnScale,
+    shouldScaleBackground,
+    snapPoints,
+    snapToSequentialPoint,
+  } as ComponentProps<typeof Vaul.Root>;
+
   return (
-    <Context value={value}>
-      <Drawer isOpen={openState} onOpenChange={setOpen}>
-        {children}
-      </Drawer>
-    </Context>
+    <SheetContext value={context}>
+      <Root {...rootProps}>{children}</Root>
+    </SheetContext>
   );
 }
+
+export function SheetRoot(props: SheetRootProps): ReactElement {
+  return <SheetRootBase {...props} />;
+}
+
 export function SheetNestedRoot(props: SheetRootProps): ReactElement {
-  return <SheetRoot {...props} isNested />;
+  return <SheetRootBase {...props} isNested />;
 }
-type PressableChild = ReactElement<{ onPress?: () => void }>;
-export function SheetTrigger({
-  children,
-}: {
-  children: PressableChild;
-}): ReactElement {
-  const { open } = useSheet();
-  return cloneElement(children, { onPress: open });
-}
-export function SheetClose({
-  children,
-}: {
-  children: PressableChild;
-}): ReactElement {
-  const { close } = useSheet();
-  return cloneElement(children, { onPress: close });
-}
-export interface SheetBackdropProps extends Omit<
-  ComponentPropsWithRef<typeof Drawer.Backdrop>,
-  "isOpen" | "onOpenChange"
+
+export type SheetTriggerProps = ComponentPropsWithRef<typeof Vaul.Trigger>;
+export const SheetTrigger: ForwardRefExoticComponent<SheetTriggerProps> =
+  forwardRef<HTMLButtonElement, SheetTriggerProps>(function SheetTrigger(
+    { children, ...props },
+    ref,
+  ) {
+    return (
+      <Vaul.Trigger {...props} asChild ref={ref}>
+        {children}
+      </Vaul.Trigger>
+    );
+  });
+
+export type SheetCloseProps = ComponentPropsWithRef<typeof Vaul.Close>;
+export const SheetClose: ForwardRefExoticComponent<SheetCloseProps> =
+  forwardRef<HTMLButtonElement, SheetCloseProps>(function SheetClose(
+    { children, ...props },
+    ref,
+  ) {
+    return (
+      <Vaul.Close {...props} asChild ref={ref}>
+        {children}
+      </Vaul.Close>
+    );
+  });
+
+export interface SheetBackdropProps extends ComponentPropsWithRef<
+  typeof Vaul.Overlay
 > {
   variant?: "blur" | "opaque" | "transparent";
 }
-export function SheetBackdrop({
-  className,
-  variant = "opaque",
-  ...props
-}: SheetBackdropProps): ReactElement {
-  const { isDismissable } = useSheet();
-  return (
-    <Drawer.Backdrop
-      {...props}
-      className={
-        cn(
-          "sheet__backdrop",
-          `sheet__backdrop--${variant}`,
-          typeof className === "string" ? className : undefined,
-        ) ?? "sheet__backdrop"
-      }
-      data-slot="sheet-backdrop"
-      data-variant={variant}
-      isDismissable={isDismissable}
-      variant={variant}
-    />
-  );
-}
-const snapSize = (
-  point: SheetSnapPoint | null,
-  placement: SheetPlacement,
-): string | undefined =>
-  point == null
-    ? undefined
-    : typeof point === "string"
-      ? point
-      : point <= 1
-        ? `calc(${placement === "bottom" || placement === "top" ? "100dvh" : "100dvw"} * ${point})`
-        : `${point}px`;
-export type SheetContentProps = ComponentPropsWithRef<"div"> &
-  Omit<ComponentPropsWithRef<typeof Drawer.Content>, "className" | "children">;
-const DrawerContent = Drawer.Content as ComponentType<SheetContentProps>;
-export function SheetContent({
-  className,
-  style,
-  ...props
-}: SheetContentProps): ReactElement {
-  const state = useSheet();
-  const start = useRef<{ x: number; y: number } | null>(null);
-  const size = snapSize(state.activeSnapPoint, state.placement);
-  const drag = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (!start.current) return;
-    const delta =
-      state.placement === "bottom"
-        ? event.clientY - start.current.y
-        : state.placement === "top"
-          ? start.current.y - event.clientY
-          : state.placement === "right"
-            ? event.clientX - start.current.x
-            : start.current.x - event.clientX;
-    const dimension =
-      state.placement === "bottom" || state.placement === "top"
-        ? window.innerHeight
-        : window.innerWidth;
-    state.onDrag?.(event, Math.max(0, delta / dimension));
-  };
-  return (
-    <DrawerContent
-      {...props}
-      className={
-        cn(
+
+export const SheetBackdrop: ForwardRefExoticComponent<SheetBackdropProps> =
+  forwardRef<HTMLDivElement, SheetBackdropProps>(function SheetBackdrop(
+    { children, className, variant = "opaque", ...props },
+    ref,
+  ) {
+    return (
+      <Vaul.Portal>
+        <Vaul.Overlay
+          {...props}
+          className={cn(
+            "sheet__backdrop",
+            `sheet__backdrop--${variant}`,
+            className,
+          )}
+          data-sheet-overlay=""
+          data-slot="sheet-backdrop"
+          data-variant={variant}
+          ref={ref}
+        >
+          <Vaul.Close aria-label="Dismiss" className="sr-only">
+            Dismiss
+          </Vaul.Close>
+          {children}
+        </Vaul.Overlay>
+      </Vaul.Portal>
+    );
+  });
+
+export type SheetContentProps = ComponentPropsWithRef<typeof Vaul.Content>;
+export const SheetContent: ForwardRefExoticComponent<SheetContentProps> =
+  forwardRef<HTMLDivElement, SheetContentProps>(function SheetContent(
+    { className, style, ...props },
+    ref,
+  ) {
+    const { isDetached, placement, snapPoints } = useSheetContext();
+
+    return (
+      <Vaul.Content
+        {...props}
+        className={cn(
           "sheet__content",
-          `sheet__content--${state.placement}`,
-          typeof className === "string" ? className : undefined,
-        ) ?? "sheet__content"
-      }
-      data-sheet-detached={state.isDetached || undefined}
-      data-sheet-drawer=""
-      data-sheet-drawer-direction={state.placement}
-      data-sheet-snap-points={state.snapPoints?.length ? "true" : undefined}
-      data-slot="sheet-content"
-      placement={state.placement}
-      style={
-        {
-          ...style,
-          ...(size
-            ? {
-                [state.placement === "bottom" || state.placement === "top"
-                  ? "height"
-                  : "width"]: size,
-              }
-            : {}),
-          "--snap-point-height": size,
-        } as CSSProperties
-      }
-      onPointerDown={(event) => {
-        if (!state.isHandleOnly)
-          start.current = { x: event.clientX, y: event.clientY };
-        props.onPointerDown?.(event);
-      }}
-      onPointerMove={(event) => {
-        drag(event);
-        props.onPointerMove?.(event);
-      }}
-      onPointerUp={(event) => {
-        start.current = null;
-        state.onRelease?.(event, state.isOpen);
-        props.onPointerUp?.(event);
-      }}
-    />
-  );
-}
-export interface SheetDialogProps extends ComponentPropsWithRef<
-  typeof Drawer.Dialog
-> {
-  children: ReactNode;
-}
-export function SheetDialog({
-  className,
-  ...props
-}: SheetDialogProps): ReactElement {
-  const { placement } = useSheet();
-  return (
-    <Drawer.Dialog
-      {...props}
-      className={
-        cn(
-          "sheet__dialog",
-          `sheet__dialog--${placement}`,
-          typeof className === "string" ? className : undefined,
-        ) ?? "sheet__dialog"
-      }
-      data-placement={placement}
-      data-slot="sheet-dialog"
-    />
-  );
-}
-const divPart =
-  (slot: string, base: string) =>
-  (p: ComponentPropsWithRef<"div">): ReactElement => (
-    <div {...p} className={cn(base, p.className)} data-slot={slot} />
-  );
-type DivPart = (p: ComponentPropsWithRef<"div">) => ReactElement;
-export const SheetHeader: DivPart = divPart("sheet-header", "sheet__header");
-export const SheetBody: DivPart = divPart("sheet-body", "sheet__body");
-export const SheetFooter: DivPart = divPart("sheet-footer", "sheet__footer");
-export type SheetHeadingProps = ComponentPropsWithRef<typeof Drawer.Heading>;
-export function SheetHeading({
-  className,
-  ...props
-}: SheetHeadingProps): ReactElement {
-  return (
-    <Drawer.Heading
-      {...props}
-      className={
-        cn(
-          "sheet__heading",
-          typeof className === "string" ? className : undefined,
-        ) ?? "sheet__heading"
-      }
-      data-slot="sheet-heading"
-    />
-  );
-}
-export interface SheetHandleProps extends ComponentPropsWithRef<"div"> {
-  preventCycle?: boolean;
-}
-export function SheetHandle({
-  children,
-  className,
-  preventCycle = false,
-  ...props
-}: SheetHandleProps): ReactElement {
-  const state = useSheet();
-  const start = useRef<{ x: number; y: number } | null>(null);
-  return (
-    <div
-      {...props}
-      aria-hidden="true"
-      className={cn("sheet__handle", className)}
-      data-sheet-handle=""
-      data-slot="sheet-handle"
-      onClick={() => {
-        if (preventCycle) return;
-        const points = state.snapPoints;
-        if (!points?.length) {
-          if (state.isDismissable) state.close();
-          return;
-        }
-        const index = points.findIndex(
-          (point) => point === state.activeSnapPoint,
-        );
-        if (index === points.length - 1) {
-          if (state.isDismissable) state.close();
-        } else state.setActiveSnapPoint(points[index + 1] ?? points[0] ?? null);
-      }}
-      onPointerDown={(event) => {
-        start.current = { x: event.clientX, y: event.clientY };
-        props.onPointerDown?.(event);
-      }}
-      onPointerMove={(event) => {
-        if (start.current) {
-          const delta = Math.abs(
-            state.placement === "bottom" || state.placement === "top"
-              ? event.clientY - start.current.y
-              : event.clientX - start.current.x,
-          );
-          state.onDrag?.(
-            event,
-            delta /
-              (state.placement === "bottom" || state.placement === "top"
-                ? window.innerHeight
-                : window.innerWidth),
-          );
-        }
-        props.onPointerMove?.(event);
-      }}
-      onPointerUp={(event) => {
-        start.current = null;
-        state.onRelease?.(event, state.isOpen);
-        props.onPointerUp?.(event);
-      }}
-    >
-      <span data-slot="sheet-handle-hitarea">
-        {children ?? (
-          <span className="sheet__handle-bar" data-slot="sheet-handle-bar" />
+          `sheet__content--${placement}`,
+          className,
         )}
-      </span>
-    </div>
+        data-sheet-detached={isDetached || undefined}
+        data-sheet-drawer=""
+        data-sheet-drawer-direction={placement}
+        data-sheet-snap-points={snapPoints?.length ? "true" : "false"}
+        data-slot="sheet-content"
+        ref={ref}
+        role="presentation"
+        style={style as CSSProperties}
+      />
+    );
+  });
+
+export type SheetDialogProps = ComponentPropsWithRef<typeof Dialog>;
+export const SheetDialog: ForwardRefExoticComponent<SheetDialogProps> =
+  forwardRef<HTMLElement, SheetDialogProps>(function SheetDialog(
+    { className, ...props },
+    ref,
+  ) {
+    const { placement } = useSheetContext();
+
+    return (
+      <Dialog
+        {...props}
+        className={
+          cn("sheet__dialog", `sheet__dialog--${placement}`, className) ??
+          "sheet__dialog"
+        }
+        data-placement={placement}
+        data-slot="sheet-dialog"
+        ref={ref}
+      />
+    );
+  });
+
+type SheetDivPart = ForwardRefExoticComponent<ComponentPropsWithRef<"div">>;
+
+function createDivPart(slot: string, base: string): SheetDivPart {
+  return forwardRef<HTMLDivElement, ComponentPropsWithRef<"div">>(
+    function SheetPart({ className, ...props }, ref) {
+      return (
+        <div
+          {...props}
+          className={cn(base, className)}
+          data-slot={slot}
+          ref={ref}
+        />
+      );
+    },
   );
 }
+
+export const SheetHeader: SheetDivPart = createDivPart(
+  "sheet-header",
+  "sheet__header",
+);
+export const SheetBody: SheetDivPart = createDivPart(
+  "sheet-body",
+  "sheet__body",
+);
+export const SheetFooter: SheetDivPart = createDivPart(
+  "sheet-footer",
+  "sheet__footer",
+);
+
+export type SheetHeadingProps = ComponentPropsWithRef<typeof Heading>;
+export const SheetHeading: ForwardRefExoticComponent<SheetHeadingProps> =
+  forwardRef<HTMLHeadingElement, SheetHeadingProps>(function SheetHeading(
+    { className, ...props },
+    ref,
+  ) {
+    return (
+      <Heading
+        {...props}
+        className={cn("sheet__heading", className) ?? "sheet__heading"}
+        data-slot="sheet-heading"
+        level={2}
+        ref={ref}
+        slot="title"
+      />
+    );
+  });
+
+export type SheetHandleProps = ComponentPropsWithRef<typeof Vaul.Handle>;
+export const SheetHandle: ForwardRefExoticComponent<SheetHandleProps> =
+  forwardRef<HTMLDivElement, SheetHandleProps>(function SheetHandle(
+    { children, className, ...props },
+    ref,
+  ) {
+    return (
+      <Vaul.Handle
+        {...props}
+        className={cn("sheet__handle", className)}
+        data-sheet-handle=""
+        data-slot="sheet-handle"
+        ref={ref}
+      >
+        <span data-slot="sheet-handle-hitarea">
+          {children ?? (
+            <span className="sheet__handle-bar" data-slot="sheet-handle-bar" />
+          )}
+        </span>
+      </Vaul.Handle>
+    );
+  });
+
 export type SheetCloseTriggerProps = ComponentPropsWithRef<typeof CloseButton>;
-export function SheetCloseTrigger({
-  className,
-  ...props
-}: SheetCloseTriggerProps): ReactElement {
-  const { close } = useSheet();
-  return (
-    <CloseButton
-      {...props}
-      className={
-        cn(
-          "sheet__close-trigger",
-          typeof className === "string" ? className : undefined,
-        ) ?? "sheet__close-trigger"
-      }
-      data-slot="sheet-close-trigger"
-      onPress={close}
-    />
+export const SheetCloseTrigger: ForwardRefExoticComponent<SheetCloseTriggerProps> =
+  forwardRef<HTMLButtonElement, SheetCloseTriggerProps>(
+    function SheetCloseTrigger({ className, ...props }, ref) {
+      return (
+        <Vaul.Close asChild>
+          <CloseButton
+            {...props}
+            className={
+              cn("sheet__close-trigger", className) ?? "sheet__close-trigger"
+            }
+            data-slot="sheet-close-trigger"
+            ref={ref}
+          />
+        </Vaul.Close>
+      );
+    },
   );
-}
+
 type SheetComponent = typeof SheetRoot & {
   Backdrop: typeof SheetBackdrop;
   Body: typeof SheetBody;
@@ -442,6 +369,7 @@ type SheetComponent = typeof SheetRoot & {
   Root: typeof SheetRoot;
   Trigger: typeof SheetTrigger;
 };
+
 export const Sheet: SheetComponent = Object.assign(SheetRoot, {
   Backdrop: SheetBackdrop,
   Body: SheetBody,
