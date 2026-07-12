@@ -16,7 +16,6 @@ import {
   cn,
   ScrollShadow,
   Separator as HeroSeparator,
-  Drawer,
   Tooltip,
 } from "@heroui/react";
 import {
@@ -27,6 +26,8 @@ import {
   TreeItemContent,
   TreeSection,
 } from "react-aria-components";
+
+import { Sheet } from "../sheet";
 
 export type SidebarSide = "left" | "right";
 export type SidebarVariant = "floating" | "inset" | "sidebar";
@@ -569,10 +570,14 @@ export function SidebarMobile({
 }): ReactElement | null {
   const state = useSidebar();
   return state.isMobile ? (
-    <Drawer isOpen={state.isMobileOpen} onOpenChange={state.setMobileOpen}>
-      <Drawer.Backdrop variant={backdrop}>
-        <Drawer.Content placement={state.side}>
-          <Drawer.Dialog>
+    <Sheet.Root
+      isOpen={state.isMobileOpen}
+      placement={state.side}
+      onOpenChange={state.setMobileOpen}
+    >
+      <Sheet.Backdrop variant={backdrop}>
+        <Sheet.Content>
+          <Sheet.Dialog aria-label="Mobile sidebar">
             <div
               {...props}
               className={cn("sidebar__mobile", className)}
@@ -580,10 +585,10 @@ export function SidebarMobile({
             >
               {children}
             </div>
-          </Drawer.Dialog>
-        </Drawer.Content>
-      </Drawer.Backdrop>
-    </Drawer>
+          </Sheet.Dialog>
+        </Sheet.Content>
+      </Sheet.Backdrop>
+    </Sheet.Root>
   ) : null;
 }
 export function SidebarTooltip({

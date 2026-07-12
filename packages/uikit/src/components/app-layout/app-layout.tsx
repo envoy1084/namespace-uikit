@@ -12,9 +12,10 @@ import {
   useState,
 } from "react";
 
-import { Button, cn, Drawer, Tooltip } from "@heroui/react";
+import { Button, cn, Tooltip } from "@heroui/react";
 
 import { Resizable } from "../resizable";
+import { Sheet } from "../sheet";
 import {
   Sidebar,
   useSidebar,
@@ -273,15 +274,19 @@ function AppLayoutMobileAsideDrawer({
   const app = useAppLayout();
   const { isMobile } = useSidebar();
   return app && isMobile ? (
-    <Drawer isOpen={app.isAsideOpen} onOpenChange={app.setAsideOpen}>
-      <Drawer.Backdrop variant="blur">
-        <Drawer.Content placement="right">
-          <Drawer.Dialog>
+    <Sheet.Root
+      isOpen={app.isAsideOpen}
+      placement="right"
+      onOpenChange={app.setAsideOpen}
+    >
+      <Sheet.Backdrop variant="blur">
+        <Sheet.Content>
+          <Sheet.Dialog aria-label="Application aside">
             <div className="app-layout__mobile-aside">{children}</div>
-          </Drawer.Dialog>
-        </Drawer.Content>
-      </Drawer.Backdrop>
-    </Drawer>
+          </Sheet.Dialog>
+        </Sheet.Content>
+      </Sheet.Backdrop>
+    </Sheet.Root>
   ) : null;
 }
 export interface AppLayoutTooltipProps {
