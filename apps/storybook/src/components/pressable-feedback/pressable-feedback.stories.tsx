@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState } from "react";
 
+import { ArrowRight01Icon, UserIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Icon } from "@iconify/react";
 
 import { Button } from "../button";
@@ -609,7 +611,12 @@ function StandaloneRow({ mode }: { mode: "highlight" | "ripple" }) {
           <PressableFeedback.Highlight />
         )}
         <span className="bg-default flex size-10 items-center justify-center rounded-xl">
-          <Icon icon="solar:user-linear" />
+          <HugeiconsIcon
+            aria-hidden
+            icon={UserIcon}
+            size={16}
+            strokeWidth={2}
+          />
         </span>
         <span className="flex flex-1 flex-col">
           <strong>Profile</strong>
@@ -617,10 +624,14 @@ function StandaloneRow({ mode }: { mode: "highlight" | "ripple" }) {
             Update your personal information
           </span>
         </span>
-        <Icon
-          className="text-muted size-4"
-          icon="solar:alt-arrow-right-linear"
-        />
+        <span>
+          <HugeiconsIcon
+            aria-hidden
+            className="text-muted size-4"
+            icon={ArrowRight01Icon}
+            strokeWidth={2}
+          />
+        </span>
       </button>
     </div>
   );

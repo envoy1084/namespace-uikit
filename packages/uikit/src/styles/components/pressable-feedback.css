@@ -34,14 +34,19 @@
     inset: 0;
   }
 
-  [data-hovered="true"] > .pressable-feedback__highlight {
-    opacity: var(--pressable-feedback-highlight-opacity);
+  @media (hover: hover) {
+    :hover > .pressable-feedback__highlight,
+    [data-hovered="true"] > .pressable-feedback__highlight {
+      opacity: var(--pressable-feedback-highlight-opacity);
+    }
   }
 
+  :active > .pressable-feedback__highlight,
   [data-pressed="true"] > .pressable-feedback__highlight {
     opacity: var(--pressable-feedback-highlight-pressed-opacity);
   }
 
+  :disabled > .pressable-feedback__highlight,
   [aria-disabled="true"] > .pressable-feedback__highlight {
     display: none;
   }
