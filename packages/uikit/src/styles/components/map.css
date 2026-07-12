@@ -160,12 +160,15 @@
   .map__compass-icon [data-needle="south-left"] {
     fill: color-mix(in oklch, var(--muted) 38%, transparent);
   }
-  .maplibregl-popup-content {
-    background: transparent;
-    box-shadow: none;
-    padding: 0;
-  }
-  .maplibregl-popup-tip {
-    display: none;
-  }
+}
+
+/* MapLibre ships these selectors unlayered, so the reset must also be
+   unlayered to take precedence over its default popup chrome. */
+.maplibregl-popup-content {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+.maplibregl-popup-tip {
+  display: none;
 }
