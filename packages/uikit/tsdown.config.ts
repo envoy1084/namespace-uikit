@@ -26,6 +26,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/agenda.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/area-chart.css",
       to: "dist/components",
     },
@@ -147,6 +151,7 @@ export default defineConfig({
     neverBundle: [
       "@hugeicons/core-free-icons",
       "@hugeicons/react",
+      "@internationalized/date",
       "@heroui/react",
       "@number-flow/react",
       "@tiptap/core",
