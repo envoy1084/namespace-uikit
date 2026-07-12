@@ -1,0 +1,33 @@
+@layer components {
+  .text-shimmer {
+    --text-shimmer-color: color-mix(in oklch, currentColor 45%, transparent);
+    display: inline-block;
+    width: fit-content;
+    background: linear-gradient(
+        90deg,
+        var(--text-shimmer-color) 0%,
+        currentColor 45%,
+        currentColor 55%,
+        var(--text-shimmer-color) 100%
+      )
+      0 0 / 250% 100% no-repeat;
+    color: currentColor;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: text-shimmer 2.3s linear infinite;
+  }
+  @keyframes text-shimmer {
+    from { background-position: 100% 0; }
+    to { background-position: -100% 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .text-shimmer {
+      animation: none;
+      background: none;
+      color: currentColor;
+      opacity: 0.6;
+      -webkit-text-fill-color: unset;
+    }
+  }
+}

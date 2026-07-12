@@ -121,6 +121,7 @@ export * from "./components/tabs";
 export * from "./components/tag";
 export * from "./components/tag-group";
 export * from "./components/textarea";
+export * from "./components/text-shimmer";
 export * from "./components/textfield";
 export * from "./components/time-field";
 export * from "./components/timeline";

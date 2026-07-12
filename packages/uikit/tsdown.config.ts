@@ -82,6 +82,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/text-shimmer.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/kanban.css",
       to: "dist/components",
     },

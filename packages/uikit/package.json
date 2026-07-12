@@ -161,6 +161,14 @@
       "types": "./dist/components/trend-chip.d.mts",
       "import": "./dist/components/trend-chip.mjs"
     },
+    "./text-shimmer": {
+      "@thenamespace/source": {
+        "types": "./src/components/text-shimmer/index.ts",
+        "import": "./src/components/text-shimmer/index.ts"
+      },
+      "types": "./dist/components/text-shimmer.d.mts",
+      "import": "./dist/components/text-shimmer.mjs"
+    },
     "./rating": {
       "@thenamespace/source": {
         "types": "./src/components/rating/index.ts",

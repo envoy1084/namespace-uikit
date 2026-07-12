@@ -121,6 +121,7 @@ export * from "./tabs";
 export * from "./tag";
 export * from "./tag-group";
 export * from "./textarea";
+export * from "./text-shimmer";
 export * from "./textfield";
 export * from "./time-field";
 export * from "./timeline";
