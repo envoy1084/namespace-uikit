@@ -103,13 +103,13 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 
 ### Shared foundations
 
-- [ ] Compare Storybook typography, font loading, antialiasing, and perceived weight with the official HeroUI Storybook before applying component-specific weight overrides.
+- [x] Compare Storybook typography, font loading, antialiasing, and perceived weight with the official HeroUI Storybook before applying component-specific weight overrides.
 - [ ] Replace hardcoded SVGs, emoji, and mismatched icons throughout Storybook with HeroUI icons where available and Hugeicons otherwise.
 - [ ] Verify all follow-up fixes in light and dark mode, including hover, press, focus, disabled, animation, and responsive states where applicable.
 
 ### Shared primitives and charts
 
-- [ ] Segment matches official active, inactive-hover, tint, separator, radius, and motion styles.
+- [x] Segment matches official active, inactive-hover, tint, separator, radius, and motion styles.
 - [ ] Chart axes use the official typography weight across area, bar, composed, line, pie, radar, and radial charts.
 - [ ] ChartTooltip matches official padding and radius in every tooltip variant.
 - [ ] Bar Chart percentage chip uses the official dark-green text treatment.
@@ -118,7 +118,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 
 ### Dependent complex components
 
-- [ ] Agenda composes the shared Segment component for its top view switcher and matches official behavior.
+- [x] Agenda composes the shared Segment component for its top view switcher and matches official behavior.
 - [ ] Navbar Search Docs uses the official input variant and user icon; Dashboard renders without errors.
 - [ ] Sidebar is re-audited for hover actions, menu icons, collapsed square icons, spacing, and all official states.
 - [ ] AppLayout is re-audited after Navbar and Sidebar fixes.

@@ -19,7 +19,7 @@ import {
   useState,
 } from "react";
 
-import { Button, cn, ToggleButton, ToggleButtonGroup } from "@heroui/react";
+import { Button, cn } from "@heroui/react";
 import {
   CalendarDateTime,
   getLocalTimeZone,
@@ -27,6 +27,8 @@ import {
   startOfWeek,
   today,
 } from "@internationalized/date";
+
+import { Segment } from "../buttons/segment";
 
 export type AgendaView = "day" | "month" | "week";
 export type AgendaEventStatus = "confirmed" | "unconfirmed";
@@ -472,16 +474,14 @@ function AgendaViewSelector({
 }): ReactElement {
   const { setView, view } = useAgendaContext();
   return (
-    <ToggleButtonGroup
+    <Segment
       aria-label="Calendar view"
       className={
         cn("agenda__view-selector", className) ?? "agenda__view-selector"
       }
-      selectedKeys={new Set([view])}
-      selectionMode="single"
+      selectedKey={view}
       size={size}
-      onSelectionChange={(keys) => {
-        const next = [...keys][0];
+      onSelectionChange={(next) => {
         if (next === "day" || next === "week" || next === "month") {
           setView(next);
         }
@@ -489,12 +489,12 @@ function AgendaViewSelector({
     >
       {children ??
         (["day", "week", "month"] as const).map((item) => (
-          <ToggleButton id={item} key={item} variant="ghost">
+          <Segment.Item id={item} key={item}>
             {item[0]?.toUpperCase()}
             {item.slice(1)}
-          </ToggleButton>
+          </Segment.Item>
         ))}
-    </ToggleButtonGroup>
+    </Segment>
   );
 }
 function AgendaDayHeader({ date }: { date: CalendarDate }): ReactElement {
