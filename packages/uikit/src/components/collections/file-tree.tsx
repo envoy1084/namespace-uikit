@@ -137,7 +137,6 @@ export function FileTreeItem<T extends object = object>({
           hasChildItems,
           isExpanded,
           level,
-          selectionBehavior,
           selectionMode,
         }) => {
           const renderedIcon =
@@ -148,8 +147,7 @@ export function FileTreeItem<T extends object = object>({
                   isExpanded,
                 })
               : icon;
-          const showCheckbox =
-            selectionBehavior === "toggle" && selectionMode !== "none";
+          const showCheckbox = selectionMode === "multiple";
 
           return (
             <div
@@ -185,9 +183,11 @@ export function FileTreeItem<T extends object = object>({
                   data-slot="file-tree-checkbox"
                 >
                   <Checkbox aria-label="Select" slot="selection">
-                    <Checkbox.Control>
-                      <Checkbox.Indicator />
-                    </Checkbox.Control>
+                    <Checkbox.Content>
+                      <Checkbox.Control>
+                        <Checkbox.Indicator />
+                      </Checkbox.Control>
+                    </Checkbox.Content>
                   </Checkbox>
                 </span>
               ) : null}

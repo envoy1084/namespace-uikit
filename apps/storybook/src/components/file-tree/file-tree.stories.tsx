@@ -388,6 +388,7 @@ function WithCheckboxesDemo() {
       className="w-[460px]"
       defaultExpandedKeys={["root", "apps-check"]}
       selectedKeys={selectedKeys}
+      selectionBehavior="toggle"
       selectionMode="multiple"
       onSelectionChange={setSelectedKeys}
     >
