@@ -13,6 +13,7 @@ export * from "./button-group";
 export * from "./calendar";
 export * from "./calendar-year-picker";
 export * from "./chat-attachment";
+export * from "./chat-loader";
 export * from "./chat-message";
 export * from "./chat-message-actions";
 export * from "./chat-source";

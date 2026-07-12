@@ -42,6 +42,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/chat-loader.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/chat-message.css",
       to: "dist/components",
     },
