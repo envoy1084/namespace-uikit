@@ -55,6 +55,7 @@ export * from "./components/input-otp";
 export * from "./components/inline-select";
 export * from "./components/kbd";
 export * from "./components/kpi";
+export * from "./components/kpi-group";
 export * from "./components/label";
 export * from "./components/link";
 export * from "./components/list-box";
