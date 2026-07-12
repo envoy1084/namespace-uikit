@@ -67,328 +67,328 @@
     },
     "./number-stepper": {
       "@thenamespace/source": {
-        "types": "./src/components/forms/number-stepper/index.ts",
-        "import": "./src/components/forms/number-stepper/index.ts"
+        "types": "./src/components/forms/number-stepper.tsx",
+        "import": "./src/components/forms/number-stepper.tsx"
       },
       "types": "./dist/components/number-stepper.d.mts",
       "import": "./dist/components/number-stepper.mjs"
     },
     "./chart-tooltip": {
       "@thenamespace/source": {
-        "types": "./src/components/charts/chart-tooltip/index.ts",
-        "import": "./src/components/charts/chart-tooltip/index.ts"
+        "types": "./src/components/charts/chart-tooltip.tsx",
+        "import": "./src/components/charts/chart-tooltip.tsx"
       },
       "types": "./dist/components/chart-tooltip.d.mts",
       "import": "./dist/components/chart-tooltip.mjs"
     },
     "./area-chart": {
       "@thenamespace/source": {
-        "types": "./src/components/charts/area-chart/index.ts",
-        "import": "./src/components/charts/area-chart/index.ts"
+        "types": "./src/components/charts/area-chart.tsx",
+        "import": "./src/components/charts/area-chart.tsx"
       },
       "types": "./dist/components/area-chart.d.mts",
       "import": "./dist/components/area-chart.mjs"
     },
     "./bar-chart": {
       "@thenamespace/source": {
-        "types": "./src/components/charts/bar-chart/index.ts",
-        "import": "./src/components/charts/bar-chart/index.ts"
+        "types": "./src/components/charts/bar-chart.tsx",
+        "import": "./src/components/charts/bar-chart.tsx"
       },
       "types": "./dist/components/bar-chart.d.mts",
       "import": "./dist/components/bar-chart.mjs"
     },
     "./composed-chart": {
       "@thenamespace/source": {
-        "types": "./src/components/charts/composed-chart/index.ts",
-        "import": "./src/components/charts/composed-chart/index.ts"
+        "types": "./src/components/charts/composed-chart.tsx",
+        "import": "./src/components/charts/composed-chart.tsx"
       },
       "types": "./dist/components/composed-chart.d.mts",
       "import": "./dist/components/composed-chart.mjs"
     },
     "./line-chart": {
       "@thenamespace/source": {
-        "types": "./src/components/charts/line-chart/index.ts",
-        "import": "./src/components/charts/line-chart/index.ts"
+        "types": "./src/components/charts/line-chart.tsx",
+        "import": "./src/components/charts/line-chart.tsx"
       },
       "types": "./dist/components/line-chart.d.mts",
       "import": "./dist/components/line-chart.mjs"
     },
     "./pie-chart": {
       "@thenamespace/source": {
-        "types": "./src/components/charts/pie-chart/index.ts",
-        "import": "./src/components/charts/pie-chart/index.ts"
+        "types": "./src/components/charts/pie-chart.tsx",
+        "import": "./src/components/charts/pie-chart.tsx"
       },
       "types": "./dist/components/pie-chart.d.mts",
       "import": "./dist/components/pie-chart.mjs"
     },
     "./radar-chart": {
       "@thenamespace/source": {
-        "types": "./src/components/charts/radar-chart/index.ts",
-        "import": "./src/components/charts/radar-chart/index.ts"
+        "types": "./src/components/charts/radar-chart.tsx",
+        "import": "./src/components/charts/radar-chart.tsx"
       },
       "types": "./dist/components/radar-chart.d.mts",
       "import": "./dist/components/radar-chart.mjs"
     },
     "./radial-chart": {
       "@thenamespace/source": {
-        "types": "./src/components/charts/radial-chart/index.ts",
-        "import": "./src/components/charts/radial-chart/index.ts"
+        "types": "./src/components/charts/radial-chart.tsx",
+        "import": "./src/components/charts/radial-chart.tsx"
       },
       "types": "./dist/components/radial-chart.d.mts",
       "import": "./dist/components/radial-chart.mjs"
     },
     "./number-value": {
       "@thenamespace/source": {
-        "types": "./src/components/number-value/index.ts",
-        "import": "./src/components/number-value/index.ts"
+        "types": "./src/components/number-value.tsx",
+        "import": "./src/components/number-value.tsx"
       },
       "types": "./dist/components/number-value.d.mts",
       "import": "./dist/components/number-value.mjs"
     },
     "./pressable-feedback": {
       "@thenamespace/source": {
-        "types": "./src/components/pressable-feedback/index.ts",
-        "import": "./src/components/pressable-feedback/index.ts"
+        "types": "./src/components/pressable-feedback.tsx",
+        "import": "./src/components/pressable-feedback.tsx"
       },
       "types": "./dist/components/pressable-feedback.d.mts",
       "import": "./dist/components/pressable-feedback.mjs"
     },
     "./trend-chip": {
       "@thenamespace/source": {
-        "types": "./src/components/trend-chip/index.ts",
-        "import": "./src/components/trend-chip/index.ts"
+        "types": "./src/components/trend-chip.tsx",
+        "import": "./src/components/trend-chip.tsx"
       },
       "types": "./dist/components/trend-chip.d.mts",
       "import": "./dist/components/trend-chip.mjs"
     },
     "./text-shimmer": {
       "@thenamespace/source": {
-        "types": "./src/components/text-shimmer/index.ts",
-        "import": "./src/components/text-shimmer/index.ts"
+        "types": "./src/components/text-shimmer.tsx",
+        "import": "./src/components/text-shimmer.tsx"
       },
       "types": "./dist/components/text-shimmer.d.mts",
       "import": "./dist/components/text-shimmer.mjs"
     },
     "./code-block": {
       "@thenamespace/source": {
-        "types": "./src/components/code-block/index.ts",
-        "import": "./src/components/code-block/index.ts"
+        "types": "./src/components/code-block.tsx",
+        "import": "./src/components/code-block.tsx"
       },
       "types": "./dist/components/code-block.d.mts",
       "import": "./dist/components/code-block.mjs"
     },
     "./markdown": {
       "@thenamespace/source": {
-        "types": "./src/components/markdown/index.ts",
-        "import": "./src/components/markdown/index.ts"
+        "types": "./src/components/markdown.tsx",
+        "import": "./src/components/markdown.tsx"
       },
       "types": "./dist/components/markdown.d.mts",
       "import": "./dist/components/markdown.mjs"
     },
     "./chat-attachment": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-attachment/index.ts",
-        "import": "./src/components/chat-attachment/index.ts"
+        "types": "./src/components/chat-attachment.tsx",
+        "import": "./src/components/chat-attachment.tsx"
       },
       "types": "./dist/components/chat-attachment.d.mts",
       "import": "./dist/components/chat-attachment.mjs"
     },
     "./chat-conversation": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-conversation/index.ts",
-        "import": "./src/components/chat-conversation/index.ts"
+        "types": "./src/components/chat-conversation.tsx",
+        "import": "./src/components/chat-conversation.tsx"
       },
       "types": "./dist/components/chat-conversation.d.mts",
       "import": "./dist/components/chat-conversation.mjs"
     },
     "./chat-list-view": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-list-view/index.ts",
-        "import": "./src/components/chat-list-view/index.ts"
+        "types": "./src/components/chat-list-view.tsx",
+        "import": "./src/components/chat-list-view.tsx"
       },
       "types": "./dist/components/chat-list-view.d.mts",
       "import": "./dist/components/chat-list-view.mjs"
     },
     "./chat-source": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-source/index.ts",
-        "import": "./src/components/chat-source/index.ts"
+        "types": "./src/components/chat-source.tsx",
+        "import": "./src/components/chat-source.tsx"
       },
       "types": "./dist/components/chat-source.d.mts",
       "import": "./dist/components/chat-source.mjs"
     },
     "./chat-tool": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-tool/index.ts",
-        "import": "./src/components/chat-tool/index.ts"
+        "types": "./src/components/chat-tool.tsx",
+        "import": "./src/components/chat-tool.tsx"
       },
       "types": "./dist/components/chat-tool.d.mts",
       "import": "./dist/components/chat-tool.mjs"
     },
     "./chain-of-thought": {
       "@thenamespace/source": {
-        "types": "./src/components/chain-of-thought/index.ts",
-        "import": "./src/components/chain-of-thought/index.ts"
+        "types": "./src/components/chain-of-thought.tsx",
+        "import": "./src/components/chain-of-thought.tsx"
       },
       "types": "./dist/components/chain-of-thought.d.mts",
       "import": "./dist/components/chain-of-thought.mjs"
     },
     "./chat-message": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-message/index.ts",
-        "import": "./src/components/chat-message/index.ts"
+        "types": "./src/components/chat-message.tsx",
+        "import": "./src/components/chat-message.tsx"
       },
       "types": "./dist/components/chat-message.d.mts",
       "import": "./dist/components/chat-message.mjs"
     },
     "./chat-message-actions": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-message-actions/index.ts",
-        "import": "./src/components/chat-message-actions/index.ts"
+        "types": "./src/components/chat-message-actions.tsx",
+        "import": "./src/components/chat-message-actions.tsx"
       },
       "types": "./dist/components/chat-message-actions.d.mts",
       "import": "./dist/components/chat-message-actions.mjs"
     },
     "./chat-loader": {
       "@thenamespace/source": {
-        "types": "./src/components/chat-loader/index.ts",
-        "import": "./src/components/chat-loader/index.ts"
+        "types": "./src/components/chat-loader.tsx",
+        "import": "./src/components/chat-loader.tsx"
       },
       "types": "./dist/components/chat-loader.d.mts",
       "import": "./dist/components/chat-loader.mjs"
     },
     "./prompt-input": {
       "@thenamespace/source": {
-        "types": "./src/components/prompt-input/index.ts",
-        "import": "./src/components/prompt-input/index.ts"
+        "types": "./src/components/prompt-input.tsx",
+        "import": "./src/components/prompt-input.tsx"
       },
       "types": "./dist/components/prompt-input.d.mts",
       "import": "./dist/components/prompt-input.mjs"
     },
     "./prompt-suggestion": {
       "@thenamespace/source": {
-        "types": "./src/components/prompt-suggestion/index.ts",
-        "import": "./src/components/prompt-suggestion/index.ts"
+        "types": "./src/components/prompt-suggestion.tsx",
+        "import": "./src/components/prompt-suggestion.tsx"
       },
       "types": "./dist/components/prompt-suggestion.d.mts",
       "import": "./dist/components/prompt-suggestion.mjs"
     },
     "./rating": {
       "@thenamespace/source": {
-        "types": "./src/components/rating/index.ts",
-        "import": "./src/components/rating/index.ts"
+        "types": "./src/components/rating.tsx",
+        "import": "./src/components/rating.tsx"
       },
       "types": "./dist/components/rating.d.mts",
       "import": "./dist/components/rating.mjs"
     },
     "./emoji-reaction-button": {
       "@thenamespace/source": {
-        "types": "./src/components/emoji-reaction-button/index.ts",
-        "import": "./src/components/emoji-reaction-button/index.ts"
+        "types": "./src/components/emoji-reaction-button.tsx",
+        "import": "./src/components/emoji-reaction-button.tsx"
       },
       "types": "./dist/components/emoji-reaction-button.d.mts",
       "import": "./dist/components/emoji-reaction-button.mjs"
     },
     "./emoji-picker": {
       "@thenamespace/source": {
-        "types": "./src/components/emoji-picker/index.ts",
-        "import": "./src/components/emoji-picker/index.ts"
+        "types": "./src/components/emoji-picker.tsx",
+        "import": "./src/components/emoji-picker.tsx"
       },
       "types": "./dist/components/emoji-picker.d.mts",
       "import": "./dist/components/emoji-picker.mjs"
     },
     "./resizable": {
       "@thenamespace/source": {
-        "types": "./src/components/resizable/index.ts",
-        "import": "./src/components/resizable/index.ts"
+        "types": "./src/components/resizable.tsx",
+        "import": "./src/components/resizable.tsx"
       },
       "types": "./dist/components/resizable.d.mts",
       "import": "./dist/components/resizable.mjs"
     },
     "./cell-color-picker": {
       "@thenamespace/source": {
-        "types": "./src/components/cell-color-picker/index.ts",
-        "import": "./src/components/cell-color-picker/index.ts"
+        "types": "./src/components/cell-color-picker.tsx",
+        "import": "./src/components/cell-color-picker.tsx"
       },
       "types": "./dist/components/cell-color-picker.d.mts",
       "import": "./dist/components/cell-color-picker.mjs"
     },
     "./cell-select": {
       "@thenamespace/source": {
-        "types": "./src/components/cell-select/index.ts",
-        "import": "./src/components/cell-select/index.ts"
+        "types": "./src/components/cell-select.tsx",
+        "import": "./src/components/cell-select.tsx"
       },
       "types": "./dist/components/cell-select.d.mts",
       "import": "./dist/components/cell-select.mjs"
     },
     "./cell-slider": {
       "@thenamespace/source": {
-        "types": "./src/components/cell-slider/index.ts",
-        "import": "./src/components/cell-slider/index.ts"
+        "types": "./src/components/cell-slider.tsx",
+        "import": "./src/components/cell-slider.tsx"
       },
       "types": "./dist/components/cell-slider.d.mts",
       "import": "./dist/components/cell-slider.mjs"
     },
     "./cell-switch": {
       "@thenamespace/source": {
-        "types": "./src/components/cell-switch/index.ts",
-        "import": "./src/components/cell-switch/index.ts"
+        "types": "./src/components/cell-switch.tsx",
+        "import": "./src/components/cell-switch.tsx"
       },
       "types": "./dist/components/cell-switch.d.mts",
       "import": "./dist/components/cell-switch.mjs"
     },
     "./checkbox-button-group": {
       "@thenamespace/source": {
-        "types": "./src/components/checkbox-button-group/index.ts",
-        "import": "./src/components/checkbox-button-group/index.ts"
+        "types": "./src/components/checkbox-button-group.tsx",
+        "import": "./src/components/checkbox-button-group.tsx"
       },
       "types": "./dist/components/checkbox-button-group.d.mts",
       "import": "./dist/components/checkbox-button-group.mjs"
     },
     "./inline-select": {
       "@thenamespace/source": {
-        "types": "./src/components/inline-select/index.ts",
-        "import": "./src/components/inline-select/index.ts"
+        "types": "./src/components/inline-select.tsx",
+        "import": "./src/components/inline-select.tsx"
       },
       "types": "./dist/components/inline-select.d.mts",
       "import": "./dist/components/inline-select.mjs"
     },
     "./native-select": {
       "@thenamespace/source": {
-        "types": "./src/components/native-select/index.ts",
-        "import": "./src/components/native-select/index.ts"
+        "types": "./src/components/native-select.tsx",
+        "import": "./src/components/native-select.tsx"
       },
       "types": "./dist/components/native-select.d.mts",
       "import": "./dist/components/native-select.mjs"
     },
     "./radio-button-group": {
       "@thenamespace/source": {
-        "types": "./src/components/radio-button-group/index.ts",
-        "import": "./src/components/radio-button-group/index.ts"
+        "types": "./src/components/radio-button-group.tsx",
+        "import": "./src/components/radio-button-group.tsx"
       },
       "types": "./dist/components/radio-button-group.d.mts",
       "import": "./dist/components/radio-button-group.mjs"
     },
     "./drop-zone": {
       "@thenamespace/source": {
-        "types": "./src/components/drop-zone/index.ts",
-        "import": "./src/components/drop-zone/index.ts"
+        "types": "./src/components/drop-zone.tsx",
+        "import": "./src/components/drop-zone.tsx"
       },
       "types": "./dist/components/drop-zone.d.mts",
       "import": "./dist/components/drop-zone.mjs"
     },
     "./rich-text-editor": {
       "@thenamespace/source": {
-        "types": "./src/components/rich-text-editor/index.ts",
-        "import": "./src/components/rich-text-editor/index.ts"
+        "types": "./src/components/rich-text-editor.tsx",
+        "import": "./src/components/rich-text-editor.tsx"
       },
       "types": "./dist/components/rich-text-editor.d.mts",
       "import": "./dist/components/rich-text-editor.mjs"
     },
     "./*": {
       "@thenamespace/source": {
-        "types": "./src/components/*.ts",
-        "import": "./src/components/*.ts"
+        "types": "./src/components/*.tsx",
+        "import": "./src/components/*.tsx"
       },
       "types": "./dist/components/*.d.mts",
       "import": "./dist/components/*.mjs"

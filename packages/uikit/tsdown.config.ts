@@ -8,7 +8,7 @@ const componentEntries = Object.fromEntries(
     .filter(
       (entry) =>
         entry.isFile() &&
-        entry.name.endsWith(".ts") &&
+        entry.name.endsWith(".tsx") &&
         entry.name !== "index.ts",
     )
     .map((entry) => {
@@ -327,36 +327,15 @@ export default defineConfig({
   },
   entry: {
     ...componentEntries,
-    "components/area-chart": "src/components/charts/area-chart/index.ts",
-    "components/bar-chart": "src/components/charts/bar-chart/index.ts",
-    "components/composed-chart":
-      "src/components/charts/composed-chart/index.ts",
-    "components/line-chart": "src/components/charts/line-chart/index.ts",
-    "components/pie-chart": "src/components/charts/pie-chart/index.ts",
-    "components/radar-chart": "src/components/charts/radar-chart/index.ts",
-    "components/radial-chart": "src/components/charts/radial-chart/index.ts",
-    "components/number-value": "src/components/number-value/index.ts",
-    "components/pressable-feedback":
-      "src/components/pressable-feedback/index.ts",
-    "components/trend-chip": "src/components/trend-chip/index.ts",
-    "components/rating": "src/components/rating/index.ts",
-    "components/emoji-reaction-button":
-      "src/components/emoji-reaction-button/index.ts",
-    "components/resizable": "src/components/resizable/index.ts",
-    "components/cell-color-picker": "src/components/cell-color-picker/index.ts",
-    "components/cell-select": "src/components/cell-select/index.ts",
-    "components/cell-slider": "src/components/cell-slider/index.ts",
-    "components/cell-switch": "src/components/cell-switch/index.ts",
-    "components/checkbox-button-group":
-      "src/components/checkbox-button-group/index.ts",
-    "components/inline-select": "src/components/inline-select/index.ts",
-    "components/native-select": "src/components/native-select/index.ts",
-    "components/radio-button-group":
-      "src/components/radio-button-group/index.ts",
-    "components/drop-zone": "src/components/drop-zone/index.ts",
-    "components/rich-text-editor": "src/components/rich-text-editor/index.ts",
-    "components/chart-tooltip": "src/components/charts/chart-tooltip/index.ts",
-    "components/number-stepper": "src/components/forms/number-stepper/index.ts",
+    "components/area-chart": "src/components/charts/area-chart.tsx",
+    "components/bar-chart": "src/components/charts/bar-chart.tsx",
+    "components/chart-tooltip": "src/components/charts/chart-tooltip.tsx",
+    "components/composed-chart": "src/components/charts/composed-chart.tsx",
+    "components/line-chart": "src/components/charts/line-chart.tsx",
+    "components/number-stepper": "src/components/forms/number-stepper.tsx",
+    "components/pie-chart": "src/components/charts/pie-chart.tsx",
+    "components/radar-chart": "src/components/charts/radar-chart.tsx",
+    "components/radial-chart": "src/components/charts/radial-chart.tsx",
     hooks: "src/hooks.ts",
     icons: "src/icons.ts",
     index: "src/index.ts",
