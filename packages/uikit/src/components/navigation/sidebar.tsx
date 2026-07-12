@@ -297,30 +297,55 @@ export function SidebarMenu<T extends object = object>({
 export type SidebarMenuSectionProps<T extends object = object> =
   ComponentPropsWithRef<typeof TreeSection<T>>;
 export function SidebarMenuSection<T extends object = object>({
+  children,
   className,
   ...props
 }: SidebarMenuSectionProps<T>): ReactElement {
+  const header = (
+    typeof children === "function" ? [] : Children.toArray(children)
+  ).find(
+    (child) => isValidElement(child) && child.type === SidebarMenuHeader,
+  ) as ReactElement<{ children?: ReactNode }> | undefined;
+  const label =
+    isValidElement(header) && typeof header.props.children === "string"
+      ? header.props.children
+      : undefined;
+
   return (
     <TreeSection
       {...props}
+      {...(label === undefined ? {} : { "aria-label": label })}
       className={
         cn("sidebar__menu-section", className) ?? "sidebar__menu-section"
       }
       data-slot="sidebar-menu-section"
-    />
+    >
+      {children}
+    </TreeSection>
   );
 }
 export type SidebarMenuHeaderProps = ComponentPropsWithRef<typeof Header>;
 export function SidebarMenuHeader({
+  children,
   className,
   ...props
 }: SidebarMenuHeaderProps): ReactElement {
   return (
     <Header
       {...props}
-      className={cn("sidebar__menu-header", className)}
-      data-slot="sidebar-menu-header"
-    />
+      role="presentation"
+      style={{ display: "contents", ...props.style }}
+    >
+      <div
+        className={cn("sidebar__menu-header", className)}
+        data-slot="sidebar-menu-header"
+        role="row"
+      >
+        <div role="rowheader" style={{ display: "contents" }}>
+          {children}
+        </div>
+      </div>
+    </Header>
   );
 }
 export interface SidebarMenuItemProps extends ComponentPropsWithRef<

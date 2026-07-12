@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import { Fragment } from "react";
+
 import {
   Avatar,
   Breadcrumbs,
@@ -10,6 +12,7 @@ import {
 } from "@thenamespace/uikit";
 import {
   Analytics01Icon,
+  BookOpen01Icon,
   Copy01Icon,
   Delete02Icon,
   FolderOpenIcon,
@@ -18,6 +21,7 @@ import {
   HugeiconsIcon,
   Logout01Icon,
   MoreVerticalIcon,
+  Notification01Icon,
   ReceiptTextIcon,
   Settings01Icon,
   Task01Icon,
@@ -87,7 +91,13 @@ function MoreActions({ label }: { label: string }) {
   );
 }
 
-function Menu({ nested = true }: { nested?: boolean }) {
+function Menu({
+  analyticsItems = ["Overview", "Reports", "Conversions"],
+  nested = true,
+}: {
+  analyticsItems?: readonly string[];
+  nested?: boolean;
+}) {
   return (
     <Sidebar.Menu
       aria-label="Navigation"
@@ -121,19 +131,21 @@ function Menu({ nested = true }: { nested?: boolean }) {
           ) : null}
           {nested && item.items ? (
             <Sidebar.Submenu>
-              {item.items.map((child) => (
-                <Sidebar.MenuItem
-                  href="#"
-                  id={`${item.label}-${child}`}
-                  key={child}
-                  textValue={child}
-                >
-                  <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
-                  <Sidebar.MenuActions className="ml-auto">
-                    <MoreActions label={child} />
-                  </Sidebar.MenuActions>
-                </Sidebar.MenuItem>
-              ))}
+              {(item.label === "Analytics" ? analyticsItems : item.items).map(
+                (child) => (
+                  <Sidebar.MenuItem
+                    href="#"
+                    id={`${item.label}-${child}`}
+                    key={child}
+                    textValue={child}
+                  >
+                    <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
+                    <Sidebar.MenuActions className="ml-auto">
+                      <MoreActions label={child} />
+                    </Sidebar.MenuActions>
+                  </Sidebar.MenuItem>
+                ),
+              )}
             </Sidebar.Submenu>
           ) : null}
         </Sidebar.MenuItem>
@@ -167,6 +179,7 @@ function UserMenu() {
 function Demo({
   collapsible = "icon",
   defaultOpen = true,
+  description = "Main content area. Resize to mobile to see the Sheet sidebar.",
   nested = false,
   side = "left",
   variant = "sidebar",
@@ -175,12 +188,73 @@ function Demo({
 }: {
   collapsible?: "icon" | "none" | "offcanvas";
   defaultOpen?: boolean;
+  description?: string;
   nested?: boolean;
   side?: "left" | "right";
   title?: string;
   user?: boolean;
   variant?: "floating" | "inset" | "sidebar";
 }) {
+  const sidebar = (
+    <Sidebar>
+      <Sidebar.Header>
+        <div className="flex items-center gap-3 px-1 py-2">
+          <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
+            <span className="text-sm font-bold text-white">H</span>
+          </span>
+          <span
+            className="text-foreground text-sm font-semibold"
+            data-sidebar="label"
+          >
+            {title}
+          </span>
+        </div>
+      </Sidebar.Header>
+      <Sidebar.Content>
+        <Sidebar.Group>{Menu({ nested })}</Sidebar.Group>
+      </Sidebar.Content>
+      <Sidebar.Footer>
+        {user ? (
+          <UserMenu />
+        ) : (
+          <Sidebar.Menu aria-label="Footer actions">
+            <Sidebar.MenuItem href="#" id="help" textValue="Help & Information">
+              <Sidebar.MenuIcon>
+                <HugeiconsIcon icon={HelpCircleIcon} size={16} />
+              </Sidebar.MenuIcon>
+              <Sidebar.MenuLabel>Help & Information</Sidebar.MenuLabel>
+            </Sidebar.MenuItem>
+            <Sidebar.MenuItem href="#" id="logout" textValue="Log out">
+              <Sidebar.MenuIcon>
+                <HugeiconsIcon icon={Logout01Icon} size={16} />
+              </Sidebar.MenuIcon>
+              <Sidebar.MenuLabel>Log out</Sidebar.MenuLabel>
+            </Sidebar.MenuItem>
+          </Sidebar.Menu>
+        )}
+      </Sidebar.Footer>
+      <Sidebar.Rail />
+    </Sidebar>
+  );
+  const main = (
+    <Sidebar.Main>
+      <div className="flex items-center gap-3 p-4">
+        <Sidebar.Trigger />
+        <Breadcrumbs className="min-w-0">
+          <Breadcrumbs.Item className="min-w-0 font-semibold">
+            <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+              <HugeiconsIcon icon={Home01Icon} size={16} />
+              <span className="truncate">Dashboard</span>
+            </span>
+          </Breadcrumbs.Item>
+        </Breadcrumbs>
+      </div>
+      <div className="p-6">
+        <p className="text-muted">{description}</p>
+      </div>
+    </Sidebar.Main>
+  );
+
   return (
     <Sidebar.Provider
       collapsible={collapsible}
@@ -188,67 +262,17 @@ function Demo({
       side={side}
       variant={variant}
     >
-      <Sidebar>
-        <Sidebar.Header>
-          <div className="flex items-center gap-3 px-1 py-2">
-            <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
-              <span className="text-sm font-bold text-white">H</span>
-            </span>
-            <span
-              className="text-foreground text-sm font-semibold"
-              data-sidebar="label"
-            >
-              {title}
-            </span>
-          </div>
-        </Sidebar.Header>
-        <Sidebar.Content>
-          <Sidebar.Group>{Menu({ nested })}</Sidebar.Group>
-        </Sidebar.Content>
-        <Sidebar.Footer>
-          {user ? (
-            <UserMenu />
-          ) : (
-            <Sidebar.Menu aria-label="Footer actions">
-              <Sidebar.MenuItem
-                href="#"
-                id="help"
-                textValue="Help & Information"
-              >
-                <Sidebar.MenuIcon>
-                  <HugeiconsIcon icon={HelpCircleIcon} size={16} />
-                </Sidebar.MenuIcon>
-                <Sidebar.MenuLabel>Help & Information</Sidebar.MenuLabel>
-              </Sidebar.MenuItem>
-              <Sidebar.MenuItem href="#" id="logout" textValue="Log out">
-                <Sidebar.MenuIcon>
-                  <HugeiconsIcon icon={Logout01Icon} size={16} />
-                </Sidebar.MenuIcon>
-                <Sidebar.MenuLabel>Log out</Sidebar.MenuLabel>
-              </Sidebar.MenuItem>
-            </Sidebar.Menu>
-          )}
-        </Sidebar.Footer>
-        <Sidebar.Rail />
-      </Sidebar>
-      <Sidebar.Main>
-        <div className="flex items-center gap-3 p-4">
-          <Sidebar.Trigger />
-          <Breadcrumbs className="min-w-0">
-            <Breadcrumbs.Item className="min-w-0 font-semibold">
-              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
-                <HugeiconsIcon icon={Home01Icon} size={16} />
-                <span className="truncate">Dashboard</span>
-              </span>
-            </Breadcrumbs.Item>
-          </Breadcrumbs>
-        </div>
-        <div className="p-6">
-          <p className="text-muted">
-            Main content area. Resize to mobile to see the Sheet sidebar.
-          </p>
-        </div>
-      </Sidebar.Main>
+      {side === "right" ? (
+        <>
+          {main}
+          {sidebar}
+        </>
+      ) : (
+        <>
+          {sidebar}
+          {main}
+        </>
+      )}
     </Sidebar.Provider>
   );
 }
@@ -397,34 +421,275 @@ function IconOnlyDemo() {
     </Sidebar.Provider>
   );
 }
+
+const groupSections = [
+  {
+    label: "Platform",
+    items: [
+      { icon: Home01Icon, label: "Dashboard" },
+      { icon: Analytics01Icon, label: "Analytics" },
+      { icon: ReceiptTextIcon, label: "Orders" },
+    ],
+  },
+  {
+    label: "Settings",
+    items: [
+      { icon: Settings01Icon, label: "General" },
+      { icon: UserMultipleIcon, label: "Team" },
+      { icon: Notification01Icon, label: "Notifications" },
+    ],
+  },
+] as const;
+
+function WithGroupsDemo() {
+  return (
+    <Sidebar.Provider>
+      <Sidebar>
+        <Sidebar.Header>
+          <div className="flex items-center gap-3 px-1 py-2">
+            <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
+              <span className="text-sm font-bold text-white">H</span>
+            </span>
+            <span
+              className="text-foreground text-sm font-semibold"
+              data-sidebar="label"
+            >
+              HeroUI
+            </span>
+          </div>
+        </Sidebar.Header>
+        <Sidebar.Content>
+          {groupSections.map((section, index) => (
+            <Fragment key={section.label}>
+              {index > 0 ? <Sidebar.Separator /> : null}
+              <Sidebar.Group>
+                <Sidebar.GroupLabel>{section.label}</Sidebar.GroupLabel>
+                <Sidebar.Menu aria-label={section.label}>
+                  {section.items.map((item) => (
+                    <Sidebar.MenuItem
+                      id={item.label.toLowerCase()}
+                      key={item.label}
+                      textValue={item.label}
+                    >
+                      <Sidebar.MenuIcon>
+                        <HugeiconsIcon icon={item.icon} size={16} />
+                      </Sidebar.MenuIcon>
+                      <Sidebar.MenuLabel>{item.label}</Sidebar.MenuLabel>
+                    </Sidebar.MenuItem>
+                  ))}
+                </Sidebar.Menu>
+              </Sidebar.Group>
+            </Fragment>
+          ))}
+        </Sidebar.Content>
+      </Sidebar>
+      <Sidebar.Main>
+        <div className="flex items-center gap-3 p-4">
+          <Sidebar.Trigger />
+          <Breadcrumbs className="min-w-0">
+            <Breadcrumbs.Item className="min-w-0 font-semibold">
+              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                <HugeiconsIcon icon={Home01Icon} size={16} />
+                <span className="truncate">Dashboard</span>
+              </span>
+            </Breadcrumbs.Item>
+          </Breadcrumbs>
+        </div>
+        <div className="p-6">
+          <p className="text-muted">Main content area</p>
+        </div>
+      </Sidebar.Main>
+    </Sidebar.Provider>
+  );
+}
+
+const documentationSections = [
+  { items: ["Installation", "Project Structure"], label: "Getting Started" },
+  {
+    items: [
+      "Routing",
+      "Data Fetching",
+      "Rendering",
+      "Caching",
+      "Styling",
+      "Testing",
+    ],
+    label: "Build Your Application",
+  },
+  {
+    items: ["Components", "Functions", "Hooks", "Config"],
+    label: "API Reference",
+  },
+] as const;
+
+function DocumentationMenu() {
+  return (
+    <Sidebar.Menu
+      aria-label="Documentation navigation"
+      defaultExpandedKeys={["Build Your Application"]}
+      showGuideLines="hover"
+    >
+      {documentationSections.map((section) => (
+        <Sidebar.MenuSection key={section.label}>
+          <Sidebar.MenuHeader>{section.label}</Sidebar.MenuHeader>
+          <Sidebar.MenuItem id={section.label} textValue={section.label}>
+            <Sidebar.MenuLabel>{section.label}</Sidebar.MenuLabel>
+            <Sidebar.MenuTrigger>
+              <Sidebar.MenuIndicator />
+            </Sidebar.MenuTrigger>
+            <Sidebar.Submenu>
+              {section.items.map((item) => (
+                <Sidebar.MenuItem
+                  href="#"
+                  id={`${section.label}-${item}`}
+                  isCurrent={item === "Data Fetching"}
+                  key={item}
+                  textValue={item}
+                >
+                  <Sidebar.MenuLabel>{item}</Sidebar.MenuLabel>
+                  <Sidebar.MenuActions className="ml-auto">
+                    <MoreActions label={item} />
+                  </Sidebar.MenuActions>
+                </Sidebar.MenuItem>
+              ))}
+            </Sidebar.Submenu>
+          </Sidebar.MenuItem>
+        </Sidebar.MenuSection>
+      ))}
+    </Sidebar.Menu>
+  );
+}
+
+function CollapsibleGroupsDemo() {
+  return (
+    <Sidebar.Provider collapsible="offcanvas">
+      <Sidebar>
+        <Sidebar.Header>
+          <div className="flex items-center gap-3 px-1 py-2">
+            <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
+              <span className="text-xs font-bold text-white">D</span>
+            </span>
+            <span className="flex flex-col">
+              <span className="text-foreground text-sm leading-tight font-semibold">
+                Documentation
+              </span>
+              <span className="text-muted text-xs leading-tight">v1.0.0</span>
+            </span>
+          </div>
+        </Sidebar.Header>
+        <Sidebar.Content>
+          <DocumentationMenu />
+        </Sidebar.Content>
+      </Sidebar>
+      <Sidebar.Main>
+        <div className="flex items-center gap-3 p-4">
+          <Sidebar.Trigger />
+          <Breadcrumbs className="min-w-0">
+            <Breadcrumbs.Item className="text-muted min-w-0" href="#">
+              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                <HugeiconsIcon icon={BookOpen01Icon} size={16} />
+                <span className="truncate">Build Your Application</span>
+              </span>
+            </Breadcrumbs.Item>
+            <Breadcrumbs.Item className="min-w-0 font-semibold">
+              <span className="truncate">Data Fetching</span>
+            </Breadcrumbs.Item>
+          </Breadcrumbs>
+        </div>
+        <div className="p-6">
+          <p className="text-muted">
+            Documentation content area. Toggle the sidebar with the trigger
+            button.
+          </p>
+        </div>
+      </Sidebar.Main>
+    </Sidebar.Provider>
+  );
+}
+
+function ReducedMotionDemo() {
+  return (
+    <Sidebar.Provider collapsible="icon" reduceMotion>
+      <Sidebar>
+        <Sidebar.Header>
+          <div className="flex items-center gap-3 px-1 py-2">
+            <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
+              <span className="text-sm font-bold text-white">H</span>
+            </span>
+            <span
+              className="text-foreground text-sm font-semibold"
+              data-sidebar="label"
+            >
+              HeroUI
+            </span>
+          </div>
+        </Sidebar.Header>
+        <Sidebar.Content>
+          <Sidebar.Group>
+            <Sidebar.GroupLabel>Navigation</Sidebar.GroupLabel>
+            <Menu analyticsItems={["Overview", "Reports", "Exports"]} nested />
+          </Sidebar.Group>
+        </Sidebar.Content>
+        <Sidebar.Rail />
+      </Sidebar>
+      <Sidebar.Main>
+        <div className="flex items-center gap-3 p-4">
+          <Sidebar.Trigger />
+          <Breadcrumbs className="min-w-0">
+            <Breadcrumbs.Item className="text-muted min-w-0" href="#">
+              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                <HugeiconsIcon icon={Analytics01Icon} size={16} />
+                <span className="truncate">Analytics</span>
+              </span>
+            </Breadcrumbs.Item>
+            <Breadcrumbs.Item className="min-w-0 font-semibold">
+              <span>Reports</span>
+            </Breadcrumbs.Item>
+          </Breadcrumbs>
+        </div>
+        <div className="p-6">
+          <p className="text-muted">
+            reduceMotion is enabled, so nested sections open and close
+            instantly.
+          </p>
+        </div>
+      </Sidebar.Main>
+    </Sidebar.Provider>
+  );
+}
 export const Default: Story = { render: () => <Demo nested title="HeroUI" /> };
-export const RightSide: Story = { render: () => <Demo side="right" /> };
+export const RightSide: Story = {
+  render: () => (
+    <Demo
+      description="Main content area with the sidebar attached to the right. Resize to mobile to see the Sheet open from the right."
+      nested
+      side="right"
+      title="HeroUI"
+    />
+  ),
+};
 export const RightSideOffcanvas: Story = {
-  render: () => <Demo collapsible="offcanvas" side="right" />,
+  render: () => (
+    <Demo
+      collapsible="offcanvas"
+      description="Right-side offcanvas sidebar. Use the trigger or rail to collapse the sidebar off the right edge. Resize to mobile to verify the Sheet also opens from the right."
+      nested
+      side="right"
+      title="HeroUI"
+    />
+  ),
 };
 export const WithGroups: Story = {
-  render: () => <Demo title="Grouped navigation" />,
+  render: () => <WithGroupsDemo />,
 };
 export const CollapsibleGroups: Story = {
-  render: () => <Demo nested title="Documentation" />,
+  render: () => <CollapsibleGroupsDemo />,
 };
 export const Collapsible: Story = {
   render: () => <CollapsibleDemo />,
 };
 export const ReducedMotion: Story = {
-  render: () => (
-    <Sidebar.Provider reduceMotion>
-      <Sidebar>
-        <Sidebar.Header>
-          <Sidebar.Trigger />
-        </Sidebar.Header>
-        <Sidebar.Content>{Menu({ nested: true })}</Sidebar.Content>
-      </Sidebar>
-      <Sidebar.Main>
-        <div className="p-6">Nested menus with reduced motion.</div>
-      </Sidebar.Main>
-    </Sidebar.Provider>
-  ),
+  render: () => <ReducedMotionDemo />,
 };
 export const FloatingVariant: Story = {
   render: () => <Demo variant="floating" />,
