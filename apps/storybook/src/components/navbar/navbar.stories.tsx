@@ -2,15 +2,29 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useRef, useState } from "react";
 
-import { Icon } from "@iconify/react";
 import {
   Avatar,
   Button,
   Dropdown,
   InlineSelect,
-  Input,
+  Kbd,
+  ListBox,
+  SearchField,
   Segment,
 } from "@thenamespace/uikit";
+import {
+  ArrowDown01Icon,
+  ComputerIcon,
+  DashboardSquare01Icon,
+  Icon,
+  Moon02Icon,
+  Notification02Icon,
+  PlusSignIcon,
+  Search01Icon,
+  Settings01Icon,
+  Sun01Icon,
+  UserGroupIcon,
+} from "@thenamespace/uikit/icons";
 
 import { Navbar } from "./index";
 
@@ -32,7 +46,10 @@ const Logo = ({ compact = false }: { compact?: boolean }) => (
 );
 const User = () => (
   <Avatar className="size-7">
-    <Avatar.Fallback>JG</Avatar.Fallback>
+    <Avatar.Image
+      alt="User avatar"
+      src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg"
+    />
   </Avatar>
 );
 function BaseHeader({ mobile = false }: { mobile?: boolean }) {
@@ -56,10 +73,10 @@ function BaseHeader({ mobile = false }: { mobile?: boolean }) {
       <Navbar.Spacer />
       <Navbar.Content>
         <Navbar.Item aria-label="Search">
-          <Icon data-slot="icon" icon="lucide:search" />
+          <Icon data-slot="icon" icon={Search01Icon} />
         </Navbar.Item>
         <Navbar.Item aria-label="Notifications">
-          <Icon data-slot="icon" icon="lucide:bell" />
+          <Icon data-slot="icon" icon={Notification02Icon} />
         </Navbar.Item>
         <Navbar.Separator />
         <Navbar.Item aria-label="Profile">
@@ -104,9 +121,9 @@ export const HideOnScroll: Story = { render: () => <HideDemo /> };
 function WithMenuDemo() {
   const [current, setCurrent] = useState("Dashboard");
   const items = [
-    ["Dashboard", "lucide:layout-dashboard"],
-    ["Team", "lucide:users"],
-    ["Settings", "lucide:settings"],
+    ["Dashboard", DashboardSquare01Icon],
+    ["Team", UserGroupIcon],
+    ["Settings", Settings01Icon],
   ] as const;
   return (
     <div className="bg-background w-full overflow-visible">
@@ -133,7 +150,7 @@ function WithMenuDemo() {
           <Navbar.Spacer />
           <Navbar.Content>
             <Navbar.Item>
-              <Icon data-slot="icon" icon="lucide:search" />
+              <Icon data-slot="icon" icon={Search01Icon} />
             </Navbar.Item>
             <Navbar.Item>
               <User />
@@ -172,43 +189,49 @@ function WithMenuDemo() {
 export const WithMenu: Story = { render: () => <WithMenuDemo /> };
 export const DocsSite: Story = {
   render: () => (
-    <div className="border-border w-full overflow-hidden rounded-xl border">
-      <Navbar position="static">
-        <Navbar.Header>
-          <Navbar.MenuToggle className="md:hidden" />
-          <Navbar.Brand>
-            <Logo />
-          </Navbar.Brand>
-          <Navbar.Content className="hidden md:flex">
-            {["Docs", "Components", "Templates", "Releases"].map((x) => (
-              <Navbar.Item key={x} isCurrent={x === "Components"}>
-                {x}
-              </Navbar.Item>
-            ))}
-          </Navbar.Content>
-          <Navbar.Spacer />
-          <Input
-            className="hidden max-w-64 md:flex"
-            placeholder="Search documentation..."
-          />
-          <Segment
-            className="hidden md:flex"
-            defaultSelectedKey="system"
-            size="sm"
-          >
-            <Segment.Item id="light">
-              <Icon icon="lucide:sun" />
+    <Navbar position="static">
+      <Navbar.Header>
+        <Navbar.MenuToggle className="md:hidden" />
+        <Navbar.Brand>
+          <Logo compact />
+        </Navbar.Brand>
+        <Navbar.Content className="hidden md:flex">
+          {["Docs", "Pro", "Blog"].map((label) => (
+            <Navbar.Item href={`#${label.toLowerCase()}`} key={label}>
+              {label}
+            </Navbar.Item>
+          ))}
+        </Navbar.Content>
+        <Navbar.Spacer />
+        <Navbar.Content className="hidden md:flex">
+          <SearchField className="w-[200px]" variant="secondary">
+            <SearchField.Group className="h-8">
+              <SearchField.SearchIcon />
+              <SearchField.Input
+                aria-label="Search documentation"
+                className="w-16"
+                placeholder="Search docs…"
+              />
+              <Kbd className="pointer-events-none mr-1.5 text-xs">
+                <Kbd.Abbr keyValue="command" />
+                <Kbd.Content>K</Kbd.Content>
+              </Kbd>
+            </SearchField.Group>
+          </SearchField>
+          <Segment defaultSelectedKey="system" size="sm">
+            <Segment.Item aria-label="Light" id="light">
+              <Icon icon={Sun01Icon} />
             </Segment.Item>
-            <Segment.Item id="dark">
-              <Icon icon="lucide:moon" />
+            <Segment.Item aria-label="Dark" id="dark">
+              <Icon icon={Moon02Icon} />
             </Segment.Item>
-            <Segment.Item id="system">
-              <Icon icon="lucide:monitor" />
+            <Segment.Item aria-label="System" id="system">
+              <Icon icon={ComputerIcon} />
             </Segment.Item>
           </Segment>
-        </Navbar.Header>
-      </Navbar>
-    </div>
+        </Navbar.Content>
+      </Navbar.Header>
+    </Navbar>
   ),
 };
 function UserMenu() {
@@ -243,7 +266,7 @@ export const WithDropdowns: Story = {
             <Dropdown>
               <Dropdown.Trigger>
                 <Button variant="ghost">
-                  Acme Inc. <Icon icon="lucide:chevron-down" />
+                  Acme Inc. <Icon icon={ArrowDown01Icon} />
                 </Button>
               </Dropdown.Trigger>
               <Dropdown.Popover>
@@ -271,37 +294,146 @@ export const WithDropdowns: Story = {
     </div>
   ),
 };
+
+const dashboardWorkspaces = ["samlee", "acme-corp", "moonshot"];
+const dashboardProjects = [
+  "content-hub",
+  "marketing-site",
+  "api-gateway",
+  "design-tokens",
+];
+const dashboardTimezones = [
+  ["utc", "UTC", "UTC+00:00"],
+  ["pst", "PST", "UTC−08:00"],
+  ["est", "EST", "UTC−05:00"],
+  ["cet", "CET", "UTC+01:00"],
+  ["jst", "JST", "UTC+09:00"],
+] as const;
+
+function DashboardNavbar() {
+  const [workspace, setWorkspace] = useState("samlee");
+  const [project, setProject] = useState("content-hub");
+  const [timezone, setTimezone] = useState("utc");
+  const timezoneLabel =
+    dashboardTimezones.find(([id]) => id === timezone)?.[1] ?? "UTC";
+
+  return (
+    <Navbar position="static">
+      <Navbar.Header className="gap-2">
+        <Navbar.Brand className="mr-1">
+          <Logo compact />
+        </Navbar.Brand>
+        <span aria-hidden className="text-border text-lg font-light">
+          /
+        </span>
+        <InlineSelect
+          aria-label="Workspace"
+          value={workspace}
+          onChange={setWorkspace}
+        >
+          <InlineSelect.Trigger className="gap-2">
+            <Avatar className="size-5">
+              <Avatar.Image
+                alt={workspace}
+                src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg"
+              />
+            </Avatar>
+            <span className="text-foreground text-sm font-medium">
+              {workspace}
+            </span>
+            <InlineSelect.Indicator />
+          </InlineSelect.Trigger>
+          <InlineSelect.Popover className="w-44">
+            <ListBox>
+              {dashboardWorkspaces.map((item) => (
+                <ListBox.Item id={item} key={item} textValue={item}>
+                  {item}
+                  <ListBox.ItemIndicator />
+                </ListBox.Item>
+              ))}
+            </ListBox>
+          </InlineSelect.Popover>
+        </InlineSelect>
+        <span aria-hidden className="text-border text-lg font-light">
+          /
+        </span>
+        <InlineSelect
+          aria-label="Project"
+          value={project}
+          onChange={setProject}
+        >
+          <InlineSelect.Trigger>
+            <span className="text-foreground text-sm font-medium">
+              {project}
+            </span>
+            <InlineSelect.Indicator />
+          </InlineSelect.Trigger>
+          <InlineSelect.Popover className="w-44">
+            <ListBox>
+              {dashboardProjects.map((item) => (
+                <ListBox.Item id={item} key={item} textValue={item}>
+                  {item}
+                  <ListBox.ItemIndicator />
+                </ListBox.Item>
+              ))}
+            </ListBox>
+          </InlineSelect.Popover>
+        </InlineSelect>
+        <Navbar.Spacer />
+        <div
+          aria-label="Estimated monthly costs"
+          className="hidden items-center gap-1.5 md:flex"
+        >
+          <span className="text-muted text-[11px] font-medium tracking-wider uppercase">
+            Est. costs
+          </span>
+          <span className="text-foreground text-sm font-semibold tabular-nums">
+            $71.96
+          </span>
+        </div>
+        <Navbar.Separator className="hidden h-4 md:block" />
+        <InlineSelect
+          aria-label="Timezone"
+          value={timezone}
+          onChange={setTimezone}
+        >
+          <InlineSelect.Trigger>
+            <span className="text-foreground text-sm font-medium">
+              {timezoneLabel}
+            </span>
+            <InlineSelect.Indicator />
+          </InlineSelect.Trigger>
+          <InlineSelect.Popover className="w-44">
+            <ListBox>
+              {dashboardTimezones.map(([id, label, offset]) => (
+                <ListBox.Item id={id} key={id} textValue={`${label} ${offset}`}>
+                  <span>{label}</span>
+                  <span className="text-muted ml-auto text-xs">{offset}</span>
+                  <ListBox.ItemIndicator />
+                </ListBox.Item>
+              ))}
+            </ListBox>
+          </InlineSelect.Popover>
+        </InlineSelect>
+        <Navbar.Content>
+          <Navbar.Item aria-label="Notifications">
+            <Icon data-slot="icon" icon={Notification02Icon} />
+          </Navbar.Item>
+          <Button aria-label="Account menu" isIconOnly variant="ghost">
+            <Avatar className="size-7" color="success" variant="soft">
+              <Avatar.Fallback className="text-xs font-semibold">
+                SM
+              </Avatar.Fallback>
+            </Avatar>
+          </Button>
+        </Navbar.Content>
+      </Navbar.Header>
+    </Navbar>
+  );
+}
+
 export const Dashboard: Story = {
-  render: () => (
-    <div className="border-border w-full overflow-hidden rounded-xl border">
-      <Navbar position="static">
-        <Navbar.Header>
-          <Navbar.Brand>
-            <Logo compact />
-          </Navbar.Brand>
-          <Navbar.Content>
-            <InlineSelect defaultSelectedKey="workspace">
-              <InlineSelect.Item id="workspace">
-                Acme Workspace
-              </InlineSelect.Item>
-            </InlineSelect>
-            <span className="text-muted">/</span>
-            <InlineSelect defaultSelectedKey="project">
-              <InlineSelect.Item id="project">Dashboard</InlineSelect.Item>
-            </InlineSelect>
-          </Navbar.Content>
-          <Navbar.Spacer />
-          <Navbar.Content>
-            <span className="text-muted text-sm">$42.18 this month</span>
-            <InlineSelect defaultSelectedKey="utc">
-              <InlineSelect.Item id="utc">UTC−8</InlineSelect.Item>
-            </InlineSelect>
-            <UserMenu />
-          </Navbar.Content>
-        </Navbar.Header>
-      </Navbar>
-    </div>
-  ),
+  render: () => <DashboardNavbar />,
 };
 export const Compact: Story = {
   render: () => (
@@ -325,7 +457,7 @@ export const Compact: Story = {
           </Navbar.Content>
           <Navbar.Spacer />
           <Button isIconOnly size="sm" variant="ghost">
-            <Icon icon="lucide:plus" />
+            <Icon icon={PlusSignIcon} />
           </Button>
           <UserMenu />
         </Navbar.Header>

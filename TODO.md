@@ -119,7 +119,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 ### Dependent complex components
 
 - [x] Agenda composes the shared Segment component for its top view switcher and matches official behavior.
-- [ ] Navbar Search Docs uses the official input variant and user icon; Dashboard renders without errors.
+- [x] Navbar Search Docs uses the official input variant and user icon; Dashboard renders without errors.
 - [ ] Sidebar is re-audited for hover actions, menu icons, collapsed square icons, spacing, and all official states.
 - [ ] AppLayout is re-audited after Navbar and Sidebar fixes.
 
