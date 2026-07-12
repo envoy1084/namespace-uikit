@@ -9,7 +9,7 @@
     width: 100%;
     flex-direction: column;
     overflow: hidden;
-    border: 1px solid var(--field-border, var(--border));
+    border: 0 solid transparent;
     border-radius: calc(var(--radius) * 2);
     transition:
       background-color 150ms,
@@ -23,6 +23,7 @@
     background: var(--default);
   }
   .prompt-input__shell[data-dragging="true"] {
+    border-width: 1px;
     border-color: var(--accent);
     border-style: dotted;
     background: var(--accent-soft);
@@ -48,7 +49,7 @@
     border: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
-    padding: 0.75rem;
+    padding: 0.75rem 0.75rem 0.5rem;
     outline: none !important;
     transition: height 100ms;
   }
@@ -78,6 +79,7 @@
     color: var(--muted);
     text-align: center;
     font-size: 0.75rem;
+    line-height: 1rem;
   }
   .prompt-input__send {
     flex-shrink: 0;

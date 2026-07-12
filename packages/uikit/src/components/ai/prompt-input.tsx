@@ -29,6 +29,7 @@ import {
   ArrowUp01Icon,
   Cancel01Icon,
   CornerDownRightIcon,
+  DragDropVerticalIcon,
   MoreHorizontalIcon,
   StopIcon,
 } from "@hugeicons/core-free-icons";
@@ -575,7 +576,14 @@ export function PromptInputQueueItemIcon({
       data-slot="prompt-input-queue-item-icon"
       {...props}
     >
-      {children ?? "↳"}
+      {children ?? (
+        <HugeiconsIcon
+          aria-hidden
+          icon={CornerDownRightIcon}
+          size={16}
+          strokeWidth={2}
+        />
+      )}
     </span>
   );
 }
@@ -604,7 +612,14 @@ export function PromptInputQueueItemHandle({
         onPointerDown?.(event);
       }}
     >
-      {children ?? "⠿"}
+      {children ?? (
+        <HugeiconsIcon
+          aria-hidden
+          icon={DragDropVerticalIcon}
+          size={16}
+          strokeWidth={2}
+        />
+      )}
     </Button>
   );
 }
