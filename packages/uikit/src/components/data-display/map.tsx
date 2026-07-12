@@ -9,6 +9,7 @@ import type {
 } from "react";
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useId,
@@ -68,9 +69,54 @@ const getViewport = (map: MapRef): MapViewport => {
 };
 const getDocumentTheme = (): MapTheme =>
   typeof document !== "undefined" &&
-  document.documentElement.classList.contains("dark")
+  (document.documentElement.classList.contains("dark") ||
+    (!document.documentElement.classList.contains("light") &&
+      window.matchMedia?.("(prefers-color-scheme: dark)").matches))
     ? "dark"
     : "light";
+const readCssValue = (element: HTMLElement, property: string): string =>
+  window.getComputedStyle(element).getPropertyValue(property).trim();
+const resolveCssColor = (
+  element: HTMLElement,
+  property: string,
+  fallback: string,
+): string => {
+  const value = readCssValue(element, property);
+  if (!value) return fallback;
+  const context = document.createElement("canvas").getContext("2d");
+  if (!context) return value;
+  context.fillStyle = fallback;
+  const fallbackColor = context.fillStyle;
+  context.fillStyle = value;
+  return context.fillStyle === fallbackColor && value !== fallbackColor
+    ? fallback
+    : context.fillStyle;
+};
+const resolveCssNumber = (
+  element: HTMLElement,
+  property: string,
+  fallback: number,
+): number => {
+  const value = Number.parseFloat(readCssValue(element, property));
+  return Number.isFinite(value) ? value : fallback;
+};
+
+const centerTuple = (
+  value: NonNullable<MapOptions["center"]>,
+): [number, number] => {
+  if (Array.isArray(value)) return [value[0], value[1]];
+  return ["lng" in value ? value.lng : value.lon, value.lat];
+};
+const centersEqual = (
+  left: MapOptions["center"] | undefined,
+  right: MapOptions["center"] | undefined,
+): boolean => {
+  if (left === right) return true;
+  if (!left || !right) return false;
+  const leftCenter = centerTuple(left);
+  const rightCenter = centerTuple(right);
+  return leftCenter[0] === rightCenter[0] && leftCenter[1] === rightCenter[1];
+};
 
 export interface MapRootProps extends Omit<MapOptions, "container" | "style"> {
   "aria-describedby"?: string;
@@ -113,11 +159,15 @@ export function MapRoot({
 }: MapRootProps): ReactElement {
   const containerRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<MapRef | null>(null);
-  const [isLoaded, setLoaded] = useState(false);
+  const [isMapLoaded, setMapLoaded] = useState(false);
+  const [isStyleLoaded, setStyleLoaded] = useState(false);
   const [documentTheme, setDocumentTheme] =
     useState<MapTheme>(getDocumentTheme);
   const optionsRef = useRef(props);
+  const initialViewportRef = useRef(viewport);
   const viewportCallback = useRef(onViewportChange);
+  const isApplyingViewport = useRef(false);
+  const styleReadyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   viewportCallback.current = onViewportChange;
   const resolvedTheme = theme ?? documentTheme;
   const resolvedStyle =
@@ -126,18 +176,28 @@ export function MapRoot({
       ? (styles?.dark ?? styles?.light ?? emptyStyle)
       : (styles?.light ?? styles?.dark ?? emptyStyle));
   const styleRef = useRef(resolvedStyle);
+  const appliedStyleRef = useRef(resolvedStyle);
+  const bearing = viewport?.bearing ?? props.bearing;
+  const center = viewport?.center ?? props.center;
+  const pitch = viewport?.pitch ?? props.pitch;
+  const zoom = viewport?.zoom ?? props.zoom;
+  const previousViewport = useRef({ bearing, center, pitch, zoom });
 
   useImperativeHandle(ref, () => map as MapRef, [map]);
   useEffect(() => {
     if (theme || typeof document === "undefined") return;
-    const observer = new MutationObserver(() =>
-      setDocumentTheme(getDocumentTheme()),
-    );
+    const updateTheme = () => setDocumentTheme(getDocumentTheme());
+    const observer = new MutationObserver(updateTheme);
+    const media = window.matchMedia?.("(prefers-color-scheme: dark)");
     observer.observe(document.documentElement, {
       attributeFilter: ["class"],
       attributes: true,
     });
-    return () => observer.disconnect();
+    media?.addEventListener("change", updateTheme);
+    return () => {
+      observer.disconnect();
+      media?.removeEventListener("change", updateTheme);
+    };
   }, [theme]);
   useEffect(() => {
     if (!containerRef.current) return;
@@ -147,41 +207,82 @@ export function MapRoot({
       renderWorldCopies: false,
       style: styleRef.current as StyleSpecification | string,
       ...optionsRef.current,
-      ...viewport,
+      ...initialViewportRef.current,
     });
-    const onLoad = () => {
-      setLoaded(true);
-      if (projection) instance.setProjection(projection);
+    const clearStyleReadyTimer = () => {
+      if (styleReadyTimer.current) clearTimeout(styleReadyTimer.current);
+      styleReadyTimer.current = null;
     };
-    const onMove = () => viewportCallback.current?.(getViewport(instance));
+    const markStyleReady = () => {
+      clearStyleReadyTimer();
+      styleReadyTimer.current = setTimeout(() => {
+        if (instance.isStyleLoaded()) {
+          setStyleLoaded(true);
+          if (projection) instance.setProjection(projection);
+        }
+      }, 0);
+    };
+    const onLoad = () => {
+      setMapLoaded(true);
+      markStyleReady();
+    };
+    const onMove = () => {
+      if (!isApplyingViewport.current)
+        viewportCallback.current?.(getViewport(instance));
+    };
     instance.on("load", onLoad);
+    instance.on("style.load", markStyleReady);
+    instance.on("styledata", markStyleReady);
+    instance.on("idle", markStyleReady);
     instance.on("move", onMove);
     setMap(instance);
     return () => {
+      clearStyleReadyTimer();
       instance.off("load", onLoad);
+      instance.off("style.load", markStyleReady);
+      instance.off("styledata", markStyleReady);
+      instance.off("idle", markStyleReady);
       instance.off("move", onMove);
       instance.remove();
       setMap(null);
-      setLoaded(false);
+      setMapLoaded(false);
+      setStyleLoaded(false);
     };
   }, []);
   useEffect(() => {
-    if (!map) return;
+    if (!map || appliedStyleRef.current === resolvedStyle) return;
+    appliedStyleRef.current = resolvedStyle;
+    setStyleLoaded(false);
     map.setStyle(resolvedStyle, { diff: false });
-    setLoaded(false);
-    const onStyle = () => setLoaded(true);
-    map.once("style.load", onStyle);
-    return () => {
-      map.off("style.load", onStyle);
-    };
   }, [map, resolvedStyle]);
   useEffect(() => {
-    if (map && isLoaded && projection) map.setProjection(projection);
-  }, [isLoaded, map, projection]);
+    if (map && isStyleLoaded && projection) map.setProjection(projection);
+  }, [isStyleLoaded, map, projection]);
   useEffect(() => {
-    if (!map || !viewport) return;
-    map.jumpTo(viewport);
-  }, [map, viewport]);
+    const next = { bearing, center, pitch, zoom };
+    const previous = previousViewport.current;
+    previousViewport.current = next;
+    if (!map) return;
+    const changes: Partial<MapViewport> = {};
+    if (bearing !== undefined && !Object.is(bearing, previous.bearing))
+      changes.bearing = bearing;
+    if (center !== undefined && !centersEqual(center, previous.center))
+      changes.center = centerTuple(center);
+    if (pitch !== undefined && !Object.is(pitch, previous.pitch))
+      changes.pitch = pitch;
+    if (zoom !== undefined && !Object.is(zoom, previous.zoom))
+      changes.zoom = zoom;
+    if (!Object.keys(changes).length) return;
+    isApplyingViewport.current = true;
+    try {
+      map.jumpTo(changes);
+    } finally {
+      isApplyingViewport.current = false;
+    }
+  }, [bearing, center, map, pitch, zoom]);
+
+  const isLoaded = isMapLoaded && isStyleLoaded;
+  const showLoader = !isMapLoaded || isLoading;
 
   return (
     <Context value={{ isLoaded, map }}>
@@ -191,7 +292,7 @@ export function MapRoot({
         aria-labelledby={ariaLabelledBy}
         className={cn("map", className)}
         data-loaded={isLoaded ? "true" : undefined}
-        data-loading={!isLoaded || isLoading ? "true" : undefined}
+        data-loading={showLoader ? "true" : undefined}
         data-slot="map"
         id={id}
         ref={containerRef}
@@ -199,7 +300,7 @@ export function MapRoot({
         style={style}
         tabIndex={tabIndex}
       >
-        {!isLoaded || isLoading ? (
+        {showLoader ? (
           <div className="map__loader" data-slot="map-loader">
             <Spinner
               className="map__loader-spinner"
@@ -295,6 +396,18 @@ export function MapMarker({
   useEffect(() => {
     marker?.setDraggable(draggable);
   }, [draggable, marker]);
+  useEffect(() => {
+    marker?.setOffset(options.offset ?? [0, 0]);
+  }, [marker, options.offset]);
+  useEffect(() => {
+    marker?.setRotation(options.rotation ?? 0);
+  }, [marker, options.rotation]);
+  useEffect(() => {
+    marker?.setRotationAlignment(options.rotationAlignment ?? "auto");
+  }, [marker, options.rotationAlignment]);
+  useEffect(() => {
+    marker?.setPitchAlignment(options.pitchAlignment ?? "auto");
+  }, [marker, options.pitchAlignment]);
   useEffect(() => {
     if (!marker) return;
     const element = marker.getElement();
@@ -464,6 +577,11 @@ export function MapMarkerPopup({
       marker.setPopup(null);
     };
   }, [map, marker, state]);
+  useEffect(() => {
+    if (!state) return;
+    state.popup.setOffset(options.offset ?? 16);
+    state.popup.setMaxWidth(options.maxWidth ?? "none");
+  }, [options.maxWidth, options.offset, state]);
   return state
     ? createPortal(
         <PopupContent
@@ -525,6 +643,11 @@ export function MapMarkerTooltip({
       element.removeEventListener("mouseleave", leave);
     };
   }, [map, marker, state]);
+  useEffect(() => {
+    if (!state) return;
+    state.popup.setOffset(options.offset ?? 16);
+    state.popup.setMaxWidth(options.maxWidth ?? "none");
+  }, [options.maxWidth, options.offset, state]);
   return state
     ? createPortal(
         <div
@@ -588,8 +711,15 @@ export function MapPopup({
     };
   }, [map, state]);
   useEffect(() => {
-    state?.popup.setLngLat([longitude, latitude]);
-  }, [latitude, longitude, state]);
+    if (!state) return;
+    state.popup.setLngLat([longitude, latitude]);
+    if (map && !state.popup.isOpen()) state.popup.addTo(map);
+  }, [latitude, longitude, map, state]);
+  useEffect(() => {
+    if (!state) return;
+    state.popup.setOffset(options.offset ?? 16);
+    state.popup.setMaxWidth(options.maxWidth ?? "none");
+  }, [options.maxWidth, options.offset, state]);
   return state
     ? createPortal(
         <PopupContent
@@ -937,29 +1067,51 @@ export interface MapRouteProps {
   width?: number;
 }
 export function MapRoute({
-  color = "#4285F4",
+  color,
   coordinates,
   dashArray,
-  id = "route",
+  id,
   interactive = true,
   onClick,
   onMouseEnter,
   onMouseLeave,
-  opacity = 0.8,
-  width = 3,
+  opacity,
+  width,
 }: MapRouteProps): null {
   const { isLoaded, map } = useMapContext();
-  const sourceId = `${id}-source`;
-  const layerId = `${id}-layer`;
+  const baseId = useLayerId("route", id);
+  const sourceId = `${baseId}-source`;
+  const layerId = `${baseId}-layer`;
+  const callbacks = useRef({ onClick, onMouseEnter, onMouseLeave });
+  callbacks.current = { onClick, onMouseEnter, onMouseLeave };
+  const resolvePaint = useCallback(() => {
+    const container = map?.getContainer();
+    return {
+      color:
+        color ??
+        (container
+          ? resolveCssColor(container, "--map-route-color", "#4285F4")
+          : "#4285F4"),
+      opacity:
+        opacity ??
+        (container
+          ? resolveCssNumber(container, "--map-route-opacity", 0.8)
+          : 0.8),
+      width:
+        width ??
+        (container ? resolveCssNumber(container, "--map-route-width", 3) : 3),
+    };
+  }, [color, map, opacity, width]);
   useEffect(() => {
     if (!isLoaded || !map) return;
+    const paint = resolvePaint();
     if (!map.getSource(sourceId))
       map.addSource(sourceId, {
         type: "geojson",
         data: {
           type: "Feature",
           properties: {},
-          geometry: { type: "LineString", coordinates },
+          geometry: { type: "LineString", coordinates: [] },
         },
       });
     if (!map.getLayer(layerId))
@@ -969,9 +1121,9 @@ export function MapRoute({
         type: "line",
         layout: { "line-cap": "round", "line-join": "round" },
         paint: {
-          "line-color": color,
-          "line-opacity": opacity,
-          "line-width": width,
+          "line-color": paint.color,
+          "line-opacity": paint.opacity,
+          "line-width": paint.width,
           ...(dashArray ? { "line-dasharray": dashArray } : {}),
         },
       });
@@ -979,27 +1131,33 @@ export function MapRoute({
       if (map.getLayer(layerId)) map.removeLayer(layerId);
       if (map.getSource(sourceId)) map.removeSource(sourceId);
     };
-  }, [
-    color,
-    coordinates,
-    dashArray,
-    isLoaded,
-    layerId,
-    map,
-    opacity,
-    sourceId,
-    width,
-  ]);
+  }, [dashArray, isLoaded, layerId, map, resolvePaint, sourceId]);
+  useEffect(() => {
+    if (!isLoaded || !map) return;
+    (map.getSource(sourceId) as GeoJSONSource | undefined)?.setData({
+      type: "Feature",
+      properties: {},
+      geometry: { type: "LineString", coordinates },
+    });
+  }, [coordinates, isLoaded, map, sourceId]);
+  useEffect(() => {
+    if (!isLoaded || !map || !map.getLayer(layerId)) return;
+    const paint = resolvePaint();
+    map.setPaintProperty(layerId, "line-color", paint.color);
+    map.setPaintProperty(layerId, "line-opacity", paint.opacity);
+    map.setPaintProperty(layerId, "line-width", paint.width);
+    map.setPaintProperty(layerId, "line-dasharray", dashArray ?? null);
+  }, [dashArray, isLoaded, layerId, map, resolvePaint]);
   useEffect(() => {
     if (!isLoaded || !map || !interactive) return;
-    const click = () => onClick?.();
+    const click = () => callbacks.current.onClick?.();
     const enter = () => {
       map.getCanvas().style.cursor = "pointer";
-      onMouseEnter?.();
+      callbacks.current.onMouseEnter?.();
     };
     const leave = () => {
       map.getCanvas().style.cursor = "";
-      onMouseLeave?.();
+      callbacks.current.onMouseLeave?.();
     };
     map.on("click", layerId, click);
     map.on("mouseenter", layerId, enter);
@@ -1009,15 +1167,7 @@ export function MapRoute({
       map.off("mouseenter", layerId, enter);
       map.off("mouseleave", layerId, leave);
     };
-  }, [
-    interactive,
-    isLoaded,
-    layerId,
-    map,
-    onClick,
-    onMouseEnter,
-    onMouseLeave,
-  ]);
+  }, [interactive, isLoaded, layerId, map]);
   return null;
 }
 
