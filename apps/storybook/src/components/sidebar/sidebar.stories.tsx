@@ -18,8 +18,10 @@ import {
   HugeiconsIcon,
   Logout01Icon,
   MoreVerticalIcon,
+  ReceiptTextIcon,
   Settings01Icon,
   Task01Icon,
+  UserMultipleIcon,
 } from "@thenamespace/uikit/icons";
 
 import { Sidebar } from "./index";
@@ -250,6 +252,151 @@ function Demo({
     </Sidebar.Provider>
   );
 }
+
+const collapsibleNav = [
+  { icon: Home01Icon, label: "Dashboard" },
+  { icon: ReceiptTextIcon, label: "Orders" },
+  { badge: "New", icon: Task01Icon, label: "Tracker" },
+  { icon: Analytics01Icon, label: "Analytics" },
+  { icon: UserMultipleIcon, label: "Team" },
+  { icon: Settings01Icon, label: "Settings" },
+] as const;
+
+function CollapsibleDemo() {
+  return (
+    <Sidebar.Provider collapsible="icon">
+      <Sidebar>
+        <Sidebar.Header>
+          <div className="flex items-center gap-3 px-1 py-2">
+            <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
+              <span className="text-sm font-bold text-white">H</span>
+            </span>
+            <span
+              className="text-foreground text-sm font-semibold"
+              data-sidebar="label"
+            >
+              HeroUI
+            </span>
+          </div>
+        </Sidebar.Header>
+        <Sidebar.Content>
+          <Sidebar.Group>
+            <Sidebar.GroupLabel>Navigation</Sidebar.GroupLabel>
+            <Sidebar.Menu aria-label="Navigation">
+              {collapsibleNav.map((item) => (
+                <Sidebar.MenuItem
+                  href="#"
+                  id={item.label}
+                  isCurrent={item.label === "Dashboard"}
+                  key={item.label}
+                  textValue={item.label}
+                >
+                  <Sidebar.MenuIcon>
+                    <HugeiconsIcon icon={item.icon} size={16} />
+                  </Sidebar.MenuIcon>
+                  <Sidebar.MenuLabel>{item.label}</Sidebar.MenuLabel>
+                  {"badge" in item ? (
+                    <Sidebar.MenuChip>
+                      <Chip color="success" size="sm" variant="soft">
+                        {item.badge}
+                      </Chip>
+                    </Sidebar.MenuChip>
+                  ) : null}
+                </Sidebar.MenuItem>
+              ))}
+            </Sidebar.Menu>
+          </Sidebar.Group>
+        </Sidebar.Content>
+        <Sidebar.Rail />
+      </Sidebar>
+      <Sidebar.Main>
+        <div className="flex items-center gap-3 p-4">
+          <Sidebar.Trigger />
+          <Breadcrumbs className="min-w-0">
+            <Breadcrumbs.Item className="min-w-0 font-semibold">
+              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                <HugeiconsIcon icon={Home01Icon} size={16} />
+                <span className="truncate">Dashboard</span>
+              </span>
+            </Breadcrumbs.Item>
+          </Breadcrumbs>
+        </div>
+        <div className="p-6">
+          <p className="text-muted">
+            Click the rail edge or trigger button to collapse. Press Cmd+B.
+          </p>
+        </div>
+      </Sidebar.Main>
+    </Sidebar.Provider>
+  );
+}
+
+function IconOnlyDemo() {
+  return (
+    <Sidebar.Provider collapsible="none">
+      <Sidebar className="[--sidebar-width:56px]">
+        <Sidebar.Header className="items-center justify-center p-0 py-4">
+          <Avatar className="size-8 shrink-0">
+            <Avatar.Image
+              alt="Kate Moore"
+              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue-light.jpg"
+            />
+            <Avatar.Fallback>KM</Avatar.Fallback>
+          </Avatar>
+        </Sidebar.Header>
+        <Sidebar.Content className="items-center justify-center px-1.5">
+          <Sidebar.Group>
+            <Sidebar.Menu
+              aria-label="Navigation"
+              className="items-center gap-1"
+            >
+              {collapsibleNav.map((item) => (
+                <Sidebar.MenuItem
+                  id={item.label}
+                  key={item.label}
+                  textValue={item.label}
+                  tooltipProps={{ content: item.label, delay: 0 }}
+                >
+                  <Sidebar.MenuItemContent className="justify-center gap-0 p-2.5">
+                    <Sidebar.MenuIcon>
+                      <HugeiconsIcon icon={item.icon} size={16} />
+                    </Sidebar.MenuIcon>
+                  </Sidebar.MenuItemContent>
+                </Sidebar.MenuItem>
+              ))}
+            </Sidebar.Menu>
+          </Sidebar.Group>
+        </Sidebar.Content>
+        <Sidebar.Footer className="items-center justify-center p-0 py-4">
+          <Sidebar.Menu
+            aria-label="Footer actions"
+            className="items-center gap-1"
+          >
+            <Sidebar.MenuItem
+              id="support"
+              textValue="Help & Support"
+              tooltipProps={{ content: "Help & Support", delay: 0 }}
+            >
+              <Sidebar.MenuItemContent className="justify-center gap-0 p-2.5">
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={HelpCircleIcon} size={16} />
+                </Sidebar.MenuIcon>
+              </Sidebar.MenuItemContent>
+            </Sidebar.MenuItem>
+          </Sidebar.Menu>
+        </Sidebar.Footer>
+      </Sidebar>
+      <Sidebar.Main>
+        <div className="flex flex-col px-10 py-6">
+          <h1 className="text-foreground text-lg font-semibold">Dashboard</h1>
+          <p className="text-muted">
+            Icon-only sidebar that is always collapsed.
+          </p>
+        </div>
+      </Sidebar.Main>
+    </Sidebar.Provider>
+  );
+}
 export const Default: Story = { render: () => <Demo nested title="HeroUI" /> };
 export const RightSide: Story = { render: () => <Demo side="right" /> };
 export const RightSideOffcanvas: Story = {
@@ -262,7 +409,7 @@ export const CollapsibleGroups: Story = {
   render: () => <Demo nested title="Documentation" />,
 };
 export const Collapsible: Story = {
-  render: () => <Demo nested title="HeroUI" />,
+  render: () => <CollapsibleDemo />,
 };
 export const ReducedMotion: Story = {
   render: () => (
@@ -287,9 +434,7 @@ export const WithAvatar: Story = {
 };
 export const InsetVariant: Story = { render: () => <Demo variant="inset" /> };
 export const IconOnly: Story = {
-  render: () => (
-    <Demo collapsible="icon" defaultOpen={false} title="Icon navigation" />
-  ),
+  render: () => <IconOnlyDemo />,
 };
 export const Complex: Story = {
   render: () => <Demo nested title="Teamspaces" user />,

@@ -331,7 +331,13 @@ export interface SidebarMenuItemProps extends ComponentPropsWithRef<
   href?: string;
   isCurrent?: boolean;
   tooltip?: ReactNode;
-  tooltipProps?: Record<string, unknown>;
+  tooltipProps?: {
+    className?: string;
+    closeDelay?: number;
+    content: ReactNode;
+    delay?: number;
+    placement?: "bottom" | "left" | "right" | "top";
+  };
 }
 export function SidebarMenuItem({
   children,
@@ -421,6 +427,37 @@ export function SidebarMenuItem({
       </Tooltip>
     );
   });
+  const content = (
+    <div
+      {...contentProps}
+      className={cn("sidebar__menu-item-content", contentProps.className)}
+      data-slot="sidebar-menu-item-content"
+    >
+      {renderedRow}
+    </div>
+  );
+  const renderedContent = tooltipProps ? (
+    <Tooltip
+      {...(tooltipProps.closeDelay === undefined
+        ? {}
+        : { closeDelay: tooltipProps.closeDelay })}
+      {...(tooltipProps.delay === undefined
+        ? {}
+        : { delay: tooltipProps.delay })}
+    >
+      <Tooltip.Trigger className="w-full">{content}</Tooltip.Trigger>
+      <Tooltip.Content
+        {...(tooltipProps.className === undefined
+          ? {}
+          : { className: tooltipProps.className })}
+        placement={tooltipProps.placement ?? "right"}
+      >
+        {tooltipProps.content}
+      </Tooltip.Content>
+    </Tooltip>
+  ) : (
+    content
+  );
   const item = (
     <TreeItem
       {...props}
@@ -437,15 +474,7 @@ export function SidebarMenuItem({
       {...(href === undefined ? {} : { href })}
       onAction={action}
     >
-      <TreeItemContent>
-        <div
-          {...contentProps}
-          className={cn("sidebar__menu-item-content", contentProps.className)}
-          data-slot="sidebar-menu-item-content"
-        >
-          {renderedRow}
-        </div>
-      </TreeItemContent>
+      <TreeItemContent>{renderedContent}</TreeItemContent>
       {state.collapsible === "icon" && !state.isOpen ? null : nested}
     </TreeItem>
   );
