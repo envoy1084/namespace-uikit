@@ -1,9 +1,9 @@
 @layer components {
-.radio-button-group {
-  --radio-button-group-item-radius: var(--radius-2xl);
-  display: flex;
-  gap: calc(var(--spacing) * 3);
-}
+  .radio-button-group {
+    --radio-button-group-item-radius: var(--radius-2xl);
+    display: flex;
+    gap: calc(var(--spacing) * 3);
+  }
 }
 
 .radio-button-group--grid {
@@ -38,7 +38,9 @@
 
 .radio-button-group__item:focus-visible,
 .radio-button-group__item[data-focus-visible="true"] {
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--focus);
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--focus);
   outline: none;
 }
 

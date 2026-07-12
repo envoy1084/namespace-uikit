@@ -22,7 +22,9 @@
         transparent
       ),
       linear-gradient(black, black);
-    mask-position: 0 0, 100% 0;
+    mask-position:
+      0 0,
+      100% 0;
     mask-repeat: no-repeat;
     mask-size:
       calc(100% - var(--chat-conversation-scrollbar-mask-size)) 100%,

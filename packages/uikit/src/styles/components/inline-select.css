@@ -1,9 +1,9 @@
 @layer components {
-.inline-select {
-  --inline-select-value-max-width: 12rem;
-  --inline-select-indicator-size: 0.75rem;
-  flex-shrink: 0;
-}
+  .inline-select {
+    --inline-select-value-max-width: 12rem;
+    --inline-select-indicator-size: 0.75rem;
+    flex-shrink: 0;
+  }
 }
 
 .inline-select .inline-select__trigger {
@@ -23,7 +23,10 @@
   box-shadow: none;
   outline: none;
   -webkit-tap-highlight-color: transparent;
-  transition: color 0.1s, background-color 0.1s, border-color 0.1s;
+  transition:
+    color 0.1s,
+    background-color 0.1s,
+    border-color 0.1s;
 }
 
 .inline-select .inline-select__trigger:hover,
@@ -37,7 +40,9 @@
 .inline-select .inline-select__trigger[data-focus-visible="true"] {
   border-color: transparent;
   background-color: transparent;
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--focus);
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--focus);
   outline: none;
 }
 

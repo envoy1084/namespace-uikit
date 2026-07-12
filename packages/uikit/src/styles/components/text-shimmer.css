@@ -18,8 +18,12 @@
     animation: text-shimmer 2.3s linear infinite;
   }
   @keyframes text-shimmer {
-    from { background-position: 100% 0; }
-    to { background-position: -100% 0; }
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: -100% 0;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .text-shimmer {

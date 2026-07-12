@@ -1,9 +1,9 @@
 @layer components {
-.native-select {
-  display: inline-flex;
-  flex-direction: column;
-  gap: calc(var(--spacing) * 1);
-}
+  .native-select {
+    display: inline-flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 1);
+  }
 }
 
 .native-select[data-invalid="true"] [data-slot="description"],
@@ -48,7 +48,10 @@
   box-shadow: var(--field-shadow);
   outline: none;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color 0.15s var(--ease-smooth), border-color 0.15s var(--ease-smooth), box-shadow 0.15s var(--ease-out);
+  transition:
+    background-color 0.15s var(--ease-smooth),
+    border-color 0.15s var(--ease-smooth),
+    box-shadow 0.15s var(--ease-out);
 }
 
 .native-select__select:hover {
@@ -64,7 +67,9 @@
 }
 
 .native-select__select:focus-visible {
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--focus);
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--focus);
 }
 
 .native-select[data-invalid="true"] .native-select__select,

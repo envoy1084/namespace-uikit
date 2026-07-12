@@ -1,8 +1,8 @@
 @layer components {
-.cell-color-picker {
-  --cell-color-picker-swatch-size: 1.25rem;
-  display: flex;
-}
+  .cell-color-picker {
+    --cell-color-picker-swatch-size: 1.25rem;
+    display: flex;
+  }
 }
 
 .cell-color-picker .cell-color-picker__trigger {
@@ -21,7 +21,10 @@
   box-shadow: var(--field-shadow);
   outline: none;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color 0.15s var(--ease-smooth), border-color 0.15s var(--ease-smooth), box-shadow 0.15s var(--ease-out);
+  transition:
+    background-color 0.15s var(--ease-smooth),
+    border-color 0.15s var(--ease-smooth),
+    box-shadow 0.15s var(--ease-out);
 }
 
 .cell-color-picker .cell-color-picker__trigger:hover,
@@ -34,7 +37,9 @@
 .cell-color-picker .cell-color-picker__trigger[data-focus-visible="true"] {
   border-color: var(--color-field-border-focus);
   background-color: var(--color-field-focus);
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--focus);
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--focus);
 }
 
 .cell-color-picker .cell-color-picker__trigger:disabled,

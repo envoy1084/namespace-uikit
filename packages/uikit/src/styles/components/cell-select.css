@@ -1,7 +1,7 @@
 @layer components {
-.cell-select {
-  --cell-select-indicator-size: 0.75rem;
-}
+  .cell-select {
+    --cell-select-indicator-size: 0.75rem;
+  }
 }
 
 .cell-select .cell-select__trigger {
@@ -19,7 +19,10 @@
   box-shadow: var(--field-shadow);
   outline: none;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color 0.15s var(--ease-smooth), border-color 0.15s var(--ease-smooth), box-shadow 0.15s var(--ease-out);
+  transition:
+    background-color 0.15s var(--ease-smooth),
+    border-color 0.15s var(--ease-smooth),
+    box-shadow 0.15s var(--ease-out);
 }
 
 .cell-select .cell-select__trigger:hover,
@@ -32,7 +35,9 @@
 .cell-select .cell-select__trigger[data-focus-visible="true"] {
   border-color: var(--color-field-border-focus);
   background-color: var(--color-field-focus);
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--focus);
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--focus);
 }
 
 .cell-select .cell-select__trigger:disabled,

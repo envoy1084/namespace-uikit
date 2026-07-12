@@ -1,9 +1,9 @@
 @layer components {
-.checkbox-button-group {
-  --checkbox-button-group-item-radius: var(--radius-2xl);
-  display: flex;
-  gap: calc(var(--spacing) * 3);
-}
+  .checkbox-button-group {
+    --checkbox-button-group-item-radius: var(--radius-2xl);
+    display: flex;
+    gap: calc(var(--spacing) * 3);
+  }
 }
 
 .checkbox-button-group--grid {
@@ -38,7 +38,9 @@
 
 .checkbox-button-group__item:focus-visible,
 .checkbox-button-group__item[data-focus-visible="true"] {
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--focus);
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--focus);
   outline: none;
 }
 

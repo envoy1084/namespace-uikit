@@ -151,14 +151,12 @@ export const Variants: Story = {
             </ItemCardGroup.Description>
           </ItemCardGroup.Header>
           <Rows
-            items={settings
-              .slice(0, 2)
-              .map((item) => ({
-                action: <Chevron />,
-                description: item.description,
-                icon: item.icon,
-                title: item.title,
-              }))}
+            items={settings.slice(0, 2).map((item) => ({
+              action: <Chevron />,
+              description: item.description,
+              icon: item.icon,
+              title: item.title,
+            }))}
             pressable
           />
         </ItemCardGroup>
@@ -361,14 +359,12 @@ export const Pressable: Story = {
         </ItemCardGroup.Header>
         <Rows
           items={[
-            ...settings
-              .slice(0, 2)
-              .map((item) => ({
-                action: <Chevron />,
-                description: item.description,
-                icon: item.icon,
-                title: item.title,
-              })),
+            ...settings.slice(0, 2).map((item) => ({
+              action: <Chevron />,
+              description: item.description,
+              icon: item.icon,
+              title: item.title,
+            })),
             {
               title: "Cloud sync",
               description: "Sync data across your devices",

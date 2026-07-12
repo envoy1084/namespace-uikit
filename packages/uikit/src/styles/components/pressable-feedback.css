@@ -10,7 +10,7 @@
   }
 
   .pressable-feedback[data-focus-visible] {
-    @apply ring-focus ring-2 ring-offset-[var(--ring-offset-width)] ring-offset-background outline-none;
+    @apply ring-focus ring-offset-background ring-2 ring-offset-[var(--ring-offset-width)] outline-none;
   }
 
   .pressable-feedback:disabled,
@@ -85,12 +85,18 @@
     background-color: var(--pressable-feedback-ripple-color, currentColor);
     width: 100%;
     height: 100%;
-    transition: opacity var(--pressable-feedback-ripple-duration, 0.15s), background-color var(--pressable-feedback-ripple-duration, 0.15s);
+    transition:
+      opacity var(--pressable-feedback-ripple-duration, 0.15s),
+      background-color var(--pressable-feedback-ripple-duration, 0.15s);
     inset: 0;
   }
 
   .pressable-feedback__ripple-surface::after {
-    background: radial-gradient(closest-side, var(--pressable-feedback-ripple-color, currentColor) max(100% - 70px, 65%), transparent 100%);
+    background: radial-gradient(
+      closest-side,
+      var(--pressable-feedback-ripple-color, currentColor) max(100% - 70px, 65%),
+      transparent 100%
+    );
     transform-origin: 50%;
     transition: opacity 0.375s;
     inset: 0;
@@ -120,23 +126,33 @@
   .pressable-feedback__hold-confirm {
     --pressable-feedback-hold-confirm-duration: 2s;
     --pressable-feedback-hold-confirm-release-duration: 0.2s;
-    transition: clip-path var(--pressable-feedback-hold-confirm-release-duration) ease-out;
+    transition: clip-path
+      var(--pressable-feedback-hold-confirm-release-duration) ease-out;
   }
 
   .pressable-feedback__progress-feedback {
     --pressable-feedback-progress-feedback-duration: 2s;
     --pressable-feedback-progress-feedback-release-duration: 0.3s;
-    transition: clip-path var(--pressable-feedback-progress-feedback-release-duration) ease-out;
+    transition: clip-path
+      var(--pressable-feedback-progress-feedback-release-duration) ease-out;
   }
 
   .pressable-feedback__hold-confirm[data-sweep="right"],
-  .pressable-feedback__progress-feedback[data-sweep="right"] { clip-path: inset(0 100% 0 0); }
+  .pressable-feedback__progress-feedback[data-sweep="right"] {
+    clip-path: inset(0 100% 0 0);
+  }
   .pressable-feedback__hold-confirm[data-sweep="left"],
-  .pressable-feedback__progress-feedback[data-sweep="left"] { clip-path: inset(0 0 0 100%); }
+  .pressable-feedback__progress-feedback[data-sweep="left"] {
+    clip-path: inset(0 0 0 100%);
+  }
   .pressable-feedback__hold-confirm[data-sweep="down"],
-  .pressable-feedback__progress-feedback[data-sweep="down"] { clip-path: inset(0 0 100%); }
+  .pressable-feedback__progress-feedback[data-sweep="down"] {
+    clip-path: inset(0 0 100%);
+  }
   .pressable-feedback__hold-confirm[data-sweep="up"],
-  .pressable-feedback__progress-feedback[data-sweep="up"] { clip-path: inset(100% 0 0); }
+  .pressable-feedback__progress-feedback[data-sweep="up"] {
+    clip-path: inset(100% 0 0);
+  }
 
   .pressable-feedback__hold-confirm[data-holding="true"] {
     clip-path: inset(0);
@@ -145,7 +161,8 @@
 
   .pressable-feedback__progress-feedback[data-progressing="true"] {
     clip-path: inset(0);
-    transition: clip-path var(--pressable-feedback-progress-feedback-duration) linear;
+    transition: clip-path var(--pressable-feedback-progress-feedback-duration)
+      linear;
   }
 
   .pressable-feedback__hold-confirm[data-complete="true"],

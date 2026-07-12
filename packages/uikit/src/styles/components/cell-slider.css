@@ -1,13 +1,13 @@
 @layer components {
-.cell-slider {
-  --cell-slider-thumb-width: 2px;
-  --cell-slider-thumb-height: 16px;
-  display: block;
-  grid-template: none;
-  gap: 0;
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-}
+  .cell-slider {
+    --cell-slider-thumb-width: 2px;
+    --cell-slider-thumb-height: 16px;
+    display: block;
+    grid-template: none;
+    gap: 0;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 .cell-slider .cell-slider__track {
@@ -28,7 +28,10 @@
   box-shadow: var(--field-shadow);
   outline: none;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color 0.15s var(--ease-smooth), border-color 0.15s var(--ease-smooth), box-shadow 0.15s var(--ease-out);
+  transition:
+    background-color 0.15s var(--ease-smooth),
+    border-color 0.15s var(--ease-smooth),
+    box-shadow 0.15s var(--ease-out);
 }
 
 .cell-slider .cell-slider__track:hover,
@@ -40,7 +43,9 @@
 .cell-slider .cell-slider__track[data-focus-visible="true"] {
   border-color: var(--color-field-border-focus);
   background-color: var(--color-field-focus);
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--focus);
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--focus);
 }
 
 .cell-slider .cell-slider__track--secondary {
@@ -96,7 +101,9 @@
   box-shadow: none;
   opacity: 0;
   content: "";
-  transition: opacity 0.15s var(--ease-smooth), transform 0.12s var(--ease-smooth);
+  transition:
+    opacity 0.15s var(--ease-smooth),
+    transform 0.12s var(--ease-smooth);
 }
 
 .cell-slider .cell-slider__thumb[data-focus-visible="true"] {
@@ -106,7 +113,9 @@
 
 .cell-slider .cell-slider__thumb[data-focus-visible="true"]::after {
   opacity: 0.7;
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--focus);
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--focus);
   transform: scaleY(1.2);
 }
 
@@ -119,8 +128,12 @@
   transform: scaleY(1.5);
 }
 
-.cell-slider .cell-slider__track:hover .cell-slider__thumb:not([data-dragging="true"])::after,
-.cell-slider .cell-slider__track[data-hovered="true"] .cell-slider__thumb:not([data-dragging="true"])::after {
+.cell-slider
+  .cell-slider__track:hover
+  .cell-slider__thumb:not([data-dragging="true"])::after,
+.cell-slider
+  .cell-slider__track[data-hovered="true"]
+  .cell-slider__thumb:not([data-dragging="true"])::after {
   opacity: 0.4;
 }
 
