@@ -18,6 +18,7 @@ export * from "./components/chat-message";
 export * from "./components/chat-message-actions";
 export * from "./components/chat-source";
 export * from "./components/chat-tool";
+export * from "./components/chain-of-thought";
 export * from "./components/carousel";
 export * from "./components/card";
 export * from "./components/cell-color-picker";

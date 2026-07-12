@@ -9,6 +9,7 @@
 @import "./components/chat-message-actions.css";
 @import "./components/chat-source.css";
 @import "./components/chat-tool.css";
+@import "./components/chain-of-thought.css";
 @import "./components/command.css";
 @import "./components/code-block.css";
 @import "./components/context-menu.css";

@@ -209,6 +209,14 @@
       "types": "./dist/components/chat-tool.d.mts",
       "import": "./dist/components/chat-tool.mjs"
     },
+    "./chain-of-thought": {
+      "@thenamespace/source": {
+        "types": "./src/components/chain-of-thought/index.ts",
+        "import": "./src/components/chain-of-thought/index.ts"
+      },
+      "types": "./dist/components/chain-of-thought.d.mts",
+      "import": "./dist/components/chain-of-thought.mjs"
+    },
     "./chat-message": {
       "@thenamespace/source": {
         "types": "./src/components/chat-message/index.ts",

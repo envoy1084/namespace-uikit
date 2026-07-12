@@ -18,6 +18,7 @@ export * from "./chat-message";
 export * from "./chat-message-actions";
 export * from "./chat-source";
 export * from "./chat-tool";
+export * from "./chain-of-thought";
 export * from "./carousel";
 export * from "./card";
 export * from "./cell-color-picker";
