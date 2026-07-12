@@ -4,20 +4,26 @@ import type { Selection } from "react-aria-components";
 import { useMemo, useState } from "react";
 
 import {
+  Add01Icon,
   Archive02Icon,
   Cancel01Icon,
   Copy01Icon,
   Delete02Icon,
   Download04Icon,
+  File01Icon,
+  File02Icon,
+  Folder01Icon,
+  FolderOpenIcon,
+  Image01Icon,
   MoreVerticalIcon,
   PencilEdit01Icon,
   ViewIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Icon } from "@iconify/react";
 import { ActionBar } from "@thenamespace/uikit/action-bar";
 import { Avatar } from "@thenamespace/uikit/avatar";
 import { Dropdown } from "@thenamespace/uikit/dropdown";
+import { EmptyState as EmptyStateComponent } from "@thenamespace/uikit/empty-state";
 import { Link } from "@thenamespace/uikit/link";
 
 import { Button } from "../button";
@@ -1009,17 +1015,69 @@ export const BulkActions: Story = {
     );
   },
 };
+type EmptyProject = {
+  files: number;
+  id: string;
+  name: string;
+  owner: string;
+  updatedAt: string;
+};
+const emptyProjectColumns: DataGridColumn<EmptyProject>[] = [
+  {
+    accessorKey: "name",
+    cellClassName: "font-medium",
+    header: "Project",
+    id: "name",
+    isRowHeader: true,
+  },
+  { accessorKey: "owner", header: "Owner", id: "owner" },
+  {
+    accessorKey: "files",
+    align: "center",
+    header: "Files",
+    id: "files",
+  },
+  {
+    accessorKey: "updatedAt",
+    header: "Last Updated",
+    id: "updatedAt",
+  },
+];
 export const EmptyState: Story = {
   render: () => (
-    <Grid
-      data={[]}
-      renderEmptyState={() => (
-        <div className="grid place-items-center gap-2">
-          <Icon className="size-8" icon="lucide:folder-open" />
-          <span>No employees found.</span>
-        </div>
-      )}
-    />
+    <div className="flex w-full max-w-4xl flex-col gap-4">
+      <h2 className="text-xl font-bold">Projects</h2>
+      <DataGrid
+        aria-label="Projects"
+        columns={emptyProjectColumns}
+        data={[]}
+        getRowId={(project) => project.id}
+        renderEmptyState={() => (
+          <div className="py-6">
+            <EmptyStateComponent size="sm">
+              <EmptyStateComponent.Header>
+                <EmptyStateComponent.Media className="border" variant="icon">
+                  <StoryIcon icon={FolderOpenIcon} />
+                </EmptyStateComponent.Media>
+                <EmptyStateComponent.Title>
+                  No Projects Yet
+                </EmptyStateComponent.Title>
+                <EmptyStateComponent.Description>
+                  Get started by creating your first project. You can always
+                  import existing projects later.
+                </EmptyStateComponent.Description>
+              </EmptyStateComponent.Header>
+              <EmptyStateComponent.Content className="flex-row gap-2">
+                <Button variant="outline">
+                  <StoryIcon icon={Add01Icon} />
+                  Create Project
+                </Button>
+              </EmptyStateComponent.Content>
+            </EmptyStateComponent>
+          </div>
+        )}
+      />
+    </div>
   ),
 };
 export const PinnedColumnsCompact: Story = {
@@ -1036,48 +1094,177 @@ export const PinnedColumnsCompact: Story = {
   ),
 };
 type TreeRow = {
-  id: string;
-  name: string;
-  owner: string;
   children?: TreeRow[];
+  id: string;
+  kind: "document" | "folder" | "image" | "text";
+  modified: string;
+  name: string;
+  size: string;
 };
 const tree: TreeRow[] = [
   {
-    id: "design",
-    name: "Design",
-    owner: "Marcus",
     children: [
-      { id: "brand", name: "Brand assets", owner: "Priya" },
-      { id: "product", name: "Product screens", owner: "Elena" },
+      {
+        children: [
+          {
+            id: "3",
+            kind: "document",
+            modified: "Jul 10, 2025",
+            name: "Weekly Report.pdf",
+            size: "1.2 MB",
+          },
+          {
+            id: "4",
+            kind: "document",
+            modified: "Aug 20, 2025",
+            name: "Budget.xlsx",
+            size: "48 KB",
+          },
+        ],
+        id: "2",
+        kind: "folder",
+        modified: "Aug 2, 2025",
+        name: "Project Alpha",
+        size: "2 items",
+      },
+      {
+        id: "8",
+        kind: "text",
+        modified: "Sep 14, 2025",
+        name: "Meeting Notes.md",
+        size: "12 KB",
+      },
     ],
+    id: "1",
+    kind: "folder",
+    modified: "Oct 20, 2025",
+    name: "Documents",
+    size: "3 items",
   },
   {
-    id: "engineering",
-    name: "Engineering",
-    owner: "Yuki",
-    children: [{ id: "web", name: "Web app", owner: "Amara" }],
+    children: [
+      {
+        id: "6",
+        kind: "image",
+        modified: "Jan 23, 2026",
+        name: "hero-1.png",
+        size: "2.4 MB",
+      },
+      {
+        id: "7",
+        kind: "image",
+        modified: "Feb 3, 2026",
+        name: "hero-2.png",
+        size: "3.1 MB",
+      },
+    ],
+    id: "5",
+    kind: "folder",
+    modified: "Feb 3, 2026",
+    name: "Photos",
+    size: "2 items",
+  },
+  {
+    id: "9",
+    kind: "text",
+    modified: "Mar 1, 2026",
+    name: "readme.txt",
+    size: "4 KB",
   },
 ];
 export const ExpandableRows: Story = {
-  render: () => (
-    <div className="max-w-2xl">
-      <DataGrid
-        aria-label="Projects"
-        columns={[
-          {
-            accessorKey: "name",
-            header: "Project",
-            id: "name",
-            isRowHeader: true,
-          },
-          { accessorKey: "owner", header: "Owner", id: "owner" },
-        ]}
-        data={tree}
-        defaultExpandedKeys={new Set(["design"])}
-        getChildren={(item) => item.children}
-        getRowId={(item) => item.id}
-        treeColumn="name"
-      />
-    </div>
-  ),
+  render: function Demo() {
+    const [expanded, setExpanded] = useState<Selection>(new Set(["1"]));
+    const isExpanded = (id: string) => expanded === "all" || expanded.has(id);
+    const typeLabel = {
+      document: "Document",
+      folder: "Folder",
+      image: "Image",
+      text: "Text",
+    } as const;
+    const typeColor = {
+      document: "accent",
+      folder: "warning",
+      image: "success",
+      text: "default",
+    } as const;
+    const fileColumns: DataGridColumn<TreeRow>[] = [
+      {
+        accessorKey: "name",
+        cell: (item) => {
+          const icon =
+            item.kind === "folder"
+              ? isExpanded(item.id)
+                ? FolderOpenIcon
+                : Folder01Icon
+              : item.kind === "image"
+                ? Image01Icon
+                : item.kind === "document"
+                  ? File02Icon
+                  : File01Icon;
+          return (
+            <span className="flex min-w-0 items-center gap-2">
+              <HugeiconsIcon
+                className={
+                  item.kind === "folder"
+                    ? "text-warning size-4 shrink-0"
+                    : "text-muted size-4 shrink-0"
+                }
+                icon={icon}
+                strokeWidth={2}
+              />
+              <span className="truncate text-sm font-medium">{item.name}</span>
+            </span>
+          );
+        },
+        header: "Name",
+        id: "name",
+        isRowHeader: true,
+        minWidth: 280,
+      },
+      {
+        accessorKey: "kind",
+        cell: (item) => (
+          <Chip color={typeColor[item.kind]} size="sm" variant="soft">
+            <Chip.Label>{typeLabel[item.kind]}</Chip.Label>
+          </Chip>
+        ),
+        header: "Type",
+        id: "kind",
+        minWidth: 120,
+      },
+      {
+        accessorKey: "size",
+        align: "end",
+        cellClassName: "text-muted text-sm tabular-nums",
+        header: "Size",
+        id: "size",
+        minWidth: 100,
+      },
+      {
+        accessorKey: "modified",
+        cellClassName: "text-muted text-sm tabular-nums",
+        header: "Date Modified",
+        id: "modified",
+        minWidth: 160,
+      },
+    ];
+
+    return (
+      <div className="flex w-full max-w-3xl flex-col gap-3">
+        <DataGrid
+          aria-label="Files"
+          columns={fileColumns}
+          contentClassName="min-w-[660px]"
+          data={tree}
+          expandedKeys={expanded}
+          getChildren={(item) => item.children}
+          getRowId={(item) => item.id}
+          treeColumn="name"
+          variant="primary"
+          onExpandedChange={setExpanded}
+        />
+      </div>
+    );
+  },
 };
