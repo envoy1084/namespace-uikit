@@ -77,7 +77,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 
 - [x] [Text Shimmer docs](https://heroui.pro/docs/react/components/text-shimmer) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-textshimmer--docs) — implementation and reference story added; final catalog-wide visual audit remains
 - [x] [Code Block docs](https://heroui.pro/docs/react/components/code-block) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-codeblock--docs) — implementation and reference story added; final catalog-wide visual audit remains
-- [ ] [Markdown docs](https://heroui.pro/docs/react/components/markdown) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-markdown--docs)
+- [x] [Markdown docs](https://heroui.pro/docs/react/components/markdown) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-markdown--docs) — implementation and all reference stories added; final catalog-wide visual audit remains
 - [ ] [Chat Attachment docs](https://heroui.pro/docs/react/components/chat-attachment) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-chatattachment--docs)
 - [ ] [Chat Source docs](https://heroui.pro/docs/react/components/chat-source) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-chatsource--docs)
 - [ ] [Chat Message Actions docs](https://heroui.pro/docs/react/components/chat-message-actions) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-ai-chatmessageactions--docs)
