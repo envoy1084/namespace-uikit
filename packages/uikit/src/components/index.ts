@@ -99,6 +99,7 @@ export * from "./radio-group";
 export * from "./range-calendar";
 export * from "./scroll-shadow";
 export * from "./search-field";
+export * from "./segment";
 export * from "./select";
 export * from "./separator";
 export * from "./skeleton";

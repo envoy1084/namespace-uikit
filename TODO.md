@@ -63,7 +63,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 
 ## Phase 5 — Navigation and overlays
 
-- [ ] [Segment docs](https://heroui.pro/docs/react/components/segment) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-segment--docs)
+- [x] [Segment docs](https://heroui.pro/docs/react/components/segment) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-segment--docs)
 - [ ] [Stepper docs](https://heroui.pro/docs/react/components/stepper) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-stepper--docs)
 - [ ] [Command docs](https://heroui.pro/docs/react/components/command) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-command--docs)
 - [ ] [Context Menu docs](https://heroui.pro/docs/react/components/context-menu) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-contextmenu--docs)
