@@ -1,0 +1,106 @@
+@layer components {
+  .app-layout {
+    --app-layout-aside-width: 320px;
+    --app-layout-aside-duration: 0.2s;
+    display: flex;
+    min-height: 100svh;
+    width: 100%;
+  }
+  .app-layout__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .app-layout__header {
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+  }
+  .app-layout__header .navbar {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+    position: static;
+    top: auto;
+    width: 100%;
+  }
+  .app-layout__main {
+    flex: 1;
+    min-width: 0;
+  }
+  .app-layout__main[data-scroll-mode="content"] {
+    height: 0;
+    overflow-y: auto;
+  }
+  .app-layout:has(.app-layout__main[data-scroll-mode="content"]) {
+    height: 100svh;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .app-layout__toolbar {
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    position: sticky;
+    top: var(--navbar-height, 4rem);
+    z-index: 30;
+  }
+  .app-layout__footer {
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .app-layout__aside {
+    background: var(--background);
+    border-left: 1px solid var(--border);
+    height: 100svh;
+    overflow: hidden;
+    position: sticky;
+    top: 0;
+    transition: width var(--app-layout-aside-duration);
+    width: var(--app-layout-aside-width);
+  }
+  .app-layout__aside[data-state="closed"] {
+    border-left-width: 0;
+    width: 0;
+  }
+  .app-layout__aside > * {
+    transition: translate var(--app-layout-aside-duration);
+    width: var(--app-layout-aside-width);
+  }
+  .app-layout__aside[data-state="closed"] > * {
+    translate: 100% 0;
+  }
+  .app-layout__menu-toggle {
+    display: none;
+  }
+  .app-layout__aside-trigger {
+    display: inline-flex;
+  }
+  .app-layout__mobile-aside {
+    height: 100%;
+    overflow: auto;
+    width: min(90vw, var(--app-layout-aside-width));
+  }
+  @media (max-width: 1024px) {
+    .app-layout__aside,
+    .app-layout__aside-trigger {
+      display: none;
+    }
+  }
+  @media (max-width: 768px) {
+    .app-layout__menu-toggle {
+      display: inline-flex;
+    }
+    .app-layout [data-slot="sidebar-trigger"] {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .app-layout__aside,
+    .app-layout__aside > * {
+      transition: none;
+    }
+  }
+}

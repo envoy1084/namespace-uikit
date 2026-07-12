@@ -26,6 +26,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/app-layout.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/agenda.css",
       to: "dist/components",
     },
