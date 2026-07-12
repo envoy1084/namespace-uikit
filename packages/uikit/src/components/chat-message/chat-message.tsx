@@ -42,7 +42,7 @@ export const ChatMessageContent: DivPart = part(
   "chat-message__content",
   "chat-message-content",
 );
-export const ChatMessageActions: DivPart = part(
+export const ChatMessageActionsContainer: DivPart = part(
   "chat-message__actions",
   "chat-message-actions",
 );
@@ -125,7 +125,7 @@ export function ChatMessageAvatar({
 }
 export interface ChatMessageComponent {
   Action: typeof ChatMessageAction;
-  Actions: typeof ChatMessageActions;
+  Actions: typeof ChatMessageActionsContainer;
   Assistant: typeof ChatMessageAssistant;
   Avatar: typeof ChatMessageAvatar;
   Body: typeof ChatMessageBody;
@@ -135,7 +135,7 @@ export interface ChatMessageComponent {
 }
 export const ChatMessage: ChatMessageComponent = {
   Action: ChatMessageAction,
-  Actions: ChatMessageActions,
+  Actions: ChatMessageActionsContainer,
   Assistant: ChatMessageAssistant,
   Avatar: ChatMessageAvatar,
   Body: ChatMessageBody,

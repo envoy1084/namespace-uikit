@@ -14,6 +14,7 @@ export * from "./components/calendar";
 export * from "./components/calendar-year-picker";
 export * from "./components/chat-attachment";
 export * from "./components/chat-message";
+export * from "./components/chat-message-actions";
 export * from "./components/chat-source";
 export * from "./components/carousel";
 export * from "./components/card";
