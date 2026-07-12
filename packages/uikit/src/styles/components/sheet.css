@@ -294,6 +294,14 @@
     touch-action: pan-y;
   }
 
+  .sheet__handle[data-vaul-handle] {
+    width: auto;
+    height: auto;
+    margin: 0;
+    opacity: 1;
+    border-radius: 0;
+  }
+
   .sheet__handle:active {
     cursor: grabbing;
   }

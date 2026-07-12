@@ -8,7 +8,15 @@ import type {
   ReactElement,
   ReactNode,
 } from "react";
-import { createContext, forwardRef, useContext, useMemo } from "react";
+import {
+  cloneElement,
+  createContext,
+  forwardRef,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 import { CloseButton, cn } from "@heroui/react";
 import { Dialog, Heading } from "react-aria-components";
@@ -18,7 +26,9 @@ export type SheetPlacement = "bottom" | "left" | "right" | "top";
 export type SheetSnapPoint = number | string;
 
 interface SheetContextValue {
+  close: () => void;
   isDetached: boolean;
+  open: () => void;
   placement: SheetPlacement;
   snapPoints: SheetSnapPoint[] | undefined;
 }
@@ -105,9 +115,24 @@ function SheetRootBase({
   snapToSequentialPoint,
 }: SheetRootProps): ReactElement {
   const Root = isNested ? Vaul.NestedRoot : Vaul.Root;
+  const [localOpen, setLocalOpen] = useState(defaultOpen ?? false);
+  const openState = isOpen ?? localOpen;
+  const setOpen = useCallback(
+    (nextOpen: boolean) => {
+      if (isOpen === undefined) setLocalOpen(nextOpen);
+      onOpenChange?.(nextOpen);
+    },
+    [isOpen, onOpenChange],
+  );
   const context = useMemo(
-    () => ({ isDetached, placement, snapPoints }),
-    [isDetached, placement, snapPoints],
+    () => ({
+      close: () => setOpen(false),
+      isDetached,
+      open: () => setOpen(true),
+      placement,
+      snapPoints,
+    }),
+    [isDetached, placement, setOpen, snapPoints],
   );
   const rootProps = {
     activeSnapPoint,
@@ -126,9 +151,9 @@ function SheetRootBase({
     onAnimationEnd,
     onClose,
     onDrag,
-    onOpenChange,
+    onOpenChange: setOpen,
     onRelease,
-    open: isOpen,
+    open: openState,
     preventScrollRestoration,
     repositionInputs,
     scrollLockTimeout,
@@ -154,31 +179,27 @@ export function SheetNestedRoot(props: SheetRootProps): ReactElement {
   return <SheetRootBase {...props} isNested />;
 }
 
-export type SheetTriggerProps = ComponentPropsWithRef<typeof Vaul.Trigger>;
-export const SheetTrigger: ForwardRefExoticComponent<SheetTriggerProps> =
-  forwardRef<HTMLButtonElement, SheetTriggerProps>(function SheetTrigger(
-    { children, ...props },
-    ref,
-  ) {
-    return (
-      <Vaul.Trigger {...props} asChild ref={ref}>
-        {children}
-      </Vaul.Trigger>
-    );
-  });
+type PressableElement = ReactElement<{ onPress?: () => void }>;
 
-export type SheetCloseProps = ComponentPropsWithRef<typeof Vaul.Close>;
-export const SheetClose: ForwardRefExoticComponent<SheetCloseProps> =
-  forwardRef<HTMLButtonElement, SheetCloseProps>(function SheetClose(
-    { children, ...props },
-    ref,
-  ) {
-    return (
-      <Vaul.Close {...props} asChild ref={ref}>
-        {children}
-      </Vaul.Close>
-    );
-  });
+export interface SheetTriggerProps {
+  children: PressableElement;
+}
+
+export function SheetTrigger({ children }: SheetTriggerProps): ReactElement {
+  const { open } = useSheetContext();
+
+  return cloneElement(children, { onPress: open });
+}
+
+export interface SheetCloseProps {
+  children: PressableElement;
+}
+
+export function SheetClose({ children }: SheetCloseProps): ReactElement {
+  const { close } = useSheetContext();
+
+  return cloneElement(children, { onPress: close });
+}
 
 export interface SheetBackdropProps extends ComponentPropsWithRef<
   typeof Vaul.Overlay
@@ -205,9 +226,6 @@ export const SheetBackdrop: ForwardRefExoticComponent<SheetBackdropProps> =
           data-variant={variant}
           ref={ref}
         >
-          <Vaul.Close aria-label="Dismiss" className="sr-only">
-            Dismiss
-          </Vaul.Close>
           {children}
         </Vaul.Overlay>
       </Vaul.Portal>
@@ -217,10 +235,11 @@ export const SheetBackdrop: ForwardRefExoticComponent<SheetBackdropProps> =
 export type SheetContentProps = ComponentPropsWithRef<typeof Vaul.Content>;
 export const SheetContent: ForwardRefExoticComponent<SheetContentProps> =
   forwardRef<HTMLDivElement, SheetContentProps>(function SheetContent(
-    { className, style, ...props },
+    { children, className, style, ...props },
     ref,
   ) {
     const { isDetached, placement, snapPoints } = useSheetContext();
+    const { close } = useSheetContext();
 
     return (
       <Vaul.Content
@@ -238,7 +257,10 @@ export const SheetContent: ForwardRefExoticComponent<SheetContentProps> =
         ref={ref}
         role="presentation"
         style={style as CSSProperties}
-      />
+      >
+        <button aria-label="Dismiss" className="sr-only" onClick={close} />
+        {children}
+      </Vaul.Content>
     );
   });
 
@@ -339,17 +361,18 @@ export type SheetCloseTriggerProps = ComponentPropsWithRef<typeof CloseButton>;
 export const SheetCloseTrigger: ForwardRefExoticComponent<SheetCloseTriggerProps> =
   forwardRef<HTMLButtonElement, SheetCloseTriggerProps>(
     function SheetCloseTrigger({ className, ...props }, ref) {
+      const { close } = useSheetContext();
+
       return (
-        <Vaul.Close asChild>
-          <CloseButton
-            {...props}
-            className={
-              cn("sheet__close-trigger", className) ?? "sheet__close-trigger"
-            }
-            data-slot="sheet-close-trigger"
-            ref={ref}
-          />
-        </Vaul.Close>
+        <CloseButton
+          {...props}
+          className={
+            cn("sheet__close-trigger", className) ?? "sheet__close-trigger"
+          }
+          data-slot="sheet-close-trigger"
+          ref={ref}
+          onPress={close}
+        />
       );
     },
   );
