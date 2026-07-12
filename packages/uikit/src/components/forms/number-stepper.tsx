@@ -96,11 +96,11 @@ function NumberStepperGroup({
     >
       {composeRenderProps(children, (resolvedChildren) => (
         <>
+          {resolvedChildren}
           <InputPrimitive
             className="number-stepper__input"
             data-slot="number-stepper-input"
           />
-          {resolvedChildren}
         </>
       ))}
     </GroupPrimitive>
