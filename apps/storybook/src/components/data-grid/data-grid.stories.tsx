@@ -4,8 +4,11 @@ import type { Selection } from "react-aria-components";
 import { useMemo, useState } from "react";
 
 import {
+  Archive02Icon,
+  Cancel01Icon,
   Copy01Icon,
   Delete02Icon,
+  Download04Icon,
   MoreVerticalIcon,
   PencilEdit01Icon,
   ViewIcon,
@@ -13,6 +16,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Icon } from "@iconify/react";
 import { ActionBar } from "@thenamespace/uikit/action-bar";
+import { Avatar } from "@thenamespace/uikit/avatar";
 import { Dropdown } from "@thenamespace/uikit/dropdown";
 
 import { Button } from "../button";
@@ -579,33 +583,211 @@ export const EditableCells: Story = {
     return <Grid columns={editable} data={data} />;
   },
 };
+
+type BulkEmployee = {
+  avatar: string;
+  department: string;
+  email: string;
+  id: number;
+  joinDate: string;
+  name: string;
+  status: "Active" | "Inactive" | "Pending";
+};
+
+const bulkEmployees: BulkEmployee[] = [
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=20",
+    department: "HR",
+    email: "elena.rodriguez@company.com",
+    id: 1,
+    joinDate: "2024-01-28",
+    name: "Elena Rodriguez",
+    status: "Active",
+  },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=21",
+    department: "Design",
+    email: "marcus.chen@company.com",
+    id: 2,
+    joinDate: "2024-02-03",
+    name: "Marcus Chen",
+    status: "Pending",
+  },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=22",
+    department: "HR",
+    email: "priya.patel@company.com",
+    id: 3,
+    joinDate: "2024-03-04",
+    name: "Priya Patel",
+    status: "Active",
+  },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=23",
+    department: "Finance",
+    email: "james.o.brien@company.com",
+    id: 4,
+    joinDate: "2024-04-14",
+    name: "James O'Brien",
+    status: "Active",
+  },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=24",
+    department: "Product",
+    email: "yuki.tanaka@company.com",
+    id: 5,
+    joinDate: "2024-05-08",
+    name: "Yuki Tanaka",
+    status: "Inactive",
+  },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=25",
+    department: "Support",
+    email: "amara.okafor@company.com",
+    id: 6,
+    joinDate: "2024-06-27",
+    name: "Amara Okafor",
+    status: "Pending",
+  },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=26",
+    department: "Engineering",
+    email: "luca.bianchi@company.com",
+    id: 7,
+    joinDate: "2024-07-25",
+    name: "Luca Bianchi",
+    status: "Active",
+  },
+];
+
+const bulkColumns: DataGridColumn<BulkEmployee>[] = [
+  {
+    accessorKey: "name",
+    allowsSorting: true,
+    cell: (employee) => (
+      <div className="flex items-center gap-3">
+        <Avatar size="sm">
+          <Avatar.Image alt={employee.name} src={employee.avatar} />
+          <Avatar.Fallback>
+            {employee.name
+              .split(" ")
+              .map((part) => part[0])
+              .join("")}
+          </Avatar.Fallback>
+        </Avatar>
+        <div className="flex flex-col">
+          <span className="text-sm font-medium">{employee.name}</span>
+          <span className="text-muted text-xs">{employee.email}</span>
+        </div>
+      </div>
+    ),
+    header: "Employee",
+    id: "name",
+    isRowHeader: true,
+    minWidth: 240,
+  },
+  {
+    accessorKey: "department",
+    allowsSorting: true,
+    header: "Department",
+    id: "department",
+  },
+  {
+    accessorKey: "status",
+    allowsSorting: true,
+    cell: (employee) => (
+      <Chip color={statusColor[employee.status]} size="sm" variant="soft">
+        <span aria-hidden className="size-1.5 rounded-full bg-current" />
+        <Chip.Label>{employee.status}</Chip.Label>
+      </Chip>
+    ),
+    header: "Status",
+    id: "status",
+  },
+  {
+    accessorKey: "joinDate",
+    allowsSorting: true,
+    cell: (employee) => (
+      <span className="text-muted text-sm tabular-nums">
+        {formatDate(employee.joinDate)}
+      </span>
+    ),
+    header: "Joined",
+    id: "joinDate",
+  },
+];
+
 export const BulkActions: Story = {
   render: function Demo() {
+    const [data, setData] = useState(bulkEmployees);
     const [selected, setSelected] = useState<Selection>(new Set());
-    const count = selected === "all" ? people.length : selected.size;
+    const count = selected === "all" ? data.length : selected.size;
+    const selectedIds =
+      selected === "all" ? new Set(data.map((item) => item.id)) : selected;
+
     return (
       <>
-        <Grid
-          selectedKeys={selected}
-          selectionMode="multiple"
-          showSelectionCheckboxes
-          onSelectionChange={setSelected}
-        />
+        <div className="w-full max-w-4xl">
+          <DataGrid
+            showSelectionCheckboxes
+            aria-label="Employees"
+            columns={bulkColumns}
+            data={data}
+            defaultSortDescriptor={{ column: "name", direction: "ascending" }}
+            getRowId={(employee) => employee.id}
+            selectedKeys={selected}
+            selectionMode="multiple"
+            onSelectionChange={setSelected}
+          />
+        </div>
         <ActionBar aria-label="Bulk actions" isOpen={count > 0}>
           <ActionBar.Prefix>
-            <Chip size="sm">{count}</Chip>
+            <Chip className="size-5 shrink-0 tabular-nums" size="sm">
+              {count}
+            </Chip>
           </ActionBar.Prefix>
           <Separator />
           <ActionBar.Content>
-            <Button size="sm" variant="ghost">
-              <Icon icon="lucide:pencil" />
-              Edit
+            <Button aria-label="Edit" size="sm" variant="ghost">
+              <StoryIcon icon={PencilEdit01Icon} />
+              <span className="action-bar__label">Edit</span>
             </Button>
-            <Button className="text-danger" size="sm" variant="ghost">
-              <Icon icon="lucide:trash-2" />
-              Delete
+            <Button aria-label="Export" size="sm" variant="ghost">
+              <StoryIcon icon={Download04Icon} />
+              <span className="action-bar__label">Export</span>
+            </Button>
+            <Button aria-label="Archive" size="sm" variant="ghost">
+              <StoryIcon icon={Archive02Icon} />
+              <span className="action-bar__label">Archive</span>
+            </Button>
+            <Button
+              aria-label="Delete"
+              className="text-danger bg-danger/10"
+              size="sm"
+              variant="ghost"
+              onPress={() => {
+                setData((current) =>
+                  current.filter((item) => !selectedIds.has(item.id)),
+                );
+                setSelected(new Set());
+              }}
+            >
+              <StoryIcon icon={Delete02Icon} />
+              <span className="action-bar__label">Delete</span>
             </Button>
           </ActionBar.Content>
+          <Separator />
+          <ActionBar.Suffix>
+            <Button
+              isIconOnly
+              aria-label="Clear selection"
+              size="sm"
+              variant="ghost"
+              onPress={() => setSelected(new Set())}
+            >
+              <StoryIcon icon={Cancel01Icon} />
+            </Button>
+          </ActionBar.Suffix>
         </ActionBar>
       </>
     );
