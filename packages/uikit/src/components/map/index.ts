@@ -1,5 +1,7 @@
 export {
   Map,
+  MapArc,
+  MapClusterLayer,
   MapCompassControl,
   MapControlButton,
   MapControlGroup,
@@ -21,6 +23,10 @@ export {
 } from "./map";
 export type {
   MapControlButtonProps,
+  MapArcDatum,
+  MapArcEvent,
+  MapArcProps,
+  MapClusterLayerProps,
   MapControlGroupProps,
   MapControlSeparatorProps,
   MapCompassControlProps,

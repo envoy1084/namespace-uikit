@@ -59,7 +59,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 - [x] [Timeline docs](https://heroui.pro/docs/react/components/timeline) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-timeline--docs)
 - [x] [Kanban docs](https://heroui.pro/docs/react/components/kanban) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-kanban--docs)
 - [x] [Data Grid docs](https://heroui.pro/docs/react/components/data-grid) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-datagrid--docs)
-- [ ] [Map docs](https://heroui.pro/docs/react/components/map) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-data-display-map--docs)
+- [x] [Map docs](https://heroui.pro/docs/react/components/map) · [Storybook](https://storybook.heroui.pro/?path=/docs/components-data-display-map--docs)
 
 ## Phase 5 — Navigation and overlays
 

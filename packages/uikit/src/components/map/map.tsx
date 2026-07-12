@@ -11,7 +11,9 @@ import {
   createContext,
   useContext,
   useEffect,
+  useId,
   useImperativeHandle,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -21,6 +23,10 @@ import { Button, ButtonGroup, CloseButton, cn, Spinner } from "@heroui/react";
 import maplibregl, {
   type Map as MapRef,
   type MapOptions,
+  type CircleLayerSpecification,
+  type GeoJSONSource,
+  type GeoJSONSourceSpecification,
+  type LineLayerSpecification,
   type MarkerOptions,
   type PopupOptions,
   type ProjectionSpecification,
@@ -170,8 +176,8 @@ export function MapRoot({
     };
   }, [map, resolvedStyle]);
   useEffect(() => {
-    if (map && projection) map.setProjection(projection);
-  }, [map, projection]);
+    if (map && isLoaded && projection) map.setProjection(projection);
+  }, [isLoaded, map, projection]);
   useEffect(() => {
     if (!map || !viewport) return;
     map.jumpTo(viewport);
@@ -397,15 +403,18 @@ const PopupContent = ({
   className,
   closeButton,
   onClose,
+  slot,
 }: {
   children: ReactNode;
   className?: string;
   closeButton?: boolean;
   onClose: () => void;
+  slot: "map-marker-popup" | "map-popup";
 }) => (
   <div
     className={cn("map__popup-content", className)}
     data-close-button={closeButton || undefined}
+    data-slot={slot}
   >
     {closeButton ? (
       <CloseButton
@@ -463,6 +472,7 @@ export function MapMarkerPopup({
           onClose={() => {
             state.popup.remove();
           }}
+          slot="map-marker-popup"
         >
           {children}
         </PopupContent>,
@@ -588,6 +598,7 @@ export function MapPopup({
           onClose={() => {
             state.popup.remove();
           }}
+          slot="map-popup"
         >
           {children}
         </PopupContent>,
@@ -682,11 +693,77 @@ export function MapControlSeparator({
     />
   );
 }
-const ControlIcon = ({ icon }: { icon: string }) => (
-  <span aria-hidden className="map__control-icon">
-    {icon}
-  </span>
-);
+const ControlIcon = ({
+  type,
+}: {
+  type: "compass" | "fullscreen" | "locate" | "minus" | "plus";
+}): ReactElement => {
+  if (type === "plus" || type === "minus")
+    return (
+      <svg
+        aria-hidden="true"
+        className="map__control-icon"
+        fill="none"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M3 8h10M8 3v10"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeWidth="1.5"
+        />
+        {type === "minus" ? (
+          <path d="M8 2v12" stroke="var(--overlay)" strokeWidth="3" />
+        ) : null}
+      </svg>
+    );
+  if (type === "locate")
+    return (
+      <svg
+        aria-hidden="true"
+        className="map__control-icon"
+        fill="none"
+        viewBox="0 0 16 16"
+      >
+        <path
+          clipRule="evenodd"
+          d="M8.75 1.75a.75.75 0 0 0-1.5 0v.79A5.51 5.51 0 0 0 2.54 7.25h-.79a.75.75 0 0 0 0 1.5h.79a5.51 5.51 0 0 0 4.71 4.71v.79a.75.75 0 0 0 1.5 0v-.79a5.51 5.51 0 0 0 4.71-4.71h.79a.75.75 0 0 0 0-1.5h-.79a5.51 5.51 0 0 0-4.71-4.71zM8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8m0 2.25a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5"
+          fill="currentColor"
+          fillRule="evenodd"
+        />
+      </svg>
+    );
+  if (type === "fullscreen")
+    return (
+      <svg
+        aria-hidden="true"
+        className="map__control-icon"
+        fill="none"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M2.5 5.5v-3h3m5 0h3v3m0 5v3h-3m-5 0h-3v-3"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
+      </svg>
+    );
+  return (
+    <svg
+      aria-hidden="true"
+      className="map__compass-icon"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path d="M12 2 16 12h-4V2Z" data-needle="north-right" />
+      <path d="m12 2-4 10h4V2Z" data-needle="north-left" />
+      <path d="m12 22 4-10h-4v10Z" data-needle="south-right" />
+      <path d="M12 22 8 12h4v10Z" data-needle="south-left" />
+    </svg>
+  );
+};
 export interface MapZoomControlProps extends Omit<
   MapControlGroupProps,
   "children"
@@ -707,7 +784,7 @@ export function MapZoomControl({
         label="Zoom in"
         onPress={() => map?.zoomTo(map.getZoom() + step, { duration })}
       >
-        <ControlIcon icon="+" />
+        <ControlIcon type="plus" />
       </MapControlButton>
       <MapControlButton
         isDisabled={!map}
@@ -715,7 +792,7 @@ export function MapZoomControl({
         onPress={() => map?.zoomTo(map.getZoom() - step, { duration })}
       >
         <MapControlSeparator />
-        <ControlIcon icon="−" />
+        <ControlIcon type="minus" />
       </MapControlButton>
     </MapControlGroup>
   );
@@ -731,6 +808,21 @@ export function MapCompassControl({
   ...props
 }: MapCompassControlProps): ReactElement {
   const { map } = useMapContext();
+  const iconRef = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    if (!map || !iconRef.current) return;
+    const update = () => {
+      if (iconRef.current)
+        iconRef.current.style.transform = `rotateX(${map.getPitch()}deg) rotateZ(${-map.getBearing()}deg)`;
+    };
+    map.on("rotate", update);
+    map.on("pitch", update);
+    update();
+    return () => {
+      map.off("rotate", update);
+      map.off("pitch", update);
+    };
+  }, [map]);
   return (
     <MapControlGroup {...props}>
       <MapControlButton
@@ -738,7 +830,9 @@ export function MapCompassControl({
         label="Reset bearing to north"
         onPress={() => map?.resetNorthPitch({ duration })}
       >
-        <ControlIcon icon="◆" />
+        <span ref={iconRef} className="map__compass-icon">
+          <ControlIcon type="compass" />
+        </span>
       </MapControlButton>
     </MapControlGroup>
   );
@@ -793,7 +887,7 @@ export function MapLocateControl({
         label="Find my location"
         onPress={locate}
       >
-        {loading ? <Spinner size="sm" /> : <ControlIcon icon="⌾" />}
+        {loading ? <Spinner size="sm" /> : <ControlIcon type="locate" />}
       </MapControlButton>
     </MapControlGroup>
   );
@@ -824,7 +918,7 @@ export function MapFullscreenControl({
         label="Toggle fullscreen"
         onPress={toggle}
       >
-        <ControlIcon icon="⛶" />
+        <ControlIcon type="fullscreen" />
       </MapControlButton>
     </MapControlGroup>
   );
@@ -927,7 +1021,412 @@ export function MapRoute({
   return null;
 }
 
+const useLayerId = (prefix: string, id?: string): string => {
+  const reactId = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  return id ?? `${prefix}-${reactId}`;
+};
+export interface MapArcDatum {
+  from: [number, number];
+  id: number | string;
+  to: [number, number];
+  [key: string]: unknown;
+}
+export interface MapArcEvent<T extends MapArcDatum = MapArcDatum> {
+  arc: T;
+  latitude: number;
+  longitude: number;
+  originalEvent: maplibregl.MapMouseEvent;
+}
+export interface MapArcProps<T extends MapArcDatum = MapArcDatum> {
+  beforeId?: string;
+  curvature?: number;
+  data: T[];
+  hoverPaint?: LineLayerSpecification["paint"];
+  id?: string;
+  interactive?: boolean;
+  layout?: LineLayerSpecification["layout"];
+  onClick?: (event: MapArcEvent<T>) => void;
+  onHover?: (event: MapArcEvent<T> | null) => void;
+  paint?: LineLayerSpecification["paint"];
+  samples?: number;
+}
+const arcCoordinates = (
+  from: [number, number],
+  to: [number, number],
+  curvature: number,
+  samples: number,
+): [number, number][] => {
+  const [x1, y1] = from;
+  const [x2, y2] = to;
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const distance = Math.hypot(dx, dy);
+  if (!distance || !curvature) return [from, to];
+  const controlX = (x1 + x2) / 2 + (-dy / distance) * distance * curvature;
+  const controlY = (y1 + y2) / 2 + (dx / distance) * distance * curvature;
+  return Array.from(
+    { length: Math.max(2, Math.floor(samples)) + 1 },
+    (_, index) => {
+      const t = index / Math.max(2, Math.floor(samples));
+      const inverse = 1 - t;
+      return [
+        inverse * inverse * x1 + 2 * inverse * t * controlX + t * t * x2,
+        inverse * inverse * y1 + 2 * inverse * t * controlY + t * t * y2,
+      ];
+    },
+  );
+};
+export function MapArc<T extends MapArcDatum = MapArcDatum>({
+  beforeId,
+  curvature = 0.2,
+  data,
+  hoverPaint,
+  id,
+  interactive = true,
+  layout,
+  onClick,
+  onHover,
+  paint,
+  samples = 64,
+}: MapArcProps<T>): null {
+  const { isLoaded, map } = useMapContext();
+  const baseId = useLayerId("arc", id);
+  const sourceId = `${baseId}-source`;
+  const layerId = `${baseId}-layer`;
+  const hitLayerId = `${baseId}-hit-layer`;
+  const dataRef = useRef(data);
+  dataRef.current = data;
+  const callbacks = useRef({ onClick, onHover });
+  callbacks.current = { onClick, onHover };
+  const geojson = useMemo(
+    () => ({
+      features: data.map(({ from, id: arcId, to, ...properties }) => ({
+        geometry: {
+          coordinates: arcCoordinates(from, to, curvature, samples),
+          type: "LineString" as const,
+        },
+        properties: { id: arcId, ...properties },
+        type: "Feature" as const,
+      })),
+      type: "FeatureCollection" as const,
+    }),
+    [curvature, data, samples],
+  );
+  const resolvedPaint = useMemo(() => {
+    const base = {
+      "line-color": "#4285F4",
+      "line-opacity": 0.85,
+      "line-width": 2,
+      ...paint,
+    } as NonNullable<LineLayerSpecification["paint"]>;
+    if (!hoverPaint) return base;
+    const result = { ...base };
+    for (const [key, value] of Object.entries(hoverPaint)) {
+      if (value === undefined) continue;
+      const normal = result[key as keyof typeof result];
+      (result as Record<string, unknown>)[key] =
+        normal === undefined
+          ? value
+          : [
+              "case",
+              ["boolean", ["feature-state", "hover"], false],
+              value,
+              normal,
+            ];
+    }
+    return result;
+  }, [hoverPaint, paint]);
+  useEffect(() => {
+    if (!isLoaded || !map) return;
+    if (!map.getSource(sourceId))
+      map.addSource(sourceId, {
+        data: geojson,
+        promoteId: "id",
+        type: "geojson",
+      });
+    if (!map.getLayer(layerId))
+      map.addLayer(
+        {
+          id: layerId,
+          layout: { "line-cap": "round", "line-join": "round", ...layout },
+          paint: resolvedPaint,
+          source: sourceId,
+          type: "line",
+        },
+        beforeId,
+      );
+    if (!map.getLayer(hitLayerId))
+      map.addLayer(
+        {
+          id: hitLayerId,
+          layout: { "line-cap": "round", "line-join": "round" },
+          paint: {
+            "line-color": "rgba(0,0,0,0)",
+            "line-opacity": 1,
+            "line-width": 12,
+          },
+          source: sourceId,
+          type: "line",
+        },
+        beforeId,
+      );
+    return () => {
+      try {
+        if (map.getLayer(hitLayerId)) map.removeLayer(hitLayerId);
+        if (map.getLayer(layerId)) map.removeLayer(layerId);
+        if (map.getSource(sourceId)) map.removeSource(sourceId);
+      } catch {}
+    };
+  }, [
+    beforeId,
+    geojson,
+    hitLayerId,
+    isLoaded,
+    layerId,
+    layout,
+    map,
+    resolvedPaint,
+    sourceId,
+  ]);
+  useEffect(() => {
+    if (!isLoaded || !map || !interactive) return;
+    let hoveredId: number | string | null = null;
+    const findArc = (featureId: number | string | undefined) =>
+      dataRef.current.find((arc) => String(arc.id) === String(featureId));
+    const move = (event: maplibregl.MapLayerMouseEvent) => {
+      const featureId = event.features?.[0]?.id;
+      if (featureId === undefined) return;
+      if (hoveredId !== null)
+        map.setFeatureState(
+          { id: hoveredId, source: sourceId },
+          { hover: false },
+        );
+      hoveredId = featureId;
+      map.setFeatureState({ id: featureId, source: sourceId }, { hover: true });
+      map.getCanvas().style.cursor = "pointer";
+      const arc = findArc(featureId);
+      if (arc)
+        callbacks.current.onHover?.({
+          arc,
+          latitude: event.lngLat.lat,
+          longitude: event.lngLat.lng,
+          originalEvent: event,
+        });
+    };
+    const leave = () => {
+      if (hoveredId !== null)
+        map.setFeatureState(
+          { id: hoveredId, source: sourceId },
+          { hover: false },
+        );
+      hoveredId = null;
+      map.getCanvas().style.cursor = "";
+      callbacks.current.onHover?.(null);
+    };
+    const click = (event: maplibregl.MapLayerMouseEvent) => {
+      const arc = findArc(event.features?.[0]?.id);
+      if (arc)
+        callbacks.current.onClick?.({
+          arc,
+          latitude: event.lngLat.lat,
+          longitude: event.lngLat.lng,
+          originalEvent: event,
+        });
+    };
+    map.on("mousemove", hitLayerId, move);
+    map.on("mouseleave", hitLayerId, leave);
+    map.on("click", hitLayerId, click);
+    return () => {
+      map.off("mousemove", hitLayerId, move);
+      map.off("mouseleave", hitLayerId, leave);
+      map.off("click", hitLayerId, click);
+      leave();
+    };
+  }, [hitLayerId, interactive, isLoaded, map, sourceId]);
+  return null;
+}
+
+export interface MapClusterLayerProps {
+  clusterColors?: [string, string, string];
+  clusterMaxZoom?: number;
+  clusterRadius?: number;
+  clusterThresholds?: [number, number];
+  data: GeoJSONSourceSpecification["data"];
+  id?: string;
+  onClusterClick?: (
+    clusterId: number,
+    coordinates: [number, number],
+    pointCount: number,
+  ) => void;
+  onPointClick?: (
+    feature: maplibregl.MapGeoJSONFeature,
+    coordinates: [number, number],
+  ) => void;
+  pointColor?: string;
+  pointPaint?: CircleLayerSpecification["paint"];
+}
+export function MapClusterLayer({
+  clusterColors = ["#22c55e", "#eab308", "#ef4444"],
+  clusterMaxZoom = 14,
+  clusterRadius = 50,
+  clusterThresholds = [100, 750],
+  data,
+  id,
+  onClusterClick,
+  onPointClick,
+  pointColor = "#3b82f6",
+  pointPaint,
+}: MapClusterLayerProps): null {
+  const { isLoaded, map } = useMapContext();
+  const baseId = useLayerId("cluster", id);
+  const sourceId = `${baseId}-source`;
+  const clustersId = `${baseId}-clusters`;
+  const countId = `${baseId}-cluster-count`;
+  const pointsId = `${baseId}-unclustered-point`;
+  const callbacks = useRef({ onClusterClick, onPointClick });
+  callbacks.current = { onClusterClick, onPointClick };
+  useEffect(() => {
+    if (!isLoaded || !map) return;
+    if (!map.getSource(sourceId))
+      map.addSource(sourceId, {
+        cluster: true,
+        clusterMaxZoom,
+        clusterRadius,
+        data,
+        type: "geojson",
+      });
+    if (!map.getLayer(clustersId))
+      map.addLayer({
+        filter: ["has", "point_count"],
+        id: clustersId,
+        paint: {
+          "circle-color": [
+            "step",
+            ["get", "point_count"],
+            clusterColors[0],
+            clusterThresholds[0],
+            clusterColors[1],
+            clusterThresholds[1],
+            clusterColors[2],
+          ],
+          "circle-opacity": 0.85,
+          "circle-radius": [
+            "step",
+            ["get", "point_count"],
+            20,
+            clusterThresholds[0],
+            30,
+            clusterThresholds[1],
+            40,
+          ],
+          "circle-stroke-color": "#fff",
+          "circle-stroke-width": 1,
+        },
+        source: sourceId,
+        type: "circle",
+      });
+    if (!map.getLayer(countId))
+      map.addLayer({
+        filter: ["has", "point_count"],
+        id: countId,
+        layout: { "text-field": "{point_count_abbreviated}", "text-size": 12 },
+        paint: { "text-color": "#fff" },
+        source: sourceId,
+        type: "symbol",
+      });
+    if (!map.getLayer(pointsId))
+      map.addLayer({
+        filter: ["!", ["has", "point_count"]],
+        id: pointsId,
+        paint: {
+          "circle-color": pointColor,
+          "circle-radius": 6,
+          "circle-stroke-color": "#fff",
+          "circle-stroke-width": 2,
+          ...pointPaint,
+        },
+        source: sourceId,
+        type: "circle",
+      });
+    return () => {
+      try {
+        if (map.getLayer(countId)) map.removeLayer(countId);
+        if (map.getLayer(pointsId)) map.removeLayer(pointsId);
+        if (map.getLayer(clustersId)) map.removeLayer(clustersId);
+        if (map.getSource(sourceId)) map.removeSource(sourceId);
+      } catch {}
+    };
+  }, [
+    clusterColors,
+    clusterMaxZoom,
+    clusterRadius,
+    clusterThresholds,
+    clustersId,
+    countId,
+    data,
+    isLoaded,
+    map,
+    pointColor,
+    pointPaint,
+    pointsId,
+    sourceId,
+  ]);
+  useEffect(() => {
+    if (!isLoaded || !map) return;
+    const clusterClick = async (event: maplibregl.MapLayerMouseEvent) => {
+      const feature = event.features?.[0];
+      if (!feature || feature.geometry.type !== "Point") return;
+      const clusterId = Number(feature.properties?.["cluster_id"]);
+      const pointCount = Number(feature.properties?.["point_count"]);
+      const coordinates = feature.geometry.coordinates.slice(0, 2) as [
+        number,
+        number,
+      ];
+      if (callbacks.current.onClusterClick)
+        callbacks.current.onClusterClick(clusterId, coordinates, pointCount);
+      else {
+        const source = map.getSource(sourceId) as GeoJSONSource | undefined;
+        const zoom = await source?.getClusterExpansionZoom(clusterId);
+        if (zoom != null) map.easeTo({ center: coordinates, zoom });
+      }
+    };
+    const pointClick = (event: maplibregl.MapLayerMouseEvent) => {
+      const feature = event.features?.[0];
+      if (!feature || feature.geometry.type !== "Point") return;
+      callbacks.current.onPointClick?.(
+        feature,
+        feature.geometry.coordinates.slice(0, 2) as [number, number],
+      );
+    };
+    const enter = () => {
+      map.getCanvas().style.cursor = "pointer";
+    };
+    const leave = () => {
+      map.getCanvas().style.cursor = "";
+    };
+    map.on("click", clustersId, clusterClick);
+    map.on("click", countId, clusterClick);
+    map.on("click", pointsId, pointClick);
+    map.on("mouseenter", clustersId, enter);
+    map.on("mouseenter", countId, enter);
+    map.on("mouseleave", clustersId, leave);
+    map.on("mouseleave", countId, leave);
+    return () => {
+      map.off("click", clustersId, clusterClick);
+      map.off("click", countId, clusterClick);
+      map.off("click", pointsId, pointClick);
+      map.off("mouseenter", clustersId, enter);
+      map.off("mouseenter", countId, enter);
+      map.off("mouseleave", clustersId, leave);
+      map.off("mouseleave", countId, leave);
+    };
+  }, [clustersId, countId, isLoaded, map, pointsId, sourceId]);
+  return null;
+}
+
 type MapComponent = typeof MapRoot & {
+  Arc: typeof MapArc;
+  ClusterLayer: typeof MapClusterLayer;
   CompassControl: typeof MapCompassControl;
   ControlButton: typeof MapControlButton;
   ControlGroup: typeof MapControlGroup;
@@ -947,6 +1446,8 @@ type MapComponent = typeof MapRoot & {
   ZoomControl: typeof MapZoomControl;
 };
 export const Map: MapComponent = Object.assign(MapRoot, {
+  Arc: MapArc,
+  ClusterLayer: MapClusterLayer,
   CompassControl: MapCompassControl,
   ControlButton: MapControlButton,
   ControlGroup: MapControlGroup,
