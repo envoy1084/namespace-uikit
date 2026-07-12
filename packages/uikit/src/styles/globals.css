@@ -42,6 +42,7 @@
 @import "./components/map.css";
 @import "./components/navbar.css";
 @import "./components/segment.css";
+@import "./components/sidebar.css";
 @import "./components/stepper.css";
 @import "./components/rich-text-editor.css";
 @import "./components/number-stepper.css";

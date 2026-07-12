@@ -94,6 +94,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/sidebar.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/stepper.css",
       to: "dist/components",
     },

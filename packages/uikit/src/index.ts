@@ -103,6 +103,7 @@ export * from "./components/range-calendar";
 export * from "./components/scroll-shadow";
 export * from "./components/search-field";
 export * from "./components/segment";
+export * from "./components/sidebar";
 export * from "./components/select";
 export * from "./components/separator";
 export * from "./components/skeleton";
