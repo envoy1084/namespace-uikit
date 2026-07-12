@@ -1,6 +1,6 @@
 /**
  * Color calculation utilities using apcach for APCA-based contrast calculations
- * Aligned with Namespace theme system - starts with defaults from variables.css and applies hue/chroma adjustments
+ * Aligned with HeroUI theme system - starts with defaults from variables.css and applies hue/chroma adjustments
  */
 import { formatRgb, parse } from "culori";
 
