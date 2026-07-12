@@ -2,7 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
+import {
+  Globe02Icon,
+  PaintBoardIcon,
+  SmileIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 
 import { ListBox } from "../list-box";
 import { CellSelect } from "./index";
@@ -161,10 +166,14 @@ export const SettingsGroup: Story = {
 };
 
 const iconSets = [
-  { icon: "solar:emoji-funny-square-outline", id: "gravity", name: "Gravity" },
-  { icon: "solar:palette-outline", id: "heroicons", name: "Heroicons" },
-  { icon: "solar:global-outline", id: "lucide", name: "Lucide" },
+  { icon: SmileIcon, id: "gravity", name: "Gravity" },
+  { icon: PaintBoardIcon, id: "heroicons", name: "Heroicons" },
+  { icon: Globe02Icon, id: "lucide", name: "Lucide" },
 ];
+
+function IconSetGlyph({ icon }: { icon: IconSvgElement }) {
+  return <HugeiconsIcon aria-hidden icon={icon} size={16} strokeWidth={2} />;
+}
 
 export const CustomValue: Story = {
   render: function Demo() {
@@ -184,7 +193,9 @@ export const CustomValue: Story = {
                 return item ? (
                   <span className="flex items-center justify-end gap-1.5 text-end">
                     {item.name}
-                    <Icon className="text-muted" icon={item.icon} />
+                    <span className="text-muted">
+                      <IconSetGlyph icon={item.icon} />
+                    </span>
                   </span>
                 ) : (
                   defaultChildren
@@ -196,7 +207,7 @@ export const CustomValue: Story = {
             <ListBox>
               {iconSets.map((item) => (
                 <ListBox.Item id={item.id} key={item.id} textValue={item.name}>
-                  <Icon icon={item.icon} />
+                  <IconSetGlyph icon={item.icon} />
                   {item.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
