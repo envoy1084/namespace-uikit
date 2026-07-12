@@ -1,1 +1,1 @@
-@layer components { .chat-message-actions { display:flex;align-items:flex-start; } }
+@layer components { .chat-message-actions { display:flex;align-items:flex-start; } .chat-message-actions__action { flex-shrink:0; } }

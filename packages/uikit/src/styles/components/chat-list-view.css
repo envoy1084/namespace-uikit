@@ -3,6 +3,14 @@
     width: 100%;
   }
 
+  .chat-list-view__item {
+    width: 100%;
+  }
+
+  .chat-list-view__item-content {
+    min-width: 0;
+  }
+
   .chat-list-view__icon {
     width: 1rem;
     height: 1rem;

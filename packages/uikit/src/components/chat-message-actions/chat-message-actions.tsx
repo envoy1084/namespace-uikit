@@ -74,6 +74,7 @@ export interface ChatMessageActionsCopyProps extends ComponentPropsWithRef<
 }
 export function ChatMessageActionsCopy({
   children,
+  className,
   copiedIcon,
   isCopied,
   onPress,
@@ -92,6 +93,7 @@ export function ChatMessageActionsCopy({
   return (
     <ChatMessage.Action
       {...props}
+      className={cls("chat-message-actions__action", className)}
       onPress={(event) => {
         onPress?.(event);
         if (!controlled) {
@@ -126,9 +128,16 @@ export function ChatMessageActionsCopy({
 type ActionProps = ComponentPropsWithRef<typeof ChatMessage.Action>;
 const action = (Icon: (props: IconProps) => ReactElement) =>
   // oxlint-disable-next-line unicorn/consistent-function-scoping -- factory captures Icon.
-  function Action({ children, ...props }: ActionProps): ReactElement {
+  function Action({
+    children,
+    className,
+    ...props
+  }: ActionProps): ReactElement {
     return (
-      <ChatMessage.Action {...props}>
+      <ChatMessage.Action
+        className={cls("chat-message-actions__action", className)}
+        {...props}
+      >
         {children && isValidElement(children) ? children : <Icon />}
       </ChatMessage.Action>
     );

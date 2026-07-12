@@ -89,7 +89,7 @@ export function ChatLoaderSkeleton({
       <div
         aria-busy="true"
         aria-label={label}
-        className={cls("chat-loader__skeleton", className)}
+        className={cls("chat-loader chat-loader__skeleton", className)}
         data-slot="chat-loader-skeleton"
         role={label ? "status" : undefined}
         {...props}
@@ -116,7 +116,7 @@ export function ChatLoaderSkeletonAvatar({
   return (
     <div
       className={cls(
-        `chat-loader__skeleton-avatar chat-loader__skeleton-avatar--${size}`,
+        `chat-loader__avatar chat-loader__skeleton-avatar chat-loader__skeleton-avatar--${size}`,
         className,
       )}
       data-slot="chat-loader-skeleton-avatar"
@@ -130,7 +130,10 @@ export function ChatLoaderSkeletonBlock({
 }: ComponentPropsWithRef<"div">): ReactElement {
   return (
     <div
-      className={cls("chat-loader__skeleton-block", className)}
+      className={cls(
+        "chat-loader__content chat-loader__skeleton-block",
+        className,
+      )}
       data-slot="chat-loader-skeleton-block"
       {...props}
     />
@@ -144,7 +147,7 @@ export function ChatLoaderSkeletonLine({
   return (
     <div
       className={cls(
-        `chat-loader__skeleton-line chat-loader__skeleton-line--${size}`,
+        `chat-loader__line chat-loader__skeleton-line chat-loader__skeleton-line--${size}`,
         className,
       )}
       data-slot="chat-loader-skeleton-line"

@@ -67,10 +67,20 @@ export interface ChatListViewItemProps extends ListViewItemProps {
 
 export function ChatListViewItem({
   children,
+  className,
   ...props
 }: ChatListViewItemProps): ReactElement {
   return (
-    <ListView.Item data-slot="chat-list-view-item" {...props}>
+    <ListView.Item
+      className={(state) =>
+        cn(
+          "chat-list-view__item",
+          typeof className === "function" ? className(state) : className,
+        ) ?? "chat-list-view__item"
+      }
+      data-slot="chat-list-view-item"
+      {...props}
+    >
       {children}
     </ListView.Item>
   );
@@ -78,10 +88,15 @@ export function ChatListViewItem({
 
 export function ChatListViewItemContent({
   children,
+  className,
   ...props
 }: ComponentPropsWithRef<"div">): ReactElement {
   return (
-    <ListView.ItemContent data-slot="chat-list-view-item-content" {...props}>
+    <ListView.ItemContent
+      className={cn("chat-list-view__item-content", className)}
+      data-slot="chat-list-view-item-content"
+      {...props}
+    >
       {children}
     </ListView.ItemContent>
   );
