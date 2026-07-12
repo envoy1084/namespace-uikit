@@ -1,7 +1,9 @@
 "use client";
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 import {
+  Children,
   createContext,
+  isValidElement,
   useCallback,
   useContext,
   useEffect,
@@ -22,6 +24,7 @@ import {
   Header,
   Tree,
   TreeItem,
+  TreeItemContent,
   TreeSection,
 } from "react-aria-components";
 
@@ -345,6 +348,26 @@ export function SidebarMenuItem({
     }
     if (state.isMobile && closeMobileOnAction) state.setMobileOpen(false);
   };
+  const row: ReactNode[] = [];
+  const nested: ReactNode[] = [];
+  Children.forEach(children, (child) => {
+    if (isValidElement(child) && child.type === SidebarSubmenu)
+      nested.push(
+        (child as ReactElement<{ children: ReactNode }>).props.children,
+      );
+    else row.push(child);
+  });
+  const renderedRow =
+    tooltip && state.collapsible === "icon" && !state.isOpen ? (
+      <Tooltip>
+        <Tooltip.Trigger>{row}</Tooltip.Trigger>
+        <Tooltip.Content placement={state.side === "left" ? "right" : "left"}>
+          {tooltip}
+        </Tooltip.Content>
+      </Tooltip>
+    ) : (
+      row
+    );
   const item = (
     <TreeItem
       {...props}
@@ -360,19 +383,11 @@ export function SidebarMenuItem({
       {...(href === undefined ? {} : { href })}
       onAction={action}
     >
-      {children}
+      <TreeItemContent>{renderedRow}</TreeItemContent>
+      {nested}
     </TreeItem>
   );
-  return tooltip && state.collapsible === "icon" && !state.isOpen ? (
-    <Tooltip>
-      <Tooltip.Trigger>{item}</Tooltip.Trigger>
-      <Tooltip.Content placement={state.side === "left" ? "right" : "left"}>
-        {tooltip}
-      </Tooltip.Content>
-    </Tooltip>
-  ) : (
-    item
-  );
+  return item;
 }
 export const SidebarMenuItemContent = ({
   children,
