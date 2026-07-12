@@ -3,7 +3,8 @@ import type { Placement } from "react-aria-components";
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
+import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 import { ListBox } from "../list-box";
 import { InlineSelect } from "./index";
@@ -87,7 +88,12 @@ export const CustomIndicator: Story = {
         <InlineSelect.Trigger>
           <InlineSelect.Value />
           <InlineSelect.Indicator>
-            <Icon icon="solar:alt-arrow-right-linear" />
+            <HugeiconsIcon
+              aria-hidden
+              icon={ArrowRight01Icon}
+              size={12}
+              strokeWidth={2}
+            />
           </InlineSelect.Indicator>
         </InlineSelect.Trigger>
         <InlineSelect.Popover className="w-[124px]">
