@@ -28,6 +28,7 @@ export * from "./color-picker";
 export * from "./color-slider";
 export * from "./color-swatch";
 export * from "./command";
+export * from "./context-menu";
 export * from "./color-swatch-picker";
 export * from "./combo-box";
 export * from "./date-field";
