@@ -91,6 +91,7 @@ export * from "./charts/radar-chart";
 export * from "./charts/radial-chart";
 export * from "./number-value";
 export * from "./pressable-feedback";
+export * from "./prompt-input";
 export * from "./trend-chip";
 export * from "./rating";
 export * from "./emoji-reaction-button";

@@ -24,6 +24,7 @@
 @import "./components/radial-chart.css";
 @import "./components/number-value.css";
 @import "./components/pressable-feedback.css";
+@import "./components/prompt-input.css";
 @import "./components/trend-chip.css";
 @import "./components/rating.css";
 @import "./components/emoji-reaction-button.css";
