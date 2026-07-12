@@ -51,8 +51,14 @@ export const Grouped: Story = {
         <ChatSources.Trigger>3 sources</ChatSources.Trigger>
         <ChatSources.Content>
           <ChatSources.List>
-            <ChatSource href="https://heroui.com" title="HeroUI" />
             <ChatSource
+              faviconUrl={favicon("https://heroui.com")}
+              href="https://heroui.com"
+              title="HeroUI"
+            />
+            <ChatSource
+              description="Tailwind Variants powers slot-based styling in Pro components."
+              faviconUrl={favicon("https://tailwind-variants.org")}
               href="https://tailwind-variants.org"
               title="Tailwind Variants"
             />
@@ -67,7 +73,9 @@ export const Composable: Story = {
   render: () => (
     <Assistant>
       <ChatMessage.Content>
-        React documentation explains component composition.
+        React&apos;s documentation has a clear explanation of component
+        composition and state-driven rendering. The source chip below uses
+        custom trigger content with a fetched favicon.
       </ChatMessage.Content>
       <ChatSource enablePreview href="https://react.dev">
         <ChatSource.Trigger>
@@ -76,7 +84,12 @@ export const Composable: Story = {
         </ChatSource.Trigger>
         <ChatSource.Preview>
           <div className="flex max-w-72 flex-col gap-2">
-            <strong>react.dev</strong>
+            <div className="flex items-center gap-2">
+              <ChatSource.Icon faviconUrl={favicon("https://react.dev")} />
+              <span className="text-foreground text-sm font-medium">
+                react.dev
+              </span>
+            </div>
             <p className="text-muted text-sm">
               Official React documentation for learning modern React patterns.
             </p>
@@ -88,35 +101,46 @@ export const Composable: Story = {
 };
 export const StackedFavicons: Story = {
   name: "Stacked Favicons",
-  render: () => (
-    <Assistant>
-      <ChatMessage.Content>
-        Answer synthesized from multiple sources.
-      </ChatMessage.Content>
-      <ChatSources defaultExpanded={false}>
-        <ChatSources.Trigger>
-          <span className="inline-flex -space-x-1.5">
-            {[
-              "https://reuters.com",
-              "https://nypost.com",
-              "https://foxsports.com",
-            ].map((href) => (
-              <img
-                alt=""
-                className="border-background size-5 rounded-full border"
-                key={href}
-                src={favicon(href)}
-              />
-            ))}
-          </span>
-          <span>Sources</span>
-        </ChatSources.Trigger>
-        <ChatSources.Content>
-          <ChatSources.List>
-            <ChatSource href="https://reuters.com" title="Reuters" />
-          </ChatSources.List>
-        </ChatSources.Content>
-      </ChatSources>
-    </Assistant>
-  ),
+  render: () => {
+    const sources = [
+      { href: "https://www.reuters.com", label: "Reuters" },
+      { href: "https://nypost.com", label: "New York Post" },
+      { href: "https://www.foxsports.com", label: "Fox Sports" },
+    ];
+
+    return (
+      <Assistant>
+        <ChatMessage.Content>
+          Answer synthesized from multiple sources.
+        </ChatMessage.Content>
+        <ChatSources defaultExpanded={false}>
+          <ChatSources.Trigger>
+            <span className="inline-flex -space-x-1.5">
+              {sources.map((source) => (
+                <img
+                  alt=""
+                  className="border-background size-5 rounded-full border object-cover"
+                  key={source.href}
+                  src={favicon(source.href)}
+                />
+              ))}
+            </span>
+            <span>Sources</span>
+          </ChatSources.Trigger>
+          <ChatSources.Content>
+            <ChatSources.List>
+              {sources.map((source) => (
+                <ChatSource
+                  faviconUrl={favicon(source.href)}
+                  href={source.href}
+                  key={source.href}
+                  title={source.label}
+                />
+              ))}
+            </ChatSources.List>
+          </ChatSources.Content>
+        </ChatSources>
+      </Assistant>
+    );
+  },
 };

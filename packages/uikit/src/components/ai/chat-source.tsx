@@ -9,6 +9,8 @@ import {
 } from "react";
 
 import { cn, Disclosure } from "@heroui/react";
+import { File01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 import { HoverCard } from "../overlays/hover-card";
 export type ChatSourceType = "document" | "url";
@@ -214,7 +216,7 @@ export function ChatSourceDocumentIcon({
       className={cls("chat-source__document-icon", className)}
       data-slot="chat-source-document-icon"
     >
-      ▤
+      <HugeiconsIcon aria-hidden icon={File01Icon} strokeWidth={2} />
     </span>
   );
 }
