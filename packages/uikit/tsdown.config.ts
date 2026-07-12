@@ -170,6 +170,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/prompt-suggestion.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/trend-chip.css",
       to: "dist/components",
     },

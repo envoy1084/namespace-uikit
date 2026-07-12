@@ -92,6 +92,7 @@ export * from "./charts/radial-chart";
 export * from "./number-value";
 export * from "./pressable-feedback";
 export * from "./prompt-input";
+export * from "./prompt-suggestion";
 export * from "./trend-chip";
 export * from "./rating";
 export * from "./emoji-reaction-button";

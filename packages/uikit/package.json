@@ -201,6 +201,14 @@
       "types": "./dist/components/prompt-input.d.mts",
       "import": "./dist/components/prompt-input.mjs"
     },
+    "./prompt-suggestion": {
+      "@thenamespace/source": {
+        "types": "./src/components/prompt-suggestion/index.ts",
+        "import": "./src/components/prompt-suggestion/index.ts"
+      },
+      "types": "./dist/components/prompt-suggestion.d.mts",
+      "import": "./dist/components/prompt-suggestion.mjs"
+    },
     "./rating": {
       "@thenamespace/source": {
         "types": "./src/components/rating/index.ts",
