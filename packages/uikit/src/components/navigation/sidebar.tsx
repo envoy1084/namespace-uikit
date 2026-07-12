@@ -2,7 +2,9 @@
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 import {
   Children,
+  cloneElement,
   createContext,
+  Fragment,
   isValidElement,
   useCallback,
   useContext,
@@ -18,6 +20,8 @@ import {
   Separator as HeroSeparator,
   Tooltip,
 } from "@heroui/react";
+import { SidebarLeftIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Button,
   Header,
@@ -27,6 +31,7 @@ import {
   TreeSection,
 } from "react-aria-components";
 
+import { IconChevronRight } from "../../heroui-icons";
 import { Sheet } from "../overlays/sheet";
 
 export type SidebarSide = "left" | "right";
@@ -188,7 +193,7 @@ export function SidebarRoot({
       {...props}
       className={cn(
         "sidebar",
-        `sidebar--${variant}`,
+        variant === "sidebar" ? "sidebar--default" : `sidebar--${variant}`,
         `sidebar--${side}`,
         className,
       )}
@@ -284,6 +289,7 @@ export function SidebarMenu<T extends object = object>({
             : "hover"
       }
       data-reduce-motion={reduceMotion}
+      data-sidebar="menu"
       data-slot="sidebar-menu"
     />
   );
@@ -336,6 +342,7 @@ export function SidebarMenuItem({
   isCurrent = false,
   onAction,
   tooltip,
+  tooltipProps,
   ...props
 }: SidebarMenuItemProps): ReactElement {
   const state = useSidebar();
@@ -351,24 +358,69 @@ export function SidebarMenuItem({
   };
   const row: ReactNode[] = [];
   const nested: ReactNode[] = [];
+  let contentProps: ComponentPropsWithRef<"div"> = {};
   Children.forEach(children, (child) => {
     if (isValidElement(child) && child.type === SidebarSubmenu)
       nested.push(
         (child as ReactElement<{ children: ReactNode }>).props.children,
       );
-    else row.push(child);
+    else if (isValidElement(child) && child.type === SidebarMenuItemContent) {
+      const { children: contentChildren, ...nextContentProps } =
+        child.props as ComponentPropsWithRef<"div">;
+      contentProps = nextContentProps;
+      Children.forEach(contentChildren, (contentChild) =>
+        row.push(contentChild),
+      );
+    } else row.push(child);
   });
-  const renderedRow =
-    tooltip && state.collapsible === "icon" && !state.isOpen ? (
-      <Tooltip>
-        <Tooltip.Trigger>{row}</Tooltip.Trigger>
-        <Tooltip.Content placement={state.side === "left" ? "right" : "left"}>
-          {tooltip}
+  const tooltipContent = tooltip ?? props.textValue;
+  const renderedRow = row.map((child, index) => {
+    if (isValidElement(child) && child.type === SidebarMenuTrigger) {
+      const {
+        children: triggerChildren,
+        className: triggerClassName,
+        ...triggerProps
+      } = child.props as SidebarMenuTriggerProps;
+
+      return (
+        <Button
+          {...triggerProps}
+          className={
+            cn("sidebar__menu-trigger", triggerClassName) ??
+            "sidebar__menu-trigger"
+          }
+          data-slot="sidebar-menu-trigger"
+          key={index}
+          slot="chevron"
+        >
+          {triggerChildren}
+        </Button>
+      );
+    }
+
+    if (
+      index !== 0 ||
+      !tooltipContent ||
+      state.collapsible !== "icon" ||
+      state.isOpen ||
+      !isValidElement(child) ||
+      child.type !== SidebarMenuIcon
+    ) {
+      return <Fragment key={index}>{child}</Fragment>;
+    }
+
+    return (
+      <Tooltip key={index}>
+        <Tooltip.Trigger>{child}</Tooltip.Trigger>
+        <Tooltip.Content
+          {...tooltipProps}
+          placement={state.side === "left" ? "right" : "left"}
+        >
+          {tooltipContent}
         </Tooltip.Content>
       </Tooltip>
-    ) : (
-      row
     );
+  });
   const item = (
     <TreeItem
       {...props}
@@ -380,29 +432,28 @@ export function SidebarMenuItem({
         ) ?? "sidebar__menu-item"
       }
       data-current={isCurrent || undefined}
+      data-reduce-motion={state.reduceMotion || undefined}
       data-slot="sidebar-menu-item"
       {...(href === undefined ? {} : { href })}
       onAction={action}
     >
-      <TreeItemContent>{renderedRow}</TreeItemContent>
-      {nested}
+      <TreeItemContent>
+        <div
+          {...contentProps}
+          className={cn("sidebar__menu-item-content", contentProps.className)}
+          data-slot="sidebar-menu-item-content"
+        >
+          {renderedRow}
+        </div>
+      </TreeItemContent>
+      {state.collapsible === "icon" && !state.isOpen ? null : nested}
     </TreeItem>
   );
   return item;
 }
 export const SidebarMenuItemContent = ({
   children,
-  className,
-  ...props
-}: ComponentPropsWithRef<"div">): ReactElement => (
-  <div
-    {...props}
-    className={cn("sidebar__menu-item-content", className)}
-    data-slot="sidebar-menu-item-content"
-  >
-    {children}
-  </div>
-);
+}: ComponentPropsWithRef<"div">): ReactElement => <>{children}</>;
 export const SidebarMenuIcon = ({
   className,
   ...props
@@ -414,15 +465,28 @@ export const SidebarMenuIcon = ({
   />
 );
 export const SidebarMenuLabel = ({
+  children,
   className,
   ...props
 }: ComponentPropsWithRef<"span">): ReactElement => (
   <span
     {...props}
-    className={cn("sidebar__menu-label sidebar__menu-label-text", className)}
+    className={cn("sidebar__menu-label", className)}
     data-sidebar="label"
     data-slot="sidebar-menu-label"
-  />
+  >
+    <span
+      className="sidebar__menu-label-text"
+      data-slot="sidebar-menu-label-text"
+    >
+      {Children.toArray(children).filter(
+        (child) => !isValidElement(child) || child.type !== SidebarMenuTrigger,
+      )}
+    </span>
+    {Children.toArray(children).filter(
+      (child) => isValidElement(child) && child.type === SidebarMenuTrigger,
+    )}
+  </span>
 );
 export const SidebarMenuChip = ({
   className,
@@ -458,36 +522,29 @@ export function SidebarMenuAction({
 }
 export type SidebarMenuTriggerProps = ComponentPropsWithRef<typeof Button>;
 export function SidebarMenuTrigger({
-  className,
-  ...props
+  children,
 }: SidebarMenuTriggerProps): ReactElement {
-  return (
-    <Button
-      {...props}
-      className={
-        cn(
-          "sidebar__menu-trigger",
-          typeof className === "string" ? className : undefined,
-        ) ?? "sidebar__menu-trigger"
-      }
-      data-slot="sidebar-menu-trigger"
-      slot="chevron"
-    />
-  );
+  return <>{children}</>;
 }
 export function SidebarMenuIndicator({
   children,
   className,
   ...props
-}: ComponentPropsWithRef<"span">): ReactElement {
-  return (
-    <span
-      {...props}
-      className={cn("sidebar__menu-indicator", className)}
-      data-slot="sidebar-menu-indicator"
-    >
-      {children ?? "›"}
-    </span>
+}: ComponentPropsWithRef<"svg">): ReactElement {
+  const indicatorProps = {
+    ...props,
+    className:
+      cn("sidebar__menu-indicator", className) ?? "sidebar__menu-indicator",
+    "data-slot": "sidebar-menu-indicator",
+  };
+
+  return isValidElement(children) ? (
+    cloneElement(
+      children as ReactElement<ComponentPropsWithRef<"svg">>,
+      indicatorProps,
+    )
+  ) : (
+    <IconChevronRight aria-hidden="true" {...indicatorProps} />
   );
 }
 export const SidebarSubmenu = ({
@@ -528,7 +585,9 @@ export function SidebarTrigger({
       variant="ghost"
       onPress={toggleSidebar}
     >
-      {children ?? "☰"}
+      {children ?? (
+        <HugeiconsIcon aria-hidden="true" icon={SidebarLeftIcon} size={16} />
+      )}
     </HeroButton>
   );
 }

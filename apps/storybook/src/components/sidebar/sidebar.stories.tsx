@@ -1,7 +1,26 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Icon } from "@iconify/react";
-import { Avatar, Button, Dropdown } from "@thenamespace/uikit";
+import {
+  Avatar,
+  Breadcrumbs,
+  Button,
+  Chip,
+  Dropdown,
+  Label,
+} from "@thenamespace/uikit";
+import {
+  Analytics01Icon,
+  Copy01Icon,
+  Delete02Icon,
+  FolderOpenIcon,
+  HelpCircleIcon,
+  Home01Icon,
+  HugeiconsIcon,
+  Logout01Icon,
+  MoreVerticalIcon,
+  Settings01Icon,
+  Task01Icon,
+} from "@thenamespace/uikit/icons";
 
 import { Sidebar } from "./index";
 
@@ -13,42 +32,104 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 const nav = [
-  ["Home", "lucide:house"],
-  ["Inbox", "lucide:inbox"],
-  ["Calendar", "lucide:calendar"],
-  ["Search", "lucide:search"],
-  ["Settings", "lucide:settings"],
+  { icon: Home01Icon, label: "Dashboard" },
+  {
+    icon: Analytics01Icon,
+    items: ["Overview", "Reports", "Conversions"],
+    label: "Analytics",
+  },
+  { badge: "New", icon: Task01Icon, label: "Tracker" },
+  {
+    icon: Settings01Icon,
+    items: ["General", "Team", "Notifications"],
+    label: "Settings",
+  },
 ] as const;
-function Menu({ nested = false }: { nested?: boolean }) {
+
+function MoreActions({ label }: { label: string }) {
   return (
-    <Sidebar.Menu aria-label="Main navigation">
-      {nav.map(([label, icon], index) => (
+    <Dropdown>
+      <Dropdown.Trigger
+        aria-label={`More actions for ${label}`}
+        className="sidebar__menu-action"
+        data-slot="sidebar-menu-action"
+      >
+        <HugeiconsIcon icon={MoreVerticalIcon} size={16} />
+      </Dropdown.Trigger>
+      <Dropdown.Popover className="w-44" offset={6} placement="right top">
+        <Dropdown.Menu aria-label={`${label} actions`}>
+          <Dropdown.Item id="open" textValue="Open">
+            <HugeiconsIcon
+              className="text-muted size-4 shrink-0"
+              icon={FolderOpenIcon}
+            />
+            <Label>Open</Label>
+          </Dropdown.Item>
+          <Dropdown.Item id="duplicate" textValue="Duplicate">
+            <HugeiconsIcon
+              className="text-muted size-4 shrink-0"
+              icon={Copy01Icon}
+            />
+            <Label>Duplicate</Label>
+          </Dropdown.Item>
+          <Dropdown.Item id="delete" textValue="Delete" variant="danger">
+            <HugeiconsIcon
+              className="text-danger size-4 shrink-0"
+              icon={Delete02Icon}
+            />
+            <Label>Delete</Label>
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown.Popover>
+    </Dropdown>
+  );
+}
+
+function Menu({ nested = true }: { nested?: boolean }) {
+  return (
+    <Sidebar.Menu
+      aria-label="Navigation"
+      defaultExpandedKeys={nested ? ["Analytics"] : []}
+    >
+      {nav.map((item) => (
         <Sidebar.MenuItem
-          id={label}
-          isCurrent={index === 0}
-          key={label}
-          textValue={label}
-          tooltip={label}
+          href={item.items ? undefined : "#"}
+          id={item.label}
+          isCurrent={item.label === "Dashboard"}
+          key={item.label}
+          textValue={item.label}
         >
-          <Sidebar.MenuItemContent>
-            <Sidebar.MenuIcon>
-              <Icon icon={icon} />
-            </Sidebar.MenuIcon>
-            <Sidebar.MenuLabel>{label}</Sidebar.MenuLabel>
-            {label === "Inbox" ? <Sidebar.MenuChip>12</Sidebar.MenuChip> : null}
-            {nested && label === "Home" ? (
+          <Sidebar.MenuIcon>
+            <HugeiconsIcon icon={item.icon} size={16} />
+          </Sidebar.MenuIcon>
+          <Sidebar.MenuLabel>
+            {item.label}
+            {nested && item.items ? (
               <Sidebar.MenuTrigger>
                 <Sidebar.MenuIndicator />
               </Sidebar.MenuTrigger>
             ) : null}
-          </Sidebar.MenuItemContent>
-          {nested && label === "Home" ? (
+          </Sidebar.MenuLabel>
+          {"badge" in item ? (
+            <Sidebar.MenuChip>
+              <Chip color="success" size="sm" variant="soft">
+                {item.badge}
+              </Chip>
+            </Sidebar.MenuChip>
+          ) : null}
+          {nested && item.items ? (
             <Sidebar.Submenu>
-              {["Overview", "Analytics", "Reports"].map((x) => (
-                <Sidebar.MenuItem id={x} key={x} textValue={x}>
-                  <Sidebar.MenuItemContent>
-                    <Sidebar.MenuLabel>{x}</Sidebar.MenuLabel>
-                  </Sidebar.MenuItemContent>
+              {item.items.map((child) => (
+                <Sidebar.MenuItem
+                  href="#"
+                  id={`${item.label}-${child}`}
+                  key={child}
+                  textValue={child}
+                >
+                  <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
+                  <Sidebar.MenuActions className="ml-auto">
+                    <MoreActions label={child} />
+                  </Sidebar.MenuActions>
                 </Sidebar.MenuItem>
               ))}
             </Sidebar.Submenu>
@@ -107,64 +188,69 @@ function Demo({
     >
       <Sidebar>
         <Sidebar.Header>
-          <div className="flex h-9 items-center gap-2 px-2">
-            <span className="bg-accent text-accent-foreground flex size-7 items-center justify-center rounded-lg">
-              N
+          <div className="flex items-center gap-3 px-1 py-2">
+            <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
+              <span className="text-sm font-bold text-white">H</span>
             </span>
-            <strong className="truncate">{title}</strong>
-            <Sidebar.Trigger className="ms-auto" />
+            <span
+              className="text-foreground text-sm font-semibold"
+              data-sidebar="label"
+            >
+              {title}
+            </span>
           </div>
         </Sidebar.Header>
         <Sidebar.Content>
-          <Sidebar.Group>
-            <Sidebar.GroupLabel>Navigation</Sidebar.GroupLabel>
-            {Menu({ nested })}
-          </Sidebar.Group>
+          <Sidebar.Group>{Menu({ nested })}</Sidebar.Group>
         </Sidebar.Content>
         <Sidebar.Footer>
           {user ? (
             <UserMenu />
           ) : (
-            <>
-              <Sidebar.Separator />
-              <Sidebar.Menu>
-                <Sidebar.MenuItem id="help" textValue="Help" tooltip="Help">
-                  <Sidebar.MenuItemContent>
-                    <Sidebar.MenuIcon>
-                      <Icon icon="lucide:circle-help" />
-                    </Sidebar.MenuIcon>
-                    <Sidebar.MenuLabel>Help & support</Sidebar.MenuLabel>
-                  </Sidebar.MenuItemContent>
-                </Sidebar.MenuItem>
-              </Sidebar.Menu>
-            </>
+            <Sidebar.Menu aria-label="Footer actions">
+              <Sidebar.MenuItem
+                href="#"
+                id="help"
+                textValue="Help & Information"
+              >
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={HelpCircleIcon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel>Help & Information</Sidebar.MenuLabel>
+              </Sidebar.MenuItem>
+              <Sidebar.MenuItem href="#" id="logout" textValue="Log out">
+                <Sidebar.MenuIcon>
+                  <HugeiconsIcon icon={Logout01Icon} size={16} />
+                </Sidebar.MenuIcon>
+                <Sidebar.MenuLabel>Log out</Sidebar.MenuLabel>
+              </Sidebar.MenuItem>
+            </Sidebar.Menu>
           )}
         </Sidebar.Footer>
         <Sidebar.Rail />
       </Sidebar>
       <Sidebar.Main>
-        <div className="border-border flex h-14 items-center border-b px-4">
+        <div className="flex items-center gap-3 p-4">
           <Sidebar.Trigger />
-          <span className="ms-3 font-medium">{title}</span>
+          <Breadcrumbs className="min-w-0">
+            <Breadcrumbs.Item className="min-w-0 font-semibold">
+              <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                <HugeiconsIcon icon={Home01Icon} size={16} />
+                <span className="truncate">Dashboard</span>
+              </span>
+            </Breadcrumbs.Item>
+          </Breadcrumbs>
         </div>
-        <div className="grid gap-4 p-6 md:grid-cols-3">
-          {["Overview", "Activity", "Performance"].map((x) => (
-            <section
-              className="border-border bg-surface min-h-36 rounded-xl border p-4"
-              key={x}
-            >
-              <h2 className="font-semibold">{x}</h2>
-              <p className="text-muted mt-2 text-sm">
-                Sidebar composition preview content.
-              </p>
-            </section>
-          ))}
+        <div className="p-6">
+          <p className="text-muted">
+            Main content area. Resize to mobile to see the Sheet sidebar.
+          </p>
         </div>
       </Sidebar.Main>
     </Sidebar.Provider>
   );
 }
-export const Default: Story = { render: () => <Demo /> };
+export const Default: Story = { render: () => <Demo nested title="HeroUI" /> };
 export const RightSide: Story = { render: () => <Demo side="right" /> };
 export const RightSideOffcanvas: Story = {
   render: () => <Demo collapsible="offcanvas" side="right" />,
@@ -176,7 +262,7 @@ export const CollapsibleGroups: Story = {
   render: () => <Demo nested title="Documentation" />,
 };
 export const Collapsible: Story = {
-  render: () => <Demo defaultOpen={false} />,
+  render: () => <Demo nested title="HeroUI" />,
 };
 export const ReducedMotion: Story = {
   render: () => (
