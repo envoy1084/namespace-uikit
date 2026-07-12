@@ -62,6 +62,10 @@ export default defineConfig({
       to: "dist/components",
     },
     {
+      from: "src/styles/components/file-tree.css",
+      to: "dist/components",
+    },
+    {
       from: "src/styles/components/area-chart.css",
       to: "dist/components",
     },

@@ -43,6 +43,7 @@ export * from "./empty-state";
 export * from "./error-message";
 export * from "./field-error";
 export * from "./fieldset";
+export * from "./file-tree";
 export * from "./form";
 export * from "./floating-toc";
 export * from "./header";

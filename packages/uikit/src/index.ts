@@ -43,6 +43,7 @@ export * from "./components/empty-state";
 export * from "./components/error-message";
 export * from "./components/field-error";
 export * from "./components/fieldset";
+export * from "./components/file-tree";
 export * from "./components/form";
 export * from "./components/floating-toc";
 export * from "./components/header";

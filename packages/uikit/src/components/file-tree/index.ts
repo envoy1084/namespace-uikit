@@ -1,0 +1,25 @@
+export {
+  FileTree,
+  FileTreeHeader,
+  FileTreeIndicator,
+  FileTreeItem,
+  FileTreeRoot,
+  FileTreeSection,
+  useFileTree,
+  useFileTreeDrag,
+} from "./file-tree";
+export type {
+  FileTreeHeaderProps,
+  FileTreeIndicatorProps,
+  FileTreeItemProps,
+  FileTreeItemRenderProps,
+  FileTreeRootProps,
+  FileTreeSectionProps,
+  FileTreeSize,
+  TreeDataManager,
+  TreeNode,
+  UseFileTreeDragOptions,
+  UseFileTreeDragResult,
+  UseFileTreeOptions,
+  UseFileTreeResult,
+} from "./file-tree";
