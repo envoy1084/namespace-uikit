@@ -24,6 +24,8 @@ import { createPortal } from "react-dom";
 import { Button, cn } from "@heroui/react";
 import useEmblaCarousel from "embla-carousel-react";
 
+import { IconChevronLeft, IconChevronRight } from "../../heroui-icons";
+
 type CarouselType = "in-place" | "miniatures" | "modal";
 interface ContextValue {
   api: EmblaCarouselType | undefined;
@@ -162,17 +164,6 @@ function CarouselItem({
     />
   );
 }
-const Chevron = ({ direction }: { direction: "left" | "right" }) => (
-  <svg aria-hidden fill="none" height="18" viewBox="0 0 24 24" width="18">
-    <path
-      d={direction === "left" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6"}
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-    />
-  </svg>
-);
 interface CarouselControlProps extends Omit<
   ComponentPropsWithRef<typeof Button>,
   "children" | "className" | "onPress"
@@ -200,7 +191,7 @@ function CarouselPrevious({
       size="sm"
       variant="tertiary"
     >
-      {children ?? <Chevron direction="left" />}
+      {children ?? <IconChevronLeft />}
     </Button>
   );
   return type === "miniatures" || !viewportWrapper
@@ -227,7 +218,7 @@ function CarouselNext({
       size="sm"
       variant="tertiary"
     >
-      {children ?? <Chevron direction="right" />}
+      {children ?? <IconChevronRight />}
     </Button>
   );
   return type === "miniatures" || !viewportWrapper
@@ -253,19 +244,16 @@ function CarouselDots({
       role="tablist"
     >
       {Array.from({ length: scrollSnapCount }, (_, index) => (
-        <Button
+        <button
           aria-label={`Go to slide ${index + 1}`}
-          aria-selected={selectedIndex === index}
           className="carousel__dot"
           data-selected={selectedIndex === index || undefined}
-          isIconOnly
           key={index}
-          onPress={() => scrollTo(index)}
-          size="sm"
-          variant="tertiary"
+          type="button"
+          onClick={() => scrollTo(index)}
         >
           {renderDot?.({ index, isSelected: selectedIndex === index })}
-        </Button>
+        </button>
       ))}
     </div>
   );
