@@ -10,7 +10,7 @@ import type {
 import type { ReactElement, ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { Button, Checkbox, cn, Table } from "@heroui/react";
+import { Button, Checkbox, cn, IconChevronUp, Table } from "@heroui/react";
 import {
   TableLayout,
   useDragAndDrop,
@@ -485,12 +485,12 @@ function DataGridInner<T extends object>({
                         ? column.header({ sortDirection })
                         : column.header}
                       {sortDirection ? (
-                        <span
+                        <IconChevronUp
+                          aria-hidden="true"
                           className="data-grid__sort-icon"
                           data-direction={sortDirection}
-                        >
-                          ↑
-                        </span>
+                          data-slot="data-grid-sort-icon"
+                        />
                       ) : null}
                     </span>
                   ) : typeof column.header === "function" ? (
