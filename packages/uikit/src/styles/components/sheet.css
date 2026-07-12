@@ -32,6 +32,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    max-height: 96dvh;
   }
 
   .sheet__content--top {
@@ -39,6 +40,7 @@
     right: 0;
     left: 0;
     width: 100%;
+    max-height: 96dvh;
   }
 
   .sheet__content--left {
@@ -73,7 +75,6 @@
     position: relative;
     display: flex;
     width: 100%;
-    height: 100%;
     min-height: 0;
     flex-direction: column;
     overflow: hidden;
@@ -87,21 +88,25 @@
   .sheet__dialog--bottom {
     border-radius: 1rem 1rem 0 0;
     border-bottom: 0;
+    max-height: 96dvh;
   }
 
   .sheet__dialog--top {
     border-radius: 0 0 1rem 1rem;
     border-top: 0;
+    max-height: 96dvh;
   }
 
   .sheet__dialog--left {
     border-radius: 0 1rem 1rem 0;
     border-left: 0;
+    height: 100%;
   }
 
   .sheet__dialog--right {
     border-radius: 1rem 0 0 1rem;
     border-right: 0;
+    height: 100%;
   }
 
   [data-sheet-detached] .sheet__dialog {
