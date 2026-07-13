@@ -480,7 +480,7 @@ export const PermissionLevels: Story = {
 const wallets = [
   {
     address: "0x34E6...6255",
-    avatar: "🦭",
+    icon: "gravity-ui:wallet",
     bg: "bg-neutral-800",
     eth: "0.0 ETH",
     name: "Funds",
@@ -488,7 +488,7 @@ const wallets = [
   },
   {
     address: "0xD9EA...f40e",
-    avatar: "🔮",
+    icon: "gravity-ui:globe",
     bg: "bg-blue-500",
     eth: "0.0 ETH",
     name: "0xD9EA...f40e",
@@ -496,7 +496,7 @@ const wallets = [
   },
   {
     address: "0x9DC5...621a",
-    avatar: "🏖️",
+    icon: "gravity-ui:planet-earth",
     bg: "bg-green-500",
     eth: "0.021 ETH",
     name: "SLMobbin's",
@@ -504,7 +504,7 @@ const wallets = [
   },
   {
     address: "0xa98b...4daa",
-    avatar: "😜",
+    icon: "gravity-ui:person",
     bg: "bg-orange-400",
     eth: "0.0 ETH",
     name: "Sam Lee's Wallet",
@@ -521,7 +521,7 @@ export const WalletList: Story = {
             <ItemCard.Icon
               className={`size-10 rounded-full ${wallet.bg} text-lg`}
             >
-              <span>{wallet.avatar}</span>
+              <Icon icon={wallet.icon} width={20} />
             </ItemCard.Icon>
             <ItemCard.Content>
               <ItemCard.Title>{wallet.name}</ItemCard.Title>
