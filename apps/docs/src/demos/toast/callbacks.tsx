@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Button, toast } from "@thenamespace/uikit";
+import { Button, Toast, toast } from "@thenamespace/uikit";
 
 export function Callbacks() {
   const [closedHistory, setClosedHistory] = React.useState<
@@ -17,6 +17,7 @@ export function Callbacks() {
 
   return (
     <div className="flex h-full max-w-2xl flex-col items-center justify-center gap-6">
+      <Toast.Provider placement="bottom" />
       {/* Toast Buttons */}
       <div className="flex w-full flex-wrap items-center justify-center gap-4">
         <Button

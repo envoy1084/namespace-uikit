@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, toast } from "@thenamespace/uikit";
+import { Button, Toast, toast } from "@thenamespace/uikit";
 
 const uploadFile = (): Promise<{ filename: string; size: number }> => {
   return new Promise<{ filename: string; size: number }>((resolve) => {
@@ -41,6 +41,7 @@ const fetchUser = (): Promise<{ name: string; email: string }> => {
 export function PromiseDemo() {
   return (
     <div className="flex h-full max-w-2xl flex-col items-center justify-center gap-8">
+      <Toast.Provider placement="bottom" />
       {/* Promise API Section */}
       <div className="w-full space-y-3">
         <div className="text-center">

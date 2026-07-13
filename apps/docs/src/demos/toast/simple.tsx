@@ -1,10 +1,11 @@
 "use client";
 
-import { Button, toast } from "@thenamespace/uikit";
+import { Button, Toast, toast } from "@thenamespace/uikit";
 
 export function Simple() {
   return (
     <div className="flex h-full max-w-xl flex-col items-center justify-center">
+      <Toast.Provider placement="bottom" />
       <div className="flex w-full flex-wrap items-center justify-center gap-4">
         <Button
           size="sm"
