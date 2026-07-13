@@ -1,6 +1,7 @@
 import { defineConfig } from "oxlint";
 
 export default defineConfig({
+  ignorePatterns: ["**/.next/**", "**/.source/**", "**/next-env.d.ts"],
   categories: {
     correctness: "error",
     perf: "error",

@@ -1,6 +1,9 @@
 # compiled output
 dist
 storybook-static
+.next
+.source
+*.tsbuildinfo
 tmp
 out-tsc
 

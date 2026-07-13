@@ -1,0 +1,41 @@
+{
+  "name": "@thenamespace/docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "format": "oxfmt . --write --no-error-on-unmatched-pattern",
+    "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
+    "lint": "oxlint src next.config.ts source.config.ts --no-error-on-unmatched-pattern",
+    "lint:fix": "oxlint src next.config.ts source.config.ts --fix --no-error-on-unmatched-pattern",
+    "postinstall": "fumadocs-mdx",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "typegen": "next typegen"
+  },
+  "dependencies": {
+    "@thenamespace/uikit": "workspace:*",
+    "fumadocs-core": "16.9.0",
+    "fumadocs-mdx": "14.2.2",
+    "fumadocs-ui": "16.9.0",
+    "lucide-react": "0.562.0",
+    "next": "16.2.6",
+    "next-themes": "0.4.6",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.2",
+    "@types/mdx": "2.0.14",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "oxfmt": "catalog:",
+    "oxlint": "catalog:",
+    "postcss": "8.5.6",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
+  }
+}

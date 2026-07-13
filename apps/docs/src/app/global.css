@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/black.css";
+@import "fumadocs-ui/css/preset.css";
+@import "@thenamespace/uikit/styles";
+
+:root {
+  --fd-layout-width: 1440px;
+  --color-fd-background: var(--background);
+  --color-fd-foreground: var(--foreground);
+  --color-fd-primary: var(--foreground);
+  --color-fd-border: var(--border);
+  --color-fd-muted-foreground: var(--muted);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
