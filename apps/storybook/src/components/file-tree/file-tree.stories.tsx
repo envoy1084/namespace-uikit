@@ -361,7 +361,31 @@ function WithCheckboxesDemo() {
     new Set(["root"]),
   );
   const nodes: IncludedNode[] = [
-    { id: "apps-check", name: "apps", included: 812, children: project },
+    { id: "cursor-check", name: ".cursor", included: 5 },
+    { id: "github-check", name: ".github" },
+    { id: "husky-check", name: ".husky" },
+    { id: "vscode-check", name: ".vscode" },
+    {
+      id: "apps-check",
+      name: "apps",
+      included: 812,
+      children: [
+        { id: "api-check", name: "api", included: 104 },
+        { id: "campaigns-check", name: "campaigns", included: 23 },
+        {
+          id: "docs-check",
+          name: "docs",
+          included: 248,
+          children: [
+            { id: "content-check", name: "content", included: 99 },
+            { id: "public-check", name: "public" },
+            { id: "scripts-check", name: "scripts" },
+            { id: "skills-check", name: "skills" },
+            { id: "src-check", name: "src", included: 145 },
+          ],
+        },
+      ],
+    },
     { id: "packages-check", name: "packages", included: 416 },
   ];
   const renderNode = (node: IncludedNode): React.JSX.Element => (
@@ -386,7 +410,7 @@ function WithCheckboxesDemo() {
     <FileTree
       aria-label="Repository file tree"
       className="w-[460px]"
-      defaultExpandedKeys={["root", "apps-check"]}
+      defaultExpandedKeys={["root", "apps-check", "docs-check"]}
       selectedKeys={selectedKeys}
       selectionBehavior="toggle"
       selectionMode="multiple"
