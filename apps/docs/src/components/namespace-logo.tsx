@@ -1,9 +1,6 @@
 export function NamespaceLogo() {
   return (
-    <span
-      aria-label="Namespace UIKit"
-      className="inline-flex items-center gap-2.5"
-    >
+    <span aria-label="Namespace" className="inline-flex items-center gap-2.5">
       <span
         aria-hidden="true"
         className="grid size-7 place-items-center rounded-lg bg-black p-1.5"
@@ -19,9 +16,7 @@ export function NamespaceLogo() {
           />
         </svg>
       </span>
-      <span className="text-sm font-semibold tracking-tight">
-        Namespace UIKit
-      </span>
+      <span className="text-base font-semibold tracking-tight">Namespace</span>
     </span>
   );
 }

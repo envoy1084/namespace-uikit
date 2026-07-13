@@ -1,0 +1,54 @@
+---
+title: LLMs.txt
+description: Help ChatGPT, Claude, Cursor, Windsurf, and other AI assistants understand Namespace UIKit.
+icon: bot
+---
+
+Namespace UIKit publishes [LLMs.txt](https://llmstxt.org/) files so coding assistants can use the documentation as an explicit source of truth instead of relying on memory.
+
+## Available Files
+
+- [/llms.txt](/llms.txt) — A compact index of every documentation page.
+- [/llms-full.txt](/llms-full.txt) — The complete documentation in one file.
+- Per-page Markdown — Every page action menu includes a direct Markdown URL, such as [/llms.mdx/components/button](/llms.mdx/components/button).
+
+## ChatGPT and Claude
+
+Give the assistant the compact index and ask it to open relevant page Markdown before writing code:
+
+```text
+Use Namespace UIKit documentation from https://your-domain.example/llms.txt.
+Open the relevant per-page Markdown links before implementing components.
+```
+
+The **Copy Markdown** menu at the top of each page can also open the current documentation directly in ChatGPT or Claude.
+
+## Cursor
+
+Add the complete documentation through Cursor's **@Docs** feature:
+
+```text
+@Docs https://your-domain.example/llms-full.txt
+```
+
+For smaller context windows, prefer the compact index and allow Cursor to fetch only the component pages it needs.
+
+## Windsurf
+
+Reference the documentation from your project rules:
+
+```text
+#docs https://your-domain.example/llms.txt
+```
+
+## Project Instructions
+
+You can add this guidance to your project-level agent instructions:
+
+```md
+When using Namespace UIKit, read /llms.txt first and use the linked component Markdown pages as the API source of truth. Import components from @thenamespace/uikit or their one-level entry points.
+```
+
+## Keep Context Focused
+
+Use [/llms.txt](/llms.txt) for discovery, a component-specific Markdown page for implementation, and [/llms-full.txt](/llms-full.txt) only when the assistant needs cross-library context.

@@ -8,6 +8,7 @@ const componentDirectory = join(appRoot, "content/docs/components");
 const storyDirectory = join(repoRoot, "apps/storybook/src/components");
 const componentUrls = new Map();
 const storySources = {};
+const storyLoaders = {};
 
 for (const match of todo.matchAll(
   /https:\/\/heroui\.pro\/docs\/react\/components\/([a-z0-9-]+)/g,
@@ -83,17 +84,45 @@ for (const [slug, url] of componentUrls) {
     storySources[slug] = adaptStory(
       await readFile(join(storyDirectory, slug, `${slug}.stories.tsx`), "utf8"),
     );
+    storyLoaders[slug] =
+      `() => import("../../../storybook/src/components/${slug}/${slug}.stories")`;
   } catch {
     storySources[slug] = "";
   }
 }
 
 const generatedDirectory = join(appRoot, "src/generated");
+const generatedStoryDirectory = join(generatedDirectory, "pro-stories");
 
 await mkdir(generatedDirectory, { recursive: true });
+await mkdir(generatedStoryDirectory, { recursive: true });
+for (const [slug, source] of Object.entries(storySources)) {
+  const executableSource = source
+    .replaceAll('from "./index"', 'from "@thenamespace/uikit"')
+    .replace(/from "\.\.\/([a-z0-9-]+)"/g, 'from "@thenamespace/uikit/$1"')
+    .replace('from "../../icon"', 'from "../../../../storybook/src/icon"')
+    .replace(
+      'from "./occupations"',
+      'from "../../../../storybook/src/components/sheet/occupations"',
+    );
+
+  await writeFile(
+    join(generatedStoryDirectory, `${slug}.tsx`),
+    `// @ts-nocheck -- Generated from the tested Storybook story for docs rendering.\n"use client";\n${executableSource}`,
+  );
+  storyLoaders[slug] = `() => import("./pro-stories/${slug}")`;
+}
 await writeFile(
   join(generatedDirectory, "pro-story-sources.ts"),
   `export const proStorySources: Record<string, string> = ${JSON.stringify(storySources, null, 2)};\n`,
+);
+await writeFile(
+  join(generatedDirectory, "pro-story-loaders.ts"),
+  `export const proStoryLoaders: Record<string, () => Promise<Record<string, unknown>>> = {\n${Object.entries(
+    storyLoaders,
+  )
+    .map(([slug, loader]) => `  ${JSON.stringify(slug)}: ${loader},`)
+    .join("\n")}\n};\n`,
 );
 
 const metaPath = join(componentDirectory, "meta.json");

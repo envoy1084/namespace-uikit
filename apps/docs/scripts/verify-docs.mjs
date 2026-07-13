@@ -61,6 +61,7 @@ const gettingStartedPages = [
   "(handbook)/styling.mdx",
   "(handbook)/animation.mdx",
   "(handbook)/composition.mdx",
+  "(ui-for-agents)/llms-txt.mdx",
 ];
 
 for (const page of gettingStartedPages) {
@@ -92,6 +93,10 @@ const proComponents = [
   ),
 ];
 const missingProDocs = proComponents.filter((name) => !componentDocs.has(name));
+const proLoaders = await readFile(
+  join(appRoot, "src/generated/pro-story-loaders.ts"),
+  "utf8",
+);
 
 invariant(
   missingProDocs.length === 0,
@@ -107,6 +112,10 @@ for (const name of proComponents) {
   invariant(
     content.includes(`<ProExamples component="${name}"`),
     `Missing examples for ${name}`,
+  );
+  invariant(
+    proLoaders.includes(`pro-stories/${name}`),
+    `Missing rendered Pro story loader: ${name}`,
   );
 }
 

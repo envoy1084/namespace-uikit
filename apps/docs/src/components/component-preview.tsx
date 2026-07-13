@@ -1,4 +1,6 @@
+import { ComponentPreviewCode } from "@/components/component-preview-code";
 import { getDemo } from "@/demos";
+import { cn } from "@/utils/cn";
 
 interface ComponentPreviewProps {
   align?: "center" | "end" | "start";
@@ -36,28 +38,28 @@ export async function ComponentPreview({
   }[align];
 
   return (
-    <div className="not-prose border-separator my-6 overflow-hidden rounded-xl border">
+    <div
+      className="component-preview-container group relative my-4 w-full"
+      data-name={name}
+    >
       {description ? (
-        <p className="border-separator text-muted border-b p-4 text-sm">
-          {description}
-        </p>
+        <p className="text-muted-foreground mb-2 text-sm">{description}</p>
       ) : null}
       <div
-        className={`flex w-full p-6 sm:p-10 ${alignment} ${isBgSolid ? "bg-background" : "bg-surface-secondary"}`}
-        style={{ minHeight: minHeight ?? "20rem" }}
+        className={cn(
+          "preview not-prose border-separator relative flex min-h-[350px] w-full overflow-hidden rounded-t-xl border-t border-r border-l p-4 sm:p-10",
+          isBgSolid && "bg-background",
+          alignment,
+        )}
       >
-        <Demo />
+        <div
+          className="flex w-full items-center justify-center"
+          style={{ minHeight }}
+        >
+          <Demo />
+        </div>
       </div>
-      {code ? (
-        <details className="border-separator border-t">
-          <summary className="cursor-pointer px-4 py-3 text-sm font-medium">
-            View code
-          </summary>
-          <pre className="border-separator max-h-[32rem] overflow-auto border-t p-4 text-xs">
-            <code>{code}</code>
-          </pre>
-        </details>
-      ) : null}
+      {code ? <ComponentPreviewCode code={code} /> : null}
     </div>
   );
 }

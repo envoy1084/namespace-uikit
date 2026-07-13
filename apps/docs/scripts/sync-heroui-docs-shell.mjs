@@ -26,13 +26,20 @@ const upstreamLintCompatibility =
 
 for (const file of files) {
   const output = join(appRoot, "src", file);
-  const source = (await readFile(join(upstream, file), "utf8"))
+  let source = (await readFile(join(upstream, file), "utf8"))
     .replaceAll("@heroui/react", "@thenamespace/uikit")
     .replaceAll("@heroui/styles", "@thenamespace/uikit/styles")
     .replaceAll("HEROUI", "NAMESPACE UIKIT")
     .replaceAll("HeroUI", "Namespace UIKit")
     .replaceAll("heroui", "namespace")
     .replace(/[ \t]+$/gm, "");
+
+  if (file === "components/fumadocs/layouts/notebook/index.tsx") {
+    source = source.replace(
+      "            {nav.children}\n            {tabs.length > 0 && (",
+      "            {tabs.length > 0 && (",
+    );
+  }
 
   await mkdir(dirname(output), { recursive: true });
   await writeFile(output, `${upstreamLintCompatibility}${source}`);
@@ -69,6 +76,10 @@ const fontCss = `
   font-weight: 700;
   font-display: swap;
   src: url("/fonts/Inter-Bold.ttf") format("truetype");
+}
+
+:root {
+  --font-inter: "Inter";
 }
 `;
 

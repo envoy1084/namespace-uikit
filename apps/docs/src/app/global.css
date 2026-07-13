@@ -31,6 +31,10 @@
   src: url("/fonts/Inter-Bold.ttf") format("truetype");
 }
 
+:root {
+  --font-inter: "Inter";
+}
+
 @keyframes float-stars {
   0% {
     transform: translateY(0px) translateX(0px);

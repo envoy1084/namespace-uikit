@@ -230,7 +230,6 @@ export function DocsLayout(props: DocsLayoutProps) {
                 )}
               </div>
             )}
-            {nav.children}
             {tabs.length > 0 && (
               <FilteredSidebarTabsDropdown
                 className={cn(tabMode === "navbar" && "lg:hidden")}
