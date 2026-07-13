@@ -23,7 +23,9 @@ function Profile() {
           <span className="text-sm leading-4 font-semibold">
             Namespace UIKit
           </span>
-          <span className="text-muted text-sm tracking-tight">@hero_ui</span>
+          <span className="text-muted text-sm tracking-tight">
+            @thenamespace
+          </span>
         </div>
       </div>
       <p className="mt-3 pl-px text-sm font-medium">
@@ -50,8 +52,12 @@ function Profile() {
 
 function TriggerLink() {
   return (
-    <Link className="underline" href="https://x.com/hero_ui" target="_blank">
-      @hero_ui
+    <Link
+      className="underline"
+      href="https://x.com/thenamespace"
+      target="_blank"
+    >
+      @thenamespace
     </Link>
   );
 }

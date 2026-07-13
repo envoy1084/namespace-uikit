@@ -20,7 +20,9 @@ function Profile() {
           <span className="text-sm leading-4 font-semibold">
             Namespace UIKit
           </span>
-          <span className="text-muted text-sm tracking-tight">@hero_ui</span>
+          <span className="text-muted text-sm tracking-tight">
+            @thenamespace
+          </span>
         </div>
       </div>
       <p className="mt-3 pl-px text-sm font-medium">
