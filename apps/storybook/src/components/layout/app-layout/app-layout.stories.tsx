@@ -1,6 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import {
+  Avatar,
+  Breadcrumbs,
+  BreadcrumbsItem,
+  Button,
+  Chip,
+  Dropdown,
+} from "@thenamespace/uikit";
+import {
   AnalyticsUpIcon,
   DashboardSquare01Icon,
   HelpCircleIcon,
@@ -10,16 +18,8 @@ import {
   Settings01Icon,
   Task01Icon,
   UserIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  Avatar,
-  Breadcrumbs,
-  BreadcrumbsItem,
-  Button,
-  Chip,
-  Dropdown,
-} from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { AppLayout, Navbar, Sidebar } from "./index";
 

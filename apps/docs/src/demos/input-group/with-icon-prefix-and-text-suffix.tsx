@@ -1,7 +1,7 @@
 "use client";
 
-import { Globe } from "@gravity-ui/icons";
 import { InputGroup, Label, TextField } from "@thenamespace/uikit";
+import { Globe } from "@thenamespace/uikit/icons";
 
 export function WithIconPrefixAndTextSuffix() {
   return (

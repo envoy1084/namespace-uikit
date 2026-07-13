@@ -246,7 +246,7 @@ export const WithCustomIndicator: Story = {
         <ColorSwatchPicker.Item key={color} color={color}>
           <ColorSwatchPicker.Swatch />
           <ColorSwatchPicker.Indicator>
-            <Icon icon="gravity-ui:star-fill" />
+            <Icon icon="hugeicons:star-fill" />
           </ColorSwatchPicker.Indicator>
         </ColorSwatchPicker.Item>
       ))}

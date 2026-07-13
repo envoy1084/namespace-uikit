@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useMemo, useRef, useState } from "react";
 
+import { Button } from "@thenamespace/uikit/button";
+import { EmptyState } from "@thenamespace/uikit/empty-state";
 import {
   Basketball01Icon,
   Car01Icon,
@@ -13,10 +15,8 @@ import {
   Idea01Icon,
   SmileIcon,
   SpoonAndForkIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { Button } from "@thenamespace/uikit/button";
-import { EmptyState } from "@thenamespace/uikit/empty-state";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 import { ScrollShadow } from "@thenamespace/uikit/scroll-shadow";
 import { SearchField } from "@thenamespace/uikit/search-field";
 import { Tooltip } from "@thenamespace/uikit/tooltip";

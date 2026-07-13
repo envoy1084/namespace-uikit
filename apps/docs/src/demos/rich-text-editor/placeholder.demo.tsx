@@ -1,6 +1,7 @@
 "use client";
 
 // @demo-title Placeholder
+import { RichTextEditor } from "@thenamespace/uikit";
 import {
   CodeSquareIcon,
   Delete02Icon,
@@ -19,9 +20,8 @@ import {
   TextStrikethroughIcon,
   TextUnderlineIcon,
   Undo02Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { RichTextEditor } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 
 function Tool({
   command,

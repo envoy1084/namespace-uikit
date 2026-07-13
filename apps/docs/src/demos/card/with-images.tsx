@@ -1,5 +1,5 @@
-import { CircleDollar } from "@gravity-ui/icons";
 import { Avatar, Button, Card, CloseButton, Link } from "@thenamespace/uikit";
+import { CircleDollar } from "@thenamespace/uikit/icons";
 
 export function WithImages() {
   return (

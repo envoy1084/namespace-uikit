@@ -38,7 +38,7 @@ const Template = (args: CloseButtonProps) => (
 const TemplateWithCustomIcon = (args: CloseButtonProps) => (
   <div className="flex gap-3">
     <CloseButton {...args}>
-      <Icon icon="gravity-ui:circle-xmark" />
+      <Icon icon="hugeicons:circle-xmark" />
     </CloseButton>
   </div>
 );

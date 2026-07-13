@@ -3,6 +3,11 @@ import type { Selection, SortDescriptor } from "react-aria-components";
 
 import { useMemo, useState } from "react";
 
+import { ActionBar } from "@thenamespace/uikit/action-bar";
+import { AreaChart } from "@thenamespace/uikit/area-chart";
+import { Avatar } from "@thenamespace/uikit/avatar";
+import { Dropdown } from "@thenamespace/uikit/dropdown";
+import { EmptyState as EmptyStateComponent } from "@thenamespace/uikit/empty-state";
 import {
   Add01Icon,
   Archive02Icon,
@@ -29,13 +34,8 @@ import {
   Link01Icon,
   SlidersHorizontalIcon,
   ViewIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { ActionBar } from "@thenamespace/uikit/action-bar";
-import { AreaChart } from "@thenamespace/uikit/area-chart";
-import { Avatar } from "@thenamespace/uikit/avatar";
-import { Dropdown } from "@thenamespace/uikit/dropdown";
-import { EmptyState as EmptyStateComponent } from "@thenamespace/uikit/empty-state";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Link } from "@thenamespace/uikit/link";
 import { ListBox } from "@thenamespace/uikit/list-box";
 import { NumberStepper } from "@thenamespace/uikit/number-stepper";

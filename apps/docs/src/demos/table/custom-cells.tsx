@@ -166,7 +166,7 @@ export function CustomCells() {
                     <Button isIconOnly size="sm" variant="ghost">
                       <Icon
                         className="text-muted size-4"
-                        icon="gravity-ui:copy"
+                        icon="hugeicons:copy"
                       />
                     </Button>
                   </div>
@@ -201,13 +201,13 @@ export function CustomCells() {
                 <Table.Cell>
                   <div className="flex items-center gap-1">
                     <Button isIconOnly size="sm" variant="tertiary">
-                      <Icon className="size-4" icon="gravity-ui:eye" />
+                      <Icon className="size-4" icon="hugeicons:eye" />
                     </Button>
                     <Button isIconOnly size="sm" variant="tertiary">
-                      <Icon className="size-4" icon="gravity-ui:pencil" />
+                      <Icon className="size-4" icon="hugeicons:pencil" />
                     </Button>
                     <Button isIconOnly size="sm" variant="danger-soft">
-                      <Icon className="size-4" icon="gravity-ui:trash-bin" />
+                      <Icon className="size-4" icon="hugeicons:trash-bin" />
                     </Button>
                   </div>
                 </Table.Cell>

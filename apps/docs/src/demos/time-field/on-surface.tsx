@@ -1,7 +1,7 @@
 "use client";
 
-import { Clock } from "@gravity-ui/icons";
 import { Description, Label, Surface, TimeField } from "@thenamespace/uikit";
+import { Clock } from "@thenamespace/uikit/icons";
 
 export function OnSurface() {
   return (

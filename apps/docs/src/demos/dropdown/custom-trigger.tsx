@@ -1,5 +1,5 @@
-import { ArrowRightFromSquare, Gear, Persons } from "@gravity-ui/icons";
 import { Avatar, Dropdown, Label } from "@thenamespace/uikit";
+import { ArrowRightFromSquare, Gear, Persons } from "@thenamespace/uikit/icons";
 
 export function CustomTrigger() {
   return (

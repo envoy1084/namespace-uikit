@@ -4,7 +4,6 @@ import type { DateValue } from "@internationalized/date";
 
 import { useState } from "react";
 
-import { Calendar } from "@gravity-ui/icons";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   Button,
@@ -14,6 +13,7 @@ import {
   Form,
   Label,
 } from "@thenamespace/uikit";
+import { Calendar } from "@thenamespace/uikit/icons";
 
 export function FormExample() {
   const [value, setValue] = useState<DateValue | null>(null);

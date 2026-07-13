@@ -1,5 +1,6 @@
 "use client";
 
+import { Switch } from "@thenamespace/uikit";
 import {
   BellFill,
   BellSlash,
@@ -11,8 +12,7 @@ import {
   Sun,
   VolumeFill,
   VolumeSlashFill,
-} from "@gravity-ui/icons";
-import { Switch } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 export function WithIcons() {
   const icons = {

@@ -34,7 +34,7 @@ export const Default = () => {
             <Modal.CloseTrigger />
             <Modal.Header>
               <Modal.Icon className="bg-default text-foreground">
-                <Icon className="size-5" icon="gravity-ui:rocket" />
+                <Icon className="size-5" icon="hugeicons:rocket" />
               </Modal.Icon>
               <Modal.Heading>Welcome to Namespace</Modal.Heading>
             </Modal.Header>
@@ -72,7 +72,7 @@ export const Placements = () => {
                 <Modal.CloseTrigger />
                 <Modal.Header>
                   <Modal.Icon className="bg-default text-foreground">
-                    <Icon className="size-5" icon="gravity-ui:rocket" />
+                    <Icon className="size-5" icon="hugeicons:rocket" />
                   </Modal.Icon>
                   <Modal.Heading>
                     Placement:{" "}
@@ -116,7 +116,7 @@ export const BackdropVariants = () => {
                 <Modal.CloseTrigger />
                 <Modal.Header>
                   <Modal.Icon className="bg-default text-foreground">
-                    <Icon className="size-5" icon="gravity-ui:rocket" />
+                    <Icon className="size-5" icon="hugeicons:rocket" />
                   </Modal.Icon>
                   <Modal.Heading>
                     Backdrop:{" "}
@@ -161,7 +161,7 @@ export const Sizes = () => {
                 <Modal.CloseTrigger />
                 <Modal.Header>
                   <Modal.Icon className="bg-default text-foreground">
-                    <Icon className="size-5" icon="gravity-ui:rocket" />
+                    <Icon className="size-5" icon="hugeicons:rocket" />
                   </Modal.Icon>
                   <Modal.Heading>
                     Size: {size.charAt(0).toUpperCase() + size.slice(1)}
@@ -221,7 +221,7 @@ export const CustomBackdrop = () => (
         <Modal.Dialog className="sm:max-w-[360px]">
           <Modal.Header className="items-center text-center">
             <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-              <Icon className="size-5" icon="gravity-ui:sparkles" />
+              <Icon className="size-5" icon="hugeicons:sparkles" />
             </Modal.Icon>
             <Modal.Heading>Premium Backdrop</Modal.Heading>
           </Modal.Header>
@@ -266,7 +266,7 @@ export const DismissBehavior = () => (
               <Modal.CloseTrigger />
               <Modal.Header>
                 <Modal.Icon className="bg-default text-foreground">
-                  <Icon className="size-5" icon="gravity-ui:circle-info" />
+                  <Icon className="size-5" icon="hugeicons:circle-info" />
                 </Modal.Icon>
                 <Modal.Heading>isDismissable = false</Modal.Heading>
                 <p className="text-muted text-sm leading-5">
@@ -306,7 +306,7 @@ export const DismissBehavior = () => (
               <Modal.CloseTrigger />
               <Modal.Header>
                 <Modal.Icon className="bg-default text-foreground">
-                  <Icon className="size-5" icon="gravity-ui:circle-info" />
+                  <Icon className="size-5" icon="hugeicons:circle-info" />
                 </Modal.Icon>
                 <Modal.Heading>isKeyboardDismissDisabled = true</Modal.Heading>
                 <p className="text-muted text-sm leading-5">
@@ -348,7 +348,7 @@ export const CloseMethods = () => (
             <Modal.Dialog className="sm:max-w-[360px]">
               <Modal.Header>
                 <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                  <Icon className="size-5" icon="gravity-ui:circle-info" />
+                  <Icon className="size-5" icon="hugeicons:circle-info" />
                 </Modal.Icon>
                 <Modal.Heading>Using slot="close"</Modal.Heading>
               </Modal.Header>
@@ -387,7 +387,7 @@ export const CloseMethods = () => (
                 <>
                   <Modal.Header>
                     <Modal.Icon className="bg-success-soft text-success-soft-foreground">
-                      <Icon className="size-5" icon="gravity-ui:circle-check" />
+                      <Icon className="size-5" icon="hugeicons:circle-check" />
                     </Modal.Icon>
                     <Modal.Heading>Using Dialog render props</Modal.Heading>
                   </Modal.Header>
@@ -535,7 +535,7 @@ export const Controlled = () => {
               <Modal.CloseTrigger />
               <Modal.Header>
                 <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                  <Icon className="size-5" icon="gravity-ui:circle-check" />
+                  <Icon className="size-5" icon="hugeicons:circle-check" />
                 </Modal.Icon>
                 <Modal.Heading>Controlled with useState()</Modal.Heading>
               </Modal.Header>
@@ -591,7 +591,7 @@ export const Controlled = () => {
               <Modal.CloseTrigger />
               <Modal.Header>
                 <Modal.Icon className="bg-success-soft text-success-soft-foreground">
-                  <Icon className="size-5" icon="gravity-ui:circle-check" />
+                  <Icon className="size-5" icon="hugeicons:circle-check" />
                 </Modal.Icon>
                 <Modal.Heading>Controlled with useOverlayState()</Modal.Heading>
               </Modal.Header>
@@ -626,7 +626,7 @@ export const WithForm = () => (
           <Modal.CloseTrigger />
           <Modal.Header>
             <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-              <Icon className="size-5" icon="gravity-ui:envelope" />
+              <Icon className="size-5" icon="hugeicons:envelope" />
             </Modal.Icon>
             <Modal.Heading>Contact Us</Modal.Heading>
             <p className="text-muted mt-1.5 text-sm leading-5">
@@ -676,7 +676,7 @@ export const CustomTrigger = () => (
   <Modal>
     <Modal.Trigger className="group bg-surface hover:bg-surface-secondary flex items-center gap-3 rounded-2xl p-4 shadow-xs select-none">
       <div className="bg-accent-soft text-accent-soft-foreground flex size-12 shrink-0 items-center justify-center rounded-xl">
-        <Icon className="size-6" icon="gravity-ui:gear" />
+        <Icon className="size-6" icon="hugeicons:gear" />
       </div>
       <div className="flex flex-1 flex-col gap-0.5">
         <p className="text-sm font-semibold">Settings</p>
@@ -689,7 +689,7 @@ export const CustomTrigger = () => (
           <Modal.CloseTrigger />
           <Modal.Header>
             <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-              <Icon className="size-5" icon="gravity-ui:gear" />
+              <Icon className="size-5" icon="hugeicons:gear" />
             </Modal.Icon>
             <Modal.Heading>Settings</Modal.Heading>
           </Modal.Header>
@@ -718,7 +718,7 @@ export const CustomAnimations = () => {
       name: "Kinematic Scale",
       description:
         "Physics-based elastic scaling. Simulates a high-damping spring system with fast transient response and prolonged settling time. Ideal for Modals and Popovers.",
-      icon: "gravity-ui:sparkles",
+      icon: "hugeicons:sparkles",
       classNames: {
         backdrop: [
           "data-[entering]:duration-400",
@@ -744,7 +744,7 @@ export const CustomAnimations = () => {
       name: "Fluid Slide",
       description:
         "Simulates movement through a medium with fluid resistance. Eliminates mechanical linearity for a natural, grounded feel. Perfect for Bottom Sheets or Toasts.",
-      icon: "gravity-ui:arrow-up-from-line",
+      icon: "hugeicons:arrow-up-from-line",
       classNames: {
         backdrop: [
           "data-[entering]:duration-500",

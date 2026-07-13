@@ -60,9 +60,9 @@ const SizesTemplate = (props: ChipProps) => (
 const WithIconTemplate = (props: ChipProps) => (
   <div className="flex items-center gap-3">
     <Chip {...props}>
-      <Icon icon="gravity-ui:circle-dashed" />
+      <Icon icon="hugeicons:circle-dashed" />
       <Chip.Label>Label</Chip.Label>
-      <Icon icon="gravity-ui:circle-dashed" />
+      <Icon icon="hugeicons:circle-dashed" />
     </Chip>
   </div>
 );
@@ -75,19 +75,19 @@ const StatusesTemplate = (props: ChipProps) => {
       {variants.map((variant) => (
         <div key={variant} className="flex items-center gap-3">
           <Chip {...props} variant={variant}>
-            <Icon icon="gravity-ui:circle-fill" width={6} />
+            <Icon icon="hugeicons:circle-fill" width={6} />
             <Chip.Label>Information</Chip.Label>
           </Chip>
           <Chip {...props} color="success" variant={variant}>
-            <Icon icon="gravity-ui:circle-fill" width={6} />
+            <Icon icon="hugeicons:circle-fill" width={6} />
             <Chip.Label>Completed</Chip.Label>
           </Chip>
           <Chip {...props} color="warning" variant={variant}>
-            <Icon icon="gravity-ui:circle-fill" width={6} />
+            <Icon icon="hugeicons:circle-fill" width={6} />
             <Chip.Label>Pending</Chip.Label>
           </Chip>
           <Chip {...props} color="danger" variant={variant}>
-            <Icon icon="gravity-ui:circle-fill" width={6} />
+            <Icon icon="hugeicons:circle-fill" width={6} />
             <Chip.Label>Failed</Chip.Label>
           </Chip>
         </div>
@@ -140,9 +140,9 @@ const VariantsTemplate = (props: ChipProps) => {
                         size={size}
                         variant={variant}
                       >
-                        <Icon icon="gravity-ui:circle-dashed" />
+                        <Icon icon="hugeicons:circle-dashed" />
                         <Chip.Label>Label</Chip.Label>
-                        <Icon icon="gravity-ui:circle-dashed" />
+                        <Icon icon="hugeicons:circle-dashed" />
                       </Chip>
                     </div>
                   ))}

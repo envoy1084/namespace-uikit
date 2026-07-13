@@ -1,3 +1,4 @@
+import { ToggleButton, ToggleButtonGroup } from "@thenamespace/uikit";
 import {
   Bold,
   Italic,
@@ -6,8 +7,7 @@ import {
   TextAlignLeft,
   TextAlignRight,
   Underline,
-} from "@gravity-ui/icons";
-import { ToggleButton, ToggleButtonGroup } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 export function SelectionMode() {
   return (

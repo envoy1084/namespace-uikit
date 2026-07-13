@@ -23,8 +23,8 @@ import {
   TextStrikethroughIcon,
   TextUnderlineIcon,
   Undo02Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
 

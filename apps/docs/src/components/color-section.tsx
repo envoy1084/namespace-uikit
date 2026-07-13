@@ -2,8 +2,8 @@
 
 import * as React from "react";
 
-import { Gear } from "@gravity-ui/icons";
 import { Chip, Tooltip, toast } from "@thenamespace/uikit";
+import { Gear } from "@thenamespace/uikit/icons";
 import { converter, parse } from "culori";
 
 import { cn } from "@/utils/cn";

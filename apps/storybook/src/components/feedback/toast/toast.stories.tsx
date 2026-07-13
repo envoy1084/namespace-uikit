@@ -2,8 +2,8 @@ import type { Meta } from "@storybook/react";
 
 import React from "react";
 
-import { Tick02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Tick02Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
 import { Icon } from "@/icon";
@@ -74,7 +74,7 @@ const Template = () => {
                 variant: "tertiary",
               },
               description: "Bob sent you an invitation to join Namespace team",
-              indicator: <Icon icon="gravity-ui:persons" />,
+              indicator: <Icon icon="hugeicons:persons" />,
               variant: "default",
             });
           }}
@@ -139,7 +139,7 @@ const Template = () => {
               },
               description:
                 "Remove files to release space. Adding more text to demonstrate longer content display",
-              indicator: <Icon icon="gravity-ui:hard-drive" />,
+              indicator: <Icon icon="hugeicons:hard-drive" />,
             })
           }
         >
@@ -368,7 +368,7 @@ const CustomIndicatorTemplate = () => {
         variant="secondary"
         onPress={() =>
           toast("Custom icon indicator", {
-            indicator: <Icon icon="gravity-ui:star" />,
+            indicator: <Icon icon="hugeicons:star" />,
           })
         }
       >

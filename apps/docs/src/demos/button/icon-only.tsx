@@ -1,5 +1,5 @@
-import { Ellipsis, Gear, TrashBin } from "@gravity-ui/icons";
 import { Button } from "@thenamespace/uikit";
+import { Ellipsis, Gear, TrashBin } from "@thenamespace/uikit/icons";
 
 export function IconOnly() {
   return (

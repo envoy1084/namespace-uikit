@@ -3,8 +3,8 @@ import type { Placement } from "react-aria-components";
 
 import { useState } from "react";
 
-import { ArrowRight01Icon, Building03Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowRight01Icon, Building03Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { ListBox } from "@/components/collections/list-box";
 

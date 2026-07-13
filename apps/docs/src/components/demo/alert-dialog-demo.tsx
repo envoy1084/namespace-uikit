@@ -14,7 +14,7 @@ export function AlertDialogDemo() {
       <Card.Header className="flex w-full items-start justify-center gap-2 px-1">
         <Avatar color="warning" variant="soft">
           <Avatar.Fallback>
-            <Iconify className="text-lg" icon="gravity-ui:floppy-disk" />
+            <Iconify className="text-lg" icon="hugeicons:floppy-disk" />
           </Avatar.Fallback>
         </Avatar>
         <Card.Title>{t.title}</Card.Title>

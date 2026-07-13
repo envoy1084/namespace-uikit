@@ -1,7 +1,7 @@
 "use client";
 
-import { Calendar } from "@gravity-ui/icons";
 import { DateField, Description, Label, Surface } from "@thenamespace/uikit";
+import { Calendar } from "@thenamespace/uikit/icons";
 
 export function OnSurface() {
   return (

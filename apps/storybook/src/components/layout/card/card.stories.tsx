@@ -50,7 +50,7 @@ export const Default: Story = {
       <Icon
         aria-label="Dollar sign icon"
         className="text-primary size-6"
-        icon="gravity-ui:circle-dollar"
+        icon="hugeicons:circle-dollar"
         role="img"
       />
       <Card.Header>
@@ -277,7 +277,7 @@ export const WithImages: Story = {
                 <Icon
                   aria-label="Dollar sign icon"
                   className="text-primary size-8 shrink-0"
-                  icon="gravity-ui:circle-dollar"
+                  icon="hugeicons:circle-dollar"
                   role="img"
                 />
                 <div className="flex flex-col gap-1">

@@ -1,5 +1,5 @@
-import { Envelope } from "@gravity-ui/icons";
 import { InputGroup, Label, TextField } from "@thenamespace/uikit";
+import { Envelope } from "@thenamespace/uikit/icons";
 
 export function Variants() {
   return (

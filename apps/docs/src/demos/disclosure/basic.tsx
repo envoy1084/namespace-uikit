@@ -2,9 +2,9 @@
 
 import React from "react";
 
-import { QrCode } from "@gravity-ui/icons";
 import { Icon } from "@iconify/react";
 import { Button, Disclosure } from "@thenamespace/uikit";
+import { QrCode } from "@thenamespace/uikit/icons";
 
 export function Basic() {
   const [isExpanded, setIsExpanded] = React.useState(true);

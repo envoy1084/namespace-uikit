@@ -1,5 +1,5 @@
-import { Envelope, Eye } from "@gravity-ui/icons";
 import { InputGroup, Label, TextField } from "@thenamespace/uikit";
+import { Envelope, Eye } from "@thenamespace/uikit/icons";
 
 export function FullWidth() {
   return (

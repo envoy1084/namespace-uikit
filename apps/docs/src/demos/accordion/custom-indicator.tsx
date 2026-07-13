@@ -4,13 +4,13 @@ import type { Key } from "@thenamespace/uikit";
 
 import React from "react";
 
+import { Accordion } from "@thenamespace/uikit";
 import {
   ChevronsDown,
   CircleChevronDown,
   Minus,
   Plus,
-} from "@gravity-ui/icons";
-import { Accordion } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 export function CustomIndicator() {
   const [expandedKeys, setExpandedKeys] = React.useState<Set<Key>>(

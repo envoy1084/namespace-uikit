@@ -250,7 +250,7 @@ const CustomIconsTemplate = (props: PaginationProps) => (
       <Pagination.Item>
         <Pagination.Previous>
           <Pagination.PreviousIcon>
-            <Icon icon="gravity-ui:arrow-left" />
+            <Icon icon="hugeicons:arrow-left" />
           </Pagination.PreviousIcon>
           <span>Back</span>
         </Pagination.Previous>
@@ -268,7 +268,7 @@ const CustomIconsTemplate = (props: PaginationProps) => (
         <Pagination.Next>
           <span>Forward</span>
           <Pagination.NextIcon>
-            <Icon icon="gravity-ui:arrow-right" />
+            <Icon icon="hugeicons:arrow-right" />
           </Pagination.NextIcon>
         </Pagination.Next>
       </Pagination.Item>

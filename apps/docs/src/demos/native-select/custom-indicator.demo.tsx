@@ -1,9 +1,9 @@
 "use client";
 
 // @demo-title Custom Indicator
-import { UnfoldMoreIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { NativeSelect } from "@thenamespace/uikit";
+import { UnfoldMoreIcon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Label } from "@thenamespace/uikit/label";
 
 export const DemoCustomIndicatorExample = () => (

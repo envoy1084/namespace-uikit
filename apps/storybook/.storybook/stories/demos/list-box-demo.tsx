@@ -1,12 +1,6 @@
 import React from "react";
 
 import {
-  AddSquareIcon,
-  Delete02Icon,
-  PencilEdit01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
   Description,
   Header,
   Kbd,
@@ -15,6 +9,12 @@ import {
   Separator,
   Surface,
 } from "@thenamespace/uikit";
+import {
+  AddSquareIcon,
+  Delete02Icon,
+  PencilEdit01Icon,
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function ListBoxDemo() {
   return (

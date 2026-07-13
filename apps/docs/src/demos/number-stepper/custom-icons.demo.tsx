@@ -1,9 +1,9 @@
 "use client";
 
 // @demo-title Custom Icons
-import { ZoomInAreaIcon, ZoomOutAreaIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { NumberStepper } from "@thenamespace/uikit";
+import { ZoomInAreaIcon, ZoomOutAreaIcon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export const DemoCustomIconsExample = () => (
   <NumberStepper

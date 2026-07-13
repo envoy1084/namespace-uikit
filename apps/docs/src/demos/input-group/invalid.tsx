@@ -1,7 +1,7 @@
 "use client";
 
-import { Envelope } from "@gravity-ui/icons";
 import { FieldError, InputGroup, Label, TextField } from "@thenamespace/uikit";
+import { Envelope } from "@thenamespace/uikit/icons";
 
 export function Invalid() {
   return (

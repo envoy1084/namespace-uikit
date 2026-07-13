@@ -1,7 +1,7 @@
 "use client";
 
-import { Copy } from "@gravity-ui/icons";
 import { Button, InputGroup, Label, TextField } from "@thenamespace/uikit";
+import { Copy } from "@thenamespace/uikit/icons";
 
 export function WithCopySuffix() {
   return (

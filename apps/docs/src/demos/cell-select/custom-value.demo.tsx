@@ -4,13 +4,13 @@
 // @demo-title Custom Value
 import { useState } from "react";
 
+import { CellSelect } from "@thenamespace/uikit";
 import {
   Globe02Icon,
   PaintBoardIcon,
   SmileIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { CellSelect } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 import { ListBox } from "@thenamespace/uikit/list-box";
 
 const iconSets = [

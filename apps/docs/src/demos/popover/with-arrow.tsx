@@ -1,5 +1,5 @@
-import { Ellipsis } from "@gravity-ui/icons";
 import { Button, Popover } from "@thenamespace/uikit";
+import { Ellipsis } from "@thenamespace/uikit/icons";
 
 export function PopoverWithArrow() {
   return (

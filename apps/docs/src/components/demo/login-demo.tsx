@@ -22,7 +22,7 @@ export function LoginDemo() {
       <Card.Header className="flex w-full items-center justify-center gap-2">
         <Avatar>
           <Avatar.Fallback>
-            <Iconify icon="gravity-ui:person" />
+            <Iconify icon="hugeicons:person" />
           </Avatar.Fallback>
         </Avatar>
         <Card.Title>{t.title}</Card.Title>

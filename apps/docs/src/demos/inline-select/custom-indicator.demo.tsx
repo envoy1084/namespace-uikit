@@ -4,9 +4,9 @@
 // @demo-title Custom Indicator
 import { useState } from "react";
 
-import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { InlineSelect } from "@thenamespace/uikit";
+import { ArrowRight01Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { ListBox } from "@thenamespace/uikit/list-box";
 
 export const DemoCustomIndicatorExample = function Demo() {

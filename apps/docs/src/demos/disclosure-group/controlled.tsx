@@ -2,7 +2,6 @@
 
 import React from "react";
 
-import { ChevronDown, ChevronUp, QrCode } from "@gravity-ui/icons";
 import { Icon } from "@iconify/react";
 import {
   Button,
@@ -11,6 +10,7 @@ import {
   Separator,
   useDisclosureGroupNavigation,
 } from "@thenamespace/uikit";
+import { ChevronDown, ChevronUp, QrCode } from "@thenamespace/uikit/icons";
 import { cn } from "tailwind-variants";
 
 export function Controlled() {

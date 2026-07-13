@@ -1,12 +1,6 @@
 "use client";
 
 import {
-  EllipsisVertical,
-  Pencil,
-  SquarePlus,
-  TrashBin,
-} from "@gravity-ui/icons";
-import {
   Button,
   Description,
   Dropdown,
@@ -15,6 +9,12 @@ import {
   Label,
   Separator,
 } from "@thenamespace/uikit";
+import {
+  EllipsisVertical,
+  Pencil,
+  SquarePlus,
+  TrashBin,
+} from "@thenamespace/uikit/icons";
 
 export function WithSections() {
   return (

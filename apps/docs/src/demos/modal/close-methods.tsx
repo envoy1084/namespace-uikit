@@ -1,7 +1,7 @@
 "use client";
 
-import { CircleCheck, CircleInfo } from "@gravity-ui/icons";
 import { Button, Modal } from "@thenamespace/uikit";
+import { CircleCheck, CircleInfo } from "@thenamespace/uikit/icons";
 
 export function CloseMethods() {
   return (

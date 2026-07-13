@@ -1,7 +1,5 @@
 import React from "react";
 
-import { UserIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Avatar,
   Button,
@@ -9,6 +7,8 @@ import {
   CloseButton,
   Separator,
 } from "@thenamespace/uikit";
+import { UserIcon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { AppleIcon, GoogleIcon } from "./components/icons";
 

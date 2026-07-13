@@ -1,4 +1,12 @@
 import {
+  Button,
+  ButtonGroup,
+  Separator,
+  ToggleButton,
+  ToggleButtonGroup,
+  Toolbar,
+} from "@thenamespace/uikit";
+import {
   ArrowUturnCcwLeft,
   ArrowUturnCwRight,
   Bold,
@@ -7,15 +15,7 @@ import {
   TextAlignLeft,
   TextAlignRight,
   Underline,
-} from "@gravity-ui/icons";
-import {
-  Button,
-  ButtonGroup,
-  Separator,
-  ToggleButton,
-  ToggleButtonGroup,
-  Toolbar,
-} from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 export function WithButtonGroup() {
   return (

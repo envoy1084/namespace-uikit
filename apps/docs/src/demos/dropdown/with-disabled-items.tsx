@@ -1,6 +1,5 @@
 "use client";
 
-import { Bars, Pencil, SquarePlus, TrashBin } from "@gravity-ui/icons";
 import {
   Button,
   Description,
@@ -10,6 +9,7 @@ import {
   Label,
   Separator,
 } from "@thenamespace/uikit";
+import { Bars, Pencil, SquarePlus, TrashBin } from "@thenamespace/uikit/icons";
 
 export function WithDisabledItems() {
   return (

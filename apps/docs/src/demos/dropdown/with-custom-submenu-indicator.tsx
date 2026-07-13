@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowRight } from "@gravity-ui/icons";
 import { Button, Dropdown, Label } from "@thenamespace/uikit";
+import { ArrowRight } from "@thenamespace/uikit/icons";
 
 export function WithCustomSubmenuIndicator() {
   return (

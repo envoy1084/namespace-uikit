@@ -45,7 +45,7 @@ const Template = (props: Disclosure["RootProps"]) => {
       >
         <Disclosure.Heading>
           <Button slot="trigger" variant="secondary">
-            <Icon icon="gravity-ui:qr-code" />
+            <Icon icon="hugeicons:qr-code" />
             Preview Namespace Native
             <Disclosure.Indicator />
           </Button>
@@ -97,7 +97,7 @@ const ControlledTemplate = (props: Disclosure["RootProps"]) => {
           <span>Toggle content</span>
           <Icon
             className="size-4 transition-transform duration-200 data-[state=open]:rotate-180"
-            icon="gravity-ui:chevron-down"
+            icon="hugeicons:chevron-down"
           />
         </Disclosure.Trigger>
         <Disclosure.Content>
@@ -125,13 +125,13 @@ const ProductDetailsTemplate = (props: Disclosure["RootProps"]) => {
       >
         <Disclosure.Trigger className="flex w-full items-center justify-between rounded-md border border-gray-300 px-4 py-2 text-left hover:bg-gray-50">
           <span className="flex items-center gap-2">
-            <Icon icon="gravity-ui:box" />
+            <Icon icon="hugeicons:box" />
             View product details
           </span>
           <Icon
             className="size-4 transition-transform duration-200"
             icon={
-              isExpanded ? "gravity-ui:chevron-up" : "gravity-ui:chevron-down"
+              isExpanded ? "hugeicons:chevron-up" : "hugeicons:chevron-down"
             }
           />
         </Disclosure.Trigger>

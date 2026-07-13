@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState } from "react";
 
-import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { CheckmarkCircle02Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { PressableFeedback } from "@/components/buttons/pressable-feedback";
 import { Chip } from "@/components/data-display/chip";

@@ -3,19 +3,19 @@
 // @demo-title Queue
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import {
-  Attachment01Icon,
-  Copy01Icon,
-  Delete02Icon,
-  PencilEdit01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { Dropdown, Label } from "@thenamespace/uikit";
 import {
   ChatAttachment,
   ChatAttachmentGroup,
   PromptInput,
 } from "@thenamespace/uikit";
+import {
+  Attachment01Icon,
+  Copy01Icon,
+  Delete02Icon,
+  PencilEdit01Icon,
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 interface PendingAttachment {
   id: string;

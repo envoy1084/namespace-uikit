@@ -5,16 +5,16 @@ import type { Selection } from "react-aria-components";
 
 import { useState } from "react";
 
+import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
+import { Chip } from "@thenamespace/uikit/chip";
 import {
   File01Icon,
   File02Icon,
   Folder01Icon,
   FolderOpenIcon,
   Image01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
-import { Chip } from "@thenamespace/uikit/chip";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 type TreeRow = {
   children?: TreeRow[];

@@ -1,6 +1,5 @@
 "use client";
 
-import { Pencil, SquarePlus, TrashBin } from "@gravity-ui/icons";
 import {
   Description,
   Header,
@@ -10,6 +9,7 @@ import {
   Separator,
   Surface,
 } from "@thenamespace/uikit";
+import { Pencil, SquarePlus, TrashBin } from "@thenamespace/uikit/icons";
 
 export function WithSections() {
   return (

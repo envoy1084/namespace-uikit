@@ -1,12 +1,12 @@
 "use client";
 
+import { Button, Description, Dropdown, Kbd, Label } from "@thenamespace/uikit";
 import {
   FloppyDisk,
   FolderOpen,
   SquarePlus,
   TrashBin,
-} from "@gravity-ui/icons";
-import { Button, Description, Dropdown, Kbd, Label } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 export function WithDescriptions() {
   return (

@@ -7,8 +7,8 @@ import {
   ArrowUp01Icon,
   ZoomInAreaIcon,
   ZoomOutAreaIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
 import { Spinner } from "@/components/feedback/spinner";

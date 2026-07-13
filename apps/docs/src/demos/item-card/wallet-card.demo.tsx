@@ -12,7 +12,7 @@ export const DemoWalletCardExample = () => (
   <div className="w-[500px] rounded-2xl p-6">
     <ItemCard>
       <ItemCard.Icon className="size-10 rounded-full bg-green-500 text-lg">
-        <Icon icon="gravity-ui:globe" width={20} />
+        <Icon icon="hugeicons:globe" width={20} />
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>SLMobbin&apos;s</ItemCard.Title>

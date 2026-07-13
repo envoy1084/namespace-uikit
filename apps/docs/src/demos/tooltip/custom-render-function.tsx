@@ -1,7 +1,7 @@
 "use client";
 
-import { CircleInfo } from "@gravity-ui/icons";
 import { Button, Tooltip } from "@thenamespace/uikit";
+import { CircleInfo } from "@thenamespace/uikit/icons";
 
 export function CustomRenderFunction() {
   return (

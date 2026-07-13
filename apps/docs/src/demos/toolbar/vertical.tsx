@@ -1,11 +1,4 @@
 import {
-  ArrowUturnCcwLeft,
-  ArrowUturnCwRight,
-  Bold,
-  Italic,
-  Underline,
-} from "@gravity-ui/icons";
-import {
   Button,
   ButtonGroup,
   Separator,
@@ -13,6 +6,13 @@ import {
   ToggleButtonGroup,
   Toolbar,
 } from "@thenamespace/uikit";
+import {
+  ArrowUturnCcwLeft,
+  ArrowUturnCwRight,
+  Bold,
+  Italic,
+  Underline,
+} from "@thenamespace/uikit/icons";
 
 export function Vertical() {
   return (

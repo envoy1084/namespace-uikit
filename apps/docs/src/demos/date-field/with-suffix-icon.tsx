@@ -1,7 +1,7 @@
 "use client";
 
-import { Calendar } from "@gravity-ui/icons";
 import { DateField, Label } from "@thenamespace/uikit";
+import { Calendar } from "@thenamespace/uikit/icons";
 
 export function WithSuffixIcon() {
   return (

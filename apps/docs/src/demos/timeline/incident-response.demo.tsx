@@ -1,6 +1,11 @@
 "use client";
 
 // @demo-title Incident Response
+import { Timeline } from "@thenamespace/uikit";
+import { Avatar } from "@thenamespace/uikit/avatar";
+import { Button } from "@thenamespace/uikit/button";
+import { Card } from "@thenamespace/uikit/card";
+import { Chip } from "@thenamespace/uikit/chip";
 import {
   Attachment01Icon,
   BadgeCheckIcon,
@@ -13,13 +18,8 @@ import {
   SecurityWarningIcon,
   User02Icon,
   ZapIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { Timeline } from "@thenamespace/uikit";
-import { Avatar } from "@thenamespace/uikit/avatar";
-import { Button } from "@thenamespace/uikit/button";
-import { Card } from "@thenamespace/uikit/card";
-import { Chip } from "@thenamespace/uikit/chip";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { Link } from "@thenamespace/uikit/link";
 

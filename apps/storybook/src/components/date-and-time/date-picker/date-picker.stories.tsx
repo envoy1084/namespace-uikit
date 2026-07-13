@@ -171,7 +171,7 @@ export const WithCustomIndicator: Story = {
         <DateField.Suffix>
           <DatePicker.Trigger>
             <DatePicker.TriggerIndicator>
-              <Icon className="size-4" icon="gravity-ui:chevron-down" />
+              <Icon className="size-4" icon="hugeicons:chevron-down" />
             </DatePicker.TriggerIndicator>
           </DatePicker.Trigger>
         </DateField.Suffix>

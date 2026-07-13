@@ -1,15 +1,15 @@
 "use client";
 
 // @demo-title Empty State
+import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
+import { Button } from "@thenamespace/uikit/button";
+import { EmptyState as EmptyStateComponent } from "@thenamespace/uikit/empty-state";
 import {
   Add01Icon,
   FolderOpenIcon,
   MoreVerticalIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
-import { Button } from "@thenamespace/uikit/button";
-import { EmptyState as EmptyStateComponent } from "@thenamespace/uikit/empty-state";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 function StoryIcon({ icon }: { icon: typeof MoreVerticalIcon }) {
   return <HugeiconsIcon className="size-4" icon={icon} strokeWidth={2} />;

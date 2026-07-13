@@ -2,7 +2,6 @@
 
 import React from "react";
 
-import { FloppyDisk } from "@gravity-ui/icons";
 import {
   Button,
   Description,
@@ -15,6 +14,7 @@ import {
   TextArea,
   TextField,
 } from "@thenamespace/uikit";
+import { FloppyDisk } from "@thenamespace/uikit/icons";
 
 export function OnSurface() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {

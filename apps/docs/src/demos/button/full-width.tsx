@@ -1,5 +1,5 @@
-import { Plus } from "@gravity-ui/icons";
 import { Button } from "@thenamespace/uikit";
+import { Plus } from "@thenamespace/uikit/icons";
 
 export function FullWidth() {
   return (

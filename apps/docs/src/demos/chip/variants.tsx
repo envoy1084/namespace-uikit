@@ -1,7 +1,7 @@
 import React from "react";
 
-import { CircleDashed } from "@gravity-ui/icons";
 import { Chip, Separator } from "@thenamespace/uikit";
+import { CircleDashed } from "@thenamespace/uikit/icons";
 
 export function ChipVariants() {
   const sizes = ["lg", "md", "sm"] as const;

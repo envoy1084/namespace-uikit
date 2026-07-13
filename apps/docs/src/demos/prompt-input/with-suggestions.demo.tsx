@@ -3,6 +3,8 @@
 // @demo-title With Suggestions
 import { useState } from "react";
 
+import { TextShimmer } from "@thenamespace/uikit";
+import { PromptInput, PromptSuggestion } from "@thenamespace/uikit";
 import {
   Add01Icon,
   ArrowUp01Icon,
@@ -11,10 +13,8 @@ import {
   MusicNote01Icon,
   PaintBoardIcon,
   TextIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { TextShimmer } from "@thenamespace/uikit";
-import { PromptInput, PromptSuggestion } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 
 const suggestionItems: Array<{ icon: IconSvgElement; label: string }> = [
   { icon: PaintBoardIcon, label: "Design a launch page" },

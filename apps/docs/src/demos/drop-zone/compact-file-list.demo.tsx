@@ -3,13 +3,13 @@
 // @demo-title Compact File List
 import { useState } from "react";
 
+import { DropZone } from "@thenamespace/uikit";
+import { Button } from "@thenamespace/uikit/button";
 import {
   CheckmarkCircle02Icon,
   Loading03Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { DropZone } from "@thenamespace/uikit";
-import { Button } from "@thenamespace/uikit/button";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 type Upload = {
   id: string;

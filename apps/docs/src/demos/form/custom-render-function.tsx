@@ -1,6 +1,5 @@
 "use client";
 
-import { Check } from "@gravity-ui/icons";
 import {
   Button,
   Description,
@@ -10,6 +9,7 @@ import {
   Label,
   TextField,
 } from "@thenamespace/uikit";
+import { Check } from "@thenamespace/uikit/icons";
 
 export function CustomRenderFunction() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {

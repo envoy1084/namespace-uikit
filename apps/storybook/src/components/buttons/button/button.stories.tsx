@@ -87,23 +87,23 @@ const TemplateWithLinkButton = ({
 const TemplateWithIcon = ({ isDisabled, size }: Button["RootProps"]) => (
   <div className="flex gap-3">
     <Button isDisabled={isDisabled} size={size}>
-      <Icon icon="gravity-ui:globe" />
+      <Icon icon="hugeicons:globe" />
       Search
     </Button>
     <Button isDisabled={isDisabled} size={size} variant="secondary">
-      <Icon icon="gravity-ui:plus" />
+      <Icon icon="hugeicons:plus" />
       Add Member
     </Button>
     <Button isDisabled={isDisabled} size={size} variant="tertiary">
-      <Icon icon="gravity-ui:envelope" />
+      <Icon icon="hugeicons:envelope" />
       Email
     </Button>
     <Button isDisabled={isDisabled} size={size} variant="danger">
-      <Icon icon="gravity-ui:trash-bin" />
+      <Icon icon="hugeicons:trash-bin" />
       Delete
     </Button>
     <Button isDisabled={isDisabled} size={size} variant="danger-soft">
-      <Icon icon="gravity-ui:trash-bin" />
+      <Icon icon="hugeicons:trash-bin" />
       Cancel
     </Button>
   </div>
@@ -121,7 +121,7 @@ const TemplateWithIconOnly = ({
       size={size}
       variant={variant ?? "tertiary"}
     >
-      <Icon icon="gravity-ui:ellipsis" />
+      <Icon icon="hugeicons:ellipsis" />
     </Button>
   </div>
 );
@@ -157,7 +157,7 @@ const TemplateWithLoadingState = ({ size, variant }: Button["RootProps"]) => {
           {isPending ? (
             <Spinner color="current" size="sm" />
           ) : (
-            <Icon icon="gravity-ui:paperclip" />
+            <Icon icon="hugeicons:paperclip" />
           )}
           {isLoading ? "Uploading..." : "Upload File"}
         </>
@@ -175,27 +175,27 @@ const SizesTemplate = () => (
     </div>
     <div className="flex items-center gap-3">
       <Button size="sm" variant="secondary">
-        <Icon icon="gravity-ui:plus" />
+        <Icon icon="hugeicons:plus" />
         Small
       </Button>
       <Button size="md" variant="secondary">
-        <Icon icon="gravity-ui:plus" />
+        <Icon icon="hugeicons:plus" />
         Medium
       </Button>
       <Button size="lg" variant="secondary">
-        <Icon icon="gravity-ui:plus" />
+        <Icon icon="hugeicons:plus" />
         Large
       </Button>
     </div>
     <div className="flex items-center gap-3">
       <Button isIconOnly size="sm" variant="tertiary">
-        <Icon icon="gravity-ui:ellipsis" />
+        <Icon icon="hugeicons:ellipsis" />
       </Button>
       <Button isIconOnly size="md" variant="tertiary">
-        <Icon icon="gravity-ui:ellipsis" />
+        <Icon icon="hugeicons:ellipsis" />
       </Button>
       <Button isIconOnly size="lg" variant="tertiary">
-        <Icon icon="gravity-ui:ellipsis" />
+        <Icon icon="hugeicons:ellipsis" />
       </Button>
     </div>
   </div>
@@ -253,7 +253,7 @@ export const FullWidth = {
         Large
       </Button>
       <Button fullWidth>
-        <Icon icon="gravity-ui:plus" />
+        <Icon icon="hugeicons:plus" />
         With Icon
       </Button>
     </div>

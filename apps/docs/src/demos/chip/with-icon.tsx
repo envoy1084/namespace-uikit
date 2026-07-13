@@ -1,11 +1,11 @@
+import { Chip } from "@thenamespace/uikit";
 import {
   ChevronDown,
   CircleCheckFill,
   CircleFill,
   Clock,
   Xmark,
-} from "@gravity-ui/icons";
-import { Chip } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 export function ChipWithIcon() {
   return (

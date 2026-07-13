@@ -1,5 +1,5 @@
-import { Rocket } from "@gravity-ui/icons";
 import { buttonVariants } from "@thenamespace/uikit";
+import { Rocket } from "@thenamespace/uikit/icons";
 import LinkRoot from "fumadocs-core/link";
 
 import { DemoShowcase } from "@/components/demo-showcase";

@@ -1,9 +1,9 @@
+import { Button, ButtonGroup } from "@thenamespace/uikit";
 import {
   TextAlignCenter,
   TextAlignLeft,
   TextAlignRight,
-} from "@gravity-ui/icons";
-import { Button, ButtonGroup } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 export function FullWidth() {
   return (

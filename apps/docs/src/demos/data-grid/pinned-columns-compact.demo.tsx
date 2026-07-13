@@ -5,17 +5,17 @@ import type { Selection } from "react-aria-components";
 
 import { useMemo, useState } from "react";
 
+import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
+import { Button } from "@thenamespace/uikit/button";
+import { Dropdown } from "@thenamespace/uikit/dropdown";
 import {
   ArrowDown01Icon,
   CircleIcon,
   FilterIcon,
   Link01Icon,
   SlidersHorizontalIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
-import { Button } from "@thenamespace/uikit/button";
-import { Dropdown } from "@thenamespace/uikit/dropdown";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { SearchField } from "@thenamespace/uikit/search-field";
 import { Separator } from "@thenamespace/uikit/separator";

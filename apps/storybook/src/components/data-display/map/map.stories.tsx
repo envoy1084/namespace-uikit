@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useEffect, useMemo, useState } from "react";
 
+import { Avatar } from "@thenamespace/uikit/avatar";
+import { Card } from "@thenamespace/uikit/card";
 import {
   FirstAidKitIcon,
   GpsSignal01Icon,
@@ -9,10 +11,8 @@ import {
   StreetFoodIcon,
   TrafficLightIcon,
   UserGroupIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Avatar } from "@thenamespace/uikit/avatar";
-import { Card } from "@thenamespace/uikit/card";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Map, useMap } from "./index";
 

@@ -2,6 +2,7 @@
 "use client";
 
 // @demo-title Extensible
+import { RichTextEditor, type JSONContent } from "@thenamespace/uikit";
 import {
   CodeSquareIcon,
   Calendar03Icon,
@@ -23,9 +24,8 @@ import {
   TextStrikethroughIcon,
   TextUnderlineIcon,
   Undo02Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { RichTextEditor, type JSONContent } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 
 const extensibleArticle: JSONContent = {
   type: "doc",

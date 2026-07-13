@@ -1,5 +1,5 @@
-import { Person } from "@gravity-ui/icons";
 import { Avatar, Separator } from "@thenamespace/uikit";
+import { Person } from "@thenamespace/uikit/icons";
 
 export function Variants() {
   const colors = ["accent", "default", "success", "warning", "danger"] as const;

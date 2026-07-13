@@ -16,7 +16,11 @@ import {
   useState,
 } from "react";
 
-import { ChevronDown, ChevronLeft, ChevronRight } from "@gravity-ui/icons";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+} from "@thenamespace/uikit/icons";
 import { getBreadcrumbItemsFromPath } from "fumadocs-core/breadcrumb";
 import { usePathname } from "fumadocs-core/framework";
 import Link from "fumadocs-core/link";

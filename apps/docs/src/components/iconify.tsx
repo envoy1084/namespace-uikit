@@ -1,9 +1,10 @@
 import type { IconProps } from "@iconify/react";
 
+import type { ComponentType } from "react";
 import { forwardRef, useId, useMemo } from "react";
 
-import gravityIcons from "@iconify-json/gravity-ui/icons.json";
 import { Icon } from "@iconify/react";
+import * as UIKitIcons from "@thenamespace/uikit/icons";
 
 export type IconifyProps = IconProps & {
   icon?: IconProps["icon"] | string;
@@ -99,42 +100,53 @@ const customIcons = {
   },
 };
 
-const icons = {
-  ...gravityIcons.icons,
-  ...customIcons,
+const iconAliases: Record<string, string> = {
+  "bookmark-fill": "Bookmark",
+  "caret-right": "ChevronRight",
+  "layout-cells-large": "Box",
+  "layout-columns-3": "Box",
+  "list-ul": "Bars",
+  "person-gear": "Person",
+  "pin-fill": "Pin",
+  shuffle: "ArrowsRotateLeft",
+  "star-fill": "Star",
+  tray: "Box",
+  wallet: "CreditCard",
 };
+
+function toComponentName(name: string): string {
+  return (
+    iconAliases[name] ??
+    name.replace(/(^|-)([a-z0-9])/g, (_, _separator, character: string) =>
+      character.toUpperCase(),
+    )
+  );
+}
 
 const Iconify = forwardRef<SVGSVGElement, IconifyProps>(
   ({ icon: iconProp, ...props }, ref) => {
-    // Check if it's a gravity-ui icon (no prefix or explicitly in gravity icons)
-    const isGravityIcon =
-      typeof iconProp === "string" &&
-      (iconProp in icons || iconProp.startsWith("gravity-ui:"));
+    if (typeof iconProp === "string") {
+      const iconName = iconProp.replace(/^hugeicons:/, "");
+      const customIcon = customIcons[iconName as keyof typeof customIcons];
 
-    // For gravity-ui icons, render SVG directly from icon data
-    // This ensures consistent rendering between SSR and client, avoiding hydration mismatch
-    if (isGravityIcon && typeof iconProp === "string") {
-      // Remove "gravity-ui:" prefix if present
-      const iconName = iconProp.replace(/^gravity-ui:/, "");
-      const gravityIconData = icons[iconName as keyof typeof icons];
+      if (customIcon) {
+        return <SVGFromIconData ref={ref} iconData={customIcon} {...props} />;
+      }
 
-      if (gravityIconData) {
-        return (
-          <SVGFromIconData ref={ref} iconData={gravityIconData} {...props} />
-        );
+      const componentName = toComponentName(iconName);
+      const HugeIcon = UIKitIcons[componentName as keyof typeof UIKitIcons] as
+        | ComponentType<Omit<IconProps, "icon">>
+        | undefined;
+
+      if (
+        (iconProp.startsWith("hugeicons:") || !iconProp.includes(":")) &&
+        typeof HugeIcon === "function"
+      ) {
+        return <HugeIcon ref={ref} {...props} />;
       }
     }
 
-    // Use online version for other icon sets (like simple-icons:vite, lineicons:nextjs)
-    // Icon component supports SSR, so this works consistently on both server and client
-    return (
-      <Icon
-        {...props}
-        ref={ref}
-        fallback={<SVGFromIconData iconData={icons["square"]} />}
-        icon={iconProp}
-      />
-    );
+    return <Icon {...props} ref={ref} icon={iconProp} />;
   },
 );
 

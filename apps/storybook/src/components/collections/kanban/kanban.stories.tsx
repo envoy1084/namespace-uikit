@@ -3,6 +3,11 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { FormEvent, ReactNode } from "react";
 import { createContext, useContext, useRef, useState } from "react";
 
+import { Avatar } from "@thenamespace/uikit/avatar";
+import { Button } from "@thenamespace/uikit/button";
+import { Chip } from "@thenamespace/uikit/chip";
+import { Dropdown } from "@thenamespace/uikit/dropdown";
+import { Header } from "@thenamespace/uikit/header";
 import {
   Add01Icon,
   ArrowRight01Icon,
@@ -15,13 +20,8 @@ import {
   Delete02Icon,
   FlashIcon,
   MoreHorizontalIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Avatar } from "@thenamespace/uikit/avatar";
-import { Button } from "@thenamespace/uikit/button";
-import { Chip } from "@thenamespace/uikit/chip";
-import { Dropdown } from "@thenamespace/uikit/dropdown";
-import { Header } from "@thenamespace/uikit/header";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { Label } from "@thenamespace/uikit/label";
 import { Modal } from "@thenamespace/uikit/modal";

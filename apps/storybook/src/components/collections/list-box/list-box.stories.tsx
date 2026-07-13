@@ -86,7 +86,7 @@ export const WithSections: Story = {
             <div className="flex h-8 items-start justify-center pt-px">
               <Icon
                 className="text-muted size-4 shrink-0"
-                icon="gravity-ui:square-plus"
+                icon="hugeicons:square-plus"
               />
             </div>
             <div className="flex flex-col">
@@ -102,7 +102,7 @@ export const WithSections: Story = {
             <div className="flex h-8 items-start justify-center pt-px">
               <Icon
                 className="text-muted size-4 shrink-0"
-                icon="gravity-ui:pencil"
+                icon="hugeicons:pencil"
               />
             </div>
             <div className="flex flex-col">
@@ -126,7 +126,7 @@ export const WithSections: Story = {
             <div className="flex h-8 items-start justify-center pt-px">
               <Icon
                 className="text-danger size-4 shrink-0"
-                icon="gravity-ui:trash-bin"
+                icon="hugeicons:trash-bin"
               />
             </div>
             <div className="flex flex-col">
@@ -161,7 +161,7 @@ export const WithDisabledItems: Story = {
             <div className="flex h-8 items-start justify-center pt-px">
               <Icon
                 className="text-muted size-4 shrink-0"
-                icon="gravity-ui:square-plus"
+                icon="hugeicons:square-plus"
               />
             </div>
             <div className="flex flex-col">
@@ -177,7 +177,7 @@ export const WithDisabledItems: Story = {
             <div className="flex h-8 items-start justify-center pt-px">
               <Icon
                 className="text-muted size-4 shrink-0"
-                icon="gravity-ui:pencil"
+                icon="hugeicons:pencil"
               />
             </div>
             <div className="flex flex-col">
@@ -201,7 +201,7 @@ export const WithDisabledItems: Story = {
             <div className="flex h-8 items-start justify-center pt-px">
               <Icon
                 className="text-danger size-4 shrink-0"
-                icon="gravity-ui:trash-bin"
+                icon="hugeicons:trash-bin"
               />
             </div>
             <div className="flex flex-col">
@@ -278,7 +278,7 @@ export const CustomCheckIcon: Story = {
           <ListBox.ItemIndicator>
             {({ isSelected }) =>
               isSelected ? (
-                <Icon className="text-accent size-4" icon="gravity-ui:check" />
+                <Icon className="text-accent size-4" icon="hugeicons:check" />
               ) : null
             }
           </ListBox.ItemIndicator>
@@ -295,7 +295,7 @@ export const CustomCheckIcon: Story = {
           <ListBox.ItemIndicator>
             {({ isSelected }) =>
               isSelected ? (
-                <Icon className="text-accent size-4" icon="gravity-ui:check" />
+                <Icon className="text-accent size-4" icon="hugeicons:check" />
               ) : null
             }
           </ListBox.ItemIndicator>
@@ -312,7 +312,7 @@ export const CustomCheckIcon: Story = {
           <ListBox.ItemIndicator>
             {({ isSelected }) =>
               isSelected ? (
-                <Icon className="text-accent size-4" icon="gravity-ui:check" />
+                <Icon className="text-accent size-4" icon="hugeicons:check" />
               ) : null
             }
           </ListBox.ItemIndicator>
@@ -351,7 +351,7 @@ export const Controlled: Story = {
                   isSelected ? (
                     <Icon
                       className="text-accent size-4"
-                      icon="gravity-ui:check"
+                      icon="hugeicons:check"
                     />
                   ) : null
                 }
@@ -371,7 +371,7 @@ export const Controlled: Story = {
                   isSelected ? (
                     <Icon
                       className="text-accent size-4"
-                      icon="gravity-ui:check"
+                      icon="hugeicons:check"
                     />
                   ) : null
                 }
@@ -391,7 +391,7 @@ export const Controlled: Story = {
                   isSelected ? (
                     <Icon
                       className="text-accent size-4"
-                      icon="gravity-ui:check"
+                      icon="hugeicons:check"
                     />
                   ) : null
                 }

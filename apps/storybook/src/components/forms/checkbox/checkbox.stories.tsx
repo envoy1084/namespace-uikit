@@ -6,8 +6,8 @@ import {
   Add01Icon,
   FavouriteIcon,
   MinusSignIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { cx } from "tailwind-variants";
 
 import { CheckboxGroup } from "@/components/forms/checkbox-group";
@@ -318,19 +318,19 @@ export const FeaturesAndAddOnsExample: Story = {
         title: "Email Notifications",
         value: "email",
         description: "Receive updates via email",
-        icon: "gravity-ui:envelope",
+        icon: "hugeicons:envelope",
       },
       {
         title: "SMS Alerts",
         value: "sms",
         description: "Get instant SMS notifications",
-        icon: "gravity-ui:comment",
+        icon: "hugeicons:comment",
       },
       {
         title: "Push Notifications",
         value: "push",
         description: "Browser and mobile push alerts",
-        icon: "gravity-ui:bell",
+        icon: "hugeicons:bell",
       },
     ];
 

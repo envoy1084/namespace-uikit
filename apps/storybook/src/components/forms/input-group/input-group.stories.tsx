@@ -33,7 +33,7 @@ export const Default: Story = {
       <Label>Email address</Label>
       <InputGroup>
         <InputGroup.Prefix>
-          <Icon className="text-muted size-4" icon="gravity-ui:envelope" />
+          <Icon className="text-muted size-4" icon="hugeicons:envelope" />
         </InputGroup.Prefix>
         <InputGroup.Input className="w-[280px]" placeholder="name@email.com" />
       </InputGroup>
@@ -48,7 +48,7 @@ export const Variants: Story = {
         <Label>Primary variant</Label>
         <InputGroup variant="primary">
           <InputGroup.Prefix>
-            <Icon className="text-muted size-4" icon="gravity-ui:envelope" />
+            <Icon className="text-muted size-4" icon="hugeicons:envelope" />
           </InputGroup.Prefix>
           <InputGroup.Input placeholder="name@email.com" />
         </InputGroup>
@@ -57,7 +57,7 @@ export const Variants: Story = {
         <Label>Secondary variant</Label>
         <InputGroup variant="secondary">
           <InputGroup.Prefix>
-            <Icon className="text-muted size-4" icon="gravity-ui:envelope" />
+            <Icon className="text-muted size-4" icon="hugeicons:envelope" />
           </InputGroup.Prefix>
           <InputGroup.Input placeholder="name@email.com" />
         </InputGroup>
@@ -73,7 +73,7 @@ export const FullWidth: Story = {
         <Label>Email address</Label>
         <InputGroup fullWidth>
           <InputGroup.Prefix>
-            <Icon className="text-muted size-4" icon="gravity-ui:envelope" />
+            <Icon className="text-muted size-4" icon="hugeicons:envelope" />
           </InputGroup.Prefix>
           <InputGroup.Input placeholder="name@email.com" />
         </InputGroup>
@@ -83,7 +83,7 @@ export const FullWidth: Story = {
         <InputGroup fullWidth>
           <InputGroup.Input placeholder="Enter password" type="password" />
           <InputGroup.Suffix>
-            <Icon className="text-muted size-4" icon="gravity-ui:eye" />
+            <Icon className="text-muted size-4" icon="hugeicons:eye" />
           </InputGroup.Suffix>
         </InputGroup>
       </TextField>
@@ -97,7 +97,7 @@ export const WithPrefixIcon: Story = {
       <Label>Email address</Label>
       <InputGroup>
         <InputGroup.Prefix>
-          <Icon className="text-muted size-4" icon="gravity-ui:envelope" />
+          <Icon className="text-muted size-4" icon="hugeicons:envelope" />
         </InputGroup.Prefix>
         <InputGroup.Input className="w-[280px]" placeholder="name@email.com" />
       </InputGroup>
@@ -113,7 +113,7 @@ export const WithSuffixIcon: Story = {
       <InputGroup>
         <InputGroup.Input className="w-[280px]" placeholder="name@email.com" />
         <InputGroup.Suffix>
-          <Icon className="text-muted size-4" icon="gravity-ui:envelope" />
+          <Icon className="text-muted size-4" icon="hugeicons:envelope" />
         </InputGroup.Suffix>
       </InputGroup>
       <Description>We don't send spam</Description>
@@ -169,7 +169,7 @@ export const WithIconPrefixAndTextSuffix: Story = {
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Prefix>
-          <Icon className="text-muted size-4" icon="gravity-ui:globe" />
+          <Icon className="text-muted size-4" icon="hugeicons:globe" />
         </InputGroup.Prefix>
         <InputGroup.Input className="w-[280px]" />
         <InputGroup.Suffix>.com</InputGroup.Suffix>
@@ -190,7 +190,7 @@ export const WithCopySuffix: Story = {
         <InputGroup.Input className="w-[280px]" />
         <InputGroup.Suffix className="pr-0">
           <Button isIconOnly aria-label="Copy" size="sm" variant="ghost">
-            <Icon className="size-4" icon="gravity-ui:copy" />
+            <Icon className="size-4" icon="hugeicons:copy" />
           </Button>
         </InputGroup.Suffix>
       </InputGroup>
@@ -208,12 +208,12 @@ export const WithIconPrefixAndCopySuffix: Story = {
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Prefix>
-          <Icon className="text-muted size-4" icon="gravity-ui:globe" />
+          <Icon className="text-muted size-4" icon="hugeicons:globe" />
         </InputGroup.Prefix>
         <InputGroup.Input className="w-[280px]" />
         <InputGroup.Suffix className="pr-0">
           <Button isIconOnly aria-label="Copy" size="sm" variant="ghost">
-            <Icon className="size-4" icon="gravity-ui:copy" />
+            <Icon className="size-4" icon="hugeicons:copy" />
           </Button>
         </InputGroup.Suffix>
       </InputGroup>
@@ -244,7 +244,7 @@ export const PasswordWithToggle: Story = {
             >
               <Icon
                 className="size-4"
-                icon={isVisible ? "gravity-ui:eye" : "gravity-ui:eye-slash"}
+                icon={isVisible ? "hugeicons:eye" : "hugeicons:eye-slash"}
               />
             </Button>
           </InputGroup.Suffix>
@@ -305,7 +305,7 @@ export const Required: Story = {
         <Label>Email address</Label>
         <InputGroup>
           <InputGroup.Prefix>
-            <Icon className="text-muted size-4" icon="gravity-ui:envelope" />
+            <Icon className="text-muted size-4" icon="hugeicons:envelope" />
           </InputGroup.Prefix>
           <InputGroup.Input
             className="w-[280px]"
@@ -337,7 +337,7 @@ export const Invalid: Story = {
         <Label>Email address</Label>
         <InputGroup>
           <InputGroup.Prefix>
-            <Icon className="text-muted size-4" icon="gravity-ui:envelope" />
+            <Icon className="text-muted size-4" icon="hugeicons:envelope" />
           </InputGroup.Prefix>
           <InputGroup.Input
             className="w-[280px]"
@@ -375,7 +375,7 @@ export const Disabled: Story = {
         <Label>Email address</Label>
         <InputGroup>
           <InputGroup.Prefix>
-            <Icon className="text-muted size-4" icon="gravity-ui:envelope" />
+            <Icon className="text-muted size-4" icon="hugeicons:envelope" />
           </InputGroup.Prefix>
           <InputGroup.Input className="w-[280px]" />
         </InputGroup>
@@ -423,7 +423,7 @@ export const WithTextArea: Story = {
         <InputGroup fullWidth className="flex flex-col gap-2 rounded-3xl py-2">
           <InputGroup.Prefix className="px-3 py-0">
             <Button aria-label="Add context" size="sm" variant="outline">
-              <Icon icon="gravity-ui:at" />
+              <Icon icon="hugeicons:at" />
               Add Context
             </Button>
           </InputGroup.Prefix>
@@ -442,7 +442,7 @@ export const WithTextArea: Story = {
                 size="sm"
                 variant="tertiary"
               >
-                <Icon icon="gravity-ui:plus" />
+                <Icon icon="hugeicons:plus" />
               </Button>
               <Tooltip.Content>
                 <p className="text-xs">Add a files and more</p>
@@ -455,7 +455,7 @@ export const WithTextArea: Story = {
                 size="sm"
                 variant="tertiary"
               >
-                <Icon icon="gravity-ui:plug-connection" />
+                <Icon icon="hugeicons:plug-connection" />
               </Button>
               <Tooltip.Content>
                 <p className="text-xs">Connect apps</p>
@@ -469,7 +469,7 @@ export const WithTextArea: Story = {
                   size="sm"
                   variant="ghost"
                 >
-                  <Icon icon="gravity-ui:microphone" />
+                  <Icon icon="hugeicons:microphone" />
                 </Button>
                 <Tooltip.Content>
                   <p className="text-xs">Voice input</p>
@@ -487,7 +487,7 @@ export const WithTextArea: Story = {
                     isPending ? (
                       <Spinner color="current" size="sm" />
                     ) : (
-                      <Icon icon="gravity-ui:arrow-up" />
+                      <Icon icon="hugeicons:arrow-up" />
                     )
                   }
                 </Button>
@@ -514,7 +514,7 @@ export const AllVariations: Story = {
           <Label>Email address *</Label>
           <InputGroup>
             <InputGroup.Prefix>
-              <Icon className="text-muted size-4" icon="gravity-ui:envelope" />
+              <Icon className="text-muted size-4" icon="hugeicons:envelope" />
             </InputGroup.Prefix>
             <InputGroup.Input
               className="w-[280px]"
@@ -532,7 +532,7 @@ export const AllVariations: Story = {
               placeholder="name@email.com"
             />
             <InputGroup.Suffix>
-              <Icon className="text-muted size-4" icon="gravity-ui:envelope" />
+              <Icon className="text-muted size-4" icon="hugeicons:envelope" />
             </InputGroup.Suffix>
           </InputGroup>
           <Description>We don't send spam</Description>
@@ -580,7 +580,7 @@ export const AllVariations: Story = {
           <Label>Website</Label>
           <InputGroup>
             <InputGroup.Prefix>
-              <Icon className="text-muted size-4" icon="gravity-ui:globe" />
+              <Icon className="text-muted size-4" icon="hugeicons:globe" />
             </InputGroup.Prefix>
             <InputGroup.Input className="w-[280px]" />
             <InputGroup.Suffix>.com</InputGroup.Suffix>
@@ -603,7 +603,7 @@ export const AllVariations: Story = {
                 size="sm"
                 variant="ghost"
               >
-                <Icon className="size-4" icon="gravity-ui:copy" />
+                <Icon className="size-4" icon="hugeicons:copy" />
               </Button>
             </InputGroup.Suffix>
           </InputGroup>
@@ -617,7 +617,7 @@ export const AllVariations: Story = {
           <Label>Website</Label>
           <InputGroup>
             <InputGroup.Prefix>
-              <Icon className="text-muted size-4" icon="gravity-ui:globe" />
+              <Icon className="text-muted size-4" icon="hugeicons:globe" />
             </InputGroup.Prefix>
             <InputGroup.Input className="w-[280px]" />
             <InputGroup.Suffix className="pr-0">
@@ -628,7 +628,7 @@ export const AllVariations: Story = {
                 size="sm"
                 variant="ghost"
               >
-                <Icon className="size-4" icon="gravity-ui:copy" />
+                <Icon className="size-4" icon="hugeicons:copy" />
               </Button>
             </InputGroup.Suffix>
           </InputGroup>

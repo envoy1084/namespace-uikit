@@ -107,8 +107,8 @@ import {
   Video01Icon,
   Wallet01Icon,
   Wrench01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 
 const icons: Record<string, IconSvgElement> = {
   "add-circle-linear": AddCircleIcon,

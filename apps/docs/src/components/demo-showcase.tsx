@@ -5,7 +5,6 @@ import type { Color } from "react-aria-components";
 import type { CSSProperties } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { Palette } from "@gravity-ui/icons";
 import {
   ColorSwatchPicker,
   Spinner,
@@ -13,6 +12,7 @@ import {
   Tooltip,
   buttonVariants,
 } from "@thenamespace/uikit";
+import { Palette } from "@thenamespace/uikit/icons";
 import LinkRoot from "fumadocs-core/link";
 import { useTheme } from "next-themes";
 

@@ -1,5 +1,5 @@
-import { ChevronDown } from "@gravity-ui/icons";
 import { Accordion, cn } from "@thenamespace/uikit";
+import { ChevronDown } from "@thenamespace/uikit/icons";
 
 const items = [
   {

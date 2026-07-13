@@ -1,7 +1,7 @@
 "use client";
 
-import { HardDrive, Persons } from "@gravity-ui/icons";
 import { Button, Toast, toast } from "@thenamespace/uikit";
+import { HardDrive, Persons } from "@thenamespace/uikit/icons";
 
 const noop = () => {};
 

@@ -1,9 +1,9 @@
 "use client";
 
 // @demo-title Standalone Ripple
-import { ArrowRight01Icon, UserIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { PressableFeedback } from "@thenamespace/uikit";
+import { ArrowRight01Icon, UserIcon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 function StandaloneRow({ mode }: { mode: "highlight" | "ripple" }) {
   return (

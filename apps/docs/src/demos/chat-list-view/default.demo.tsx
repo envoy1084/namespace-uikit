@@ -1,9 +1,9 @@
 "use client";
 
 // @demo-title Default
-import { Comment01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { ChatListView } from "@thenamespace/uikit";
+import { Comment01Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 const chats = [
   {

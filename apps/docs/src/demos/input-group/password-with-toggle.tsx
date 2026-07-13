@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-import { Eye, EyeSlash } from "@gravity-ui/icons";
 import { Button, InputGroup, Label, TextField } from "@thenamespace/uikit";
+import { Eye, EyeSlash } from "@thenamespace/uikit/icons";
 
 export function PasswordWithToggle() {
   const [isVisible, setIsVisible] = useState(false);

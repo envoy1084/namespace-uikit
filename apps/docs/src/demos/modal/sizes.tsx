@@ -1,7 +1,7 @@
 "use client";
 
-import { Rocket } from "@gravity-ui/icons";
 import { Button, Modal } from "@thenamespace/uikit";
+import { Rocket } from "@thenamespace/uikit/icons";
 
 export function Sizes() {
   const sizes = ["xs", "sm", "md", "lg", "cover", "full"] as const;

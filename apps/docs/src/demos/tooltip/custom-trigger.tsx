@@ -1,5 +1,5 @@
-import { CircleCheckFill, CircleQuestion } from "@gravity-ui/icons";
 import { Avatar, Chip, Tooltip } from "@thenamespace/uikit";
+import { CircleCheckFill, CircleQuestion } from "@thenamespace/uikit/icons";
 
 export function TooltipCustomTrigger() {
   return (

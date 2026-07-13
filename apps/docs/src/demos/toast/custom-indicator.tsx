@@ -1,7 +1,7 @@
 "use client";
 
-import { Star } from "@gravity-ui/icons";
 import { Button, Toast, toast } from "@thenamespace/uikit";
+import { Star } from "@thenamespace/uikit/icons";
 
 export function CustomIndicator() {
   return (

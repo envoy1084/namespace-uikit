@@ -2,8 +2,8 @@ import type { Meta } from "@storybook/react";
 
 import React from "react";
 
-import { InformationCircleIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { InformationCircleIcon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { buttonVariants } from "@/components/buttons/button/index";
 import { ExternalLinkIcon } from "@/components/utilities/icons";

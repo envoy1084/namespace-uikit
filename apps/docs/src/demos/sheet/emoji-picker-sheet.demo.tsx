@@ -4,6 +4,13 @@
 // @demo-title Emoji Picker Sheet
 import { useMemo, useRef, useState } from "react";
 
+import { Sheet } from "@thenamespace/uikit";
+import { Button } from "@thenamespace/uikit/button";
+import {
+  EmojiPicker,
+  EMOJI_SKIN_TONES,
+} from "@thenamespace/uikit/emoji-picker";
+import { EmptyState } from "@thenamespace/uikit/empty-state";
 import {
   Basketball01Icon,
   Car01Icon,
@@ -14,15 +21,8 @@ import {
   Idea01Icon,
   SmileIcon,
   SpoonAndForkIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { Sheet } from "@thenamespace/uikit";
-import { Button } from "@thenamespace/uikit/button";
-import {
-  EmojiPicker,
-  EMOJI_SKIN_TONES,
-} from "@thenamespace/uikit/emoji-picker";
-import { EmptyState } from "@thenamespace/uikit/empty-state";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { ScrollShadow } from "@thenamespace/uikit/scroll-shadow";
 import { SearchField } from "@thenamespace/uikit/search-field";

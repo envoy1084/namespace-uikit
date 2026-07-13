@@ -1,4 +1,3 @@
-import { Bold, Copy, Italic, Scissors, Underline } from "@gravity-ui/icons";
 import {
   Button,
   ButtonGroup,
@@ -7,6 +6,13 @@ import {
   ToggleButtonGroup,
   Toolbar,
 } from "@thenamespace/uikit";
+import {
+  Bold,
+  Copy,
+  Italic,
+  Scissors,
+  Underline,
+} from "@thenamespace/uikit/icons";
 
 export function Basic() {
   return (

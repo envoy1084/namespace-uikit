@@ -1,5 +1,6 @@
 import type { ComponentType, SVGProps } from "react";
 
+import { Button, Drawer } from "@thenamespace/uikit";
 import {
   Bars,
   Bell,
@@ -8,8 +9,7 @@ import {
   House,
   Magnifier,
   Person,
-} from "@gravity-ui/icons";
-import { Button, Drawer } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 export function Navigation() {
   const navItems: {

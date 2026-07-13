@@ -35,19 +35,19 @@ export const Default: Story = {
     <TagGroup aria-label="Tags" selectionMode="single">
       <TagGroup.List>
         <Tag id="default-news">
-          <Icon icon="gravity-ui:square-article" />
+          <Icon icon="hugeicons:square-article" />
           News
         </Tag>
         <Tag id="default-travel">
-          <Icon icon="gravity-ui:planet-earth" />
+          <Icon icon="hugeicons:planet-earth" />
           Travel
         </Tag>
         <Tag id="default-gaming">
-          <Icon icon="gravity-ui:rocket" />
+          <Icon icon="hugeicons:rocket" />
           Gaming
         </Tag>
         <Tag id="default-shopping">
-          <Icon icon="gravity-ui:shopping-bag" />
+          <Icon icon="hugeicons:shopping-bag" />
           Shopping
         </Tag>
       </TagGroup.List>
@@ -258,19 +258,19 @@ export const WithPrefix: Story = {
         <Label>With Icons</Label>
         <TagGroup.List>
           <Tag>
-            <Icon icon="gravity-ui:square-article" />
+            <Icon icon="hugeicons:square-article" />
             News
           </Tag>
           <Tag>
-            <Icon icon="gravity-ui:planet-earth" />
+            <Icon icon="hugeicons:planet-earth" />
             Travel
           </Tag>
           <Tag>
-            <Icon icon="gravity-ui:rocket" />
+            <Icon icon="hugeicons:rocket" />
             Gaming
           </Tag>
           <Tag>
-            <Icon icon="gravity-ui:shopping-bag" />
+            <Icon icon="hugeicons:shopping-bag" />
             Shopping
           </Tag>
         </TagGroup.List>
@@ -371,7 +371,7 @@ export const WithRemoveButton: Story = {
                       {tag.name}
                       {!!renderProps.allowsRemoving && (
                         <Tag.RemoveButton>
-                          <Icon icon="gravity-ui:circle-xmark-fill" />
+                          <Icon icon="hugeicons:circle-xmark-fill" />
                         </Tag.RemoveButton>
                       )}
                     </>
@@ -398,7 +398,7 @@ export const WithRemoveButton: Story = {
                 <Tag key={tag.id} id={tag.id} textValue={tag.name}>
                   {tag.name}
                   <Tag.RemoveButton>
-                    <Icon icon="gravity-ui:circle-xmark-fill" />
+                    <Icon icon="hugeicons:circle-xmark-fill" />
                   </Tag.RemoveButton>
                 </Tag>
               )}

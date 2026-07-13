@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useEffect, useRef, useState } from "react";
 
-import { ArrowUp01Icon, Attachment01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowUp01Icon, Attachment01Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import {
   ChatAttachment,

@@ -7,8 +7,8 @@ import {
   AddCircleIcon,
   ArrowDown01Icon,
   ArrowUp01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { cn } from "tailwind-variants";
 
 import { Button } from "@/components/buttons/button";
@@ -67,7 +67,7 @@ const Template = (props: DisclosureGroupProps) => {
                 })}
               >
                 <div className="flex w-full items-center justify-start gap-2">
-                  <Icon icon="gravity-ui:qr-code" />
+                  <Icon icon="hugeicons:qr-code" />
                   Preview Namespace Native
                 </div>
                 <Disclosure.Indicator className="text-muted" />
@@ -197,7 +197,7 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
                 })}
               >
                 <div className="flex w-full items-center justify-start gap-2">
-                  <Icon icon="gravity-ui:qr-code" />
+                  <Icon icon="hugeicons:qr-code" />
                   Preview Namespace Native
                 </div>
                 <Disclosure.Indicator className="text-muted" />

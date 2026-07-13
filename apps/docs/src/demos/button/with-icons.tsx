@@ -1,5 +1,5 @@
-import { Envelope, Globe, Plus, TrashBin } from "@gravity-ui/icons";
 import { Button } from "@thenamespace/uikit";
+import { Envelope, Globe, Plus, TrashBin } from "@thenamespace/uikit/icons";
 
 export function WithIcons() {
   return (

@@ -6,8 +6,8 @@ import * as React from "react";
 import {
   ArrowRight01Icon,
   CheckmarkCircle02Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
 import { Avatar } from "@/components/data-display/avatar";
@@ -397,7 +397,7 @@ export const WithIcons: Story = {
           <Dropdown.Item id="new-file" textValue="New file">
             <Icon
               className="text-muted size-4 shrink-0"
-              icon="gravity-ui:square-plus"
+              icon="hugeicons:square-plus"
             />
             <Label>New file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
@@ -408,7 +408,7 @@ export const WithIcons: Story = {
           <Dropdown.Item id="open-file" textValue="Open file">
             <Icon
               className="text-muted size-4 shrink-0"
-              icon="gravity-ui:folder-open"
+              icon="hugeicons:folder-open"
             />
             <Label>Open file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
@@ -419,7 +419,7 @@ export const WithIcons: Story = {
           <Dropdown.Item id="save-file" textValue="Save file">
             <Icon
               className="text-muted size-4 shrink-0"
-              icon="gravity-ui:floppy-disk"
+              icon="hugeicons:floppy-disk"
             />
             <Label>Save file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
@@ -434,7 +434,7 @@ export const WithIcons: Story = {
           >
             <Icon
               className="text-danger size-4 shrink-0"
-              icon="gravity-ui:trash-bin"
+              icon="hugeicons:trash-bin"
             />
             <Label>Delete file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
@@ -491,7 +491,7 @@ export const WithDescriptions: Story = {
             <div className="flex h-8 items-start justify-center pt-px">
               <Icon
                 className="text-muted size-4 shrink-0"
-                icon="gravity-ui:square-plus"
+                icon="hugeicons:square-plus"
               />
             </div>
             <div className="flex flex-col">
@@ -507,7 +507,7 @@ export const WithDescriptions: Story = {
             <div className="flex h-8 items-start justify-center pt-px">
               <Icon
                 className="text-muted size-4 shrink-0"
-                icon="gravity-ui:folder-open"
+                icon="hugeicons:folder-open"
               />
             </div>
             <div className="flex flex-col">
@@ -523,7 +523,7 @@ export const WithDescriptions: Story = {
             <div className="flex h-8 items-start justify-center pt-px">
               <Icon
                 className="text-muted size-4 shrink-0"
-                icon="gravity-ui:floppy-disk"
+                icon="hugeicons:floppy-disk"
               />
             </div>
             <div className="flex flex-col">
@@ -543,7 +543,7 @@ export const WithDescriptions: Story = {
             <div className="flex h-8 items-start justify-center pt-px">
               <Icon
                 className="text-danger size-4 shrink-0"
-                icon="gravity-ui:trash-bin"
+                icon="hugeicons:trash-bin"
               />
             </div>
             <div className="flex flex-col">
@@ -569,7 +569,7 @@ export const WithSections: Story = {
         aria-label="Menu"
         className="button button-md button--secondary button--icon-only data-[focus-visible=true]:status-focused"
       >
-        <Icon className="outline-none" icon="gravity-ui:ellipsis-vertical" />
+        <Icon className="outline-none" icon="hugeicons:ellipsis-vertical" />
       </Dropdown.Trigger>
       <Dropdown.Popover>
         <Dropdown.Menu onAction={(key) => alert(`Selected: ${key}`)}>
@@ -579,7 +579,7 @@ export const WithSections: Story = {
               <div className="flex h-8 items-start justify-center pt-px">
                 <Icon
                   className="text-muted size-4 shrink-0"
-                  icon="gravity-ui:square-plus"
+                  icon="hugeicons:square-plus"
                 />
               </div>
               <div className="flex flex-col">
@@ -595,7 +595,7 @@ export const WithSections: Story = {
               <div className="flex h-8 items-start justify-center pt-px">
                 <Icon
                   className="text-muted size-4 shrink-0"
-                  icon="gravity-ui:pencil"
+                  icon="hugeicons:pencil"
                 />
               </div>
               <div className="flex flex-col">
@@ -619,7 +619,7 @@ export const WithSections: Story = {
               <div className="flex h-8 items-start justify-center pt-px">
                 <Icon
                   className="text-danger size-4 shrink-0"
-                  icon="gravity-ui:trash-bin"
+                  icon="hugeicons:trash-bin"
                 />
               </div>
               <div className="flex flex-col">
@@ -643,7 +643,7 @@ export const WithDisabledItems: Story = {
   render: () => (
     <Dropdown>
       <Button isIconOnly aria-label="Menu" variant="secondary">
-        <Icon className="outline-none" icon="gravity-ui:bars" />
+        <Icon className="outline-none" icon="hugeicons:bars" />
       </Button>
       <Dropdown.Popover className="min-w-[220px]">
         <Dropdown.Menu
@@ -656,7 +656,7 @@ export const WithDisabledItems: Story = {
               <div className="flex h-8 items-start justify-center pt-px">
                 <Icon
                   className="text-muted size-4 shrink-0"
-                  icon="gravity-ui:square-plus"
+                  icon="hugeicons:square-plus"
                 />
               </div>
               <div className="flex flex-col">
@@ -672,7 +672,7 @@ export const WithDisabledItems: Story = {
               <div className="flex h-8 items-start justify-center pt-px">
                 <Icon
                   className="text-muted size-4 shrink-0"
-                  icon="gravity-ui:pencil"
+                  icon="hugeicons:pencil"
                 />
               </div>
               <div className="flex flex-col">
@@ -696,7 +696,7 @@ export const WithDisabledItems: Story = {
               <div className="flex h-8 items-start justify-center pt-px">
                 <Icon
                   className="text-danger size-4 shrink-0"
-                  icon="gravity-ui:trash-bin"
+                  icon="hugeicons:trash-bin"
                 />
               </div>
               <div className="flex flex-col">
@@ -794,7 +794,7 @@ export const WithCustomSubmenuIndicator: Story = {
               <Dropdown.SubmenuIndicator>
                 <Icon
                   className="text-muted size-3.5"
-                  icon="gravity-ui:arrow-right"
+                  icon="hugeicons:arrow-right"
                 />
               </Dropdown.SubmenuIndicator>
             </Dropdown.Item>
@@ -970,13 +970,13 @@ export const CustomTrigger: Story = {
           <Dropdown.Item id="settings" textValue="Settings">
             <div className="flex w-full items-center justify-between gap-2">
               <Label>Settings</Label>
-              <Icon className="text-muted size-3.5" icon="gravity-ui:gear" />
+              <Icon className="text-muted size-3.5" icon="hugeicons:gear" />
             </div>
           </Dropdown.Item>
           <Dropdown.Item id="new-project" textValue="New project">
             <div className="flex w-full items-center justify-between gap-2">
               <Label>Create Team</Label>
-              <Icon className="text-muted size-3.5" icon="gravity-ui:persons" />
+              <Icon className="text-muted size-3.5" icon="hugeicons:persons" />
             </div>
           </Dropdown.Item>
           <Dropdown.Item id="logout" textValue="Logout" variant="danger">
@@ -984,7 +984,7 @@ export const CustomTrigger: Story = {
               <Label>Log Out</Label>
               <Icon
                 className="text-danger size-3.5"
-                icon="gravity-ui:arrow-right-from-square"
+                icon="hugeicons:arrow-right-from-square"
               />
             </div>
           </Dropdown.Item>

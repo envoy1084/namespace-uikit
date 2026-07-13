@@ -1,5 +1,5 @@
-import { HeartFill } from "@gravity-ui/icons";
 import { ColorSwatchPicker } from "@thenamespace/uikit";
+import { HeartFill } from "@thenamespace/uikit/icons";
 
 export function CustomIndicator() {
   const colors = [

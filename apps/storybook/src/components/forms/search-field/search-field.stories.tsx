@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import { CancelCircleIcon, FilterIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { CancelCircleIcon, FilterIcon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
 import { Spinner } from "@/components/feedback/spinner";

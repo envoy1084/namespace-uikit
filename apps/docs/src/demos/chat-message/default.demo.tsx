@@ -30,19 +30,19 @@ export const DemoDefaultExample = () => (
         </ChatMessage.Content>
         <ChatMessage.Actions>
           <ChatMessage.Action aria-label="Copy" tooltip="Copy">
-            <Icon icon="gravity-ui:copy" />
+            <Icon icon="hugeicons:copy" />
           </ChatMessage.Action>
           <ChatMessage.Action
             aria-label="Good response"
             tooltip="Good response"
           >
-            <Icon icon="gravity-ui:thumbs-up" />
+            <Icon icon="hugeicons:thumbs-up" />
           </ChatMessage.Action>
           <ChatMessage.Action aria-label="Bad response" tooltip="Bad response">
-            <Icon icon="gravity-ui:thumbs-down" />
+            <Icon icon="hugeicons:thumbs-down" />
           </ChatMessage.Action>
           <ChatMessage.Action aria-label="Regenerate" tooltip="Regenerate">
-            <Icon icon="gravity-ui:arrow-uturn-ccw-left" />
+            <Icon icon="hugeicons:arrow-uturn-ccw-left" />
           </ChatMessage.Action>
         </ChatMessage.Actions>
       </ChatMessage.Body>

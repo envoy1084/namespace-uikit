@@ -1,5 +1,5 @@
-import { Bell } from "@gravity-ui/icons";
 import { Avatar, Badge } from "@thenamespace/uikit";
+import { Bell } from "@thenamespace/uikit/icons";
 
 const AVATAR_URL = "/assets/avatars/green.jpg";
 

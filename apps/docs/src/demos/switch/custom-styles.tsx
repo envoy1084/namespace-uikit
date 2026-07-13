@@ -1,7 +1,7 @@
 "use client";
 
-import { Check, Power } from "@gravity-ui/icons";
 import { Switch } from "@thenamespace/uikit";
+import { Check, Power } from "@thenamespace/uikit/icons";
 
 export function CustomStyles() {
   return (

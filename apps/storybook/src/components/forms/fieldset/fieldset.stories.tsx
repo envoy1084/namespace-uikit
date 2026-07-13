@@ -86,7 +86,7 @@ export const Default: Story = {
           </Fieldset.Group>
           <Fieldset.Actions>
             <Button type="submit">
-              <Icon icon="gravity-ui:floppy-disk" />
+              <Icon icon="hugeicons:floppy-disk" />
               Save changes
             </Button>
             <Button type="reset" variant="tertiary">

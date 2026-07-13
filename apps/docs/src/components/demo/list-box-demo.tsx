@@ -30,7 +30,7 @@ export function ListBoxDemo() {
             <div className="flex h-8 items-start justify-center pt-px">
               <Iconify
                 className="text-muted size-4 shrink-0"
-                icon="gravity-ui:square-plus"
+                icon="hugeicons:square-plus"
               />
             </div>
             <div className="flex flex-col">
@@ -46,7 +46,7 @@ export function ListBoxDemo() {
             <div className="flex h-8 items-start justify-center pt-px">
               <Iconify
                 className="text-muted size-4 shrink-0"
-                icon="gravity-ui:pencil"
+                icon="hugeicons:pencil"
               />
             </div>
             <div className="flex flex-col">
@@ -70,7 +70,7 @@ export function ListBoxDemo() {
             <div className="flex h-8 items-start justify-center pt-px">
               <Iconify
                 className="text-danger size-4 shrink-0"
-                icon="gravity-ui:trash-bin"
+                icon="hugeicons:trash-bin"
               />
             </div>
             <div className="flex flex-col">

@@ -1,7 +1,7 @@
 "use client";
 
-import { Sparkles } from "@gravity-ui/icons";
 import { Button, Modal } from "@thenamespace/uikit";
+import { Sparkles } from "@thenamespace/uikit/icons";
 
 export function CustomBackdrop() {
   return (

@@ -1,5 +1,5 @@
-import { CircleXmark, Xmark } from "@gravity-ui/icons";
 import { CloseButton } from "@thenamespace/uikit";
+import { CircleXmark, Xmark } from "@thenamespace/uikit/icons";
 
 export function WithCustomIcon() {
   return (

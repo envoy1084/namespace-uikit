@@ -1,6 +1,5 @@
 "use client";
 
-import { Envelope } from "@gravity-ui/icons";
 import {
   Description,
   InputGroup,
@@ -8,6 +7,7 @@ import {
   Surface,
   TextField,
 } from "@thenamespace/uikit";
+import { Envelope } from "@thenamespace/uikit/icons";
 
 export function OnSurface() {
   return (

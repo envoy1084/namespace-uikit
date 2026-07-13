@@ -20,7 +20,7 @@ export function EmptyStateDemo() {
           <Table.Body
             renderEmptyState={() => (
               <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 text-center">
-                <Icon className="text-muted size-6" icon="gravity-ui:tray" />
+                <Icon className="text-muted size-6" icon="hugeicons:tray" />
                 <span className="text-muted text-sm">No results found</span>
               </EmptyState>
             )}

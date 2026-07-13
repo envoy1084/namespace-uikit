@@ -3,6 +3,15 @@
 
 // @demo-title Collapsible
 import {
+  Avatar,
+  Breadcrumbs,
+  BreadcrumbsItem,
+  Button,
+  Chip,
+  Dropdown,
+} from "@thenamespace/uikit";
+import { AppLayout, Navbar, Sidebar } from "@thenamespace/uikit";
+import {
   AnalyticsUpIcon,
   DashboardSquare01Icon,
   HelpCircleIcon,
@@ -12,17 +21,8 @@ import {
   Settings01Icon,
   Task01Icon,
   UserIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  Avatar,
-  Breadcrumbs,
-  BreadcrumbsItem,
-  Button,
-  Chip,
-  Dropdown,
-} from "@thenamespace/uikit";
-import { AppLayout, Navbar, Sidebar } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 const navigation = [
   { icon: DashboardSquare01Icon, label: "Dashboard" },

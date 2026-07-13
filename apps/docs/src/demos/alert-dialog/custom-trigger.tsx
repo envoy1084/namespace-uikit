@@ -1,7 +1,7 @@
 "use client";
 
-import { TrashBin } from "@gravity-ui/icons";
 import { AlertDialog, Button } from "@thenamespace/uikit";
+import { TrashBin } from "@thenamespace/uikit/icons";
 
 export function CustomTrigger() {
   return (

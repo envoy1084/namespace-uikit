@@ -210,18 +210,18 @@ export const WithScrollableContent = () => (
 
 export const NavigationDrawer = () => {
   const navItems = [
-    { icon: "gravity-ui:house", label: "Home" },
-    { icon: "gravity-ui:magnifier", label: "Search" },
-    { icon: "gravity-ui:bell", label: "Notifications" },
-    { icon: "gravity-ui:envelope", label: "Messages" },
-    { icon: "gravity-ui:person", label: "Profile" },
-    { icon: "gravity-ui:gear", label: "Settings" },
+    { icon: "hugeicons:house", label: "Home" },
+    { icon: "hugeicons:magnifier", label: "Search" },
+    { icon: "hugeicons:bell", label: "Notifications" },
+    { icon: "hugeicons:envelope", label: "Messages" },
+    { icon: "hugeicons:person", label: "Profile" },
+    { icon: "hugeicons:gear", label: "Settings" },
   ];
 
   return (
     <Drawer>
       <Button variant="secondary">
-        <Icon icon="gravity-ui:bars" />
+        <Icon icon="hugeicons:bars" />
         Menu
       </Button>
       <Drawer.Backdrop>

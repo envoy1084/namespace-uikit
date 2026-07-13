@@ -1,8 +1,8 @@
 import React from "react";
 
-import { FloppyDiskIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { Avatar, Button, Card, CloseButton } from "@thenamespace/uikit";
+import { FloppyDiskIcon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function AlertDialogDemo() {
   return (

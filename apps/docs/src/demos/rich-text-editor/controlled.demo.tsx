@@ -3,6 +3,8 @@
 // @demo-title Controlled
 import { useState } from "react";
 
+import { RichTextEditor, type JSONContent } from "@thenamespace/uikit";
+import { Button } from "@thenamespace/uikit/button";
 import {
   CodeSquareIcon,
   Delete02Icon,
@@ -21,10 +23,8 @@ import {
   TextStrikethroughIcon,
   TextUnderlineIcon,
   Undo02Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { RichTextEditor, type JSONContent } from "@thenamespace/uikit";
-import { Button } from "@thenamespace/uikit/button";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 
 const controlledArticle: JSONContent = {
   type: "doc",

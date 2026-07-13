@@ -3,6 +3,14 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { Key } from "react";
 import { useMemo, useRef, useState } from "react";
 
+import { Button } from "@thenamespace/uikit/button";
+import { Description } from "@thenamespace/uikit/description";
+import {
+  EmojiPicker,
+  EMOJI_SKIN_TONES,
+} from "@thenamespace/uikit/emoji-picker";
+import { EmojiReactionButton } from "@thenamespace/uikit/emoji-reaction-button";
+import { EmptyState } from "@thenamespace/uikit/empty-state";
 import {
   ArrowDown01Icon,
   ArrowRight01Icon,
@@ -27,16 +35,8 @@ import {
   SpoonAndForkIcon,
   Task01Icon,
   TextIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { Button } from "@thenamespace/uikit/button";
-import { Description } from "@thenamespace/uikit/description";
-import {
-  EmojiPicker,
-  EMOJI_SKIN_TONES,
-} from "@thenamespace/uikit/emoji-picker";
-import { EmojiReactionButton } from "@thenamespace/uikit/emoji-reaction-button";
-import { EmptyState } from "@thenamespace/uikit/empty-state";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { Label } from "@thenamespace/uikit/label";
 import { ListBox } from "@thenamespace/uikit/list-box";

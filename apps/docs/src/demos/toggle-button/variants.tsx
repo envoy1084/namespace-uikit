@@ -1,5 +1,5 @@
-import { Heart } from "@gravity-ui/icons";
 import { ToggleButton } from "@thenamespace/uikit";
+import { Heart } from "@thenamespace/uikit/icons";
 
 export function Variants() {
   return (

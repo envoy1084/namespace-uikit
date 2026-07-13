@@ -5,18 +5,18 @@ import type { Selection } from "react-aria-components";
 
 import { useState } from "react";
 
+import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
+import { Button } from "@thenamespace/uikit/button";
+import { Chip } from "@thenamespace/uikit/chip";
+import { Dropdown } from "@thenamespace/uikit/dropdown";
 import {
   Copy01Icon,
   Delete02Icon,
   MoreVerticalIcon,
   PencilEdit01Icon,
   ViewIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
-import { Button } from "@thenamespace/uikit/button";
-import { Chip } from "@thenamespace/uikit/chip";
-import { Dropdown } from "@thenamespace/uikit/dropdown";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 type Payment = {
   amount: number;

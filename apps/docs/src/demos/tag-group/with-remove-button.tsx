@@ -4,7 +4,6 @@ import type { Key } from "@thenamespace/uikit";
 
 import { useState } from "react";
 
-import { CircleXmarkFill } from "@gravity-ui/icons";
 import {
   Description,
   EmptyState,
@@ -12,6 +11,7 @@ import {
   Tag,
   TagGroup,
 } from "@thenamespace/uikit";
+import { CircleXmarkFill } from "@thenamespace/uikit/icons";
 
 export function TagGroupWithRemoveButton() {
   type TagItem = { id: string; name: string };

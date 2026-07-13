@@ -56,7 +56,7 @@ const Template = (props: Tooltip["ContentProps"]) => (
   <div className="flex items-center justify-center gap-3">
     <Tooltip delay={0}>
       <Button isIconOnly variant="tertiary">
-        <Icon icon="gravity-ui:circle-info" />
+        <Icon icon="hugeicons:circle-info" />
       </Button>
       <Tooltip.Content {...props}>
         <Tooltip.Arrow />
@@ -71,7 +71,7 @@ const TemplateWithTrigger = (props: Tooltip["ContentProps"]) => (
     <Tooltip delay={0}>
       <Tooltip.Trigger aria-label="Tooltip trigger">
         <div className="bg-accent-soft rounded-full p-2">
-          <Icon icon="gravity-ui:circle-info" />
+          <Icon icon="hugeicons:circle-info" />
         </div>
       </Tooltip.Trigger>
       <Tooltip.Content {...props}>
@@ -104,7 +104,7 @@ const CardWithTooltipTemplate = (props: Tooltip["ContentProps"]) => (
             size="lg"
             variant="secondary"
           >
-            <Icon icon="gravity-ui:paperclip" />
+            <Icon icon="hugeicons:paperclip" />
           </Button>
         </Tooltip.Trigger>
         <Tooltip.Content {...props}>

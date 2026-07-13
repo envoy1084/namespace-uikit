@@ -1,5 +1,5 @@
-import { Bookmark, Heart } from "@gravity-ui/icons";
 import { ToggleButton } from "@thenamespace/uikit";
+import { Bookmark, Heart } from "@thenamespace/uikit/icons";
 
 export function IconOnly() {
   return (

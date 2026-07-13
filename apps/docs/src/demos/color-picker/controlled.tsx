@@ -84,7 +84,7 @@ export function Controlled() {
               variant="tertiary"
               onPress={shuffleColor}
             >
-              <Icon className="size-4" icon="gravity-ui:shuffle" />
+              <Icon className="size-4" icon="hugeicons:shuffle" />
             </Button>
           </div>
           <ColorField aria-label="Color field">

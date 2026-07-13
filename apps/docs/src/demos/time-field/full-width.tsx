@@ -1,7 +1,7 @@
 "use client";
 
-import { ChevronDown, Clock } from "@gravity-ui/icons";
 import { Label, TimeField } from "@thenamespace/uikit";
+import { ChevronDown, Clock } from "@thenamespace/uikit/icons";
 
 export function FullWidth() {
   return (

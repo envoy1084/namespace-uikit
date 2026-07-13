@@ -1,11 +1,11 @@
+import { Chip } from "@thenamespace/uikit";
 import {
   Ban,
   Check,
   CircleFill,
   CircleInfo,
   TriangleExclamation,
-} from "@gravity-ui/icons";
-import { Chip } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 export function ChipStatuses() {
   return (

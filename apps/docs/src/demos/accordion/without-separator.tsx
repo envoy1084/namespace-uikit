@@ -1,10 +1,10 @@
+import { Accordion } from "@thenamespace/uikit";
 import {
   ChevronDown,
   CreditCard,
   Receipt,
   ShoppingBag,
-} from "@gravity-ui/icons";
-import { Accordion } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 const items = [
   {

@@ -393,7 +393,7 @@ export const CustomIndicator: Story = {
       <Select.Trigger>
         <Select.Value />
         <Select.Indicator className="size-3">
-          <Icon icon="gravity-ui:chevrons-expand-vertical" />
+          <Icon icon="hugeicons:chevrons-expand-vertical" />
         </Select.Indicator>
       </Select.Trigger>
       <Select.Popover>

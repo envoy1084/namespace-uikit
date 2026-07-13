@@ -5,8 +5,8 @@ import { useState } from "react";
 import {
   CheckmarkCircle02Icon,
   Loading03Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
 import { Link } from "@/components/navigation/link";

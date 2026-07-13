@@ -3,14 +3,14 @@
 // @demo-title Composer
 import { useEffect, useRef, useState } from "react";
 
-import { ArrowUp01Icon, Attachment01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import {
   ChatAttachment,
   ChatAttachmentGroup,
   ChatAttachmentInput,
   PromptInput,
 } from "@thenamespace/uikit";
+import { ArrowUp01Icon, Attachment01Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 interface Attachment {
   id: string;

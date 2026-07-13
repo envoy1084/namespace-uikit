@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Comment01Icon, Mail01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { Tabs } from "@thenamespace/uikit";
+import { Comment01Icon, Mail01Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function TabsDemo2() {
   return (

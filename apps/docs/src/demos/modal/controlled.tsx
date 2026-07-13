@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import { CircleCheck } from "@gravity-ui/icons";
 import { Button, Modal, useOverlayState } from "@thenamespace/uikit";
+import { CircleCheck } from "@thenamespace/uikit/icons";
 
 export function Controlled() {
   const [isOpen, setIsOpen] = React.useState(false);

@@ -14,12 +14,12 @@ export function TabsDemo2() {
       <Tabs.ListContainer>
         <Tabs.List aria-label={t.ariaLabel}>
           <Tabs.Tab className="gap-1.5" id="chats">
-            <Iconify icon="gravity-ui:comment" />
+            <Iconify icon="hugeicons:comment" />
             <span>{t.chats}</span>
             <Tabs.Indicator />
           </Tabs.Tab>
           <Tabs.Tab className="gap-1.5" id="emails">
-            <Iconify icon="gravity-ui:envelope" />
+            <Iconify icon="hugeicons:envelope" />
             <span>{t.emails}</span>
             <Tabs.Indicator />
           </Tabs.Tab>

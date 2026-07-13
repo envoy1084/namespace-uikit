@@ -3,6 +3,18 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
 import {
+  Button,
+  Dropdown,
+  Header,
+  Label,
+  ListBox,
+  ProgressCircle,
+  Select,
+  Separator,
+  TextShimmer,
+  Tooltip,
+} from "@thenamespace/uikit";
+import {
   Add01Icon,
   ArrowUp01Icon,
   Attachment01Icon,
@@ -17,20 +29,8 @@ import {
   PaintBoardIcon,
   PencilEdit01Icon,
   TextIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import {
-  Button,
-  Dropdown,
-  Header,
-  Label,
-  ListBox,
-  ProgressCircle,
-  Select,
-  Separator,
-  TextShimmer,
-  Tooltip,
-} from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 
 import {
   ChatAttachment,

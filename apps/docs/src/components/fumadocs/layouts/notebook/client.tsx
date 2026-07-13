@@ -23,7 +23,7 @@ import {
   useState,
 } from "react";
 
-import { ChevronDown } from "@gravity-ui/icons";
+import { ChevronDown } from "@thenamespace/uikit/icons";
 import { usePathname } from "fumadocs-core/framework";
 import Link from "fumadocs-core/link";
 import { useSidebar } from "fumadocs-ui/components/sidebar/base";

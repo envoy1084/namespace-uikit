@@ -1,11 +1,11 @@
 "use client";
 
 // @demo-title Subscription Plans
-import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { RadioButtonGroup } from "@thenamespace/uikit";
 import { Chip } from "@thenamespace/uikit/chip";
 import { Description } from "@thenamespace/uikit/description";
+import { CheckmarkCircle02Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Label } from "@thenamespace/uikit/label";
 import { PressableFeedback } from "@thenamespace/uikit/pressable-feedback";
 

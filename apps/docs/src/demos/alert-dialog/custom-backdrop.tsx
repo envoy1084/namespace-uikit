@@ -1,7 +1,7 @@
 "use client";
 
-import { TriangleExclamation } from "@gravity-ui/icons";
 import { AlertDialog, Button } from "@thenamespace/uikit";
+import { TriangleExclamation } from "@thenamespace/uikit/icons";
 
 export function CustomBackdrop() {
   return (

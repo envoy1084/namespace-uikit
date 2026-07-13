@@ -1,10 +1,10 @@
+import { Button, ButtonGroup } from "@thenamespace/uikit";
 import {
   TextAlignCenter,
   TextAlignJustify,
   TextAlignLeft,
   TextAlignRight,
-} from "@gravity-ui/icons";
-import { Button, ButtonGroup } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 export function Orientation() {
   return (

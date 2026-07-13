@@ -1,7 +1,7 @@
 "use client";
 
-import { ChevronsExpandVertical } from "@gravity-ui/icons";
 import { ComboBox, Input, Label, ListBox } from "@thenamespace/uikit";
+import { ChevronsExpandVertical } from "@thenamespace/uikit/icons";
 
 export function CustomIndicator() {
   return (

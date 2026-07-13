@@ -60,16 +60,13 @@ export const FullWidth: Story = {
         <Label>Time</Label>
         <TimeField.Group fullWidth>
           <TimeField.Prefix>
-            <Icon className="text-muted size-4" icon="gravity-ui:clock" />
+            <Icon className="text-muted size-4" icon="hugeicons:clock" />
           </TimeField.Prefix>
           <TimeField.Input>
             {(segment) => <TimeField.Segment segment={segment} />}
           </TimeField.Input>
           <TimeField.Suffix>
-            <Icon
-              className="text-muted size-4"
-              icon="gravity-ui:chevron-down"
-            />
+            <Icon className="text-muted size-4" icon="hugeicons:chevron-down" />
           </TimeField.Suffix>
         </TimeField.Group>
       </TimeField>
@@ -282,7 +279,7 @@ export const WithPrefixIcon: Story = {
       <Label>Time</Label>
       <TimeField.Group>
         <TimeField.Prefix>
-          <Icon className="text-muted size-4" icon="gravity-ui:clock" />
+          <Icon className="text-muted size-4" icon="hugeicons:clock" />
         </TimeField.Prefix>
         <TimeField.Input>
           {(segment) => <TimeField.Segment segment={segment} />}
@@ -301,7 +298,7 @@ export const WithSuffixIcon: Story = {
           {(segment) => <TimeField.Segment segment={segment} />}
         </TimeField.Input>
         <TimeField.Suffix>
-          <Icon className="text-muted size-4" icon="gravity-ui:clock" />
+          <Icon className="text-muted size-4" icon="hugeicons:clock" />
         </TimeField.Suffix>
       </TimeField.Group>
     </TimeField>
@@ -314,13 +311,13 @@ export const WithPrefixAndSuffix: Story = {
       <Label>Time</Label>
       <TimeField.Group>
         <TimeField.Prefix>
-          <Icon className="text-muted size-4" icon="gravity-ui:clock" />
+          <Icon className="text-muted size-4" icon="hugeicons:clock" />
         </TimeField.Prefix>
         <TimeField.Input>
           {(segment) => <TimeField.Segment segment={segment} />}
         </TimeField.Input>
         <TimeField.Suffix>
-          <Icon className="text-muted size-4" icon="gravity-ui:chevron-down" />
+          <Icon className="text-muted size-4" icon="hugeicons:chevron-down" />
         </TimeField.Suffix>
       </TimeField.Group>
       <Description>Enter a time</Description>
@@ -371,7 +368,7 @@ export const FormExample: Story = {
           <Label>Appointment time</Label>
           <TimeField.Group>
             <TimeField.Prefix>
-              <Icon className="text-muted size-4" icon="gravity-ui:clock" />
+              <Icon className="text-muted size-4" icon="hugeicons:clock" />
             </TimeField.Prefix>
             <TimeField.Input>
               {(segment) => <TimeField.Segment segment={segment} />}
@@ -405,7 +402,7 @@ export const AllVariations: Story = {
           <Label>Time</Label>
           <TimeField.Group>
             <TimeField.Prefix>
-              <Icon className="text-muted size-4" icon="gravity-ui:clock" />
+              <Icon className="text-muted size-4" icon="hugeicons:clock" />
             </TimeField.Prefix>
             <TimeField.Input>
               {(segment) => <TimeField.Segment segment={segment} />}
@@ -421,7 +418,7 @@ export const AllVariations: Story = {
               {(segment) => <TimeField.Segment segment={segment} />}
             </TimeField.Input>
             <TimeField.Suffix>
-              <Icon className="text-muted size-4" icon="gravity-ui:clock" />
+              <Icon className="text-muted size-4" icon="hugeicons:clock" />
             </TimeField.Suffix>
           </TimeField.Group>
           <Description>Enter a time</Description>
@@ -431,7 +428,7 @@ export const AllVariations: Story = {
           <Label>Time</Label>
           <TimeField.Group>
             <TimeField.Prefix>
-              <Icon className="text-muted size-4" icon="gravity-ui:clock" />
+              <Icon className="text-muted size-4" icon="hugeicons:clock" />
             </TimeField.Prefix>
             <TimeField.Input>
               {(segment) => <TimeField.Segment segment={segment} />}
@@ -439,7 +436,7 @@ export const AllVariations: Story = {
             <TimeField.Suffix>
               <Icon
                 className="text-muted size-4"
-                icon="gravity-ui:chevron-down"
+                icon="hugeicons:chevron-down"
               />
             </TimeField.Suffix>
           </TimeField.Group>

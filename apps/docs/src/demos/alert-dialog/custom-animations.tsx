@@ -2,12 +2,12 @@
 
 import React from "react";
 
-import { ArrowUpFromLine, Sparkles } from "@gravity-ui/icons";
 import { AlertDialog, Button } from "@thenamespace/uikit";
+import { ArrowUpFromLine, Sparkles } from "@thenamespace/uikit/icons";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  "gravity-ui:arrow-up-from-line": ArrowUpFromLine,
-  "gravity-ui:sparkles": Sparkles,
+  "hugeicons:arrow-up-from-line": ArrowUpFromLine,
+  "hugeicons:sparkles": Sparkles,
 };
 
 export function CustomAnimations() {
@@ -35,7 +35,7 @@ export function CustomAnimations() {
       },
       description:
         "Physics-based elastic scaling. Simulates a high-damping spring system with fast transient response and prolonged settling time. Ideal for Alert Dialogs and Modals.",
-      icon: "gravity-ui:sparkles",
+      icon: "hugeicons:sparkles",
       name: "Kinematic Scale",
     },
     {
@@ -61,7 +61,7 @@ export function CustomAnimations() {
       },
       description:
         "Simulates movement through a medium with fluid resistance. Eliminates mechanical linearity for a natural, grounded feel. Perfect for Bottom Sheets or Toasts.",
-      icon: "gravity-ui:arrow-up-from-line",
+      icon: "hugeicons:arrow-up-from-line",
       name: "Fluid Slide",
     },
   ];

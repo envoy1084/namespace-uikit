@@ -1,5 +1,8 @@
-import { ArrowUpRightFromSquare, Link as LinkIcon } from "@gravity-ui/icons";
 import { Link } from "@thenamespace/uikit";
+import {
+  ArrowUpRightFromSquare,
+  Link as LinkIcon,
+} from "@thenamespace/uikit/icons";
 
 export function LinkCustomIcon() {
   return (

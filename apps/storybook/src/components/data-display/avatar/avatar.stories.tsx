@@ -95,12 +95,12 @@ const Template = ({ color, size }: Avatar["RootProps"]) => (
       </Avatar>
       <Avatar color={color} size={size}>
         <Avatar.Fallback>
-          <Icon icon="gravity-ui:person" />
+          <Icon icon="hugeicons:person" />
         </Avatar.Fallback>
       </Avatar>
       <Avatar color={color} size={size}>
         <Avatar.Fallback>
-          <Icon icon="gravity-ui:person-gear" />
+          <Icon icon="hugeicons:person-gear" />
         </Avatar.Fallback>
       </Avatar>
     </div>
@@ -204,7 +204,7 @@ const FallbackTemplate = () => {
       {/* Icon fallback */}
       <Avatar>
         <Avatar.Fallback>
-          <Icon icon="gravity-ui:person" />
+          <Icon icon="hugeicons:person" />
         </Avatar.Fallback>
       </Avatar>
       {/* Fallback with delay */}
@@ -300,11 +300,11 @@ const VariantsTemplate = (props: AvatarRootProps) => {
   const variants = [
     { label: "letter", type: "letter", content: "AG" },
     { label: "letter soft", type: "letter-soft", content: "AG" },
-    { label: "icon", type: "icon", content: <Icon icon="gravity-ui:person" /> },
+    { label: "icon", type: "icon", content: <Icon icon="hugeicons:person" /> },
     {
       label: "icon soft",
       type: "icon-soft",
-      content: <Icon icon="gravity-ui:person" />,
+      content: <Icon icon="hugeicons:person" />,
     },
     {
       label: "img",

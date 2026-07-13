@@ -1,5 +1,5 @@
-import { Globe, Plus, TrashBin } from "@gravity-ui/icons";
 import { Button, ButtonGroup } from "@thenamespace/uikit";
+import { Globe, Plus, TrashBin } from "@thenamespace/uikit/icons";
 
 export function WithIcons() {
   return (

@@ -1,4 +1,12 @@
 import {
+  Button,
+  ButtonGroup,
+  Chip,
+  Description,
+  Dropdown,
+  Label,
+} from "@thenamespace/uikit";
+import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -15,15 +23,7 @@ import {
   ThumbsDown,
   ThumbsUp,
   Video,
-} from "@gravity-ui/icons";
-import {
-  Button,
-  ButtonGroup,
-  Chip,
-  Description,
-  Dropdown,
-  Label,
-} from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 export function Basic() {
   return (

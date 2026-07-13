@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import { Cancel01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Cancel01Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
 import { Checkbox } from "@/components/forms/checkbox";

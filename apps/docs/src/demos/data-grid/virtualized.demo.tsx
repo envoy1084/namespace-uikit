@@ -6,14 +6,14 @@ import type { Selection } from "react-aria-components";
 
 import { useMemo, useState } from "react";
 
+import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
+import { Chip } from "@thenamespace/uikit/chip";
 import {
   CancelCircleIcon,
   CheckmarkCircle02Icon,
   Clock01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
-import { Chip } from "@thenamespace/uikit/chip";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { Rating } from "@thenamespace/uikit/rating";
 import { SearchField } from "@thenamespace/uikit/search-field";

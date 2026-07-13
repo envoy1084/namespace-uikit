@@ -199,7 +199,7 @@ export const Sizes = () => {
                 <AlertDialog.CloseTrigger />
                 <AlertDialog.Header>
                   <AlertDialog.Icon className="bg-default text-foreground">
-                    <Icon className="size-5" icon="gravity-ui:rocket" />
+                    <Icon className="size-5" icon="hugeicons:rocket" />
                   </AlertDialog.Icon>
                   <AlertDialog.Heading>
                     Size: {size.charAt(0).toUpperCase() + size.slice(1)}
@@ -296,7 +296,7 @@ export const CustomIcon = () => (
           <AlertDialog.CloseTrigger />
           <AlertDialog.Header>
             <AlertDialog.Icon status="warning">
-              <Icon className="size-5" icon="gravity-ui:lock-open" />
+              <Icon className="size-5" icon="hugeicons:lock-open" />
             </AlertDialog.Icon>
             <AlertDialog.Heading>Reset your password?</AlertDialog.Heading>
           </AlertDialog.Header>
@@ -330,7 +330,7 @@ export const CustomBackdrop = () => (
           <AlertDialog.CloseTrigger />
           <AlertDialog.Header className="items-center text-center">
             <AlertDialog.Icon status="danger">
-              <Icon className="size-5" icon="gravity-ui:triangle-exclamation" />
+              <Icon className="size-5" icon="hugeicons:triangle-exclamation" />
             </AlertDialog.Icon>
             <AlertDialog.Heading>
               Permanently delete your account?
@@ -376,7 +376,7 @@ export const DismissBehavior = () => (
               <AlertDialog.CloseTrigger />
               <AlertDialog.Header>
                 <AlertDialog.Icon status="danger">
-                  <Icon className="size-5" icon="gravity-ui:circle-info" />
+                  <Icon className="size-5" icon="hugeicons:circle-info" />
                 </AlertDialog.Icon>
                 <AlertDialog.Heading>isDismissable = false</AlertDialog.Heading>
                 <p className="text-muted text-sm leading-5">
@@ -416,7 +416,7 @@ export const DismissBehavior = () => (
               <AlertDialog.CloseTrigger />
               <AlertDialog.Header>
                 <AlertDialog.Icon status="accent">
-                  <Icon className="size-5" icon="gravity-ui:circle-info" />
+                  <Icon className="size-5" icon="hugeicons:circle-info" />
                 </AlertDialog.Icon>
                 <AlertDialog.Heading>
                   isKeyboardDismissDisabled = true
@@ -667,7 +667,7 @@ export const CustomTrigger = () => (
   <AlertDialog>
     <AlertDialog.Trigger className="group bg-surface hover:bg-surface-secondary flex items-center gap-3 rounded-2xl p-4 shadow-xs select-none">
       <div className="bg-danger-soft text-danger-soft-foreground flex size-12 shrink-0 items-center justify-center rounded-xl">
-        <Icon className="size-6" icon="gravity-ui:trash-bin" />
+        <Icon className="size-6" icon="hugeicons:trash-bin" />
       </div>
       <div className="flex flex-1 flex-col gap-0.5">
         <p className="text-sm font-semibold">Delete Item</p>
@@ -680,7 +680,7 @@ export const CustomTrigger = () => (
           <AlertDialog.CloseTrigger />
           <AlertDialog.Header>
             <AlertDialog.Icon status="danger">
-              <Icon className="size-5" icon="gravity-ui:trash-bin" />
+              <Icon className="size-5" icon="hugeicons:trash-bin" />
             </AlertDialog.Icon>
             <AlertDialog.Heading>Delete this item?</AlertDialog.Heading>
           </AlertDialog.Header>
@@ -711,7 +711,7 @@ export const CustomAnimations = () => {
       name: "Kinematic Scale",
       description:
         "Physics-based elastic scaling. Simulates a high-damping spring system with fast transient response and prolonged settling time. Ideal for Alert Dialogs and Modals.",
-      icon: "gravity-ui:sparkles",
+      icon: "hugeicons:sparkles",
       classNames: {
         backdrop: [
           "data-[entering]:duration-400",
@@ -737,7 +737,7 @@ export const CustomAnimations = () => {
       name: "Fluid Slide",
       description:
         "Simulates movement through a medium with fluid resistance. Eliminates mechanical linearity for a natural, grounded feel. Perfect for Bottom Sheets or Toasts.",
-      icon: "gravity-ui:arrow-up-from-line",
+      icon: "hugeicons:arrow-up-from-line",
       classNames: {
         backdrop: [
           "data-[entering]:duration-500",

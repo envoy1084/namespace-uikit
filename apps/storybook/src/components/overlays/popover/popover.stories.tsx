@@ -55,7 +55,7 @@ const Template = (props: Popover["ContentProps"]) => (
   <div className="flex items-center gap-3">
     <Popover>
       <Button isIconOnly aria-label="Popover trigger" variant="tertiary">
-        <Icon icon="gravity-ui:circle-info" />
+        <Icon icon="hugeicons:circle-info" />
       </Button>
       <Popover.Content {...props}>
         <Popover.Dialog>
@@ -71,7 +71,7 @@ const TemplateWithArrow = (props: Popover["ContentProps"]) => (
   <div className="flex items-center gap-3">
     <Popover>
       <Button isIconOnly aria-label="Popover trigger" variant="tertiary">
-        <Icon icon="gravity-ui:circle-info" />
+        <Icon icon="hugeicons:circle-info" />
       </Button>
       <Popover.Content {...props}>
         <Popover.Dialog>
@@ -226,7 +226,7 @@ const CardWithHelptextTemplate = (props: Popover["ContentProps"]) => (
         <Popover>
           <Popover.Trigger aria-label="Help information">
             <Button isIconOnly aria-label="Help" size="sm" variant="ghost">
-              <Icon className="text-muted" icon="gravity-ui:circle-info" />
+              <Icon className="text-muted" icon="hugeicons:circle-info" />
             </Button>
           </Popover.Trigger>
           <Popover.Content

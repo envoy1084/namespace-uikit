@@ -70,7 +70,7 @@ function renderExpandableRow(item: ExpandableRow) {
               >
                 <Icon
                   aria-hidden
-                  icon="gravity-ui:chevron-right"
+                  icon="hugeicons:chevron-right"
                   className={cn(
                     "text-muted size-4 transition-transform duration-150",
                     isExpanded ? "rotate-90" : "",
@@ -398,7 +398,7 @@ function DefaultTableTemplate({
                       <Button isIconOnly size="sm" variant="ghost">
                         <Icon
                           className="text-muted size-4"
-                          icon="gravity-ui:copy"
+                          icon="hugeicons:copy"
                         />
                       </Button>
                     </div>
@@ -433,13 +433,13 @@ function DefaultTableTemplate({
                   <Table.Cell>
                     <div className="flex items-center gap-1">
                       <Button isIconOnly size="sm" variant="tertiary">
-                        <Icon className="size-4" icon="gravity-ui:eye" />
+                        <Icon className="size-4" icon="hugeicons:eye" />
                       </Button>
                       <Button isIconOnly size="sm" variant="tertiary">
-                        <Icon className="size-4" icon="gravity-ui:pencil" />
+                        <Icon className="size-4" icon="hugeicons:pencil" />
                       </Button>
                       <Button isIconOnly size="sm" variant="danger-soft">
-                        <Icon className="size-4" icon="gravity-ui:trash-bin" />
+                        <Icon className="size-4" icon="hugeicons:trash-bin" />
                       </Button>
                     </div>
                   </Table.Cell>
@@ -499,7 +499,7 @@ export const EmptyStateDemo: Story = {
             <Table.Body
               renderEmptyState={() => (
                 <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 text-center">
-                  <Icon className="text-muted size-6" icon="gravity-ui:tray" />
+                  <Icon className="text-muted size-6" icon="hugeicons:tray" />
                   <span className="text-muted text-sm">No results found</span>
                 </EmptyState>
               )}

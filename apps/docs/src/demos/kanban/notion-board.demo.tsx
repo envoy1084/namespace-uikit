@@ -2,13 +2,6 @@
 
 // @demo-title Notion Board
 import {
-  Add01Icon,
-  Calendar03Icon,
-  FlashIcon,
-  MoreHorizontalIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
   Kanban,
   useKanban,
   useKanbanColumn,
@@ -18,6 +11,13 @@ import {
 import { Avatar } from "@thenamespace/uikit/avatar";
 import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
+import {
+  Add01Icon,
+  Calendar03Icon,
+  FlashIcon,
+  MoreHorizontalIcon,
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 const people: Record<string, string> = {
   Alex: "orange",

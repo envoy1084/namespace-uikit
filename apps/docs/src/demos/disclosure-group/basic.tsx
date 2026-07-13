@@ -2,7 +2,6 @@
 
 import React from "react";
 
-import { QrCode } from "@gravity-ui/icons";
 import { Icon } from "@iconify/react";
 import {
   Button,
@@ -10,6 +9,7 @@ import {
   DisclosureGroup,
   Separator,
 } from "@thenamespace/uikit";
+import { QrCode } from "@thenamespace/uikit/icons";
 import { cn } from "tailwind-variants";
 
 export function Basic() {

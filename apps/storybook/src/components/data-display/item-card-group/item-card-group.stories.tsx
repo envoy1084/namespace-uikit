@@ -481,7 +481,7 @@ export const PermissionLevels: Story = {
 const wallets = [
   {
     address: "0x34E6...6255",
-    icon: "gravity-ui:wallet",
+    icon: "hugeicons:wallet",
     bg: "bg-neutral-800",
     eth: "0.0 ETH",
     name: "Funds",
@@ -489,7 +489,7 @@ const wallets = [
   },
   {
     address: "0xD9EA...f40e",
-    icon: "gravity-ui:globe",
+    icon: "hugeicons:globe",
     bg: "bg-blue-500",
     eth: "0.0 ETH",
     name: "0xD9EA...f40e",
@@ -497,7 +497,7 @@ const wallets = [
   },
   {
     address: "0x9DC5...621a",
-    icon: "gravity-ui:planet-earth",
+    icon: "hugeicons:planet-earth",
     bg: "bg-green-500",
     eth: "0.021 ETH",
     name: "SLMobbin's",
@@ -505,7 +505,7 @@ const wallets = [
   },
   {
     address: "0xa98b...4daa",
-    icon: "gravity-ui:person",
+    icon: "hugeicons:person",
     bg: "bg-orange-400",
     eth: "0.0 ETH",
     name: "Sam Lee's Wallet",

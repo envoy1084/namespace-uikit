@@ -1,17 +1,17 @@
 "use client";
 
 // @demo-title Repository Activity
+import { Timeline } from "@thenamespace/uikit";
+import { Card } from "@thenamespace/uikit/card";
+import { Chip } from "@thenamespace/uikit/chip";
 import {
   AddCircleIcon,
   EyeIcon,
   GitCommitHorizontalIcon,
   GitMergeIcon,
   GitPullRequestIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { Timeline } from "@thenamespace/uikit";
-import { Card } from "@thenamespace/uikit/card";
-import { Chip } from "@thenamespace/uikit/chip";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 import { Link } from "@thenamespace/uikit/link";
 
 const TimelineGlyph = ({ icon }: { icon: IconSvgElement }) => (

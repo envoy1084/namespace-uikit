@@ -1,5 +1,5 @@
-import { Bold, Italic, Underline } from "@gravity-ui/icons";
 import { ToggleButton, ToggleButtonGroup } from "@thenamespace/uikit";
+import { Bold, Italic, Underline } from "@thenamespace/uikit/icons";
 
 export function Disabled() {
   return (

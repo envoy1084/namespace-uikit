@@ -4,7 +4,6 @@ import type { Selection } from "@thenamespace/uikit";
 
 import { useState } from "react";
 
-import { Check } from "@gravity-ui/icons";
 import {
   Avatar,
   Description,
@@ -12,6 +11,7 @@ import {
   ListBox,
   Surface,
 } from "@thenamespace/uikit";
+import { Check } from "@thenamespace/uikit/icons";
 
 export function Controlled() {
   const [selected, setSelected] = useState<Selection>(new Set(["1"]));

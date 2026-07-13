@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState } from "react";
 
-import { ArrowRight01Icon, UserIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowRight01Icon, UserIcon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
 import { Card } from "@/components/layout/card";

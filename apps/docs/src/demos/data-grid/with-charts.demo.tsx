@@ -6,19 +6,19 @@ import type { Selection, SortDescriptor } from "react-aria-components";
 
 import { useMemo, useState } from "react";
 
+import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
+import { AreaChart } from "@thenamespace/uikit/area-chart";
+import { Button } from "@thenamespace/uikit/button";
+import { Chip } from "@thenamespace/uikit/chip";
+import { Dropdown } from "@thenamespace/uikit/dropdown";
 import {
   Copy01Icon,
   FilterIcon,
   MoreVerticalIcon,
   LayoutThreeColumnIcon,
   SlidersHorizontalIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
-import { AreaChart } from "@thenamespace/uikit/area-chart";
-import { Button } from "@thenamespace/uikit/button";
-import { Chip } from "@thenamespace/uikit/chip";
-import { Dropdown } from "@thenamespace/uikit/dropdown";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { ProgressCircle } from "@thenamespace/uikit/progress-circle";
 import { SearchField } from "@thenamespace/uikit/search-field";

@@ -92,7 +92,7 @@ export function ExpandableRows() {
                 >
                   <Icon
                     aria-hidden
-                    icon="gravity-ui:chevron-right"
+                    icon="hugeicons:chevron-right"
                     className={cn(
                       "text-muted size-4 transition-transform duration-150",
                       isExpanded ? "rotate-90" : "",

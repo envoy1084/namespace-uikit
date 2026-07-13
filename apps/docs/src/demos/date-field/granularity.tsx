@@ -4,7 +4,6 @@ import type { DateValue } from "@internationalized/date";
 
 import { useState } from "react";
 
-import { CircleQuestion } from "@gravity-ui/icons";
 import { parseDate, parseZonedDateTime } from "@internationalized/date";
 import {
   DateField,
@@ -13,6 +12,7 @@ import {
   Select,
   Tooltip,
 } from "@thenamespace/uikit";
+import { CircleQuestion } from "@thenamespace/uikit/icons";
 
 export function Granularity() {
   const granularityOptions = [

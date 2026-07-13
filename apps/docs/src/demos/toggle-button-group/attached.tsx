@@ -1,5 +1,10 @@
-import { Bold, Italic, Strikethrough, Underline } from "@gravity-ui/icons";
 import { ToggleButton, ToggleButtonGroup } from "@thenamespace/uikit";
+import {
+  Bold,
+  Italic,
+  Strikethrough,
+  Underline,
+} from "@thenamespace/uikit/icons";
 
 export function Attached() {
   return (

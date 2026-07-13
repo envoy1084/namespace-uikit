@@ -7,12 +7,6 @@ import type {
 import React, { useState } from "react";
 
 import {
-  ArrowLeft01Icon,
-  ArrowRight01Icon,
-  ShuffleIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
   Button,
   InputGroup,
   ListBox,
@@ -20,6 +14,12 @@ import {
   Select,
   parseColor,
 } from "@thenamespace/uikit";
+import {
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+  ShuffleIcon,
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import {
   ColorArea as AriaColorArea,
   ColorField as AriaColorField,

@@ -921,7 +921,7 @@ export const CustomIndicator: Story = {
           <Autocomplete.Value />
           <Autocomplete.ClearButton />
           <Autocomplete.Indicator className="size-3">
-            <Icon icon="gravity-ui:chevrons-expand-vertical" />
+            <Icon icon="hugeicons:chevrons-expand-vertical" />
           </Autocomplete.Indicator>
         </Autocomplete.Trigger>
         <Autocomplete.Popover>

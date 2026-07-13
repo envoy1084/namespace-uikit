@@ -212,7 +212,7 @@ export const WithCustomStyles: Story = {
               <Switch.Icon>
                 <Icon
                   className={`size-4 ${isSelected ? "text-cyan-600" : "text-blue-600"}`}
-                  icon={isSelected ? "gravity-ui:check" : "gravity-ui:power"}
+                  icon={isSelected ? "hugeicons:check" : "hugeicons:power"}
                 />
               </Switch.Icon>
             </Switch.Thumb>
@@ -227,32 +227,32 @@ export const WithIcons: Story = {
   render: () => {
     const icons = {
       lock: {
-        off: "gravity-ui:volume-fill",
-        on: "gravity-ui:volume-slash-fill",
+        off: "hugeicons:volume-fill",
+        on: "hugeicons:volume-slash-fill",
         selectedControlClass: "bg-blue-500",
         selectedIconClass: "text-blue-600",
       },
       microphone: {
-        off: "gravity-ui:microphone",
-        on: "gravity-ui:microphone-slash",
+        off: "hugeicons:microphone",
+        on: "hugeicons:microphone-slash",
         selectedControlClass: "bg-red-500",
         selectedIconClass: "text-red-600",
       },
       check: {
-        off: "gravity-ui:power",
-        on: "gravity-ui:check",
+        off: "hugeicons:power",
+        on: "hugeicons:check",
         selectedControlClass: "bg-green-500",
         selectedIconClass: "text-green-600",
       },
       darkMode: {
-        off: "gravity-ui:moon",
-        on: "gravity-ui:sun",
+        off: "hugeicons:moon",
+        on: "hugeicons:sun",
         selectedControlClass: "",
         selectedIconClass: "",
       },
       notification: {
-        off: "gravity-ui:bell-slash",
-        on: "gravity-ui:bell-fill",
+        off: "hugeicons:bell-slash",
+        on: "hugeicons:bell-fill",
         selectedControlClass: "bg-purple-500",
         selectedIconClass: "text-purple-600",
       },

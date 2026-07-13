@@ -4,15 +4,6 @@
 import { useState } from "react";
 
 import {
-  Add01Icon,
-  ArrowUp01Icon,
-  ComputerIcon,
-  GitBranchIcon,
-  Mic01Icon,
-  MoreHorizontalIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
   Button,
   ListBox,
   ProgressCircle,
@@ -20,6 +11,15 @@ import {
   Tooltip,
 } from "@thenamespace/uikit";
 import { PromptInput } from "@thenamespace/uikit";
+import {
+  Add01Icon,
+  ArrowUp01Icon,
+  ComputerIcon,
+  GitBranchIcon,
+  Mic01Icon,
+  MoreHorizontalIcon,
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 const reviewModels = [
   { id: "composer-2.5", label: "Composer 2.5", meta: "Fast" },

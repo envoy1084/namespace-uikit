@@ -1,12 +1,12 @@
 "use client";
 
+import { Tag, TagGroup } from "@thenamespace/uikit";
 import {
   PlanetEarth,
   Rocket,
   ShoppingBag,
   SquareArticle,
-} from "@gravity-ui/icons";
-import { Tag, TagGroup } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
 
 export function TagGroupBasic() {
   return (

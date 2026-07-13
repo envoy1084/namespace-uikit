@@ -5,15 +5,6 @@ import type { FormEvent, ReactNode } from "react";
 import { createContext, useContext, useRef, useState } from "react";
 
 import {
-  Add01Icon,
-  ArrowRight01Icon,
-  Attachment01Icon,
-  Comment01Icon,
-  Delete02Icon,
-  MoreHorizontalIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
   Kanban,
   useKanban,
   useKanbanColumn,
@@ -26,6 +17,15 @@ import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
 import { Dropdown } from "@thenamespace/uikit/dropdown";
 import { Header } from "@thenamespace/uikit/header";
+import {
+  Add01Icon,
+  ArrowRight01Icon,
+  Attachment01Icon,
+  Comment01Icon,
+  Delete02Icon,
+  MoreHorizontalIcon,
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { Label } from "@thenamespace/uikit/label";
 import { Modal } from "@thenamespace/uikit/modal";

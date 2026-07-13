@@ -1,7 +1,7 @@
 "use client";
 
-import { Gear } from "@gravity-ui/icons";
 import { Button, Modal } from "@thenamespace/uikit";
+import { Gear } from "@thenamespace/uikit/icons";
 
 export function CustomTrigger() {
   return (

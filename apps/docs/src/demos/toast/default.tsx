@@ -1,7 +1,7 @@
 "use client";
 
-import { Persons } from "@gravity-ui/icons";
 import { Button, Toast, toast } from "@thenamespace/uikit";
+import { Persons } from "@thenamespace/uikit/icons";
 
 export function Default() {
   return (

@@ -1,7 +1,7 @@
 "use client";
 
-import { Calendar, ChevronDown } from "@gravity-ui/icons";
 import { DateField, Description, Label } from "@thenamespace/uikit";
+import { Calendar, ChevronDown } from "@thenamespace/uikit/icons";
 
 export function WithPrefixAndSuffix() {
   return (

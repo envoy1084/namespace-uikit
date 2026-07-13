@@ -24,7 +24,7 @@ export function WithCustomIndicator() {
         <DateField.Suffix>
           <DateRangePicker.Trigger>
             <DateRangePicker.TriggerIndicator>
-              <Icon className="size-4" icon="gravity-ui:chevron-down" />
+              <Icon className="size-4" icon="hugeicons:chevron-down" />
             </DateRangePicker.TriggerIndicator>
           </DateRangePicker.Trigger>
         </DateField.Suffix>

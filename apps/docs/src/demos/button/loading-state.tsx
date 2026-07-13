@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 
-import { Paperclip } from "@gravity-ui/icons";
 import { Button, Spinner } from "@thenamespace/uikit";
+import { Paperclip } from "@thenamespace/uikit/icons";
 
 export function LoadingState() {
   const [isLoading, setLoading] = useState(false);

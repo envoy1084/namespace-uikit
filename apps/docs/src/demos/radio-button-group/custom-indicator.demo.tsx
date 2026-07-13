@@ -1,10 +1,10 @@
 "use client";
 
 // @demo-title Custom Indicator
-import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { RadioButtonGroup } from "@thenamespace/uikit";
 import { Description } from "@thenamespace/uikit/description";
+import { CheckmarkCircle02Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Label } from "@thenamespace/uikit/label";
 import { NumberValue } from "@thenamespace/uikit/number-value";
 

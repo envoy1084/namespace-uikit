@@ -3,11 +3,11 @@
 // @demo-title Professions Picker
 import { useMemo, useState } from "react";
 
-import { SmileIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { Sheet } from "@thenamespace/uikit";
 import { Button } from "@thenamespace/uikit/button";
 import { EmptyState } from "@thenamespace/uikit/empty-state";
+import { SmileIcon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { Label } from "@thenamespace/uikit/label";
 import { ListBox } from "@thenamespace/uikit/list-box";

@@ -3,8 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React, { useState } from "react";
 
-import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import {
   getLocalTimeZone,
   isToday,
@@ -14,6 +12,8 @@ import {
   startOfWeek,
   today,
 } from "@internationalized/date";
+import { ArrowLeft01Icon, ArrowRight01Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { I18nProvider, useLocale } from "react-aria-components/I18nProvider";
 
 import { Button } from "@/components/buttons/button";

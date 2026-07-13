@@ -4,8 +4,13 @@ import type { Key } from "@thenamespace/uikit";
 
 import { useState } from "react";
 
-import { Bold, Italic, Strikethrough, Underline } from "@gravity-ui/icons";
 import { ToggleButton, ToggleButtonGroup } from "@thenamespace/uikit";
+import {
+  Bold,
+  Italic,
+  Strikethrough,
+  Underline,
+} from "@thenamespace/uikit/icons";
 
 export function Controlled() {
   const [selectedKeys, setSelectedKeys] = useState(new Set<Key>(["bold"]));

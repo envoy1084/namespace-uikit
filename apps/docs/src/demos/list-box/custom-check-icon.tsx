@@ -1,6 +1,5 @@
 "use client";
 
-import { Check } from "@gravity-ui/icons";
 import {
   Avatar,
   Description,
@@ -8,6 +7,7 @@ import {
   ListBox,
   Surface,
 } from "@thenamespace/uikit";
+import { Check } from "@thenamespace/uikit/icons";
 
 export function CustomCheckIcon() {
   return (

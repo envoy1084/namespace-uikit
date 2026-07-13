@@ -6,6 +6,11 @@ import type { Selection } from "react-aria-components";
 
 import { useState } from "react";
 
+import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
+import { ActionBar } from "@thenamespace/uikit/action-bar";
+import { Avatar } from "@thenamespace/uikit/avatar";
+import { Button } from "@thenamespace/uikit/button";
+import { Chip } from "@thenamespace/uikit/chip";
 import {
   Archive02Icon,
   Cancel01Icon,
@@ -13,13 +18,8 @@ import {
   Download04Icon,
   MoreVerticalIcon,
   PencilEdit01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
-import { ActionBar } from "@thenamespace/uikit/action-bar";
-import { Avatar } from "@thenamespace/uikit/avatar";
-import { Button } from "@thenamespace/uikit/button";
-import { Chip } from "@thenamespace/uikit/chip";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Separator } from "@thenamespace/uikit/separator";
 
 const formatDate = (value: string) =>

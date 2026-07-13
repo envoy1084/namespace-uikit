@@ -1,7 +1,7 @@
 "use client";
 
-import { LockOpen } from "@gravity-ui/icons";
 import { AlertDialog, Button } from "@thenamespace/uikit";
+import { LockOpen } from "@thenamespace/uikit/icons";
 
 export function CustomIcon() {
   return (

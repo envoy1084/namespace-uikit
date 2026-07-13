@@ -3,6 +3,8 @@
 // @demo-title Event Operations
 import { useState } from "react";
 
+import { Map } from "@thenamespace/uikit";
+import { Card } from "@thenamespace/uikit/card";
 import {
   FirstAidKitIcon,
   GpsSignal01Icon,
@@ -10,10 +12,8 @@ import {
   StreetFoodIcon,
   TrafficLightIcon,
   UserGroupIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Map } from "@thenamespace/uikit";
-import { Card } from "@thenamespace/uikit/card";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 const styles = {
   dark: "/assets/maps/dark-matter.json",

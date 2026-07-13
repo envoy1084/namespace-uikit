@@ -43,7 +43,7 @@ const Level2Template = () => (
 );
 
 const CustomSeparatorTemplate = () => (
-  <Breadcrumbs separator={<Icon icon="gravity-ui:caret-right" />}>
+  <Breadcrumbs separator={<Icon icon="hugeicons:caret-right" />}>
     <BreadcrumbsItem href="#">Home</BreadcrumbsItem>
     <BreadcrumbsItem href="#">Products</BreadcrumbsItem>
     <BreadcrumbsItem href="#">Electronics</BreadcrumbsItem>

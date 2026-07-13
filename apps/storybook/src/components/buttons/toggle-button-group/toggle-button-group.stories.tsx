@@ -49,19 +49,19 @@ export const Default: Story = {
   render: () => (
     <ToggleButtonGroup selectionMode="multiple">
       <ToggleButton isIconOnly aria-label="Bold" id="bold">
-        <Icon icon="gravity-ui:bold" />
+        <Icon icon="hugeicons:bold" />
       </ToggleButton>
       <ToggleButton isIconOnly aria-label="Italic" id="italic">
         <ToggleButtonGroup.Separator />
-        <Icon icon="gravity-ui:italic" />
+        <Icon icon="hugeicons:italic" />
       </ToggleButton>
       <ToggleButton isIconOnly aria-label="Underline" id="underline">
         <ToggleButtonGroup.Separator />
-        <Icon icon="gravity-ui:underline" />
+        <Icon icon="hugeicons:underline" />
       </ToggleButton>
       <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
         <ToggleButtonGroup.Separator />
-        <Icon icon="gravity-ui:strikethrough" />
+        <Icon icon="hugeicons:strikethrough" />
       </ToggleButton>
     </ToggleButtonGroup>
   ),
@@ -74,15 +74,15 @@ export const Sizes: Story = {
         <p className="text-muted text-sm">Small</p>
         <ToggleButtonGroup selectionMode="multiple" size="sm">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Icon icon="gravity-ui:bold" />
+            <Icon icon="hugeicons:bold" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:italic" />
+            <Icon icon="hugeicons:italic" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:underline" />
+            <Icon icon="hugeicons:underline" />
           </ToggleButton>
           <ToggleButton
             isIconOnly
@@ -90,7 +90,7 @@ export const Sizes: Story = {
             id="strikethrough"
           >
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:strikethrough" />
+            <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -98,15 +98,15 @@ export const Sizes: Story = {
         <p className="text-muted text-sm">Medium (default)</p>
         <ToggleButtonGroup selectionMode="multiple" size="md">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Icon icon="gravity-ui:bold" />
+            <Icon icon="hugeicons:bold" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:italic" />
+            <Icon icon="hugeicons:italic" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:underline" />
+            <Icon icon="hugeicons:underline" />
           </ToggleButton>
           <ToggleButton
             isIconOnly
@@ -114,7 +114,7 @@ export const Sizes: Story = {
             id="strikethrough"
           >
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:strikethrough" />
+            <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -122,15 +122,15 @@ export const Sizes: Story = {
         <p className="text-muted text-sm">Large</p>
         <ToggleButtonGroup selectionMode="multiple" size="lg">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Icon icon="gravity-ui:bold" />
+            <Icon icon="hugeicons:bold" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:italic" />
+            <Icon icon="hugeicons:italic" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:underline" />
+            <Icon icon="hugeicons:underline" />
           </ToggleButton>
           <ToggleButton
             isIconOnly
@@ -138,7 +138,7 @@ export const Sizes: Story = {
             id="strikethrough"
           >
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:strikethrough" />
+            <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -153,15 +153,15 @@ export const Orientation: Story = {
         <p className="text-muted text-sm">Horizontal</p>
         <ToggleButtonGroup orientation="horizontal" selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Icon icon="gravity-ui:bold" />
+            <Icon icon="hugeicons:bold" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:italic" />
+            <Icon icon="hugeicons:italic" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:underline" />
+            <Icon icon="hugeicons:underline" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -169,15 +169,15 @@ export const Orientation: Story = {
         <p className="text-muted text-sm">Vertical</p>
         <ToggleButtonGroup orientation="vertical" selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Icon icon="gravity-ui:bold" />
+            <Icon icon="hugeicons:bold" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:italic" />
+            <Icon icon="hugeicons:italic" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:underline" />
+            <Icon icon="hugeicons:underline" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -192,15 +192,15 @@ export const AttachedVsDetached: Story = {
         <p className="text-muted text-sm">Attached (default)</p>
         <ToggleButtonGroup selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Icon icon="gravity-ui:bold" />
+            <Icon icon="hugeicons:bold" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:italic" />
+            <Icon icon="hugeicons:italic" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:underline" />
+            <Icon icon="hugeicons:underline" />
           </ToggleButton>
           <ToggleButton
             isIconOnly
@@ -208,7 +208,7 @@ export const AttachedVsDetached: Story = {
             id="strikethrough"
           >
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:strikethrough" />
+            <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -216,20 +216,20 @@ export const AttachedVsDetached: Story = {
         <p className="text-muted text-sm">Detached</p>
         <ToggleButtonGroup isDetached selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Icon icon="gravity-ui:bold" />
+            <Icon icon="hugeicons:bold" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
-            <Icon icon="gravity-ui:italic" />
+            <Icon icon="hugeicons:italic" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
-            <Icon icon="gravity-ui:underline" />
+            <Icon icon="hugeicons:underline" />
           </ToggleButton>
           <ToggleButton
             isIconOnly
             aria-label="Strikethrough"
             id="strikethrough"
           >
-            <Icon icon="gravity-ui:strikethrough" />
+            <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -242,34 +242,34 @@ export const FullWidth: Story = {
     <div className="w-[400px] space-y-3">
       <ToggleButtonGroup fullWidth selectionMode="multiple">
         <ToggleButton isIconOnly aria-label="Bold" id="bold">
-          <Icon icon="gravity-ui:bold" />
+          <Icon icon="hugeicons:bold" />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Italic" id="italic">
           <ToggleButtonGroup.Separator />
-          <Icon icon="gravity-ui:italic" />
+          <Icon icon="hugeicons:italic" />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Underline" id="underline">
           <ToggleButtonGroup.Separator />
-          <Icon icon="gravity-ui:underline" />
+          <Icon icon="hugeicons:underline" />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
           <ToggleButtonGroup.Separator />
-          <Icon icon="gravity-ui:strikethrough" />
+          <Icon icon="hugeicons:strikethrough" />
         </ToggleButton>
       </ToggleButtonGroup>
       <ToggleButtonGroup fullWidth selectionMode="single">
         <ToggleButton id="left">
-          <Icon icon="gravity-ui:text-align-left" />
+          <Icon icon="hugeicons:text-align-left" />
           Left
         </ToggleButton>
         <ToggleButton id="center">
           <ToggleButtonGroup.Separator />
-          <Icon icon="gravity-ui:text-align-center" />
+          <Icon icon="hugeicons:text-align-center" />
           Center
         </ToggleButton>
         <ToggleButton id="right">
           <ToggleButtonGroup.Separator />
-          <Icon icon="gravity-ui:text-align-right" />
+          <Icon icon="hugeicons:text-align-right" />
           Right
         </ToggleButton>
       </ToggleButtonGroup>
@@ -287,17 +287,17 @@ export const SelectionMode: Story = {
           selectionMode="single"
         >
           <ToggleButton id="left">
-            <Icon icon="gravity-ui:text-align-left" />
+            <Icon icon="hugeicons:text-align-left" />
             Left
           </ToggleButton>
           <ToggleButton id="center">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:text-align-center" />
+            <Icon icon="hugeicons:text-align-center" />
             Center
           </ToggleButton>
           <ToggleButton id="right">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:text-align-right" />
+            <Icon icon="hugeicons:text-align-right" />
             Right
           </ToggleButton>
         </ToggleButtonGroup>
@@ -309,15 +309,15 @@ export const SelectionMode: Story = {
           selectionMode="multiple"
         >
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Icon icon="gravity-ui:bold" />
+            <Icon icon="hugeicons:bold" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:italic" />
+            <Icon icon="hugeicons:italic" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:underline" />
+            <Icon icon="hugeicons:underline" />
           </ToggleButton>
           <ToggleButton
             isIconOnly
@@ -325,7 +325,7 @@ export const SelectionMode: Story = {
             id="strikethrough"
           >
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:strikethrough" />
+            <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -345,15 +345,15 @@ export const Controlled: Story = {
           onSelectionChange={setSelectedKeys}
         >
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Icon icon="gravity-ui:bold" />
+            <Icon icon="hugeicons:bold" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:italic" />
+            <Icon icon="hugeicons:italic" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:underline" />
+            <Icon icon="hugeicons:underline" />
           </ToggleButton>
           <ToggleButton
             isIconOnly
@@ -361,7 +361,7 @@ export const Controlled: Story = {
             id="strikethrough"
           >
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:strikethrough" />
+            <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
         <p className="text-muted text-sm">
@@ -382,15 +382,15 @@ export const Disabled: Story = {
         <p className="text-muted text-sm">All buttons disabled</p>
         <ToggleButtonGroup isDisabled selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Icon icon="gravity-ui:bold" />
+            <Icon icon="hugeicons:bold" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:italic" />
+            <Icon icon="hugeicons:italic" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:underline" />
+            <Icon icon="hugeicons:underline" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -398,15 +398,15 @@ export const Disabled: Story = {
         <p className="text-muted text-sm">Individual button disabled</p>
         <ToggleButtonGroup selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Icon icon="gravity-ui:bold" />
+            <Icon icon="hugeicons:bold" />
           </ToggleButton>
           <ToggleButton isDisabled isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:italic" />
+            <Icon icon="hugeicons:italic" />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Icon icon="gravity-ui:underline" />
+            <Icon icon="hugeicons:underline" />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -418,16 +418,16 @@ export const WithoutSeparator: Story = {
   render: () => (
     <ToggleButtonGroup selectionMode="multiple">
       <ToggleButton isIconOnly aria-label="Bold" id="bold">
-        <Icon icon="gravity-ui:bold" />
+        <Icon icon="hugeicons:bold" />
       </ToggleButton>
       <ToggleButton isIconOnly aria-label="Italic" id="italic">
-        <Icon icon="gravity-ui:italic" />
+        <Icon icon="hugeicons:italic" />
       </ToggleButton>
       <ToggleButton isIconOnly aria-label="Underline" id="underline">
-        <Icon icon="gravity-ui:underline" />
+        <Icon icon="hugeicons:underline" />
       </ToggleButton>
       <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
-        <Icon icon="gravity-ui:strikethrough" />
+        <Icon icon="hugeicons:strikethrough" />
       </ToggleButton>
     </ToggleButtonGroup>
   ),
@@ -441,17 +441,17 @@ export const WithLabels: Story = {
         selectionMode="multiple"
       >
         <ToggleButton id="bold">
-          <Icon icon="gravity-ui:bold" />
+          <Icon icon="hugeicons:bold" />
           Bold
         </ToggleButton>
         <ToggleButton id="italic">
           <ToggleButtonGroup.Separator />
-          <Icon icon="gravity-ui:italic" />
+          <Icon icon="hugeicons:italic" />
           Italic
         </ToggleButton>
         <ToggleButton id="underline">
           <ToggleButtonGroup.Separator />
-          <Icon icon="gravity-ui:underline" />
+          <Icon icon="hugeicons:underline" />
           Underline
         </ToggleButton>
       </ToggleButtonGroup>
@@ -478,15 +478,15 @@ export const Examples: Story = {
               onSelectionChange={setFormatting}
             >
               <ToggleButton isIconOnly aria-label="Bold" id="bold">
-                <Icon icon="gravity-ui:bold" />
+                <Icon icon="hugeicons:bold" />
               </ToggleButton>
               <ToggleButton isIconOnly aria-label="Italic" id="italic">
                 <ToggleButtonGroup.Separator />
-                <Icon icon="gravity-ui:italic" />
+                <Icon icon="hugeicons:italic" />
               </ToggleButton>
               <ToggleButton isIconOnly aria-label="Underline" id="underline">
                 <ToggleButtonGroup.Separator />
-                <Icon icon="gravity-ui:underline" />
+                <Icon icon="hugeicons:underline" />
               </ToggleButton>
               <ToggleButton
                 isIconOnly
@@ -494,7 +494,7 @@ export const Examples: Story = {
                 id="strikethrough"
               >
                 <ToggleButtonGroup.Separator />
-                <Icon icon="gravity-ui:strikethrough" />
+                <Icon icon="hugeicons:strikethrough" />
               </ToggleButton>
             </ToggleButtonGroup>
             <ToggleButtonGroup
@@ -504,15 +504,15 @@ export const Examples: Story = {
               onSelectionChange={setAlignment}
             >
               <ToggleButton isIconOnly aria-label="Align left" id="left">
-                <Icon icon="gravity-ui:text-align-left" />
+                <Icon icon="hugeicons:text-align-left" />
               </ToggleButton>
               <ToggleButton isIconOnly aria-label="Align center" id="center">
                 <ToggleButtonGroup.Separator />
-                <Icon icon="gravity-ui:text-align-center" />
+                <Icon icon="hugeicons:text-align-center" />
               </ToggleButton>
               <ToggleButton isIconOnly aria-label="Align right" id="right">
                 <ToggleButtonGroup.Separator />
-                <Icon icon="gravity-ui:text-align-right" />
+                <Icon icon="hugeicons:text-align-right" />
               </ToggleButton>
             </ToggleButtonGroup>
           </div>
@@ -528,15 +528,15 @@ export const Examples: Story = {
             size="sm"
           >
             <ToggleButton isIconOnly aria-label="Grid view" id="grid">
-              <Icon icon="gravity-ui:layout-cells-large" />
+              <Icon icon="hugeicons:layout-cells-large" />
             </ToggleButton>
             <ToggleButton isIconOnly aria-label="List view" id="list">
               <ToggleButtonGroup.Separator />
-              <Icon icon="gravity-ui:list-ul" />
+              <Icon icon="hugeicons:list-ul" />
             </ToggleButton>
             <ToggleButton isIconOnly aria-label="Columns view" id="columns">
               <ToggleButtonGroup.Separator />
-              <Icon icon="gravity-ui:layout-columns-3" />
+              <Icon icon="hugeicons:layout-columns-3" />
             </ToggleButton>
           </ToggleButtonGroup>
         </div>
@@ -546,15 +546,15 @@ export const Examples: Story = {
           <p className="text-muted text-sm">Vertical toolbar</p>
           <ToggleButtonGroup orientation="vertical" selectionMode="multiple">
             <ToggleButton isIconOnly aria-label="Bold" id="bold">
-              <Icon icon="gravity-ui:bold" />
+              <Icon icon="hugeicons:bold" />
             </ToggleButton>
             <ToggleButton isIconOnly aria-label="Italic" id="italic">
               <ToggleButtonGroup.Separator />
-              <Icon icon="gravity-ui:italic" />
+              <Icon icon="hugeicons:italic" />
             </ToggleButton>
             <ToggleButton isIconOnly aria-label="Underline" id="underline">
               <ToggleButtonGroup.Separator />
-              <Icon icon="gravity-ui:underline" />
+              <Icon icon="hugeicons:underline" />
             </ToggleButton>
           </ToggleButtonGroup>
         </div>

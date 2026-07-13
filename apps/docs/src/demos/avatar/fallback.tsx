@@ -1,5 +1,5 @@
-import { Person } from "@gravity-ui/icons";
 import { Avatar } from "@thenamespace/uikit";
+import { Person } from "@thenamespace/uikit/icons";
 
 export function Fallback() {
   return (

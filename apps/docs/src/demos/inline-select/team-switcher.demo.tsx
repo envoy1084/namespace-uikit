@@ -4,9 +4,9 @@
 // @demo-title Team Switcher
 import { useState } from "react";
 
-import { Building03Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { InlineSelect } from "@thenamespace/uikit";
+import { Building03Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { ListBox } from "@thenamespace/uikit/list-box";
 
 const teams = [

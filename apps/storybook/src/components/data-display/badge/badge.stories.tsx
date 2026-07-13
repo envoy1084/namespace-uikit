@@ -152,7 +152,7 @@ const WithContentTemplate = (props: BadgeProps) => (
           <Avatar.Image src={AVATAR_URL} />
         </Avatar>
         <Badge {...props} color="accent">
-          <Icon icon="gravity-ui:bell" />
+          <Icon icon="hugeicons:bell" />
         </Badge>
       </Badge.Anchor>
       <span className="text-muted text-xs">Icon</span>

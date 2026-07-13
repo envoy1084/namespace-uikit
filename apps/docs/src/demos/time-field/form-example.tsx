@@ -4,7 +4,6 @@ import type { Time } from "@internationalized/date";
 
 import { useState } from "react";
 
-import { Clock } from "@gravity-ui/icons";
 import { parseTime } from "@internationalized/date";
 import {
   Button,
@@ -14,6 +13,7 @@ import {
   Label,
   TimeField,
 } from "@thenamespace/uikit";
+import { Clock } from "@thenamespace/uikit/icons";
 
 export function FormExample() {
   const [value, setValue] = useState<Time | null>(null);

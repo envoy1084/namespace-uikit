@@ -3,8 +3,6 @@
 // @demo-title Inline
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
-import { ArrowUp01Icon, Attachment01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { Header, ListBox, Select, Separator } from "@thenamespace/uikit";
 import {
   ChatAttachment,
@@ -12,6 +10,8 @@ import {
   ChatAttachmentInput,
   PromptInput,
 } from "@thenamespace/uikit";
+import { ArrowUp01Icon, Attachment01Icon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 interface PendingAttachment {
   id: string;

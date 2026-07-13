@@ -3,15 +3,15 @@
 // @demo-title Editable Cells
 import { useState } from "react";
 
+import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
+import { Button } from "@thenamespace/uikit/button";
+import { Chip } from "@thenamespace/uikit/chip";
 import {
   Cancel01Icon,
   PencilEdit01Icon,
   Tick02Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
-import { Button } from "@thenamespace/uikit/button";
-import { Chip } from "@thenamespace/uikit/chip";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { ListBox } from "@thenamespace/uikit/list-box";
 import { NumberStepper } from "@thenamespace/uikit/number-stepper";

@@ -1,5 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import { Avatar } from "@thenamespace/uikit/avatar";
+import { Button } from "@thenamespace/uikit/button";
+import { Card } from "@thenamespace/uikit/card";
+import { Chip } from "@thenamespace/uikit/chip";
+import { CloseButton } from "@thenamespace/uikit/close-button";
 import {
   AddCircleIcon,
   Attachment01Icon,
@@ -19,13 +24,8 @@ import {
   SecurityWarningIcon,
   User02Icon,
   ZapIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { Avatar } from "@thenamespace/uikit/avatar";
-import { Button } from "@thenamespace/uikit/button";
-import { Card } from "@thenamespace/uikit/card";
-import { Chip } from "@thenamespace/uikit/chip";
-import { CloseButton } from "@thenamespace/uikit/close-button";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { Link } from "@thenamespace/uikit/link";
 

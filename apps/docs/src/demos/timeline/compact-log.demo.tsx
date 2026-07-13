@@ -1,14 +1,14 @@
 "use client";
 
 // @demo-title Compact Log
+import { Timeline, type TimelineStatus } from "@thenamespace/uikit";
 import {
   CheckmarkCircle02Icon,
   CreditCardIcon,
   ReceiptTextIcon,
   SecurityWarningIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { Timeline, type TimelineStatus } from "@thenamespace/uikit";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 
 const TimelineGlyph = ({ icon }: { icon: IconSvgElement }) => (
   <HugeiconsIcon aria-hidden icon={icon} strokeWidth={2} />

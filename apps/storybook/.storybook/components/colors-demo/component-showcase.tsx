@@ -210,7 +210,7 @@ export function ComponentShowcase() {
                       <Icon
                         aria-label="Dollar sign icon"
                         className="text-primary size-8 shrink-0"
-                        icon="gravity-ui:circle-dollar"
+                        icon="hugeicons:circle-dollar"
                         role="img"
                       />
                       <div className="flex flex-col gap-1">
@@ -636,7 +636,7 @@ export function ComponentShowcase() {
                     <Modal.CloseTrigger />
                     <Modal.Header>
                       <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                        <Icon className="size-5" icon="gravity-ui:rocket" />
+                        <Icon className="size-5" icon="hugeicons:rocket" />
                       </Modal.Icon>
                       <Modal.Heading>Welcome to Namespace</Modal.Heading>
                     </Modal.Header>
@@ -660,7 +660,7 @@ export function ComponentShowcase() {
             {/* Popover */}
             <Popover>
               <Button isIconOnly aria-label="Info" size="sm" variant="tertiary">
-                <Icon icon="gravity-ui:circle-info" />
+                <Icon icon="hugeicons:circle-info" />
               </Button>
               <Popover.Content>
                 <Popover.Dialog>
@@ -846,7 +846,7 @@ export function ComponentShowcase() {
                     <Modal.CloseTrigger />
                     <Modal.Header>
                       <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                        <Icon className="size-5" icon="gravity-ui:envelope" />
+                        <Icon className="size-5" icon="hugeicons:envelope" />
                       </Modal.Icon>
                       <Modal.Heading>Contact Us</Modal.Heading>
                       <p className="text-muted text-sm">
@@ -900,7 +900,7 @@ export function ComponentShowcase() {
                   <Modal.Dialog className="sm:max-w-[360px]">
                     <Modal.Header className="items-center text-center">
                       <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                        <Icon className="size-5" icon="gravity-ui:sparkles" />
+                        <Icon className="size-5" icon="hugeicons:sparkles" />
                       </Modal.Icon>
                       <Modal.Heading>Premium Feature</Modal.Heading>
                     </Modal.Header>
@@ -944,7 +944,7 @@ export function ComponentShowcase() {
                       <AlertDialog.Icon status="danger">
                         <Icon
                           className="size-5"
-                          icon="gravity-ui:triangle-exclamation"
+                          icon="hugeicons:triangle-exclamation"
                         />
                       </AlertDialog.Icon>
                       <AlertDialog.Heading>

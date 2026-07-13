@@ -1,8 +1,6 @@
 "use client";
 
 // @demo-title Project Board
-import { Add01Icon, MoreHorizontalIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Kanban,
   useKanban,
@@ -11,6 +9,8 @@ import {
 } from "@thenamespace/uikit";
 import { Avatar } from "@thenamespace/uikit/avatar";
 import { Button } from "@thenamespace/uikit/button";
+import { Add01Icon, MoreHorizontalIcon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { ProgressBar } from "@thenamespace/uikit/progress-bar";
 
 const people: Record<string, string> = {

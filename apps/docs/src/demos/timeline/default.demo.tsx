@@ -1,6 +1,8 @@
 "use client";
 
 // @demo-title Default
+import { Timeline, type TimelineStatus } from "@thenamespace/uikit";
+import { Chip } from "@thenamespace/uikit/chip";
 import {
   BadgeCheckIcon,
   CheckmarkCircle02Icon,
@@ -8,10 +10,8 @@ import {
   Flag02Icon,
   Megaphone02Icon,
   SecurityWarningIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { Timeline, type TimelineStatus } from "@thenamespace/uikit";
-import { Chip } from "@thenamespace/uikit/chip";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 
 const icons = [
   Flag02Icon,

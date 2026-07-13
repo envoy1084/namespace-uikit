@@ -34,7 +34,7 @@ const defaultArgs: ToggleButton["RootProps"] = {
 const Template = ({ isDisabled, size, variant }: ToggleButton["RootProps"]) => (
   <div className="flex gap-3">
     <ToggleButton isDisabled={isDisabled} size={size} variant={variant}>
-      <Icon icon="gravity-ui:heart" />
+      <Icon icon="hugeicons:heart" />
       Like
     </ToggleButton>
     <ToggleButton
@@ -42,7 +42,7 @@ const Template = ({ isDisabled, size, variant }: ToggleButton["RootProps"]) => (
       size={size}
       variant={variant ?? "ghost"}
     >
-      <Icon icon="gravity-ui:heart" />
+      <Icon icon="hugeicons:heart" />
       Like
     </ToggleButton>
   </div>
@@ -54,11 +54,11 @@ const VariantsTemplate = ({ isDisabled, size }: ToggleButton["RootProps"]) => (
       <p className="text-muted text-sm font-medium">Default</p>
       <div className="flex gap-3">
         <ToggleButton isDisabled={isDisabled} size={size}>
-          <Icon icon="gravity-ui:heart" />
+          <Icon icon="hugeicons:heart" />
           Like
         </ToggleButton>
         <ToggleButton defaultSelected isDisabled={isDisabled} size={size}>
-          <Icon icon="gravity-ui:heart-fill" />
+          <Icon icon="hugeicons:heart-fill" />
           Like
         </ToggleButton>
       </div>
@@ -67,7 +67,7 @@ const VariantsTemplate = ({ isDisabled, size }: ToggleButton["RootProps"]) => (
       <p className="text-muted text-sm font-medium">Ghost</p>
       <div className="flex gap-3">
         <ToggleButton isDisabled={isDisabled} size={size} variant="ghost">
-          <Icon icon="gravity-ui:heart" />
+          <Icon icon="hugeicons:heart" />
           Like
         </ToggleButton>
         <ToggleButton
@@ -76,7 +76,7 @@ const VariantsTemplate = ({ isDisabled, size }: ToggleButton["RootProps"]) => (
           size={size}
           variant="ghost"
         >
-          <Icon icon="gravity-ui:heart-fill" />
+          <Icon icon="hugeicons:heart-fill" />
           Like
         </ToggleButton>
       </div>
@@ -88,27 +88,27 @@ const SizesTemplate = () => (
   <div className="flex flex-col gap-6">
     <div className="flex items-center gap-3">
       <ToggleButton size="sm">
-        <Icon icon="gravity-ui:heart" />
+        <Icon icon="hugeicons:heart" />
         Small
       </ToggleButton>
       <ToggleButton size="md">
-        <Icon icon="gravity-ui:heart" />
+        <Icon icon="hugeicons:heart" />
         Medium
       </ToggleButton>
       <ToggleButton size="lg">
-        <Icon icon="gravity-ui:heart" />
+        <Icon icon="hugeicons:heart" />
         Large
       </ToggleButton>
     </div>
     <div className="flex items-center gap-3">
       <ToggleButton isIconOnly size="sm">
-        <Icon icon="gravity-ui:heart" />
+        <Icon icon="hugeicons:heart" />
       </ToggleButton>
       <ToggleButton isIconOnly size="md">
-        <Icon icon="gravity-ui:heart" />
+        <Icon icon="hugeicons:heart" />
       </ToggleButton>
       <ToggleButton isIconOnly size="lg">
-        <Icon icon="gravity-ui:heart" />
+        <Icon icon="hugeicons:heart" />
       </ToggleButton>
     </div>
   </div>
@@ -126,7 +126,7 @@ const IconOnlyTemplate = ({
       size={size}
       variant={variant}
     >
-      <Icon icon="gravity-ui:heart" />
+      <Icon icon="hugeicons:heart" />
     </ToggleButton>
     <ToggleButton
       isIconOnly
@@ -134,7 +134,7 @@ const IconOnlyTemplate = ({
       size={size}
       variant={variant ?? "ghost"}
     >
-      <Icon icon="gravity-ui:bookmark" />
+      <Icon icon="hugeicons:bookmark" />
     </ToggleButton>
   </div>
 );
@@ -149,7 +149,7 @@ const ControlledTemplate = () => {
           {({ isSelected: selected }) => (
             <>
               <Icon
-                icon={selected ? "gravity-ui:heart-fill" : "gravity-ui:heart"}
+                icon={selected ? "hugeicons:heart-fill" : "hugeicons:heart"}
               />
               {selected ? "Liked" : "Like"}
             </>
@@ -169,11 +169,11 @@ const ControlledTemplate = () => {
 const DisabledTemplate = () => (
   <div className="flex gap-3">
     <ToggleButton isDisabled>
-      <Icon icon="gravity-ui:heart" />
+      <Icon icon="hugeicons:heart" />
       Like
     </ToggleButton>
     <ToggleButton defaultSelected isDisabled>
-      <Icon icon="gravity-ui:heart-fill" />
+      <Icon icon="hugeicons:heart-fill" />
       Like
     </ToggleButton>
   </div>
@@ -190,7 +190,7 @@ const RealWorldTemplate = () => {
         {({ isSelected }) => (
           <>
             <Icon
-              icon={isSelected ? "gravity-ui:heart-fill" : "gravity-ui:heart"}
+              icon={isSelected ? "hugeicons:heart-fill" : "hugeicons:heart"}
             />
             Like
           </>
@@ -206,7 +206,7 @@ const RealWorldTemplate = () => {
           <>
             <Icon
               icon={
-                isSelected ? "gravity-ui:bookmark-fill" : "gravity-ui:bookmark"
+                isSelected ? "hugeicons:bookmark-fill" : "hugeicons:bookmark"
               }
             />
             Save
@@ -221,7 +221,7 @@ const RealWorldTemplate = () => {
         onChange={setPinned}
       >
         {({ isSelected }) => (
-          <Icon icon={isSelected ? "gravity-ui:pin-fill" : "gravity-ui:pin"} />
+          <Icon icon={isSelected ? "hugeicons:pin-fill" : "hugeicons:pin"} />
         )}
       </ToggleButton>
     </div>

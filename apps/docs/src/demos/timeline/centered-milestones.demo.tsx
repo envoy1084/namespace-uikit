@@ -1,6 +1,8 @@
 "use client";
 
 // @demo-title Centered Milestones
+import { Timeline } from "@thenamespace/uikit";
+import { Chip } from "@thenamespace/uikit/chip";
 import {
   BadgeCheckIcon,
   CheckmarkCircle02Icon,
@@ -8,10 +10,8 @@ import {
   Flag02Icon,
   Megaphone02Icon,
   SecurityWarningIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { Timeline } from "@thenamespace/uikit";
-import { Chip } from "@thenamespace/uikit/chip";
+} from "@thenamespace/uikit/icons";
+import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 import { Link } from "@thenamespace/uikit/link";
 
 const TimelineGlyph = ({ icon }: { icon: IconSvgElement }) => (

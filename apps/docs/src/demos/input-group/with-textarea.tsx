@@ -3,13 +3,6 @@
 import { useState } from "react";
 
 import {
-  ArrowUp,
-  At,
-  Microphone,
-  PlugConnection,
-  Plus,
-} from "@gravity-ui/icons";
-import {
   Button,
   InputGroup,
   Kbd,
@@ -17,6 +10,13 @@ import {
   TextField,
   Tooltip,
 } from "@thenamespace/uikit";
+import {
+  ArrowUp,
+  At,
+  Microphone,
+  PlugConnection,
+  Plus,
+} from "@thenamespace/uikit/icons";
 
 export function WithTextArea() {
   const [value, setValue] = useState("");

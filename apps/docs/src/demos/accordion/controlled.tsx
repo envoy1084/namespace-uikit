@@ -2,12 +2,12 @@
 
 import React from "react";
 
-import { ChevronDown, ChevronUp } from "@gravity-ui/icons";
 import {
   Accordion,
   Button,
   useDisclosureGroupNavigation,
 } from "@thenamespace/uikit";
+import { ChevronDown, ChevronUp } from "@thenamespace/uikit/icons";
 
 const items = [
   {

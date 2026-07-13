@@ -1,17 +1,17 @@
 "use client";
 
 // @demo-title Studio Review
+import { Timeline, type TimelineStatus } from "@thenamespace/uikit";
+import { Avatar } from "@thenamespace/uikit/avatar";
+import { Card } from "@thenamespace/uikit/card";
+import { Chip } from "@thenamespace/uikit/chip";
 import {
   BadgeCheckIcon,
   CheckmarkCircle02Icon,
   Flag02Icon,
   Megaphone02Icon,
   SecurityWarningIcon,
-} from "@hugeicons/core-free-icons";
-import { Timeline, type TimelineStatus } from "@thenamespace/uikit";
-import { Avatar } from "@thenamespace/uikit/avatar";
-import { Card } from "@thenamespace/uikit/card";
-import { Chip } from "@thenamespace/uikit/chip";
+} from "@thenamespace/uikit/icons";
 import { Link } from "@thenamespace/uikit/link";
 
 const avatars = ["blue", "orange", "green", "blue"];
