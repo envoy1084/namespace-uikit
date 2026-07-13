@@ -242,7 +242,7 @@ export function ThemeBuilder() {
   }
 
   return (
-    <main className="bg-background text-foreground flex min-h-[calc(100dvh-4rem)] flex-col">
+    <div className="bg-background text-foreground flex min-h-[calc(100dvh-4rem)] flex-col">
       <header className="border-border bg-background/90 sticky top-16 z-20 flex min-h-16 items-center justify-between gap-3 border-b px-4 backdrop-blur-xl md:px-6">
         <div className="min-w-0">
           <h1 className="truncate text-base font-semibold">Theme builder</h1>
@@ -453,7 +453,7 @@ export function ThemeBuilder() {
           )}
         </section>
       </div>
-    </main>
+    </div>
   );
 }
 
