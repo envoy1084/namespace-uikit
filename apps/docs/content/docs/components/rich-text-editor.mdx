@@ -1,0 +1,245 @@
+---
+title: Rich Text Editor
+description: A composable Tiptap editor with toolbar controls, selection bubble menu, JSON value updates, and character count support.
+---
+
+## Usage
+
+<ProExamples component="rich-text-editor" title="Rich Text Editor" />
+
+## Anatomy
+
+Import the RichTextEditor component and arrange its parts with dot notation.
+
+```tsx
+import { RichTextEditor } from "@thenamespace/uikit";
+
+<RichTextEditor defaultValue={documentJson} onValueChange={setDocumentJson}>
+  <RichTextEditor.Shell>
+    <RichTextEditor.Toolbar>
+      <RichTextEditor.ToolbarGroup>
+        <RichTextEditor.ToggleButton command="bold" />
+        <RichTextEditor.ToggleButton command="italic" />
+        <RichTextEditor.LinkPopover>
+          <RichTextEditor.LinkPopover.Trigger />
+          <RichTextEditor.LinkPopover.Content>
+            <RichTextEditor.LinkPopover.Input />
+            <RichTextEditor.LinkPopover.Actions>
+              <RichTextEditor.LinkPopover.UnsetButton />
+              <RichTextEditor.LinkPopover.ApplyButton />
+            </RichTextEditor.LinkPopover.Actions>
+          </RichTextEditor.LinkPopover.Content>
+        </RichTextEditor.LinkPopover>
+      </RichTextEditor.ToolbarGroup>
+    </RichTextEditor.Toolbar>
+    <RichTextEditor.Content />
+    <RichTextEditor.BubbleMenu>
+      <RichTextEditor.ToggleButton command="bold" />
+    </RichTextEditor.BubbleMenu>
+    <RichTextEditor.Footer>
+      <RichTextEditor.CharacterCount />
+    </RichTextEditor.Footer>
+  </RichTextEditor.Shell>
+</RichTextEditor>;
+```
+
+## Controlled
+
+## Character Count
+
+## Placeholder
+
+## Disabled And Read Only
+
+## Custom Composition
+
+## Extensible Commands
+
+Use `CommandButton`, `FloatingMenu`, `SuggestionMenu`, and the editor hooks to connect custom Tiptap commands without waiting for a new built-in prop.
+
+```tsx
+import {
+  RichTextEditor,
+  filterRichTextEditorSuggestionItems,
+} from "@thenamespace/uikit";
+
+const slashItems = ({ query }) =>
+  filterRichTextEditorSuggestionItems(
+    [
+      {
+        title: "Heading 1",
+        keywords: ["title", "h1"],
+        command: ({ editor, range }) => {
+          editor
+            .chain()
+            .focus()
+            .deleteRange(range)
+            .setNode("heading", { level: 1 })
+            .run();
+        },
+      },
+    ],
+    query,
+  );
+
+<RichTextEditor extensions={customExtensions}>
+  <RichTextEditor.Shell>
+    <RichTextEditor.Toolbar>
+      <RichTextEditor.CommandButton
+        aria-label="Insert date"
+        onCommand={(editor) =>
+          editor.chain().focus().insertContent("27 May 2026").run()
+        }
+      />
+    </RichTextEditor.Toolbar>
+    <RichTextEditor.Content />
+    <RichTextEditor.FloatingMenu>
+      <RichTextEditor.CommandButton
+        aria-label="Add heading"
+        onCommand={(editor) =>
+          editor.chain().focus().toggleHeading({ level: 2 }).run()
+        }
+      />
+    </RichTextEditor.FloatingMenu>
+    <RichTextEditor.SuggestionMenu char="/" items={slashItems} />
+  </RichTextEditor.Shell>
+</RichTextEditor>;
+```
+
+## CSS Classes
+
+### Base Classes
+
+- `.rich-text-editor` - Root wrapper
+- `.rich-text-editor__shell` - Editor surface
+
+### Element Classes
+
+- `.rich-text-editor__toolbar` - Toolbar container
+- `.rich-text-editor__toolbar-group` - Toolbar group
+- `.rich-text-editor__toolbar-button` - Toolbar button slot
+- `.rich-text-editor__toolbar-separator` - Toolbar separator
+- `.rich-text-editor__content` - Tiptap content host
+- `.rich-text-editor__prosemirror` - ProseMirror editable element
+- `.rich-text-editor__bubble-menu` - Floating selection toolbar
+- `.rich-text-editor__bubble-menu-toolbar` - Toolbar inside the floating selection menu
+- `.rich-text-editor__floating-menu` - Floating empty-line toolbar
+- `.rich-text-editor__floating-menu-toolbar` - Toolbar inside the floating empty-line menu
+- `.rich-text-editor__suggestion-menu` - Triggered suggestion menu
+- `.rich-text-editor__suggestion-menu-item` - Suggestion menu item
+- `.rich-text-editor__footer` - Footer row
+- `.rich-text-editor__character-count` - Character and word count
+- `.rich-text-editor__link-popover` - Link popover surface
+- `.rich-text-editor__link-input` - Link URL input
+
+### States
+
+- **Disabled**: `[data-disabled="true"]` on `.rich-text-editor`
+- **Read only**: `[data-readonly="true"]` on `.rich-text-editor`
+- **Over limit**: `[data-over-limit="true"]` on `.rich-text-editor__character-count`
+- **Active command**: `[data-active="true"]` on toolbar buttons
+
+## API Reference
+
+### RichTextEditor
+
+The root provider. It owns the Tiptap editor instance and emits JSON-first value updates.
+
+| Prop            | Type                       | Default              | Description                                                                    |
+| --------------- | -------------------------- | -------------------- | ------------------------------------------------------------------------------ |
+| `value`         | `JSONContent`              | -                    | Controlled Tiptap JSON document                                                |
+| `defaultValue`  | `JSONContent`              | -                    | Initial uncontrolled JSON document                                             |
+| `onValueChange` | `(value, details) => void` | -                    | Called with JSON plus HTML, text, empty state, character count, and word count |
+| `placeholder`   | `string`                   | `"Start writing..."` | Placeholder text for empty content                                             |
+| `maxLength`     | `number`                   | -                    | CharacterCount limit                                                           |
+| `isDisabled`    | `boolean`                  | `false`              | Disables editing and controls                                                  |
+| `isReadOnly`    | `boolean`                  | `false`              | Keeps content focusable but not editable                                       |
+| `extensions`    | `Extensions`               | -                    | Additional Tiptap extensions appended after defaults                           |
+| `editorOptions` | `Partial<EditorOptions>`   | -                    | Advanced Tiptap editor options                                                 |
+
+### RichTextEditor.ToggleButton
+
+Runs a formatting command and subscribes to active/disabled editor state.
+
+| Prop      | Type                                                                                                                                                                   | Description              |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `command` | `"bold" \| "italic" \| "underline" \| "strike" \| "code" \| "blockquote" \| "bulletList" \| "orderedList" \| "codeBlock" \| "heading-1" \| "heading-2" \| "heading-3"` | Formatting command       |
+| `tooltip` | `ReactNode`                                                                                                                                                            | Optional tooltip content |
+
+### RichTextEditor.ActionButton
+
+Runs editor actions.
+
+| Prop      | Type                                                      | Description              |
+| --------- | --------------------------------------------------------- | ------------------------ |
+| `action`  | `"undo" \| "redo" \| "clearFormatting" \| "clearContent"` | Editor action            |
+| `tooltip` | `ReactNode`                                               | Optional tooltip content |
+
+### RichTextEditor.CommandButton
+
+Runs any custom Tiptap command.
+
+| Prop         | Type                             | Description                                      |
+| ------------ | -------------------------------- | ------------------------------------------------ |
+| `onCommand`  | `(editor) => void \| boolean`    | Command to run with the current editor           |
+| `isActive`   | `boolean \| (editor) => boolean` | Active state used for styling and `aria-pressed` |
+| `isDisabled` | `boolean \| (editor) => boolean` | Command-specific disabled state                  |
+| `tooltip`    | `ReactNode`                      | Optional tooltip content                         |
+
+### RichTextEditor.LinkPopover
+
+Compound popover for applying and removing links through Tiptap link commands.
+
+Subcomponents: `Trigger`, `Content`, `Input`, `Actions`, `ApplyButton`, and `UnsetButton`.
+
+### RichTextEditor.Content
+
+Renders the Tiptap `EditorContent` for the current editor instance.
+
+### RichTextEditor.BubbleMenu
+
+Wraps Tiptap's React BubbleMenu and renders its children inside a Namespace UIKit Toolbar. The default visibility shows the menu for non-empty text selections while the editor is focused.
+
+| Prop           | Type           | Default | Description                                       |
+| -------------- | -------------- | ------- | ------------------------------------------------- |
+| `toolbarProps` | `ToolbarProps` | -       | Props forwarded to the internal selection toolbar |
+
+### RichTextEditor.FloatingMenu
+
+Wraps Tiptap's React FloatingMenu and renders its children inside a Namespace UIKit Toolbar. By default, Tiptap shows this menu on an empty editable text block.
+
+| Prop           | Type           | Default | Description                                       |
+| -------------- | -------------- | ------- | ------------------------------------------------- |
+| `toolbarProps` | `ToolbarProps` | -       | Props forwarded to the internal insertion toolbar |
+
+### RichTextEditor.SuggestionMenu
+
+Registers a Tiptap suggestion plugin for slash commands, mentions, variables, snippets, and other triggered menus. If no render function is provided, items with `{title, description, icon, command}` render in the default menu.
+
+| Prop              | Type                                             | Default | Description                               |
+| ----------------- | ------------------------------------------------ | ------- | ----------------------------------------- |
+| `char`            | `string`                                         | `"/"`   | Trigger character                         |
+| `items`           | `({query, editor}) => Item[] \| Promise<Item[]>` | -       | Suggestion item loader                    |
+| `children`        | `(props) => ReactNode`                           | -       | Custom renderer for complete menu control |
+| `onSelect`        | `(props) => void`                                | -       | Selection handler for custom item shapes  |
+| `pluginKey`       | `string \| PluginKey`                            | -       | Stable ProseMirror plugin key             |
+| `allowSpaces`     | `boolean`                                        | `false` | Allows spaces in the query                |
+| `allowedPrefixes` | `string[] \| null`                               | `[" "]` | Prefixes allowed before the trigger       |
+| `startOfLine`     | `boolean`                                        | `false` | Restricts matches to the start of a line  |
+| `maxHeight`       | `number`                                         | `384`   | Max menu height in pixels                 |
+
+### Hooks
+
+| Hook                                           | Description                                                                                |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `useRichTextEditor()`                          | Returns `{editor, isDisabled, isReadOnly, maxLength}` from the nearest editor              |
+| `useRichTextEditorState(selector, equalityFn)` | Subscribes to selected Tiptap editor state without re-rendering for unrelated transactions |
+
+### RichTextEditor.CharacterCount
+
+Displays the CharacterCount extension storage values.
+
+| Prop        | Type                                | Default | Description                             |
+| ----------- | ----------------------------------- | ------- | --------------------------------------- |
+| `showWords` | `boolean`                           | `false` | Appends word count to the default label |
+| `children`  | `ReactNode \| (stats) => ReactNode` | -       | Custom count rendering                  |

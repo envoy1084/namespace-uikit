@@ -1,0 +1,97 @@
+---
+title: Trend Chip
+description: A compact chip displaying a trend direction with percentage value, icon indicator, and contextual suffix.
+---
+
+## Usage
+
+<ProExamples component="trend-chip" title="Trend Chip" />
+
+## Anatomy
+
+Import the TrendChip component and access all parts using dot notation.
+
+```tsx
+import { TrendChip } from "@thenamespace/uikit";
+
+<TrendChip>
+  <TrendChip.Prefix />
+  <TrendChip.Indicator />
+  <TrendChip.Suffix />
+</TrendChip>;
+```
+
+## Custom Indicator
+
+## Prefix And Suffix
+
+## Sizes
+
+## Tabular Nums
+
+## Variants
+
+## CSS Classes
+
+### Base & Size Classes
+
+- `.trend-chip` - Base chip wrapper
+- `.trend-chip--sm` - Small size (default)
+- `.trend-chip--md` - Medium size
+- `.trend-chip--lg` - Large size
+
+### Element Classes
+
+- `.trend-chip__indicator` - Trend arrow icon
+- `.trend-chip__value` - Numeric value text
+- `.trend-chip__prefix` - Text before the value
+- `.trend-chip__suffix` - Text after the value
+
+### Data Attributes
+
+- `[data-trend="up"]` / `[data-trend="down"]` / `[data-trend="neutral"]` on the root - Current trend direction
+
+## API Reference
+
+### TrendChip
+
+The root component. Wraps Namespace UIKit [Chip](https://namespace.com/docs/react/components/chip) with trend-aware coloring and arrow icons.
+
+| Prop       | Type                                               | Default  | Description                                                             |
+| ---------- | -------------------------------------------------- | -------- | ----------------------------------------------------------------------- |
+| `trend`    | `'up' \| 'down' \| 'neutral'`                      | `'up'`   | Trend direction; controls arrow icon and color (success/danger/warning) |
+| `size`     | `'sm' \| 'md' \| 'lg'`                             | `'sm'`   | Size variant                                                            |
+| `variant`  | `'primary' \| 'secondary' \| 'soft' \| 'tertiary'` | `'soft'` | Chip style variant                                                      |
+| `children` | `ReactNode`                                        | -        | Value text, optional Indicator, Prefix, and Suffix sub-components       |
+
+Also supports all [Namespace UIKit Chip](https://namespace.com/docs/react/components/chip) props except `children`, `color`, and `size`.
+
+### TrendChip.Indicator
+
+Custom trend arrow icon. When omitted, a default directional arrow is rendered based on the `trend` prop.
+
+| Prop       | Type        | Default | Description             |
+| ---------- | ----------- | ------- | ----------------------- |
+| `children` | `ReactNode` | -       | Custom SVG icon element |
+
+Also supports all native `svg` HTML attributes.
+
+### TrendChip.Prefix
+
+Text displayed before the value.
+
+| Prop       | Type        | Default | Description |
+| ---------- | ----------- | ------- | ----------- |
+| `children` | `ReactNode` | -       | Prefix text |
+
+Also supports all native `span` HTML attributes.
+
+### TrendChip.Suffix
+
+Text displayed after the value.
+
+| Prop       | Type        | Default | Description |
+| ---------- | ----------- | ------- | ----------- |
+| `children` | `ReactNode` | -       | Suffix text |
+
+Also supports all native `span` HTML attributes.

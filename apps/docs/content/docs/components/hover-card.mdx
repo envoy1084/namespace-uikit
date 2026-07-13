@@ -1,0 +1,88 @@
+---
+title: Hover Card
+description: A popover card that appears on hover to preview additional content without navigating away.
+---
+
+## Usage
+
+<ProExamples component="hover-card" title="Hover Card" />
+
+## Anatomy
+
+Import the HoverCard component and access all parts using dot notation.
+
+```tsx
+import { HoverCard } from "@thenamespace/uikit";
+
+<HoverCard>
+  <HoverCard.Trigger />
+  <HoverCard.Content>
+    <HoverCard.Arrow />
+  </HoverCard.Content>
+</HoverCard>;
+```
+
+## Controlled
+
+## Custom Delays
+
+## Placements
+
+## With Arrow
+
+## With Image
+
+## CSS Classes
+
+### Element Classes
+
+- `.hover-card__trigger` - Inline wrapper around the trigger element
+- `.hover-card__content` - The floating panel that appears on hover
+- `.hover-card__arrow` - Optional pointing arrow connecting content to trigger
+
+### Interactive States
+
+- **Entering/Exiting**: `[data-entering="true"]` / `[data-exiting="true"]` on `.hover-card__content` (fade + zoom + slide animation)
+- **Placement**: `[data-placement="top|bottom|left|right"]` on `.hover-card__content` and `.hover-card__arrow` (directional animations and arrow rotation)
+
+## API Reference
+
+### HoverCard
+
+The root component. Manages hover state, open/close timing, and context.
+
+| Prop           | Type                      | Default | Description                                         |
+| -------------- | ------------------------- | ------- | --------------------------------------------------- |
+| `open`         | `boolean`                 | -       | Controlled open state                               |
+| `defaultOpen`  | `boolean`                 | -       | Default open state (uncontrolled)                   |
+| `onOpenChange` | `(open: boolean) => void` | -       | Callback when open state changes                    |
+| `openDelay`    | `number`                  | `700`   | Time in ms before opening after hover               |
+| `closeDelay`   | `number`                  | `300`   | Time in ms before closing after pointer/focus leave |
+| `children`     | `ReactNode`               | -       | Trigger and Content elements                        |
+
+### HoverCard.Trigger
+
+Inline wrapper that tracks hover and focus events on its children.
+
+Also supports all native `span` HTML attributes.
+
+### HoverCard.Content
+
+The floating panel. Wraps RAC [Popover](https://react-spectrum.adobe.com/react-aria/Popover.html).
+
+| Prop        | Type        | Default | Description                               |
+| ----------- | ----------- | ------- | ----------------------------------------- |
+| `placement` | `Placement` | `'top'` | Popover placement relative to the trigger |
+| `offset`    | `number`    | `8`     | Distance from the trigger                 |
+
+Also supports all RAC [Popover](https://react-spectrum.adobe.com/react-aria/Popover.html) props except `isOpen` and `triggerRef`.
+
+### HoverCard.Arrow
+
+Optional pointing arrow. Wraps RAC [OverlayArrow](https://react-spectrum.adobe.com/react-aria/OverlayArrow.html). Renders a default SVG arrow when no children are provided.
+
+| Prop       | Type        | Default | Description          |
+| ---------- | ----------- | ------- | -------------------- |
+| `children` | `ReactNode` | -       | Custom arrow element |
+
+Also supports all RAC [OverlayArrow](https://react-spectrum.adobe.com/react-aria/OverlayArrow.html) props.

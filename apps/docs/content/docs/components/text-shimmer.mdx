@@ -1,0 +1,41 @@
+---
+title: Text Shimmer
+description: Animated shimmer text for streaming, thinking, and loading labels.
+---
+
+## Usage
+
+<ProExamples component="text-shimmer" title="Text Shimmer" />
+
+Use `TextShimmer` for short labels that indicate active generation or background work.
+
+## Color
+
+The shimmer uses `currentColor`, so you can pass text color utilities such as `text-muted` and keep the animation visible.
+
+```tsx
+<TextShimmer className="text-muted">Thinking...</TextShimmer>
+```
+
+## Anatomy
+
+```tsx
+import { TextShimmer } from "@thenamespace/uikit";
+
+<TextShimmer>Thinking...</TextShimmer>;
+```
+
+## CSS Classes
+
+- `.text-shimmer` - Root animated text element
+
+## API Reference
+
+### TextShimmer
+
+| Prop        | Type        | Default | Description                                                 |
+| ----------- | ----------- | ------- | ----------------------------------------------------------- |
+| `children`  | `ReactNode` | -       | Text content                                                |
+| `className` | `string`    | -       | Additional classes, including color and text size utilities |
+
+Also supports render props from Namespace UIKit `dom.span`.

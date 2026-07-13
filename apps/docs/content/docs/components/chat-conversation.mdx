@@ -1,0 +1,55 @@
+---
+title: Chat Conversation
+description: A stick-to-bottom conversation viewport for streaming chat messages.
+---
+
+## Usage
+
+<ProExamples component="chat-conversation" title="Chat Conversation" />
+
+Use `ChatConversation` as the scrollable message viewport for assistant and user messages.
+
+## Full Chat
+
+Combine `ChatConversation`, `ChatMessage`, `ChainOfThought`, and `PromptInput` for a complete chat surface.
+
+## Scroll Button
+
+Add `ChatConversation.ScrollButton` only when your product needs an explicit jump-to-bottom control.
+
+## Anatomy
+
+```tsx
+import { ChatConversation } from "@thenamespace/uikit";
+
+<ChatConversation>
+  <ChatConversation.Content>{messages}</ChatConversation.Content>
+  <ChatConversation.ScrollAnchor />
+</ChatConversation>;
+```
+
+## CSS Classes
+
+- `.chat-conversation` - Scrollable root viewport
+- `.chat-conversation__content` - Message column
+- `.chat-conversation__scroll-button` - Jump-to-bottom button
+- `.chat-conversation__scroll-button-container` - Jump-to-bottom button positioner
+- `.chat-conversation__scroll-anchor` - Bottom scroll anchor
+
+## API Reference
+
+### ChatConversation
+
+Root scroll viewport. Supports native `div` props.
+
+### ChatConversation.Content
+
+Centers and stacks conversation content. Supports native `div` props.
+
+### ChatConversation.ScrollButton
+
+Optional button that appears when the viewport is away from the bottom. Extends Namespace UIKit `Button` props.
+
+### ChatConversation.ScrollAnchor
+
+Bottom anchor used by the stick-to-bottom behavior. Supports native `div` props.

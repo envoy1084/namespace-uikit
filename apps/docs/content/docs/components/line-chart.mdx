@@ -1,0 +1,99 @@
+---
+title: Line Chart
+description: A line chart for visualizing trends over time with multi-series, sparkline, and custom tooltip support.
+---
+
+## Usage
+
+<ProExamples component="line-chart" title="Line Chart" />
+
+## Anatomy
+
+Import the LineChart component and access all parts using dot notation.
+
+```tsx
+import { LineChart } from "@thenamespace/uikit";
+
+<LineChart>
+  <LineChart.Grid />
+  <LineChart.XAxis />
+  <LineChart.YAxis />
+  <LineChart.Line />
+  <LineChart.Tooltip />
+</LineChart>;
+```
+
+## Dashed Comparison
+
+## KPI With Chart
+
+## Multi Line Chart Colors
+
+## Portfolio
+
+## Sparkline
+
+## Stats With Chart
+
+## Traffic Source
+
+## With Custom Tooltip
+
+## With Dots
+
+## CSS Classes
+
+### Element Classes
+
+- `.line-chart` — Root container wrapping `ResponsiveContainer` and the Recharts chart.
+
+### Recharts Theming
+
+The following CSS rules target Recharts internal class names to apply Namespace UIKit design tokens automatically:
+
+- `.line-chart .recharts-cartesian-axis-tick-value` — Axis tick labels. 10px muted text.
+- `.line-chart .recharts-cartesian-axis-line` — Axis lines. Hidden by default.
+- `.line-chart .recharts-cartesian-axis-tick-line` — Tick lines. Hidden by default.
+- `.line-chart .recharts-cartesian-grid line` — Cartesian grid lines. Muted stroke at 0.15 opacity.
+- `.line-chart .recharts-tooltip-cursor` — Tooltip cursor. Dashed vertical line on hover.
+- `.line-chart .recharts-active-dot circle` — Active dot. Outlined with surface color for contrast.
+
+## API Reference
+
+### LineChart
+
+The root wrapper. Renders a `ResponsiveContainer` + Recharts `LineChart` with Namespace UIKit CSS theming applied automatically.
+
+| Prop       | Type                                                               | Default                                    | Description                                                               |
+| ---------- | ------------------------------------------------------------------ | ------------------------------------------ | ------------------------------------------------------------------------- |
+| `data`     | `Record<string, number \| string>[]`                               | —                                          | Chart data — array of objects with numeric/string fields for each series. |
+| `height`   | `number`                                                           | `300`                                      | Chart height in pixels.                                                   |
+| `width`    | ``number \| `${number}%` ``                                        | `"100%"`                                   | Chart width in pixels or percentage string.                               |
+| `margin`   | `{ top?: number; right?: number; bottom?: number; left?: number }` | `{ top: 8, right: 8, bottom: 0, left: 0 }` | Recharts margin around the chart area.                                    |
+| `children` | `ReactNode`                                                        | —                                          | Recharts child components (`LineChart.Line`, `LineChart.XAxis`, etc.).    |
+
+Also supports all native `div` HTML attributes.
+
+### LineChart.Line
+
+Re-exported Recharts `Line` component. Follows the [Recharts Line API](https://recharts.github.io/en-US/api/Line/).
+
+### LineChart.XAxis
+
+Re-exported Recharts `XAxis` component. Follows the [Recharts XAxis API](https://recharts.github.io/en-US/api/XAxis/).
+
+### LineChart.YAxis
+
+Re-exported Recharts `YAxis` component. Follows the [Recharts YAxis API](https://recharts.github.io/en-US/api/YAxis/).
+
+### LineChart.Grid
+
+Re-exported Recharts `CartesianGrid` component. Follows the [Recharts CartesianGrid API](https://recharts.github.io/en-US/api/CartesianGrid/).
+
+### LineChart.Tooltip
+
+Re-exported Recharts `Tooltip` component. Follows the [Recharts Tooltip API](https://recharts.github.io/en-US/api/Tooltip/). Use with `LineChart.TooltipContent` for styled tooltips.
+
+### LineChart.TooltipContent
+
+Pre-built tooltip renderer for Recharts. Pass as the `content` prop of `LineChart.Tooltip`. See [ChartTooltip](/react/components/chart-tooltip) for full props.

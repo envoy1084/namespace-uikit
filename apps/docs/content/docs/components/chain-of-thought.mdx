@@ -1,0 +1,83 @@
+---
+title: Chain Of Thought
+description: A collapsible reasoning timeline for assistant thinking, progress, and agent traces.
+---
+
+## Usage
+
+<ProExamples component="chain-of-thought" title="Chain Of Thought" />
+
+Use `ChainOfThought` to show assistant reasoning, progress, tool discovery, or agent traces without coupling to an AI SDK.
+
+## Streaming
+
+Set `isStreaming` to shimmer the trigger while reasoning is still in progress.
+
+## Agent Trace
+
+Complex traces can be composed from multiple collapsible reasoning blocks and nested steps.
+
+## Agent Trace Streaming
+
+Use the same trace structure with `isStreaming` when the agent is still working.
+
+## Anatomy
+
+```tsx
+import { ChainOfThought } from "@thenamespace/uikit";
+
+<ChainOfThought defaultExpanded>
+  <ChainOfThought.Trigger>Thought for 2s</ChainOfThought.Trigger>
+  <ChainOfThought.Content>
+    <ChainOfThought.Steps>
+      <ChainOfThought.Step label="Explore">
+        Read layout and globals.
+      </ChainOfThought.Step>
+    </ChainOfThought.Steps>
+  </ChainOfThought.Content>
+</ChainOfThought>;
+```
+
+## CSS Classes
+
+- `.chain-of-thought` - Root disclosure wrapper
+- `.chain-of-thought__trigger` - Collapsible trigger
+- `.chain-of-thought__content` - Disclosure content panel
+- `.chain-of-thought__steps` - Vertical step timeline
+- `.chain-of-thought__step` - One step in the timeline
+- `.chain-of-thought__step-label` - Optional step label
+- `.chain-of-thought__step-content` - Step body content
+
+## API Reference
+
+### ChainOfThought
+
+Extends Namespace UIKit `Disclosure` props.
+
+| Prop              | Type        | Default | Description                                      |
+| ----------------- | ----------- | ------- | ------------------------------------------------ |
+| `children`        | `ReactNode` | -       | Trigger and content                              |
+| `isStreaming`     | `boolean`   | `false` | Applies streaming shimmer styling to the trigger |
+| `defaultExpanded` | `boolean`   | -       | Open by default for uncontrolled usage           |
+| `isExpanded`      | `boolean`   | -       | Controlled expanded state                        |
+
+### ChainOfThought.Trigger
+
+Extends Namespace UIKit `Button` props. Renders the disclosure trigger.
+
+### ChainOfThought.Content
+
+Extends `Disclosure.Content` props. Wraps the expanded content body.
+
+### ChainOfThought.Steps
+
+Renders the vertical timeline container. Also supports native `div` props.
+
+### ChainOfThought.Step
+
+Renders one timeline step. Also supports native `div` props.
+
+| Prop       | Type        | Default | Description                                    |
+| ---------- | ----------- | ------- | ---------------------------------------------- |
+| `label`    | `ReactNode` | -       | Optional label rendered above the step content |
+| `children` | `ReactNode` | -       | Step body content                              |

@@ -1,0 +1,70 @@
+---
+title: Prompt Suggestion
+description: Suggested prompts and starter actions for AI chat empty states.
+---
+
+## Usage
+
+<ProExamples component="prompt-suggestion" title="Prompt Suggestion" />
+
+Use `PromptSuggestion` to show suggested prompts near a composer or empty chat state.
+
+## Cards
+
+Use card layout for richer prompt starters.
+
+## Anatomy
+
+```tsx
+import { PromptSuggestion } from "@thenamespace/uikit";
+
+<PromptSuggestion>
+  <PromptSuggestion.Header>
+    <PromptSuggestion.Title>What can I help with?</PromptSuggestion.Title>
+    <PromptSuggestion.Description>
+      Start from a suggested prompt.
+    </PromptSuggestion.Description>
+  </PromptSuggestion.Header>
+  <PromptSuggestion.Items>
+    <PromptSuggestion.Item>
+      <PromptSuggestion.ItemTitle>
+        Summarize this document
+      </PromptSuggestion.ItemTitle>
+      <PromptSuggestion.ItemDescription>
+        Create a concise summary.
+      </PromptSuggestion.ItemDescription>
+    </PromptSuggestion.Item>
+  </PromptSuggestion.Items>
+</PromptSuggestion>;
+```
+
+## CSS Classes
+
+- `.prompt-suggestion` - Root suggestion item
+- `.prompt-suggestion__header` - Header wrapper
+- `.prompt-suggestion__title` - Header title
+- `.prompt-suggestion__description` - Header description
+- `.prompt-suggestion__items` - Suggestion item grid/list
+- `.prompt-suggestion__item` - Individual suggestion item
+
+## API Reference
+
+### PromptSuggestion
+
+Root suggestion group. Supports native `div` props.
+
+### PromptSuggestion.Header, Title, Description
+
+Header slots for title and description.
+
+### PromptSuggestion.Items
+
+Container for suggestion items.
+
+### PromptSuggestion.Item
+
+Individual suggestion item. Extends Namespace UIKit `Button` props.
+
+### PromptSuggestion.ItemTitle, ItemDescription, ItemMeta, ItemTags, ItemFooter
+
+Slots for composing rich suggestion items.

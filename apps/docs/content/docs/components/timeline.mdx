@@ -1,0 +1,141 @@
+---
+title: Timeline
+description: A composable event-history component for feeds, activity logs, and centered milestone timelines.
+---
+
+## Usage
+
+<ProExamples component="timeline" title="Timeline" />
+
+Timeline is for read-only chronology: activity feeds, audit trails, incident history, release logs,
+and milestone roadmaps. Use Stepper when the user is moving through a known sequence where current,
+complete, and upcoming steps are the primary meaning.
+
+## Anatomy
+
+Import the Timeline component and access all parts using dot notation.
+
+```tsx
+import { Timeline } from "@thenamespace/uikit";
+
+<Timeline>
+  <Timeline.Item>
+    <Timeline.Rail>
+      <Timeline.Marker />
+      <Timeline.Connector />
+    </Timeline.Rail>
+    <Timeline.Content>
+      <article>
+        <h3>Event title</h3>
+        <time dateTime="2026-05-22">May 22, 2026</time>
+        <p>Event details</p>
+      </article>
+    </Timeline.Content>
+  </Timeline.Item>
+</Timeline>;
+```
+
+Timeline intentionally owns only the chronology layout. It renders an `ol` with `li` items,
+keeps connectors decorative, hides empty markers from assistive technology, and marks
+`status="current"` items with `aria-current="true"`. Use semantic HTML and OSS components such as
+`Card`, `Chip`, and `Avatar` inside `Timeline.Content` for the event content itself.
+
+## Centered Milestones
+
+## Studio Review
+
+## Compact Log
+
+## Incident Response
+
+## Version History
+
+## Repository Activity
+
+## Split Content
+
+## API Reference
+
+### Timeline
+
+The root component. Renders an ordered list and provides axis, placement, size, density, and item
+alignment context.
+
+| Prop        | Type                              | Default         | Description                                                         |
+| ----------- | --------------------------------- | --------------- | ------------------------------------------------------------------- |
+| `axis`      | `'start' \| 'center'`             | `'start'`       | Position of the timeline rail                                       |
+| `placement` | `'start' \| 'end' \| 'alternate'` | `'end'`         | Default side for item content; `alternate` alternates by item index |
+| `size`      | `'sm' \| 'md' \| 'lg'`            | `'md'`          | Marker and text size                                                |
+| `density`   | `'compact' \| 'comfortable'`      | `'comfortable'` | Vertical rhythm between events                                      |
+| `itemAlign` | `'start' \| 'center'`             | `'start'`       | Default vertical alignment for item content                         |
+| `children`  | `ReactNode`                       | -               | Timeline items                                                      |
+
+Also supports all native `ol` HTML attributes.
+
+### Timeline.Item
+
+A single event in the timeline.
+
+| Prop       | Type                                                                      | Default     | Description                         |
+| ---------- | ------------------------------------------------------------------------- | ----------- | ----------------------------------- |
+| `status`   | `'default' \| 'current' \| 'success' \| 'warning' \| 'danger' \| 'muted'` | `'default'` | Marker tone                         |
+| `align`    | `'start' \| 'center'`                                                     | inherited   | Vertical alignment for item content |
+| `side`     | `'start' \| 'end'`                                                        | inherited   | Content side for centered timelines |
+| `children` | `ReactNode`                                                               | -           | Item parts                          |
+
+Also supports all native `li` HTML attributes.
+
+### Timeline.Rail
+
+Rail wrapper for the marker and connector. If omitted, `Timeline.Item` renders a default rail.
+
+| Prop       | Type        | Default | Description                  |
+| ---------- | ----------- | ------- | ---------------------------- |
+| `children` | `ReactNode` | -       | Marker and connector content |
+
+Also supports all native `span` HTML attributes.
+
+### Timeline.Marker
+
+The event marker. If omitted, `Timeline.Rail` renders a default marker. Empty markers are
+decorative and hidden from assistive technology.
+
+| Prop       | Type                                                                      | Default     | Description           |
+| ---------- | ------------------------------------------------------------------------- | ----------- | --------------------- |
+| `status`   | `'default' \| 'current' \| 'success' \| 'warning' \| 'danger' \| 'muted'` | item status | Marker tone override  |
+| `children` | `ReactNode`                                                               | -           | Custom marker content |
+
+Also supports all native `span` HTML attributes.
+
+### Timeline.Connector
+
+Connector line after the current item. It is hidden automatically for the last item.
+
+| Prop    | Type      | Default | Description                           |
+| ------- | --------- | ------- | ------------------------------------- |
+| `force` | `boolean` | `false` | Force rendering even on the last item |
+
+Also supports all native `span` HTML attributes.
+
+### Timeline.Content
+
+Main event content. In centered timelines, `side` controls which side of the axis it occupies.
+
+| Prop       | Type               | Default   | Description   |
+| ---------- | ------------------ | --------- | ------------- |
+| `side`     | `'start' \| 'end'` | item side | Content side  |
+| `children` | `ReactNode`        | -         | Content parts |
+
+Also supports all native `div` HTML attributes.
+
+### useTimelineItem
+
+Hook to access per-item context from descendants of `Timeline.Item`.
+
+| Property | Type                                                                      | Description                             |
+| -------- | ------------------------------------------------------------------------- | --------------------------------------- |
+| `align`  | `'start' \| 'center'`                                                     | Resolved item content alignment         |
+| `index`  | `number`                                                                  | Zero-based item index                   |
+| `isLast` | `boolean`                                                                 | Whether this is the final timeline item |
+| `side`   | `'start' \| 'end'`                                                        | Resolved item side                      |
+| `status` | `'default' \| 'current' \| 'success' \| 'warning' \| 'danger' \| 'muted'` | Item marker status                      |

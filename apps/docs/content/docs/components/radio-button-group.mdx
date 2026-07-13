@@ -1,0 +1,124 @@
+---
+title: Radio Button Group
+description: A single-selection button group with card-style radio options, icons, and custom indicators.
+---
+
+## Usage
+
+<ProExamples component="radio-button-group" title="Radio Button Group" />
+
+## Anatomy
+
+Import the RadioButtonGroup component and access all parts using dot notation.
+
+```tsx
+import { RadioButtonGroup } from "@thenamespace/uikit";
+
+<RadioButtonGroup>
+  <RadioButtonGroup.Item>
+    <RadioButtonGroup.ItemIcon />
+    <RadioButtonGroup.ItemContent />
+    <RadioButtonGroup.Indicator />
+  </RadioButtonGroup.Item>
+</RadioButtonGroup>;
+```
+
+## Delivery And Payment
+
+## Subscription Plans
+
+## Controlled
+
+## Custom Indicator
+
+## Disabled Group
+
+## Grid Layout
+
+## Icon Cards
+
+## No Indicator
+
+## Render Prop Children
+
+## With Icons
+
+## With Ripple
+
+## CSS Classes
+
+### Base Classes
+
+- `.radio-button-group` - Base RadioGroup container with flex layout
+
+### Layout Classes
+
+- `.radio-button-group--grid` - Grid layout mode
+
+### Element Classes
+
+- `.radio-button-group__item` - Card-like radio button with border and selection ring
+- `.radio-button-group__indicator` - Positioned top-right indicator (radio dot or custom icon)
+- `.radio-button-group__item-content` - Text/content area wrapping Radio.Content
+- `.radio-button-group__item-icon` - Leading icon container
+
+### Interactive States
+
+- **Selected**: `[data-selected="true"]` on `.radio-button-group__item` (accent ring)
+- **Focus visible**: `:focus-visible` or `[data-focus-visible="true"]` on `.radio-button-group__item` (focus ring)
+- **Disabled**: `:disabled` or `[aria-disabled="true"]` on `.radio-button-group__item` (reduced opacity)
+
+### CSS Variables
+
+- `--radio-button-group-item-radius` - Border radius of items (default: `var(--radius-2xl)`)
+
+## API Reference
+
+### RadioButtonGroup
+
+The root component. Wraps Namespace UIKit [RadioGroup](https://namespace.com/docs/react/components/radio-group) with card-style layout.
+
+| Prop     | Type               | Default  | Description           |
+| -------- | ------------------ | -------- | --------------------- |
+| `layout` | `'flex' \| 'grid'` | `'flex'` | Layout mode for items |
+
+Also supports all [Namespace UIKit RadioGroup](https://namespace.com/docs/react/components/radio-group) props.
+
+### RadioButtonGroup.Item
+
+A selectable card wrapping Namespace UIKit Radio. Supports render prop children for accessing selection state.
+
+Also supports all [Namespace UIKit Radio](https://namespace.com/docs/react/components/radio) props.
+
+### RadioButtonGroup.Indicator
+
+Selection indicator positioned at the top-right of the item.
+
+- **No children**: renders the default Namespace UIKit radio dot (Control + Indicator)
+- **With children**: renders a custom icon that appears only when selected
+
+| Prop       | Type        | Default | Description                                 |
+| ---------- | ----------- | ------- | ------------------------------------------- |
+| `children` | `ReactNode` | -       | Custom indicator icon (shown when selected) |
+
+Also supports all native `span` HTML attributes.
+
+### RadioButtonGroup.ItemContent
+
+Content area for title and description text. Wraps Namespace UIKit `Radio.Content`.
+
+| Prop       | Type        | Default | Description      |
+| ---------- | ----------- | ------- | ---------------- |
+| `children` | `ReactNode` | -       | Content elements |
+
+Also supports all native `div` HTML attributes.
+
+### RadioButtonGroup.ItemIcon
+
+Leading icon container.
+
+| Prop       | Type        | Default | Description  |
+| ---------- | ----------- | ------- | ------------ |
+| `children` | `ReactNode` | -       | Icon element |
+
+Also supports all native `div` HTML attributes.

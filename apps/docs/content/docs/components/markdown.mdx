@@ -1,0 +1,61 @@
+---
+title: Markdown
+description: Render AI responses with rich markdown, memoized streaming blocks, and optional Streamdown rendering.
+---
+
+## Usage
+
+<ProExamples component="markdown" title="Markdown" />
+
+Use `Markdown` for AI responses that need headings, lists, inline code, and fenced code blocks with Namespace UIKit styling.
+
+## Streaming
+
+The built-in Markdown component splits content into memoized blocks so token updates only re-render the blocks that changed.
+
+## With Streamdown
+
+Use Streamdown when you want incomplete markdown repair, streaming animation, and a caret while the assistant response is still being generated.
+
+```tsx
+import { Streamdown } from "streamdown";
+import "streamdown/styles.css";
+
+<Streamdown animated caret="block" isAnimating={isStreaming}>
+  {response}
+</Streamdown>;
+```
+
+## Anatomy
+
+```tsx
+import { Markdown } from "@thenamespace/uikit";
+
+<Markdown>{response}</Markdown>;
+```
+
+## CSS Classes
+
+### Base Classes
+
+- `.markdown` - Root markdown content wrapper
+- `.markdown__block` - Memoized block wrapper for each parsed markdown block
+
+### Element Classes
+
+- `.markdown__inline-code` - Inline code styling
+
+## API Reference
+
+### Markdown
+
+The root component. Renders markdown content with Namespace UIKit typography and code block styling.
+
+| Prop         | Type                  | Default   | Description                                 |
+| ------------ | --------------------- | --------- | ------------------------------------------- |
+| `children`   | `string`              | -         | Markdown content to render                  |
+| `components` | `Partial<Components>` | -         | Custom `react-markdown` component overrides |
+| `id`         | `string`              | generated | Stable id seed used for memoized block keys |
+| `className`  | `string`              | -         | Additional CSS class                        |
+
+Also supports all native `div` HTML attributes.

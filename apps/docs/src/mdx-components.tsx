@@ -5,6 +5,7 @@ import defaultComponents from "fumadocs-ui/mdx";
 
 import { CollapsibleCode } from "@/components/collapsible-code";
 import { ComponentPreview } from "@/components/component-preview";
+import { ProExamples } from "@/components/pro-examples";
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
@@ -12,6 +13,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...TabsComponents,
     CollapsibleCode,
     ComponentPreview,
+    ProExamples,
     ...components,
   };
 }

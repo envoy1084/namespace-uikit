@@ -1,0 +1,101 @@
+---
+title: Cell Color Picker
+description: A compact color picker styled as a settings cell with preset palettes and custom color input.
+---
+
+## Usage
+
+<ProExamples component="cell-color-picker" title="Cell Color Picker" />
+
+## Anatomy
+
+Import the CellColorPicker component and access all parts using dot notation.
+
+```tsx
+import { CellColorPicker } from "@thenamespace/uikit";
+
+<CellColorPicker>
+  <CellColorPicker.Label />
+  <CellColorPicker.Trigger />
+  <CellColorPicker.ValueDisplay />
+  <CellColorPicker.Popover>
+    <CellColorPicker.Swatch />
+  </CellColorPicker.Popover>
+</CellColorPicker>;
+```
+
+## Controlled
+
+## Disabled
+
+## Settings Group
+
+## Variants
+
+## With Presets
+
+## CSS Classes
+
+### Base Classes
+
+- `.cell-color-picker` - Root wrapper
+
+### Element Classes
+
+- `.cell-color-picker__trigger` - The visible cell row button
+- `.cell-color-picker__trigger--default` - Default variant trigger styling
+- `.cell-color-picker__trigger--secondary` - Secondary variant trigger styling
+- `.cell-color-picker__label` - Leading text label
+- `.cell-color-picker__value-display` - Hex value text display
+- `.cell-color-picker__swatch` - Color swatch preview
+- `.cell-color-picker__popover` - Dropdown color picker panel
+
+## API Reference
+
+### CellColorPicker
+
+The root component. Wraps Namespace UIKit [ColorPicker](https://namespace.com/docs/react/components/color-picker) with cell-style layout.
+
+| Prop      | Type                       | Default     | Description          |
+| --------- | -------------------------- | ----------- | -------------------- |
+| `variant` | `'default' \| 'secondary'` | `'default'` | Visual style variant |
+
+Also supports all RAC [ColorPicker](https://react-spectrum.adobe.com/react-aria/ColorPicker.html) props except `children` (`defaultValue`, `value`, `onChange`, etc.).
+
+### CellColorPicker.Trigger
+
+The visible cell row button. Wraps RAC [Button](https://react-spectrum.adobe.com/react-aria/Button.html).
+
+Also supports all RAC [Button](https://react-spectrum.adobe.com/react-aria/Button.html) props.
+
+### CellColorPicker.Label
+
+Leading text label rendered as a `span`.
+
+| Prop       | Type        | Default | Description |
+| ---------- | ----------- | ------- | ----------- |
+| `children` | `ReactNode` | -       | Label text  |
+
+Also supports all native `span` HTML attributes.
+
+### CellColorPicker.ValueDisplay
+
+Displays the current color as a hex value (e.g. `#FF5733`). Automatically reads from the color picker state.
+
+Also supports all native `span` HTML attributes.
+
+### CellColorPicker.Swatch
+
+Color swatch preview. Wraps Namespace UIKit [ColorSwatch](https://namespace.com/docs/react/components/color-picker).
+
+Also supports all Namespace UIKit ColorSwatch props.
+
+### CellColorPicker.Popover
+
+Dropdown color picker panel. Wraps Namespace UIKit `ColorPicker.Popover`.
+
+| Prop        | Type        | Default        | Description                               |
+| ----------- | ----------- | -------------- | ----------------------------------------- |
+| `placement` | `Placement` | `'bottom end'` | Popover placement relative to the trigger |
+
+Also supports all Namespace UIKit ColorPicker.Popover props.

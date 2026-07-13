@@ -1,0 +1,100 @@
+---
+title: Inline Select
+description: A minimal inline dropdown that blends into surrounding text for contextual selections without a full form field.
+---
+
+## Usage
+
+<ProExamples component="inline-select" title="Inline Select" />
+
+## Anatomy
+
+Import the InlineSelect component and access all parts using dot notation.
+
+```tsx
+import { InlineSelect } from "@thenamespace/uikit";
+
+<InlineSelect>
+  <InlineSelect.Indicator />
+  <InlineSelect.Trigger />
+  <InlineSelect.Value />
+  <InlineSelect.Popover />
+</InlineSelect>;
+```
+
+## Team Switcher
+
+## Custom Indicator
+
+## Multi Select
+
+## Placements
+
+## CSS Classes
+
+### Base Classes
+
+- `.inline-select` - Root wrapper with custom properties
+
+### Element Classes
+
+- `.inline-select__trigger` - Ghost-styled trigger button (overrides Namespace UIKit Select field styles)
+- `.inline-select__value` - Displayed text of the selected item(s)
+- `.inline-select__indicator` - Inline chevron icon (static positioning instead of absolute)
+- `.inline-select__popover` - Dropdown panel
+
+### Interactive States
+
+- **Hover**: `:hover` or `[data-hovered="true"]` on `.inline-select__trigger` (text color change)
+- **Focus visible**: `:focus-visible` or `[data-focus-visible="true"]` on `.inline-select__trigger` (focus ring)
+- **Disabled**: `:disabled` or `[aria-disabled="true"]` on `.inline-select__trigger` (reduced opacity)
+- **Open**: `[data-open="true"]` on `.inline-select__indicator`
+
+### CSS Variables
+
+- `--inline-select-value-max-width` - Max width of the value text (default: `12rem`)
+- `--inline-select-indicator-size` - Size of the indicator icon (default: `0.75rem`)
+
+## API Reference
+
+### InlineSelect
+
+The root component. Wraps the Namespace UIKit [Select](https://namespace.com/docs/react/components/select) with ghost styling for inline use.
+
+| Prop       | Type        | Default | Description                                        |
+| ---------- | ----------- | ------- | -------------------------------------------------- |
+| `children` | `ReactNode` | -       | Trigger, Value, Indicator, Popover, and list items |
+
+Also supports all [Namespace UIKit Select](https://namespace.com/docs/react/components/select) props.
+
+### InlineSelect.Trigger
+
+Ghost-styled trigger button.
+
+Also supports all Namespace UIKit `Select.Trigger` props.
+
+### InlineSelect.Value
+
+Displayed text of the selected item(s), truncated.
+
+Also supports all Namespace UIKit `Select.Value` props.
+
+### InlineSelect.Indicator
+
+Chevron icon. Defaults to a `ChevronsExpandVertical` icon when no children are provided.
+
+| Prop       | Type        | Default | Description           |
+| ---------- | ----------- | ------- | --------------------- |
+| `children` | `ReactNode` | -       | Custom indicator icon |
+
+Also supports all Namespace UIKit `Select.Indicator` props.
+
+### InlineSelect.Popover
+
+Dropdown panel for selection options.
+
+| Prop        | Type        | Default        | Description                               |
+| ----------- | ----------- | -------------- | ----------------------------------------- |
+| `placement` | `Placement` | `'bottom end'` | Popover placement relative to the trigger |
+
+Also supports all Namespace UIKit `Select.Popover` props.

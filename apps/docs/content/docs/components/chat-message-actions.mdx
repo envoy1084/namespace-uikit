@@ -1,0 +1,44 @@
+---
+title: Chat Message Actions
+description: Inline action buttons for assistant and user messages.
+---
+
+## Usage
+
+<ProExamples component="chat-message-actions" title="Chat Message Actions" />
+
+Use `ChatMessageActions` for copy, retry, rating, share, or custom message actions.
+
+## Minimal
+
+Use a smaller action set when only one or two actions are needed.
+
+## Custom Icons
+
+Actions are composable, so you can bring your own icon set.
+
+## Anatomy
+
+```tsx
+import { ChatMessageActions } from "@thenamespace/uikit";
+
+<ChatMessageActions>
+  <ChatMessageActions.Action aria-label="Copy">...</ChatMessageActions.Action>
+  <ChatMessageActions.Action aria-label="Like">...</ChatMessageActions.Action>
+</ChatMessageActions>;
+```
+
+## CSS Classes
+
+- `.chat-message-actions` - Root action row
+- `.chat-message-actions__action` - Individual icon button
+
+## API Reference
+
+### ChatMessageActions
+
+Root action group. Supports native `div` props.
+
+### ChatMessageActions.Action
+
+Individual action button. Extends Namespace UIKit `Button` props.

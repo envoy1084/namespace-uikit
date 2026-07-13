@@ -1,0 +1,192 @@
+---
+title: KPI
+description: A key performance indicator card displaying a metric value with trend chip, sparkline chart, and contextual details.
+---
+
+## Usage
+
+<ProExamples component="kpi" title="KPI" />
+
+## Anatomy
+
+Import the KPI component and access all parts using dot notation.
+
+```tsx
+import { KPI } from "@thenamespace/uikit";
+
+<KPI>
+  <KPI.Header />
+  <KPI.Icon />
+  <KPI.Title />
+  <KPI.Value />
+  <KPI.Trend />
+  <KPI.Progress />
+  <KPI.Chart />
+  <KPI.Content />
+  <KPI.Separator />
+  <KPI.Actions />
+  <KPI.Footer />
+</KPI>;
+```
+
+## With Actions
+
+## With Chart Bottom
+
+## With Chart Inline
+
+## With Footer
+
+## With Icon
+
+## With Progress
+
+## CSS Classes
+
+### Base Classes
+
+- `.kpi` - Base card shell with flex column layout and padding
+
+### Element Classes
+
+- `.kpi__header` - Top row for icon, title, and actions
+- `.kpi__content` - Grid layout container for value and trend side by side
+- `.kpi__icon` - Status-tinted icon container
+- `.kpi__actions` - Absolutely positioned action button area
+- `.kpi__title` - Metric label text (`dt` element)
+- `.kpi__value` - Large formatted number (`dd` element)
+- `.kpi__trend` - Inline trend badge (wraps TrendChip)
+- `.kpi__progress` - Full-width progress bar area
+- `.kpi__chart` - Sparkline container with edge-fade mask
+- `.kpi__separator` - Edge-to-edge divider
+- `.kpi__footer` - Bottom section
+
+### Data Attributes
+
+- `[data-status="success"]` / `[data-status="warning"]` / `[data-status="danger"]` on `.kpi__icon` - Status color tinting
+
+### CSS Variables
+
+- `--kpi-chart-fade` - Edge fade width for the sparkline mask (default: `10%`)
+
+## API Reference
+
+### KPI
+
+The root component. Wraps Namespace UIKit [Card](https://namespace.com/docs/react/components/card).
+
+| Prop       | Type        | Default | Description        |
+| ---------- | ----------- | ------- | ------------------ |
+| `children` | `ReactNode` | -       | KPI sub-components |
+
+Also supports all [Namespace UIKit Card](https://namespace.com/docs/react/components/card) props.
+
+### KPI.Header
+
+Top row container for icon, title, and actions.
+
+| Prop       | Type        | Default | Description                       |
+| ---------- | ----------- | ------- | --------------------------------- |
+| `children` | `ReactNode` | -       | Icon, Title, and Actions elements |
+
+Also supports all native `div` HTML attributes.
+
+### KPI.Content
+
+Grid layout container placing value and trend side by side.
+
+| Prop       | Type        | Default | Description                  |
+| ---------- | ----------- | ------- | ---------------------------- |
+| `children` | `ReactNode` | -       | Value, Trend, Progress, etc. |
+
+Also supports all native `div` HTML attributes.
+
+### KPI.Icon
+
+Status-tinted icon container.
+
+| Prop       | Type                                 | Default | Description                              |
+| ---------- | ------------------------------------ | ------- | ---------------------------------------- |
+| `status`   | `'success' \| 'warning' \| 'danger'` | -       | Status color for icon background tinting |
+| `children` | `ReactNode`                          | -       | Icon element                             |
+
+Also supports all native `div` HTML attributes.
+
+### KPI.Title
+
+Metric label rendered as a `dt` element.
+
+| Prop       | Type        | Default | Description |
+| ---------- | ----------- | ------- | ----------- |
+| `children` | `ReactNode` | -       | Title text  |
+
+Also supports all native `dt` HTML attributes.
+
+### KPI.Value
+
+Large formatted number display. Wraps [NumberValue](#numbervalue) with a `dd` element for semantics.
+
+| Prop       | Type                                 | Default | Description                                             |
+| ---------- | ------------------------------------ | ------- | ------------------------------------------------------- |
+| `value`    | `number`                             | -       | **Required.** The numeric value to format               |
+| `children` | `((formatted: string) => ReactNode)` | -       | Optional render function receiving the formatted string |
+
+Also supports all NumberValue props except `children`.
+
+### KPI.Trend
+
+Inline trend badge. Wraps [TrendChip](#trendchip).
+
+Also supports all TrendChip props.
+
+### KPI.Progress
+
+Full-width progress bar.
+
+| Prop     | Type                                 | Default     | Description                                |
+| -------- | ------------------------------------ | ----------- | ------------------------------------------ |
+| `value`  | `number`                             | -           | **Required.** Progress value from 0 to 100 |
+| `status` | `'success' \| 'warning' \| 'danger'` | `'success'` | Status color for the progress bar          |
+
+Also supports all native `div` HTML attributes.
+
+### KPI.Actions
+
+Action button (three-dot icon by default). Wraps Namespace UIKit [Button](https://namespace.com/docs/react/components/button) as a ghost icon-only button.
+
+| Prop       | Type        | Default | Description                                      |
+| ---------- | ----------- | ------- | ------------------------------------------------ |
+| `children` | `ReactNode` | -       | Custom icon replacing the default three-dot icon |
+
+Also supports all [Namespace UIKit Button](https://namespace.com/docs/react/components/button) props.
+
+### KPI.Chart
+
+Sparkline area chart using [Recharts](https://recharts.github.io/en-US/api/AreaChart/).
+
+| Prop          | Type                                 | Default          | Description                                                          |
+| ------------- | ------------------------------------ | ---------------- | -------------------------------------------------------------------- |
+| `data`        | `Record<string, number \| string>[]` | -                | **Required.** Chart data array                                       |
+| `dataKey`     | `string`                             | `'value'`        | Key in each data object to use as the Y value                        |
+| `color`       | `string`                             | `'currentColor'` | Stroke/line color                                                    |
+| `fillColor`   | `string`                             | -                | Fill color for the area gradient. Defaults to `color` at 20% opacity |
+| `height`      | `number`                             | `80`             | Chart height in pixels                                               |
+| `strokeWidth` | `number`                             | `2`              | Stroke width                                                         |
+
+Also supports all native `div` HTML attributes.
+
+### KPI.Separator
+
+Edge-to-edge divider. Wraps Namespace UIKit [Separator](https://namespace.com/docs/react/components/separator).
+
+Also supports all [Namespace UIKit Separator](https://namespace.com/docs/react/components/separator) props.
+
+### KPI.Footer
+
+Bottom section for additional details or links.
+
+| Prop       | Type        | Default | Description    |
+| ---------- | ----------- | ------- | -------------- |
+| `children` | `ReactNode` | -       | Footer content |
+
+Also supports all native `div` HTML attributes.

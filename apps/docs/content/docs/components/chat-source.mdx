@@ -1,0 +1,114 @@
+---
+title: Chat Source
+description: Citation chips and grouped source lists for AI responses.
+---
+
+## Usage
+
+<ProExamples component="chat-source" title="Chat Source" />
+
+Use `ChatSource` to cite a URL or uploaded document inline with an assistant answer.
+
+## Document
+
+Set `sourceType="document"` for uploaded or local files.
+
+## Grouped
+
+Use `ChatSources` to group multiple citations behind a collapsible trigger.
+
+## Stacked Favicons
+
+For a compact source button, render stacked favicon avatars in the `ChatSources.Trigger`.
+
+## Composable
+
+Use compound parts when you need custom trigger content.
+
+## Anatomy
+
+```tsx
+import {ChatSource, ChatSources} from "@thenamespace/uikit";
+
+<ChatSource
+  faviconUrl="https://www.google.com/s2/favicons?domain_url=https://namespace.com&sz=64"
+  href="https://namespace.com"
+  title="Namespace UIKit"
+/>
+
+<ChatSources defaultExpanded={false}>
+  <ChatSources.Trigger>3 sources</ChatSources.Trigger>
+  <ChatSources.Content>
+    <ChatSources.List>
+      <ChatSource href="https://namespace.com" title="Namespace UIKit" />
+    </ChatSources.List>
+  </ChatSources.Content>
+</ChatSources>
+
+```
+
+## CSS Classes
+
+- `.chat-source` - Source root
+- `.chat-source__trigger` - Trigger wrapper
+- `.chat-source__trigger-link` - Link or document pill
+- `.chat-source__icon` - Favicon image or custom icon
+- `.chat-source__icon-fallback` - Initial fallback for URL sources
+- `.chat-source__document-icon` - Document source icon
+- `.chat-source__preview` - Hover preview popover
+- `.chat-sources` - Grouped source disclosure
+- `.chat-sources__trigger` - Group trigger
+- `.chat-sources__list` - Expanded source list
+
+## API Reference
+
+### ChatSource
+
+| Prop            | Type                  | Default                 | Description                                                                |
+| --------------- | --------------------- | ----------------------- | -------------------------------------------------------------------------- |
+| `href`          | `string`              | -                       | URL source link                                                            |
+| `title`         | `string`              | domain                  | Display title                                                              |
+| `description`   | `string`              | -                       | Enables and populates the hover preview                                    |
+| `enablePreview` | `boolean`             | auto                    | Force-enable custom preview content or disable the automatic hover preview |
+| `faviconUrl`    | `string`              | -                       | Favicon image shown in trigger and preview                                 |
+| `sourceType`    | `'url' \| 'document'` | inferred                | Source type                                                                |
+| `children`      | `ReactNode`           | default trigger/preview | Custom source composition                                                  |
+
+### ChatSource.Trigger
+
+Renders the source pill trigger. Extends native anchor props for URL sources.
+
+### ChatSource.Icon
+
+Renders a custom icon or favicon.
+
+| Prop         | Type        | Default          | Description         |
+| ------------ | ----------- | ---------------- | ------------------- |
+| `faviconUrl` | `string`    | -                | Favicon image URL   |
+| `children`   | `ReactNode` | fallback initial | Custom icon element |
+
+### ChatSource.Title
+
+Renders the source title.
+
+### ChatSource.Preview
+
+Renders the hover preview content for URL sources with title or description. If you provide a
+custom preview without root `title` or `description`, set `enablePreview` on `ChatSource` so the
+required hover-card wrapper is mounted.
+
+### ChatSources
+
+Grouped source disclosure. Extends Namespace UIKit `Disclosure` props.
+
+### ChatSources.Trigger
+
+Renders the grouped source trigger.
+
+### ChatSources.Content
+
+Renders the expanded grouped source content.
+
+### ChatSources.List
+
+Renders the flex-wrapped source list.

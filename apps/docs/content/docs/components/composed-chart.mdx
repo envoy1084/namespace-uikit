@@ -1,0 +1,99 @@
+---
+title: Composed Chart
+description: A composed chart that combines Bar, Line, and Area series in a single cartesian chart for multi-metric dashboards.
+---
+
+## Usage
+
+<ProExamples component="composed-chart" title="Composed Chart" />
+
+## Anatomy
+
+Import the ComposedChart component and access all parts using dot notation.
+
+```tsx
+import { ComposedChart } from "@thenamespace/uikit";
+
+<ComposedChart>
+  <ComposedChart.Grid />
+  <ComposedChart.XAxis />
+  <ComposedChart.YAxis />
+  <ComposedChart.Bar />
+  <ComposedChart.Line />
+  <ComposedChart.Area />
+  <ComposedChart.Tooltip />
+</ComposedChart>;
+```
+
+## Stacked Bar With Line
+
+## Area With Line
+
+## Bar With Area
+
+## Multi Type
+
+## CSS Classes
+
+### Element Classes
+
+- `.composed-chart` — Root container wrapping `ResponsiveContainer` and the Recharts chart.
+
+### Recharts Theming
+
+The following CSS rules target Recharts internal class names to apply Namespace UIKit design tokens automatically:
+
+- `.composed-chart .recharts-cartesian-axis-tick-value` — Axis tick labels. 10px muted text.
+- `.composed-chart .recharts-cartesian-axis-line` — Axis lines. Hidden by default.
+- `.composed-chart .recharts-cartesian-axis-tick-line` — Tick lines. Hidden by default.
+- `.composed-chart .recharts-cartesian-grid line` — Cartesian grid lines. Muted stroke at 0.15 opacity.
+- `.composed-chart .recharts-tooltip-cursor` — Tooltip cursor. Dashed vertical line on hover.
+- `.composed-chart .recharts-active-dot circle` — Active dot. Outlined with surface color for contrast.
+
+## API Reference
+
+### ComposedChart
+
+The root wrapper. Renders a `ResponsiveContainer` + Recharts `ComposedChart` with Namespace UIKit CSS theming applied automatically.
+
+| Prop       | Type                                                               | Default                                    | Description                                                                                        |
+| ---------- | ------------------------------------------------------------------ | ------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| `data`     | `Record<string, number \| string>[]`                               | —                                          | Chart data — array of objects with numeric/string fields for each series.                          |
+| `height`   | `number`                                                           | `300`                                      | Chart height in pixels.                                                                            |
+| `width`    | ``number \| `${number}%` ``                                        | `"100%"`                                   | Chart width in pixels or percentage string.                                                        |
+| `margin`   | `{ top?: number; right?: number; bottom?: number; left?: number }` | `{ top: 8, right: 8, bottom: 0, left: 0 }` | Recharts margin around the chart area.                                                             |
+| `children` | `ReactNode`                                                        | —                                          | Recharts child components (`ComposedChart.Bar`, `ComposedChart.Line`, `ComposedChart.Area`, etc.). |
+
+Also supports all native `div` HTML attributes.
+
+### ComposedChart.Bar
+
+Re-exported Recharts `Bar` component. Follows the [Recharts Bar API](https://recharts.github.io/en-US/api/Bar/).
+
+### ComposedChart.Line
+
+Re-exported Recharts `Line` component. Follows the [Recharts Line API](https://recharts.github.io/en-US/api/Line/).
+
+### ComposedChart.Area
+
+Re-exported Recharts `Area` component. Follows the [Recharts Area API](https://recharts.github.io/en-US/api/Area/).
+
+### ComposedChart.XAxis
+
+Re-exported Recharts `XAxis` component. Follows the [Recharts XAxis API](https://recharts.github.io/en-US/api/XAxis/).
+
+### ComposedChart.YAxis
+
+Re-exported Recharts `YAxis` component. Follows the [Recharts YAxis API](https://recharts.github.io/en-US/api/YAxis/).
+
+### ComposedChart.Grid
+
+Re-exported Recharts `CartesianGrid` component. Follows the [Recharts CartesianGrid API](https://recharts.github.io/en-US/api/CartesianGrid/).
+
+### ComposedChart.Tooltip
+
+Re-exported Recharts `Tooltip` component. Follows the [Recharts Tooltip API](https://recharts.github.io/en-US/api/Tooltip/). Use with `ComposedChart.TooltipContent` for styled tooltips.
+
+### ComposedChart.TooltipContent
+
+Pre-built tooltip renderer for Recharts. Pass as the `content` prop of `ComposedChart.Tooltip`. See [ChartTooltip](/react/components/chart-tooltip) for full props.

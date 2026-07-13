@@ -1,0 +1,180 @@
+---
+title: Map
+description: A MapLibre-powered map surface for custom styles, markers, popups, routes, arcs, clusters, and controls.
+---
+
+## Usage
+
+<ProExamples component="map" title="Map" />
+
+## Anatomy
+
+Import the Map component and compose overlays with dot notation.
+
+```tsx
+import { Map } from "@thenamespace/uikit";
+
+const styles = {
+  dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+  light: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+};
+
+<Map center={[-122.3927, 37.7816]} styles={styles} zoom={13.25}>
+  <Map.Route coordinates={route} />
+  <Map.Marker latitude={37.79519} longitude={-122.39385}>
+    <Map.MarkerContent>
+      <Map.MarkerDot color="#22c55e" />
+      <Map.MarkerLabel>Start</Map.MarkerLabel>
+    </Map.MarkerContent>
+    <Map.MarkerTooltip>Ferry Building</Map.MarkerTooltip>
+  </Map.Marker>
+  <Map.Popup latitude={37.79519} longitude={-122.39385}>
+    Pickup ready
+  </Map.Popup>
+  <Map.Controls>
+    <Map.ZoomControl />
+    <Map.CompassControl />
+  </Map.Controls>
+</Map>;
+```
+
+The examples above use [CARTO basemaps](https://docs.carto.com/carto-for-developers/carto-for-react/guides/basemaps) for Voyager (light) and Dark Matter (dark). See the CARTO docs for available style URLs and usage terms.
+
+## Live Visitors
+
+## Property Listings
+
+## Live Tracking
+
+## Store Locator
+
+## Fleet Dispatch
+
+## Coverage Zones
+
+## Heatmap
+
+## Flight Paths
+
+## Incident Monitor
+
+## Style
+
+Map uses MapLibre GL internally, but it does not ship a tile provider or basemap style. Pass `mapStyle` for a single MapLibre-compatible style URL/object, or `styles` for separate light and dark styles. These demos pass CARTO Voyager and CARTO Dark Matter through `styles`.
+
+## CSS Classes
+
+### Element Classes
+
+- `.map` — MapLibre container and positioning root.
+- `.map__marker` — Marker host element.
+- `.map__marker-content` — React-rendered marker content.
+- `.map__default-marker` — Default marker dot.
+- `.map__marker-label` — Marker label.
+- `.map__popup-content` — Popup content wrapper.
+- `.map__tooltip` — Marker tooltip.
+- `.map__controls` — Controls container.
+- `.map__control-group` — Grouped control surface.
+- `.map__control-button` — Single control button.
+
+### CSS Variables
+
+- `--map-control-size` — Control button size.
+- `--map-control-offset` — Controls offset from map edges.
+- `--map-popup-max-width` — Popup and tooltip max width.
+- `--map-marker-color` — Default marker fill color.
+- `--map-marker-ring-color` — Default marker ring color.
+- `--map-route-color` — Default route stroke color.
+- `--map-route-width` — Default route stroke width.
+- `--map-route-opacity` — Default route stroke opacity.
+
+## API Reference
+
+### Map
+
+The root map container. Renders a MapLibre map with Namespace UIKit themed controls and overlays.
+
+| Prop               | Type                                                | Default  | Description                                                      |
+| ------------------ | --------------------------------------------------- | -------- | ---------------------------------------------------------------- |
+| `center`           | `[number, number]`                                  | —        | Initial center as `[longitude, latitude]`.                       |
+| `zoom`             | `number`                                            | —        | Initial zoom level.                                              |
+| `mapStyle`         | `string \| StyleSpecification`                      | —        | Single MapLibre-compatible style URL/object. Overrides `styles`. |
+| `styles`           | `{ light?: MapStyleOption; dark?: MapStyleOption }` | —        | Theme-aware style URLs or objects.                               |
+| `theme`            | `"light" \| "dark"`                                 | detected | Force the map style theme.                                       |
+| `viewport`         | `Partial<MapViewport>`                              | —        | Controlled viewport state.                                       |
+| `onViewportChange` | `(viewport: MapViewport) => void`                   | —        | Fired as the map moves.                                          |
+| `isLoading`        | `boolean`                                           | `false`  | Shows the loading veil over the map.                             |
+
+Also supports MapLibre `MapOptions` except `container` and `style`.
+
+### Map.Marker
+
+Adds a React-rendered marker at a longitude/latitude.
+
+| Prop        | Type                          | Default | Description                           |
+| ----------- | ----------------------------- | ------- | ------------------------------------- |
+| `latitude`  | `number`                      | —       | Marker latitude.                      |
+| `longitude` | `number`                      | —       | Marker longitude.                     |
+| `draggable` | `boolean`                     | `false` | Allows dragging the marker.           |
+| `onClick`   | `(event: MouseEvent) => void` | —       | Fired when the marker is clicked.     |
+| `onDragEnd` | `({ lat, lng }) => void`      | —       | Fired after a draggable marker moves. |
+
+### Marker Parts
+
+- `Map.MarkerContent` — Renders marker content into the MapLibre marker element.
+- `Map.MarkerDot` — Renders the default marker dot. Customize with `className`, `style`, `color`, or `ringColor`.
+- `Map.MarkerLabel` — Adds a marker label with `position="top" | "bottom"`.
+- `Map.MarkerTooltip` — Shows a lightweight tooltip on hover.
+- `Map.MarkerPopup` — Attaches a MapLibre popup to a marker.
+
+### Map.MarkerDot
+
+Renders the default marker visual. Use it inside `Map.MarkerContent` when you want the built-in marker style plus labels or other custom content.
+
+| Prop        | Type     | Default | Description                          |
+| ----------- | -------- | ------- | ------------------------------------ |
+| `color`     | `string` | —       | Overrides `--map-marker-color`.      |
+| `ringColor` | `string` | —       | Overrides `--map-marker-ring-color`. |
+
+### Map.Popup
+
+Renders a standalone popup at a longitude/latitude.
+
+| Prop          | Type         | Default | Description                             |
+| ------------- | ------------ | ------- | --------------------------------------- |
+| `latitude`    | `number`     | —       | Popup latitude.                         |
+| `longitude`   | `number`     | —       | Popup longitude.                        |
+| `closeButton` | `boolean`    | `false` | Shows the Namespace UIKit close button. |
+| `onClose`     | `() => void` | —       | Fired when the popup closes.            |
+
+### Map.Controls
+
+Positions map controls in a corner.
+
+| Prop       | Type                                                           | Default          | Description         |
+| ---------- | -------------------------------------------------------------- | ---------------- | ------------------- |
+| `position` | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | `"bottom-right"` | Controls placement. |
+
+Use `Map.ZoomControl`, `Map.CompassControl`, `Map.LocateControl`, `Map.FullscreenControl`, `Map.ControlGroup`, `Map.ControlButton`, and `Map.ControlSeparator` inside `Map.Controls`.
+
+### Map.Route
+
+Draws a GeoJSON line layer from coordinates.
+
+`Map.Route` does not calculate navigation paths or snap points to roads. Pass the route geometry from your routing provider, such as Google Routes, Mapbox Directions, OSRM, Valhalla, or your own routing service.
+
+| Prop          | Type                 | Default | Description                                   |
+| ------------- | -------------------- | ------- | --------------------------------------------- |
+| `coordinates` | `[number, number][]` | —       | Route coordinates as `[longitude, latitude]`. |
+| `color`       | `string`             | CSS var | Route stroke color.                           |
+| `width`       | `number`             | CSS var | Route stroke width.                           |
+| `opacity`     | `number`             | CSS var | Route stroke opacity.                         |
+| `dashArray`   | `[number, number]`   | —       | Optional dashed route pattern.                |
+
+### Map.Arc
+
+Draws curved connection lines between points. Each datum needs `id`, `from`, and `to`.
+
+### Map.ClusterLayer
+
+Draws clustered points from a GeoJSON point collection or GeoJSON URL.

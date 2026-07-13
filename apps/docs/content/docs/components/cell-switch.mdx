@@ -1,0 +1,96 @@
+---
+title: Cell Switch
+description: A toggle switch styled as a settings cell with label and description, ideal for preference panels.
+---
+
+## Usage
+
+<ProExamples component="cell-switch" title="Cell Switch" />
+
+## Anatomy
+
+Import the CellSwitch component and access all parts using dot notation.
+
+```tsx
+import { CellSwitch } from "@thenamespace/uikit";
+
+<CellSwitch>
+  <CellSwitch.Trigger>
+    <CellSwitch.Label />
+    <CellSwitch.Control />
+  </CellSwitch.Trigger>
+</CellSwitch>;
+```
+
+## Controlled
+
+## Disabled
+
+## Feature Announcement
+
+## Secondary Group
+
+## Settings Group
+
+## Variants
+
+## CSS Classes
+
+### Base Classes
+
+- `.cell-switch` - Root wrapper (renders as a `label` via Namespace UIKit Switch)
+
+### Element Classes
+
+- `.cell-switch__trigger` - The visible cell row container
+- `.cell-switch__trigger--default` - Default variant trigger styling
+- `.cell-switch__trigger--secondary` - Secondary variant trigger styling
+- `.cell-switch__label` - Leading text label
+- `.cell-switch__control` - Switch control wrapper
+- `.cell-switch__control--secondary` - Secondary variant control styling
+
+### Variant Classes
+
+- `.cell-switch--secondary` - Secondary variant on the root
+
+## API Reference
+
+### CellSwitch
+
+The root component. Wraps Namespace UIKit [Switch](https://namespace.com/docs/react/components/switch) with cell-style layout. Clicking anywhere in the cell toggles the switch.
+
+| Prop      | Type                       | Default     | Description          |
+| --------- | -------------------------- | ----------- | -------------------- |
+| `variant` | `'default' \| 'secondary'` | `'default'` | Visual style variant |
+
+Also supports all [Namespace UIKit Switch](https://namespace.com/docs/react/components/switch) props except `variant`.
+
+### CellSwitch.Trigger
+
+The visible cell row containing the label and switch control. Renders Namespace UIKit `Switch.Content` (a `<label>` element from React Aria's `SwitchButton`), so clicking anywhere in the row toggles the switch.
+
+| Prop       | Type        | Default | Description                |
+| ---------- | ----------- | ------- | -------------------------- |
+| `children` | `ReactNode` | -       | Label and control elements |
+
+Also supports all Namespace UIKit `Switch.Content` props.
+
+### CellSwitch.Label
+
+Leading text label rendered as a `span`.
+
+| Prop       | Type        | Default | Description |
+| ---------- | ----------- | ------- | ----------- |
+| `children` | `ReactNode` | -       | Label text  |
+
+Also supports all native `span` HTML attributes.
+
+### CellSwitch.Control
+
+Switch control. Renders the default Namespace UIKit `Switch.Thumb` when no children are provided.
+
+| Prop       | Type        | Default | Description            |
+| ---------- | ----------- | ------- | ---------------------- |
+| `children` | `ReactNode` | -       | Custom control content |
+
+Also supports all Namespace UIKit `Switch.Control` props.
