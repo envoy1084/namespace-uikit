@@ -2,6 +2,14 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
+import {
+  ArrowDown01Icon,
+  ArrowUp01Icon,
+  ZoomInAreaIcon,
+  ZoomOutAreaIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
 import { Button } from "../button";
 import { Description } from "../description";
 import { FieldError } from "../field-error";
@@ -432,35 +440,11 @@ export const CustomIcons: Story = {
         <Label>Width (Custom Icons)</Label>
         <NumberField.Group>
           <NumberField.DecrementButton>
-            <svg
-              height="16"
-              viewBox="0 0 16 16"
-              width="16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                clipRule="evenodd"
-                d="M6.75 11a4.25 4.25 0 1 0 0-8.5a4.25 4.25 0 0 0 0 8.5m0 1.5a5.73 5.73 0 0 0 3.501-1.188l2.719 2.718a.75.75 0 1 0 1.06-1.06l-2.718-2.719A5.75 5.75 0 1 0 6.75 12.5m-2-6.5a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5z"
-                fill="currentColor"
-                fillRule="evenodd"
-              />
-            </svg>
+            <HugeiconsIcon icon={ZoomOutAreaIcon} size={16} />
           </NumberField.DecrementButton>
           <NumberField.Input className="w-[120px]" />
           <NumberField.IncrementButton>
-            <svg
-              height="16"
-              viewBox="0 0 16 16"
-              width="16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                clipRule="evenodd"
-                d="M6.75 11a4.25 4.25 0 1 0 0-8.5a4.25 4.25 0 0 0 0 8.5m0 1.5a5.73 5.73 0 0 0 3.501-1.188l2.719 2.718a.75.75 0 1 0 1.06-1.06l-2.718-2.719A5.75 5.75 0 1 0 6.75 12.5m.75-7.75a.75.75 0 0 0-1.5 0V6H4.75a.75.75 0 0 0 0 1.5H6v1.25a.75.75 0 0 0 1.5 0V7.5h1.25a.75.75 0 0 0 0-1.5H7.5z"
-                fill="currentColor"
-                fillRule="evenodd"
-              />
-            </svg>
+            <HugeiconsIcon icon={ZoomInAreaIcon} size={16} />
           </NumberField.IncrementButton>
         </NumberField.Group>
         <Description>Custom icon children</Description>
@@ -486,36 +470,10 @@ export const WithChevrons: Story = {
         <NumberField.Input className="flex-1" />
         <div className="border-field-placeholder/15 flex h-full flex-col border-l">
           <NumberField.IncrementButton className="flex h-1/2 w-6 items-center justify-center rounded-none border-0 pt-0.5 text-sm">
-            <svg
-              aria-hidden="true"
-              height="11"
-              viewBox="0 0 16 16"
-              width="11"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                clipRule="evenodd"
-                d="M13.03 10.53a.75.75 0 0 1-1.06 0L8 6.56l-3.97 3.97a.75.75 0 1 1-1.06-1.06l4.5-4.5a.75.75 0 0 1 1.06 0l4.5 4.5a.75.75 0 0 1 0 1.06"
-                fill="currentColor"
-                fillRule="evenodd"
-              />
-            </svg>
+            <HugeiconsIcon icon={ArrowUp01Icon} size={11} />
           </NumberField.IncrementButton>
           <NumberField.DecrementButton className="flex h-1/2 w-6 items-center justify-center rounded-none border-0 pb-0.5 text-sm">
-            <svg
-              aria-hidden="true"
-              height="11"
-              viewBox="0 0 16 16"
-              width="11"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                clipRule="evenodd"
-                d="M2.97 5.47a.75.75 0 0 1 1.06 0L8 9.44l3.97-3.97a.75.75 0 1 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 0 1 0-1.06"
-                fill="currentColor"
-                fillRule="evenodd"
-              />
-            </svg>
+            <HugeiconsIcon icon={ArrowDown01Icon} size={11} />
           </NumberField.DecrementButton>
         </div>
       </NumberField.Group>

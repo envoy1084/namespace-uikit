@@ -2,6 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
+import { ZoomInAreaIcon, ZoomOutAreaIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
 import { Button } from "../button";
 import { Description } from "../description";
 import { Label } from "../label";
@@ -179,46 +182,6 @@ export const CustomValue: Story = {
   ),
 };
 
-function ZoomOutIcon() {
-  return (
-    <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
-      <circle
-        cx="10.5"
-        cy="10.5"
-        r="6.5"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <path
-        d="M6.5 10.5h8M15.5 15.5 21 21"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function ZoomInIcon() {
-  return (
-    <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
-      <circle
-        cx="10.5"
-        cy="10.5"
-        r="6.5"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <path
-        d="M6.5 10.5h8m-4-4v8M15.5 15.5 21 21"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
 export const CustomIcons: Story = {
   render: () => (
     <NumberStepper
@@ -229,11 +192,11 @@ export const CustomIcons: Story = {
     >
       <NumberStepper.Group>
         <NumberStepper.DecrementButton aria-label="Decrease Zoom level">
-          <ZoomOutIcon />
+          <HugeiconsIcon icon={ZoomOutAreaIcon} />
         </NumberStepper.DecrementButton>
         <NumberStepper.Value />
         <NumberStepper.IncrementButton aria-label="Increase Zoom level">
-          <ZoomInIcon />
+          <HugeiconsIcon icon={ZoomInAreaIcon} />
         </NumberStepper.IncrementButton>
       </NumberStepper.Group>
     </NumberStepper>
