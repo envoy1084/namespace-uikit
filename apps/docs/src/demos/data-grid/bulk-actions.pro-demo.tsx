@@ -43,6 +43,15 @@ type BulkEmployee = {
   status: "Active" | "Inactive" | "Pending";
 };
 
+const statusColor: Record<
+  BulkEmployee["status"],
+  "danger" | "success" | "warning"
+> = {
+  Active: "success",
+  Inactive: "danger",
+  Pending: "warning",
+};
+
 const bulkEmployees: BulkEmployee[] = [
   {
     avatar: "/assets/generated/image/avatar?w=200&h=200&u=20",
