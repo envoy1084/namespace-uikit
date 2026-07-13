@@ -29,6 +29,7 @@ import {
   Select,
   Separator,
   TextShimmer,
+  Tooltip,
 } from "@thenamespace/uikit";
 
 import {
@@ -617,21 +618,26 @@ function ReviewComposerDemo() {
           <span className="text-danger-soft-foreground font-semibold">-34</span>
         </Button>
         <Button className="hidden sm:inline-flex" size="sm" variant="outline">
-          Create Branch &amp; Commit
+          <span>Create Branch &amp; Commit</span>
         </Button>
-        <Button
-          isIconOnly
-          aria-label="More actions"
-          size="sm"
-          variant="outline"
-        >
-          <HugeiconsIcon
-            aria-hidden
-            icon={MoreHorizontalIcon}
-            size={16}
-            strokeWidth={2}
-          />
-        </Button>
+        <Tooltip delay={0}>
+          <Tooltip.Trigger>
+            <Button
+              isIconOnly
+              aria-label="More actions"
+              size="sm"
+              variant="outline"
+            >
+              <HugeiconsIcon
+                aria-hidden
+                icon={MoreHorizontalIcon}
+                size={16}
+                strokeWidth={2}
+              />
+            </Button>
+          </Tooltip.Trigger>
+          <Tooltip.Content>More actions</Tooltip.Content>
+        </Tooltip>
       </div>
       <PromptInput
         className="group max-w-full min-w-0 overflow-hidden"
