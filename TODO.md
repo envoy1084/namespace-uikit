@@ -157,4 +157,4 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 ### Completion gates
 
 - [x] Every item above has official/local Storybook comparison evidence.
-- [ ] Formatting, lint, typecheck, UIKit build, Storybook production build, package pack, and flat-subpath consumer imports pass.
+- [x] Formatting, lint, typecheck, UIKit build, Storybook production build, package pack, and flat-subpath consumer imports pass.
