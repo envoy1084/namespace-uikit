@@ -176,12 +176,18 @@ export const PressableCards: Story = {
           members: 148,
           image: "demo1.jpg",
           color: "text-rose-200",
+          author: "John",
+          authorAvatar:
+            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
         },
         {
           name: "AI Builders",
           members: 362,
           image: "demo2.jpg",
           color: "text-sky-300",
+          author: "Martha",
+          authorAvatar:
+            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/pink.jpg",
         },
       ].map((item) => (
         <Card
@@ -200,10 +206,13 @@ export const PressableCards: Story = {
             <p className="text-sm leading-4 font-medium">{item.name}</p>
             <p className="text-muted text-xs">{item.members} members</p>
           </Card.Content>
-          <Card.Footer>
-            <p className="text-muted text-xs">
-              By {item.name === "Indie Hackers" ? "John" : "Martha"}
-            </p>
+          <Card.Footer className="flex items-center gap-1.5">
+            <img
+              alt={item.author}
+              className="size-5 rounded-full object-cover"
+              src={item.authorAvatar}
+            />
+            <p className="text-muted text-xs">By {item.author}</p>
           </Card.Footer>
         </Card>
       ))}
@@ -212,11 +221,13 @@ export const PressableCards: Story = {
           title: "Bridging the Future",
           time: "Today, 6:30 PM",
           image: "robot1.jpeg",
+          imageAlt: "Futuristic Robot",
         },
         {
           title: "Avocado Hackathon",
           time: "Wed, 4:30 PM",
           image: "avocado.jpeg",
+          imageAlt: "Avocado Hackathon",
         },
       ].map((item) => (
         <Card
@@ -226,7 +237,7 @@ export const PressableCards: Story = {
         >
           <PressableFeedback.Highlight />
           <img
-            alt={item.title}
+            alt={item.imageAlt}
             className="aspect-square h-20 w-20 shrink-0 rounded-xl object-cover"
             src={`https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/${item.image}`}
           />
