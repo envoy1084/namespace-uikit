@@ -417,7 +417,6 @@ function DataGridInner<T extends object>({
   };
   const tableContent = (
     <Table.Content
-      key={columnCollectionKey}
       {...(contentClassName ? { className: contentClassName } : {})}
       {...(defaultExpandedKeys ? { defaultExpandedKeys } : {})}
       {...(defaultSelectedKeys ? { defaultSelectedKeys } : {})}
@@ -556,6 +555,7 @@ function DataGridInner<T extends object>({
   const root = (
     <Table
       ref={rootRef}
+      key={columnCollectionKey}
       className={cn("data-grid", className) ?? "data-grid"}
       data-slot="data-grid"
       data-vertical-align={verticalAlign}
