@@ -15,10 +15,12 @@
     "postinstall": "fumadocs-mdx",
     "start": "next start",
     "sync:docs-navigation": "node scripts/organize-component-docs.mjs",
+    "sync:docs-shell": "node scripts/sync-heroui-docs-shell.mjs",
     "sync:entrypoint-docs": "node scripts/add-entrypoint-docs.mjs",
     "sync:pro-docs": "node scripts/sync-heroui-pro-docs.mjs",
     "typecheck": "tsc --noEmit",
-    "typegen": "next typegen"
+    "typegen": "next typegen",
+    "verify": "node scripts/verify-docs.mjs"
   },
   "dependencies": {
     "@gravity-ui/icons": "2.16.0",
@@ -38,6 +40,7 @@
     "react": "catalog:",
     "react-aria-components": "1.18.0",
     "react-dom": "catalog:",
+    "tailwind-merge": "3.4.0",
     "tailwind-variants": "3.2.2"
   },
   "devDependencies": {

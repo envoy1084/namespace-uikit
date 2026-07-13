@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { createRelativeLink } from "fumadocs-ui/mdx";
+
 import {
   DocsBody,
   DocsDescription,
   DocsPage,
   DocsTitle,
-} from "fumadocs-ui/layouts/docs/page";
-import { createRelativeLink } from "fumadocs-ui/mdx";
-
+} from "@/components/fumadocs/layouts/notebook/page";
 import { source } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
 
@@ -27,7 +27,7 @@ export default async function Page({
   return (
     <DocsPage
       full={page.data.full}
-      tableOfContent={{ style: "clerk" }}
+      tableOfContent={{ style: "normal" }}
       toc={page.data.toc}
     >
       <DocsTitle>{page.data.title}</DocsTitle>

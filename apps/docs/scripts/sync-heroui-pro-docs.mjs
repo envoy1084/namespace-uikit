@@ -51,6 +51,23 @@ function adaptPage(raw, slug) {
   return `---\ntitle: ${title}\ndescription: ${description}\n---\n\n${body}\n`;
 }
 
+function adaptStory(source) {
+  return source
+    .replace(
+      /https:\/\/heroui-assets\.nyc3\.cdn\.digitaloceanspaces\.com/g,
+      "/assets",
+    )
+    .replace(
+      /https:\/\/nextuipro\.nyc3\.cdn\.digitaloceanspaces\.com/g,
+      "/assets",
+    )
+    .replace(/https:\/\/img\.heroui\.chat/g, "/assets/generated")
+    .replace(/HeroUI Pro/g, "Namespace UIKit")
+    .replace(/HeroUI/g, "Namespace UIKit")
+    .replace(/heroui\.com/g, "namespace.ninja")
+    .replace(/heroui/g, "namespace");
+}
+
 for (const [slug, url] of componentUrls) {
   const response = await fetch(`${url}.mdx`);
 
@@ -63,9 +80,8 @@ for (const [slug, url] of componentUrls) {
   );
 
   try {
-    storySources[slug] = await readFile(
-      join(storyDirectory, slug, `${slug}.stories.tsx`),
-      "utf8",
+    storySources[slug] = adaptStory(
+      await readFile(join(storyDirectory, slug, `${slug}.stories.tsx`), "utf8"),
     );
   } catch {
     storySources[slug] = "";

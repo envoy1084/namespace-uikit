@@ -201,9 +201,12 @@ importers:
       react-dom:
         specifier: 'catalog:'
         version: 19.2.7(react@19.2.7)
+      tailwind-merge:
+        specifier: 3.4.0
+        version: 3.4.0
       tailwind-variants:
         specifier: 3.2.2
-        version: 3.2.2(tailwind-merge@3.6.0)(tailwindcss@4.3.2)
+        version: 3.2.2(tailwind-merge@3.4.0)(tailwindcss@4.3.2)
     devDependencies:
       '@tailwindcss/postcss':
         specifier: 4.3.2
@@ -12177,12 +12180,6 @@ snapshots:
       tailwindcss: 4.3.2
     optionalDependencies:
       tailwind-merge: 3.4.0
-
-  tailwind-variants@3.2.2(tailwind-merge@3.6.0)(tailwindcss@4.3.2):
-    dependencies:
-      tailwindcss: 4.3.2
-    optionalDependencies:
-      tailwind-merge: 3.6.0
 
   tailwindcss@4.3.0: {}
 
