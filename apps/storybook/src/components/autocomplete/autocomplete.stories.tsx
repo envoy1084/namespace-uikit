@@ -3,12 +3,12 @@ import type { Key } from "@thenamespace/uikit";
 
 import React, { useState } from "react";
 
-import { Icon } from "@iconify/react";
 import { useAsyncList } from "@react-stately/data";
 import { useFilter } from "react-aria-components/Autocomplete";
 import { ListLayout, Virtualizer } from "react-aria-components/Virtualizer";
 import { cn } from "tailwind-variants";
 
+import { Icon } from "../../icon";
 import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 import { Button } from "../button";
 import { Description } from "../description";

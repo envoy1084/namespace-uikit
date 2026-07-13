@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Icon } from "@iconify/react";
 import { Link } from "@thenamespace/uikit/link";
 import { NumberValue } from "@thenamespace/uikit/number-value";
 import { TrendChip } from "@thenamespace/uikit/trend-chip";
 
+import { Icon } from "../../icon";
 import { KPI } from "./index";
 
 const meta = {

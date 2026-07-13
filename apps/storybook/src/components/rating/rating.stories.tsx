@@ -2,8 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import { Label } from "../label";
 import { Rating, StarIcon } from "./index";
 

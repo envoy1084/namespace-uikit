@@ -4,8 +4,8 @@ import { useState } from "react";
 
 import { ArrowRight01Icon, UserIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Icon } from "@iconify/react";
 
+import { Icon } from "../../icon";
 import { Button } from "../button";
 import { Card } from "../card";
 import { PressableFeedback } from "./index";

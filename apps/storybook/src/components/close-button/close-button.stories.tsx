@@ -2,8 +2,7 @@ import type { Meta } from "@storybook/react";
 
 import React, { useState } from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import type { CloseButtonProps } from "./index";
 import { CloseButton } from "./index";
 

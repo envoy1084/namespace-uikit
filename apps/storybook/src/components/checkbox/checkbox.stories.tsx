@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import { Icon } from "@iconify/react";
 import { cx } from "tailwind-variants";
 
+import { Icon } from "../../icon";
 import { CheckboxGroup } from "../checkbox-group";
 import { Description } from "../description";
 import { FieldError } from "../field-error";

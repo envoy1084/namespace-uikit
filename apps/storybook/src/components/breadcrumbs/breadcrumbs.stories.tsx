@@ -2,8 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import { Breadcrumbs, BreadcrumbsItem } from "./index";
 
 const meta: Meta<typeof Breadcrumbs> = {

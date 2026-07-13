@@ -2,8 +2,7 @@ import type { Meta } from "@storybook/react";
 
 import React from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import { Button } from "../button";
 import { Input } from "../input";
 import { Label } from "../label";

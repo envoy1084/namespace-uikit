@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React, { useState } from "react";
 
-import { Icon } from "@iconify/react";
 import {
   getLocalTimeZone,
   parseDate,
@@ -11,6 +10,7 @@ import {
   today,
 } from "@internationalized/date";
 
+import { Icon } from "../../icon";
 import { Button } from "../button";
 import { Description } from "../description";
 import { FieldError } from "../field-error";

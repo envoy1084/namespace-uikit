@@ -2,13 +2,13 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
 import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
 import { InlineSelect } from "@thenamespace/uikit/inline-select";
 import { ListBox } from "@thenamespace/uikit/list-box";
 import { Switch } from "@thenamespace/uikit/switch";
 
+import { Icon } from "../../icon";
 import { ItemCard } from "./index";
 
 const meta = {

@@ -2,8 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState, type ReactNode } from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import { ChainOfThought } from "./index";
 
 const meta = {

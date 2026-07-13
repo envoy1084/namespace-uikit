@@ -3,8 +3,7 @@ import type { Key } from "react-aria-components";
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import { Segment } from "./index";
 
 const meta = {

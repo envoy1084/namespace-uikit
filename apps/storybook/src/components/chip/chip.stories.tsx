@@ -2,8 +2,7 @@ import type { Meta } from "@storybook/react";
 
 import React from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import { Separator } from "../separator";
 import type { ChipProps } from "./index";
 import { Chip } from "./index";

@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
 import { Button } from "@thenamespace/uikit";
 
+import { Icon } from "../../icon";
 import { Stepper } from "./index";
 
 const meta = {

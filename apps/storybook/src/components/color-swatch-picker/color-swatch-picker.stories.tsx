@@ -2,8 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import { parseColor } from "../rac";
 import { ColorSwatchPicker } from "./index";
 

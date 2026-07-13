@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Fragment, useState } from "react";
 
-import { Icon } from "@iconify/react";
 import { Button } from "@thenamespace/uikit/button";
 import { InlineSelect } from "@thenamespace/uikit/inline-select";
 import { ItemCard } from "@thenamespace/uikit/item-card";
@@ -11,6 +10,7 @@ import { Separator } from "@thenamespace/uikit/separator";
 import { Switch } from "@thenamespace/uikit/switch";
 import { Tooltip } from "@thenamespace/uikit/tooltip";
 
+import { Icon } from "../../icon";
 import { ItemCardGroup } from "./index";
 
 const meta = {

@@ -4,8 +4,8 @@ import { useState } from "react";
 
 import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Icon } from "@iconify/react";
 
+import { Icon } from "../../icon";
 import { Chip } from "../chip";
 import { Description } from "../description";
 import { Label } from "../label";

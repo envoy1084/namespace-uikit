@@ -4,9 +4,9 @@ import type { ButtonProps } from "@thenamespace/uikit";
 import type { SVGProps } from "react";
 import React from "react";
 
-import { Icon } from "@iconify/react";
 import { cn } from "tailwind-variants";
 
+import { Icon } from "../../icon";
 import { Button } from "../button";
 import { Disclosure } from "../disclosure";
 import { Separator } from "../separator";

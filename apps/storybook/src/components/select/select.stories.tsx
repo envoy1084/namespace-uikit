@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
-import { Icon } from "@iconify/react";
 import { useAsyncList } from "@react-stately/data";
 
+import { Icon } from "../../icon";
 import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 import { Button } from "../button";
 import { Chip } from "../chip";

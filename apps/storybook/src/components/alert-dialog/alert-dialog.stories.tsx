@@ -2,9 +2,8 @@ import type { Meta } from "@storybook/react";
 
 import React, { useCallback, useRef, useState } from "react";
 
-import { Icon } from "@iconify/react";
-
 import { useOverlayState } from "../../hooks/use-overlay-state";
+import { Icon } from "../../icon";
 import { Button } from "../button";
 import { AlertDialog } from "./index";
 

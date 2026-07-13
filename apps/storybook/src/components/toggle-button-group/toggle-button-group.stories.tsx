@@ -2,8 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React, { useState } from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import type { Key } from "../rac";
 import { ToggleButton } from "../toggle-button";
 import { ToggleButtonGroup } from "./";

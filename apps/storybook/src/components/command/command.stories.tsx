@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
 import { Button, Chip, Kbd } from "@thenamespace/uikit";
 
+import { Icon } from "../../icon";
 import { Command } from "./index";
 
 const meta = {

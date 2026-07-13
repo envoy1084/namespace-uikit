@@ -3,8 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import * as React from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import { Avatar } from "../avatar";
 import { Button } from "../button";
 import { Description } from "../description";

@@ -3,9 +3,9 @@ import type { Selection, SelectionMode } from "react-aria-components";
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
 import { ActionBar } from "@thenamespace/uikit/action-bar";
 
+import { Icon } from "../../icon";
 import { Button } from "../button";
 import { Chip } from "../chip";
 import { Separator } from "../separator";

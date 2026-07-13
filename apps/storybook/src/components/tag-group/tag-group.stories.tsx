@@ -2,11 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React, { useMemo, useState } from "react";
 
-import { Icon } from "@iconify/react";
-
 import type { Key } from "../";
 import { Avatar, Description, EmptyState, ErrorMessage, Label, Tag } from "../";
 import { useListData } from "../../";
+import { Icon } from "../../icon";
 import { TagGroup } from "./";
 
 const meta: Meta<typeof TagGroup> = {

@@ -2,8 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import { Button } from "../button";
 import { Link } from "../link";
 import { DropZone, useDropZone } from "./index";

@@ -3,8 +3,7 @@ import type { Selection } from "react-aria-components";
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import { Button } from "../button";
 import { Chip } from "../chip";
 import { DataGrid, type DataGridColumn } from "../data-grid";

@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useMemo, useState } from "react";
 
-import { Icon } from "@iconify/react";
 import { useTreeData } from "@react-stately/data";
 import { Collection, type Selection } from "react-aria-components";
 
+import { Icon } from "../../icon";
 import {
   FileTree,
   useFileTree,

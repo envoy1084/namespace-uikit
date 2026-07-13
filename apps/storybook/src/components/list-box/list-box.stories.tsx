@@ -3,9 +3,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import * as React from "react";
 
-import { Icon } from "@iconify/react";
 import { ListLayout, Virtualizer } from "react-aria-components/Virtualizer";
 
+import { Icon } from "../../icon";
 import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 import { Description } from "../description";
 import { Header } from "../header";

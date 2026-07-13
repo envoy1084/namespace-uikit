@@ -2,8 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React, { useState } from "react";
 
-import { Icon } from "@iconify/react";
-
+import { Icon } from "../../icon";
 import { Button } from "../button";
 import { Chip } from "../chip";
 import { Description } from "../description";

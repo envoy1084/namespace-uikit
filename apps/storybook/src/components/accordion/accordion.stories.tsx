@@ -2,9 +2,9 @@ import type { Meta } from "@storybook/react";
 
 import React from "react";
 
-import { Icon } from "@iconify/react";
 import { cn } from "tailwind-variants";
 
+import { Icon } from "../../icon";
 import { Accordion } from "./index";
 
 export default {

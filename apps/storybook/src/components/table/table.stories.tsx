@@ -3,10 +3,10 @@ import type { Selection, SortDescriptor } from "react-aria-components/Table";
 
 import React from "react";
 
-import { Icon } from "@iconify/react";
 import { cn } from "@thenamespace/uikit";
 import { TableLayout, Virtualizer } from "react-aria-components/Virtualizer";
 
+import { Icon } from "../../icon";
 import { Avatar } from "../avatar";
 import { Button } from "../button";
 import { Checkbox } from "../checkbox";
