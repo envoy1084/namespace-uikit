@@ -90,17 +90,20 @@ export function FontPicker({
 
   return (
     <Popover>
-      <Popover.Trigger aria-label={`Font family: ${font.label}`}>
+      <Popover.Trigger
+        aria-label={`Font family: ${font.label}`}
+        className="w-full"
+      >
         <InputGroup className="w-full cursor-pointer">
           <InputGroup.Prefix>
             <Type className="size-4" />
           </InputGroup.Prefix>
           <InputGroup.Input
             readOnly
-            className="cursor-pointer"
+            className="min-w-0 grow cursor-pointer"
             value={font.label}
           />
-          <InputGroup.Suffix>
+          <InputGroup.Suffix className="ml-auto">
             <ChevronDown className="text-muted size-4" />
           </InputGroup.Suffix>
         </InputGroup>

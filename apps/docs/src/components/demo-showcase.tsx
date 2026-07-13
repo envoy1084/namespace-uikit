@@ -16,7 +16,7 @@ import {
 import LinkRoot from "fumadocs-core/link";
 import { useTheme } from "next-themes";
 
-import { DemoComponents } from "@/components/demo";
+import { ComponentDemoGallery } from "@/components/component-demo-gallery";
 import { cn } from "@/utils/cn";
 
 const tabs = ["components", "dashboard", "mail", "chat", "finances"] as const;
@@ -176,11 +176,11 @@ export function DemoShowcase({
       >
         <div
           className={cn(
-            "bg-background w-full justify-center rounded-2xl py-8",
+            "bg-background w-full justify-center rounded-2xl",
             alwaysShowTabs ? "hidden" : "flex lg:hidden",
           )}
         >
-          <DemoComponents />
+          <ComponentDemoGallery />
         </div>
         <div
           className={cn(
@@ -190,13 +190,11 @@ export function DemoShowcase({
         >
           <div
             className={cn(
-              "border-border/50 bg-background flex flex-1 justify-center overflow-x-hidden overflow-y-auto rounded-2xl border py-8",
+              "bg-background flex flex-1 justify-center overflow-x-hidden overflow-y-auto rounded-2xl",
               selectedTab !== "components" && "invisible",
             )}
           >
-            <div className="my-auto">
-              <DemoComponents />
-            </div>
+            <ComponentDemoGallery />
           </div>
           {selectedTab !== "components" && iframeTabs[selectedTab] && (
             <div className="absolute inset-0">
