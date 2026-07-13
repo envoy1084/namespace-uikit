@@ -9,6 +9,13 @@
     position: relative;
   }
   .segment .segment__item {
+    --toggle-button-bg: transparent;
+    --toggle-button-bg-hover: transparent;
+    --toggle-button-bg-pressed: transparent;
+    --toggle-button-bg-selected: transparent;
+    --toggle-button-bg-selected-hover: transparent;
+    --toggle-button-bg-selected-pressed: transparent;
+
     align-items: center;
     border-radius: calc(var(--radius) * 3);
     color: var(--muted);
