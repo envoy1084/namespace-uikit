@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Person } from "@gravity-ui/icons";
+import { UserIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Avatar,
   Button,
@@ -17,7 +18,7 @@ export function LoginDemo() {
       <Card.Header className="flex w-full items-center justify-center gap-2">
         <Avatar>
           <Avatar.Fallback>
-            <Person />
+            <HugeiconsIcon icon={UserIcon} />
           </Avatar.Fallback>
         </Avatar>
         <Card.Title>Create an account</Card.Title>

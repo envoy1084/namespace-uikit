@@ -1,6 +1,7 @@
 import React from "react";
 
-import { FloppyDisk } from "@gravity-ui/icons";
+import { FloppyDiskIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Avatar, Button, Card, CloseButton } from "@thenamespace/uikit";
 
 export function AlertDialogDemo() {
@@ -9,7 +10,7 @@ export function AlertDialogDemo() {
       <Card.Header className="flex w-full items-start justify-center gap-2 px-1">
         <Avatar color="warning" variant="soft">
           <Avatar.Fallback>
-            <FloppyDisk className="text-lg" />
+            <HugeiconsIcon icon={FloppyDiskIcon} size={18} />
           </Avatar.Fallback>
         </Avatar>
         <Card.Title>Unsaved changes</Card.Title>

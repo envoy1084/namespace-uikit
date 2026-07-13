@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Comment, Envelope } from "@gravity-ui/icons";
+import { Comment01Icon, Mail01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Tabs } from "@thenamespace/uikit";
 
 export function TabsDemo2() {
@@ -9,12 +10,12 @@ export function TabsDemo2() {
       <Tabs.ListContainer>
         <Tabs.List aria-label="Options">
           <Tabs.Tab className="gap-1.5" id="chats">
-            <Comment />
+            <HugeiconsIcon icon={Comment01Icon} />
             <span>Chats</span>
             <Tabs.Indicator />
           </Tabs.Tab>
           <Tabs.Tab className="gap-1.5" id="emails">
-            <Envelope />
+            <HugeiconsIcon icon={Mail01Icon} />
             <span>Emails</span>
             <Tabs.Indicator />
           </Tabs.Tab>

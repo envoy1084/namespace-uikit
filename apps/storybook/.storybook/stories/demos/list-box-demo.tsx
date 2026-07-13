@@ -1,6 +1,11 @@
 import React from "react";
 
-import { Pencil, SquarePlus, TrashBin } from "@gravity-ui/icons";
+import {
+  AddSquareIcon,
+  Delete02Icon,
+  PencilEdit01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Description,
   Header,
@@ -23,7 +28,11 @@ export function ListBoxDemo() {
           <Header>Actions</Header>
           <ListBox.Item id="new-file" textValue="New file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <SquarePlus className="text-muted size-4 shrink-0" />
+              <HugeiconsIcon
+                className="text-muted shrink-0"
+                icon={AddSquareIcon}
+                size={16}
+              />
             </div>
             <div className="flex flex-col">
               <Label>New file</Label>
@@ -36,7 +45,11 @@ export function ListBoxDemo() {
           </ListBox.Item>
           <ListBox.Item id="edit-file" textValue="Edit file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Pencil className="text-muted size-4 shrink-0" />
+              <HugeiconsIcon
+                className="text-muted shrink-0"
+                icon={PencilEdit01Icon}
+                size={16}
+              />
             </div>
             <div className="flex flex-col">
               <Label>Edit file</Label>
@@ -57,7 +70,11 @@ export function ListBoxDemo() {
             variant="danger"
           >
             <div className="flex h-8 items-start justify-center pt-px">
-              <TrashBin className="text-danger size-4 shrink-0" />
+              <HugeiconsIcon
+                className="text-danger shrink-0"
+                icon={Delete02Icon}
+                size={16}
+              />
             </div>
             <div className="flex flex-col">
               <Label>Delete file</Label>
