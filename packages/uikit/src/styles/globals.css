@@ -71,25 +71,12 @@
   .default,
   [data-theme="light"],
   [data-theme="default"] {
-    --chart-1: oklch(from var(--accent) calc(l - 0.24) c h);
-    --chart-2: oklch(from var(--accent) calc(l - 0.12) c h);
-    --chart-3: var(--accent);
-    --chart-4: oklch(from var(--accent) calc(l + 0.12) c h);
-    --chart-5: oklch(from var(--accent) calc(l + 0.24) c h);
-  }
-}
-
-/* @layer theme {
-  :root,
-  .light,
-  .default,
-  [data-theme="light"],
-  [data-theme="default"] {
-    --chart-1: oklch(from var(--accent) calc(l - 0.24) c h);
-    --chart-2: oklch(from var(--accent) calc(l - 0.12) c h);
-    --chart-3: var(--accent);
-    --chart-4: oklch(from var(--accent) calc(l + 0.12) c h);
-    --chart-5: oklch(from var(--accent) calc(l + 0.24) c h);
+    --chart-base: oklch(62.04% 0.195 253.83);
+    --chart-1: oklch(from var(--chart-base) calc(l - 0.24) c h);
+    --chart-2: oklch(from var(--chart-base) calc(l - 0.12) c h);
+    --chart-3: var(--chart-base);
+    --chart-4: oklch(from var(--chart-base) calc(l + 0.12) c h);
+    --chart-5: oklch(from var(--chart-base) calc(l + 0.24) c h);
 
     --accent: oklch(23.929% 0.00003 271.152);
     --accent-foreground: oklch(99.11% 0 0);
@@ -124,7 +111,7 @@
     --warning-foreground: oklch(15% 0.0457 80.6);
     --accent-soft-foreground: oklch(0 0 0);
 
-    --radius: 0.3rem;
+    --radius: 0.4rem;
     --field-radius: 0.6rem;
 
     --font-sans: var(--font-inter, Inter, ui-sans-serif, system-ui, sans-serif);
@@ -166,4 +153,4 @@
     --warning-foreground: oklch(15% 0.0404 86.06);
     --accent-soft-foreground: oklch(0.9848 0 0);
   }
-} */
+}
