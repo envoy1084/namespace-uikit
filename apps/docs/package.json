@@ -5,25 +5,15 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "build:demo-registry": "node scripts/build-demo-registry.mjs",
     "dev": "next dev",
     "format": "oxfmt . --write --no-error-on-unmatched-pattern",
     "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
     "lint": "oxlint src next.config.ts source.config.ts --no-error-on-unmatched-pattern",
     "lint:fix": "oxlint src next.config.ts source.config.ts --fix --no-error-on-unmatched-pattern",
-    "migrate:docs": "pnpm migrate:heroui && pnpm sync:advanced-docs && pnpm sync:entrypoint-docs && pnpm sync:docs-navigation",
-    "migrate:heroui": "node scripts/migrate-heroui-react-docs.mjs",
     "postinstall": "fumadocs-mdx",
     "start": "next start",
-    "sync:advanced-docs": "node scripts/sync-advanced-docs.mjs",
-    "sync:docs-navigation": "node scripts/organize-component-docs.mjs",
-    "sync:docs-shell": "node scripts/sync-heroui-docs-shell.mjs",
-    "sync:entrypoint-docs": "node scripts/add-entrypoint-docs.mjs",
-    "sync:getting-started": "node scripts/sync-heroui-getting-started.mjs",
     "typecheck": "tsc --noEmit",
-    "typegen": "next typegen",
-    "verify": "node scripts/verify-docs.mjs && node scripts/verify-assets.mjs",
-    "verify:assets": "node scripts/verify-assets.mjs"
+    "typegen": "next typegen"
   },
   "dependencies": {
     "@gravity-ui/icons": "2.16.0",

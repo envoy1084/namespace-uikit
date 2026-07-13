@@ -68,11 +68,7 @@ Component behavior and composition follow the [HeroUI component documentation](h
 
 ## Theme development
 
-Namespace theme variables live in [`packages/uikit/src/styles/globals.css`](./packages/uikit/src/styles/globals.css). After changing them, synchronize Storybook's generated theme data:
-
-```bash
-pnpm sync-theme
-```
+Namespace theme variables live in [`packages/uikit/src/styles/globals.css`](./packages/uikit/src/styles/globals.css).
 
 ## Releases
 
