@@ -2,6 +2,9 @@ import type { Meta } from "@storybook/react";
 
 import React from "react";
 
+import { Tick02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
 import { Icon } from "../../icon";
 import { Button } from "../button";
 import type { ToastContentValue, ToastVariants } from "./index";
@@ -561,19 +564,7 @@ const WithCallbacksTemplate = () => {
                   <span className="text-muted ml-2 text-xs">({item.time})</span>
                 </div>
                 <div className="bg-success/10 text-success flex h-5 w-5 shrink-0 items-center justify-center rounded-full">
-                  <svg
-                    className="size-3"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M5 13l4 4L19 7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <HugeiconsIcon icon={Tick02Icon} size={12} />
                 </div>
               </div>
             ))

@@ -2,6 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState } from "react";
 
+import { UnfoldMoreIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
 import { Button } from "../button";
 import { Description } from "../description";
 import { FieldError } from "../field-error";
@@ -244,17 +247,7 @@ export const CustomIndicator: Story = {
             ),
           )}
           <NativeSelect.Indicator>
-            <svg
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path d="m7 15 5 5 5-5" />
-              <path d="m7 9 5-5 5 5" />
-            </svg>
+            <HugeiconsIcon icon={UnfoldMoreIcon} />
           </NativeSelect.Indicator>
         </NativeSelect.Trigger>
       </NativeSelect>

@@ -2,6 +2,9 @@ import type { Meta } from "@storybook/react";
 
 import React from "react";
 
+import { InformationCircleIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
 import { buttonVariants } from "../button/index";
 import { ExternalLinkIcon } from "../icons";
 import type { LinkProps } from "./index";
@@ -52,9 +55,7 @@ const CustomIconTemplate = (_props: Link["RootProps"]) => (
     </Link>
     <Link href="#">
       <Link.Icon>
-        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-        </svg>
+        <HugeiconsIcon icon={InformationCircleIcon} size={16} />
       </Link.Icon>
       Info Link
     </Link>
