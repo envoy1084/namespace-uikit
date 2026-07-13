@@ -4,12 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 
 import {
   Button,
-  CellColorPicker,
   CellSlider,
   CodeBlock,
   ColorArea,
   ColorField,
+  ColorPicker,
   ColorSlider,
+  ColorSwatch,
+  highlightCode,
   Input,
   Label,
   SearchField,
@@ -17,7 +19,7 @@ import {
   Sheet,
   TextField,
 } from "@thenamespace/uikit";
-import { Code2, Moon, RotateCcw, Sun } from "lucide-react";
+import { Code2, Moon, RotateCcw, SlidersHorizontal, Sun } from "lucide-react";
 
 import { DemoShowcase } from "@/components/demo-showcase";
 import { cn } from "@/utils/cn";
@@ -75,20 +77,21 @@ function ColorControl({
 
   return (
     <div className="space-y-1 py-2">
-      <CellColorPicker
+      <ColorPicker
         aria-label={`Choose ${token} color`}
         value={colorInputValue(value)}
-        variant="secondary"
         onChange={(color) => onChange(colorToOklch(color.toString("hex")))}
       >
-        <CellColorPicker.Trigger>
-          <CellColorPicker.Label className="capitalize">
+        <ColorPicker.Trigger className="w-full justify-start gap-2">
+          <ColorSwatch className="size-6" size="sm" />
+          <Label className="grow capitalize">
             {token.replaceAll("-", " ")}
-          </CellColorPicker.Label>
-          <CellColorPicker.ValueDisplay />
-          <CellColorPicker.Swatch />
-        </CellColorPicker.Trigger>
-        <CellColorPicker.Popover className="w-64 gap-3">
+          </Label>
+          <span className="text-muted font-mono text-xs">
+            {colorInputValue(value).toUpperCase()}
+          </span>
+        </ColorPicker.Trigger>
+        <ColorPicker.Popover className="w-64 gap-3">
           <ColorArea
             aria-label={`${token} color area`}
             className="max-w-full"
@@ -111,13 +114,13 @@ function ColorControl({
           <ColorField aria-label={`${token} color value`}>
             <ColorField.Group variant="secondary">
               <ColorField.Prefix>
-                <CellColorPicker.Swatch className="size-4" size="xs" />
+                <ColorSwatch className="size-4" size="xs" />
               </ColorField.Prefix>
               <ColorField.Input />
             </ColorField.Group>
           </ColorField>
-        </CellColorPicker.Popover>
-      </CellColorPicker>
+        </ColorPicker.Popover>
+      </ColorPicker>
       <TextField
         aria-label={`${token} CSS value`}
         value={value}
@@ -161,12 +164,125 @@ function ModeSwitch({
   );
 }
 
+function ThemeControlsSheet({
+  config,
+  isOpen,
+  mode,
+  query,
+  onColorChange,
+  onCustomFontsChange,
+  onFontChange,
+  onNumberChange,
+  onOpenChange,
+  onQueryChange,
+}: {
+  config: ThemeConfig;
+  isOpen: boolean;
+  mode: ThemeMode;
+  query: string;
+  onColorChange: (token: ColorToken, value: string) => void;
+  onCustomFontsChange: (fonts: ThemeConfig["customFonts"]) => void;
+  onFontChange: (font: ThemeConfig["font"]) => void;
+  onNumberChange: (key: "radius" | "fieldRadius", value: number) => void;
+  onOpenChange: (open: boolean) => void;
+  onQueryChange: (query: string) => void;
+}) {
+  return (
+    <Sheet isOpen={isOpen} placement="left" onOpenChange={onOpenChange}>
+      <Sheet.Backdrop variant="blur">
+        <Sheet.Content className="w-[min(100vw,26rem)]">
+          <Sheet.Dialog className="h-full">
+            <Sheet.CloseTrigger />
+            <Sheet.Header>
+              <Sheet.Heading>Customize theme</Sheet.Heading>
+              <p className="text-muted text-sm">
+                Editing the {mode} theme ·{" "}
+                {Object.keys(config.colors[mode]).length} color tokens
+              </p>
+            </Sheet.Header>
+            <Sheet.Body className="min-h-0 space-y-7 overflow-y-auto px-4 pb-6">
+              <SearchField
+                aria-label="Find a token"
+                value={query}
+                onChange={onQueryChange}
+              >
+                <SearchField.Group>
+                  <SearchField.SearchIcon />
+                  <SearchField.Input
+                    className="min-w-0 flex-1"
+                    placeholder="Find a color token…"
+                  />
+                  <SearchField.ClearButton />
+                </SearchField.Group>
+              </SearchField>
+
+              {colorGroups.map((group) => {
+                const tokens = group.tokens.filter((token) =>
+                  token.includes(query.trim().toLowerCase()),
+                );
+
+                if (tokens.length === 0) return null;
+
+                return (
+                  <section key={group.label}>
+                    <h3 className="text-muted border-border mb-1 border-b pb-2 text-xs font-semibold tracking-wider uppercase">
+                      {group.label}
+                    </h3>
+                    <div className="divide-border divide-y">
+                      {tokens.map((token) => (
+                        <ColorControl
+                          key={token}
+                          mode={mode}
+                          token={token}
+                          value={config.colors[mode][token]}
+                          onChange={(value) => onColorChange(token, value)}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                );
+              })}
+
+              <section className="space-y-5">
+                <h3 className="text-muted border-border border-b pb-2 text-xs font-semibold tracking-wider uppercase">
+                  Shape & type
+                </h3>
+                <RangeControl
+                  label="Component radius"
+                  value={config.radius}
+                  onChange={(value) => onNumberChange("radius", value)}
+                />
+                <RangeControl
+                  label="Field radius"
+                  value={config.fieldRadius}
+                  onChange={(value) => onNumberChange("fieldRadius", value)}
+                />
+                <div className="space-y-2">
+                  <Label>Font family</Label>
+                  <FontPicker
+                    customFonts={config.customFonts}
+                    font={config.font}
+                    onChange={onFontChange}
+                    onCustomFontsChange={onCustomFontsChange}
+                  />
+                </div>
+              </section>
+            </Sheet.Body>
+          </Sheet.Dialog>
+        </Sheet.Content>
+      </Sheet.Backdrop>
+    </Sheet>
+  );
+}
+
 function ThemeCodeSheet({
   code,
+  highlightedCode,
   isOpen,
   onOpenChange,
 }: {
   code: string;
+  highlightedCode?: string;
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
@@ -194,6 +310,7 @@ function ThemeCodeSheet({
                   showLineNumbers
                   className="min-h-0 flex-1 text-xs"
                   code={code}
+                  highlightedHtml={highlightedCode}
                   language="css"
                 />
               </CodeBlock>
@@ -208,9 +325,10 @@ function ThemeCodeSheet({
 export function ThemeBuilder() {
   const [config, setConfig] = useState<ThemeConfig>(defaultTheme);
   const [mode, setMode] = useState<ThemeMode>("light");
-  const [mobileView, setMobileView] = useState<"preview" | "tokens">("preview");
   const [query, setQuery] = useState("");
+  const [showCustomize, setShowCustomize] = useState(false);
   const [showCode, setShowCode] = useState(false);
+  const [highlightedCode, setHighlightedCode] = useState<string>();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -235,6 +353,20 @@ export function ThemeBuilder() {
     () => themeStyles(config, mode),
     [config, mode],
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    setHighlightedCode(undefined);
+    async function prepareHighlight() {
+      const html = await highlightCode(code, { language: "css" });
+      if (!cancelled) setHighlightedCode(html);
+    }
+    void prepareHighlight();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [code]);
 
   function updateColor(token: ColorToken, value: string) {
     setConfig((current) => ({
@@ -267,6 +399,14 @@ export function ThemeBuilder() {
         <div className="flex items-center gap-2">
           <ModeSwitch mode={mode} onChange={setMode} />
           <Button
+            className="gap-2"
+            variant={showCustomize ? "primary" : "secondary"}
+            onPress={() => setShowCustomize(true)}
+          >
+            <SlidersHorizontal className="size-4" />
+            <span className="hidden sm:inline">Customize</span>
+          </Button>
+          <Button
             className="hover:bg-default hidden h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium sm:flex"
             variant="tertiary"
             onPress={reset}
@@ -279,17 +419,14 @@ export function ThemeBuilder() {
             aria-label="View CSS"
             className="sm:hidden"
             variant={showCode ? "primary" : "tertiary"}
-            onPress={() => {
-              setMobileView("preview");
-              setShowCode((visible) => !visible);
-            }}
+            onPress={() => setShowCode(true)}
           >
             <Code2 className="size-4" />
           </Button>
           <Button
             className="hidden sm:flex"
             variant={showCode ? "primary" : "tertiary"}
-            onPress={() => setShowCode((visible) => !visible)}
+            onPress={() => setShowCode(true)}
           >
             <Code2 className="size-4" />
             View CSS
@@ -297,126 +434,8 @@ export function ThemeBuilder() {
         </div>
       </header>
 
-      <div className="border-border bg-background border-b p-2 lg:hidden">
-        <Segment
-          aria-label="Theme builder view"
-          className="w-full"
-          selectedKey={mobileView}
-          onSelectionChange={(key) =>
-            setMobileView(key as "preview" | "tokens")
-          }
-        >
-          <Segment.Item className="flex-1" id="preview">
-            Preview
-          </Segment.Item>
-          <Segment.Item className="flex-1" id="tokens">
-            Customize
-          </Segment.Item>
-        </Segment>
-      </div>
-
-      <div className="grid min-h-0 flex-1 lg:grid-cols-[23rem_minmax(0,1fr)]">
-        <aside
-          className={cn(
-            "border-border bg-background order-2 border-t lg:order-1 lg:block lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto lg:border-t-0 lg:border-r",
-            mobileView === "preview" && "hidden",
-          )}
-        >
-          <div className="space-y-7 p-4 md:p-5">
-            <section>
-              <div className="mb-4 flex items-start justify-between gap-4">
-                <div>
-                  <h2 className="text-sm font-semibold capitalize">
-                    {mode} colors
-                  </h2>
-                  <p className="text-muted text-xs">
-                    Changes apply to the {mode} selector.
-                  </p>
-                </div>
-                <span className="bg-default text-muted rounded-full px-2 py-1 text-[10px] font-semibold tracking-wide uppercase">
-                  {Object.keys(config.colors[mode]).length} tokens
-                </span>
-              </div>
-              <SearchField
-                aria-label="Find a token"
-                value={query}
-                onChange={setQuery}
-              >
-                <SearchField.Group>
-                  <SearchField.SearchIcon />
-                  <SearchField.Input
-                    className="min-w-0 flex-1"
-                    placeholder="Find a color token…"
-                  />
-                  <SearchField.ClearButton />
-                </SearchField.Group>
-              </SearchField>
-            </section>
-
-            {colorGroups.map((group) => {
-              const tokens = group.tokens.filter((token) =>
-                token.includes(query.trim().toLowerCase()),
-              );
-
-              if (tokens.length === 0) return null;
-
-              return (
-                <section key={group.label}>
-                  <h3 className="text-muted border-border mb-1 border-b pb-2 text-xs font-semibold tracking-wider uppercase">
-                    {group.label}
-                  </h3>
-                  <div className="divide-border divide-y">
-                    {tokens.map((token) => (
-                      <ColorControl
-                        key={token}
-                        mode={mode}
-                        token={token}
-                        value={config.colors[mode][token]}
-                        onChange={(value) => updateColor(token, value)}
-                      />
-                    ))}
-                  </div>
-                </section>
-              );
-            })}
-
-            <section className="space-y-5">
-              <h3 className="text-muted border-border border-b pb-2 text-xs font-semibold tracking-wider uppercase">
-                Shape & type
-              </h3>
-              <RangeControl
-                label="Component radius"
-                value={config.radius}
-                onChange={(value) => updateNumber("radius", value)}
-              />
-              <RangeControl
-                label="Field radius"
-                value={config.fieldRadius}
-                onChange={(value) => updateNumber("fieldRadius", value)}
-              />
-              <div className="space-y-2">
-                <Label>Font family</Label>
-                <FontPicker
-                  customFonts={config.customFonts}
-                  font={config.font}
-                  onChange={(font) =>
-                    setConfig((current) => ({ ...current, font }))
-                  }
-                  onCustomFontsChange={(customFonts) =>
-                    setConfig((current) => ({ ...current, customFonts }))
-                  }
-                />
-              </div>
-            </section>
-          </div>
-        </aside>
-
-        <section
-          className={cn(
-            "bg-surface-secondary relative order-1 min-h-[34rem] overflow-hidden p-3 sm:p-6 lg:order-2 lg:block lg:h-[calc(100dvh-8rem)]",
-            mobileView === "tokens" && "hidden",
-          )}
-        >
+      <div className="min-h-0 flex-1">
+        <section className="bg-surface-secondary relative h-[calc(100dvh-8rem)] min-h-[34rem] overflow-hidden p-3 sm:p-6">
           <div
             data-theme={mode}
             style={previewStyles}
@@ -437,8 +456,23 @@ export function ThemeBuilder() {
           </div>
         </section>
       </div>
+      <ThemeControlsSheet
+        config={config}
+        isOpen={showCustomize}
+        mode={mode}
+        query={query}
+        onColorChange={updateColor}
+        onCustomFontsChange={(customFonts) =>
+          setConfig((current) => ({ ...current, customFonts }))
+        }
+        onFontChange={(font) => setConfig((current) => ({ ...current, font }))}
+        onNumberChange={updateNumber}
+        onOpenChange={setShowCustomize}
+        onQueryChange={setQuery}
+      />
       <ThemeCodeSheet
         code={code}
+        highlightedCode={highlightedCode}
         isOpen={showCode}
         onOpenChange={setShowCode}
       />
