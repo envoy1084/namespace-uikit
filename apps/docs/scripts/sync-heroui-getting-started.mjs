@@ -116,7 +116,7 @@ Namespace UIKit publishes [LLMs.txt](https://llmstxt.org/) files so coding assis
 
 - [/llms.txt](/llms.txt) — A compact index of every documentation page.
 - [/llms-full.txt](/llms-full.txt) — The complete documentation in one file.
-- Per-page Markdown — Every page action menu includes a direct Markdown URL, such as [/llms.mdx/components/button](/llms.mdx/components/button).
+- Per-page Markdown — Every documentation page is also available by adding \`.mdx\` to its URL, such as [/docs/components/button.mdx](/docs/components/button.mdx).
 
 ## ChatGPT and Claude
 
