@@ -11,6 +11,7 @@
   "ignore": [
     "@thenamespace/storybook",
     "@thenamespace/ens-components",
+    "@thenamespace/docs",
     "@thenamespace/demo"
   ],
   "linked": [],
