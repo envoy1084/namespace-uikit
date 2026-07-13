@@ -13,7 +13,7 @@ export function CustomRenderFunction() {
       <Tabs.ListContainer>
         <Tabs.List aria-label="Options">
           <Tabs.Tab
-            href="/docs/react/getting-started"
+            href="/docs/getting-started"
             id="getting-started"
             render={(domProps: any) => <Link {...domProps} />}
           >
@@ -21,7 +21,7 @@ export function CustomRenderFunction() {
             <Tabs.Indicator />
           </Tabs.Tab>
           <Tabs.Tab
-            href="/docs/react/components"
+            href="/docs/components"
             id="components"
             render={(domProps: any) => <Link {...domProps} />}
           >
@@ -29,11 +29,11 @@ export function CustomRenderFunction() {
             <Tabs.Indicator />
           </Tabs.Tab>
           <Tabs.Tab
-            href="/docs/react/releases"
-            id="releases"
+            href="/themes"
+            id="themes"
             render={(domProps: any) => <Link {...domProps} />}
           >
-            Releases
+            Themes
             <Tabs.Indicator />
           </Tabs.Tab>
         </Tabs.List>
