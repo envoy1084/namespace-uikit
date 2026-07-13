@@ -249,7 +249,6 @@ function DataGridInner<T extends object>({
   });
   const activeDragHooks =
     dragAndDropHooks ?? (onReorder ? reorderHooks : undefined);
-  const columnCollectionKey = columns.map((column) => column.id).join(":");
   const hasDragHandle = !!activeDragHooks;
   const hasTree = typeof getChildren === "function";
   const hierarchyColumn =
@@ -555,7 +554,6 @@ function DataGridInner<T extends object>({
   const root = (
     <Table
       ref={rootRef}
-      key={columnCollectionKey}
       className={cn("data-grid", className) ?? "data-grid"}
       data-slot="data-grid"
       data-vertical-align={verticalAlign}
@@ -582,4 +580,12 @@ function DataGridInner<T extends object>({
   );
 }
 
-export const DataGrid: typeof DataGridInner = DataGridInner;
+function DataGridRoot<T extends object>(props: DataGridProps<T>): ReactElement {
+  const columnCollectionKey = props.columns
+    .map((column) => column.id)
+    .join(":");
+
+  return <DataGridInner key={columnCollectionKey} {...props} />;
+}
+
+export const DataGrid: typeof DataGridInner = DataGridRoot;
