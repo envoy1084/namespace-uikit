@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
+      "@": new URL("./src", import.meta.url).pathname,
       "@thenamespace/uikit/styles.css": new URL(
         "../../packages/uikit/src/styles/globals.css",
         import.meta.url,

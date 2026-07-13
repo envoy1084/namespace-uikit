@@ -26,6 +26,9 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "resolveJsonModule": true,
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2022",
