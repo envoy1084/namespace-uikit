@@ -16,7 +16,7 @@ export default function DocumentationLayout({
         children: <GitHubLink />,
         mode: "top",
         title: <NamespaceLogo />,
-        url: "/docs",
+        url: "/docs/getting-started",
       }}
       sidebar={{
         collapsible: false,

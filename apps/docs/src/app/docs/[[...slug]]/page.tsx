@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { createRelativeLink } from "fumadocs-ui/mdx";
 
@@ -19,6 +19,9 @@ export default async function Page({
   params: Promise<{ slug?: string[] }>;
 }) {
   const { slug } = await params;
+
+  if (!slug?.length) redirect("/docs/getting-started");
+
   const page = source.getPage(slug);
 
   if (!page) notFound();
@@ -34,11 +37,7 @@ export default async function Page({
       <section className="flex flex-col gap-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <DocsTitle>{page.data.title}</DocsTitle>
-          <PageActions
-            markdownUrl={
-              slug?.length ? `/llms.mdx/${slug.join("/")}` : "/docs.mdx"
-            }
-          />
+          <PageActions markdownUrl={`/docs/${slug.join("/")}.mdx`} />
         </div>
         <DocsDescription className="text-md mt-2 mb-4">
           {page.data.description}
