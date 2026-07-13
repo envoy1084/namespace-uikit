@@ -168,16 +168,23 @@ export const defaultTheme: ThemeConfig = {
   customFonts: [],
   fieldRadius: 0.6,
   font: {
-    family: '"Inter", ui-sans-serif, system-ui, sans-serif',
-    id: "inter",
-    label: "Inter",
+    family: '"Satoshi", ui-sans-serif, system-ui, sans-serif',
+    id: "satoshi",
+    label: "Satoshi",
     source:
-      "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap",
+      "https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,800,900&display=swap",
   },
   radius: 0.4,
 };
 
 export const fontOptions: ThemeFont[] = [
+  {
+    family: '"Satoshi", ui-sans-serif, system-ui, sans-serif',
+    id: "satoshi",
+    label: "Satoshi",
+    source:
+      "https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,800,900&display=swap",
+  },
   {
     family: '"Inter", ui-sans-serif, system-ui, sans-serif',
     id: "inter",

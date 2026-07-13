@@ -2,38 +2,10 @@
    IMPORTS
    ============================================================================ */
 
+@import "@thenamespace/uikit/styles";
 @import "tailwindcss";
 @import "fumadocs-ui/css/black.css";
 @import "fumadocs-ui/css/preset.css";
-@import "@thenamespace/uikit/styles";
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/Inter-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500 600;
-  font-display: swap;
-  src: url("/fonts/Inter-Medium.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/Inter-Bold.ttf") format("truetype");
-}
-
-:root {
-  --font-inter: "Inter";
-}
 
 @keyframes float-stars {
   0% {
@@ -87,7 +59,7 @@
   --animate-fd-fade-out: custom-fade-out 150ms ease-out forwards;
 
   /* Default font - can be overridden by theme builder */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Satoshi", ui-sans-serif, system-ui, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
