@@ -17,4 +17,22 @@ export default defineConfig({
     "node",
     "promise",
   ],
+  overrides: [
+    {
+      files: ["apps/docs/src/demos/**/*.tsx"],
+      rules: {
+        "eslint/no-shadow": "off",
+        "import/no-unassigned-import": "off",
+        "unicorn/consistent-function-scoping": "off",
+        "unicorn/no-array-sort": "off",
+        "unicorn/prefer-set-has": "off",
+      },
+    },
+    {
+      files: ["apps/docs/scripts/*.mjs"],
+      rules: {
+        "eslint/no-await-in-loop": "off",
+      },
+    },
+  ],
 });
