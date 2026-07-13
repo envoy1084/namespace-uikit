@@ -31,7 +31,7 @@ const config: NextConfig = {
 
     if (cdnUrl) {
       rewrites.push({
-        destination: `${cdnUrl}/assets/:path*`,
+        destination: `${cdnUrl}/:path*`,
         source: "/assets/:path*",
       });
     }

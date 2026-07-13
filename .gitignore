@@ -7,6 +7,10 @@ storybook-static
 tmp
 out-tsc
 
+# Local/CDN assets
+/apps/docs/public/assets/
+/apps/storybook/public/assets/
+
 # dependencies
 node_modules
 

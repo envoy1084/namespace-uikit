@@ -1,2 +1,0 @@
-countries.geojson contains Natural Earth 1:110m administrative boundaries.
-Natural Earth data is in the public domain.

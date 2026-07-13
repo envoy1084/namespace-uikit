@@ -11,7 +11,7 @@ const rewriteAssetUrls = () => ({
     if (!cdnUrl || !/\.[cm]?[jt]sx?$/.test(id) || !code.includes("/assets/"))
       return;
 
-    const assetBase = `${cdnUrl}/assets/`;
+    const assetBase = `${cdnUrl}/`;
 
     return code
       .replaceAll('"/assets/', `"${assetBase}`)

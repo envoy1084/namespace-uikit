@@ -1,6 +1,6 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 
-import { readFileSync as fsReadFileSync } from "fs";
+import { existsSync, readFileSync as fsReadFileSync } from "fs";
 import { dirname, join as pathJoin } from "path";
 import { fileURLToPath } from "url";
 
@@ -12,6 +12,11 @@ const componentStoryGlob = pathJoin(
   storybookConfigDir,
   "../src/components/**/*.stories.@(ts|tsx)",
 );
+const sharedAssetsDir = pathJoin(
+  storybookConfigDir,
+  "../../docs/public/assets",
+);
+const hasAssetCdn = Boolean(process.env.NEXT_PUBLIC_CDN_URL);
 
 export const getStories = () => {
   const isStorybookReadyOnly = process.env.STORYBOOK_READY_ONLY === "true";
@@ -40,10 +45,9 @@ const config: StorybookConfig = {
   },
   staticDirs: [
     pathJoin(storybookConfigDir, "../public"),
-    {
-      from: pathJoin(storybookConfigDir, "../../docs/public/assets"),
-      to: "/assets",
-    },
+    ...(!hasAssetCdn && existsSync(sharedAssetsDir)
+      ? [{ from: sharedAssetsDir, to: "/assets" }]
+      : []),
   ],
   stories: [
     "./welcome.mdx",
