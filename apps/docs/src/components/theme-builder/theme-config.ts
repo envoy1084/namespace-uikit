@@ -1,3 +1,5 @@
+import type { ThemeFont } from "./font-utils";
+
 export const colorGroups = [
   {
     label: "Brand & status",
@@ -12,7 +14,17 @@ export const colorGroups = [
       "warning-foreground",
       "danger",
       "danger-foreground",
+    ],
+  },
+  {
+    label: "Chart palette",
+    tokens: [
       "chart-base",
+      "chart-1",
+      "chart-2",
+      "chart-3",
+      "chart-4",
+      "chart-5",
     ],
   },
   {
@@ -60,8 +72,9 @@ export type ThemeColors = Record<ColorToken, string>;
 
 export type ThemeConfig = {
   colors: Record<ThemeMode, ThemeColors>;
+  customFonts: ThemeFont[];
   fieldRadius: number;
-  fontFamily: string;
+  font: ThemeFont;
   radius: number;
 };
 
@@ -78,6 +91,11 @@ export const defaultTheme: ThemeConfig = {
       background: "oklch(97.02% 0 0)",
       border: "oklch(90% 0 0)",
       "chart-base": sharedColors["chart-base"],
+      "chart-1": "oklch(38.04% 0.195 253.83)",
+      "chart-2": "oklch(50.04% 0.195 253.83)",
+      "chart-3": sharedColors["chart-base"],
+      "chart-4": "oklch(74.04% 0.195 253.83)",
+      "chart-5": "oklch(86.04% 0.195 253.83)",
       danger: "oklch(0.573 0.2249 21.97)",
       "danger-foreground": "oklch(98% 0.02 21.97)",
       default: "oklch(94% 0 0)",
@@ -113,6 +131,11 @@ export const defaultTheme: ThemeConfig = {
       background: "oklch(12% 0 0)",
       border: "oklch(28% 0 0)",
       "chart-base": sharedColors["chart-base"],
+      "chart-1": "oklch(38.04% 0.195 253.83)",
+      "chart-2": "oklch(50.04% 0.195 253.83)",
+      "chart-3": sharedColors["chart-base"],
+      "chart-4": "oklch(74.04% 0.195 253.83)",
+      "chart-5": "oklch(86.04% 0.195 253.83)",
       danger: "oklch(0.7044 0.1872 23.19)",
       "danger-foreground": "oklch(15% 0.05 23.19)",
       default: "oklch(27.4% 0 0)",
@@ -142,18 +165,73 @@ export const defaultTheme: ThemeConfig = {
       "warning-foreground": "oklch(15% 0.0404 86.06)",
     },
   },
+  customFonts: [],
   fieldRadius: 0.6,
-  fontFamily: "var(--font-inter, Inter, ui-sans-serif, system-ui, sans-serif)",
+  font: {
+    family: '"Inter", ui-sans-serif, system-ui, sans-serif',
+    id: "inter",
+    label: "Inter",
+    source:
+      "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap",
+  },
   radius: 0.4,
 };
 
-export const fontOptions = [
+export const fontOptions: ThemeFont[] = [
   {
+    family: '"Inter", ui-sans-serif, system-ui, sans-serif',
+    id: "inter",
     label: "Inter",
-    value: "var(--font-inter, Inter, ui-sans-serif, system-ui, sans-serif)",
+    source:
+      "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap",
   },
-  { label: "System UI", value: "ui-sans-serif, system-ui, sans-serif" },
-  { label: "Geist", value: "Geist, ui-sans-serif, system-ui, sans-serif" },
-  { label: "DM Sans", value: '"DM Sans", ui-sans-serif, sans-serif' },
-  { label: "Manrope", value: "Manrope, ui-sans-serif, sans-serif" },
-] as const;
+  {
+    family: '"Figtree", ui-sans-serif, system-ui, sans-serif',
+    id: "figtree",
+    label: "Figtree",
+    source:
+      "https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&display=swap",
+  },
+  {
+    family: '"Hanken Grotesk", ui-sans-serif, system-ui, sans-serif',
+    id: "hanken-grotesk",
+    label: "Hanken Grotesk",
+    source:
+      "https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&display=swap",
+  },
+  {
+    family: '"Geist", ui-sans-serif, system-ui, sans-serif',
+    id: "geist",
+    label: "Geist",
+    source:
+      "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap",
+  },
+  {
+    family: '"DM Sans", ui-sans-serif, system-ui, sans-serif',
+    id: "dm-sans",
+    label: "DM Sans",
+    source:
+      "https://fonts.googleapis.com/css2?family=DM+Sans:wght@100..900&display=swap",
+  },
+  {
+    family: '"Public Sans", ui-sans-serif, system-ui, sans-serif',
+    id: "public-sans",
+    label: "Public Sans",
+    source:
+      "https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&display=swap",
+  },
+  {
+    family: '"Fraunces", ui-serif, Georgia, serif',
+    id: "fraunces",
+    label: "Fraunces",
+    source:
+      "https://fonts.googleapis.com/css2?family=Fraunces:wght@100..900&display=swap",
+  },
+  {
+    family: '"IBM Plex Mono", ui-monospace, monospace',
+    id: "ibm-plex-mono",
+    label: "IBM Plex Mono",
+    source:
+      "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap",
+  },
+];

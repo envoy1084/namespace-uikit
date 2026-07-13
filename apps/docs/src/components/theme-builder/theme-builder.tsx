@@ -4,20 +4,17 @@ import { useEffect, useMemo, useState } from "react";
 
 import {
   Button,
+  CellColorPicker,
+  CellSlider,
   CodeBlock,
   ColorArea,
   ColorField,
-  ColorPicker,
   ColorSlider,
-  ColorSwatch,
   Input,
   Label,
-  ListBox,
   SearchField,
   Segment,
-  Select,
   Sheet,
-  Slider,
   TextField,
 } from "@thenamespace/uikit";
 import { Code2, Moon, RotateCcw, Sun } from "lucide-react";
@@ -25,10 +22,10 @@ import { Code2, Moon, RotateCcw, Sun } from "lucide-react";
 import { DemoComponents } from "@/components/demo";
 import { cn } from "@/utils/cn";
 
+import { FontPicker } from "./font-picker";
 import {
   colorGroups,
   defaultTheme,
-  fontOptions,
   type ColorToken,
   type ThemeConfig,
   type ThemeMode,
@@ -43,7 +40,9 @@ import {
 const storageKey = "namespace-theme-builder";
 
 function restoreConfig(value: string): ThemeConfig {
-  const saved = JSON.parse(value) as Partial<ThemeConfig>;
+  const saved = JSON.parse(value) as Partial<ThemeConfig> & {
+    fontFamily?: string;
+  };
 
   return {
     ...defaultTheme,
@@ -52,6 +51,12 @@ function restoreConfig(value: string): ThemeConfig {
       dark: { ...defaultTheme.colors.dark, ...saved.colors?.dark },
       light: { ...defaultTheme.colors.light, ...saved.colors?.light },
     },
+    customFonts: saved.customFonts ?? [],
+    font:
+      saved.font ??
+      (saved.fontFamily
+        ? { ...defaultTheme.font, family: saved.fontFamily }
+        : defaultTheme.font),
   };
 }
 
@@ -69,24 +74,21 @@ function ColorControl({
   const id = `${mode}-${token}`;
 
   return (
-    <div className="group grid grid-cols-[1fr_2.5rem_8.5rem] items-center gap-2 py-2">
-      <label className="min-w-0" htmlFor={id}>
-        <span className="block truncate text-sm font-medium capitalize">
-          {token.replaceAll("-", " ")}
-        </span>
-        <span className="text-muted block truncate font-mono text-[11px]">
-          --{token}
-        </span>
-      </label>
-      <ColorPicker
+    <div className="space-y-1 py-2">
+      <CellColorPicker
         aria-label={`Choose ${token} color`}
         value={colorInputValue(value)}
+        variant="secondary"
         onChange={(color) => onChange(colorToOklch(color.toString("hex")))}
       >
-        <ColorPicker.Trigger className="size-10 justify-center p-0">
-          <ColorSwatch size="sm" />
-        </ColorPicker.Trigger>
-        <ColorPicker.Popover className="w-64 gap-3">
+        <CellColorPicker.Trigger>
+          <CellColorPicker.Label className="capitalize">
+            {token.replaceAll("-", " ")}
+          </CellColorPicker.Label>
+          <CellColorPicker.ValueDisplay />
+          <CellColorPicker.Swatch />
+        </CellColorPicker.Trigger>
+        <CellColorPicker.Popover className="w-64 gap-3">
           <ColorArea
             aria-label={`${token} color area`}
             className="max-w-full"
@@ -109,13 +111,13 @@ function ColorControl({
           <ColorField aria-label={`${token} color value`}>
             <ColorField.Group variant="secondary">
               <ColorField.Prefix>
-                <ColorSwatch size="xs" />
+                <CellColorPicker.Swatch className="size-4" size="xs" />
               </ColorField.Prefix>
               <ColorField.Input />
             </ColorField.Group>
           </ColorField>
-        </ColorPicker.Popover>
-      </ColorPicker>
+        </CellColorPicker.Popover>
+      </CellColorPicker>
       <TextField
         aria-label={`${token} CSS value`}
         value={value}
@@ -123,7 +125,7 @@ function ColorControl({
       >
         <Input
           id={id}
-          className="h-10 px-2 font-mono text-[11px]"
+          className="h-8 px-2 font-mono text-[11px]"
           spellCheck={false}
         />
       </TextField>
@@ -393,61 +395,17 @@ export function ThemeBuilder() {
                 onChange={(value) => updateNumber("fieldRadius", value)}
               />
               <div className="space-y-2">
-                <Select
-                  aria-label="Font family"
-                  className="w-full"
-                  selectedKey={
-                    fontOptions.some(
-                      (option) => option.value === config.fontFamily,
-                    )
-                      ? config.fontFamily
-                      : "custom"
+                <Label>Font family</Label>
+                <FontPicker
+                  customFonts={config.customFonts}
+                  font={config.font}
+                  onChange={(font) =>
+                    setConfig((current) => ({ ...current, font }))
                   }
-                  onSelectionChange={(key) => {
-                    if (key !== null && key !== "custom") {
-                      setConfig((current) => ({
-                        ...current,
-                        fontFamily: String(key),
-                      }));
-                    }
-                  }}
-                >
-                  <Label>Font family</Label>
-                  <Select.Trigger>
-                    <Select.Value />
-                    <Select.Indicator />
-                  </Select.Trigger>
-                  <Select.Popover>
-                    <ListBox>
-                      {fontOptions.map((option) => (
-                        <ListBox.Item
-                          key={option.label}
-                          id={option.value}
-                          textValue={option.label}
-                        >
-                          {option.label}
-                          <ListBox.ItemIndicator />
-                        </ListBox.Item>
-                      ))}
-                      <ListBox.Item id="custom" textValue="Custom">
-                        Custom
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                    </ListBox>
-                  </Select.Popover>
-                </Select>
-                <TextField
-                  aria-label="CSS font family value"
-                  value={config.fontFamily}
-                  onChange={(value) =>
-                    setConfig((current) => ({
-                      ...current,
-                      fontFamily: value,
-                    }))
+                  onCustomFontsChange={(customFonts) =>
+                    setConfig((current) => ({ ...current, customFonts }))
                   }
-                >
-                  <Input className="font-mono text-xs" />
-                </TextField>
+                />
               </div>
             </section>
           </div>
@@ -507,25 +465,22 @@ function RangeControl({
   onChange: (value: number) => void;
 }) {
   return (
-    <Slider
+    <CellSlider
       aria-label={label}
       className="w-full"
+      formatOptions={{ maximumFractionDigits: 2, minimumFractionDigits: 2 }}
       maxValue={2}
       minValue={0}
       step={0.05}
       value={value}
       onChange={(nextValue) => onChange(Number(nextValue))}
     >
-      <div className="flex items-center justify-between">
-        <Label>{label}</Label>
-        <span className="bg-default rounded-md px-2 py-1 font-mono text-xs">
-          {value.toFixed(2)}rem
-        </span>
-      </div>
-      <Slider.Track>
-        <Slider.Fill />
-        <Slider.Thumb />
-      </Slider.Track>
-    </Slider>
+      <CellSlider.Track>
+        <CellSlider.Fill />
+        <CellSlider.Thumb />
+        <CellSlider.Label>{label}</CellSlider.Label>
+        <CellSlider.Output>{() => `${value.toFixed(2)}rem`}</CellSlider.Output>
+      </CellSlider.Track>
+    </CellSlider>
   );
 }

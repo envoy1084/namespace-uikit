@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 
 import { converter, formatHex, parse } from "culori";
 
+import { renderFontSource } from "./font-utils";
 import type { ThemeConfig, ThemeMode } from "./theme-config";
 
 const toOklch = converter("oklch");
@@ -40,7 +41,7 @@ export function themeStyles(
   return {
     ...variables,
     "--field-radius": `${config.fieldRadius}rem`,
-    "--font-sans": config.fontFamily,
+    "--font-sans": config.font.family,
     "--radius": `${config.radius}rem`,
   } as CSSProperties;
 }
@@ -52,7 +53,10 @@ function renderVariables(config: ThemeConfig, mode: ThemeMode) {
 }
 
 export function generateThemeCss(config: ThemeConfig) {
+  const fontSource = renderFontSource(config.font);
+
   return `@import "@thenamespace/uikit/styles";
+${fontSource ? `\n${fontSource}\n` : ""}
 
 @layer theme {
   :root,
@@ -61,7 +65,7 @@ export function generateThemeCss(config: ThemeConfig) {
 ${renderVariables(config, "light")}
     --radius: ${config.radius}rem;
     --field-radius: ${config.fieldRadius}rem;
-    --font-sans: ${config.fontFamily};
+    --font-sans: ${config.font.family};
   }
 
   .dark,
@@ -69,7 +73,7 @@ ${renderVariables(config, "light")}
 ${renderVariables(config, "dark")}
     --radius: ${config.radius}rem;
     --field-radius: ${config.fieldRadius}rem;
-    --font-sans: ${config.fontFamily};
+    --font-sans: ${config.font.family};
   }
 }`;
 }
