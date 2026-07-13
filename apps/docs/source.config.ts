@@ -1,3 +1,4 @@
+import { rehypeCodeDefaultOptions } from "fumadocs-core/mdx-plugins";
 import { defineConfig, defineDocs } from "fumadocs-mdx/config";
 
 export const docs = defineDocs({
@@ -7,6 +8,9 @@ export const docs = defineDocs({
 export default defineConfig({
   mdxOptions: {
     providerImportSource: "@/mdx-components",
+    rehypeCodeOptions: {
+      ...rehypeCodeDefaultOptions,
+    },
     remarkNpmOptions: {
       persist: {
         id: "package-manager",
