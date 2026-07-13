@@ -29,6 +29,13 @@ export default defineConfig({
       },
     },
     {
+      files: ["apps/docs/src/demos/**/*.pro-demo.tsx"],
+      rules: {
+        "eslint/no-unused-vars": "off",
+        "oxc/no-map-spread": "off",
+      },
+    },
+    {
       files: ["apps/docs/scripts/*.mjs"],
       rules: {
         "eslint/no-await-in-loop": "off",

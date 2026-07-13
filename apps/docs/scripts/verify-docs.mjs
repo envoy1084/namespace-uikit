@@ -93,10 +93,7 @@ const proComponents = [
   ),
 ];
 const missingProDocs = proComponents.filter((name) => !componentDocs.has(name));
-const proLoaders = await readFile(
-  join(appRoot, "src/generated/pro-story-loaders.ts"),
-  "utf8",
-);
+let proDemoCount = 0;
 
 invariant(
   missingProDocs.length === 0,
@@ -113,10 +110,28 @@ for (const name of proComponents) {
     content.includes(`<ProExamples component="${name}"`),
     `Missing examples for ${name}`,
   );
-  invariant(
-    proLoaders.includes(`pro-stories/${name}`),
-    `Missing rendered Pro story loader: ${name}`,
+
+  const demoDirectory = join(appRoot, "src/demos", name);
+  const demoFiles = (await readdir(demoDirectory)).filter((file) =>
+    file.endsWith(".pro-demo.tsx"),
   );
+
+  invariant(demoFiles.length > 0, `Missing first-class Pro demos: ${name}`);
+
+  for (const demoFile of demoFiles) {
+    const demo = await readFile(join(demoDirectory, demoFile), "utf8");
+
+    invariant(
+      demo.includes("// @demo-title ") &&
+        /^export const Pro[A-Za-z0-9_$]+Example\s*=/m.test(demo),
+      `Incomplete Pro demo: ${name}/${demoFile}`,
+    );
+    invariant(
+      !/storybook|pro-story/i.test(demo),
+      `Storybook reference remains in Pro demo: ${name}/${demoFile}`,
+    );
+  }
+  proDemoCount += demoFiles.length;
 }
 
 const applicationFiles = await files(join(appRoot, "src"));
@@ -157,5 +172,5 @@ for (const route of requiredRoutes) {
 }
 
 console.log(
-  `Verified ${componentExports.length} public component entry points, ${proComponents.length} advanced pages, ${componentDocs.size} component docs, and ${requiredRoutes.length} AI routes.`,
+  `Verified ${componentExports.length} public component entry points, ${proComponents.length} advanced pages with ${proDemoCount} first-class demos, ${componentDocs.size} component docs, and ${requiredRoutes.length} AI routes.`,
 );

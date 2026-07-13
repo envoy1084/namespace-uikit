@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { getDemo } from "@/demos";
-import { proStorySources } from "@/generated/pro-story-sources";
+import { proDemoCatalog } from "@/demos/pro-catalog";
 import { site } from "@/lib/site";
 
 export const textHeaders = {
@@ -49,11 +49,14 @@ async function expandExamples(source: string) {
     /<ProExamples\s+component=["']([^"']+)["'][^>]*\/>/g,
     async (match) => {
       const component = match[1] ?? "";
-      const code = proStorySources[component];
+      const demos = proDemoCatalog[component] ?? [];
+      const demoSources = demos
+        .map((demo) => getDemo(demo.name)?.source)
+        .filter((demoSource): demoSource is string => Boolean(demoSource));
 
-      return code
-        ? `\`\`\`tsx\n${code}\n\`\`\``
-        : `\`\`\`tsx\nimport * as Component from "@thenamespace/uikit/${component}";\n\`\`\``;
+      return demoSources
+        .map((demoSource) => `\`\`\`tsx\n${demoSource}\n\`\`\``)
+        .join("\n\n");
     },
   );
 }

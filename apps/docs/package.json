@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
+    "build:pro-demo-registry": "node scripts/build-pro-demo-registry.mjs",
     "dev": "next dev",
     "format": "oxfmt . --write --no-error-on-unmatched-pattern",
     "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
