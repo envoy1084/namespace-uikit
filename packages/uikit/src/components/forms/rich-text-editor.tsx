@@ -25,7 +25,14 @@ import {
   useState,
 } from "react";
 
-import { Button, cn, Input, Separator, ToggleButton } from "@heroui/react";
+import {
+  Button,
+  cn,
+  Input,
+  Popover,
+  Separator,
+  ToggleButton,
+} from "@heroui/react";
 import { CharacterCount } from "@tiptap/extension-character-count";
 import { Link } from "@tiptap/extension-link";
 import { Placeholder } from "@tiptap/extension-placeholder";
@@ -239,9 +246,22 @@ function slotDiv(slot: string) {
 const RichTextEditorShell: ReturnType<typeof slotDiv> = slotDiv(
   "rich-text-editor__shell",
 );
-const RichTextEditorToolbarGroup: ReturnType<typeof slotDiv> = slotDiv(
-  "rich-text-editor__toolbar-group",
-);
+function RichTextEditorToolbarGroup({
+  children,
+  className,
+  ...props
+}: ComponentPropsWithRef<"div">): ReactElement {
+  return (
+    <div
+      {...props}
+      className={cn("rich-text-editor__toolbar-group", className)}
+      data-slot="rich-text-editor-toolbar-group"
+      role="group"
+    >
+      {children}
+    </div>
+  );
+}
 const RichTextEditorFooter: ReturnType<typeof slotDiv> = slotDiv(
   "rich-text-editor__footer",
 );
@@ -328,6 +348,36 @@ function run(editor: Editor, command: RichTextEditorCommand): boolean {
       return chain.toggleHeading({ level: 3 }).run();
   }
 }
+
+function canRun(editor: Editor, command: RichTextEditorCommand): boolean {
+  const chain = editor.can().chain().focus();
+  switch (command) {
+    case "bold":
+      return chain.toggleBold().run();
+    case "italic":
+      return chain.toggleItalic().run();
+    case "underline":
+      return chain.toggleUnderline().run();
+    case "strike":
+      return chain.toggleStrike().run();
+    case "code":
+      return chain.toggleCode().run();
+    case "blockquote":
+      return chain.toggleBlockquote().run();
+    case "bulletList":
+      return chain.toggleBulletList().run();
+    case "orderedList":
+      return chain.toggleOrderedList().run();
+    case "codeBlock":
+      return chain.toggleCodeBlock().run();
+    case "heading-1":
+      return chain.toggleHeading({ level: 1 }).run();
+    case "heading-2":
+      return chain.toggleHeading({ level: 2 }).run();
+    case "heading-3":
+      return chain.toggleHeading({ level: 3 }).run();
+  }
+}
 const commandLabels: Record<RichTextEditorCommand, string> = {
   blockquote: "Blockquote",
   bold: "Bold",
@@ -356,6 +406,7 @@ function RichTextEditorToggleButton({
   className,
   command,
   isDisabled,
+  tooltip,
   ...props
 }: RichTextEditorToggleButtonProps): ReactElement {
   const { editor, isDisabled: rootDisabled, isReadOnly } = useRichTextEditor();
@@ -363,7 +414,7 @@ function RichTextEditorToggleButton({
     editor,
     selector: ({ editor: current }) => ({
       active: current ? active(current, command) : false,
-      canRun: !!current,
+      canRun: current ? canRun(current, command) : false,
     }),
   });
   const disabled =
@@ -371,7 +422,10 @@ function RichTextEditorToggleButton({
   return (
     <ToggleButton
       {...props}
-      aria-label={ariaLabel ?? commandLabels[command]}
+      aria-label={
+        ariaLabel ??
+        (typeof tooltip === "string" ? tooltip : commandLabels[command])
+      }
       className={(renderProps) =>
         cn(
           "rich-text-editor__toolbar-button",
@@ -408,10 +462,27 @@ function RichTextEditorActionButton({
   children,
   className,
   isDisabled,
+  tooltip,
   ...props
 }: RichTextEditorActionButtonProps): ReactElement {
   const { editor, isDisabled: rootDisabled, isReadOnly } = useRichTextEditor();
-  const disabled = rootDisabled || isReadOnly || isDisabled || !editor;
+  const canInvoke = useEditorState({
+    editor,
+    selector: ({ editor: current }) => {
+      if (!current || current.isDestroyed) return false;
+      if (action === "undo") return true;
+      if (action === "redo") {
+        try {
+          return current.can().chain().focus().redo().run();
+        } catch {
+          return false;
+        }
+      }
+      return !current.isEmpty;
+    },
+  });
+  const disabled =
+    rootDisabled || isReadOnly || isDisabled || !editor || !canInvoke;
   const invoke = () => {
     if (!editor || disabled) return;
     const chain = editor.chain().focus();
@@ -423,7 +494,17 @@ function RichTextEditorActionButton({
   return (
     <Button
       {...props}
-      aria-label={ariaLabel ?? action}
+      aria-label={
+        ariaLabel ??
+        (typeof tooltip === "string"
+          ? tooltip
+          : {
+              clearContent: "Clear content",
+              clearFormatting: "Clear formatting",
+              redo: "Redo",
+              undo: "Undo",
+            }[action])
+      }
       className={(state) =>
         cn(
           "rich-text-editor__toolbar-button",
@@ -645,7 +726,10 @@ function useLinkContext(): LinkContextValue {
     );
   return value;
 }
-function LinkPopoverRoot({ children }: { children: ReactNode }): ReactElement {
+function LinkPopoverRoot({
+  children,
+  ...props
+}: ComponentProps<typeof Popover>): ReactElement {
   const { editor, isDisabled, isReadOnly } = useRichTextEditor();
   const [href, setHref] = useState("");
   const disabled = isDisabled || isReadOnly || !editor;
@@ -671,7 +755,7 @@ function LinkPopoverRoot({ children }: { children: ReactNode }): ReactElement {
   }, [disabled, editor]);
   return (
     <LinkContext value={{ apply, href, isDisabled: disabled, setHref, unset }}>
-      {children}
+      <Popover {...props}>{children}</Popover>
     </LinkContext>
   );
 }
@@ -683,9 +767,10 @@ function LinkPopoverTrigger({
   const { editor } = useRichTextEditor();
   const { isDisabled, setHref } = useLinkContext();
   return (
-    <span className="rich-text-editor__link-popover-trigger">
+    <Popover.Trigger>
       <Button
         {...props}
+        aria-label={props["aria-label"] ?? "Link"}
         className={(state) =>
           cn(
             "rich-text-editor__toolbar-button",
@@ -705,22 +790,30 @@ function LinkPopoverTrigger({
       >
         {children ?? "Link"}
       </Button>
-    </span>
+    </Popover.Trigger>
   );
 }
 function LinkPopoverContent({
   children,
   className,
   ...props
-}: ComponentPropsWithRef<"div">): ReactElement {
+}: ComponentProps<typeof Popover.Content>): ReactElement {
   return (
-    <div
-      {...props}
-      className={cn("rich-text-editor__link-popover", className)}
+    <Popover.Content
+      className={(state) =>
+        cn(
+          "rich-text-editor__link-popover",
+          typeof className === "function" ? className(state) : className,
+        ) ?? "rich-text-editor__link-popover"
+      }
       data-slot="rich-text-editor-link-popover"
+      {...props}
     >
-      <div className="rich-text-editor__link-popover-content">{children}</div>
-    </div>
+      <Popover.Arrow />
+      <Popover.Dialog className="rich-text-editor__link-popover-content">
+        {children}
+      </Popover.Dialog>
+    </Popover.Content>
   );
 }
 function LinkPopoverInput(props: ComponentProps<typeof Input>): ReactElement {
