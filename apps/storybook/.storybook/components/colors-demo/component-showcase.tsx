@@ -1,6 +1,5 @@
 import React from "react";
 
-import { Icon } from "@iconify/react";
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {
   Alert,
@@ -30,6 +29,7 @@ import {
   Tabs,
 } from "@thenamespace/uikit";
 
+import { Icon } from "../../../src/icon";
 import { NamespaceLogo } from "../namespace-logo";
 
 export function ComponentShowcase() {

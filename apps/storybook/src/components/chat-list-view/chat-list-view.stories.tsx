@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Comment } from "@gravity-ui/icons";
+import { Comment01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 import { ChatListView } from "./index";
 
@@ -45,7 +46,7 @@ function DefaultDemo() {
           >
             <ChatListView.ItemContent>
               <ChatListView.Icon>
-                <Comment />
+                <HugeiconsIcon icon={Comment01Icon} />
               </ChatListView.Icon>
               <ChatListView.Text>
                 <ChatListView.Title>{chat.title}</ChatListView.Title>
@@ -68,7 +69,7 @@ function CompactDemo() {
           <ChatListView.Item id={chat.id} textValue={chat.title}>
             <ChatListView.ItemContent>
               <ChatListView.Icon>
-                <Comment />
+                <HugeiconsIcon icon={Comment01Icon} />
               </ChatListView.Icon>
               <ChatListView.Text>
                 <ChatListView.Title>{chat.title}</ChatListView.Title>

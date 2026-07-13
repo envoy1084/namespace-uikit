@@ -150,18 +150,12 @@ importers:
 
   apps/storybook:
     dependencies:
-      '@gravity-ui/icons':
-        specifier: 2.16.0
-        version: 2.16.0(react@19.2.7)
       '@hugeicons/core-free-icons':
         specifier: ^4.2.2
         version: 4.2.2
       '@hugeicons/react':
         specifier: ^1.1.9
         version: 1.1.9(react@19.2.7)
-      '@iconify/react':
-        specifier: 6.0.2
-        version: 6.0.2(react@19.2.7)
       '@internationalized/date':
         specifier: 3.12.2
         version: 3.12.2
@@ -1208,14 +1202,6 @@ packages:
   '@formatjs/intl-localematcher@0.6.2':
     resolution: {integrity: sha512-XOMO2Hupl0wdd172Y06h6kLpBz6Dv+J4okPLl4LPtzbr8f66WbIoy4ev98EBuZ6ZK4h5ydTN6XneT4QVpD7cdA==}
 
-  '@gravity-ui/icons@2.16.0':
-    resolution: {integrity: sha512-AMjPSO+7yPpvcCa9k+ZFNOZ+8cmIauLyRMswhoyfQ7SeoJOVzsAa2OP/B+Dd+AZRvzTaeJha4m2iEk93JvAklA==}
-    peerDependencies:
-      react: '*'
-    peerDependenciesMeta:
-      react:
-        optional: true
-
   '@heroui/react@3.2.1':
     resolution: {integrity: sha512-dEwOFHd2I199dm6nXynK96xeqeQZH2zcFlY8BaoqAjNNvVg24X4/dFua8GuayD2KS6FNX65/2BQhlxiV3ByFrQ==}
     peerDependencies:
@@ -1235,11 +1221,6 @@ packages:
     resolution: {integrity: sha512-O+lWSWjbijoAvMCxn4K2bQWCGN5+mP1y5j+X99j23mXMj+s0X25fs71T6t9YJLaBodwmZdaewD27dzS/PiboQw==}
     peerDependencies:
       react: '>=16.0.0'
-
-  '@iconify/react@6.0.2':
-    resolution: {integrity: sha512-SMmC2sactfpJD427WJEDN6PMyznTFMhByK9yLW0gOTtnjzzbsi/Ke/XqsumsavFPwNiXs8jSiYeZTmLCLwO+Fg==}
-    peerDependencies:
-      react: '>=16'
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -6366,12 +6347,6 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@gravity-ui/icons@2.16.0(react@19.2.7)':
-    dependencies:
-      tslib: 2.8.1
-    optionalDependencies:
-      react: 19.2.7
-
   '@heroui/react@3.2.1(@react-spectrum/provider@3.11.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(tailwindcss@4.3.2)':
     dependencies:
       '@heroui/styles': 3.2.1(tailwind-merge@3.4.0)(tailwindcss@4.3.2)
@@ -6407,11 +6382,6 @@ snapshots:
 
   '@hugeicons/react@1.1.9(react@19.2.7)':
     dependencies:
-      react: 19.2.7
-
-  '@iconify/react@6.0.2(react@19.2.7)':
-    dependencies:
-      '@iconify/types': 2.0.0
       react: 19.2.7
 
   '@iconify/types@2.0.0': {}

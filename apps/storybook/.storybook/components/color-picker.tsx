@@ -6,7 +6,12 @@ import type {
 
 import React, { useState } from "react";
 
-import { ChevronLeft, ChevronRight, Shuffle } from "@gravity-ui/icons";
+import {
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+  ShuffleIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Button,
   InputGroup,
@@ -444,7 +449,7 @@ export default function ColorPicker({
                         variant="ghost"
                         onPress={() => navigateSwatches("left")}
                       >
-                        <ChevronLeft className="size-4" />
+                        <HugeiconsIcon icon={ArrowLeft01Icon} size={16} />
                       </Button>
                       {/* Carousel container */}
                       <div className="relative flex-1 overflow-hidden">
@@ -486,7 +491,7 @@ export default function ColorPicker({
                         variant="ghost"
                         onPress={() => navigateSwatches("right")}
                       >
-                        <ChevronRight className="size-4" />
+                        <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
                       </Button>
                     </div>
                   ) : null}
@@ -513,7 +518,7 @@ export default function ColorPicker({
                         variant="tertiary"
                         onPress={handleShuffle}
                       >
-                        <Shuffle className="size-4" />
+                        <HugeiconsIcon icon={ShuffleIcon} size={16} />
                       </Button>
                     ) : null}
                   </div>
