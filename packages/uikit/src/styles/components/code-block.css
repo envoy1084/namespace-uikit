@@ -33,6 +33,19 @@
   .code-block__code .line {
     padding-inline: 0 !important;
   }
+  .code-block__code[data-line-numbers] code {
+    counter-reset: code-line;
+  }
+  .code-block__code[data-line-numbers] .line::before {
+    display: inline-block;
+    width: 2rem;
+    margin-right: 1rem;
+    color: var(--muted);
+    content: counter(code-line);
+    counter-increment: code-line;
+    text-align: right;
+    user-select: none;
+  }
   .code-block__code .shiki,
   .code-block__code .shiki span {
     color: var(--shiki-light, var(--surface-secondary-foreground));

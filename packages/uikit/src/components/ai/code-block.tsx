@@ -52,6 +52,7 @@ export interface CodeBlockCodeProps extends ComponentPropsWithRef<"div"> {
   code: string;
   darkTheme?: string;
   language?: string;
+  showLineNumbers?: boolean;
   theme?: string;
 }
 export function CodeBlockCode({
@@ -59,6 +60,7 @@ export function CodeBlockCode({
   code,
   darkTheme,
   language = "plaintext",
+  showLineNumbers = false,
   theme,
   ...props
 }: CodeBlockCodeProps): ReactElement {
@@ -101,11 +103,17 @@ export function CodeBlockCode({
     <div
       className={codeClass}
       dangerouslySetInnerHTML={{ __html: highlighted.html }}
+      data-line-numbers={showLineNumbers || undefined}
       data-slot="code-block-code"
       {...props}
     />
   ) : (
-    <div className={codeClass} data-slot="code-block-code" {...props}>
+    <div
+      className={codeClass}
+      data-line-numbers={showLineNumbers || undefined}
+      data-slot="code-block-code"
+      {...props}
+    >
       <pre>
         <code>{code}</code>
       </pre>
