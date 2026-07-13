@@ -276,15 +276,3 @@ function CustomButton({ variant, className, ...props }) {
 <CustomButton variant="primary-cta">Get Started</CustomButton>
 <CustomButton variant="secondary-cta">Learn More</CustomButton>
 ```
-
-## Comparison with Namespace UIKit v2
-
-| Aspect                       | Namespace UIKit v2                   | Namespace UIKit                           |
-| ---------------------------- | ------------------------------------ | ----------------------------------------- |
-| **Animations**               | Framer Motion                        | CSS + GPU accelerated                     |
-| **Component Pattern**        | Single components with many props    | Compound components                       |
-| **Variants**                 | Visual-based (solid, bordered, flat) | Semantic (primary, secondary, tertiary)   |
-| **Styling**                  | Tailwind v4 partially supported      | Tailwind v4 fully supported               |
-| **Accessibility**            | Excellent (React Aria powered)       | Excellent (React Aria powered)            |
-| **Bundle Size**              | Larger (Bundle)                      | Smaller (tree-shakeable)                  |
-| **Customization Difficulty** | Medium (Props-based)                 | Simple (Compound components + Native CSS) |
