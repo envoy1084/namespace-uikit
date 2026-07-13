@@ -7,7 +7,7 @@ import type {
   SortDescriptor,
 } from "react-aria-components";
 
-import type { ReactElement, ReactNode } from "react";
+import type { CSSProperties, ReactElement, ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
@@ -253,6 +253,12 @@ function DataGridInner<T extends object>({
   const columnStateKey = columns
     .map((column) => `${column.id}:${column.isHidden ? "hidden" : "visible"}`)
     .join("|");
+  const columnVisibilityStyles = Object.fromEntries(
+    columns.map((column, index) => [
+      `--data-grid-column-${index}-display`,
+      column.isHidden ? "none" : "table-cell",
+    ]),
+  ) as CSSProperties;
   const hasDragHandle = !!activeDragHooks;
   const hasTree = typeof getChildren === "function";
   const hierarchyColumn =
@@ -344,7 +350,7 @@ function DataGridInner<T extends object>({
             <SelectionCheckbox />
           </Table.Cell>
         ) : null}
-        {columns.map((column) => {
+        {columns.map((column, index) => {
           const content = column.cell
             ? column.cell(item, column)
             : column.accessorKey
@@ -359,17 +365,15 @@ function DataGridInner<T extends object>({
           const tree = hasTree && column.id === hierarchyColumn;
           return (
             <Table.Cell
-              {...(column.cellClassName || column.isHidden
-                ? {
-                    className: cn(
-                      column.cellClassName,
-                      column.isHidden && "hidden",
-                    )!,
-                  }
+              {...(column.cellClassName
+                ? { className: column.cellClassName }
                 : {})}
               {...(column.align ? { "data-align": column.align } : {})}
               {...(column.pinned ? { "data-pinned": column.pinned } : {})}
-              {...(pinnedStyle ? { style: pinnedStyle } : {})}
+              style={{
+                ...pinnedStyle,
+                display: `var(--data-grid-column-${index}-display, table-cell)`,
+              }}
               key={column.id}
             >
               {tree
@@ -464,7 +468,7 @@ function DataGridInner<T extends object>({
             {selectionMode === "multiple" ? <SelectionCheckbox all /> : null}
           </Table.Column>
         ) : null}
-        {columns.map((column) => {
+        {columns.map((column, index) => {
           const pinnedStyle =
             column.pinned === "start"
               ? { insetInlineStart: startOffsets.get(column.id) }
@@ -476,13 +480,8 @@ function DataGridInner<T extends object>({
               {...(column.allowsSorting === undefined
                 ? {}
                 : { allowsSorting: column.allowsSorting })}
-              {...(column.headerClassName || column.isHidden
-                ? {
-                    className: cn(
-                      column.headerClassName,
-                      column.isHidden && "hidden",
-                    )!,
-                  }
+              {...(column.headerClassName
+                ? { className: column.headerClassName }
                 : {})}
               {...(column.align ? { "data-align": column.align } : {})}
               {...(column.pinned ? { "data-pinned": column.pinned } : {})}
@@ -495,7 +494,10 @@ function DataGridInner<T extends object>({
               {...(column.minWidth === undefined
                 ? {}
                 : { minWidth: column.minWidth })}
-              {...(pinnedStyle ? { style: pinnedStyle } : {})}
+              style={{
+                ...pinnedStyle,
+                display: `var(--data-grid-column-${index}-display, table-cell)`,
+              }}
               {...(column.width === undefined ? {} : { width: column.width })}
               id={column.id}
               key={column.id}
@@ -571,6 +573,7 @@ function DataGridInner<T extends object>({
       className={cn("data-grid", className) ?? "data-grid"}
       data-slot="data-grid"
       data-vertical-align={verticalAlign}
+      style={columnVisibilityStyles}
       variant={variant}
     >
       <Table.ScrollContainer
