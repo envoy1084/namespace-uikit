@@ -81,7 +81,7 @@ for (const [component, demos] of Object.entries(catalog)) {
   for (const demo of demos) {
     content = content.replace(
       new RegExp(
-        `\\n### ${escapeRegExp(demo.title)}\\n\\n<!-- PRO_DEMO ${escapeRegExp(demo.name)} -->\\n<ComponentPreview name="${escapeRegExp(demo.name)}" \\/>\\n?`,
+        `\\n### ${escapeRegExp(demo.title)}\\n\\n(?:<!-- PRO_DEMO ${escapeRegExp(demo.name)} -->|\\{/\\* PRO_DEMO ${escapeRegExp(demo.name)} \\*/\\})\\n<ComponentPreview name="${escapeRegExp(demo.name)}" \\/>\\n?`,
         "g",
       ),
       "\n",
@@ -91,10 +91,14 @@ for (const [component, demos] of Object.entries(catalog)) {
     /\n?<!-- PRO_DEMO [^>]+ -->\n<ComponentPreview name="[^"]+" \/>\n?/g,
     "\n",
   );
+  content = content.replace(
+    /\n?\{\/\* PRO_DEMO [^*]+ \*\/\}\n<ComponentPreview name="[^"]+" \/>\n?/g,
+    "\n",
+  );
 
   const pending = [];
   for (const demo of demos) {
-    const preview = `<!-- PRO_DEMO ${demo.name} -->\n<ComponentPreview name="${demo.name}" />`;
+    const preview = `{/* PRO_DEMO ${demo.name} */}\n<ComponentPreview name="${demo.name}" />`;
     const matchingHeading = [...content.matchAll(/^(#{2,3}) (.+)$/gm)].find(
       (match) =>
         demo.title !== "Default" &&
