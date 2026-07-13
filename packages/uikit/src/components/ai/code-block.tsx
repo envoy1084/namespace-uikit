@@ -9,6 +9,25 @@ import { codeToHtml } from "shiki";
 const Context = createContext(true);
 const part = (base: string, className: unknown): string =>
   cn(base, typeof className === "string" ? className : undefined) ?? base;
+
+export async function highlightCode(
+  code: string,
+  {
+    darkTheme = "github-dark",
+    language = "plaintext",
+    theme = "github-light",
+  }: {
+    darkTheme?: string;
+    language?: string;
+    theme?: string;
+  } = {},
+): Promise<string> {
+  return codeToHtml(code, {
+    defaultColor: false,
+    lang: language,
+    themes: { dark: darkTheme, light: theme },
+  });
+}
 export interface CodeBlockRootProps extends ComponentPropsWithRef<"div"> {
   children: ReactNode;
 }
@@ -51,6 +70,7 @@ export function CodeBlockHeader({
 export interface CodeBlockCodeProps extends ComponentPropsWithRef<"div"> {
   code: string;
   darkTheme?: string;
+  highlightedHtml?: string;
   language?: string;
   showLineNumbers?: boolean;
   theme?: string;
@@ -59,6 +79,7 @@ export function CodeBlockCode({
   className,
   code,
   darkTheme,
+  highlightedHtml,
   language = "plaintext",
   showLineNumbers = false,
   theme,
@@ -71,8 +92,13 @@ export function CodeBlockCode({
   const [highlighted, setHighlighted] = useState<{
     html: string;
     key: string;
-  } | null>(null);
+  } | null>(highlightedHtml ? { html: highlightedHtml, key } : null);
   useEffect(() => {
+    if (highlightedHtml) {
+      setHighlighted({ html: highlightedHtml, key });
+      return;
+    }
+
     let cancelled = false;
     async function highlight() {
       if (!code) {
@@ -82,10 +108,10 @@ export function CodeBlockCode({
       }
       try {
         const html = dark
-          ? await codeToHtml(code, {
-              defaultColor: false,
-              lang: language,
-              themes: { dark, light },
+          ? await highlightCode(code, {
+              darkTheme: dark,
+              language,
+              theme: light,
             })
           : await codeToHtml(code, { lang: language, theme: light });
         if (!cancelled) setHighlighted({ html, key });
@@ -97,7 +123,7 @@ export function CodeBlockCode({
     return () => {
       cancelled = true;
     };
-  }, [code, dark, key, language, light]);
+  }, [code, dark, highlightedHtml, key, language, light]);
   const codeClass = part("code-block__code", className);
   return highlighted?.key === key ? (
     <div
