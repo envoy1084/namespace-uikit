@@ -210,7 +210,8 @@ export const WithCustomButtons: Story = {
   render: () => (
     <div className="flex max-w-xl flex-col items-center gap-5">
       <p className="text-muted text-sm">
-        Using HeroUI Button (isIconOnly) as custom increment/decrement buttons.
+        Using Namespace Button (isIconOnly) as custom increment/decrement
+        buttons.
       </p>
       <div className="grid grid-cols-4 gap-5">
         {[false, true].flatMap((withoutBackground) =>

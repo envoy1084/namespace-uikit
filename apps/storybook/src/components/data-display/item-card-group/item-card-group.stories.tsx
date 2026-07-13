@@ -261,7 +261,7 @@ export const GridThreeColumns: Story = {
 const accounts = [
   {
     connected: true,
-    description: "junior@heroui.com",
+    description: "junior@namespace.ninja",
     icon: "logos:google-icon",
     name: "Google",
   },

@@ -61,7 +61,7 @@ function Brand({ mobile = false }: { mobile?: boolean }) {
         className="text-foreground text-sm font-semibold"
         data-sidebar={mobile ? undefined : "label"}
       >
-        HeroUI
+        Namespace
       </span>
     </div>
   );
@@ -225,10 +225,7 @@ function AccountMenu({ image = false }: { image?: boolean }) {
       <Button isIconOnly aria-label="Account menu" variant="ghost">
         <Avatar className="size-6" color="success" variant="soft">
           {image ? (
-            <Avatar.Image
-              alt="User avatar"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg"
-            />
+            <Avatar.Image alt="User avatar" src="/assets/avatars/purple.jpg" />
           ) : null}
           <Avatar.Fallback className="text-xs font-semibold">
             JG

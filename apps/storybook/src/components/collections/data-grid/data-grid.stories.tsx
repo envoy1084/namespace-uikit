@@ -1066,16 +1066,6 @@ const productBrands = [
   "SwiftEdge",
   "NeonPulse",
 ] as const;
-const imageKinds = [
-  "dashboard",
-  "game",
-  "furniture",
-  "album",
-  "movie",
-  "sports",
-  "fashion",
-  "book",
-] as const;
 const skuPrefixes = [
   "AUD",
   "KEY",
@@ -1098,7 +1088,6 @@ const products: Product[] = Array.from({ length: 1000 }, (_, index) => {
     productPrefixes[Math.floor(random(1) * productPrefixes.length)]!;
   const kind = productKinds[Math.floor(random(2) * productKinds.length)]!;
   const brand = productBrands[Math.floor(random(3) * productBrands.length)]!;
-  const imageKind = imageKinds[index % imageKinds.length]!;
   const skuPrefix = skuPrefixes[Math.floor(random(4) * skuPrefixes.length)]!;
   const availability = random(5);
   const status =
@@ -1111,7 +1100,7 @@ const products: Product[] = Array.from({ length: 1000 }, (_, index) => {
   return {
     cost: Math.round(price * (0.3 + random(7) * 0.4)),
     id: index + 1,
-    image: `https://img.heroui.chat/image/${imageKind}?w=80&h=80&u=${index + 1}`,
+    image: `/assets/generated/avatar-${(index % 26) + 1}.jpg`,
     name: `${brand} ${prefix} ${kind}`,
     price,
     rating: Math.round((2.5 + random(10) * 2.5) * 10) / 10,
@@ -1501,7 +1490,7 @@ const workers: Worker[] = Array.from({ length: 100 }, (_, index) => {
   const statusIndex =
     (index * 3 + Math.floor(random(5) * 7)) % workerStatuses.length;
   return {
-    avatar: `https://img.heroui.chat/image/avatar?w=200&h=200&u=${index + 1}`,
+    avatar: `/assets/generated/avatar-${(index % 26) + 1}.jpg`,
     country: countries[Math.floor(random(3) * countries.length)]!,
     email: `${name.toLowerCase().replace(/\s+/g, ".")}@example.com`,
     externalWorkerId: externalId(index * 17 + 5),
@@ -1560,8 +1549,7 @@ function CountryCell({ country }: { country: Country }) {
         alt={country.name}
         className="shrink-0 rounded-sm object-cover"
         height={14}
-        src={`https://flagcdn.com/h20/${country.code}.png`}
-        srcSet={`https://flagcdn.com/h40/${country.code}.png 2x, https://flagcdn.com/h60/${country.code}.png 3x`}
+        src={`/assets/flags/${country.code}.png`}
         width={20}
       />
       <span className="text-sm">{country.name}</span>
@@ -2561,7 +2549,7 @@ type BulkEmployee = {
 
 const bulkEmployees: BulkEmployee[] = [
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=20",
+    avatar: "/assets/generated/avatar-20.jpg",
     department: "HR",
     email: "elena.rodriguez@company.com",
     id: 1,
@@ -2570,7 +2558,7 @@ const bulkEmployees: BulkEmployee[] = [
     status: "Active",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=21",
+    avatar: "/assets/generated/avatar-21.jpg",
     department: "Design",
     email: "marcus.chen@company.com",
     id: 2,
@@ -2579,7 +2567,7 @@ const bulkEmployees: BulkEmployee[] = [
     status: "Pending",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=22",
+    avatar: "/assets/generated/avatar-22.jpg",
     department: "HR",
     email: "priya.patel@company.com",
     id: 3,
@@ -2588,7 +2576,7 @@ const bulkEmployees: BulkEmployee[] = [
     status: "Active",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=23",
+    avatar: "/assets/generated/avatar-23.jpg",
     department: "Finance",
     email: "james.o.brien@company.com",
     id: 4,
@@ -2597,7 +2585,7 @@ const bulkEmployees: BulkEmployee[] = [
     status: "Active",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=24",
+    avatar: "/assets/generated/avatar-24.jpg",
     department: "Product",
     email: "yuki.tanaka@company.com",
     id: 5,
@@ -2606,7 +2594,7 @@ const bulkEmployees: BulkEmployee[] = [
     status: "Inactive",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=25",
+    avatar: "/assets/generated/avatar-25.jpg",
     department: "Support",
     email: "amara.okafor@company.com",
     id: 6,
@@ -2615,7 +2603,7 @@ const bulkEmployees: BulkEmployee[] = [
     status: "Pending",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=26",
+    avatar: "/assets/generated/avatar-26.jpg",
     department: "Engineering",
     email: "luca.bianchi@company.com",
     id: 7,

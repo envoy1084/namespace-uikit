@@ -94,8 +94,7 @@ function renderExpandableRow(item: ExpandableRow) {
 const users: User[] = [
   {
     email: "kate@acme.com",
-    image_url:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+    image_url: "/assets/avatars/red.jpg",
     id: 4586932,
     name: "Kate Moore",
     role: "Chief Executive Officer",
@@ -103,8 +102,7 @@ const users: User[] = [
   },
   {
     email: "john@acme.com",
-    image_url:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+    image_url: "/assets/avatars/green.jpg",
     id: 5273849,
     name: "John Smith",
     role: "Chief Technology Officer",
@@ -112,8 +110,7 @@ const users: User[] = [
   },
   {
     email: "sara@acme.com",
-    image_url:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+    image_url: "/assets/avatars/blue.jpg",
     id: 7492836,
     name: "Sara Johnson",
     role: "Chief Marketing Officer",
@@ -121,8 +118,7 @@ const users: User[] = [
   },
   {
     email: "michael@acme.com",
-    image_url:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+    image_url: "/assets/avatars/purple.jpg",
     id: 8293746,
     name: "Michael Brown",
     role: "Chief Financial Officer",
@@ -130,8 +126,7 @@ const users: User[] = [
   },
   {
     email: "emily@acme.com",
-    image_url:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+    image_url: "/assets/avatars/orange.jpg",
     id: 1234567,
     name: "Emily Davis",
     role: "Product Manager",
@@ -139,8 +134,7 @@ const users: User[] = [
   },
   {
     email: "davis@acme.com",
-    image_url:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
+    image_url: "/assets/avatars/black.jpg",
     id: 9876543,
     name: "Davis Wilson",
     role: "Lead Designer",
@@ -148,8 +142,7 @@ const users: User[] = [
   },
   {
     email: "olivia@acme.com",
-    image_url:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+    image_url: "/assets/avatars/red.jpg",
     id: 3456789,
     name: "Olivia Martinez",
     role: "Frontend Engineer",
@@ -157,8 +150,7 @@ const users: User[] = [
   },
   {
     email: "james@acme.com",
-    image_url:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+    image_url: "/assets/avatars/green.jpg",
     id: 4567890,
     name: "James Taylor",
     role: "Backend Engineer",
@@ -166,8 +158,7 @@ const users: User[] = [
   },
   {
     email: "sophia@acme.com",
-    image_url:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+    image_url: "/assets/avatars/blue.jpg",
     id: 5678901,
     name: "Sophia Anderson",
     role: "QA Engineer",
@@ -175,8 +166,7 @@ const users: User[] = [
   },
   {
     email: "liam@acme.com",
-    image_url:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+    image_url: "/assets/avatars/purple.jpg",
     id: 6789012,
     name: "Liam Thomas",
     role: "DevOps Engineer",
@@ -184,8 +174,7 @@ const users: User[] = [
   },
   {
     email: "ava@acme.com",
-    image_url:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+    image_url: "/assets/avatars/orange.jpg",
     id: 7890123,
     name: "Ava Jackson",
     role: "Data Analyst",
@@ -193,8 +182,7 @@ const users: User[] = [
   },
   {
     email: "noah@acme.com",
-    image_url:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
+    image_url: "/assets/avatars/black.jpg",
     id: 8901234,
     name: "Noah White",
     role: "Security Engineer",
@@ -868,7 +856,7 @@ export const Virtualization: Story = {
         generatedUsers.push({
           id: i + 1,
           name,
-          image_url: `https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg`,
+          image_url: `/assets/avatars/red.jpg`,
           role: roles[i % roles.length],
           status: statuses[i % statuses.length],
           email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@acme.com`,

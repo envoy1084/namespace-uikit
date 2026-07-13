@@ -12,8 +12,7 @@ import {
   ChatMessage,
   PromptInput,
 } from "./index";
-const image =
-  "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/egg.webp";
+const image = "/assets/images/egg.webp";
 const meta = {
   parameters: { layout: "padded" },
   tags: ["autodocs"],

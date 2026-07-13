@@ -37,9 +37,9 @@ const LoremContent = () => (
 
 const LoremCards = () => {
   const images = [
-    "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/robot1.jpeg",
-    "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/avocado.jpeg",
-    "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/oranges.jpeg",
+    "/assets/docs/robot1.jpeg",
+    "/assets/docs/avocado.jpeg",
+    "/assets/docs/oranges.jpeg",
   ];
 
   const getRandomImage = (idx: number) => {

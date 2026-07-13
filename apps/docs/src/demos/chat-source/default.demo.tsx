@@ -4,7 +4,7 @@
 import { ChatMessage, ChatSource } from "@thenamespace/uikit";
 
 const favicon = (url: string) =>
-  `https://www.google.com/s2/favicons?domain_url=${encodeURIComponent(url)}&sz=64`;
+  `/assets/favicons/${new URL(url).hostname.replaceAll(".", "-")}.png`;
 
 const Assistant = ({ children }: { children: React.ReactNode }) => (
   <ChatMessage.Assistant>

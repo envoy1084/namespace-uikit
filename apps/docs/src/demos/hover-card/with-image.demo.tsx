@@ -10,7 +10,7 @@ function ImageCard() {
       <img
         alt="Neo Brutalism design"
         className="h-36 w-full rounded-t-2xl object-cover"
-        src="/assets/namespace-pro-landing/chat-message.webp"
+        src="/assets/hover-card/chat-message.webp"
       />
       <div className="p-4">
         <p className="text-sm font-semibold">Neo Brutalism</p>

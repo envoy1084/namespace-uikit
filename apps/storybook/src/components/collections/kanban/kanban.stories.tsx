@@ -57,7 +57,7 @@ const people: Record<string, string> = {
   Sam: "purple",
 };
 const avatar = (name: string) =>
-  `https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/${people[name] ?? "blue"}.jpg`;
+  `/assets/avatars/${people[name] ?? "blue"}.jpg`;
 
 interface Ticket {
   assignees?: { avatar: string; name: string }[];
@@ -76,12 +76,12 @@ interface Ticket {
 }
 
 const ticketAvatars = {
-  Anna: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
-  Dave: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
-  Lena: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
-  Mike: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/white.jpg",
-  Nina: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
-  Omar: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+  Anna: "/assets/avatars/red.jpg",
+  Dave: "/assets/avatars/orange.jpg",
+  Lena: "/assets/avatars/green.jpg",
+  Mike: "/assets/avatars/white.jpg",
+  Nina: "/assets/avatars/black.jpg",
+  Omar: "/assets/avatars/red.jpg",
 } as const;
 const assignee = (name: keyof typeof ticketAvatars) => ({
   avatar: ticketAvatars[name],
@@ -94,8 +94,7 @@ const tickets: Ticket[] = [
     comments: 8,
     description: "Integrate Third-Party API Services",
     id: "1",
-    image:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/cherries.jpeg",
+    image: "/assets/docs/cherries.jpeg",
     progress: 0,
     status: "Open",
     tags: [
@@ -119,8 +118,7 @@ const tickets: Ticket[] = [
     comments: 12,
     description: "Create reusable component library for the design system",
     id: "3",
-    image:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/oranges.jpeg",
+    image: "/assets/docs/oranges.jpeg",
     progress: 45,
     status: "In Progress",
     tags: [
@@ -158,8 +156,7 @@ const tickets: Ticket[] = [
     comments: 2,
     description: "Optimize lazy loading and reduce initial bundle size",
     id: "6",
-    image:
-      "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/robot1.jpeg",
+    image: "/assets/docs/robot1.jpeg",
     progress: 100,
     status: "Closed",
     tags: [{ color: "success", label: "Done" }],
@@ -948,15 +945,12 @@ interface ProjectTask {
   title: string;
 }
 const projectAvatars = {
-  Alex: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
-  Emily:
-    "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/white.jpg",
-  Jake: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
-  Maria:
-    "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
-  Sam: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
-  Sarah:
-    "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+  Alex: "/assets/avatars/orange.jpg",
+  Emily: "/assets/avatars/white.jpg",
+  Jake: "/assets/avatars/black.jpg",
+  Maria: "/assets/avatars/green.jpg",
+  Sam: "/assets/avatars/red.jpg",
+  Sarah: "/assets/avatars/orange.jpg",
 } as const;
 const projectAssignee = (name: keyof typeof projectAvatars) => ({
   avatar: projectAvatars[name],

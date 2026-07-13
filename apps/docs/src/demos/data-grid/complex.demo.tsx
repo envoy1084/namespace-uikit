@@ -224,7 +224,7 @@ const workers: Worker[] = Array.from({ length: 100 }, (_, index) => {
   const statusIndex =
     (index * 3 + Math.floor(random(5) * 7)) % workerStatuses.length;
   return {
-    avatar: `/assets/generated/image/avatar?w=200&h=200&u=${index + 1}`,
+    avatar: `/assets/generated/avatar-${(index % 26) + 1}.jpg`,
     country: countries[Math.floor(random(3) * countries.length)]!,
     email: `${name.toLowerCase().replace(/\s+/g, ".")}@example.com`,
     externalWorkerId: externalId(index * 17 + 5),
@@ -286,8 +286,7 @@ function CountryCell({ country }: { country: Country }) {
         alt={country.name}
         className="shrink-0 rounded-sm object-cover"
         height={14}
-        src={`https://flagcdn.com/h20/${country.code}.png`}
-        srcSet={`https://flagcdn.com/h40/${country.code}.png 2x, https://flagcdn.com/h60/${country.code}.png 3x`}
+        src={`/assets/flags/${country.code}.png`}
         width={20}
       />
       <span className="text-sm">{country.name}</span>

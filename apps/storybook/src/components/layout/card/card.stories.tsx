@@ -136,7 +136,7 @@ export const Horizontal: Story = {
         alt="Porsche 911 Golden Edition"
         className="pointer-events-none aspect-square w-full rounded-3xl object-cover select-none md:max-w-[136px]"
         loading="lazy"
-        src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/components/card/porsche-911.png"
+        src="/assets/components/card/porsche-911.png"
       />
       <div className="flex flex-1 flex-col gap-3">
         <Card.Header className="gap-1">
@@ -177,7 +177,7 @@ export const WithAvatar: Story = {
           alt="Indie Hackers community"
           className="pointer-events-none aspect-square w-14 rounded-2xl object-cover select-none"
           loading="lazy"
-          src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo1.jpg"
+          src="/assets/docs/demo1.jpg"
         />
         <Card.Header>
           <Card.Title>Indie Hackers</Card.Title>
@@ -185,10 +185,7 @@ export const WithAvatar: Story = {
         </Card.Header>
         <Card.Footer className="flex gap-2">
           <Avatar aria-label="Martha's profile picture" className="size-5">
-            <Avatar.Image
-              alt="Martha's avatar"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg"
-            />
+            <Avatar.Image alt="Martha's avatar" src="/assets/avatars/red.jpg" />
             <Avatar.Fallback className="text-xs">IH</Avatar.Fallback>
           </Avatar>
           <span className="text-xs">By Martha</span>
@@ -200,7 +197,7 @@ export const WithAvatar: Story = {
           alt="AI Builders community"
           className="pointer-events-none aspect-square w-14 rounded-2xl object-cover select-none"
           loading="lazy"
-          src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo2.jpg"
+          src="/assets/docs/demo2.jpg"
         />
         <Card.Header>
           <Card.Title>AI Builders</Card.Title>
@@ -210,7 +207,7 @@ export const WithAvatar: Story = {
           <Avatar aria-label="John's profile picture" className="size-5">
             <Avatar.Image
               alt="John's avatar - blue themed"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg"
+              src="/assets/avatars/blue.jpg"
             />
             <Avatar.Fallback className="text-xs">B</Avatar.Fallback>
           </Avatar>
@@ -238,7 +235,7 @@ export const WithImages: Story = {
               alt="Cherries"
               className="pointer-events-none absolute inset-0 h-full w-full scale-125 object-cover select-none"
               loading="lazy"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/cherries.jpeg"
+              src="/assets/docs/cherries.jpeg"
             />
           </div>
           <div className="flex flex-1 flex-col gap-3">
@@ -312,10 +309,7 @@ export const WithImages: Story = {
               <Card className="col-span-12 gap-2 sm:col-span-6">
                 <Card.Header>
                   <Avatar className="size-[56px] rounded-xl">
-                    <Avatar.Image
-                      alt="Demo 1"
-                      src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo1.jpg"
-                    />
+                    <Avatar.Image alt="Demo 1" src="/assets/docs/demo1.jpg" />
                     <Avatar.Fallback>JK</Avatar.Fallback>
                   </Avatar>
                 </Card.Header>
@@ -325,10 +319,7 @@ export const WithImages: Story = {
                 </Card.Content>
                 <Card.Footer className="flex items-center gap-2">
                   <Avatar className="size-4">
-                    <Avatar.Image
-                      alt="John"
-                      src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg"
-                    />
+                    <Avatar.Image alt="John" src="/assets/avatars/red.jpg" />
                     <Avatar.Fallback>JK</Avatar.Fallback>
                   </Avatar>
                   <p className="text-muted text-xs">By John</p>
@@ -338,10 +329,7 @@ export const WithImages: Story = {
               <Card className="col-span-12 gap-2 sm:col-span-6">
                 <Card.Header>
                   <Avatar className="size-[56px] rounded-xl">
-                    <Avatar.Image
-                      alt="Demo 2"
-                      src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo2.jpg"
-                    />
+                    <Avatar.Image alt="Demo 2" src="/assets/docs/demo2.jpg" />
                     <Avatar.Fallback>AB</Avatar.Fallback>
                   </Avatar>
                 </Card.Header>
@@ -351,10 +339,7 @@ export const WithImages: Story = {
                 </Card.Content>
                 <Card.Footer className="flex items-center gap-2">
                   <Avatar className="size-4">
-                    <Avatar.Image
-                      alt="John"
-                      src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg"
-                    />
+                    <Avatar.Image alt="John" src="/assets/avatars/blue.jpg" />
                     <Avatar.Fallback>M</Avatar.Fallback>
                   </Avatar>
                   <p className="text-muted text-xs">By Martha</p>
@@ -372,7 +357,7 @@ export const WithImages: Story = {
               alt="NEO Home Robot"
               aria-hidden="true"
               className="absolute inset-0 h-full w-full object-cover"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/neo2.jpeg"
+              src="/assets/docs/neo2.jpeg"
             />
 
             {/* Header */}
@@ -431,7 +416,7 @@ export const WithImages: Story = {
               alt="NEO Home Robot"
               aria-hidden="true"
               className="absolute inset-0 h-full w-full object-cover"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/neo1.jpeg"
+              src="/assets/docs/neo1.jpeg"
             />
 
             {/* Bottom gradient blur overlay */}
@@ -477,7 +462,7 @@ export const WithImages: Story = {
                 alt="Futuristic Robot"
                 className="aspect-square h-16 w-16 shrink-0 rounded-xl object-cover select-none sm:h-20 sm:w-20"
                 loading="lazy"
-                src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/robot1.jpeg"
+                src="/assets/docs/robot1.jpeg"
               />
               <div className="flex flex-1 flex-col justify-center gap-1">
                 <Card.Title className="text-sm">Bridging the Future</Card.Title>
@@ -492,7 +477,7 @@ export const WithImages: Story = {
                 alt="Avocado"
                 className="aspect-square h-16 w-16 shrink-0 rounded-xl object-cover select-none sm:h-20 sm:w-20"
                 loading="lazy"
-                src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/avocado.jpeg"
+                src="/assets/docs/avocado.jpeg"
               />
               <div className="flex flex-1 flex-col justify-center gap-1">
                 <Card.Title className="text-sm">Avocado Hackathon</Card.Title>
@@ -507,7 +492,7 @@ export const WithImages: Story = {
                 alt="Sound Electro event"
                 className="aspect-square h-16 w-16 shrink-0 rounded-xl object-cover select-none sm:h-20 sm:w-20"
                 loading="lazy"
-                src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/oranges.jpeg"
+                src="/assets/docs/oranges.jpeg"
               />
               <div className="flex flex-1 flex-col justify-center gap-1">
                 <Card.Title className="text-sm">

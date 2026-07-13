@@ -181,7 +181,7 @@ function FullChatDemo() {
           {
             id: String(Date.now() + 1),
             role: "assistant",
-            text: "This is a mocked assistant reply rendered with HeroUI Pro AI components.",
+            text: "This is a mocked assistant reply rendered with Namespace UIKit AI components.",
           },
         ]);
         setStatus("ready");

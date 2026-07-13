@@ -6,7 +6,7 @@ const code = `function greet(name: string) {
   return \`Hello, \${name}!\`;
 }
 
-console.log(greet("HeroUI"));`;
+console.log(greet("Namespace"));`;
 const meta = {
   parameters: { layout: "centered" },
   tags: ["autodocs"],

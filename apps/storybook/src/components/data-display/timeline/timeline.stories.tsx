@@ -347,7 +347,7 @@ export const StudioReview: Story = {
               <Avatar className="size-full" size="sm">
                 <Avatar.Image
                   alt=""
-                  src={`https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/${avatars[index]}.jpg`}
+                  src={`/assets/avatars/${avatars[index]}.jpg`}
                 />
                 <Avatar.Fallback>
                   {item[1]
@@ -384,7 +384,7 @@ export const StudioReview: Story = {
                       alt="Side profile of the runner product asset"
                       className="aspect-[4/3] w-full object-cover select-none sm:aspect-auto sm:h-full"
                       draggable={false}
-                      src="https://nextuipro.nyc3.cdn.digitaloceanspaces.com/components-images/shoes/product-view/2.jpeg"
+                      src="/assets/components-images/shoes/product-view/2.jpeg"
                     />
                     <div className="flex min-w-0 flex-col gap-3 p-3">
                       <p className="text-muted m-0 text-xs leading-5">
@@ -470,11 +470,9 @@ export const CompactLog: Story = {
 };
 
 const incidentAvatars = {
-  blue: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
-  green:
-    "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
-  orange:
-    "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+  blue: "/assets/avatars/blue.jpg",
+  green: "/assets/avatars/green.jpg",
+  orange: "/assets/avatars/orange.jpg",
 };
 const incident = [
   {
@@ -715,12 +713,9 @@ const revisions = [
   ],
 ];
 const revisionAvatars: Record<string, string> = {
-  "Eli Wong":
-    "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
-  "Maya Chen":
-    "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
-  "Nora Vazquez":
-    "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+  "Eli Wong": "/assets/avatars/orange.jpg",
+  "Maya Chen": "/assets/avatars/blue.jpg",
+  "Nora Vazquez": "/assets/avatars/green.jpg",
 };
 export const VersionHistory: Story = {
   render: () => (

@@ -100,10 +100,7 @@ function WithAvatarDemo() {
       <EmptyState>
         <EmptyState.Header>
           <EmptyState.Media>
-            <UserAvatar
-              alt="John Doe"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg"
-            />
+            <UserAvatar alt="John Doe" src="/assets/avatars/blue.jpg" />
           </EmptyState.Media>
           <EmptyState.Title>User Offline</EmptyState.Title>
           <EmptyState.Description>
@@ -127,18 +124,9 @@ function WithAvatarGroupDemo() {
         <EmptyState.Header>
           <EmptyState.Media>
             <div className="flex -space-x-2">
-              <UserAvatar
-                alt="John Doe"
-                src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg"
-              />
-              <UserAvatar
-                alt="Kate Wilson"
-                src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg"
-              />
-              <UserAvatar
-                alt="Emily Chen"
-                src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg"
-              />
+              <UserAvatar alt="John Doe" src="/assets/avatars/blue.jpg" />
+              <UserAvatar alt="Kate Wilson" src="/assets/avatars/green.jpg" />
+              <UserAvatar alt="Emily Chen" src="/assets/avatars/purple.jpg" />
             </div>
           </EmptyState.Media>
           <EmptyState.Title>No Team Members</EmptyState.Title>

@@ -150,7 +150,7 @@ export const PressableCards: Story = {
           alt="NEO Home Robot"
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
-          src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/neo1.jpeg"
+          src="/assets/docs/neo1.jpeg"
         />
         <Card.Header className="z-10">
           <Card.Title className="text-xs font-semibold tracking-wide text-black/70">
@@ -178,8 +178,7 @@ export const PressableCards: Story = {
           image: "demo1.jpg",
           color: "text-rose-200",
           author: "John",
-          authorAvatar:
-            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+          authorAvatar: "/assets/avatars/blue.jpg",
         },
         {
           name: "AI Builders",
@@ -187,8 +186,7 @@ export const PressableCards: Story = {
           image: "demo2.jpg",
           color: "text-sky-300",
           author: "Martha",
-          authorAvatar:
-            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/pink.jpg",
+          authorAvatar: "/assets/avatars/pink.jpg",
         },
       ].map((item) => (
         <Card
@@ -200,7 +198,7 @@ export const PressableCards: Story = {
             <img
               alt={item.name}
               className="size-14 rounded-xl object-cover"
-              src={`https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/${item.image}`}
+              src={`/assets/docs/${item.image}`}
             />
           </Card.Header>
           <Card.Content className="mt-1">
@@ -240,7 +238,7 @@ export const PressableCards: Story = {
           <img
             alt={item.imageAlt}
             className="aspect-square h-20 w-20 shrink-0 rounded-xl object-cover"
-            src={`https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/${item.image}`}
+            src={`/assets/docs/${item.image}`}
           />
           <div className="flex flex-1 flex-col justify-center gap-1">
             <Card.Title className="text-sm">{item.title}</Card.Title>

@@ -109,7 +109,7 @@ function AgentTraceDemo({ isStreaming = false }: { isStreaming?: boolean }) {
           <img
             alt="Generated area chart design"
             className="border-default bg-surface w-full max-w-sm rounded-xl border"
-            src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/pro-related-components/light-areaChart.png"
+            src="/assets/docs/charts/light-area-chart.png"
           />
         </ChainOfThought.Step>
       </TraceSection>
@@ -197,8 +197,8 @@ export const Default: Story = {
         <ChainOfThought.Content>
           <ChainOfThought.Steps>
             <ChainOfThought.Step label="Search">
-              Looked up HeroUI Pro chat template patterns for message layout and
-              composer spacing.
+              Looked up Namespace UIKit chat template patterns for message
+              layout and composer spacing.
             </ChainOfThought.Step>
             <ChainOfThought.Step label="Plan">
               Mapped the template structure to SDK-agnostic compound components.
@@ -218,7 +218,7 @@ export const Streaming: Story = {
         <ChainOfThought.Content>
           <ChainOfThought.Steps>
             <ChainOfThought.Step label="Analyze">
-              Breaking the request into presentation-only Pro components.
+              Breaking the request into presentation-only UIKit components.
             </ChainOfThought.Step>
           </ChainOfThought.Steps>
         </ChainOfThought.Content>

@@ -312,7 +312,7 @@ function CollapsibleDemo() {
               className="text-foreground text-sm font-semibold"
               data-sidebar="label"
             >
-              HeroUI
+              Namespace
             </span>
           </div>
         </Sidebar.Header>
@@ -376,7 +376,7 @@ function IconOnlyDemo() {
           <Avatar className="size-8 shrink-0">
             <Avatar.Image
               alt="Kate Moore"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue-light.jpg"
+              src="/assets/avatars/blue-light.jpg"
             />
             <Avatar.Fallback>KM</Avatar.Fallback>
           </Avatar>
@@ -467,7 +467,7 @@ function WithGroupsDemo() {
               className="text-foreground text-sm font-semibold"
               data-sidebar="label"
             >
-              HeroUI
+              Namespace
             </span>
           </div>
         </Sidebar.Header>
@@ -633,7 +633,7 @@ function ReducedMotionDemo() {
               className="text-foreground text-sm font-semibold"
               data-sidebar="label"
             >
-              HeroUI
+              Namespace
             </span>
           </div>
         </Sidebar.Header>
@@ -717,7 +717,7 @@ function FloatingVariantDemo() {
               className="text-foreground text-sm font-semibold"
               data-sidebar="label"
             >
-              HeroUI
+              Namespace
             </span>
           </div>
         </Sidebar.Header>
@@ -759,7 +759,7 @@ function WithAvatarDemo() {
             <Avatar className="size-8 shrink-0">
               <Avatar.Image
                 alt="Kate Moore"
-                src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue-light.jpg"
+                src="/assets/avatars/blue-light.jpg"
               />
               <Avatar.Fallback>KM</Avatar.Fallback>
             </Avatar>
@@ -855,7 +855,7 @@ function InsetVariantDemo() {
             </span>
             <span className="flex flex-col">
               <span className="text-foreground text-sm leading-tight font-semibold">
-                HeroUI Inc.
+                Namespace Inc.
               </span>
               <span className="text-muted text-xs leading-tight">
                 Enterprise
@@ -937,7 +937,7 @@ function CompactWithUserMenuDemo() {
               className="text-foreground text-sm font-semibold"
               data-sidebar="label"
             >
-              HeroUI Labs
+              Namespace Labs
             </span>
           </div>
         </Sidebar.Header>
@@ -1034,7 +1034,7 @@ function CompactWithUserMenuDemo() {
               <Avatar size="sm">
                 <Avatar.Image
                   alt="Junior Garcia"
-                  src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg"
+                  src="/assets/avatars/orange.jpg"
                 />
                 <Avatar.Fallback delayMs={600}>JG</Avatar.Fallback>
               </Avatar>
@@ -1056,7 +1056,7 @@ function CompactWithUserMenuDemo() {
                   <Avatar size="sm">
                     <Avatar.Image
                       alt="Junior Garcia"
-                      src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg"
+                      src="/assets/avatars/orange.jpg"
                     />
                     <Avatar.Fallback delayMs={600}>JG</Avatar.Fallback>
                   </Avatar>
@@ -1065,7 +1065,7 @@ function CompactWithUserMenuDemo() {
                       Junior Garcia
                     </p>
                     <p className="text-muted text-xs leading-none">
-                      junior@heroui.com
+                      junior@namespace.ninja
                     </p>
                   </div>
                 </div>
@@ -1942,7 +1942,7 @@ function AgentHubContent() {
               <Avatar size="sm">
                 <Avatar.Image
                   alt="Junior Garcia"
-                  src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg"
+                  src="/assets/avatars/orange.jpg"
                 />
                 <Avatar.Fallback delayMs={600}>JG</Avatar.Fallback>
               </Avatar>
@@ -2173,7 +2173,7 @@ function AgentWorkspaceDemo() {
               <Avatar size="sm">
                 <Avatar.Image
                   alt="Alex Chen"
-                  src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue-light.jpg"
+                  src="/assets/avatars/blue-light.jpg"
                 />
                 <Avatar.Fallback delayMs={600}>AC</Avatar.Fallback>
               </Avatar>
@@ -2222,14 +2222,16 @@ function AgentWorkspaceDemo() {
     </Sidebar.Provider>
   );
 }
-export const Default: Story = { render: () => <Demo nested title="HeroUI" /> };
+export const Default: Story = {
+  render: () => <Demo nested title="Namespace" />,
+};
 export const RightSide: Story = {
   render: () => (
     <Demo
       description="Main content area with the sidebar attached to the right. Resize to mobile to see the Sheet open from the right."
       nested
       side="right"
-      title="HeroUI"
+      title="Namespace"
     />
   ),
 };
@@ -2240,7 +2242,7 @@ export const RightSideOffcanvas: Story = {
       description="Right-side offcanvas sidebar. Use the trigger or rail to collapse the sidebar off the right edge. Resize to mobile to verify the Sheet also opens from the right."
       nested
       side="right"
-      title="HeroUI"
+      title="Namespace"
     />
   ),
 };

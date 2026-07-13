@@ -10,7 +10,7 @@ import { Carousel } from "./index";
 const images = Array.from(
   { length: 6 },
   (_, index) =>
-    `https://nextuipro.nyc3.cdn.digitaloceanspaces.com/components-images/shoes/product-view/${index + 1}.jpeg`,
+    `/assets/components-images/shoes/product-view/${index + 1}.jpeg`,
 );
 const imageAlts = [
   "Sneakers front view",

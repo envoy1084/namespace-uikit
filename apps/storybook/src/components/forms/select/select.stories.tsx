@@ -530,40 +530,35 @@ export const CustomValue: Story = {
         id: "1",
         name: "Bob",
         email: "bob@namespace.ninja",
-        avatarUrl:
-          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+        avatarUrl: "/assets/avatars/blue.jpg",
         fallback: "B",
       },
       {
         id: "2",
         name: "Fred",
         email: "fred@namespace.ninja",
-        avatarUrl:
-          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+        avatarUrl: "/assets/avatars/green.jpg",
         fallback: "F",
       },
       {
         id: "3",
         name: "Martha",
         email: "martha@namespace.ninja",
-        avatarUrl:
-          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+        avatarUrl: "/assets/avatars/purple.jpg",
         fallback: "M",
       },
       {
         id: "4",
         name: "John",
         email: "john@namespace.ninja",
-        avatarUrl:
-          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+        avatarUrl: "/assets/avatars/red.jpg",
         fallback: "J",
       },
       {
         id: "5",
         name: "Jane",
         email: "jane@namespace.ninja",
-        avatarUrl:
-          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+        avatarUrl: "/assets/avatars/orange.jpg",
         fallback: "J",
       },
     ];
@@ -634,40 +629,35 @@ export const CustomValueMultiple: Story = {
         id: "1",
         name: "Bob",
         email: "bob@namespace.ninja",
-        avatarUrl:
-          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+        avatarUrl: "/assets/avatars/blue.jpg",
         fallback: "B",
       },
       {
         id: "2",
         name: "Fred",
         email: "fred@namespace.ninja",
-        avatarUrl:
-          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+        avatarUrl: "/assets/avatars/green.jpg",
         fallback: "F",
       },
       {
         id: "3",
         name: "Martha",
         email: "martha@namespace.ninja",
-        avatarUrl:
-          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+        avatarUrl: "/assets/avatars/purple.jpg",
         fallback: "M",
       },
       {
         id: "4",
         name: "John",
         email: "john@namespace.ninja",
-        avatarUrl:
-          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+        avatarUrl: "/assets/avatars/red.jpg",
         fallback: "J",
       },
       {
         id: "5",
         name: "Jane",
         email: "jane@namespace.ninja",
-        avatarUrl:
-          "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+        avatarUrl: "/assets/avatars/orange.jpg",
         fallback: "J",
       },
     ];

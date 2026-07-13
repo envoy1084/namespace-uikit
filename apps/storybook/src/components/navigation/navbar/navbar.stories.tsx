@@ -46,10 +46,7 @@ const Logo = ({ compact = false }: { compact?: boolean }) => (
 );
 const User = () => (
   <Avatar className="size-7">
-    <Avatar.Image
-      alt="User avatar"
-      src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg"
-    />
+    <Avatar.Image alt="User avatar" src="/assets/avatars/purple.jpg" />
   </Avatar>
 );
 function BaseHeader({ mobile = false }: { mobile?: boolean }) {
@@ -193,7 +190,7 @@ export const DocsSite: Story = {
       <Navbar.Header>
         <Navbar.MenuToggle className="md:hidden" />
         <Navbar.Brand>
-          <span className="font-semibold">HeroUI</span>
+          <span className="font-semibold">Namespace</span>
         </Navbar.Brand>
         <Navbar.Content className="hidden md:flex">
           {["Docs", "Pro", "Blog"].map((label) => (
@@ -271,7 +268,7 @@ export const WithDropdowns: Story = {
               </Dropdown.Trigger>
               <Dropdown.Popover>
                 <Dropdown.Menu>
-                  {["Acme Inc.", "HeroUI", "Namespace"].map((x) => (
+                  {["Acme Inc.", "Namespace", "Namespace"].map((x) => (
                     <Dropdown.Item id={x} key={x}>
                       {x}
                     </Dropdown.Item>
@@ -321,7 +318,7 @@ function DashboardNavbar() {
     <Navbar position="static">
       <Navbar.Header className="gap-2">
         <Navbar.Brand className="mr-1">
-          <span className="font-semibold">HeroUI</span>
+          <span className="font-semibold">Namespace</span>
         </Navbar.Brand>
         <InlineSelect
           aria-label="Workspace"
@@ -330,10 +327,7 @@ function DashboardNavbar() {
         >
           <InlineSelect.Trigger className="gap-2">
             <Avatar className="size-5">
-              <Avatar.Image
-                alt={workspace}
-                src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg"
-              />
+              <Avatar.Image alt={workspace} src="/assets/avatars/purple.jpg" />
             </Avatar>
             <span className="text-foreground text-sm font-medium">
               {workspace}

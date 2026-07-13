@@ -172,7 +172,7 @@ export const EmailSetting: Story = {
       <ItemCard>
         <ItemCard.Content>
           <ItemCard.Title>
-            junior@heroui.com{" "}
+            junior@namespace.ninja{" "}
             <Chip className="ml-2 align-middle" size="sm" variant="soft">
               Primary
             </Chip>

@@ -101,7 +101,7 @@ function AgentTraceDemo({ isStreaming = false }: { isStreaming?: boolean }) {
           <img
             alt="Generated area chart design"
             className="border-default bg-surface w-full max-w-sm rounded-xl border"
-            src="/assets/docs/pro-related-components/light-areaChart.png"
+            src="/assets/docs/charts/light-area-chart.png"
           />
         </ChainOfThought.Step>
       </TraceSection>

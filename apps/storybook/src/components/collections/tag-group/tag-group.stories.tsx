@@ -282,21 +282,21 @@ export const WithPrefix: Story = {
         <TagGroup.List>
           <Tag>
             <Avatar className="size-4">
-              <Avatar.Image src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg" />
+              <Avatar.Image src="/assets/avatars/blue.jpg" />
               <Avatar.Fallback>F</Avatar.Fallback>
             </Avatar>
             Fred
           </Tag>
           <Tag>
             <Avatar className="size-4">
-              <Avatar.Image src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg" />
+              <Avatar.Image src="/assets/avatars/green.jpg" />
               <Avatar.Fallback>M</Avatar.Fallback>
             </Avatar>
             Michael
           </Tag>
           <Tag>
             <Avatar className="size-4">
-              <Avatar.Image src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg" />
+              <Avatar.Image src="/assets/avatars/purple.jpg" />
               <Avatar.Fallback>J</Avatar.Fallback>
             </Avatar>
             Jane
@@ -427,43 +427,37 @@ export const WithListData: Story = {
         {
           id: "fred",
           name: "Fred",
-          avatar:
-            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+          avatar: "/assets/avatars/blue.jpg",
           fallback: "F",
         },
         {
           id: "michael",
           name: "Michael",
-          avatar:
-            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+          avatar: "/assets/avatars/green.jpg",
           fallback: "M",
         },
         {
           id: "jane",
           name: "Jane",
-          avatar:
-            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+          avatar: "/assets/avatars/purple.jpg",
           fallback: "J",
         },
         {
           id: "alice",
           name: "Alice",
-          avatar:
-            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+          avatar: "/assets/avatars/red.jpg",
           fallback: "A",
         },
         {
           id: "bob",
           name: "Bob",
-          avatar:
-            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+          avatar: "/assets/avatars/orange.jpg",
           fallback: "B",
         },
         {
           id: "charlie",
           name: "Charlie",
-          avatar:
-            "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
+          avatar: "/assets/avatars/black.jpg",
           fallback: "C",
         },
       ],

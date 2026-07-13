@@ -82,7 +82,7 @@ const Template = (props: DisclosureGroupProps) => {
                 <img
                   alt="Expo Go QR Code"
                   className="aspect-square w-full max-w-54 object-cover"
-                  src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/qr-code-native.png"
+                  src="/assets/images/qr-code-native.png"
                 />
                 <p className="text-muted text-sm">
                   Expo must be installed on your device.
@@ -125,7 +125,7 @@ const Template = (props: DisclosureGroupProps) => {
                 <img
                   alt="Expo Go QR Code"
                   className="aspect-square w-full max-w-54 object-cover"
-                  src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/qr-code-native.png"
+                  src="/assets/images/qr-code-native.png"
                 />
                 <p className="text-muted text-sm">
                   Expo must be installed on your device.
@@ -212,7 +212,7 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
                 <img
                   alt="Expo Go QR Code"
                   className="aspect-square w-full max-w-54 object-cover"
-                  src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/qr-code-native.png"
+                  src="/assets/images/qr-code-native.png"
                 />
                 <p className="text-muted text-sm">
                   Expo must be installed on your device.
@@ -255,7 +255,7 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
                 <img
                   alt="Expo Go QR Code"
                   className="aspect-square w-full max-w-54 object-cover"
-                  src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/qr-code-native.png"
+                  src="/assets/images/qr-code-native.png"
                 />
                 <p className="text-muted text-sm">
                   Expo must be installed on your device.
@@ -319,7 +319,7 @@ const showcase1Items = [
     content:
       "Choose from three bold finishes. iPhone 17 Pro shown in Cosmic Orange.",
     imgSrc:
-      "https://www.apple.com/v/iphone-17-pro/a/images/overview/product-viewer/colors_orange__f2ug4x6ry8uq_large_2x.jpg",
+      "/assets/apple/product-viewer/colors_orange__f2ug4x6ry8uq_large_2x.jpg",
   },
   {
     id: "aluminum",
@@ -327,7 +327,7 @@ const showcase1Items = [
     content:
       "Optimized for performance and battery. Aluminum alloy is remarkably light and has exceptional thermal conductivity.",
     imgSrc:
-      "https://www.apple.com/v/iphone-17-pro/a/images/overview/product-viewer/viewer_aluminum_endframe__fypyvk9kkg2m_large_2x.jpg",
+      "/assets/apple/product-viewer/viewer_aluminum_endframe__fypyvk9kkg2m_large_2x.jpg",
   },
   {
     id: "vapor-chamber",
@@ -335,7 +335,7 @@ const showcase1Items = [
     content:
       "Deionized water sealed inside moves heat away from the A19 Pro chip, allowing for even higher sustained performance.",
     imgSrc:
-      "https://www.apple.com/v/iphone-17-pro/a/images/overview/product-viewer/viewer_vapor_chamber_endframe__dst8qkmuys4m_large_2x.jpg",
+      "/assets/apple/product-viewer/viewer_vapor_chamber_endframe__dst8qkmuys4m_large_2x.jpg",
   },
   {
     id: "ceramic-shield",
@@ -343,7 +343,7 @@ const showcase1Items = [
     content:
       "Protects the back of iPhone 17 Pro, making it 4x more resistant to cracks. New Ceramic Shield 2 on the front has 3x better scratch resistance.",
     imgSrc:
-      "https://www.apple.com/v/iphone-17-pro/a/images/overview/product-viewer/ceramic_shield__de0653vp43cm_large_2x.jpg",
+      "/assets/apple/product-viewer/ceramic_shield__de0653vp43cm_large_2x.jpg",
   },
   {
     id: "immersive-pro-display",
@@ -351,7 +351,7 @@ const showcase1Items = [
     content:
       "Our best‑ever 6.3‑inch and 6.9‑inch Super Retina XDR displays.5 Brighter. Better anti‑reflection. ProMotion up to 120Hz.",
     imgSrc:
-      "https://www.apple.com/v/iphone-17-pro/a/images/overview/product-viewer/pro_display__c0jmzc5emcae_large_2x.jpg",
+      "/assets/apple/product-viewer/pro_display__c0jmzc5emcae_large_2x.jpg",
   },
   {
     id: "camera-control",
@@ -359,7 +359,7 @@ const showcase1Items = [
     content:
       "Instantly take a photo, record video, adjust settings, and more. So you never miss a moment.",
     imgSrc:
-      "https://www.apple.com/v/iphone-17-pro/a/images/overview/product-viewer/camera_control__cy5kilwa0kwi_large_2x.jpg",
+      "/assets/apple/product-viewer/camera_control__cy5kilwa0kwi_large_2x.jpg",
   },
   {
     id: "action-button",
@@ -367,7 +367,7 @@ const showcase1Items = [
     content:
       " A customizable fast track to your favorite feature. Long press to launch the action you want — Silent mode, Translation, Shortcuts, and more.",
     imgSrc:
-      "https://www.apple.com/v/iphone-17-pro/a/images/overview/product-viewer/viewer_action_button_startframe__bb2coc4lpj2a_large_2x.jpg",
+      "/assets/apple/product-viewer/viewer_action_button_startframe__bb2coc4lpj2a_large_2x.jpg",
   },
 ];
 

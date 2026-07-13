@@ -372,13 +372,13 @@ const sampleAttachments: PendingAttachment[] = [
     id: "attachment-1",
     mimeType: "image/png",
     name: "hero.png",
-    src: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo/hero.png",
+    src: "/assets/docs/demo/hero.png",
   },
   {
     id: "attachment-2",
     mimeType: "image/jpeg",
     name: "dashboard.jpg",
-    src: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo/dashboard.jpg",
+    src: "/assets/docs/demo/dashboard.jpg",
   },
   { id: "attachment-3", mimeType: "application/pdf", name: "brief.pdf" },
 ];
@@ -805,7 +805,7 @@ function WithSuggestionsDemo() {
       <div className="flex flex-col items-center gap-2 text-center">
         <h2 className="text-foreground text-3xl font-normal tracking-tight">
           Build something useful with{" "}
-          <TextShimmer className="text-muted">HeroUI Pro AI</TextShimmer>
+          <TextShimmer className="text-muted">Namespace UIKit AI</TextShimmer>
         </h2>
         <p className="text-muted text-sm">
           Start with a prompt, add files, or pick a suggestion to shape the

@@ -80,6 +80,10 @@ export default defineConfig({
     "**/.output/**",
     "**/coverage/**",
     "**/storybook-static/**",
+    // Generated demo markers and indented MDX fences are semantically
+    // significant; formatting them breaks component previews and install tabs.
+    "apps/docs/content/**/*.mdx",
+    "apps/docs/src/demos/index.ts",
     "**/route-tree.gen.ts",
     "**/routeTree.gen.ts",
   ],

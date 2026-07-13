@@ -86,17 +86,6 @@ const productBrands = [
   "NeonPulse",
 ] as const;
 
-const imageKinds = [
-  "dashboard",
-  "game",
-  "furniture",
-  "album",
-  "movie",
-  "sports",
-  "fashion",
-  "book",
-] as const;
-
 const skuPrefixes = [
   "AUD",
   "KEY",
@@ -121,7 +110,6 @@ const products: Product[] = Array.from({ length: 1000 }, (_, index) => {
     productPrefixes[Math.floor(random(1) * productPrefixes.length)]!;
   const kind = productKinds[Math.floor(random(2) * productKinds.length)]!;
   const brand = productBrands[Math.floor(random(3) * productBrands.length)]!;
-  const imageKind = imageKinds[index % imageKinds.length]!;
   const skuPrefix = skuPrefixes[Math.floor(random(4) * skuPrefixes.length)]!;
   const availability = random(5);
   const status =
@@ -134,7 +122,7 @@ const products: Product[] = Array.from({ length: 1000 }, (_, index) => {
   return {
     cost: Math.round(price * (0.3 + random(7) * 0.4)),
     id: index + 1,
-    image: `/assets/generated/image/${imageKind}?w=80&h=80&u=${index + 1}`,
+    image: `/assets/generated/avatar-${(index % 26) + 1}.jpg`,
     name: `${brand} ${prefix} ${kind}`,
     price,
     rating: Math.round((2.5 + random(10) * 2.5) * 10) / 10,

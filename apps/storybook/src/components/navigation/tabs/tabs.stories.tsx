@@ -386,17 +386,14 @@ const Showcase1Template = (args: Story["args"]) => {
   };
 
   const zoomImgMap: Record<number | "macro", string> = {
-    [200]:
-      "https://www.apple.com/v/iphone-17-pro/a/images/overview/cameras/zoom/200mm__c8kya18imsqe_large_2x.jpg",
-    [100]:
-      "https://www.apple.com/v/iphone-17-pro/a/images/overview/cameras/zoom/100mm__cykxcenbhvue_large_2x.jpg",
-    [48]: "https://www.apple.com/v/iphone-17-pro/a/images/overview/cameras/zoom/48mm__bmrwps1q6w76_large_2x.jpg",
-    [35]: "https://www.apple.com/v/iphone-17-pro/a/images/overview/cameras/zoom/35mm__k375wbkrjp2e_large_2x.jpg",
-    [28]: "https://www.apple.com/v/iphone-17-pro/a/images/overview/cameras/zoom/28mm__fylmxo06jq6i_large_2x.jpg",
-    [24]: "https://www.apple.com/v/iphone-17-pro/a/images/overview/cameras/zoom/24mm__e54cxtdkdrwy_large_2x.jpg",
-    [13]: "https://www.apple.com/v/iphone-17-pro/a/images/overview/cameras/zoom/13mm__dzafu9h1kaye_large_2x.jpg",
-    ["macro"]:
-      "https://www.apple.com/v/iphone-17-pro/a/images/overview/cameras/zoom/macro__bb7oud7ri2o2_large_2x.jpg",
+    [200]: "/assets/apple/camera/200mm__c8kya18imsqe_large_2x.jpg",
+    [100]: "/assets/apple/camera/100mm__cykxcenbhvue_large_2x.jpg",
+    [48]: "/assets/apple/camera/48mm__bmrwps1q6w76_large_2x.jpg",
+    [35]: "/assets/apple/camera/35mm__k375wbkrjp2e_large_2x.jpg",
+    [28]: "/assets/apple/camera/28mm__fylmxo06jq6i_large_2x.jpg",
+    [24]: "/assets/apple/camera/24mm__e54cxtdkdrwy_large_2x.jpg",
+    [13]: "/assets/apple/camera/13mm__dzafu9h1kaye_large_2x.jpg",
+    ["macro"]: "/assets/apple/camera/macro__bb7oud7ri2o2_large_2x.jpg",
   };
 
   return (

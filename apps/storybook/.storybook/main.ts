@@ -38,7 +38,13 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {},
   },
-  staticDirs: [pathJoin(storybookConfigDir, "../public")],
+  staticDirs: [
+    pathJoin(storybookConfigDir, "../public"),
+    {
+      from: pathJoin(storybookConfigDir, "../../docs/public/assets"),
+      to: "/assets",
+    },
+  ],
   stories: [
     "./welcome.mdx",
     "./stories/colors.stories.tsx",

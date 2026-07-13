@@ -35,8 +35,7 @@ export default {
   title: "Components/Data Display/Badge",
 } as Meta<typeof Badge>;
 
-const AVATAR_URL =
-  "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg";
+const AVATAR_URL = "/assets/avatars/green.jpg";
 
 const defaultArgs: BadgeProps = {
   color: "accent",

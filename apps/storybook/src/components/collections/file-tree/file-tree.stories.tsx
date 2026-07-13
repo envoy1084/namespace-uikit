@@ -420,10 +420,10 @@ function WithCheckboxesDemo() {
       <FileTree.Item
         icon={FolderIcon}
         id="root"
-        textValue="heroui-inc/heroui.pro"
+        textValue="thenamespace/uikit"
         title={
           <span className="inline-flex w-full justify-between">
-            <span>heroui-inc/heroui.pro</span>
+            <span>thenamespace/uikit</span>
             <span className="text-muted text-xs">1664 included</span>
           </span>
         }

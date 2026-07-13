@@ -12,7 +12,8 @@
     "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern",
     "start": "storybook dev --host 127.0.0.1 --port 6006 --no-open",
     "sync-theme": "node scripts/sync-storybook-theme.mjs",
-    "typecheck": "tsc -p tsconfig.json --pretty false"
+    "typecheck": "tsc -p tsconfig.json --pretty false",
+    "verify:assets": "node ../docs/scripts/verify-assets.mjs"
   },
   "dependencies": {
     "@hugeicons/core-free-icons": "^4.2.2",

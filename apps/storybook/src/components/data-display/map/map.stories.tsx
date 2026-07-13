@@ -26,8 +26,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const styles = {
-  dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
-  light: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+  dark: "/assets/maps/dark-matter.json",
+  light: "/assets/maps/voyager.json",
 };
 const storeLocations = [
   {
@@ -1664,8 +1664,7 @@ function IncidentMonitorDemo() {
 
 export const IncidentMonitor: Story = { render: () => <IncidentMonitorDemo /> };
 
-const avatarRoot =
-  "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars";
+const avatarRoot = "/assets/avatars";
 const visitors = [
   {
     avatar: `${avatarRoot}/blue.jpg`,

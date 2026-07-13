@@ -8,8 +8,8 @@ import { Avatar } from "@thenamespace/uikit/avatar";
 import { Card } from "@thenamespace/uikit/card";
 
 const styles = {
-  dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
-  light: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+  dark: "/assets/maps/dark-matter.json",
+  light: "/assets/maps/voyager.json",
 };
 
 const avatarRoot = "/assets/avatars";

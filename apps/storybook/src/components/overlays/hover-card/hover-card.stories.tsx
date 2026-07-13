@@ -23,13 +23,13 @@ function Profile() {
       <div className="flex items-center gap-3">
         <Avatar size="sm">
           <Avatar.Image
-            alt="HeroUI"
-            src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/heroui_isotipo.png"
+            alt="Namespace"
+            src="/assets/docs/namespace_isotipo.png"
           />
           <Avatar.Fallback>H</Avatar.Fallback>
         </Avatar>
         <div className="flex flex-col items-start justify-center">
-          <span className="text-sm leading-4 font-semibold">HeroUI</span>
+          <span className="text-sm leading-4 font-semibold">Namespace</span>
           <span className="text-muted text-sm tracking-tight">@hero_ui</span>
         </div>
       </div>
@@ -161,7 +161,7 @@ function ImageCard() {
       <img
         alt="Neo Brutalism design"
         className="h-36 w-full rounded-t-2xl object-cover"
-        src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/heroui-pro-landing/chat-message.webp"
+        src="/assets/hover-card/chat-message.webp"
       />
       <div className="p-4">
         <p className="text-sm font-semibold">Neo Brutalism</p>
@@ -181,7 +181,7 @@ export const WithImage: Story = {
           <HoverCard.Trigger>
             <Link
               className="underline"
-              href="https://heroui.com"
+              href="https://namespace.ninja"
               target="_blank"
             >
               Neo Brutalism

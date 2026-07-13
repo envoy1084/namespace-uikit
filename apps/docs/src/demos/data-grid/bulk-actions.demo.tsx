@@ -54,7 +54,7 @@ const statusColor: Record<
 
 const bulkEmployees: BulkEmployee[] = [
   {
-    avatar: "/assets/generated/image/avatar?w=200&h=200&u=20",
+    avatar: "/assets/generated/avatar-20.jpg",
     department: "HR",
     email: "elena.rodriguez@company.com",
     id: 1,
@@ -63,7 +63,7 @@ const bulkEmployees: BulkEmployee[] = [
     status: "Active",
   },
   {
-    avatar: "/assets/generated/image/avatar?w=200&h=200&u=21",
+    avatar: "/assets/generated/avatar-21.jpg",
     department: "Design",
     email: "marcus.chen@company.com",
     id: 2,
@@ -72,7 +72,7 @@ const bulkEmployees: BulkEmployee[] = [
     status: "Pending",
   },
   {
-    avatar: "/assets/generated/image/avatar?w=200&h=200&u=22",
+    avatar: "/assets/generated/avatar-22.jpg",
     department: "HR",
     email: "priya.patel@company.com",
     id: 3,
@@ -81,7 +81,7 @@ const bulkEmployees: BulkEmployee[] = [
     status: "Active",
   },
   {
-    avatar: "/assets/generated/image/avatar?w=200&h=200&u=23",
+    avatar: "/assets/generated/avatar-23.jpg",
     department: "Finance",
     email: "james.o.brien@company.com",
     id: 4,
@@ -90,7 +90,7 @@ const bulkEmployees: BulkEmployee[] = [
     status: "Active",
   },
   {
-    avatar: "/assets/generated/image/avatar?w=200&h=200&u=24",
+    avatar: "/assets/generated/avatar-24.jpg",
     department: "Product",
     email: "yuki.tanaka@company.com",
     id: 5,
@@ -99,7 +99,7 @@ const bulkEmployees: BulkEmployee[] = [
     status: "Inactive",
   },
   {
-    avatar: "/assets/generated/image/avatar?w=200&h=200&u=25",
+    avatar: "/assets/generated/avatar-25.jpg",
     department: "Support",
     email: "amara.okafor@company.com",
     id: 6,
@@ -108,7 +108,7 @@ const bulkEmployees: BulkEmployee[] = [
     status: "Pending",
   },
   {
-    avatar: "/assets/generated/image/avatar?w=200&h=200&u=26",
+    avatar: "/assets/generated/avatar-26.jpg",
     department: "Engineering",
     email: "luca.bianchi@company.com",
     id: 7,

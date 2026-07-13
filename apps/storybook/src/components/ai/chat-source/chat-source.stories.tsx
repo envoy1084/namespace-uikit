@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { ChatMessage, ChatSource, ChatSources } from "./index";
 const favicon = (url: string) =>
-  `https://www.google.com/s2/favicons?domain_url=${encodeURIComponent(url)}&sz=64`;
+  `/assets/favicons/${new URL(url).hostname.replaceAll(".", "-")}.png`;
 const Assistant = ({ children }: { children: React.ReactNode }) => (
   <ChatMessage.Assistant>
     <ChatMessage.Avatar show alt="Assistant" fallback="AI" />
@@ -23,10 +23,10 @@ export const Default: Story = {
         Here is an answer backed by a single web source.
       </ChatMessage.Content>
       <ChatSource
-        description="HeroUI Pro ships presentation-only AI chat compounds for React."
-        faviconUrl={favicon("https://heroui.com")}
-        href="https://heroui.com"
-        title="HeroUI Pro"
+        description="Namespace UIKit ships presentation-only AI chat compounds for React."
+        faviconUrl={favicon("https://namespace.ninja")}
+        href="https://namespace.ninja"
+        title="Namespace UIKit"
       />
     </Assistant>
   ),
@@ -52,12 +52,12 @@ export const Grouped: Story = {
         <ChatSources.Content>
           <ChatSources.List>
             <ChatSource
-              faviconUrl={favicon("https://heroui.com")}
-              href="https://heroui.com"
-              title="HeroUI"
+              faviconUrl={favicon("https://namespace.ninja")}
+              href="https://namespace.ninja"
+              title="Namespace"
             />
             <ChatSource
-              description="Tailwind Variants powers slot-based styling in Pro components."
+              description="Tailwind Variants powers slot-based styling in UIKit components."
               faviconUrl={favicon("https://tailwind-variants.org")}
               href="https://tailwind-variants.org"
               title="Tailwind Variants"

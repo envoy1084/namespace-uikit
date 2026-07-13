@@ -59,7 +59,7 @@ const Template = (props: Disclosure["RootProps"]) => {
             <img
               alt="Expo Go QR Code"
               className="aspect-square w-full max-w-54 object-cover"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/qr-code-native.png"
+              src="/assets/images/qr-code-native.png"
             />
             <p className="text-muted text-sm">
               Expo must be installed on your device.

@@ -22,7 +22,8 @@
     "sync:getting-started": "node scripts/sync-heroui-getting-started.mjs",
     "typecheck": "tsc --noEmit",
     "typegen": "next typegen",
-    "verify": "node scripts/verify-docs.mjs"
+    "verify": "node scripts/verify-docs.mjs && node scripts/verify-assets.mjs",
+    "verify:assets": "node scripts/verify-assets.mjs"
   },
   "dependencies": {
     "@gravity-ui/icons": "2.16.0",
