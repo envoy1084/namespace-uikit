@@ -124,13 +124,13 @@ export function DemoShowcase() {
                   size: "sm",
                   variant: "ghost",
                 })}
-                href="/docs/getting-started/theming"
+                href="/themes"
               >
                 <Palette className="size-4" />
               </LinkRoot>
             </Tooltip.Trigger>
             <Tooltip.Content className="py-0">
-              Open theming docs
+              Open theme builder
             </Tooltip.Content>
           </Tooltip>
         </div>

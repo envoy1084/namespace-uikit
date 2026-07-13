@@ -22,6 +22,12 @@ export default function Layout({ children }: { children: ReactNode }) {
           url: "/docs/components",
         },
         {
+          active: "nested-url",
+          on: "nav",
+          text: "Themes",
+          url: "/themes",
+        },
+        {
           children: <GitHubLink />,
           on: "nav",
           secondary: true,
