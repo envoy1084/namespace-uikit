@@ -10,7 +10,12 @@ import {
   Separator,
   useDisclosureGroupNavigation,
 } from "@thenamespace/uikit";
-import { ChevronDown, ChevronUp, QrCode } from "@thenamespace/uikit/icons";
+import {
+  ArrowDown01Icon,
+  ArrowUp01Icon,
+  QrCodeIcon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 import { cn } from "tailwind-variants";
 
 export function Controlled() {
@@ -39,7 +44,7 @@ export function Controlled() {
               variant="secondary"
               onPress={onPrevious}
             >
-              <ChevronUp className="size-4" />
+              <HugeiconsIcon icon={ArrowUp01Icon} className="size-4" />
             </Button>
             <Button
               aria-label="Next disclosure"
@@ -48,7 +53,7 @@ export function Controlled() {
               variant="secondary"
               onPress={onNext}
             >
-              <ChevronDown className="size-4" />
+              <HugeiconsIcon icon={ArrowDown01Icon} className="size-4" />
             </Button>
           </div>
         </div>
@@ -66,7 +71,7 @@ export function Controlled() {
                 })}
               >
                 <div className="flex w-full items-center justify-start gap-2">
-                  <QrCode />
+                  <HugeiconsIcon icon={QrCodeIcon} />
                   Preview Namespace UIKit Native
                 </div>
                 <Disclosure.Indicator className="text-muted" />

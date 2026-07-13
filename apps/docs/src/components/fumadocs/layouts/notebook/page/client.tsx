@@ -17,9 +17,10 @@ import {
 } from "react";
 
 import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
+  ArrowDown01Icon,
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 import { getBreadcrumbItemsFromPath } from "fumadocs-core/breadcrumb";
 import { usePathname } from "fumadocs-core/framework";
@@ -152,7 +153,8 @@ export function PageTOCPopoverTrigger({
           {items[selected]?.title}
         </span>
       </span>
-      <ChevronDown
+      <HugeiconsIcon
+        icon={ArrowDown01Icon}
         className={cn(
           "mx-0.5 shrink-0 transition-transform",
           open && "rotate-180",
@@ -303,7 +305,7 @@ export function PageFooter({ items, ...props }: FooterProps) {
 
 function FooterItem({ index, item }: { item: Item; index: 0 | 1 }) {
   const { text } = useI18n();
-  const Icon = index === 0 ? ChevronLeft : ChevronRight;
+  const Icon = index === 0 ? ArrowLeft01Icon : ArrowRight01Icon;
 
   return (
     <Link
@@ -319,7 +321,10 @@ function FooterItem({ index, item }: { item: Item; index: 0 | 1 }) {
           index === 1 && "flex-row-reverse",
         )}
       >
-        <Icon className="-mx-1 size-4 shrink-0 rtl:rotate-180" />
+        <HugeiconsIcon
+          className="-mx-1 size-4 shrink-0 rtl:rotate-180"
+          icon={Icon}
+        />
         <p>{item.name}</p>
       </div>
       <p className="text-fd-muted-foreground truncate">
@@ -365,7 +370,12 @@ export function PageBreadcrumb({
 
         return (
           <Fragment key={i}>
-            {i !== 0 && <ChevronRight className="size-3.5 shrink-0" />}
+            {i !== 0 && (
+              <HugeiconsIcon
+                icon={ArrowRight01Icon}
+                className="size-3.5 shrink-0"
+              />
+            )}
             {item.url ? (
               <Link
                 className={cn(className, "transition-opacity hover:opacity-80")}

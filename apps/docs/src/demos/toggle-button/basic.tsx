@@ -1,10 +1,10 @@
 import { ToggleButton } from "@thenamespace/uikit";
-import { Heart } from "@thenamespace/uikit/icons";
+import { FavouriteIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Basic() {
   return (
     <ToggleButton>
-      <Heart />
+      <HugeiconsIcon icon={FavouriteIcon} />
       Like
     </ToggleButton>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertDialog, Button } from "@thenamespace/uikit";
-import { LockOpen } from "@thenamespace/uikit/icons";
+import { SquareUnlock01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomIcon() {
   return (
@@ -13,7 +13,7 @@ export function CustomIcon() {
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="warning">
-                <LockOpen className="size-5" />
+                <HugeiconsIcon icon={SquareUnlock01Icon} className="size-5" />
               </AlertDialog.Icon>
               <AlertDialog.Heading>Reset your password?</AlertDialog.Heading>
             </AlertDialog.Header>

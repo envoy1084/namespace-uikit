@@ -7,11 +7,12 @@ import {
   Toolbar,
 } from "@thenamespace/uikit";
 import {
-  Bold,
-  Copy,
-  Italic,
-  Scissors,
-  Underline,
+  TextBoldIcon,
+  Copy01Icon,
+  TextItalicIcon,
+  ScissorIcon,
+  TextUnderlineIcon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function Basic() {
@@ -19,25 +20,25 @@ export function Basic() {
     <Toolbar aria-label="Text formatting">
       <ToggleButtonGroup aria-label="Text style" selectionMode="multiple">
         <ToggleButton isIconOnly aria-label="Bold" id="bold">
-          <Bold />
+          <HugeiconsIcon icon={TextBoldIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Italic" id="italic">
           <ToggleButtonGroup.Separator />
-          <Italic />
+          <HugeiconsIcon icon={TextItalicIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Underline" id="underline">
           <ToggleButtonGroup.Separator />
-          <Underline />
+          <HugeiconsIcon icon={TextUnderlineIcon} />
         </ToggleButton>
       </ToggleButtonGroup>
       <Separator />
       <ButtonGroup variant="tertiary">
         <Button isIconOnly aria-label="Copy">
-          <Copy />
+          <HugeiconsIcon icon={Copy01Icon} />
         </Button>
         <Button isIconOnly aria-label="Cut">
           <ButtonGroup.Separator />
-          <Scissors />
+          <HugeiconsIcon icon={ScissorIcon} />
         </Button>
       </ButtonGroup>
     </Toolbar>

@@ -7,7 +7,10 @@ import {
   ListBox,
   Surface,
 } from "@thenamespace/uikit";
-import { Check } from "@thenamespace/uikit/icons";
+import {
+  CheckmarkSquare02Icon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function CustomCheckIcon() {
   return (
@@ -25,7 +28,10 @@ export function CustomCheckIcon() {
           <ListBox.ItemIndicator>
             {({ isSelected }) =>
               isSelected ? (
-                <Check className="text-accent-soft-foreground size-4" />
+                <HugeiconsIcon
+                  icon={CheckmarkSquare02Icon}
+                  className="text-accent-soft-foreground size-4"
+                />
               ) : null
             }
           </ListBox.ItemIndicator>
@@ -42,7 +48,10 @@ export function CustomCheckIcon() {
           <ListBox.ItemIndicator>
             {({ isSelected }) =>
               isSelected ? (
-                <Check className="text-accent-soft-foreground size-4" />
+                <HugeiconsIcon
+                  icon={CheckmarkSquare02Icon}
+                  className="text-accent-soft-foreground size-4"
+                />
               ) : null
             }
           </ListBox.ItemIndicator>
@@ -59,7 +68,10 @@ export function CustomCheckIcon() {
           <ListBox.ItemIndicator>
             {({ isSelected }) =>
               isSelected ? (
-                <Check className="text-accent-soft-foreground size-4" />
+                <HugeiconsIcon
+                  icon={CheckmarkSquare02Icon}
+                  className="text-accent-soft-foreground size-4"
+                />
               ) : null
             }
           </ListBox.ItemIndicator>

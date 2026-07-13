@@ -2,10 +2,11 @@
 
 import { Button, Description, Dropdown, Kbd, Label } from "@thenamespace/uikit";
 import {
-  FloppyDisk,
-  FolderOpen,
-  SquarePlus,
-  TrashBin,
+  FloppyDiskIcon,
+  FolderOpenIcon,
+  AddSquareIcon,
+  Delete02Icon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function WithDescriptions() {
@@ -18,7 +19,10 @@ export function WithDescriptions() {
         <Dropdown.Menu onAction={(key) => console.log(`Selected: ${key}`)}>
           <Dropdown.Item id="new-file" textValue="New file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <SquarePlus className="text-muted size-4 shrink-0" />
+              <HugeiconsIcon
+                icon={AddSquareIcon}
+                className="text-muted size-4 shrink-0"
+              />
             </div>
             <div className="flex flex-col">
               <Label>New file</Label>
@@ -31,7 +35,10 @@ export function WithDescriptions() {
           </Dropdown.Item>
           <Dropdown.Item id="open-file" textValue="Open file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <FolderOpen className="text-muted size-4 shrink-0" />
+              <HugeiconsIcon
+                icon={FolderOpenIcon}
+                className="text-muted size-4 shrink-0"
+              />
             </div>
             <div className="flex flex-col">
               <Label>Open file</Label>
@@ -44,7 +51,10 @@ export function WithDescriptions() {
           </Dropdown.Item>
           <Dropdown.Item id="save-file" textValue="Save file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <FloppyDisk className="text-muted size-4 shrink-0" />
+              <HugeiconsIcon
+                icon={FloppyDiskIcon}
+                className="text-muted size-4 shrink-0"
+              />
             </div>
             <div className="flex flex-col">
               <Label>Save file</Label>
@@ -61,7 +71,10 @@ export function WithDescriptions() {
             variant="danger"
           >
             <div className="flex h-8 items-start justify-center pt-px">
-              <TrashBin className="text-danger size-4 shrink-0" />
+              <HugeiconsIcon
+                icon={Delete02Icon}
+                className="text-danger size-4 shrink-0"
+              />
             </div>
             <div className="flex flex-col">
               <Label>Delete file</Label>

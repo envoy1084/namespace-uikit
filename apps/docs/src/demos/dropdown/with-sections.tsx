@@ -10,17 +10,18 @@ import {
   Separator,
 } from "@thenamespace/uikit";
 import {
-  EllipsisVertical,
-  Pencil,
-  SquarePlus,
-  TrashBin,
+  MoreVerticalIcon,
+  PencilEdit01Icon,
+  AddSquareIcon,
+  Delete02Icon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function WithSections() {
   return (
     <Dropdown>
       <Button isIconOnly aria-label="Menu" variant="secondary">
-        <EllipsisVertical className="outline-none" />
+        <HugeiconsIcon icon={MoreVerticalIcon} className="outline-none" />
       </Button>
       <Dropdown.Popover>
         <Dropdown.Menu onAction={(key) => console.log(`Selected: ${key}`)}>
@@ -28,7 +29,10 @@ export function WithSections() {
             <Header>Actions</Header>
             <Dropdown.Item id="new-file" textValue="New file">
               <div className="flex h-8 items-start justify-center pt-px">
-                <SquarePlus className="text-muted size-4 shrink-0" />
+                <HugeiconsIcon
+                  icon={AddSquareIcon}
+                  className="text-muted size-4 shrink-0"
+                />
               </div>
               <div className="flex flex-col">
                 <Label>New file</Label>
@@ -41,7 +45,10 @@ export function WithSections() {
             </Dropdown.Item>
             <Dropdown.Item id="edit-file" textValue="Edit file">
               <div className="flex h-8 items-start justify-center pt-px">
-                <Pencil className="text-muted size-4 shrink-0" />
+                <HugeiconsIcon
+                  icon={PencilEdit01Icon}
+                  className="text-muted size-4 shrink-0"
+                />
               </div>
               <div className="flex flex-col">
                 <Label>Edit file</Label>
@@ -62,7 +69,10 @@ export function WithSections() {
               variant="danger"
             >
               <div className="flex h-8 items-start justify-center pt-px">
-                <TrashBin className="text-danger size-4 shrink-0" />
+                <HugeiconsIcon
+                  icon={Delete02Icon}
+                  className="text-danger size-4 shrink-0"
+                />
               </div>
               <div className="flex flex-col">
                 <Label>Delete file</Label>

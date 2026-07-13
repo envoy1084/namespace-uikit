@@ -7,7 +7,11 @@ import {
   Button,
   useDisclosureGroupNavigation,
 } from "@thenamespace/uikit";
-import { ChevronDown, ChevronUp } from "@thenamespace/uikit/icons";
+import {
+  ArrowDown01Icon,
+  ArrowUp01Icon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 const items = [
   {
@@ -57,7 +61,7 @@ export function Controlled() {
             variant="secondary"
             onPress={onPrevious}
           >
-            <ChevronUp className="size-4" />
+            <HugeiconsIcon icon={ArrowUp01Icon} className="size-4" />
           </Button>
           <Button
             aria-label="Next item"
@@ -66,7 +70,7 @@ export function Controlled() {
             variant="secondary"
             onPress={onNext}
           >
-            <ChevronDown className="size-4" />
+            <HugeiconsIcon icon={ArrowDown01Icon} className="size-4" />
           </Button>
         </div>
       </div>

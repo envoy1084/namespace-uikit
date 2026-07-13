@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { Button, InputGroup, Label, TextField } from "@thenamespace/uikit";
-import { Eye, EyeSlash } from "@thenamespace/uikit/icons";
+import { EyeIcon, ViewOffIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function PasswordWithToggle() {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,9 +26,9 @@ export function PasswordWithToggle() {
             onPress={() => setIsVisible(!isVisible)}
           >
             {isVisible ? (
-              <Eye className="size-4" />
+              <HugeiconsIcon icon={EyeIcon} className="size-4" />
             ) : (
-              <EyeSlash className="size-4" />
+              <HugeiconsIcon icon={ViewOffIcon} className="size-4" />
             )}
           </Button>
         </InputGroup.Suffix>

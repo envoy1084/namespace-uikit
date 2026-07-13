@@ -1,7 +1,7 @@
 "use client";
 
 import { ComboBox, Input, Label, ListBox } from "@thenamespace/uikit";
-import { ChevronsExpandVertical } from "@thenamespace/uikit/icons";
+import { UnfoldMoreIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomIndicator() {
   return (
@@ -10,7 +10,7 @@ export function CustomIndicator() {
       <ComboBox.InputGroup>
         <Input placeholder="Search animals..." />
         <ComboBox.Trigger className="size-3">
-          <ChevronsExpandVertical />
+          <HugeiconsIcon icon={UnfoldMoreIcon} />
         </ComboBox.Trigger>
       </ComboBox.InputGroup>
       <ComboBox.Popover>

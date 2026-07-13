@@ -1,5 +1,5 @@
 import { Avatar, Button, Card, CloseButton, Link } from "@thenamespace/uikit";
-import { CircleDollar } from "@thenamespace/uikit/icons";
+import { DollarCircleIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function WithImages() {
   return (
@@ -51,7 +51,8 @@ export function WithImages() {
                 <CloseButton aria-label="Close notification" />
               </div>
               <Card.Header className="gap-3">
-                <CircleDollar
+                <HugeiconsIcon
+                  icon={DollarCircleIcon}
                   aria-label="Dollar sign icon"
                   className="text-primary size-8 shrink-0"
                   role="img"

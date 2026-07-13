@@ -12,7 +12,7 @@ import {
   TextArea,
   TextField,
 } from "@thenamespace/uikit";
-import { FloppyDisk } from "@thenamespace/uikit/icons";
+import { FloppyDiskIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Basic() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -73,7 +73,7 @@ export function Basic() {
         </FieldGroup>
         <Fieldset.Actions>
           <Button type="submit">
-            <FloppyDisk />
+            <HugeiconsIcon icon={FloppyDiskIcon} />
             Save changes
           </Button>
           <Button type="reset" variant="secondary">

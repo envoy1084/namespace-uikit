@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { ToggleButton } from "@thenamespace/uikit";
-import { Heart, HeartFill } from "@thenamespace/uikit/icons";
+import { FavouriteIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Controlled() {
   const [isSelected, setIsSelected] = useState(false);
@@ -13,7 +13,11 @@ export function Controlled() {
       <ToggleButton isSelected={isSelected} onChange={setIsSelected}>
         {({ isSelected: selected }) => (
           <>
-            {selected ? <HeartFill /> : <Heart />}
+            {selected ? (
+              <HugeiconsIcon icon={FavouriteIcon} />
+            ) : (
+              <HugeiconsIcon icon={FavouriteIcon} />
+            )}
             {selected ? "Liked" : "Like"}
           </>
         )}

@@ -1,5 +1,9 @@
 import { Avatar, Chip, Tooltip } from "@thenamespace/uikit";
-import { CircleCheckFill, CircleQuestion } from "@thenamespace/uikit/icons";
+import {
+  CheckmarkCircle02Icon,
+  HelpCircleIcon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function TooltipCustomTrigger() {
   return (
@@ -23,7 +27,7 @@ export function TooltipCustomTrigger() {
       <Tooltip delay={0}>
         <Tooltip.Trigger aria-label="Status chip">
           <Chip color="success">
-            <CircleCheckFill width={12} />
+            <HugeiconsIcon icon={CheckmarkCircle02Icon} width={12} />
             <Chip.Label>Active</Chip.Label>
           </Chip>
         </Tooltip.Trigger>
@@ -39,7 +43,10 @@ export function TooltipCustomTrigger() {
       <Tooltip delay={0}>
         <Tooltip.Trigger aria-label="Info icon">
           <div className="bg-accent-soft rounded-full p-2">
-            <CircleQuestion className="text-accent-soft-foreground" />
+            <HugeiconsIcon
+              icon={HelpCircleIcon}
+              className="text-accent-soft-foreground"
+            />
           </div>
         </Tooltip.Trigger>
         <Tooltip.Content showArrow>

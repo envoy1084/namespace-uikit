@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Modal } from "@thenamespace/uikit";
-import { Rocket } from "@thenamespace/uikit/icons";
+import { Rocket01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Default() {
   return (
@@ -13,7 +13,7 @@ export function Default() {
             <Modal.CloseTrigger />
             <Modal.Header>
               <Modal.Icon className="bg-default text-foreground">
-                <Rocket className="size-5" />
+                <HugeiconsIcon icon={Rocket01Icon} className="size-5" />
               </Modal.Icon>
               <Modal.Heading>Welcome to Namespace UIKit</Modal.Heading>
             </Modal.Header>

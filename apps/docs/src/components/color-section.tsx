@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { Chip, Tooltip, toast } from "@thenamespace/uikit";
-import { Gear } from "@thenamespace/uikit/icons";
+import { Settings01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { converter, parse } from "culori";
 
 import { cn } from "@/utils/cn";
@@ -121,7 +121,7 @@ function ThemeChip({ theme }: { theme: "Light" | "Dark" }) {
   return (
     <div>
       <Chip size="sm">
-        <Gear className="size-3.5" />
+        <HugeiconsIcon icon={Settings01Icon} className="size-3.5" />
         <Chip.Label>{theme}</Chip.Label>
       </Chip>
     </div>

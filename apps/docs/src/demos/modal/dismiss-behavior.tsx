@@ -1,7 +1,10 @@
 "use client";
 
 import { Button, Modal } from "@thenamespace/uikit";
-import { CircleInfo } from "@thenamespace/uikit/icons";
+import {
+  InformationCircleIcon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function DismissBehavior() {
   return (
@@ -21,7 +24,10 @@ export function DismissBehavior() {
                 <Modal.CloseTrigger />
                 <Modal.Header>
                   <Modal.Icon className="bg-default text-foreground">
-                    <CircleInfo className="size-5" />
+                    <HugeiconsIcon
+                      icon={InformationCircleIcon}
+                      className="size-5"
+                    />
                   </Modal.Icon>
                   <Modal.Heading>isDismissable = false</Modal.Heading>
                   <p className="text-muted text-sm leading-5">
@@ -61,7 +67,10 @@ export function DismissBehavior() {
                 <Modal.CloseTrigger />
                 <Modal.Header>
                   <Modal.Icon className="bg-default text-foreground">
-                    <CircleInfo className="size-5" />
+                    <HugeiconsIcon
+                      icon={InformationCircleIcon}
+                      className="size-5"
+                    />
                   </Modal.Icon>
                   <Modal.Heading>
                     isKeyboardDismissDisabled = true

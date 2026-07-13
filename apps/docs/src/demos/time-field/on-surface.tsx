@@ -1,7 +1,7 @@
 "use client";
 
 import { Description, Label, Surface, TimeField } from "@thenamespace/uikit";
-import { Clock } from "@thenamespace/uikit/icons";
+import { Clock01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function OnSurface() {
   return (
@@ -19,7 +19,7 @@ export function OnSurface() {
         <Label>Appointment time</Label>
         <TimeField.Group variant="secondary">
           <TimeField.Prefix>
-            <Clock className="text-muted size-4" />
+            <HugeiconsIcon icon={Clock01Icon} className="text-muted size-4" />
           </TimeField.Prefix>
           <TimeField.Input>
             {(segment) => <TimeField.Segment segment={segment} />}

@@ -7,7 +7,7 @@ import {
   Surface,
   TextField,
 } from "@thenamespace/uikit";
-import { Envelope } from "@thenamespace/uikit/icons";
+import { Mail01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function OnSurface() {
   return (
@@ -16,7 +16,7 @@ export function OnSurface() {
         <Label>Email address</Label>
         <InputGroup variant="secondary">
           <InputGroup.Prefix>
-            <Envelope className="text-muted size-4" />
+            <HugeiconsIcon icon={Mail01Icon} className="text-muted size-4" />
           </InputGroup.Prefix>
           <InputGroup.Input
             className="w-full max-w-[280px]"

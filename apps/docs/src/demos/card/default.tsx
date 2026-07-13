@@ -1,10 +1,11 @@
 import { Card, Link } from "@thenamespace/uikit";
-import { CircleDollar } from "@thenamespace/uikit/icons";
+import { DollarCircleIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Default() {
   return (
     <Card className="w-[400px]">
-      <CircleDollar
+      <HugeiconsIcon
+        icon={DollarCircleIcon}
         aria-label="Dollar sign icon"
         className="text-primary size-6"
         role="img"

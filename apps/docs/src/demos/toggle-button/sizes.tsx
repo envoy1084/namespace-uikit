@@ -1,32 +1,32 @@
 import { ToggleButton } from "@thenamespace/uikit";
-import { Heart } from "@thenamespace/uikit/icons";
+import { FavouriteIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Sizes() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-3">
         <ToggleButton size="sm">
-          <Heart />
+          <HugeiconsIcon icon={FavouriteIcon} />
           Small
         </ToggleButton>
         <ToggleButton size="md">
-          <Heart />
+          <HugeiconsIcon icon={FavouriteIcon} />
           Medium
         </ToggleButton>
         <ToggleButton size="lg">
-          <Heart />
+          <HugeiconsIcon icon={FavouriteIcon} />
           Large
         </ToggleButton>
       </div>
       <div className="flex items-center gap-3">
         <ToggleButton isIconOnly aria-label="Like" size="sm">
-          <Heart />
+          <HugeiconsIcon icon={FavouriteIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Like" size="md">
-          <Heart />
+          <HugeiconsIcon icon={FavouriteIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Like" size="lg">
-          <Heart />
+          <HugeiconsIcon icon={FavouriteIcon} />
         </ToggleButton>
       </div>
     </div>

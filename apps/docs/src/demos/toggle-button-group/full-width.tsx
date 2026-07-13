@@ -1,12 +1,13 @@
 import { ToggleButton, ToggleButtonGroup } from "@thenamespace/uikit";
 import {
-  Bold,
-  Italic,
-  Strikethrough,
-  TextAlignCenter,
-  TextAlignLeft,
-  TextAlignRight,
-  Underline,
+  TextBoldIcon,
+  TextItalicIcon,
+  TextStrikethroughIcon,
+  TextAlignCenterIcon,
+  TextAlignLeftIcon,
+  TextAlignRightIcon,
+  TextUnderlineIcon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function FullWidth() {
@@ -14,34 +15,34 @@ export function FullWidth() {
     <div className="w-full max-w-md space-y-3">
       <ToggleButtonGroup fullWidth selectionMode="multiple">
         <ToggleButton isIconOnly aria-label="Bold" id="bold">
-          <Bold />
+          <HugeiconsIcon icon={TextBoldIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Italic" id="italic">
           <ToggleButtonGroup.Separator />
-          <Italic />
+          <HugeiconsIcon icon={TextItalicIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Underline" id="underline">
           <ToggleButtonGroup.Separator />
-          <Underline />
+          <HugeiconsIcon icon={TextUnderlineIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
           <ToggleButtonGroup.Separator />
-          <Strikethrough />
+          <HugeiconsIcon icon={TextStrikethroughIcon} />
         </ToggleButton>
       </ToggleButtonGroup>
       <ToggleButtonGroup fullWidth selectionMode="single">
         <ToggleButton id="left">
-          <TextAlignLeft />
+          <HugeiconsIcon icon={TextAlignLeftIcon} />
           Left
         </ToggleButton>
         <ToggleButton id="center">
           <ToggleButtonGroup.Separator />
-          <TextAlignCenter />
+          <HugeiconsIcon icon={TextAlignCenterIcon} />
           Center
         </ToggleButton>
         <ToggleButton id="right">
           <ToggleButtonGroup.Separator />
-          <TextAlignRight />
+          <HugeiconsIcon icon={TextAlignRightIcon} />
           Right
         </ToggleButton>
       </ToggleButtonGroup>

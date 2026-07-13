@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Modal } from "@thenamespace/uikit";
-import { Sparkles } from "@thenamespace/uikit/icons";
+import { SparklesIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomBackdrop() {
   return (
@@ -15,7 +15,7 @@ export function CustomBackdrop() {
           <Modal.Dialog className="sm:max-w-[360px]">
             <Modal.Header className="items-center text-center">
               <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                <Sparkles className="size-5" />
+                <HugeiconsIcon icon={SparklesIcon} className="size-5" />
               </Modal.Icon>
               <Modal.Heading>Premium Backdrop</Modal.Heading>
             </Modal.Header>

@@ -1,13 +1,17 @@
 import { Avatar, Separator } from "@thenamespace/uikit";
-import { Person } from "@thenamespace/uikit/icons";
+import { UserIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Variants() {
   const colors = ["accent", "default", "success", "warning", "danger"] as const;
   const variants = [
     { content: "AG", label: "letter", type: "letter" },
     { content: "AG", label: "letter soft", type: "letter-soft" },
-    { content: <Person />, label: "icon", type: "icon" },
-    { content: <Person />, label: "icon soft", type: "icon-soft" },
+    { content: <HugeiconsIcon icon={UserIcon} />, label: "icon", type: "icon" },
+    {
+      content: <HugeiconsIcon icon={UserIcon} />,
+      label: "icon soft",
+      type: "icon-soft",
+    },
     {
       content: [
         "/assets/generated/avatar-3.jpg",

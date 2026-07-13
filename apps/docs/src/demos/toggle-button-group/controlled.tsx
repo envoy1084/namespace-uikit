@@ -6,10 +6,11 @@ import { useState } from "react";
 
 import { ToggleButton, ToggleButtonGroup } from "@thenamespace/uikit";
 import {
-  Bold,
-  Italic,
-  Strikethrough,
-  Underline,
+  TextBoldIcon,
+  TextItalicIcon,
+  TextStrikethroughIcon,
+  TextUnderlineIcon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function Controlled() {
@@ -23,19 +24,19 @@ export function Controlled() {
         onSelectionChange={setSelectedKeys}
       >
         <ToggleButton isIconOnly aria-label="Bold" id="bold">
-          <Bold />
+          <HugeiconsIcon icon={TextBoldIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Italic" id="italic">
           <ToggleButtonGroup.Separator />
-          <Italic />
+          <HugeiconsIcon icon={TextItalicIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Underline" id="underline">
           <ToggleButtonGroup.Separator />
-          <Underline />
+          <HugeiconsIcon icon={TextUnderlineIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
           <ToggleButtonGroup.Separator />
-          <Strikethrough />
+          <HugeiconsIcon icon={TextStrikethroughIcon} />
         </ToggleButton>
       </ToggleButtonGroup>
       <p className="text-muted text-sm">

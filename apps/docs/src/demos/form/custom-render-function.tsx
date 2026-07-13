@@ -9,7 +9,10 @@ import {
   Label,
   TextField,
 } from "@thenamespace/uikit";
-import { Check } from "@thenamespace/uikit/icons";
+import {
+  CheckmarkSquare02Icon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function CustomRenderFunction() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -77,7 +80,7 @@ export function CustomRenderFunction() {
 
       <div className="flex gap-2">
         <Button type="submit">
-          <Check />
+          <HugeiconsIcon icon={CheckmarkSquare02Icon} />
           Submit
         </Button>
         <Button type="reset" variant="secondary">

@@ -2,43 +2,44 @@
 
 import { Switch } from "@thenamespace/uikit";
 import {
-  BellFill,
-  BellSlash,
-  Check,
-  Microphone,
-  MicrophoneSlash,
-  Moon,
-  Power,
-  Sun,
-  VolumeFill,
-  VolumeSlashFill,
+  Notification01Icon,
+  NotificationOff01Icon,
+  CheckmarkSquare02Icon,
+  Mic01Icon,
+  MicOff01Icon,
+  Moon02Icon,
+  PowerServiceIcon,
+  Sun01Icon,
+  VolumeHighIcon,
+  VolumeOffIcon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function WithIcons() {
   const icons = {
     check: {
-      off: Power,
-      on: Check,
+      off: PowerServiceIcon,
+      on: CheckmarkSquare02Icon,
       selectedControlClass: "bg-green-500/80",
     },
     darkMode: {
-      off: Moon,
-      on: Sun,
+      off: Moon02Icon,
+      on: Sun01Icon,
       selectedControlClass: "",
     },
     microphone: {
-      off: Microphone,
-      on: MicrophoneSlash,
+      off: Mic01Icon,
+      on: MicOff01Icon,
       selectedControlClass: "bg-red-500/80",
     },
     notification: {
-      off: BellSlash,
-      on: BellFill,
+      off: NotificationOff01Icon,
+      on: Notification01Icon,
       selectedControlClass: "bg-purple-500/80",
     },
     volume: {
-      off: VolumeFill,
-      on: VolumeSlashFill,
+      off: VolumeHighIcon,
+      on: VolumeOffIcon,
       selectedControlClass: "bg-blue-500/80",
     },
   };
@@ -54,11 +55,14 @@ export function WithIcons() {
               >
                 <Switch.Thumb>
                   <Switch.Icon>
-                    {isSelected ? (
-                      <value.on className="size-3 text-inherit opacity-100" />
-                    ) : (
-                      <value.off className="size-3 text-inherit opacity-70" />
-                    )}
+                    <HugeiconsIcon
+                      className={
+                        isSelected
+                          ? "size-3 text-inherit opacity-100"
+                          : "size-3 text-inherit opacity-70"
+                      }
+                      icon={isSelected ? value.on : value.off}
+                    />
                   </Switch.Icon>
                 </Switch.Thumb>
               </Switch.Control>

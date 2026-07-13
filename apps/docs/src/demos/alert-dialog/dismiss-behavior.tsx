@@ -1,7 +1,10 @@
 "use client";
 
 import { AlertDialog, Button } from "@thenamespace/uikit";
-import { CircleInfo } from "@thenamespace/uikit/icons";
+import {
+  InformationCircleIcon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function DismissBehavior() {
   return (
@@ -22,7 +25,10 @@ export function DismissBehavior() {
                 <AlertDialog.CloseTrigger />
                 <AlertDialog.Header>
                   <AlertDialog.Icon status="danger">
-                    <CircleInfo className="size-5" />
+                    <HugeiconsIcon
+                      icon={InformationCircleIcon}
+                      className="size-5"
+                    />
                   </AlertDialog.Icon>
                   <AlertDialog.Heading>
                     isDismissable = false
@@ -65,7 +71,10 @@ export function DismissBehavior() {
                 <AlertDialog.CloseTrigger />
                 <AlertDialog.Header>
                   <AlertDialog.Icon status="accent">
-                    <CircleInfo className="size-5" />
+                    <HugeiconsIcon
+                      icon={InformationCircleIcon}
+                      className="size-5"
+                    />
                   </AlertDialog.Icon>
                   <AlertDialog.Heading>
                     isKeyboardDismissDisabled = true

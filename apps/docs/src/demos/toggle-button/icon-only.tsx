@@ -1,14 +1,18 @@
 import { ToggleButton } from "@thenamespace/uikit";
-import { Bookmark, Heart } from "@thenamespace/uikit/icons";
+import {
+  Bookmark01Icon,
+  FavouriteIcon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function IconOnly() {
   return (
     <div className="flex items-center gap-3">
       <ToggleButton isIconOnly aria-label="Like">
-        <Heart />
+        <HugeiconsIcon icon={FavouriteIcon} />
       </ToggleButton>
       <ToggleButton isIconOnly aria-label="Bookmark" variant="ghost">
-        <Bookmark />
+        <HugeiconsIcon icon={Bookmark01Icon} />
       </ToggleButton>
     </div>
   );

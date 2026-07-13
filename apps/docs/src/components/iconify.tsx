@@ -1,6 +1,6 @@
 import type { IconProps } from "@iconify/react";
 
-import type { ComponentType } from "react";
+import type { ComponentProps } from "react";
 import { forwardRef, useId, useMemo } from "react";
 
 import { Icon } from "@iconify/react";
@@ -114,6 +114,47 @@ const iconAliases: Record<string, string> = {
   wallet: "CreditCard",
 };
 
+const nativeIconAliases: Record<string, keyof typeof UIKitIcons> = {
+  ArrowRightFromSquare: "ArrowUpRight01Icon",
+  ArrowUpFromLine: "Upload01Icon",
+  ArrowUpRightFromSquare: "ArrowUpRight01Icon",
+  ArrowUturnCcwLeft: "RefreshIcon",
+  ArrowUturnCwRight: "RefreshIcon",
+  ArrowsRotateLeft: "RefreshIcon",
+  Ban: "UnavailableIcon",
+  Bars: "Menu01Icon",
+  BellFill: "Notification01Icon",
+  BellSlash: "NotificationOff01Icon",
+  ChevronsExpandVertical: "UnfoldMoreIcon",
+  CircleCheckFill: "CheckmarkCircle02Icon",
+  CircleChevronDown: "ArrowDown01Icon",
+  CircleDollar: "DollarCircleIcon",
+  CircleFill: "CircleIcon",
+  CircleInfo: "InformationCircleIcon",
+  CircleQuestion: "HelpCircleIcon",
+  CircleXmark: "CancelCircleIcon",
+  CircleXmarkFill: "CancelCircleIcon",
+  CodeFork: "GitForkIcon",
+  EyeSlash: "ViewOffIcon",
+  FloppyDisk: "FloppyDiskIcon",
+  HeartFill: "FavouriteIcon",
+  Magnifier: "Search01Icon",
+  MicrophoneSlash: "MicOff01Icon",
+  Persons: "UserGroupIcon",
+  PlanetEarth: "Globe02Icon",
+  PlugConnection: "Plug01Icon",
+  SquareArticle: "File02Icon",
+  SquarePlus: "AddSquareIcon",
+  TextAlignJustify: "TextAlignJustifyCenterIcon",
+  TextAlignLeft: "TextAlignLeftIcon",
+  TextAlignRight: "TextAlignRightIcon",
+  TrashBin: "Delete02Icon",
+  TriangleExclamation: "Alert01Icon",
+  VolumeFill: "VolumeHighIcon",
+  VolumeSlashFill: "VolumeOffIcon",
+  Xmark: "Cancel01Icon",
+};
+
 function toComponentName(name: string): string {
   return (
     iconAliases[name] ??
@@ -134,15 +175,25 @@ const Iconify = forwardRef<SVGSVGElement, IconifyProps>(
       }
 
       const componentName = toComponentName(iconName);
-      const HugeIcon = UIKitIcons[componentName as keyof typeof UIKitIcons] as
-        | ComponentType<Omit<IconProps, "icon">>
-        | undefined;
+      const nativeIconName =
+        nativeIconAliases[componentName] ??
+        (componentName as keyof typeof UIKitIcons);
+      const iconData = UIKitIcons[nativeIconName];
 
       if (
         (iconProp.startsWith("hugeicons:") || !iconProp.includes(":")) &&
-        typeof HugeIcon === "function"
+        Array.isArray(iconData)
       ) {
-        return <HugeIcon ref={ref} {...props} />;
+        return (
+          <UIKitIcons.HugeiconsIcon
+            ref={ref}
+            icon={iconData as UIKitIcons.IconSvgElement}
+            {...(props as Omit<
+              ComponentProps<typeof UIKitIcons.HugeiconsIcon>,
+              "icon"
+            >)}
+          />
+        );
       }
     }
 

@@ -1,5 +1,5 @@
 import { Avatar } from "@thenamespace/uikit";
-import { Person } from "@thenamespace/uikit/icons";
+import { UserIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Fallback() {
   return (
@@ -12,7 +12,7 @@ export function Fallback() {
       {/* Icon fallback */}
       <Avatar>
         <Avatar.Fallback>
-          <Person />
+          <HugeiconsIcon icon={UserIcon} />
         </Avatar.Fallback>
       </Avatar>
 

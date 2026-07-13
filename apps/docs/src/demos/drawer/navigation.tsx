@@ -1,33 +1,33 @@
-import type { ComponentType, SVGProps } from "react";
-
 import { Button, Drawer } from "@thenamespace/uikit";
 import {
-  Bars,
-  Bell,
-  Envelope,
-  Gear,
-  House,
-  Magnifier,
-  Person,
+  type IconSvgElement,
+  Menu01Icon,
+  Notification01Icon,
+  Mail01Icon,
+  Settings01Icon,
+  Home01Icon,
+  Search01Icon,
+  UserIcon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function Navigation() {
   const navItems: {
-    icon: ComponentType<SVGProps<SVGSVGElement>>;
+    icon: IconSvgElement;
     label: string;
   }[] = [
-    { icon: House, label: "Home" },
-    { icon: Magnifier, label: "Search" },
-    { icon: Bell, label: "Notifications" },
-    { icon: Envelope, label: "Messages" },
-    { icon: Person, label: "Profile" },
-    { icon: Gear, label: "Settings" },
+    { icon: Home01Icon, label: "Home" },
+    { icon: Search01Icon, label: "Search" },
+    { icon: Notification01Icon, label: "Notifications" },
+    { icon: Mail01Icon, label: "Messages" },
+    { icon: UserIcon, label: "Profile" },
+    { icon: Settings01Icon, label: "Settings" },
   ];
 
   return (
     <Drawer>
       <Button variant="secondary">
-        <Bars />
+        <HugeiconsIcon icon={Menu01Icon} />
         Menu
       </Button>
       <Drawer.Backdrop>
@@ -45,7 +45,10 @@ export function Navigation() {
                     className="text-foreground hover:bg-default flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors"
                     type="button"
                   >
-                    <item.icon className="text-muted size-5" />
+                    <HugeiconsIcon
+                      className="text-muted size-5"
+                      icon={item.icon}
+                    />
                     {item.label}
                   </button>
                 ))}

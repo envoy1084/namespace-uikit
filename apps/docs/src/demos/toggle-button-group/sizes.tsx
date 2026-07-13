@@ -1,9 +1,10 @@
 import { ToggleButton, ToggleButtonGroup } from "@thenamespace/uikit";
 import {
-  Bold,
-  Italic,
-  Strikethrough,
-  Underline,
+  TextBoldIcon,
+  TextItalicIcon,
+  TextStrikethroughIcon,
+  TextUnderlineIcon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function Sizes() {
@@ -13,15 +14,15 @@ export function Sizes() {
         <span className="text-muted text-sm">Small</span>
         <ToggleButtonGroup selectionMode="multiple" size="sm">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Bold />
+            <HugeiconsIcon icon={TextBoldIcon} />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Italic />
+            <HugeiconsIcon icon={TextItalicIcon} />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Underline />
+            <HugeiconsIcon icon={TextUnderlineIcon} />
           </ToggleButton>
           <ToggleButton
             isIconOnly
@@ -29,7 +30,7 @@ export function Sizes() {
             id="strikethrough"
           >
             <ToggleButtonGroup.Separator />
-            <Strikethrough />
+            <HugeiconsIcon icon={TextStrikethroughIcon} />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -37,15 +38,15 @@ export function Sizes() {
         <span className="text-muted text-sm">Medium (default)</span>
         <ToggleButtonGroup selectionMode="multiple" size="md">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Bold />
+            <HugeiconsIcon icon={TextBoldIcon} />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Italic />
+            <HugeiconsIcon icon={TextItalicIcon} />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Underline />
+            <HugeiconsIcon icon={TextUnderlineIcon} />
           </ToggleButton>
           <ToggleButton
             isIconOnly
@@ -53,7 +54,7 @@ export function Sizes() {
             id="strikethrough"
           >
             <ToggleButtonGroup.Separator />
-            <Strikethrough />
+            <HugeiconsIcon icon={TextStrikethroughIcon} />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -61,15 +62,15 @@ export function Sizes() {
         <span className="text-muted text-sm">Large</span>
         <ToggleButtonGroup selectionMode="multiple" size="lg">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Bold />
+            <HugeiconsIcon icon={TextBoldIcon} />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Italic />
+            <HugeiconsIcon icon={TextItalicIcon} />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Underline />
+            <HugeiconsIcon icon={TextUnderlineIcon} />
           </ToggleButton>
           <ToggleButton
             isIconOnly
@@ -77,7 +78,7 @@ export function Sizes() {
             id="strikethrough"
           >
             <ToggleButtonGroup.Separator />
-            <Strikethrough />
+            <HugeiconsIcon icon={TextStrikethroughIcon} />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>

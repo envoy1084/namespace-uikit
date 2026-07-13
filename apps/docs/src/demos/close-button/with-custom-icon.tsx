@@ -1,18 +1,22 @@
 import { CloseButton } from "@thenamespace/uikit";
-import { CircleXmark, Xmark } from "@thenamespace/uikit/icons";
+import {
+  CancelCircleIcon,
+  Cancel01Icon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function WithCustomIcon() {
   return (
     <div className="flex items-center gap-4">
       <div className="flex flex-col items-center gap-2">
         <CloseButton>
-          <CircleXmark />
+          <HugeiconsIcon icon={CancelCircleIcon} />
         </CloseButton>
         <span className="text-muted text-xs">Custom Icon</span>
       </div>
       <div className="flex flex-col items-center gap-2">
         <CloseButton>
-          <Xmark />
+          <HugeiconsIcon icon={Cancel01Icon} />
         </CloseButton>
         <span className="text-muted text-xs">Alternative Icon</span>
       </div>

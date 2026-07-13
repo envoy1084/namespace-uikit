@@ -7,11 +7,11 @@ import {
   Toolbar,
 } from "@thenamespace/uikit";
 import {
-  ArrowUturnCcwLeft,
-  ArrowUturnCwRight,
-  Bold,
-  Italic,
-  Underline,
+  RefreshIcon,
+  TextBoldIcon,
+  TextItalicIcon,
+  TextUnderlineIcon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function Vertical() {
@@ -19,25 +19,25 @@ export function Vertical() {
     <Toolbar aria-label="Tools" orientation="vertical">
       <ToggleButtonGroup aria-label="Text style" selectionMode="multiple">
         <ToggleButton isIconOnly aria-label="Bold" id="bold">
-          <Bold />
+          <HugeiconsIcon icon={TextBoldIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Italic" id="italic">
           <ToggleButtonGroup.Separator />
-          <Italic />
+          <HugeiconsIcon icon={TextItalicIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Underline" id="underline">
           <ToggleButtonGroup.Separator />
-          <Underline />
+          <HugeiconsIcon icon={TextUnderlineIcon} />
         </ToggleButton>
       </ToggleButtonGroup>
       <Separator />
       <ButtonGroup variant="tertiary">
         <Button isIconOnly aria-label="Undo">
-          <ArrowUturnCcwLeft />
+          <HugeiconsIcon icon={RefreshIcon} />
         </Button>
         <Button isIconOnly aria-label="Redo">
           <ButtonGroup.Separator />
-          <ArrowUturnCwRight />
+          <HugeiconsIcon icon={RefreshIcon} />
         </Button>
       </ButtonGroup>
     </Toolbar>

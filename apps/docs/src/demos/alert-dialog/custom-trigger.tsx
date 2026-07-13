@@ -1,14 +1,14 @@
 "use client";
 
 import { AlertDialog, Button } from "@thenamespace/uikit";
-import { TrashBin } from "@thenamespace/uikit/icons";
+import { Delete02Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomTrigger() {
   return (
     <AlertDialog>
       <AlertDialog.Trigger className="group bg-surface hover:bg-surface-secondary flex items-center gap-3 rounded-2xl p-4 shadow-xs select-none">
         <div className="bg-danger-soft text-danger-soft-foreground flex size-12 shrink-0 items-center justify-center rounded-xl">
-          <TrashBin className="size-6" />
+          <HugeiconsIcon icon={Delete02Icon} className="size-6" />
         </div>
         <div className="flex flex-1 flex-col gap-0.5">
           <p className="text-sm font-semibold">Delete Item</p>
@@ -21,7 +21,7 @@ export function CustomTrigger() {
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger">
-                <TrashBin className="size-5" />
+                <HugeiconsIcon icon={Delete02Icon} className="size-5" />
               </AlertDialog.Icon>
               <AlertDialog.Heading>Delete this item?</AlertDialog.Heading>
             </AlertDialog.Header>

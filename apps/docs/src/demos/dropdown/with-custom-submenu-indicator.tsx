@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Dropdown, Label } from "@thenamespace/uikit";
-import { ArrowRight } from "@thenamespace/uikit/icons";
+import { ArrowRight01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function WithCustomSubmenuIndicator() {
   return (
@@ -21,7 +21,10 @@ export function WithCustomSubmenuIndicator() {
             <Dropdown.Item id="share" textValue="Share">
               <Label>More options</Label>
               <Dropdown.SubmenuIndicator>
-                <ArrowRight className="text-muted size-3.5" />
+                <HugeiconsIcon
+                  icon={ArrowRight01Icon}
+                  className="text-muted size-3.5"
+                />
               </Dropdown.SubmenuIndicator>
             </Dropdown.Item>
             <Dropdown.Popover>

@@ -6,10 +6,10 @@ import React from "react";
 
 import { Accordion } from "@thenamespace/uikit";
 import {
-  ChevronsDown,
-  CircleChevronDown,
-  Minus,
-  Plus,
+  ArrowDown01Icon,
+  Remove01Icon,
+  Add01Icon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function CustomIndicator() {
@@ -29,7 +29,11 @@ export function CustomIndicator() {
           <Accordion.Trigger>
             Using Plus/Minus Icon
             <Accordion.Indicator>
-              {expandedKeys.has("1") ? <Minus /> : <Plus />}
+              {expandedKeys.has("1") ? (
+                <HugeiconsIcon icon={Remove01Icon} />
+              ) : (
+                <HugeiconsIcon icon={Add01Icon} />
+              )}
             </Accordion.Indicator>
           </Accordion.Trigger>
         </Accordion.Heading>
@@ -46,7 +50,7 @@ export function CustomIndicator() {
           <Accordion.Trigger>
             Using Caret Icon
             <Accordion.Indicator>
-              <CircleChevronDown />
+              <HugeiconsIcon icon={ArrowDown01Icon} />
             </Accordion.Indicator>
           </Accordion.Trigger>
         </Accordion.Heading>
@@ -63,7 +67,7 @@ export function CustomIndicator() {
           <Accordion.Trigger>
             Using Arrow Icon
             <Accordion.Indicator>
-              <ChevronsDown />
+              <HugeiconsIcon icon={ArrowDown01Icon} />
             </Accordion.Indicator>
           </Accordion.Trigger>
         </Accordion.Heading>

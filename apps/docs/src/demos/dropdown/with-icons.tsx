@@ -2,10 +2,11 @@
 
 import { Button, Dropdown, Kbd, Label } from "@thenamespace/uikit";
 import {
-  FloppyDisk,
-  FolderOpen,
-  SquarePlus,
-  TrashBin,
+  FloppyDiskIcon,
+  FolderOpenIcon,
+  AddSquareIcon,
+  Delete02Icon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function WithIcons() {
@@ -17,7 +18,10 @@ export function WithIcons() {
       <Dropdown.Popover>
         <Dropdown.Menu onAction={(key) => console.log(`Selected: ${key}`)}>
           <Dropdown.Item id="new-file" textValue="New file">
-            <SquarePlus className="text-muted size-4 shrink-0" />
+            <HugeiconsIcon
+              icon={AddSquareIcon}
+              className="text-muted size-4 shrink-0"
+            />
             <Label>New file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
               <Kbd.Abbr keyValue="command" />
@@ -25,7 +29,10 @@ export function WithIcons() {
             </Kbd>
           </Dropdown.Item>
           <Dropdown.Item id="open-file" textValue="Open file">
-            <FolderOpen className="text-muted size-4 shrink-0" />
+            <HugeiconsIcon
+              icon={FolderOpenIcon}
+              className="text-muted size-4 shrink-0"
+            />
             <Label>Open file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
               <Kbd.Abbr keyValue="command" />
@@ -33,7 +40,10 @@ export function WithIcons() {
             </Kbd>
           </Dropdown.Item>
           <Dropdown.Item id="save-file" textValue="Save file">
-            <FloppyDisk className="text-muted size-4 shrink-0" />
+            <HugeiconsIcon
+              icon={FloppyDiskIcon}
+              className="text-muted size-4 shrink-0"
+            />
             <Label>Save file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
               <Kbd.Abbr keyValue="command" />
@@ -45,7 +55,10 @@ export function WithIcons() {
             textValue="Delete file"
             variant="danger"
           >
-            <TrashBin className="text-danger size-4 shrink-0" />
+            <HugeiconsIcon
+              icon={Delete02Icon}
+              className="text-danger size-4 shrink-0"
+            />
             <Label>Delete file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
               <Kbd.Abbr keyValue="command" />

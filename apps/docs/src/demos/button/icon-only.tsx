@@ -1,17 +1,22 @@
 import { Button } from "@thenamespace/uikit";
-import { Ellipsis, Gear, TrashBin } from "@thenamespace/uikit/icons";
+import {
+  MoreHorizontalIcon,
+  Settings01Icon,
+  Delete02Icon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function IconOnly() {
   return (
     <div className="flex gap-3">
       <Button isIconOnly variant="tertiary">
-        <Ellipsis />
+        <HugeiconsIcon icon={MoreHorizontalIcon} />
       </Button>
       <Button isIconOnly variant="secondary">
-        <Gear />
+        <HugeiconsIcon icon={Settings01Icon} />
       </Button>
       <Button isIconOnly variant="danger">
-        <TrashBin />
+        <HugeiconsIcon icon={Delete02Icon} />
       </Button>
     </div>
   );

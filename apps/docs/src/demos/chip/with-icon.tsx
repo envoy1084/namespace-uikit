@@ -1,34 +1,35 @@
 import { Chip } from "@thenamespace/uikit";
 import {
-  ChevronDown,
-  CircleCheckFill,
-  CircleFill,
-  Clock,
-  Xmark,
+  ArrowDown01Icon,
+  CheckmarkCircle02Icon,
+  CircleIcon,
+  Clock01Icon,
+  Cancel01Icon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function ChipWithIcon() {
   return (
     <div className="flex flex-wrap items-center gap-3">
       <Chip>
-        <CircleFill width={6} />
+        <HugeiconsIcon icon={CircleIcon} width={6} />
         <Chip.Label>Information</Chip.Label>
       </Chip>
       <Chip color="success">
-        <CircleCheckFill width={12} />
+        <HugeiconsIcon icon={CheckmarkCircle02Icon} width={12} />
         <Chip.Label>Completed</Chip.Label>
       </Chip>
       <Chip color="warning">
-        <Clock width={12} />
+        <HugeiconsIcon icon={Clock01Icon} width={12} />
         <Chip.Label>Pending</Chip.Label>
       </Chip>
       <Chip color="danger">
-        <Xmark width={12} />
+        <HugeiconsIcon icon={Cancel01Icon} width={12} />
         <Chip.Label>Failed</Chip.Label>
       </Chip>
       <Chip color="accent">
         <Chip.Label>Label</Chip.Label>
-        <ChevronDown width={12} />
+        <HugeiconsIcon icon={ArrowDown01Icon} width={12} />
       </Chip>
     </div>
   );

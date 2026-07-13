@@ -7,22 +7,23 @@ import {
   Label,
 } from "@thenamespace/uikit";
 import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  CodeFork,
-  Ellipsis,
-  Picture,
-  Pin,
-  QrCode,
-  Star,
-  TextAlignCenter,
-  TextAlignJustify,
-  TextAlignLeft,
-  TextAlignRight,
-  ThumbsDown,
-  ThumbsUp,
-  Video,
+  ArrowDown01Icon,
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+  GitForkIcon,
+  MoreHorizontalIcon,
+  Image01Icon,
+  PinIcon,
+  QrCodeIcon,
+  StarIcon,
+  TextAlignCenterIcon,
+  TextAlignJustifyCenterIcon,
+  TextAlignLeftIcon,
+  TextAlignRightIcon,
+  ThumbsDownIcon,
+  ThumbsUpIcon,
+  Video01Icon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function Basic() {
@@ -35,7 +36,7 @@ export function Basic() {
           <Dropdown>
             <Button isIconOnly aria-label="More options">
               <ButtonGroup.Separator />
-              <ChevronDown />
+              <HugeiconsIcon icon={ArrowDown01Icon} />
             </Button>
             <Dropdown.Popover className="max-w-[290px]" placement="bottom end">
               <Dropdown.Menu>
@@ -83,7 +84,7 @@ export function Basic() {
         <div className="flex flex-wrap gap-x-2 gap-y-4">
           <ButtonGroup variant="tertiary">
             <Button>
-              <CodeFork className="size-3.5" />
+              <HugeiconsIcon icon={GitForkIcon} className="size-3.5" />
               Fork
               <Chip color="accent" size="sm" variant="soft">
                 24
@@ -91,12 +92,12 @@ export function Basic() {
             </Button>
             <Button isIconOnly>
               <ButtonGroup.Separator />
-              <ChevronDown />
+              <HugeiconsIcon icon={ArrowDown01Icon} />
             </Button>
           </ButtonGroup>
           <ButtonGroup variant="tertiary">
             <Button isIconOnly>
-              <QrCode />
+              <HugeiconsIcon icon={QrCodeIcon} />
             </Button>
             <Button>
               <ButtonGroup.Separator />
@@ -105,17 +106,17 @@ export function Basic() {
           </ButtonGroup>
           <ButtonGroup variant="tertiary">
             <Button>
-              <ThumbsUp />
+              <HugeiconsIcon icon={ThumbsUpIcon} />
               <span className="text-xs font-semibold">2.4K</span>
             </Button>
             <Button isIconOnly>
               <ButtonGroup.Separator />
-              <ThumbsDown />
+              <HugeiconsIcon icon={ThumbsDownIcon} />
             </Button>
           </ButtonGroup>
           <ButtonGroup variant="tertiary">
             <Button>
-              <Star className="size-3.5" />
+              <HugeiconsIcon icon={StarIcon} className="size-3.5" />
               Star
             </Button>
             <Button className="px-2">
@@ -127,12 +128,12 @@ export function Basic() {
           </ButtonGroup>
           <ButtonGroup variant="tertiary">
             <Button>
-              <Pin />
+              <HugeiconsIcon icon={PinIcon} />
               Pinned
             </Button>
             <Button isIconOnly>
               <ButtonGroup.Separator />
-              <ChevronDown />
+              <HugeiconsIcon icon={ArrowDown01Icon} />
             </Button>
           </ButtonGroup>
         </div>
@@ -142,13 +143,13 @@ export function Basic() {
       <div className="flex flex-col gap-2">
         <ButtonGroup variant="tertiary">
           <Button>
-            <ChevronLeft />
+            <HugeiconsIcon icon={ArrowLeft01Icon} />
             Previous
           </Button>
           <Button>
             <ButtonGroup.Separator />
             Next
-            <ChevronRight />
+            <HugeiconsIcon icon={ArrowRight01Icon} />
           </Button>
         </ButtonGroup>
       </div>
@@ -157,17 +158,17 @@ export function Basic() {
       <div className="flex flex-col gap-2">
         <ButtonGroup variant="tertiary">
           <Button>
-            <Picture />
+            <HugeiconsIcon icon={Image01Icon} />
             Photos
           </Button>
           <Button>
             <ButtonGroup.Separator />
-            <Video />
+            <HugeiconsIcon icon={Video01Icon} />
             Videos
           </Button>
           <Button isIconOnly aria-label="More options">
             <ButtonGroup.Separator />
-            <Ellipsis />
+            <HugeiconsIcon icon={MoreHorizontalIcon} />
           </Button>
         </ButtonGroup>
       </div>
@@ -191,19 +192,19 @@ export function Basic() {
       <div className="flex flex-col gap-2">
         <ButtonGroup variant="tertiary">
           <Button isIconOnly>
-            <TextAlignLeft />
+            <HugeiconsIcon icon={TextAlignLeftIcon} />
           </Button>
           <Button isIconOnly>
             <ButtonGroup.Separator />
-            <TextAlignCenter />
+            <HugeiconsIcon icon={TextAlignCenterIcon} />
           </Button>
           <Button isIconOnly>
             <ButtonGroup.Separator />
-            <TextAlignRight />
+            <HugeiconsIcon icon={TextAlignRightIcon} />
           </Button>
           <Button isIconOnly>
             <ButtonGroup.Separator />
-            <TextAlignJustify />
+            <HugeiconsIcon icon={TextAlignJustifyCenterIcon} />
           </Button>
         </ButtonGroup>
       </div>

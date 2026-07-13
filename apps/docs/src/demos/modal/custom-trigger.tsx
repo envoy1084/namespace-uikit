@@ -1,14 +1,14 @@
 "use client";
 
 import { Button, Modal } from "@thenamespace/uikit";
-import { Gear } from "@thenamespace/uikit/icons";
+import { Settings01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomTrigger() {
   return (
     <Modal>
       <Modal.Trigger className="group bg-surface hover:bg-surface-secondary flex items-center gap-3 rounded-2xl p-4 shadow-xs select-none">
         <div className="bg-accent-soft text-accent-soft-foreground flex size-12 shrink-0 items-center justify-center rounded-xl">
-          <Gear className="size-6" />
+          <HugeiconsIcon icon={Settings01Icon} className="size-6" />
         </div>
         <div className="flex flex-1 flex-col gap-0.5">
           <p className="text-sm font-semibold">Settings</p>
@@ -21,7 +21,7 @@ export function CustomTrigger() {
             <Modal.CloseTrigger />
             <Modal.Header>
               <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                <Gear className="size-5" />
+                <HugeiconsIcon icon={Settings01Icon} className="size-5" />
               </Modal.Icon>
               <Modal.Heading>Settings</Modal.Heading>
             </Modal.Header>

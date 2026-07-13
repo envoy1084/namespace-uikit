@@ -1,5 +1,5 @@
 import { Label, ListBox, Select } from "@thenamespace/uikit";
-import { ChevronsExpandVertical } from "@thenamespace/uikit/icons";
+import { UnfoldMoreIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomIndicator() {
   return (
@@ -8,7 +8,7 @@ export function CustomIndicator() {
       <Select.Trigger>
         <Select.Value />
         <Select.Indicator className="size-3">
-          <ChevronsExpandVertical />
+          <HugeiconsIcon icon={UnfoldMoreIcon} />
         </Select.Indicator>
       </Select.Trigger>
       <Select.Popover>

@@ -13,7 +13,7 @@ import {
   Label,
   TimeField,
 } from "@thenamespace/uikit";
-import { Clock } from "@thenamespace/uikit/icons";
+import { Clock01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function FormExample() {
   const [value, setValue] = useState<Time | null>(null);
@@ -56,7 +56,7 @@ export function FormExample() {
         <Label>Appointment time</Label>
         <TimeField.Group>
           <TimeField.Prefix>
-            <Clock className="text-muted size-4" />
+            <HugeiconsIcon icon={Clock01Icon} className="text-muted size-4" />
           </TimeField.Prefix>
           <TimeField.Input>
             {(segment) => <TimeField.Segment segment={segment} />}

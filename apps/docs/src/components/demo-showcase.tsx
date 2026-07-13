@@ -12,7 +12,7 @@ import {
   Tooltip,
   buttonVariants,
 } from "@thenamespace/uikit";
-import { Palette } from "@thenamespace/uikit/icons";
+import { PaintBoardIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import LinkRoot from "fumadocs-core/link";
 import { useTheme } from "next-themes";
 
@@ -156,7 +156,7 @@ export function DemoShowcase({
                   })}
                   href="/themes"
                 >
-                  <Palette className="size-4" />
+                  <HugeiconsIcon icon={PaintBoardIcon} className="size-4" />
                 </LinkRoot>
               </Tooltip.Trigger>
               <Tooltip.Content className="py-0">

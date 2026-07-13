@@ -1,5 +1,5 @@
 import { Avatar, Badge } from "@thenamespace/uikit";
-import { Bell } from "@thenamespace/uikit/icons";
+import { Notification01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 const AVATAR_URL = "/assets/avatars/green.jpg";
 
@@ -42,7 +42,7 @@ export function BadgeWithContent() {
           <Avatar.Fallback>JD</Avatar.Fallback>
         </Avatar>
         <Badge color="accent" size="sm">
-          <Bell className="size-2.5" />
+          <HugeiconsIcon icon={Notification01Icon} className="size-2.5" />
         </Badge>
       </Badge.Anchor>
     </div>

@@ -1,5 +1,5 @@
 import { Button, Popover } from "@thenamespace/uikit";
-import { Ellipsis } from "@thenamespace/uikit/icons";
+import { MoreHorizontalIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function PopoverWithArrow() {
   return (
@@ -19,7 +19,7 @@ export function PopoverWithArrow() {
 
       <Popover>
         <Button isIconOnly variant="tertiary">
-          <Ellipsis />
+          <HugeiconsIcon icon={MoreHorizontalIcon} />
         </Button>
         <Popover.Content className="max-w-64" offset={10}>
           <Popover.Dialog>

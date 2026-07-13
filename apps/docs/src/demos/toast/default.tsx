@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Toast, toast } from "@thenamespace/uikit";
-import { Persons } from "@thenamespace/uikit/icons";
+import { UserGroupIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Default() {
   return (
@@ -19,7 +19,7 @@ export function Default() {
             },
             description:
               "Bob sent you an invitation to join Namespace UIKit team",
-            indicator: <Persons />,
+            indicator: <HugeiconsIcon icon={UserGroupIcon} />,
             variant: "default",
           });
         }}

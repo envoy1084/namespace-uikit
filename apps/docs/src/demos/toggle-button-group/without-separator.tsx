@@ -1,25 +1,26 @@
 import { ToggleButton, ToggleButtonGroup } from "@thenamespace/uikit";
 import {
-  Bold,
-  Italic,
-  Strikethrough,
-  Underline,
+  TextBoldIcon,
+  TextItalicIcon,
+  TextStrikethroughIcon,
+  TextUnderlineIcon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function WithoutSeparator() {
   return (
     <ToggleButtonGroup selectionMode="multiple">
       <ToggleButton isIconOnly aria-label="Bold" id="bold">
-        <Bold />
+        <HugeiconsIcon icon={TextBoldIcon} />
       </ToggleButton>
       <ToggleButton isIconOnly aria-label="Italic" id="italic">
-        <Italic />
+        <HugeiconsIcon icon={TextItalicIcon} />
       </ToggleButton>
       <ToggleButton isIconOnly aria-label="Underline" id="underline">
-        <Underline />
+        <HugeiconsIcon icon={TextUnderlineIcon} />
       </ToggleButton>
       <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
-        <Strikethrough />
+        <HugeiconsIcon icon={TextStrikethroughIcon} />
       </ToggleButton>
     </ToggleButtonGroup>
   );

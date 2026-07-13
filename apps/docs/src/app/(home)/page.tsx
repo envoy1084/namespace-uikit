@@ -1,5 +1,5 @@
 import { buttonVariants } from "@thenamespace/uikit";
-import { Rocket } from "@thenamespace/uikit/icons";
+import { Rocket01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import LinkRoot from "fumadocs-core/link";
 
 import { DemoShowcase } from "@/components/demo-showcase";
@@ -14,7 +14,7 @@ export default function HomePage() {
             className="bg-accent-soft text-accent-soft-foreground hover:bg-accent-soft-hover flex items-center gap-1 rounded-full px-2 py-1 text-xs transition-colors"
             href="/docs/getting-started"
           >
-            <Rocket className="size-3 shrink-0" />
+            <HugeiconsIcon icon={Rocket01Icon} className="size-3 shrink-0" />
             Namespace UIKit v0.1.0
           </LinkRoot>
           <h1 className="text-foreground mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:mt-4 lg:text-5xl">

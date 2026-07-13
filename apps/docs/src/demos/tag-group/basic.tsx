@@ -2,10 +2,11 @@
 
 import { Tag, TagGroup } from "@thenamespace/uikit";
 import {
-  PlanetEarth,
-  Rocket,
-  ShoppingBag,
-  SquareArticle,
+  Globe02Icon,
+  Rocket01Icon,
+  ShoppingBag01Icon,
+  File02Icon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function TagGroupBasic() {
@@ -13,19 +14,19 @@ export function TagGroupBasic() {
     <TagGroup aria-label="Tags" selectionMode="single">
       <TagGroup.List>
         <Tag id="default-news">
-          <SquareArticle />
+          <HugeiconsIcon icon={File02Icon} />
           News
         </Tag>
         <Tag id="default-travel">
-          <PlanetEarth />
+          <HugeiconsIcon icon={Globe02Icon} />
           Travel
         </Tag>
         <Tag id="default-gaming">
-          <Rocket />
+          <HugeiconsIcon icon={Rocket01Icon} />
           Gaming
         </Tag>
         <Tag id="default-shopping">
-          <ShoppingBag />
+          <HugeiconsIcon icon={ShoppingBag01Icon} />
           Shopping
         </Tag>
       </TagGroup.List>

@@ -1,7 +1,7 @@
 "use client";
 
 import { DateField, Description, Label, Surface } from "@thenamespace/uikit";
-import { Calendar } from "@thenamespace/uikit/icons";
+import { Calendar03Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function OnSurface() {
   return (
@@ -19,7 +19,10 @@ export function OnSurface() {
         <Label>Appointment date</Label>
         <DateField.Group variant="secondary">
           <DateField.Prefix>
-            <Calendar className="text-muted size-4" />
+            <HugeiconsIcon
+              icon={Calendar03Icon}
+              className="text-muted size-4"
+            />
           </DateField.Prefix>
           <DateField.Input>
             {(segment) => <DateField.Segment segment={segment} />}

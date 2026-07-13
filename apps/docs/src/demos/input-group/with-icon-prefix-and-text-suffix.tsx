@@ -1,7 +1,7 @@
 "use client";
 
 import { InputGroup, Label, TextField } from "@thenamespace/uikit";
-import { Globe } from "@thenamespace/uikit/icons";
+import { Globe02Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function WithIconPrefixAndTextSuffix() {
   return (
@@ -13,7 +13,7 @@ export function WithIconPrefixAndTextSuffix() {
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Prefix>
-          <Globe className="text-muted size-4" />
+          <HugeiconsIcon icon={Globe02Icon} className="text-muted size-4" />
         </InputGroup.Prefix>
         <InputGroup.Input className="w-full max-w-[280px]" />
         <InputGroup.Suffix>.com</InputGroup.Suffix>

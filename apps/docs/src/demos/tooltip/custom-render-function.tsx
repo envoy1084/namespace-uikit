@@ -1,7 +1,10 @@
 "use client";
 
 import { Button, Tooltip } from "@thenamespace/uikit";
-import { CircleInfo } from "@thenamespace/uikit/icons";
+import {
+  InformationCircleIcon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function CustomRenderFunction() {
   return (
@@ -17,7 +20,7 @@ export function CustomRenderFunction() {
 
       <Tooltip delay={0}>
         <Button isIconOnly variant="tertiary">
-          <CircleInfo />
+          <HugeiconsIcon icon={InformationCircleIcon} />
         </Button>
         <Tooltip.Content
           render={(props) => <div {...props} data-custom="foo" />}

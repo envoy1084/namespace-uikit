@@ -9,7 +9,12 @@ import {
   Separator,
   Surface,
 } from "@thenamespace/uikit";
-import { Pencil, SquarePlus, TrashBin } from "@thenamespace/uikit/icons";
+import {
+  PencilEdit01Icon,
+  AddSquareIcon,
+  Delete02Icon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function WithSections() {
   return (
@@ -24,7 +29,10 @@ export function WithSections() {
           <Header>Actions</Header>
           <ListBox.Item id="new-file" textValue="New file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <SquarePlus className="text-muted size-4 shrink-0" />
+              <HugeiconsIcon
+                icon={AddSquareIcon}
+                className="text-muted size-4 shrink-0"
+              />
             </div>
             <div className="flex flex-col">
               <Label>New file</Label>
@@ -37,7 +45,10 @@ export function WithSections() {
           </ListBox.Item>
           <ListBox.Item id="edit-file" textValue="Edit file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Pencil className="text-muted size-4 shrink-0" />
+              <HugeiconsIcon
+                icon={PencilEdit01Icon}
+                className="text-muted size-4 shrink-0"
+              />
             </div>
             <div className="flex flex-col">
               <Label>Edit file</Label>
@@ -58,7 +69,10 @@ export function WithSections() {
             variant="danger"
           >
             <div className="flex h-8 items-start justify-center pt-px">
-              <TrashBin className="text-danger size-4 shrink-0" />
+              <HugeiconsIcon
+                icon={Delete02Icon}
+                className="text-danger size-4 shrink-0"
+              />
             </div>
             <div className="flex flex-col">
               <Label>Delete file</Label>

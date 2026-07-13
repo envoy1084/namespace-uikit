@@ -2,10 +2,11 @@
 
 import { Avatar, Description, Label, Tag, TagGroup } from "@thenamespace/uikit";
 import {
-  PlanetEarth,
-  Rocket,
-  ShoppingBag,
-  SquareArticle,
+  Globe02Icon,
+  Rocket01Icon,
+  ShoppingBag01Icon,
+  File02Icon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function TagGroupWithPrefix() {
@@ -15,19 +16,19 @@ export function TagGroupWithPrefix() {
         <Label>With Icons</Label>
         <TagGroup.List>
           <Tag>
-            <SquareArticle />
+            <HugeiconsIcon icon={File02Icon} />
             News
           </Tag>
           <Tag>
-            <PlanetEarth />
+            <HugeiconsIcon icon={Globe02Icon} />
             Travel
           </Tag>
           <Tag>
-            <Rocket />
+            <HugeiconsIcon icon={Rocket01Icon} />
             Gaming
           </Tag>
           <Tag>
-            <ShoppingBag />
+            <HugeiconsIcon icon={ShoppingBag01Icon} />
             Shopping
           </Tag>
         </TagGroup.List>

@@ -1,7 +1,11 @@
 "use client";
 
 import { Button, Modal } from "@thenamespace/uikit";
-import { CircleCheck, CircleInfo } from "@thenamespace/uikit/icons";
+import {
+  CheckmarkCircle02Icon,
+  InformationCircleIcon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function CloseMethods() {
   return (
@@ -20,7 +24,10 @@ export function CloseMethods() {
               <Modal.Dialog className="sm:max-w-[360px]">
                 <Modal.Header>
                   <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                    <CircleInfo className="size-5" />
+                    <HugeiconsIcon
+                      icon={InformationCircleIcon}
+                      className="size-5"
+                    />
                   </Modal.Icon>
                   <Modal.Heading>Using slot="close"</Modal.Heading>
                 </Modal.Header>
@@ -59,7 +66,10 @@ export function CloseMethods() {
                   <>
                     <Modal.Header>
                       <Modal.Icon className="bg-success-soft text-success-soft-foreground">
-                        <CircleCheck className="size-5" />
+                        <HugeiconsIcon
+                          icon={CheckmarkCircle02Icon}
+                          className="size-5"
+                        />
                       </Modal.Icon>
                       <Modal.Heading>Using Dialog render props</Modal.Heading>
                     </Modal.Header>

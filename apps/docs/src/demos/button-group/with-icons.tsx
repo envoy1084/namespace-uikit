@@ -1,5 +1,10 @@
 import { Button, ButtonGroup } from "@thenamespace/uikit";
-import { Globe, Plus, TrashBin } from "@thenamespace/uikit/icons";
+import {
+  Globe02Icon,
+  Add01Icon,
+  Delete02Icon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function WithIcons() {
   return (
@@ -8,17 +13,17 @@ export function WithIcons() {
         <p className="text-muted text-sm">With icons</p>
         <ButtonGroup variant="secondary">
           <Button>
-            <Globe />
+            <HugeiconsIcon icon={Globe02Icon} />
             Search
           </Button>
           <Button>
             <ButtonGroup.Separator />
-            <Plus />
+            <HugeiconsIcon icon={Add01Icon} />
             Add
           </Button>
           <Button>
             <ButtonGroup.Separator />
-            <TrashBin />
+            <HugeiconsIcon icon={Delete02Icon} />
             Delete
           </Button>
         </ButtonGroup>
@@ -27,15 +32,15 @@ export function WithIcons() {
         <p className="text-muted text-sm">Icon only buttons</p>
         <ButtonGroup variant="tertiary">
           <Button isIconOnly>
-            <Globe />
+            <HugeiconsIcon icon={Globe02Icon} />
           </Button>
           <Button isIconOnly>
             <ButtonGroup.Separator />
-            <Plus />
+            <HugeiconsIcon icon={Add01Icon} />
           </Button>
           <Button isIconOnly>
             <ButtonGroup.Separator />
-            <TrashBin />
+            <HugeiconsIcon icon={Delete02Icon} />
           </Button>
         </ButtonGroup>
       </div>

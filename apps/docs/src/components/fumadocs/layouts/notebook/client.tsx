@@ -23,7 +23,7 @@ import {
   useState,
 } from "react";
 
-import { ChevronDown } from "@thenamespace/uikit/icons";
+import { ArrowDown01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { usePathname } from "fumadocs-core/framework";
 import Link from "fumadocs-core/link";
 import { useSidebar } from "fumadocs-ui/components/sidebar/base";
@@ -363,7 +363,7 @@ function NavbarLinkItemMenu({
         ) : (
           item.text
         )}
-        <ChevronDown className="size-3" />
+        <HugeiconsIcon icon={ArrowDown01Icon} className="size-3" />
       </PopoverTrigger>
       <PopoverContent
         className="text-fd-muted-foreground flex flex-col p-1 text-start"

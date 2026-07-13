@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertDialog, Button } from "@thenamespace/uikit";
-import { TriangleExclamation } from "@thenamespace/uikit/icons";
+import { Alert01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomBackdrop() {
   return (
@@ -16,7 +16,7 @@ export function CustomBackdrop() {
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header className="items-center text-center">
               <AlertDialog.Icon status="danger">
-                <TriangleExclamation className="size-5" />
+                <HugeiconsIcon icon={Alert01Icon} className="size-5" />
               </AlertDialog.Icon>
               <AlertDialog.Heading>
                 Permanently delete your account?

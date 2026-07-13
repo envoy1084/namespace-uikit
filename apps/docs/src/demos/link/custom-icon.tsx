@@ -1,7 +1,8 @@
 import { Link } from "@thenamespace/uikit";
 import {
-  ArrowUpRightFromSquare,
-  Link as LinkIcon,
+  ArrowUpRight01Icon,
+  Link01Icon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function LinkCustomIcon() {
@@ -10,13 +11,13 @@ export function LinkCustomIcon() {
       <Link href="#">
         External link
         <Link.Icon className="ml-1.5 size-3">
-          <ArrowUpRightFromSquare />
+          <HugeiconsIcon icon={ArrowUpRight01Icon} />
         </Link.Icon>
       </Link>
       <Link className="gap-1" href="#">
         Go to page
         <Link.Icon className="size-3">
-          <LinkIcon />
+          <HugeiconsIcon icon={Link01Icon} />
         </Link.Icon>
       </Link>
     </div>

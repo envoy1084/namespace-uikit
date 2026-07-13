@@ -1,5 +1,10 @@
 import { ToggleButton, ToggleButtonGroup } from "@thenamespace/uikit";
-import { Bold, Italic, Underline } from "@thenamespace/uikit/icons";
+import {
+  TextBoldIcon,
+  TextItalicIcon,
+  TextUnderlineIcon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function Disabled() {
   return (
@@ -8,15 +13,15 @@ export function Disabled() {
         <span className="text-muted text-sm">All buttons disabled</span>
         <ToggleButtonGroup isDisabled selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Bold />
+            <HugeiconsIcon icon={TextBoldIcon} />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Italic />
+            <HugeiconsIcon icon={TextItalicIcon} />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Underline />
+            <HugeiconsIcon icon={TextUnderlineIcon} />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -24,15 +29,15 @@ export function Disabled() {
         <span className="text-muted text-sm">Individual button disabled</span>
         <ToggleButtonGroup selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
-            <Bold />
+            <HugeiconsIcon icon={TextBoldIcon} />
           </ToggleButton>
           <ToggleButton isDisabled isIconOnly aria-label="Italic" id="italic">
             <ToggleButtonGroup.Separator />
-            <Italic />
+            <HugeiconsIcon icon={TextItalicIcon} />
           </ToggleButton>
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <ToggleButtonGroup.Separator />
-            <Underline />
+            <HugeiconsIcon icon={TextUnderlineIcon} />
           </ToggleButton>
         </ToggleButtonGroup>
       </div>

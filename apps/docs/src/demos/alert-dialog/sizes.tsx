@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertDialog, Button } from "@thenamespace/uikit";
-import { Rocket } from "@thenamespace/uikit/icons";
+import { Rocket01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Sizes() {
   const sizes = ["xs", "sm", "md", "lg", "cover"] as const;
@@ -19,7 +19,7 @@ export function Sizes() {
                 <AlertDialog.CloseTrigger />
                 <AlertDialog.Header>
                   <AlertDialog.Icon className="bg-default text-foreground">
-                    <Rocket className="size-5" />
+                    <HugeiconsIcon icon={Rocket01Icon} className="size-5" />
                   </AlertDialog.Icon>
                   <AlertDialog.Heading>
                     Size: {size.charAt(0).toUpperCase() + size.slice(1)}

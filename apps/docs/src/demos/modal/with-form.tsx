@@ -8,7 +8,7 @@ import {
   Surface,
   TextField,
 } from "@thenamespace/uikit";
-import { Envelope } from "@thenamespace/uikit/icons";
+import { Mail01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function WithForm() {
   return (
@@ -20,7 +20,7 @@ export function WithForm() {
             <Modal.CloseTrigger />
             <Modal.Header>
               <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                <Envelope className="size-5" />
+                <HugeiconsIcon icon={Mail01Icon} className="size-5" />
               </Modal.Icon>
               <Modal.Heading>Contact Us</Modal.Heading>
               <p className="text-muted mt-1.5 text-sm leading-5">

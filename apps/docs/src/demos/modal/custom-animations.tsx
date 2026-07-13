@@ -1,13 +1,16 @@
 "use client";
 
-import React from "react";
-
 import { Button, Modal } from "@thenamespace/uikit";
-import { ArrowUpFromLine, Sparkles } from "@thenamespace/uikit/icons";
+import {
+  HugeiconsIcon,
+  type IconSvgElement,
+  SparklesIcon,
+  Upload01Icon,
+} from "@thenamespace/uikit/icons";
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  "hugeicons:arrow-up-from-line": ArrowUpFromLine,
-  "hugeicons:sparkles": Sparkles,
+const iconMap: Record<string, IconSvgElement> = {
+  "hugeicons:arrow-up-from-line": Upload01Icon,
+  "hugeicons:sparkles": SparklesIcon,
 };
 
 export function CustomAnimations() {
@@ -69,7 +72,7 @@ export function CustomAnimations() {
   return (
     <div className="flex flex-wrap gap-4">
       {animations.map(({ classNames, description, icon, name }) => {
-        const IconComponent = iconMap[icon];
+        const iconData = iconMap[icon];
 
         return (
           <Modal key={name}>
@@ -80,7 +83,9 @@ export function CustomAnimations() {
                   <Modal.CloseTrigger />
                   <Modal.Header>
                     <Modal.Icon className="bg-default text-foreground">
-                      {!!IconComponent && <IconComponent className="size-5" />}
+                      {iconData ? (
+                        <HugeiconsIcon className="size-5" icon={iconData} />
+                      ) : null}
                     </Modal.Icon>
                     <Modal.Heading>{name} Animation</Modal.Heading>
                   </Modal.Header>

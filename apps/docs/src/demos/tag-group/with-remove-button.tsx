@@ -11,7 +11,7 @@ import {
   Tag,
   TagGroup,
 } from "@thenamespace/uikit";
-import { CircleXmarkFill } from "@thenamespace/uikit/icons";
+import { CancelCircleIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function TagGroupWithRemoveButton() {
   type TagItem = { id: string; name: string };
@@ -75,7 +75,7 @@ export function TagGroupWithRemoveButton() {
                     {tag.name}
                     {!!renderProps.allowsRemoving && (
                       <Tag.RemoveButton>
-                        <CircleXmarkFill />
+                        <HugeiconsIcon icon={CancelCircleIcon} />
                       </Tag.RemoveButton>
                     )}
                   </>

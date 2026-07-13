@@ -1,5 +1,10 @@
 import { Avatar, Dropdown, Label } from "@thenamespace/uikit";
-import { ArrowRightFromSquare, Gear, Persons } from "@thenamespace/uikit/icons";
+import {
+  ArrowUpRight01Icon,
+  Settings01Icon,
+  UserGroupIcon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function CustomTrigger() {
   return (
@@ -35,19 +40,28 @@ export function CustomTrigger() {
           <Dropdown.Item id="settings" textValue="Settings">
             <div className="flex w-full items-center justify-between gap-2">
               <Label>Settings</Label>
-              <Gear className="text-muted size-3.5" />
+              <HugeiconsIcon
+                icon={Settings01Icon}
+                className="text-muted size-3.5"
+              />
             </div>
           </Dropdown.Item>
           <Dropdown.Item id="new-project" textValue="New project">
             <div className="flex w-full items-center justify-between gap-2">
               <Label>Create Team</Label>
-              <Persons className="text-muted size-3.5" />
+              <HugeiconsIcon
+                icon={UserGroupIcon}
+                className="text-muted size-3.5"
+              />
             </div>
           </Dropdown.Item>
           <Dropdown.Item id="logout" textValue="Logout" variant="danger">
             <div className="flex w-full items-center justify-between gap-2">
               <Label>Log Out</Label>
-              <ArrowRightFromSquare className="text-danger size-3.5" />
+              <HugeiconsIcon
+                icon={ArrowUpRight01Icon}
+                className="text-danger size-3.5"
+              />
             </div>
           </Dropdown.Item>
         </Dropdown.Menu>

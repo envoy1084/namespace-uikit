@@ -1,5 +1,5 @@
 import { Accordion, cn } from "@thenamespace/uikit";
-import { ChevronDown } from "@thenamespace/uikit/icons";
+import { ArrowDown01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 const items = [
   {
@@ -56,7 +56,7 @@ export function CustomStyles() {
                 </span>
               </div>
               <Accordion.Indicator className="text-muted/50 [&>svg]:size-4">
-                <ChevronDown />
+                <HugeiconsIcon icon={ArrowDown01Icon} />
               </Accordion.Indicator>
             </Accordion.Trigger>
           </Accordion.Heading>

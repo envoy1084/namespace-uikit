@@ -1,5 +1,5 @@
 import { InputGroup, Label, TextField } from "@thenamespace/uikit";
-import { Envelope } from "@thenamespace/uikit/icons";
+import { Mail01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Variants() {
   return (
@@ -8,7 +8,7 @@ export function Variants() {
         <Label>Primary variant</Label>
         <InputGroup variant="primary">
           <InputGroup.Prefix>
-            <Envelope className="text-muted size-4" />
+            <HugeiconsIcon icon={Mail01Icon} className="text-muted size-4" />
           </InputGroup.Prefix>
           <InputGroup.Input placeholder="name@email.com" />
         </InputGroup>
@@ -17,7 +17,7 @@ export function Variants() {
         <Label>Secondary variant</Label>
         <InputGroup variant="secondary">
           <InputGroup.Prefix>
-            <Envelope className="text-muted size-4" />
+            <HugeiconsIcon icon={Mail01Icon} className="text-muted size-4" />
           </InputGroup.Prefix>
           <InputGroup.Input placeholder="name@email.com" />
         </InputGroup>

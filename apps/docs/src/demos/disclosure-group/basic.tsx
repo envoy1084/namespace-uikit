@@ -9,7 +9,7 @@ import {
   DisclosureGroup,
   Separator,
 } from "@thenamespace/uikit";
-import { QrCode } from "@thenamespace/uikit/icons";
+import { QrCodeIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { cn } from "tailwind-variants";
 
 export function Basic() {
@@ -34,7 +34,7 @@ export function Basic() {
                 })}
               >
                 <div className="flex w-full items-center justify-start gap-2">
-                  <QrCode />
+                  <HugeiconsIcon icon={QrCodeIcon} />
                   Preview Namespace UIKit Native
                 </div>
                 <Disclosure.Indicator className="text-muted" />

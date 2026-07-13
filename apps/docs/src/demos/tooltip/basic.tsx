@@ -1,5 +1,8 @@
 import { Button, Tooltip } from "@thenamespace/uikit";
-import { CircleInfo } from "@thenamespace/uikit/icons";
+import {
+  InformationCircleIcon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function TooltipBasic() {
   return (
@@ -13,7 +16,7 @@ export function TooltipBasic() {
 
       <Tooltip delay={0}>
         <Button isIconOnly variant="tertiary">
-          <CircleInfo />
+          <HugeiconsIcon icon={InformationCircleIcon} />
         </Button>
         <Tooltip.Content>
           <p>More information</p>

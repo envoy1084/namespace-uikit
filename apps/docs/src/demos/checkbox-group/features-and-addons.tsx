@@ -4,26 +4,31 @@ import {
   Description,
   Label,
 } from "@thenamespace/uikit";
-import { Bell, Comment, Envelope } from "@thenamespace/uikit/icons";
+import {
+  Comment01Icon,
+  HugeiconsIcon,
+  Mail01Icon,
+  Notification01Icon,
+} from "@thenamespace/uikit/icons";
 import clsx from "clsx";
 
 export function FeaturesAndAddOns() {
   const addOns = [
     {
       description: "Receive updates via email",
-      icon: Envelope,
+      icon: Mail01Icon,
       title: "Email Notifications",
       value: "email",
     },
     {
       description: "Get instant SMS notifications",
-      icon: Comment,
+      icon: Comment01Icon,
       title: "SMS Alerts",
       value: "sms",
     },
     {
       description: "Browser and mobile push alerts",
-      icon: Bell,
+      icon: Notification01Icon,
       title: "Push Notifications",
       value: "push",
     },
@@ -51,7 +56,10 @@ export function FeaturesAndAddOns() {
                   <Checkbox.Control className="absolute top-3 right-4 size-5 rounded-full before:rounded-full">
                     <Checkbox.Indicator />
                   </Checkbox.Control>
-                  <addon.icon className="text-accent-soft-foreground size-5" />
+                  <HugeiconsIcon
+                    className="text-accent-soft-foreground size-5"
+                    icon={addon.icon}
+                  />
                   <div className="flex flex-col gap-1">
                     <span>{addon.title}</span>
                     <Description>{addon.description}</Description>

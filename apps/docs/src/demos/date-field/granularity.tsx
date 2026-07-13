@@ -12,7 +12,7 @@ import {
   Select,
   Tooltip,
 } from "@thenamespace/uikit";
-import { CircleQuestion } from "@thenamespace/uikit/icons";
+import { HelpCircleIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Granularity() {
   const granularityOptions = [
@@ -58,7 +58,10 @@ export function Granularity() {
           <Label>Granularity</Label>
           <Tooltip delay={0}>
             <Tooltip.Trigger aria-label="Granularity information">
-              <CircleQuestion className="text-muted size-4" />
+              <HugeiconsIcon
+                icon={HelpCircleIcon}
+                className="text-muted size-4"
+              />
             </Tooltip.Trigger>
             <Tooltip.Content placement="bottom start">
               <p>

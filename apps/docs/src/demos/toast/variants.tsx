@@ -1,7 +1,11 @@
 "use client";
 
 import { Button, Toast, toast } from "@thenamespace/uikit";
-import { HardDrive, Persons } from "@thenamespace/uikit/icons";
+import {
+  HardDriveIcon,
+  UserGroupIcon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 const noop = () => {};
 
@@ -22,7 +26,7 @@ export function Variants() {
               },
               description:
                 "Bob sent you an invitation to join Namespace UIKit team",
-              indicator: <Persons />,
+              indicator: <HugeiconsIcon icon={UserGroupIcon} />,
               variant: "default",
             });
           }}
@@ -87,7 +91,7 @@ export function Variants() {
               },
               description:
                 "Remove files to release space. Adding more text to demonstrate longer content display",
-              indicator: <HardDrive />,
+              indicator: <HugeiconsIcon icon={HardDriveIcon} />,
             })
           }
         >

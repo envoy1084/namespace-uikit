@@ -1,7 +1,7 @@
 "use client";
 
 import { DateField, Label } from "@thenamespace/uikit";
-import { Calendar } from "@thenamespace/uikit/icons";
+import { Calendar03Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function WithSuffixIcon() {
   return (
@@ -12,7 +12,7 @@ export function WithSuffixIcon() {
           {(segment) => <DateField.Segment segment={segment} />}
         </DateField.Input>
         <DateField.Suffix>
-          <Calendar className="text-muted size-4" />
+          <HugeiconsIcon icon={Calendar03Icon} className="text-muted size-4" />
         </DateField.Suffix>
       </DateField.Group>
     </DateField>

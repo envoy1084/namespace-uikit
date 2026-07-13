@@ -1,5 +1,5 @@
 import { ColorSwatchPicker } from "@thenamespace/uikit";
-import { HeartFill } from "@thenamespace/uikit/icons";
+import { FavouriteIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomIndicator() {
   const colors = [
@@ -18,7 +18,7 @@ export function CustomIndicator() {
         <ColorSwatchPicker.Item key={color} color={color}>
           <ColorSwatchPicker.Swatch />
           <ColorSwatchPicker.Indicator>
-            <HeartFill />
+            <HugeiconsIcon icon={FavouriteIcon} />
           </ColorSwatchPicker.Indicator>
         </ColorSwatchPicker.Item>
       ))}

@@ -3,7 +3,10 @@
 import React from "react";
 
 import { Button, Modal, useOverlayState } from "@thenamespace/uikit";
-import { CircleCheck } from "@thenamespace/uikit/icons";
+import {
+  CheckmarkCircle02Icon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function Controlled() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -54,7 +57,10 @@ export function Controlled() {
               <Modal.CloseTrigger />
               <Modal.Header>
                 <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                  <CircleCheck className="size-5" />
+                  <HugeiconsIcon
+                    icon={CheckmarkCircle02Icon}
+                    className="size-5"
+                  />
                 </Modal.Icon>
                 <Modal.Heading>Controlled with useState()</Modal.Heading>
               </Modal.Header>
@@ -110,7 +116,10 @@ export function Controlled() {
               <Modal.CloseTrigger />
               <Modal.Header>
                 <Modal.Icon className="bg-success-soft text-success-soft-foreground">
-                  <CircleCheck className="size-5" />
+                  <HugeiconsIcon
+                    icon={CheckmarkCircle02Icon}
+                    className="size-5"
+                  />
                 </Modal.Icon>
                 <Modal.Heading>Controlled with useOverlayState()</Modal.Heading>
               </Modal.Header>

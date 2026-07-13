@@ -7,14 +7,14 @@ import {
   Toolbar,
 } from "@thenamespace/uikit";
 import {
-  ArrowUturnCcwLeft,
-  ArrowUturnCwRight,
-  Bold,
-  Italic,
-  TextAlignCenter,
-  TextAlignLeft,
-  TextAlignRight,
-  Underline,
+  RefreshIcon,
+  TextBoldIcon,
+  TextItalicIcon,
+  TextAlignCenterIcon,
+  TextAlignLeftIcon,
+  TextAlignRightIcon,
+  TextUnderlineIcon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function WithButtonGroup() {
@@ -22,41 +22,41 @@ export function WithButtonGroup() {
     <Toolbar aria-label="Editor toolbar">
       <ButtonGroup variant="tertiary">
         <Button>
-          <ArrowUturnCcwLeft />
+          <HugeiconsIcon icon={RefreshIcon} />
           Undo
         </Button>
         <Button>
           <ButtonGroup.Separator />
-          <ArrowUturnCwRight />
+          <HugeiconsIcon icon={RefreshIcon} />
           Redo
         </Button>
       </ButtonGroup>
       <Separator />
       <ToggleButtonGroup aria-label="Text style" selectionMode="multiple">
         <ToggleButton isIconOnly aria-label="Bold" id="bold">
-          <Bold />
+          <HugeiconsIcon icon={TextBoldIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Italic" id="italic">
           <ToggleButtonGroup.Separator />
-          <Italic />
+          <HugeiconsIcon icon={TextItalicIcon} />
         </ToggleButton>
         <ToggleButton isIconOnly aria-label="Underline" id="underline">
           <ToggleButtonGroup.Separator />
-          <Underline />
+          <HugeiconsIcon icon={TextUnderlineIcon} />
         </ToggleButton>
       </ToggleButtonGroup>
       <Separator />
       <ButtonGroup variant="tertiary">
         <Button isIconOnly aria-label="Align left">
-          <TextAlignLeft />
+          <HugeiconsIcon icon={TextAlignLeftIcon} />
         </Button>
         <Button isIconOnly aria-label="Align center">
           <ButtonGroup.Separator />
-          <TextAlignCenter />
+          <HugeiconsIcon icon={TextAlignCenterIcon} />
         </Button>
         <Button isIconOnly aria-label="Align right">
           <ButtonGroup.Separator />
-          <TextAlignRight />
+          <HugeiconsIcon icon={TextAlignRightIcon} />
         </Button>
       </ButtonGroup>
     </Toolbar>

@@ -1,5 +1,5 @@
 import { Accordion } from "@thenamespace/uikit";
-import { ChevronDown } from "@thenamespace/uikit/icons";
+import { ArrowDown01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function FAQ() {
   const categories = [
@@ -65,7 +65,7 @@ export function FAQ() {
                   <Accordion.Trigger>
                     {item.title}
                     <Accordion.Indicator>
-                      <ChevronDown />
+                      <HugeiconsIcon icon={ArrowDown01Icon} />
                     </Accordion.Indicator>
                   </Accordion.Trigger>
                 </Accordion.Heading>

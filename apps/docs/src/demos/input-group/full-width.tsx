@@ -1,5 +1,5 @@
 import { InputGroup, Label, TextField } from "@thenamespace/uikit";
-import { Envelope, Eye } from "@thenamespace/uikit/icons";
+import { Mail01Icon, EyeIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function FullWidth() {
   return (
@@ -8,7 +8,7 @@ export function FullWidth() {
         <Label>Email address</Label>
         <InputGroup fullWidth>
           <InputGroup.Prefix>
-            <Envelope className="text-muted size-4" />
+            <HugeiconsIcon icon={Mail01Icon} className="text-muted size-4" />
           </InputGroup.Prefix>
           <InputGroup.Input placeholder="name@email.com" />
         </InputGroup>
@@ -18,7 +18,7 @@ export function FullWidth() {
         <InputGroup fullWidth>
           <InputGroup.Input placeholder="Enter password" type="password" />
           <InputGroup.Suffix>
-            <Eye className="text-muted size-4" />
+            <HugeiconsIcon icon={EyeIcon} className="text-muted size-4" />
           </InputGroup.Suffix>
         </InputGroup>
       </TextField>

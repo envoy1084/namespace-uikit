@@ -1,8 +1,9 @@
 import { Button, ButtonGroup } from "@thenamespace/uikit";
 import {
-  TextAlignCenter,
-  TextAlignLeft,
-  TextAlignRight,
+  TextAlignCenterIcon,
+  TextAlignLeftIcon,
+  TextAlignRightIcon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function FullWidth() {
@@ -21,15 +22,15 @@ export function FullWidth() {
       </ButtonGroup>
       <ButtonGroup fullWidth>
         <Button isIconOnly>
-          <TextAlignLeft />
+          <HugeiconsIcon icon={TextAlignLeftIcon} />
         </Button>
         <Button isIconOnly>
           <ButtonGroup.Separator />
-          <TextAlignCenter />
+          <HugeiconsIcon icon={TextAlignCenterIcon} />
         </Button>
         <Button isIconOnly>
           <ButtonGroup.Separator />
-          <TextAlignRight />
+          <HugeiconsIcon icon={TextAlignRightIcon} />
         </Button>
       </ButtonGroup>
     </div>

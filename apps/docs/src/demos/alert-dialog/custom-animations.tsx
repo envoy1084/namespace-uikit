@@ -1,13 +1,16 @@
 "use client";
 
-import React from "react";
-
 import { AlertDialog, Button } from "@thenamespace/uikit";
-import { ArrowUpFromLine, Sparkles } from "@thenamespace/uikit/icons";
+import {
+  HugeiconsIcon,
+  type IconSvgElement,
+  SparklesIcon,
+  Upload01Icon,
+} from "@thenamespace/uikit/icons";
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  "hugeicons:arrow-up-from-line": ArrowUpFromLine,
-  "hugeicons:sparkles": Sparkles,
+const iconMap: Record<string, IconSvgElement> = {
+  "hugeicons:arrow-up-from-line": Upload01Icon,
+  "hugeicons:sparkles": SparklesIcon,
 };
 
 export function CustomAnimations() {
@@ -69,7 +72,7 @@ export function CustomAnimations() {
   return (
     <div className="flex flex-wrap gap-4">
       {animations.map(({ classNames, description, icon, name }) => {
-        const IconComponent = iconMap[icon];
+        const iconData = iconMap[icon];
 
         return (
           <AlertDialog key={name}>
@@ -80,7 +83,9 @@ export function CustomAnimations() {
                   <AlertDialog.CloseTrigger />
                   <AlertDialog.Header>
                     <AlertDialog.Icon status="accent">
-                      {!!IconComponent && <IconComponent className="size-5" />}
+                      {iconData ? (
+                        <HugeiconsIcon className="size-5" icon={iconData} />
+                      ) : null}
                     </AlertDialog.Icon>
                     <AlertDialog.Heading>{name} Animation</AlertDialog.Heading>
                   </AlertDialog.Header>

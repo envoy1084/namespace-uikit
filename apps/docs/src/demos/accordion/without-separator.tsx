@@ -1,28 +1,29 @@
 import { Accordion } from "@thenamespace/uikit";
 import {
-  ChevronDown,
-  CreditCard,
-  Receipt,
-  ShoppingBag,
+  ArrowDown01Icon,
+  CreditCardIcon,
+  ReceiptDollarIcon,
+  ShoppingBag01Icon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 const items = [
   {
     content:
       "Browse our products, add items to your cart, and proceed to checkout. You'll need to provide shipping and payment information to complete your purchase.",
-    icon: <ShoppingBag />,
+    icon: <HugeiconsIcon icon={ShoppingBag01Icon} />,
     title: "How do I place an order?",
   },
   {
     content:
       "Yes, you can modify or cancel your order before it's shipped. Once your order is processed, you can't make changes.",
-    icon: <Receipt />,
+    icon: <HugeiconsIcon icon={ReceiptDollarIcon} />,
     title: "Can I modify or cancel my order?",
   },
   {
     content:
       "We accept all major credit cards, including Visa, Mastercard, and American Express.",
-    icon: <CreditCard />,
+    icon: <HugeiconsIcon icon={CreditCardIcon} />,
     title: "What payment methods do you accept?",
   },
 ];
@@ -41,7 +42,7 @@ export function WithoutSeparator() {
               ) : null}
               {item.title}
               <Accordion.Indicator>
-                <ChevronDown />
+                <HugeiconsIcon icon={ArrowDown01Icon} />
               </Accordion.Indicator>
             </Accordion.Trigger>
           </Accordion.Heading>

@@ -1,7 +1,11 @@
 "use client";
 
 import { Button, InputGroup, Label, TextField } from "@thenamespace/uikit";
-import { Copy, Globe } from "@thenamespace/uikit/icons";
+import {
+  Copy01Icon,
+  Globe02Icon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function WithIconPrefixAndCopySuffix() {
   return (
@@ -13,12 +17,12 @@ export function WithIconPrefixAndCopySuffix() {
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Prefix>
-          <Globe className="text-muted size-4" />
+          <HugeiconsIcon icon={Globe02Icon} className="text-muted size-4" />
         </InputGroup.Prefix>
         <InputGroup.Input className="w-full max-w-[280px]" />
         <InputGroup.Suffix className="pr-0">
           <Button isIconOnly aria-label="Copy" size="sm" variant="ghost">
-            <Copy className="size-4" />
+            <HugeiconsIcon icon={Copy01Icon} className="size-4" />
           </Button>
         </InputGroup.Suffix>
       </InputGroup>

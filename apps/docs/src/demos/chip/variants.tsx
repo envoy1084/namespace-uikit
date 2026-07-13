@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Chip, Separator } from "@thenamespace/uikit";
-import { CircleDashed } from "@thenamespace/uikit/icons";
+import { CircleIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function ChipVariants() {
   const sizes = ["lg", "md", "sm"] as const;
@@ -42,9 +42,9 @@ export function ChipVariants() {
                       style={{ width: "130px" }}
                     >
                       <Chip color={color} size={size} variant={variant}>
-                        <CircleDashed />
+                        <HugeiconsIcon icon={CircleIcon} />
                         <Chip.Label>Label</Chip.Label>
-                        <CircleDashed />
+                        <HugeiconsIcon icon={CircleIcon} />
                       </Chip>
                     </div>
                   ))}

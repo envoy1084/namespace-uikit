@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Toast, toast } from "@thenamespace/uikit";
-import { Star } from "@thenamespace/uikit/icons";
+import { StarIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomIndicator() {
   return (
@@ -12,7 +12,7 @@ export function CustomIndicator() {
         variant="secondary"
         onPress={() =>
           toast("Custom icon indicator", {
-            indicator: <Star />,
+            indicator: <HugeiconsIcon icon={StarIcon} />,
           })
         }
       >

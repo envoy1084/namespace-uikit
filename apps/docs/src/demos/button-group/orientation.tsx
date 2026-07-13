@@ -1,9 +1,10 @@
 import { Button, ButtonGroup } from "@thenamespace/uikit";
 import {
-  TextAlignCenter,
-  TextAlignJustify,
-  TextAlignLeft,
-  TextAlignRight,
+  TextAlignCenterIcon,
+  TextAlignJustifyCenterIcon,
+  TextAlignLeftIcon,
+  TextAlignRightIcon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function Orientation() {
@@ -13,19 +14,19 @@ export function Orientation() {
         <span className="text-muted text-sm">Horizontal</span>
         <ButtonGroup orientation="horizontal" variant="tertiary">
           <Button isIconOnly>
-            <TextAlignLeft />
+            <HugeiconsIcon icon={TextAlignLeftIcon} />
           </Button>
           <Button isIconOnly>
             <ButtonGroup.Separator />
-            <TextAlignCenter />
+            <HugeiconsIcon icon={TextAlignCenterIcon} />
           </Button>
           <Button isIconOnly>
             <ButtonGroup.Separator />
-            <TextAlignRight />
+            <HugeiconsIcon icon={TextAlignRightIcon} />
           </Button>
           <Button isIconOnly>
             <ButtonGroup.Separator />
-            <TextAlignJustify />
+            <HugeiconsIcon icon={TextAlignJustifyCenterIcon} />
           </Button>
         </ButtonGroup>
       </div>
@@ -33,19 +34,19 @@ export function Orientation() {
         <span className="text-muted text-sm">Vertical</span>
         <ButtonGroup orientation="vertical" variant="tertiary">
           <Button isIconOnly>
-            <TextAlignLeft />
+            <HugeiconsIcon icon={TextAlignLeftIcon} />
           </Button>
           <Button isIconOnly>
             <ButtonGroup.Separator />
-            <TextAlignCenter />
+            <HugeiconsIcon icon={TextAlignCenterIcon} />
           </Button>
           <Button isIconOnly>
             <ButtonGroup.Separator />
-            <TextAlignRight />
+            <HugeiconsIcon icon={TextAlignRightIcon} />
           </Button>
           <Button isIconOnly>
             <ButtonGroup.Separator />
-            <TextAlignJustify />
+            <HugeiconsIcon icon={TextAlignJustifyCenterIcon} />
           </Button>
         </ButtonGroup>
       </div>

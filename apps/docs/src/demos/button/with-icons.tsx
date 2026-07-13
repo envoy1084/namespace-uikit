@@ -1,23 +1,29 @@
 import { Button } from "@thenamespace/uikit";
-import { Envelope, Globe, Plus, TrashBin } from "@thenamespace/uikit/icons";
+import {
+  Mail01Icon,
+  Globe02Icon,
+  Add01Icon,
+  Delete02Icon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 export function WithIcons() {
   return (
     <div className="flex flex-wrap gap-3">
       <Button>
-        <Globe />
+        <HugeiconsIcon icon={Globe02Icon} />
         Search
       </Button>
       <Button variant="secondary">
-        <Plus />
+        <HugeiconsIcon icon={Add01Icon} />
         Add Member
       </Button>
       <Button variant="tertiary">
-        <Envelope />
+        <HugeiconsIcon icon={Mail01Icon} />
         Email
       </Button>
       <Button variant="danger">
-        <TrashBin />
+        <HugeiconsIcon icon={Delete02Icon} />
         Delete
       </Button>
     </div>

@@ -11,11 +11,12 @@ import {
   Tooltip,
 } from "@thenamespace/uikit";
 import {
-  ArrowUp,
-  At,
-  Microphone,
-  PlugConnection,
-  Plus,
+  ArrowUp01Icon,
+  AtIcon,
+  Mic01Icon,
+  Plug01Icon,
+  Add01Icon,
+  HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
 export function WithTextArea() {
@@ -43,7 +44,7 @@ export function WithTextArea() {
       <InputGroup fullWidth className="flex flex-col gap-2 rounded-3xl py-2">
         <InputGroup.Prefix className="px-3 py-0">
           <Button aria-label="Add context" size="sm" variant="outline">
-            <At />
+            <HugeiconsIcon icon={AtIcon} />
             Add Context
           </Button>
         </InputGroup.Prefix>
@@ -62,7 +63,7 @@ export function WithTextArea() {
               size="sm"
               variant="tertiary"
             >
-              <Plus />
+              <HugeiconsIcon icon={Add01Icon} />
             </Button>
             <Tooltip.Content>
               <p className="text-xs">Add a files and more</p>
@@ -75,7 +76,7 @@ export function WithTextArea() {
               size="sm"
               variant="tertiary"
             >
-              <PlugConnection />
+              <HugeiconsIcon icon={Plug01Icon} />
             </Button>
             <Tooltip.Content>
               <p className="text-xs">Connect apps</p>
@@ -89,7 +90,7 @@ export function WithTextArea() {
                 size="sm"
                 variant="ghost"
               >
-                <Microphone />
+                <HugeiconsIcon icon={Mic01Icon} />
               </Button>
               <Tooltip.Content>
                 <p className="text-xs">Voice input</p>
@@ -107,7 +108,7 @@ export function WithTextArea() {
                   isPending ? (
                     <Spinner color="current" size="sm" />
                   ) : (
-                    <ArrowUp />
+                    <HugeiconsIcon icon={ArrowUp01Icon} />
                   )
                 }
               </Button>

@@ -4,7 +4,7 @@ import React from "react";
 
 import { Icon } from "@iconify/react";
 import { Button, Disclosure } from "@thenamespace/uikit";
-import { QrCode } from "@thenamespace/uikit/icons";
+import { QrCodeIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomRenderFunction() {
   const [isExpanded, setIsExpanded] = React.useState(true);
@@ -18,7 +18,7 @@ export function CustomRenderFunction() {
       >
         <Disclosure.Heading>
           <Button slot="trigger" variant="secondary">
-            <QrCode />
+            <HugeiconsIcon icon={QrCodeIcon} />
             Preview Namespace UIKit Native
             <Disclosure.Indicator />
           </Button>
