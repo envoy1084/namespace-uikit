@@ -46,6 +46,7 @@ async function files(directory, extension) {
 function adaptMdx(source) {
   return source
     .replace(/^image:\s*https:\/\/heroui-assets[^\n]*\n/gm, "")
+    .replace(/^icon:\s*[^\n]*\n/gm, "")
     .replace(/^github:\s*\n(?:\s+[^\n]+\n)*/gm, "")
     .replace(/<Related(?:Components|Showcases)[^>]*\/>/g, "")
     .replace(
