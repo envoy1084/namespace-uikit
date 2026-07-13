@@ -4,7 +4,6 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { getDemo } from "@/demos";
-import { proDemoCatalog } from "@/demos/pro-catalog";
 import { site } from "@/lib/site";
 
 export const textHeaders = {
@@ -44,21 +43,7 @@ async function expandExamples(source: string) {
     },
   );
 
-  return replaceAsync(
-    withFreeExamples,
-    /<ProExamples\s+component=["']([^"']+)["'][^>]*\/>/g,
-    async (match) => {
-      const component = match[1] ?? "";
-      const demos = proDemoCatalog[component] ?? [];
-      const demoSources = demos
-        .map((demo) => getDemo(demo.name)?.source)
-        .filter((demoSource): demoSource is string => Boolean(demoSource));
-
-      return demoSources
-        .map((demoSource) => `\`\`\`tsx\n${demoSource}\n\`\`\``)
-        .join("\n\n");
-    },
-  );
+  return withFreeExamples;
 }
 
 function cleanMdx(source: string) {

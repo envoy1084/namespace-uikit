@@ -5,7 +5,8 @@ description: A scaffold layout that composes a full-height sidebar, a sticky nav
 
 ## Usage
 
-<ProExamples component="app-layout" title="AppLayout" />
+<!-- PRO_DEMO app-layout-default -->
+<ComponentPreview name="app-layout-default" />
 
 ## Anatomy
 
@@ -48,9 +49,15 @@ Under the hood `AppLayout` renders a `Sidebar.Provider`, so you can use all of t
 
 ## Collapsible
 
+<!-- PRO_DEMO app-layout-collapsible -->
+<ComponentPreview name="app-layout-collapsible" />
+
 Set `sidebarCollapsible="icon"` to let the sidebar collapse into an icon-only rail. Press `Cmd+B` (or `Ctrl+B`) or click the sidebar trigger to toggle.
 
 ## Offcanvas
+
+<!-- PRO_DEMO app-layout-offcanvas -->
+<ComponentPreview name="app-layout-offcanvas" />
 
 With `sidebarCollapsible="offcanvas"` the sidebar slides fully off-screen when collapsed, giving the main content area the full viewport width.
 
@@ -60,21 +67,36 @@ With `sidebarCollapsible="offcanvas"` the sidebar slides fully off-screen when c
 
 ## Floating Sidebar
 
+<!-- PRO_DEMO app-layout-floating-sidebar -->
+<ComponentPreview name="app-layout-floating-sidebar" />
+
 `sidebarVariant="floating"` detaches the sidebar from the viewport edge with rounded corners and a shadow, a common pattern for product dashboards.
 
 ## Inset Dashboard
+
+<!-- PRO_DEMO app-layout-inset-dashboard -->
+<ComponentPreview name="app-layout-inset-dashboard" />
 
 A full dashboard composition combining the `inset` sidebar variant, offcanvas collapse behavior, KPIs, and a rich user dropdown.
 
 ## Docs Site
 
+<!-- PRO_DEMO app-layout-docs-site -->
+<ComponentPreview name="app-layout-docs-site" />
+
 A documentation-style layout with a search bar, theme segment, and a grouped navigation sidebar.
 
 ## With Breadcrumbs
 
+<!-- PRO_DEMO app-layout-with-breadcrumbs -->
+<ComponentPreview name="app-layout-with-breadcrumbs" />
+
 A project-management-style navbar with a multi-level breadcrumb trail reflecting the current navigation depth.
 
 ## With Aside
+
+<!-- PRO_DEMO app-layout-with-aside -->
+<ComponentPreview name="app-layout-with-aside" />
 
 Pass content to the `aside` prop to render a right-side panel — ideal for conversation details, metadata, or contextual tooling. The aside is hidden below the desktop breakpoint and slides off-screen when closed.
 
@@ -82,11 +104,17 @@ Use `AppLayout.AsideTrigger` inside the navbar to let users toggle the aside ope
 
 ## Content Scroll Mode
 
+<!-- PRO_DEMO app-layout-content-scroll-mode -->
+<ComponentPreview name="app-layout-content-scroll-mode" />
+
 By default, `AppLayout` uses page-level scrolling (`scrollMode="page"`). Set `scrollMode="content"` to keep the shell fixed to the viewport and move vertical scrolling into the main column instead.
 
 This is useful for app shells where the sidebar and navbar should stay pinned while only the content region scrolls.
 
 ## Complex
+
+<!-- PRO_DEMO app-layout-complex -->
+<ComponentPreview name="app-layout-complex" />
 
 A full-featured layout combining an agent-hub-style sidebar, compact spacing, multiple menu groups, chips, a user dropdown, and a navbar with breadcrumbs and actions.
 
@@ -312,6 +340,26 @@ When a `Navbar` is rendered inside `AppLayout` (via the `navbar` prop), it autom
 - Sets `data-in-app-layout="true"` so you can style it further if needed.
 
 This means you can reuse the same `Navbar` composition standalone or inside an `AppLayout` without changing its markup.
+
+### Resizable Aside
+
+<!-- PRO_DEMO app-layout-resizable-aside -->
+<ComponentPreview name="app-layout-resizable-aside" />
+
+### Resizable Sidebar
+
+<!-- PRO_DEMO app-layout-resizable-sidebar -->
+<ComponentPreview name="app-layout-resizable-sidebar" />
+
+### With Inset Sidebar
+
+<!-- PRO_DEMO app-layout-with-inset-sidebar -->
+<ComponentPreview name="app-layout-with-inset-sidebar" />
+
+### With Toolbar
+
+<!-- PRO_DEMO app-layout-with-toolbar -->
+<ComponentPreview name="app-layout-with-toolbar" />
 
 ## CSS Classes
 

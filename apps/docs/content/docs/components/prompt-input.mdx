@@ -5,35 +5,57 @@ description: A composable AI prompt composer with attachments, toolbar actions, 
 
 ## Usage
 
-<ProExamples component="prompt-input" title="Prompt Input" />
+<!-- PRO_DEMO prompt-input-default -->
+<ComponentPreview name="prompt-input-default" />
 
 Use `PromptInput` as the message composer for chat and agent interfaces.
 
 ## Secondary
 
+<!-- PRO_DEMO prompt-input-secondary -->
+<ComponentPreview name="prompt-input-secondary" />
+
 Use the secondary variant when the composer sits on a default surface.
 
 ## Inline
+
+<!-- PRO_DEMO prompt-input-inline -->
+<ComponentPreview name="prompt-input-inline" />
 
 Use the inline layout when attachment, input, and send controls should stay aligned in one row while the textarea autosizes as users type or add line breaks.
 
 ## Compact
 
+<!-- PRO_DEMO prompt-input-compact -->
+<ComponentPreview name="prompt-input-compact" />
+
 Use the compact layout when the composer should start as a single-row pill and switch to the stacked composer once text wraps or attachments are added.
 
 ## Review Composer
+
+<!-- PRO_DEMO prompt-input-review-composer -->
+<ComponentPreview name="prompt-input-review-composer" />
 
 Compose `PromptInput` with workflow controls to build compact agent surfaces such as review follow-ups and commit actions.
 
 ## With Suggestions
 
+<!-- PRO_DEMO prompt-input-with-suggestions -->
+<ComponentPreview name="prompt-input-with-suggestions" />
+
 Compose `PromptInput` with `PromptSuggestion` to create a landing-style composer with quick-start prompts.
 
 ## Run State
 
+<!-- PRO_DEMO prompt-input-run-state -->
+<ComponentPreview name="prompt-input-run-state" />
+
 Prompt input supports `submitted`, `streaming`, `ready`, and `error` states for send/stop behavior.
 
 ## Queue
+
+<!-- PRO_DEMO prompt-input-queue -->
+<ComponentPreview name="prompt-input-queue" />
 
 Use `PromptInput.Queue` to show queued follow-up prompts in a compact card above the composer shell. Place it as a sibling of `PromptInput.Shell` inside `PromptInput`. Keep queue rows text-only for a clean surface — store attachments in your queue model and restore them to `PromptInput.Attachments` when the user edits a queued prompt.
 

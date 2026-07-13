@@ -3,6 +3,7 @@ import { basename, join, relative, sep } from "node:path";
 
 const appRoot = new URL("..", import.meta.url).pathname;
 const demosRoot = join(appRoot, "src/demos");
+const docsRoot = join(appRoot, "content/docs/components");
 const registryPath = join(demosRoot, "index.ts");
 const GENERATED_START = "  // GENERATED_PRO_DEMOS_START";
 const GENERATED_END = "  // GENERATED_PRO_DEMOS_END";
@@ -25,6 +26,7 @@ const catalog = {};
 
 for (const filePath of (await findDemoFiles(demosRoot)).toSorted()) {
   const source = await readFile(filePath, "utf8");
+  const displaySource = source.replace(/^\/\/ @demo-title .+\n/m, "");
   const relativeFile = relative(demosRoot, filePath).split(sep).join("/");
   const [component] = relativeFile.split("/");
   const story = basename(filePath, ".pro-demo.tsx");
@@ -41,7 +43,7 @@ for (const filePath of (await findDemoFiles(demosRoot)).toSorted()) {
   const importPath = `./${relativeFile.replace(/\.tsx$/, "")}`;
 
   registryEntries.push(
-    `  ${JSON.stringify(demoName)}: { component: ${JSON.stringify(component)}, file: ${JSON.stringify(relativeFile)}, loader: () => import(${JSON.stringify(importPath)}).then((module) => module.${exportName}), source: ${JSON.stringify(source)}, title: ${JSON.stringify(title)} },`,
+    `  ${JSON.stringify(demoName)}: { component: ${JSON.stringify(component)}, file: ${JSON.stringify(relativeFile)}, loader: () => import(${JSON.stringify(importPath)}).then((module) => module.${exportName}), source: ${JSON.stringify(displaySource)}, title: ${JSON.stringify(title)} },`,
   );
   (catalog[component] ??= []).push({ name: demoName, title });
 }
@@ -62,11 +64,69 @@ registry = registry.replace(
 );
 
 await writeFile(registryPath, registry);
-await writeFile(
-  join(demosRoot, "pro-catalog.ts"),
-  `export const proDemoCatalog: Record<string, { name: string; title: string }[]> = ${JSON.stringify(catalog, null, 2)};\n`,
-);
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function normalizeHeading(value) {
+  return value.replaceAll(/[^A-Za-z0-9]/g, "").toLowerCase();
+}
+
+for (const [component, demos] of Object.entries(catalog)) {
+  const docPath = join(docsRoot, `${component}.mdx`);
+  let content = await readFile(docPath, "utf8");
+
+  content = content.replace(/<ProExamples[^>]*\/>\s*/g, "");
+  for (const demo of demos) {
+    content = content.replace(
+      new RegExp(
+        `\\n### ${escapeRegExp(demo.title)}\\n\\n<!-- PRO_DEMO ${escapeRegExp(demo.name)} -->\\n<ComponentPreview name="${escapeRegExp(demo.name)}" \\/>\\n?`,
+        "g",
+      ),
+      "\n",
+    );
+  }
+  content = content.replace(
+    /\n?<!-- PRO_DEMO [^>]+ -->\n<ComponentPreview name="[^"]+" \/>\n?/g,
+    "\n",
+  );
+
+  const pending = [];
+  for (const demo of demos) {
+    const preview = `<!-- PRO_DEMO ${demo.name} -->\n<ComponentPreview name="${demo.name}" />`;
+    const matchingHeading = [...content.matchAll(/^(#{2,3}) (.+)$/gm)].find(
+      (match) =>
+        demo.title !== "Default" &&
+        normalizeHeading(match[2] ?? "") === normalizeHeading(demo.title),
+    )?.[0];
+    const target = new RegExp(
+      `^${escapeRegExp(demo.title === "Default" ? "## Usage" : (matchingHeading ?? ""))}$`,
+      "m",
+    );
+
+    if (matchingHeading || demo.title === "Default") {
+      content = content.replace(
+        target,
+        (heading) => `${heading}\n\n${preview}`,
+      );
+    } else {
+      pending.push(`### ${demo.title}\n\n${preview}`);
+    }
+  }
+
+  if (pending.length > 0) {
+    const insertion = pending.join("\n\n");
+    const boundary = /^## (CSS Classes|API Reference)$/m;
+
+    content = boundary.test(content)
+      ? content.replace(boundary, `${insertion}\n\n$&`)
+      : `${content.trim()}\n\n${insertion}\n`;
+  }
+
+  await writeFile(docPath, `${content.replace(/\n{3,}/g, "\n\n").trim()}\n`);
+}
 
 console.log(
-  `Registered ${registryEntries.length} first-class demos for ${Object.keys(catalog).length} Pro components.`,
+  `Registered and linked ${registryEntries.length} first-class demos for ${Object.keys(catalog).length} Pro components.`,
 );

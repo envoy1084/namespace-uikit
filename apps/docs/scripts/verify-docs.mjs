@@ -107,8 +107,8 @@ for (const name of proComponents) {
   );
 
   invariant(
-    content.includes(`<ProExamples component="${name}"`),
-    `Missing examples for ${name}`,
+    !content.includes("<ProExamples") && content.includes("<ComponentPreview"),
+    `Pro documentation does not use first-class component previews: ${name}`,
   );
 
   const demoDirectory = join(appRoot, "src/demos", name);
@@ -129,6 +129,12 @@ for (const name of proComponents) {
     invariant(
       !/storybook|pro-story/i.test(demo),
       `Storybook reference remains in Pro demo: ${name}/${demoFile}`,
+    );
+    invariant(
+      content.includes(
+        `<ComponentPreview name="${name}-${demoFile.replace(/\.pro-demo\.tsx$/, "")}" />`,
+      ),
+      `Pro demo is not linked from documentation: ${name}/${demoFile}`,
     );
   }
   proDemoCount += demoFiles.length;
