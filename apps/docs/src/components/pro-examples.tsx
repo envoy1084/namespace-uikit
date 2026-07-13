@@ -1,9 +1,8 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
-
 import { CodeBlock } from "fumadocs-ui/components/codeblock";
 
-export async function ProExamples({
+import { proStorySources } from "@/generated/pro-story-sources";
+
+export function ProExamples({
   component,
   title,
 }: {
@@ -12,19 +11,7 @@ export async function ProExamples({
 }) {
   const identifier = title.replaceAll(/[^A-Za-z0-9_$]/g, "");
   const code = `import {${identifier}} from "@thenamespace/uikit/${component}";`;
-  const storyPath = join(
-    process.cwd(),
-    "../../apps/storybook/src/components",
-    component,
-    `${component}.stories.tsx`,
-  );
-  let storySource = "";
-
-  try {
-    storySource = await readFile(storyPath, "utf8");
-  } catch {
-    // Public helper entry points do not always have standalone stories.
-  }
+  const storySource = proStorySources[component] ?? "";
 
   const storyNames = [
     ...storySource.matchAll(/^export const ([A-Za-z0-9_$]+)/gm),

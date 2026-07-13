@@ -1,11 +1,13 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
 const appRoot = new URL("..", import.meta.url).pathname;
 const repoRoot = join(appRoot, "../..");
 const todo = await readFile(join(repoRoot, "TODO.md"), "utf8");
 const componentDirectory = join(appRoot, "content/docs/components");
+const storyDirectory = join(repoRoot, "apps/storybook/src/components");
 const componentUrls = new Map();
+const storySources = {};
 
 for (const match of todo.matchAll(
   /https:\/\/heroui\.pro\/docs\/react\/components\/([a-z0-9-]+)/g,
@@ -59,7 +61,24 @@ for (const [slug, url] of componentUrls) {
     join(componentDirectory, `${slug}.mdx`),
     adaptPage(await response.text(), slug),
   );
+
+  try {
+    storySources[slug] = await readFile(
+      join(storyDirectory, slug, `${slug}.stories.tsx`),
+      "utf8",
+    );
+  } catch {
+    storySources[slug] = "";
+  }
 }
+
+const generatedDirectory = join(appRoot, "src/generated");
+
+await mkdir(generatedDirectory, { recursive: true });
+await writeFile(
+  join(generatedDirectory, "pro-story-sources.ts"),
+  `export const proStorySources: Record<string, string> = ${JSON.stringify(storySources, null, 2)};\n`,
+);
 
 const metaPath = join(componentDirectory, "meta.json");
 const meta = JSON.parse(await readFile(metaPath, "utf8"));

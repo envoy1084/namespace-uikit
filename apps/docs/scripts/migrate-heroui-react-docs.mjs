@@ -143,8 +143,10 @@ for (const name of [...demoNames].toSorted()) {
   const loaderSourcePath = join(upstreamDemos, `${importPath}.tsx`);
   const loaderOutputPath = join(outputDemos, `${importPath}.tsx`);
 
+  const demoSource = adaptDemo(await readFile(sourcePath, "utf8"));
+
   await mkdir(dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, adaptDemo(await readFile(sourcePath, "utf8")));
+  await writeFile(outputPath, demoSource);
   if (loaderSourcePath !== sourcePath) {
     await mkdir(dirname(loaderOutputPath), { recursive: true });
     await writeFile(
@@ -153,13 +155,13 @@ for (const name of [...demoNames].toSorted()) {
     );
   }
   registryEntries.push(
-    `  ${JSON.stringify(name)}: {loader: () => import(${JSON.stringify(`./${importPath}`)}).then((module) => module.${exportName}), file: ${JSON.stringify(filePath)}},`,
+    `  ${JSON.stringify(name)}: {loader: () => import(${JSON.stringify(`./${importPath}`)}).then((module) => module.${exportName}), file: ${JSON.stringify(filePath)}, source: ${JSON.stringify(demoSource)}},`,
   );
 }
 
 await writeFile(
   join(outputDemos, "index.ts"),
-  `import type {ComponentType} from "react";\n\nexport interface Demo {\n  file: string;\n  loader: () => Promise<ComponentType>;\n}\n\nexport const demos: Record<string, Demo> = {\n${registryEntries.join("\n")}\n};\n\nexport function getDemo(name: string) {\n  return demos[name];\n}\n`,
+  `import type {ComponentType} from "react";\n\nexport interface Demo {\n  file: string;\n  loader: () => Promise<ComponentType>;\n  source: string;\n}\n\nexport const demos: Record<string, Demo> = {\n${registryEntries.join("\n")}\n};\n\nexport function getDemo(name: string) {\n  return demos[name];\n}\n`,
 );
 
 await writeFile(

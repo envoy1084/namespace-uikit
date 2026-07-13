@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { getDemo } from "@/demos";
+import { proStorySources } from "@/generated/pro-story-sources";
 import { site } from "@/lib/site";
 
 export const textHeaders = {
@@ -36,12 +37,7 @@ async function expandExamples(source: string) {
 
       if (!demo) return "";
 
-      const code = await readFile(
-        join(process.cwd(), "src/demos", demo.file),
-        "utf8",
-      );
-
-      return `\`\`\`tsx\n${code}\n\`\`\``;
+      return `\`\`\`tsx\n${demo.source}\n\`\`\``;
     },
   );
 
@@ -50,20 +46,11 @@ async function expandExamples(source: string) {
     /<ProExamples\s+component=["']([^"']+)["'][^>]*\/>/g,
     async (match) => {
       const component = match[1] ?? "";
-      const storyPath = join(
-        process.cwd(),
-        "../../apps/storybook/src/components",
-        component,
-        `${component}.stories.tsx`,
-      );
+      const code = proStorySources[component];
 
-      try {
-        const code = await readFile(storyPath, "utf8");
-
-        return `\`\`\`tsx\n${code}\n\`\`\``;
-      } catch {
-        return `\`\`\`tsx\nimport * as Component from "@thenamespace/uikit/${component}";\n\`\`\``;
-      }
+      return code
+        ? `\`\`\`tsx\n${code}\n\`\`\``
+        : `\`\`\`tsx\nimport * as Component from "@thenamespace/uikit/${component}";\n\`\`\``;
     },
   );
 }

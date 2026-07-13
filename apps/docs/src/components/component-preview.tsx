@@ -1,6 +1,3 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
-
 import { getDemo } from "@/demos";
 
 interface ComponentPreviewProps {
@@ -31,9 +28,7 @@ export async function ComponentPreview({
   }
 
   const Demo = await demo.loader();
-  const code = hideCode
-    ? undefined
-    : await readFile(join(process.cwd(), "src/demos", demo.file), "utf8");
+  const code = hideCode ? undefined : demo.source;
   const alignment = {
     center: "items-center justify-center",
     end: "items-end justify-end",
