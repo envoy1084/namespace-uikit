@@ -261,6 +261,7 @@ export function ThemeBuilder() {
             Reset
           </button>
           <button
+            aria-label="View CSS"
             className={cn(
               "flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium",
               showCode
