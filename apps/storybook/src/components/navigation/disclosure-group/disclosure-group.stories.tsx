@@ -350,8 +350,7 @@ const showcase1Items = [
     label: "Immersive pro display",
     content:
       "Our best‑ever 6.3‑inch and 6.9‑inch Super Retina XDR displays.5 Brighter. Better anti‑reflection. ProMotion up to 120Hz.",
-    imgSrc:
-      "/assets/apple/product-viewer/pro_display__c0jmzc5emcae_large_2x.jpg",
+    imgSrc: "/assets/apple/product-viewer/display__c0jmzc5emcae_large_2x.jpg",
   },
   {
     id: "camera-control",

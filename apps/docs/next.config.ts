@@ -13,6 +13,12 @@ const config: NextConfig = {
         permanent: false,
         source: "/docs",
       },
+      {
+        destination:
+          "https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/:stylesheet",
+        permanent: false,
+        source: "/source/styles/:stylesheet",
+      },
     ];
   },
   async rewrites() {

@@ -83,6 +83,7 @@ export default defineConfig({
     // Generated demo markers and indented MDX fences are semantically
     // significant; formatting them breaks component previews and install tabs.
     "apps/docs/content/**/*.mdx",
+    "apps/docs/public/assets/**/*.geojson",
     "apps/docs/src/demos/index.ts",
     "**/route-tree.gen.ts",
     "**/routeTree.gen.ts",

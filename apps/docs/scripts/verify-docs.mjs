@@ -1,8 +1,10 @@
 import { readFile, readdir } from "node:fs/promises";
-import { join, relative } from "node:path";
+import { createRequire } from "node:module";
+import { dirname, join, relative } from "node:path";
 
 const appRoot = new URL("..", import.meta.url).pathname;
 const repoRoot = join(appRoot, "../..");
+const require = createRequire(import.meta.url);
 
 async function files(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -26,6 +28,10 @@ const packageJson = JSON.parse(
   await readFile(join(repoRoot, "packages/uikit/package.json"), "utf8"),
 );
 const componentDirectory = join(appRoot, "content/docs/components");
+const componentSourceDirectory = join(
+  repoRoot,
+  "packages/uikit/src/components",
+);
 const componentDocs = new Set(
   (await readdir(componentDirectory))
     .filter((file) => file.endsWith(".mdx"))
@@ -48,6 +54,134 @@ const missingDocs = componentExports.filter((name) => !componentDocs.has(name));
 invariant(
   missingDocs.length === 0,
   `Missing component documentation: ${missingDocs.join(", ")}`,
+);
+
+const sourceAliases = new Map([
+  ["text-area", "textarea"],
+  ["text-field", "textfield"],
+]);
+const componentSources = new Map();
+
+for (const group of await readdir(componentSourceDirectory, {
+  withFileTypes: true,
+})) {
+  if (!group.isDirectory()) continue;
+
+  for (const file of await readdir(
+    join(componentSourceDirectory, group.name),
+  )) {
+    if (file.endsWith(".tsx"))
+      componentSources.set(file.replace(/\.tsx$/, ""), group.name);
+  }
+}
+
+const storyFiles = (await files(join(repoRoot, "apps/storybook/src"))).filter(
+  (file) => file.endsWith(".stories.tsx"),
+);
+const storyTitles = new Set();
+const componentGroups = new Set(componentSources.values());
+const storybookComponentRoot = join(repoRoot, "apps/storybook/src/components");
+const storybookGroups = new Set(
+  (await readdir(storybookComponentRoot, { withFileTypes: true }))
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name),
+);
+
+invariant(
+  [...componentGroups].every((group) => storybookGroups.has(group)) &&
+    [...storybookGroups].every((group) => componentGroups.has(group)),
+  "Storybook component groups do not match UIKit component groups",
+);
+
+for (const file of storyFiles) {
+  const title = (await readFile(file, "utf8")).match(
+    /title:\s*["'](Components\/[^"']+)["']/,
+  )?.[1];
+
+  if (title) {
+    storyTitles.add(title);
+
+    if (file.startsWith(storybookComponentRoot)) {
+      const physicalGroup = relative(storybookComponentRoot, file).split(
+        /[\\/]/,
+      )[0];
+      const titleGroup = title
+        .split("/")[1]
+        ?.trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-");
+
+      invariant(
+        physicalGroup === titleGroup,
+        `Story title group does not match its folder: ${relative(repoRoot, file)}`,
+      );
+    }
+  }
+}
+
+const stylesPackageRoot = dirname(
+  require.resolve("@heroui/styles/package.json", {
+    paths: [join(repoRoot, "packages/uikit")],
+  }),
+);
+const inheritedStyleFiles = new Set(
+  await files(join(stylesPackageRoot, "dist/components")),
+);
+let directReexportCount = 0;
+let resourcePageCount = 0;
+
+for (const doc of componentDocs) {
+  if (doc === "index") continue;
+
+  const sourceName = sourceAliases.get(doc) ?? doc;
+  const group = componentSources.get(sourceName);
+
+  invariant(group, `Missing component source for resource header: ${doc}`);
+  resourcePageCount += 1;
+
+  const sourcePath = join(componentSourceDirectory, group, `${sourceName}.tsx`);
+  const sourceContent = await readFile(sourcePath, "utf8");
+  const docContent = await readFile(
+    join(componentDirectory, `${doc}.mdx`),
+    "utf8",
+  );
+  const declaredStory = docContent.match(/^  storybook:\s*(.+)$/m)?.[1]?.trim();
+  const declaredStyle = docContent.match(/^  styles:\s*(.+)$/m)?.[1]?.trim();
+
+  if (declaredStory)
+    invariant(
+      storyTitles.has(declaredStory),
+      `Stale Storybook metadata for ${doc}: ${declaredStory}`,
+    );
+
+  if (declaredStyle)
+    invariant(
+      inheritedStyleFiles.has(
+        join(stylesPackageRoot, "dist/components", declaredStyle),
+      ),
+      `Missing inherited style source for ${doc}: ${declaredStyle}`,
+    );
+
+  if (/^export \* from "@heroui\/react\//m.test(sourceContent))
+    directReexportCount += 1;
+}
+
+const componentPageSource = await readFile(
+  join(appRoot, "src/app/docs/[[...slug]]/page.tsx"),
+  "utf8",
+);
+invariant(
+  componentPageSource.includes("<ComponentLinks links={componentLinks} />"),
+  "Component pages do not render the shared resource header",
+);
+const componentResourceSource = await readFile(
+  join(appRoot, "src/lib/component-resources.ts"),
+  "utf8",
+);
+invariant(
+  componentResourceSource.includes("`/source/styles/${declaredStyle}`") &&
+    !/heroui|nextui/i.test(componentResourceSource),
+  "Inherited styles must use the unbranded local source route",
 );
 
 const gettingStartedPages = [
@@ -182,5 +316,5 @@ for (const route of requiredRoutes) {
 }
 
 console.log(
-  `Verified ${componentExports.length} public component entry points, ${advancedComponents.length} advanced pages with ${demoCount} first-class demos, ${componentDocs.size} component docs, and ${requiredRoutes.length} AI routes.`,
+  `Verified ${componentExports.length} public component entry points, ${resourcePageCount} component resource headers (${directReexportCount} direct reexports), ${advancedComponents.length} advanced pages with ${demoCount} first-class demos, ${componentDocs.size} component docs, and ${requiredRoutes.length} AI routes.`,
 );

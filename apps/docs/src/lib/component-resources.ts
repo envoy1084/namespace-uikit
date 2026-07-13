@@ -76,18 +76,27 @@ export function getComponentResourceLinks(
     "packages/uikit/src/styles/components",
     `${sourceName}.css`,
   );
-  const storyFile = join(
-    root,
-    "apps/storybook/src/components",
-    group,
-    sourceName,
-    `${sourceName}.stories.tsx`,
-  );
+  const storyFiles = [
+    join(
+      root,
+      "apps/storybook/src/components",
+      group,
+      sourceName,
+      `${sourceName}.stories.tsx`,
+    ),
+    join(
+      root,
+      "apps/storybook/src/components",
+      group,
+      `${sourceName}.stories.tsx`,
+    ),
+  ];
+  const storyFile = storyFiles.find((file) => existsSync(file));
   let storybook: string | undefined;
 
-  if (existsSync(storyFile)) {
+  if (storyFile) {
     const title = readFileSync(storyFile, "utf8").match(
-      /title:\s*["']([^"']+)["']/,
+      /title:\s*["'](Components\/[^"']+)["']/,
     )?.[1];
 
     if (title) {
@@ -99,7 +108,7 @@ export function getComponentResourceLinks(
   if (existsSync(localStyle)) {
     styles = `${repositoryUrl}/blob/main/packages/uikit/src/styles/components/${sourceName}.css`;
   } else if (declaredStyle) {
-    styles = `https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/${declaredStyle}`;
+    styles = `/source/styles/${declaredStyle}`;
   }
 
   return {
