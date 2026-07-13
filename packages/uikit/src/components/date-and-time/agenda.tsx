@@ -21,6 +21,12 @@ import {
 
 import { Button, cn } from "@heroui/react";
 import {
+  ArrowDown01Icon,
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
   CalendarDateTime,
   getLocalTimeZone,
   isSameDay,
@@ -199,7 +205,7 @@ export function useAgenda(options: AgendaStateOptions): AgendaState {
     if (view === "day") return [date];
     const base =
       weekDays >= 7
-        ? startOfWeek(date, "en-US")
+        ? startOfWeek(date, "en-GB")
         : date.subtract({ days: Math.floor(weekDays / 2) });
     return Array.from({ length: weekDays }, (_, index) =>
       base.add({ days: index }),
@@ -207,7 +213,7 @@ export function useAgenda(options: AgendaStateOptions): AgendaState {
   }, [date, view, weekDays]);
   const visibleWeeks = useMemo(() => {
     if (view !== "month") return [];
-    const start = startOfWeek(date.set({ day: 1 }), "en-US");
+    const start = startOfWeek(date.set({ day: 1 }), "en-GB");
     return Array.from({ length: 6 }, (_, row) =>
       Array.from({ length: 7 }, (_value, column) =>
         start.add({ days: row * 7 + column }),
@@ -439,7 +445,13 @@ function AgendaNavButton({
       variant="ghost"
       onPress={slot === "previous" ? agenda.goToPrevious : agenda.goToNext}
     >
-      {children ?? (slot === "previous" ? "‹" : "›")}
+      {children ?? (
+        <HugeiconsIcon
+          aria-hidden
+          icon={slot === "previous" ? ArrowLeft01Icon : ArrowRight01Icon}
+          size={16}
+        />
+      )}
     </Button>
   );
 }
@@ -475,7 +487,6 @@ function AgendaViewSelector({
   const { setView, view } = useAgendaContext();
   return (
     <Segment
-      aria-label="Calendar view"
       className={
         cn("agenda__view-selector", className) ?? "agenda__view-selector"
       }
@@ -579,7 +590,7 @@ function AgendaAllDaySection({
         variant="ghost"
         onPress={agenda.toggleAllDayExpanded}
       >
-        ⌄
+        <HugeiconsIcon aria-hidden icon={ArrowDown01Icon} size={16} />
       </Button>
       {agenda.isAllDayExpanded
         ? children
@@ -928,7 +939,6 @@ function AgendaEvent({
       data-selected={agenda.selectedEventId === event.id || undefined}
       data-slot="agenda-event"
       data-status={event.status ?? "confirmed"}
-      role="button"
       style={
         {
           height: Math.max(5 * pixelsPerMinute, height + resizeDelta),
@@ -946,7 +956,6 @@ function AgendaEvent({
           ...style,
         } as CSSProperties
       }
-      tabIndex={0}
       onClick={() => {
         if (suppressClick.current) {
           suppressClick.current = false;
@@ -1001,7 +1010,7 @@ function AgendaEventTime({
       data-slot="agenda-event-time"
     >
       {value
-        ? `${String(value.start.hour).padStart(2, "0")}:${String(value.start.minute).padStart(2, "0")} – ${String(value.end.hour).padStart(2, "0")}:${String(value.end.minute).padStart(2, "0")}`
+        ? `${value.start.hour}:${String(value.start.minute).padStart(2, "0")} – ${value.end.hour}:${String(value.end.minute).padStart(2, "0")}`
         : null}
     </span>
   );
