@@ -30,7 +30,13 @@ export function ProStoryPreview({
 
     proStoryLoaders[component]?.().then((storyModule) => {
       if (!active) return undefined;
-      const story = storyModule.Default as Story | undefined;
+      const story = (storyModule.Default ??
+        Object.entries(storyModule).find(
+          ([name, value]) =>
+            name !== "default" &&
+            (typeof value === "function" ||
+              (typeof value === "object" && value !== null)),
+        )?.[1]) as Story | undefined;
       const meta = storyModule.default as
         | { component?: ComponentType<Record<string, unknown>> }
         | undefined;
