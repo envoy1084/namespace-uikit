@@ -49,6 +49,10 @@ async function expandExamples(source: string) {
 function cleanMdx(source: string) {
   return source
     .replace(
+      /<OriginCode\s+prefix=["']([^"']*)["']\s+path=["']([^"']+)["']\s*\/>/g,
+      (_match, prefix: string, path: string) => `${prefix}${absoluteUrl(path)}`,
+    )
+    .replace(
       /<CollapsibleCode\s+lang\s*=\s*["']([^"']+)["']\s+code\s*=\s*{?`([\s\S]*?)`}?\s*\/>/g,
       (_match, lang: string, code: string) =>
         `\`\`\`${lang || "tsx"}\n${code}\n\`\`\``,

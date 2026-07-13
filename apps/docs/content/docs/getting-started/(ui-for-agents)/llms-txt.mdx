@@ -16,10 +16,12 @@ Namespace UIKit publishes [LLMs.txt](https://llmstxt.org/) files so coding assis
 
 Give the assistant the compact index and ask it to open relevant page Markdown before writing code:
 
-```text
-Use Namespace UIKit documentation from https://your-domain.example/llms.txt.
+<OriginCode
+  prefix="Use Namespace UIKit documentation from "
+  path="/llms.txt"
+/>
+
 Open the relevant per-page Markdown links before implementing components.
-```
 
 The **Copy Markdown** menu at the top of each page can also open the current documentation directly in ChatGPT or Claude.
 
@@ -27,9 +29,7 @@ The **Copy Markdown** menu at the top of each page can also open the current doc
 
 Add the complete documentation through Cursor's **@Docs** feature:
 
-```text
-@Docs https://your-domain.example/llms-full.txt
-```
+<OriginCode prefix="@Docs " path="/llms-full.txt" />
 
 For smaller context windows, prefer the compact index and allow Cursor to fetch only the component pages it needs.
 
@@ -37,9 +37,7 @@ For smaller context windows, prefer the compact index and allow Cursor to fetch 
 
 Reference the documentation from your project rules:
 
-```text
-#docs https://your-domain.example/llms.txt
-```
+<OriginCode prefix="#docs " path="/llms.txt" />
 
 ## Project Instructions
 
