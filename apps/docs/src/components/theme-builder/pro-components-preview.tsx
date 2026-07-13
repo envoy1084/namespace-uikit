@@ -4,10 +4,12 @@ import {
   AreaChart,
   BarChart,
   Card,
+  ComposedChart,
   KPI,
   LineChart,
   PieChart,
   RadarChart,
+  RadialChart,
 } from "@thenamespace/uikit";
 
 const chartColors = [1, 2, 3, 4, 5].map((index) => `var(--chart-${index})`);
@@ -25,6 +27,11 @@ const share = [
   { name: "Direct", value: 18 },
   { name: "Email", value: 12 },
   { name: "Other", value: 8 },
+];
+const activity = [
+  { fill: "var(--chart-1)", name: "Product", value: 84 },
+  { fill: "var(--chart-3)", name: "Growth", value: 68 },
+  { fill: "var(--chart-5)", name: "Support", value: 52 },
 ];
 const metrics = [
   { change: "+18.2%", title: "Revenue", trend: "up", value: 228451 },
@@ -205,6 +212,69 @@ export function ProComponentsPreview() {
               type="monotone"
             />
           </AreaChart>
+        </PreviewCard>
+
+        <PreviewCard title="Orders and conversion">
+          <ComposedChart data={months} height={220}>
+            <ComposedChart.Grid vertical={false} />
+            <ComposedChart.XAxis dataKey="month" tickMargin={8} />
+            <ComposedChart.YAxis width={28} />
+            <ComposedChart.Bar
+              barSize={18}
+              dataKey="a"
+              fill="var(--chart-2)"
+              radius={[4, 4, 0, 0]}
+            />
+            <ComposedChart.Line
+              dataKey="e"
+              dot={false}
+              stroke="var(--chart-5)"
+              strokeWidth={2}
+              type="monotone"
+            />
+            <ComposedChart.Tooltip
+              content={<ComposedChart.TooltipContent indicator="line" />}
+            />
+          </ComposedChart>
+        </PreviewCard>
+
+        <PreviewCard title="Team progress">
+          <div className="grid items-center gap-4 sm:grid-cols-[200px_1fr]">
+            <div className="relative mx-auto size-[200px]">
+              <RadialChart
+                data={activity}
+                height={200}
+                innerRadius="45%"
+                outerRadius="100%"
+                width={200}
+              >
+                <RadialChart.Bar background cornerRadius={12} dataKey="value" />
+              </RadialChart>
+              <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-2xl font-semibold">68%</span>
+                <span className="text-muted text-xs">average</span>
+              </div>
+            </div>
+            <div className="grid gap-3">
+              {activity.map((item) => (
+                <div className="grid gap-1" key={item.name}>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-muted">{item.name}</span>
+                    <span>{item.value}%</span>
+                  </div>
+                  <div className="bg-default h-1.5 overflow-hidden rounded-full">
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        background: item.fill,
+                        width: `${item.value}%`,
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </PreviewCard>
       </div>
     </div>

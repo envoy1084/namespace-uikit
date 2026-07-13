@@ -448,7 +448,10 @@ export function ThemeBuilder() {
                 <Segment.Item id="pro">Pro</Segment.Item>
               </Segment>
             </div>
-            <div className="flex min-h-[calc(100%-61px)] justify-center overflow-y-auto px-3">
+            <div
+              key={previewKind}
+              className="flex min-h-[calc(100%-61px)] justify-center overflow-y-auto px-3"
+            >
               {previewKind === "showcase" ? (
                 <DemoShowcase
                   alwaysShowTabs

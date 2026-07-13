@@ -7,6 +7,7 @@ import {
   Description,
   FieldError,
   Input,
+  InputGroup,
   Label,
   ListBox,
   Popover,
@@ -89,14 +90,20 @@ export function FontPicker({
 
   return (
     <Popover>
-      <Popover.Trigger>
-        <Button className="w-full justify-between" variant="secondary">
-          <span className="flex min-w-0 items-center gap-2">
-            <Type className="size-4 shrink-0" />
-            <span className="truncate">{font.label}</span>
-          </span>
-          <ChevronDown className="text-muted size-4" />
-        </Button>
+      <Popover.Trigger aria-label={`Font family: ${font.label}`}>
+        <InputGroup className="w-full cursor-pointer">
+          <InputGroup.Prefix>
+            <Type className="size-4" />
+          </InputGroup.Prefix>
+          <InputGroup.Input
+            readOnly
+            className="cursor-pointer"
+            value={font.label}
+          />
+          <InputGroup.Suffix>
+            <ChevronDown className="text-muted size-4" />
+          </InputGroup.Suffix>
+        </InputGroup>
       </Popover.Trigger>
       <Popover.Content
         className="w-[min(22rem,calc(100vw-2rem))]"
