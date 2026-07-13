@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation";
 
-import { pageText, textHeaders } from "@/lib/llms";
+import { pageText, requestOrigin, textHeaders } from "@/lib/llms";
 import { source } from "@/lib/source";
 
-export const dynamic = "force-static";
-export const revalidate = false;
+export const dynamic = "force-dynamic";
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ slug: string[] }> },
 ) {
   const { slug } = await params;
@@ -15,5 +14,7 @@ export async function GET(
 
   if (!page) notFound();
 
-  return new Response(await pageText(page), { headers: textHeaders });
+  return new Response(await pageText(page, requestOrigin(request)), {
+    headers: textHeaders,
+  });
 }
