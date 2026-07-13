@@ -407,7 +407,7 @@ function DataGridInner<T extends object>({
           );
         })}
         {children.length ? (
-          <Table.Collection items={children}>
+          <Table.Collection dependencies={[columns]} items={children}>
             {(child) => renderRow(child)}
           </Table.Collection>
         ) : null}
@@ -530,7 +530,7 @@ function DataGridInner<T extends object>({
             }
           : {})}
       >
-        <Table.Collection items={sortedData}>
+        <Table.Collection dependencies={[columns]} items={sortedData}>
           {(item: T) => renderRow(item)}
         </Table.Collection>
         {onLoadMore ? (
