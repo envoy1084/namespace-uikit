@@ -18,8 +18,8 @@ export default function HomePage() {
             Namespace UIKit v0.1.0
           </LinkRoot>
           <h1 className="text-foreground mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:mt-4 lg:text-5xl">
-            Beautiful by default.{" "}
-            <span className="text-muted/70">Built for Namespace.</span>
+            Beautiful by default.
+            <div className="text-muted/70">Built for Namespace.</div>
           </h1>
           <p className="text-muted text-balance md:text-lg">
             Namespace UIKit is a modern React component library for building
