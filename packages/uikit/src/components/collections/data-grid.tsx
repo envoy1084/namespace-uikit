@@ -568,22 +568,23 @@ function DataGridInner<T extends object>({
     tableContent
   );
   const root = (
-    <Table
+    <div
       ref={rootRef}
       className={cn("data-grid", className) ?? "data-grid"}
       data-slot="data-grid"
       data-vertical-align={verticalAlign}
       style={columnVisibilityStyles}
-      variant={variant}
     >
-      <Table.ScrollContainer
-        {...(scrollContainerClassName
-          ? { className: scrollContainerClassName }
-          : {})}
-      >
-        {resizable}
-      </Table.ScrollContainer>
-    </Table>
+      <Table variant={variant}>
+        <Table.ScrollContainer
+          {...(scrollContainerClassName
+            ? { className: scrollContainerClassName }
+            : {})}
+        >
+          {resizable}
+        </Table.ScrollContainer>
+      </Table>
+    </div>
   );
   return virtualized ? (
     <Virtualizer
