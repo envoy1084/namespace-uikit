@@ -50,6 +50,37 @@ invariant(
   `Missing component documentation: ${missingDocs.join(", ")}`,
 );
 
+const gettingStartedPages = [
+  "index.mdx",
+  "(overview)/quick-start.mdx",
+  "(overview)/design-principles.mdx",
+  "(overview)/frameworks.mdx",
+  "(handbook)/colors.mdx",
+  "(handbook)/theming.mdx",
+  "(handbook)/dark-mode.mdx",
+  "(handbook)/styling.mdx",
+  "(handbook)/animation.mdx",
+  "(handbook)/composition.mdx",
+];
+
+for (const page of gettingStartedPages) {
+  invariant(
+    (await files(join(appRoot, "content/docs/getting-started"))).some((file) =>
+      file.endsWith(page),
+    ),
+    `Missing Getting Started page: ${page}`,
+  );
+}
+
+const componentIndex = await readFile(
+  join(componentDirectory, "index.mdx"),
+  "utf8",
+);
+invariant(
+  componentIndex.includes("<ComponentsCategory"),
+  "Missing all-components overview",
+);
+
 const todo = await readFile(join(repoRoot, "TODO.md"), "utf8");
 const proComponents = [
   ...new Set(

@@ -46,7 +46,17 @@ for (const [group, slugs] of groups) {
 
 await writeFile(
   join(componentDirectory, "meta.json"),
-  `${JSON.stringify({ description: "Namespace UIKit React components", pages, title: "Components" }, null, 2)}\n`,
+  `${JSON.stringify(
+    {
+      description: "Namespace UIKit React components",
+      icon: "circles-4-diamond",
+      pages,
+      root: true,
+      title: "Components",
+    },
+    null,
+    2,
+  )}\n`,
 );
 
 console.log(

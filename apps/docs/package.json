@@ -17,6 +17,7 @@
     "sync:docs-navigation": "node scripts/organize-component-docs.mjs",
     "sync:docs-shell": "node scripts/sync-heroui-docs-shell.mjs",
     "sync:entrypoint-docs": "node scripts/add-entrypoint-docs.mjs",
+    "sync:getting-started": "node scripts/sync-heroui-getting-started.mjs",
     "sync:pro-docs": "node scripts/sync-heroui-pro-docs.mjs",
     "typecheck": "tsc --noEmit",
     "typegen": "next typegen",
