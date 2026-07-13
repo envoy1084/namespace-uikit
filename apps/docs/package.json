@@ -25,6 +25,7 @@
     "@tanstack/react-table": "8.21.3",
     "@thenamespace/uikit": "workspace:*",
     "clsx": "2.1.1",
+    "culori": "4.0.2",
     "embla-carousel": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "emojibase-data": "17.0.0",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.2",
+    "@types/culori": "4.0.1",
     "@types/mdx": "2.0.14",
     "@types/node": "catalog:",
     "@types/react": "catalog:",

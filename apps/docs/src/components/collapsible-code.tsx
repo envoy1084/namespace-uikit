@@ -1,35 +1,29 @@
-interface CollapsibleCodeProps {
-  className?: string;
-  code: string;
-  collapsible?: boolean;
-  lang?: string;
-  showLineNumbers?: boolean;
-  title?: string;
-}
+import { CodeBlock } from "./codeblock";
 
 export function CollapsibleCode({
-  className,
+  className = "",
   code,
   collapsible = true,
   lang = "tsx",
-  title,
-}: CollapsibleCodeProps) {
-  const content = (
-    <pre
-      className={`max-h-[36rem] overflow-auto p-4 text-xs ${className ?? ""}`}
-    >
-      <code data-language={lang}>{code.trim()}</code>
-    </pre>
-  );
-
-  if (!collapsible) return content;
-
+  showLineNumbers = true,
+  title = "",
+}: {
+  code: string;
+  lang?: string;
+  showLineNumbers?: boolean;
+  title?: string;
+  className?: string;
+  collapsible?: boolean;
+}) {
   return (
-    <details className="not-prose border-separator my-6 overflow-hidden rounded-xl border">
-      <summary className="cursor-pointer px-4 py-3 text-sm font-medium">
-        {title || "View code"}
-      </summary>
-      <div className="border-separator border-t">{content}</div>
-    </details>
+    <CodeBlock
+      isIsolated
+      className={className}
+      code={code}
+      collapsible={collapsible}
+      lang={lang}
+      showLineNumbers={showLineNumbers}
+      title={title}
+    />
   );
 }
