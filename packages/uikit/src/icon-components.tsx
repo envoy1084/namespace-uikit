@@ -87,14 +87,31 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 
-type UIKitIconProps = Omit<ComponentProps<typeof HugeiconsIcon>, "icon">;
+type UIKitIconProps = Omit<
+  ComponentProps<typeof HugeiconsIcon>,
+  "icon" | "strokeWidth"
+> & {
+  strokeWidth?: number | string;
+};
 
 function createIcon(
   displayName: string,
   icon: IconSvgElement,
 ): ComponentType<UIKitIconProps> {
-  function UIKitIcon(props: UIKitIconProps) {
-    return <HugeiconsIcon icon={icon} {...props} />;
+  function UIKitIcon({ strokeWidth, ...props }: UIKitIconProps) {
+    const normalizedStrokeWidth =
+      typeof strokeWidth === "string" ? Number(strokeWidth) : strokeWidth;
+
+    return (
+      <HugeiconsIcon
+        icon={icon}
+        {...(normalizedStrokeWidth === undefined ||
+        Number.isNaN(normalizedStrokeWidth)
+          ? {}
+          : { strokeWidth: normalizedStrokeWidth })}
+        {...props}
+      />
+    );
   }
 
   UIKitIcon.displayName = displayName;
