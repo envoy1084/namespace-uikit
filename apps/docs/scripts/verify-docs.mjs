@@ -83,7 +83,7 @@ invariant(
 );
 
 const todo = await readFile(join(repoRoot, "TODO.md"), "utf8");
-const proComponents = [
+const advancedComponents = [
   ...new Set(
     [
       ...todo.matchAll(
@@ -92,52 +92,54 @@ const proComponents = [
     ].map((match) => match[1]),
   ),
 ];
-const missingProDocs = proComponents.filter((name) => !componentDocs.has(name));
-let proDemoCount = 0;
+const missingAdvancedDocs = advancedComponents.filter(
+  (name) => !componentDocs.has(name),
+);
+let demoCount = 0;
 
 invariant(
-  missingProDocs.length === 0,
-  `Missing advanced documentation: ${missingProDocs.join(", ")}`,
+  missingAdvancedDocs.length === 0,
+  `Missing advanced documentation: ${missingAdvancedDocs.join(", ")}`,
 );
 
-for (const name of proComponents) {
+for (const name of advancedComponents) {
   const content = await readFile(
     join(componentDirectory, `${name}.mdx`),
     "utf8",
   );
 
   invariant(
-    !content.includes("<ProExamples") && content.includes("<ComponentPreview"),
-    `Pro documentation does not use first-class component previews: ${name}`,
+    content.includes("<ComponentPreview"),
+    `Component documentation does not use first-class component previews: ${name}`,
   );
 
   const demoDirectory = join(appRoot, "src/demos", name);
   const demoFiles = (await readdir(demoDirectory)).filter((file) =>
-    file.endsWith(".pro-demo.tsx"),
+    file.endsWith(".demo.tsx"),
   );
 
-  invariant(demoFiles.length > 0, `Missing first-class Pro demos: ${name}`);
+  invariant(demoFiles.length > 0, `Missing first-class demos: ${name}`);
 
   for (const demoFile of demoFiles) {
     const demo = await readFile(join(demoDirectory, demoFile), "utf8");
 
     invariant(
       demo.includes("// @demo-title ") &&
-        /^export const Pro[A-Za-z0-9_$]+Example\s*=/m.test(demo),
-      `Incomplete Pro demo: ${name}/${demoFile}`,
+        /^export const [A-Za-z0-9_$]+Example\s*=/m.test(demo),
+      `Incomplete demo: ${name}/${demoFile}`,
     );
     invariant(
       !/storybook|pro-story/i.test(demo),
-      `Storybook reference remains in Pro demo: ${name}/${demoFile}`,
+      `Storybook reference remains in demo: ${name}/${demoFile}`,
     );
     invariant(
       content.includes(
-        `<ComponentPreview name="${name}-${demoFile.replace(/\.pro-demo\.tsx$/, "")}" />`,
+        `<ComponentPreview name="${name}-${demoFile.replace(/\.demo\.tsx$/, "")}" />`,
       ),
-      `Pro demo is not linked from documentation: ${name}/${demoFile}`,
+      `Demo is not linked from documentation: ${name}/${demoFile}`,
     );
   }
-  proDemoCount += demoFiles.length;
+  demoCount += demoFiles.length;
 }
 
 const applicationFiles = await files(join(appRoot, "src"));
@@ -178,5 +180,5 @@ for (const route of requiredRoutes) {
 }
 
 console.log(
-  `Verified ${componentExports.length} public component entry points, ${proComponents.length} advanced pages with ${proDemoCount} first-class demos, ${componentDocs.size} component docs, and ${requiredRoutes.length} AI routes.`,
+  `Verified ${componentExports.length} public component entry points, ${advancedComponents.length} advanced pages with ${demoCount} first-class demos, ${componentDocs.size} component docs, and ${requiredRoutes.length} AI routes.`,
 );

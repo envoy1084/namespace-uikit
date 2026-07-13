@@ -29,7 +29,7 @@ export default defineConfig({
       },
     },
     {
-      files: ["apps/docs/src/demos/**/*.pro-demo.tsx"],
+      files: ["apps/docs/src/demos/**/*.demo.tsx"],
       rules: {
         "eslint/no-unused-vars": "off",
         "oxc/no-map-spread": "off",
