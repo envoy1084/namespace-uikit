@@ -249,6 +249,11 @@ function DataGridInner<T extends object>({
   });
   const activeDragHooks =
     dragAndDropHooks ?? (onReorder ? reorderHooks : undefined);
+  const columnCollectionKey = columns.map((column) => column.id).join(":");
+  const collectionItems = useMemo(
+    () => sortedData.map((item) => ({ item })),
+    [columnCollectionKey, sortedData],
+  );
   const hasDragHandle = !!activeDragHooks;
   const hasTree = typeof getChildren === "function";
   const hierarchyColumn =
@@ -530,8 +535,8 @@ function DataGridInner<T extends object>({
             }
           : {})}
       >
-        <Table.Collection dependencies={[columns]} items={sortedData}>
-          {(item: T) => renderRow(item)}
+        <Table.Collection dependencies={[columns]} items={collectionItems}>
+          {({ item }) => renderRow(item)}
         </Table.Collection>
         {onLoadMore ? (
           <Table.LoadMore isLoading={isLoadingMore} onLoadMore={onLoadMore}>
