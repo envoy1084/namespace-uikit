@@ -5,6 +5,7 @@ import { ArrowUp02Icon, Icon } from "@thenamespace/uikit/icons";
 import { Card } from "../card";
 import { ChartTooltip } from "../chart-tooltip";
 import { Chip } from "../chip";
+import { KPI } from "../kpi";
 import { BarChart } from "./index";
 
 const meta = {
@@ -462,16 +463,16 @@ export const KPIWithBarChart: Story = {
     },
   },
   render: () => (
-    <Card className="w-full max-w-[400px]">
-      <Card.Header>
-        <Card.Title className="text-muted">Monthly Sales</Card.Title>
-      </Card.Header>
-      <Card.Content className="flex flex-col gap-3">
+    <KPI className="w-full max-w-[400px]">
+      <KPI.Header>
+        <KPI.Title>Monthly Sales</KPI.Title>
+      </KPI.Header>
+      <KPI.Content className="flex flex-col gap-3">
         <div className="flex items-center gap-3 self-start">
-          <span className="text-foreground text-3xl font-semibold">278</span>
-          <span className="text-success text-xs">
-            ↑ 3.3% <span className="text-muted">last 30d</span>
-          </span>
+          <KPI.Value value={278} />
+          <KPI.Trend trend="up">
+            3.3% <span className="text-muted">last 30d</span>
+          </KPI.Trend>
         </div>
         <BarChart data={sales} height={160}>
           <BarChart.Grid vertical={false} />
@@ -484,8 +485,8 @@ export const KPIWithBarChart: Story = {
           />
           <BarChart.Tooltip content={<BarChart.TooltipContent />} />
         </BarChart>
-      </Card.Content>
-    </Card>
+      </KPI.Content>
+    </KPI>
   ),
 };
 
