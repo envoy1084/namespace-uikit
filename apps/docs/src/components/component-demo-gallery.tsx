@@ -31,7 +31,7 @@ export function ComponentDemoGallery() {
     galleryDemos.find((item) => item.component === selectedComponent) ??
     galleryDemos[0]!;
   const filteredDemos = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
+    const normalizedQuery = query.trim().toLowerCase().replaceAll(/\s+/g, "-");
 
     if (!normalizedQuery) return galleryDemos;
 

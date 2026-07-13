@@ -249,6 +249,7 @@ function DataGridInner<T extends object>({
   });
   const activeDragHooks =
     dragAndDropHooks ?? (onReorder ? reorderHooks : undefined);
+  const columnCollectionKey = columns.map((column) => column.id).join(":");
   const hasDragHandle = !!activeDragHooks;
   const hasTree = typeof getChildren === "function";
   const hierarchyColumn =
@@ -416,6 +417,7 @@ function DataGridInner<T extends object>({
   };
   const tableContent = (
     <Table.Content
+      key={columnCollectionKey}
       {...(contentClassName ? { className: contentClassName } : {})}
       {...(defaultExpandedKeys ? { defaultExpandedKeys } : {})}
       {...(defaultSelectedKeys ? { defaultSelectedKeys } : {})}
