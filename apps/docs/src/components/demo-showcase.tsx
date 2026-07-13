@@ -47,12 +47,27 @@ const colors = [
   "#A8ABFF",
 ];
 
-export function DemoShowcase() {
+export interface DemoShowcaseProps {
+  alwaysShowTabs?: boolean;
+  className?: string;
+  showPalette?: boolean;
+  theme?: "dark" | "light";
+  themeVars?: CSSProperties;
+}
+
+export function DemoShowcase({
+  alwaysShowTabs = false,
+  className,
+  showPalette = true,
+  theme,
+  themeVars,
+}: DemoShowcaseProps = {}) {
   const [selectedTab, setSelectedTab] = useState("components");
   const [selectedColor, setSelectedColor] = useState<Color | null>(null);
   const [iframeLoading, setIframeLoading] = useState(true);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const { resolvedTheme } = useTheme();
+  const activeTheme = theme ?? resolvedTheme ?? "dark";
 
   const accentVars = useMemo(() => {
     if (!selectedColor) return {};
@@ -61,20 +76,24 @@ export function DemoShowcase() {
 
     return { "--accent": accent, "--focus": accent };
   }, [selectedColor]);
+  const previewVars = useMemo(
+    () => ({ ...themeVars, ...accentVars }) as CSSProperties,
+    [accentVars, themeVars],
+  );
 
   const sendMessageToIframe = useCallback(() => {
     const iframe = iframeRef.current;
 
     if (!iframe?.contentWindow) return;
     iframe.contentWindow.postMessage(
-      { theme: resolvedTheme ?? "dark", type: "heroui-theme" },
+      { theme: activeTheme, type: "heroui-theme" },
       "*",
     );
     iframe.contentWindow.postMessage(
-      { type: "heroui-accent", vars: accentVars },
+      { type: "heroui-accent", vars: previewVars },
       "*",
     );
-  }, [accentVars, resolvedTheme]);
+  }, [activeTheme, previewVars]);
 
   useEffect(() => {
     sendMessageToIframe();
@@ -86,8 +105,18 @@ export function DemoShowcase() {
   }, [sendMessageToIframe]);
 
   return (
-    <div className="flex min-h-0 w-full max-w-[1200px] flex-1 flex-col py-6 lg:py-10">
-      <div className="mb-4 hidden w-full flex-col justify-between gap-4 px-2 lg:flex lg:flex-row lg:items-center">
+    <div
+      className={cn(
+        "flex min-h-0 w-full max-w-[1200px] flex-1 flex-col py-6 lg:py-10",
+        className,
+      )}
+    >
+      <div
+        className={cn(
+          "mb-4 w-full flex-col justify-between gap-4 px-2 lg:flex-row lg:items-center",
+          alwaysShowTabs ? "flex" : "hidden lg:flex",
+        )}
+      >
         <Tabs
           selectedKey={selectedTab}
           onSelectionChange={(key) => {
@@ -106,43 +135,59 @@ export function DemoShowcase() {
             </Tabs.List>
           </Tabs.ListContainer>
         </Tabs>
-        <div className="flex items-center gap-1">
-          <ColorSwatchPicker size="sm" onChange={setSelectedColor}>
-            {colors.map((color) => (
-              <ColorSwatchPicker.Item key={color} color={color}>
-                <ColorSwatchPicker.Swatch />
-                <ColorSwatchPicker.Indicator />
-              </ColorSwatchPicker.Item>
-            ))}
-          </ColorSwatchPicker>
-          <Tooltip delay={0}>
-            <Tooltip.Trigger>
-              <LinkRoot
-                className={buttonVariants({
-                  className: "text-muted",
-                  isIconOnly: true,
-                  size: "sm",
-                  variant: "ghost",
-                })}
-                href="/themes"
-              >
-                <Palette className="size-4" />
-              </LinkRoot>
-            </Tooltip.Trigger>
-            <Tooltip.Content className="py-0">
-              Open theme builder
-            </Tooltip.Content>
-          </Tooltip>
-        </div>
+        {showPalette ? (
+          <div className="flex items-center gap-1">
+            <ColorSwatchPicker size="sm" onChange={setSelectedColor}>
+              {colors.map((color) => (
+                <ColorSwatchPicker.Item key={color} color={color}>
+                  <ColorSwatchPicker.Swatch />
+                  <ColorSwatchPicker.Indicator />
+                </ColorSwatchPicker.Item>
+              ))}
+            </ColorSwatchPicker>
+            <Tooltip delay={0}>
+              <Tooltip.Trigger>
+                <LinkRoot
+                  className={buttonVariants({
+                    className: "text-muted",
+                    isIconOnly: true,
+                    size: "sm",
+                    variant: "ghost",
+                  })}
+                  href="/themes"
+                >
+                  <Palette className="size-4" />
+                </LinkRoot>
+              </Tooltip.Trigger>
+              <Tooltip.Content className="py-0">
+                Open theme builder
+              </Tooltip.Content>
+            </Tooltip>
+          </div>
+        ) : null}
       </div>
       <div
-        className="flex min-h-[420px] max-w-[1200px] flex-1 flex-col"
-        style={accentVars as CSSProperties}
+        data-theme={theme}
+        className={cn(
+          "flex min-h-[420px] max-w-[1200px] flex-1 flex-col font-sans",
+          theme === "dark" && "dark",
+        )}
+        style={previewVars}
       >
-        <div className="bg-background flex w-full justify-center rounded-2xl py-8 lg:hidden">
+        <div
+          className={cn(
+            "bg-background w-full justify-center rounded-2xl py-8",
+            alwaysShowTabs ? "hidden" : "flex lg:hidden",
+          )}
+        >
           <DemoComponents />
         </div>
-        <div className="relative hidden min-h-0 flex-1 lg:flex lg:flex-col">
+        <div
+          className={cn(
+            "relative min-h-0 flex-1 flex-col",
+            alwaysShowTabs ? "flex" : "hidden lg:flex",
+          )}
+        >
           <div
             className={cn(
               "border-border/50 bg-background flex flex-1 justify-center overflow-x-hidden overflow-y-auto rounded-2xl border py-8",

@@ -19,10 +19,11 @@ import {
 } from "@thenamespace/uikit";
 import { Code2, Moon, RotateCcw, Sun } from "lucide-react";
 
-import { DemoComponents } from "@/components/demo";
+import { DemoShowcase } from "@/components/demo-showcase";
 import { cn } from "@/utils/cn";
 
 import { FontPicker } from "./font-picker";
+import { ProComponentsPreview } from "./pro-components-preview";
 import {
   colorGroups,
   defaultTheme,
@@ -209,6 +210,9 @@ export function ThemeBuilder() {
   const [config, setConfig] = useState<ThemeConfig>(defaultTheme);
   const [mode, setMode] = useState<ThemeMode>("light");
   const [mobileView, setMobileView] = useState<"preview" | "tokens">("preview");
+  const [previewKind, setPreviewKind] = useState<"showcase" | "pro">(
+    "showcase",
+  );
   const [query, setQuery] = useState("");
   const [showCode, setShowCode] = useState(false);
   const [ready, setReady] = useState(false);
@@ -432,16 +436,30 @@ export function ThemeBuilder() {
                   The same live component set used on the home page.
                 </p>
               </div>
-              <div className="flex gap-1.5">
-                <span className="bg-danger size-2.5 rounded-full" />
-                <span className="bg-warning size-2.5 rounded-full" />
-                <span className="bg-success size-2.5 rounded-full" />
-              </div>
+              <Segment
+                aria-label="Preview collection"
+                selectedKey={previewKind}
+                size="sm"
+                onSelectionChange={(key) =>
+                  setPreviewKind(key as "showcase" | "pro")
+                }
+              >
+                <Segment.Item id="showcase">Showcase</Segment.Item>
+                <Segment.Item id="pro">Pro</Segment.Item>
+              </Segment>
             </div>
-            <div className="flex min-h-[calc(100%-61px)] justify-center overflow-x-auto px-4 py-10">
-              <div className="my-auto">
-                <DemoComponents />
-              </div>
+            <div className="flex min-h-[calc(100%-61px)] justify-center overflow-y-auto px-3">
+              {previewKind === "showcase" ? (
+                <DemoShowcase
+                  alwaysShowTabs
+                  className="h-full max-w-none py-3 lg:py-4"
+                  showPalette={false}
+                  theme={mode}
+                  themeVars={previewStyles}
+                />
+              ) : (
+                <ProComponentsPreview />
+              )}
             </div>
           </div>
         </section>
