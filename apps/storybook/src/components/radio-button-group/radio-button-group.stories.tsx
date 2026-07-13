@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState } from "react";
 
+import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Icon } from "@iconify/react";
 
 import { Chip } from "../chip";
@@ -161,7 +163,12 @@ export const CustomIndicator: Story = {
       ].map(([value, description, users]) => (
         <RadioButtonGroup.Item key={value} value={value as string}>
           <RadioButtonGroup.Indicator>
-            <Icon icon="solar:check-circle-bold" />
+            <HugeiconsIcon
+              aria-hidden
+              icon={CheckmarkCircle02Icon}
+              size={20}
+              strokeWidth={2}
+            />
           </RadioButtonGroup.Indicator>
           <RadioButtonGroup.ItemContent>
             <Label className="capitalize">
@@ -272,12 +279,12 @@ export const IconCards: Story = {
 };
 
 const payment = [
-  ["visa", "**** 0123", "Exp. on 01/2026", "solar:card-outline"],
-  ["mastercard", "**** 8304", "Exp. on 06/2028", "solar:card-outline"],
-  ["paypal", "PayPal", "Pay with PayPal", "solar:wallet-outline"],
+  ["visa", "**** 0123", "Exp. on 01/2026", "logos:visa"],
+  ["mastercard", "**** 8304", "Exp. on 06/2028", "logos:mastercard"],
+  ["paypal", "PayPal", "Pay with PayPal", "logos:paypal"],
 ] as const;
 
-function PaymentGroup() {
+function PaymentGroup({ align = "center" }: { align?: "center" | "start" }) {
   return (
     <RadioButtonGroup
       className="w-full max-w-2xl grid-cols-1 sm:grid-cols-2"
@@ -289,7 +296,9 @@ function PaymentGroup() {
       <Label className="col-span-full">Payment method</Label>
       {payment.map(([value, title, description, icon]) => (
         <RadioButtonGroup.Item key={value} value={value}>
-          <RadioButtonGroup.ItemContent className="flex-row items-center gap-4">
+          <RadioButtonGroup.ItemContent
+            className={`flex-row gap-4 ${align === "start" ? "items-start" : "items-center"}`}
+          >
             <RadioButtonGroup.ItemIcon>
               <Icon icon={icon} />
             </RadioButtonGroup.ItemIcon>
@@ -334,7 +343,7 @@ export const DeliveryAndPayment: Story = {
         <DeliveryGroup name="delivery-full" />
       </section>
       <section className="flex w-full flex-col gap-4">
-        <PaymentGroup />
+        <PaymentGroup align="start" />
       </section>
     </div>
   ),
@@ -445,14 +454,21 @@ export const SubscriptionPlans: Story = {
           "Billed at USD 149.99/year (US$ 12.50/month)",
         ],
       ].map(([value, title, billing], index) => (
-        <RadioButtonGroup.Item key={value} value={value}>
+        <RadioButtonGroup.Item
+          key={value}
+          className="data-[selected=true]:bg-foreground border-none ring-transparent transition-colors duration-150"
+          value={value}
+        >
           {({ isSelected }) => (
             <>
               <PressableFeedback.Ripple />
               <RadioButtonGroup.Indicator className="top-1/2 -translate-y-1/2">
-                <Icon
+                <HugeiconsIcon
+                  aria-hidden
                   className="text-[#e95f2a]"
-                  icon="solar:check-circle-bold"
+                  icon={CheckmarkCircle02Icon}
+                  size={24}
+                  strokeWidth={2}
                 />
               </RadioButtonGroup.Indicator>
               <RadioButtonGroup.ItemContent>
@@ -469,7 +485,11 @@ export const SubscriptionPlans: Story = {
                 >
                   {title}
                 </Label>
-                <Description>{billing}</Description>
+                <Description
+                  className={`mt-1 ${isSelected ? "text-background/70" : ""}`}
+                >
+                  {billing}
+                </Description>
               </RadioButtonGroup.ItemContent>
             </>
           )}
