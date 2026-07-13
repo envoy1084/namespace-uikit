@@ -193,7 +193,7 @@ export const DocsSite: Story = {
       <Navbar.Header>
         <Navbar.MenuToggle className="md:hidden" />
         <Navbar.Brand>
-          <Logo compact />
+          <span className="font-semibold">HeroUI</span>
         </Navbar.Brand>
         <Navbar.Content className="hidden md:flex">
           {["Docs", "Pro", "Blog"].map((label) => (
@@ -321,11 +321,8 @@ function DashboardNavbar() {
     <Navbar position="static">
       <Navbar.Header className="gap-2">
         <Navbar.Brand className="mr-1">
-          <Logo compact />
+          <span className="font-semibold">HeroUI</span>
         </Navbar.Brand>
-        <span aria-hidden className="text-border text-lg font-light">
-          /
-        </span>
         <InlineSelect
           aria-label="Workspace"
           value={workspace}
@@ -354,9 +351,6 @@ function DashboardNavbar() {
             </ListBox>
           </InlineSelect.Popover>
         </InlineSelect>
-        <span aria-hidden className="text-border text-lg font-light">
-          /
-        </span>
         <InlineSelect
           aria-label="Project"
           value={project}
