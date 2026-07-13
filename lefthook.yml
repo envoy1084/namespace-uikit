@@ -16,8 +16,3 @@ pre-commit:
       glob: "*.{ts,tsx,js,jsx,mjs,cjs}"
       run: pnpm exec oxlint --fix --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
-
-pre-push:
-  commands:
-    check:
-      run: pnpm check
