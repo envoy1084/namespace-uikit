@@ -145,14 +145,14 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 
 ### Form and interaction components
 
-- [ ] PressableFeedback standalone highlight and final two card hover/press states match official behavior.
-- [ ] CellSelect uses the official Hugeicon.
-- [ ] CellSlider hover line is vertically centered and expands correctly while pressed.
-- [ ] DropZone file-list retry buttons use the official variant in regular and compact stories.
-- [ ] InlineSelect uses correctly sized Hugeicon chevrons.
-- [ ] NativeSelect does not retain an incorrect trigger focus treatment after selection or click.
-- [ ] RadioButtonGroup custom indicator, delivery/payment logos, and subscription-plan styling match official stories.
-- [ ] RichTextEditor component and stories are fully re-audited for radii, spacing, menus, controls, and states.
+- [x] PressableFeedback standalone highlight and final two card hover/press states match official behavior.
+- [x] CellSelect uses the official Hugeicon.
+- [x] CellSlider hover line is vertically centered and expands correctly while pressed.
+- [x] DropZone file-list retry buttons use the official variant in regular and compact stories.
+- [x] InlineSelect uses correctly sized Hugeicon chevrons.
+- [x] NativeSelect does not retain an incorrect trigger focus treatment after selection or click.
+- [x] RadioButtonGroup custom indicator, delivery/payment logos, and subscription-plan styling match official stories.
+- [x] RichTextEditor component and stories are fully re-audited for radii, spacing, menus, controls, and states.
 
 ### Completion gates
 
