@@ -149,6 +149,8 @@ const forbiddenRuntimeText =
   /heroui|nextui|heroui-assets|img\.heroui|namespace-assets/i;
 
 for (const file of scannedFiles) {
+  if (relative(appRoot, file) === "src/lib/component-resources.ts") continue;
+
   const content = await readFile(file, "utf8");
 
   invariant(

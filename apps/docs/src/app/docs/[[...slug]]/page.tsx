@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 
 import { createRelativeLink } from "fumadocs-ui/mdx";
 
+import { ComponentLinks } from "@/components/component-links";
 import {
   DocsBody,
   DocsDescription,
@@ -10,6 +11,7 @@ import {
   DocsTitle,
 } from "@/components/fumadocs/layouts/notebook/page";
 import { PageActions } from "@/components/page-actions";
+import { getComponentResourceLinks } from "@/lib/component-resources";
 import { source } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
 
@@ -27,6 +29,10 @@ export default async function Page({
   if (!page) notFound();
 
   const Content = page.data.body;
+  const componentLinks =
+    slug.length === 2 && slug[0] === "components"
+      ? getComponentResourceLinks(slug[1] ?? "")
+      : undefined;
 
   return (
     <DocsPage
@@ -42,6 +48,7 @@ export default async function Page({
         <DocsDescription className="text-md mt-2 mb-4">
           {page.data.description}
         </DocsDescription>
+        {componentLinks ? <ComponentLinks links={componentLinks} /> : null}
       </section>
       <DocsBody className="prose-sm">
         <Content
