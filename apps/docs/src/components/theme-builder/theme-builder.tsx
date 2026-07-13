@@ -1,18 +1,26 @@
 "use client";
 
-import type { ChangeEvent } from "react";
 import { useEffect, useMemo, useState } from "react";
 
 import {
-  Check,
-  Code2,
-  Copy,
-  Moon,
-  RotateCcw,
-  Search,
-  Sun,
-  X,
-} from "lucide-react";
+  Button,
+  CodeBlock,
+  ColorArea,
+  ColorField,
+  ColorPicker,
+  ColorSlider,
+  ColorSwatch,
+  Input,
+  Label,
+  ListBox,
+  SearchField,
+  Segment,
+  Select,
+  Sheet,
+  Slider,
+  TextField,
+} from "@thenamespace/uikit";
+import { Code2, Moon, RotateCcw, Sun } from "lucide-react";
 
 import { DemoComponents } from "@/components/demo";
 import { cn } from "@/utils/cn";
@@ -61,7 +69,7 @@ function ColorControl({
   const id = `${mode}-${token}`;
 
   return (
-    <div className="group grid grid-cols-[1fr_9rem] items-center gap-3 py-2">
+    <div className="group grid grid-cols-[1fr_2.5rem_8.5rem] items-center gap-2 py-2">
       <label className="min-w-0" htmlFor={id}>
         <span className="block truncate text-sm font-medium capitalize">
           {token.replaceAll("-", " ")}
@@ -70,22 +78,55 @@ function ColorControl({
           --{token}
         </span>
       </label>
-      <div className="border-border bg-field-background focus-within:border-focus flex h-9 min-w-0 items-center rounded-[var(--field-radius)] border p-1 transition-colors">
-        <input
-          aria-label={`Choose ${token} color`}
-          className="size-7 shrink-0 cursor-pointer appearance-none overflow-hidden rounded-md border-0 bg-transparent p-0 [&::-moz-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch-wrapper]:p-0"
-          type="color"
-          value={colorInputValue(value)}
-          onChange={(event) => onChange(colorToOklch(event.target.value))}
-        />
-        <input
+      <ColorPicker
+        aria-label={`Choose ${token} color`}
+        value={colorInputValue(value)}
+        onChange={(color) => onChange(colorToOklch(color.toString("hex")))}
+      >
+        <ColorPicker.Trigger className="size-10 justify-center p-0">
+          <ColorSwatch size="sm" />
+        </ColorPicker.Trigger>
+        <ColorPicker.Popover className="w-64 gap-3">
+          <ColorArea
+            aria-label={`${token} color area`}
+            className="max-w-full"
+            colorSpace="hsb"
+            xChannel="saturation"
+            yChannel="brightness"
+          >
+            <ColorArea.Thumb />
+          </ColorArea>
+          <ColorSlider
+            aria-label={`${token} hue`}
+            channel="hue"
+            className="px-1"
+            colorSpace="hsb"
+          >
+            <ColorSlider.Track>
+              <ColorSlider.Thumb />
+            </ColorSlider.Track>
+          </ColorSlider>
+          <ColorField aria-label={`${token} color value`}>
+            <ColorField.Group variant="secondary">
+              <ColorField.Prefix>
+                <ColorSwatch size="xs" />
+              </ColorField.Prefix>
+              <ColorField.Input />
+            </ColorField.Group>
+          </ColorField>
+        </ColorPicker.Popover>
+      </ColorPicker>
+      <TextField
+        aria-label={`${token} CSS value`}
+        value={value}
+        onChange={onChange}
+      >
+        <Input
           id={id}
+          className="h-10 px-2 font-mono text-[11px]"
           spellCheck={false}
-          className="text-field-foreground min-w-0 flex-1 bg-transparent px-2 font-mono text-[11px] outline-none"
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
         />
-      </div>
+      </TextField>
     </div>
   );
 }
@@ -98,93 +139,67 @@ function ModeSwitch({
   onChange: (mode: ThemeMode) => void;
 }) {
   return (
-    <div
-      className="bg-default flex rounded-full p-1"
-      role="group"
+    <Segment
       aria-label="Preview theme"
+      selectedKey={mode}
+      size="sm"
+      onSelectionChange={(key) => onChange(key as ThemeMode)}
     >
       {(["light", "dark"] as const).map((item) => {
         const Icon = item === "light" ? Sun : Moon;
 
         return (
-          <button
-            key={item}
-            aria-pressed={mode === item}
-            className={cn(
-              "flex h-8 items-center gap-2 rounded-full px-3 text-sm font-medium capitalize transition-colors",
-              mode === item
-                ? "bg-surface text-foreground shadow-sm"
-                : "text-muted hover:text-foreground",
-            )}
-            type="button"
-            onClick={() => onChange(item)}
-          >
+          <Segment.Item key={item} className="gap-2 capitalize" id={item}>
             <Icon className="size-3.5" />
             {item}
-          </button>
+          </Segment.Item>
         );
       })}
-    </div>
+    </Segment>
   );
 }
 
-function CodePanel({ code, onClose }: { code: string; onClose: () => void }) {
-  const [copied, setCopied] = useState(false);
-
-  async function copy() {
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1600);
-  }
-
+function ThemeCodeSheet({
+  code,
+  isOpen,
+  onOpenChange,
+}: {
+  code: string;
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   return (
-    <div className="border-border bg-background absolute inset-0 z-30 flex flex-col border-l lg:inset-y-0 lg:left-auto lg:w-[min(46rem,56%)]">
-      <div className="border-border flex h-14 shrink-0 items-center justify-between border-b px-4">
-        <div>
-          <p className="text-sm font-semibold">globals.css</p>
-          <p className="text-muted text-xs">
-            Paste this after your UIKit import.
-          </p>
-        </div>
-        <div className="flex items-center gap-1">
-          <button
-            className="hover:bg-default flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium"
-            type="button"
-            onClick={copy}
-          >
-            {copied ? (
-              <Check className="size-4" />
-            ) : (
-              <Copy className="size-4" />
-            )}
-            {copied ? "Copied" : "Copy CSS"}
-          </button>
-          <button
-            aria-label="Close code panel"
-            className="hover:bg-default grid size-9 place-items-center rounded-lg"
-            type="button"
-            onClick={onClose}
-          >
-            <X className="size-4" />
-          </button>
-        </div>
-      </div>
-      <pre className="bg-surface-secondary min-h-0 flex-1 overflow-auto p-5 text-[12px] leading-6">
-        <code className="grid font-mono">
-          {code.split("\n").map((line, index) => (
-            <span
-              key={`${index}-${line}`}
-              className="grid grid-cols-[2.5rem_1fr]"
-            >
-              <span className="text-muted text-right select-none">
-                {index + 1}
-              </span>
-              <span className="pl-4 whitespace-pre">{line || " "}</span>
-            </span>
-          ))}
-        </code>
-      </pre>
-    </div>
+    <Sheet isOpen={isOpen} placement="right" onOpenChange={onOpenChange}>
+      <Sheet.Backdrop variant="blur">
+        <Sheet.Content className="w-[min(100vw,48rem)]">
+          <Sheet.Dialog className="h-full">
+            <Sheet.CloseTrigger />
+            <Sheet.Header>
+              <Sheet.Heading>Theme CSS</Sheet.Heading>
+              <p className="text-muted text-sm">
+                Paste this into your globals.css file.
+              </p>
+            </Sheet.Header>
+            <Sheet.Body className="min-h-0 p-3 sm:p-5">
+              <CodeBlock className="m-0 min-h-full">
+                <CodeBlock.Header>
+                  <span className="text-muted font-mono text-xs">
+                    globals.css
+                  </span>
+                  <CodeBlock.CopyButton aria-label="Copy CSS" code={code} />
+                </CodeBlock.Header>
+                <CodeBlock.Code
+                  showLineNumbers
+                  className="min-h-0 flex-1 text-xs"
+                  code={code}
+                  language="css"
+                />
+              </CodeBlock>
+            </Sheet.Body>
+          </Sheet.Dialog>
+        </Sheet.Content>
+      </Sheet.Backdrop>
+    </Sheet>
   );
 }
 
@@ -229,11 +244,8 @@ export function ThemeBuilder() {
     }));
   }
 
-  function updateNumber(
-    key: "radius" | "fieldRadius",
-    event: ChangeEvent<HTMLInputElement>,
-  ) {
-    setConfig((current) => ({ ...current, [key]: Number(event.target.value) }));
+  function updateNumber(key: "radius" | "fieldRadius", value: number) {
+    setConfig((current) => ({ ...current, [key]: value }));
   }
 
   function reset() {
@@ -252,49 +264,53 @@ export function ThemeBuilder() {
         </div>
         <div className="flex items-center gap-2">
           <ModeSwitch mode={mode} onChange={setMode} />
-          <button
+          <Button
             className="hover:bg-default hidden h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium sm:flex"
-            type="button"
-            onClick={reset}
+            variant="tertiary"
+            onPress={reset}
           >
             <RotateCcw className="size-4" />
             Reset
-          </button>
-          <button
+          </Button>
+          <Button
+            isIconOnly
             aria-label="View CSS"
-            className={cn(
-              "flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium",
-              showCode
-                ? "bg-accent text-accent-foreground"
-                : "bg-default hover:bg-default/80",
-            )}
-            type="button"
-            onClick={() => {
+            className="sm:hidden"
+            variant={showCode ? "primary" : "tertiary"}
+            onPress={() => {
               setMobileView("preview");
               setShowCode((visible) => !visible);
             }}
           >
             <Code2 className="size-4" />
-            <span className="hidden sm:inline">View CSS</span>
-          </button>
+          </Button>
+          <Button
+            className="hidden sm:flex"
+            variant={showCode ? "primary" : "tertiary"}
+            onPress={() => setShowCode((visible) => !visible)}
+          >
+            <Code2 className="size-4" />
+            View CSS
+          </Button>
         </div>
       </header>
 
-      <div className="border-border bg-background grid grid-cols-2 border-b p-2 lg:hidden">
-        {(["preview", "tokens"] as const).map((view) => (
-          <button
-            key={view}
-            aria-pressed={mobileView === view}
-            className={cn(
-              "h-9 rounded-lg text-sm font-medium capitalize transition-colors",
-              mobileView === view ? "bg-default text-foreground" : "text-muted",
-            )}
-            type="button"
-            onClick={() => setMobileView(view)}
-          >
-            {view === "tokens" ? "Customize" : view}
-          </button>
-        ))}
+      <div className="border-border bg-background border-b p-2 lg:hidden">
+        <Segment
+          aria-label="Theme builder view"
+          className="w-full"
+          selectedKey={mobileView}
+          onSelectionChange={(key) =>
+            setMobileView(key as "preview" | "tokens")
+          }
+        >
+          <Segment.Item className="flex-1" id="preview">
+            Preview
+          </Segment.Item>
+          <Segment.Item className="flex-1" id="tokens">
+            Customize
+          </Segment.Item>
+        </Segment>
       </div>
 
       <div className="grid min-h-0 flex-1 lg:grid-cols-[23rem_minmax(0,1fr)]">
@@ -319,16 +335,20 @@ export function ThemeBuilder() {
                   {Object.keys(config.colors[mode]).length} tokens
                 </span>
               </div>
-              <label className="border-border bg-field-background focus-within:border-focus flex h-10 items-center gap-2 rounded-[var(--field-radius)] border px-3">
-                <Search className="text-muted size-4" />
-                <span className="sr-only">Find a token</span>
-                <input
-                  className="min-w-0 flex-1 bg-transparent text-sm outline-none"
-                  placeholder="Find a color token…"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                />
-              </label>
+              <SearchField
+                aria-label="Find a token"
+                value={query}
+                onChange={setQuery}
+              >
+                <SearchField.Group>
+                  <SearchField.SearchIcon />
+                  <SearchField.Input
+                    className="min-w-0 flex-1"
+                    placeholder="Find a color token…"
+                  />
+                  <SearchField.ClearButton />
+                </SearchField.Group>
+              </SearchField>
             </section>
 
             {colorGroups.map((group) => {
@@ -365,52 +385,70 @@ export function ThemeBuilder() {
               <RangeControl
                 label="Component radius"
                 value={config.radius}
-                onChange={(event) => updateNumber("radius", event)}
+                onChange={(value) => updateNumber("radius", value)}
               />
               <RangeControl
                 label="Field radius"
                 value={config.fieldRadius}
-                onChange={(event) => updateNumber("fieldRadius", event)}
+                onChange={(value) => updateNumber("fieldRadius", value)}
               />
-              <label className="block space-y-2">
-                <span className="text-sm font-medium">Font family</span>
-                <select
-                  className="border-border bg-field-background focus:border-focus h-10 w-full rounded-[var(--field-radius)] border px-3 text-sm outline-none"
-                  value={
+              <div className="space-y-2">
+                <Select
+                  aria-label="Font family"
+                  className="w-full"
+                  selectedKey={
                     fontOptions.some(
                       (option) => option.value === config.fontFamily,
                     )
                       ? config.fontFamily
                       : "custom"
                   }
-                  onChange={(event) => {
-                    if (event.target.value !== "custom") {
+                  onSelectionChange={(key) => {
+                    if (key !== null && key !== "custom") {
                       setConfig((current) => ({
                         ...current,
-                        fontFamily: event.target.value,
+                        fontFamily: String(key),
                       }));
                     }
                   }}
                 >
-                  {fontOptions.map((option) => (
-                    <option key={option.label} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                  <option value="custom">Custom</option>
-                </select>
-                <input
+                  <Label>Font family</Label>
+                  <Select.Trigger>
+                    <Select.Value />
+                    <Select.Indicator />
+                  </Select.Trigger>
+                  <Select.Popover>
+                    <ListBox>
+                      {fontOptions.map((option) => (
+                        <ListBox.Item
+                          key={option.label}
+                          id={option.value}
+                          textValue={option.label}
+                        >
+                          {option.label}
+                          <ListBox.ItemIndicator />
+                        </ListBox.Item>
+                      ))}
+                      <ListBox.Item id="custom" textValue="Custom">
+                        Custom
+                        <ListBox.ItemIndicator />
+                      </ListBox.Item>
+                    </ListBox>
+                  </Select.Popover>
+                </Select>
+                <TextField
                   aria-label="CSS font family value"
-                  className="border-border bg-field-background focus:border-focus h-10 w-full rounded-[var(--field-radius)] border px-3 font-mono text-xs outline-none"
                   value={config.fontFamily}
-                  onChange={(event) =>
+                  onChange={(value) =>
                     setConfig((current) => ({
                       ...current,
-                      fontFamily: event.target.value,
+                      fontFamily: value,
                     }))
                   }
-                />
-              </label>
+                >
+                  <Input className="font-mono text-xs" />
+                </TextField>
+              </div>
             </section>
           </div>
         </aside>
@@ -448,11 +486,13 @@ export function ThemeBuilder() {
               </div>
             </div>
           </div>
-          {showCode && (
-            <CodePanel code={code} onClose={() => setShowCode(false)} />
-          )}
         </section>
       </div>
+      <ThemeCodeSheet
+        code={code}
+        isOpen={showCode}
+        onOpenChange={setShowCode}
+      />
     </div>
   );
 }
@@ -464,25 +504,28 @@ function RangeControl({
 }: {
   label: string;
   value: number;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: number) => void;
 }) {
   return (
-    <label className="block space-y-2">
-      <span className="flex items-center justify-between text-sm font-medium">
-        {label}
+    <Slider
+      aria-label={label}
+      className="w-full"
+      maxValue={2}
+      minValue={0}
+      step={0.05}
+      value={value}
+      onChange={(nextValue) => onChange(Number(nextValue))}
+    >
+      <div className="flex items-center justify-between">
+        <Label>{label}</Label>
         <span className="bg-default rounded-md px-2 py-1 font-mono text-xs">
           {value.toFixed(2)}rem
         </span>
-      </span>
-      <input
-        className="accent-accent h-2 w-full cursor-pointer"
-        max="2"
-        min="0"
-        step="0.05"
-        type="range"
-        value={value}
-        onChange={onChange}
-      />
-    </label>
+      </div>
+      <Slider.Track>
+        <Slider.Fill />
+        <Slider.Thumb />
+      </Slider.Track>
+    </Slider>
   );
 }
