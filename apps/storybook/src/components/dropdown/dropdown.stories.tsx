@@ -3,6 +3,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import * as React from "react";
 
+import {
+  ArrowRight01Icon,
+  CheckmarkCircle02Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
 import { Icon } from "../../icon";
 import { Avatar } from "../avatar";
 import { Button } from "../button";
@@ -114,20 +120,11 @@ export const SingleWithCustomIndicator: Story = {
     );
 
     const CustomCheckmarkIcon = (
-      <svg
-        height="16"
-        viewBox="0 0 16 16"
-        width="16"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          className="text-accent"
-          clipRule="evenodd"
-          d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14m3.1-8.55a.75.75 0 1 0-1.2-.9L7.419 8.858L6.03 7.47a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.13-.08z"
-          fill="currentColor"
-          fillRule="evenodd"
-        />
-      </svg>
+      <HugeiconsIcon
+        className="text-accent"
+        icon={CheckmarkCircle02Icon}
+        size={16}
+      />
     );
 
     return (
@@ -812,17 +809,11 @@ export const WithCustomSubmenuIndicator: Story = {
                   <Dropdown.Item id="email" textValue="Email">
                     <Label>Email</Label>
                     <Dropdown.SubmenuIndicator>
-                      <svg
-                        className="text-muted size-3.5"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M9 18l6-6-6-6" />
-                      </svg>
+                      <HugeiconsIcon
+                        className="text-muted"
+                        icon={ArrowRight01Icon}
+                        size={14}
+                      />
                     </Dropdown.SubmenuIndicator>
                   </Dropdown.Item>
                   <Dropdown.Popover>

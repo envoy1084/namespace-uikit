@@ -1,9 +1,14 @@
 import type { Meta } from "@storybook/react";
 import type { ButtonProps } from "@thenamespace/uikit";
 
-import type { SVGProps } from "react";
 import React from "react";
 
+import {
+  AddCircleIcon,
+  ArrowDown01Icon,
+  ArrowUp01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { cn } from "tailwind-variants";
 
 import { Icon } from "../../icon";
@@ -306,29 +311,6 @@ function SelectedIphoneColorSwatch({
   );
 }
 
-function PlusIcon({
-  className,
-  height = 24,
-  width = 24,
-  ...props
-}: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      className={cn("size-6 flex-none", className)}
-      height={height}
-      viewBox="0 0 24 24"
-      width={width}
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <circle cx="12" cy="12" fill="none" r="11.3" stroke="currentColor" />
-      <g fill="currentColor" stroke="none" transform="translate(7 7)">
-        <path d="m9 4h-3v-3c0-0.553-0.447-1-1-1s-1 0.447-1 1v3h-3c-0.553 0-1 0.447-1 1s0.447 1 1 1h3v3c0 0.553 0.447 1 1 1s1-0.447 1-1v-3h3c0.553 0 1-0.447 1-1s-0.447-1-1-1" />
-      </g>
-    </svg>
-  );
-}
-
 const showcase1Items = [
   {
     id: "colors",
@@ -425,9 +407,7 @@ const Showcase1Template = (props: DisclosureGroupProps) => {
             variant="secondary"
             onPress={onPrevious}
           >
-            <svg className="fill-foreground size-8" viewBox="0 0 36 36">
-              <path d="m11 20c0-.3838.1465-.7676.4395-1.0605l5.5-5.5c.5854-.5859 1.5356-.5859 2.1211 0l5.5 5.5c.5859.5859.5859 1.5352 0 2.1211-.5854.5859-1.5356.5859-2.1211 0l-4.4395-4.4395-4.4395 4.4395c-.5854.5859-1.5356.5859-2.1211 0-.293-.293-.4395-.6768-.4395-1.0605z" />
-            </svg>
+            <HugeiconsIcon icon={ArrowUp01Icon} size={32} />
           </Button>
           <Button
             isIconOnly
@@ -437,9 +417,7 @@ const Showcase1Template = (props: DisclosureGroupProps) => {
             variant="secondary"
             onPress={onNext}
           >
-            <svg className="fill-foreground size-8" viewBox="0 0 36 36">
-              <path d="m19.0625 22.5597 5.5-5.5076c.5854-.5854.5825-1.5323-.0039-2.1157-.5869-.5835-1.5366-.5815-2.1211.0039l-4.4375 4.4438-4.4375-4.4438c-.5845-.5854-1.5342-.5874-2.1211-.0039-.2944.2922-.4414.676-.4414 1.0598 0 .3818.1455.7637.4375 1.0559l5.5 5.5076c.2813.2815.6636.4403 1.0625.4403s.7812-.1588 1.0625-.4403z" />
-            </svg>
+            <HugeiconsIcon icon={ArrowDown01Icon} size={32} />
           </Button>
         </div>
         <div className="z-[1] w-full max-w-md">
@@ -463,7 +441,10 @@ const Showcase1Template = (props: DisclosureGroupProps) => {
                           name="Cosmic Orange"
                         />
                       ) : (
-                        <PlusIcon />
+                        <HugeiconsIcon
+                          className="size-6 flex-none"
+                          icon={AddCircleIcon}
+                        />
                       )}
                       {item.label}
                     </div>

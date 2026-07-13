@@ -2,6 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
 
+import {
+  Add01Icon,
+  FavouriteIcon,
+  MinusSignIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { cx } from "tailwind-variants";
 
 import { Icon } from "../../icon";
@@ -88,14 +94,7 @@ export const WithCustomIndicator: Story = {
           <Checkbox.Control>
             <Checkbox.Indicator>
               {({ isSelected }) =>
-                isSelected ? (
-                  <svg viewBox="0 0 24 24">
-                    <path
-                      d="M12.62 20.81c-.34.12-.9.12-1.24 0C8.48 19.82 2 15.69 2 8.69 2 5.6 4.49 3.1 7.56 3.1c1.82 0 3.43.88 4.44 2.24a5.53 5.53 0 0 1 4.44-2.24C19.51 3.1 22 5.6 22 8.69c0 7-6.48 11.13-9.38 12.12Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                ) : null
+                isSelected ? <HugeiconsIcon icon={FavouriteIcon} /> : null
               }
             </Checkbox.Indicator>
           </Checkbox.Control>
@@ -107,24 +106,7 @@ export const WithCustomIndicator: Story = {
           <Checkbox.Control>
             <Checkbox.Indicator>
               {({ isSelected }) =>
-                isSelected ? (
-                  <svg fill="none" viewBox="0 0 24 24">
-                    <path
-                      d="M6 12H18"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="3"
-                    />
-                    <path
-                      d="M12 18V6"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="3"
-                    />
-                  </svg>
-                ) : null
+                isSelected ? <HugeiconsIcon icon={Add01Icon} /> : null
               }
             </Checkbox.Indicator>
           </Checkbox.Control>
@@ -136,15 +118,7 @@ export const WithCustomIndicator: Story = {
           <Checkbox.Control>
             <Checkbox.Indicator>
               {({ isIndeterminate }) =>
-                isIndeterminate ? (
-                  <svg
-                    stroke="currentColor"
-                    strokeWidth={3}
-                    viewBox="0 0 24 24"
-                  >
-                    <line x1="21" x2="3" y1="12" y2="12" />
-                  </svg>
-                ) : null
+                isIndeterminate ? <HugeiconsIcon icon={MinusSignIcon} /> : null
               }
             </Checkbox.Indicator>
           </Checkbox.Control>

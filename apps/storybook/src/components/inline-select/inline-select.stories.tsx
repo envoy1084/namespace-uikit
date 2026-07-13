@@ -3,7 +3,7 @@ import type { Placement } from "react-aria-components";
 
 import { useState } from "react";
 
-import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import { ArrowRight01Icon, Building03Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { ListBox } from "../list-box";
@@ -143,12 +143,7 @@ export const TeamSwitcher: Story = {
     const selected = teams.find((team) => team.id === value) ?? teams[0];
     return (
       <div className="flex items-center gap-2.5">
-        <svg className="size-6" fill="none" viewBox="0 0 24 24">
-          <path
-            d="M6 7.99v4.78c0 .227.121.437.32.556l3.389 2.038c.451.272 1.036-.041 1.036-.555v-4.018c0-.232.127-.446.333-.564l2.067-1.181v10.298c0 .512.582.826 1.034.558l3.498-2.076c.201-.119.323-.33.323-.558v-9.89c0-.509-.576-.823-1.028-.56l-3.827 2.228v-4.39c0-.509-.573-.823-1.025-.562L6.33 7.428A.649.649 0 0 0 6 7.99Z"
-            fill="currentColor"
-          />
-        </svg>
+        <HugeiconsIcon icon={Building03Icon} size={24} />
         <span className="text-border text-lg font-light">/</span>
         <InlineSelect aria-label="Team" value={value} onChange={setValue}>
           <InlineSelect.Trigger className="gap-2">
