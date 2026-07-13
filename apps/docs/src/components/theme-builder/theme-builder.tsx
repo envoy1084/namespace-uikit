@@ -191,6 +191,7 @@ function CodePanel({ code, onClose }: { code: string; onClose: () => void }) {
 export function ThemeBuilder() {
   const [config, setConfig] = useState<ThemeConfig>(defaultTheme);
   const [mode, setMode] = useState<ThemeMode>("light");
+  const [mobileView, setMobileView] = useState<"preview" | "tokens">("preview");
   const [query, setQuery] = useState("");
   const [showCode, setShowCode] = useState(false);
   const [ready, setReady] = useState(false);
@@ -267,7 +268,10 @@ export function ThemeBuilder() {
                 : "bg-default hover:bg-default/80",
             )}
             type="button"
-            onClick={() => setShowCode((visible) => !visible)}
+            onClick={() => {
+              setMobileView("preview");
+              setShowCode((visible) => !visible);
+            }}
           >
             <Code2 className="size-4" />
             <span className="hidden sm:inline">View CSS</span>
@@ -275,8 +279,30 @@ export function ThemeBuilder() {
         </div>
       </header>
 
+      <div className="border-border bg-background grid grid-cols-2 border-b p-2 lg:hidden">
+        {(["preview", "tokens"] as const).map((view) => (
+          <button
+            key={view}
+            aria-pressed={mobileView === view}
+            className={cn(
+              "h-9 rounded-lg text-sm font-medium capitalize transition-colors",
+              mobileView === view ? "bg-default text-foreground" : "text-muted",
+            )}
+            type="button"
+            onClick={() => setMobileView(view)}
+          >
+            {view === "tokens" ? "Customize" : view}
+          </button>
+        ))}
+      </div>
+
       <div className="grid min-h-0 flex-1 lg:grid-cols-[23rem_minmax(0,1fr)]">
-        <aside className="border-border bg-background order-2 border-t lg:order-1 lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto lg:border-t-0 lg:border-r">
+        <aside
+          className={cn(
+            "border-border bg-background order-2 border-t lg:order-1 lg:block lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto lg:border-t-0 lg:border-r",
+            mobileView === "preview" && "hidden",
+          )}
+        >
           <div className="space-y-7 p-4 md:p-5">
             <section>
               <div className="mb-4 flex items-start justify-between gap-4">
@@ -388,7 +414,12 @@ export function ThemeBuilder() {
           </div>
         </aside>
 
-        <section className="bg-surface-secondary relative order-1 min-h-[34rem] overflow-hidden p-3 sm:p-6 lg:order-2 lg:h-[calc(100dvh-8rem)]">
+        <section
+          className={cn(
+            "bg-surface-secondary relative order-1 min-h-[34rem] overflow-hidden p-3 sm:p-6 lg:order-2 lg:block lg:h-[calc(100dvh-8rem)]",
+            mobileView === "tokens" && "hidden",
+          )}
+        >
           <div
             data-theme={mode}
             style={previewStyles}
