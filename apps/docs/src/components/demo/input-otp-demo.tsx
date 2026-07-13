@@ -1,0 +1,42 @@
+"use client";
+
+import { useState } from "react";
+
+import { InputOTP, Label, Link } from "@thenamespace/uikit";
+
+import { useDictionary } from "@/components/demo/dictionary";
+
+export function InputOTPDemo() {
+  const { demos } = useDictionary();
+  const t = demos.inputOtp;
+  // HERO - 4320 - easter egg
+  const [value, setValue] = useState("4320");
+
+  return (
+    <div className="flex w-full justify-center">
+      <div className="flex w-[280px] flex-col items-start justify-center gap-2">
+        <div className="flex flex-col items-start gap-1">
+          <Label>{t.label}</Label>
+          <p className="text-muted text-sm">{t.description}</p>
+        </div>
+        <InputOTP maxLength={6} value={value} onChange={setValue}>
+          <InputOTP.Group>
+            <InputOTP.Slot index={0} />
+            <InputOTP.Slot index={1} />
+            <InputOTP.Slot index={2} />
+          </InputOTP.Group>
+          <InputOTP.Separator />
+          <InputOTP.Group>
+            <InputOTP.Slot index={3} />
+            <InputOTP.Slot index={4} />
+            <InputOTP.Slot index={5} />
+          </InputOTP.Group>
+        </InputOTP>
+        <div className="flex items-center gap-[5px] px-1 pt-1">
+          <p className="text-muted text-sm">{t.didntReceive}</p>
+          <Link className="text-foreground">{t.resend}</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
