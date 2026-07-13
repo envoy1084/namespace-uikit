@@ -1,5 +1,6 @@
 import { buttonVariants } from "@thenamespace/uikit";
-import { Github } from "lucide-react";
+
+import { GitHubIcon } from "@/icons/github";
 
 export function GitHubLink() {
   return (
@@ -14,7 +15,7 @@ export function GitHubLink() {
       rel="noreferrer"
       target="_blank"
     >
-      <Github className="size-4" />
+      <GitHubIcon />
     </a>
   );
 }
