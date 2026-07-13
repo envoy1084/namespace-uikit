@@ -54,6 +54,7 @@ export interface DataGridColumn<T extends object> {
       }) => ReactNode);
   headerClassName?: string;
   id: string;
+  isHidden?: boolean;
   isRowHeader?: boolean;
   maxWidth?: DataGridStaticColumnSize;
   minWidth?: DataGridStaticColumnSize;
@@ -249,11 +250,6 @@ function DataGridInner<T extends object>({
   });
   const activeDragHooks =
     dragAndDropHooks ?? (onReorder ? reorderHooks : undefined);
-  const columnCollectionKey = columns.map((column) => column.id).join(":");
-  const collectionItems = useMemo(
-    () => sortedData.map((item) => ({ item })),
-    [columnCollectionKey, sortedData],
-  );
   const hasDragHandle = !!activeDragHooks;
   const hasTree = typeof getChildren === "function";
   const hierarchyColumn =
@@ -360,8 +356,13 @@ function DataGridInner<T extends object>({
           const tree = hasTree && column.id === hierarchyColumn;
           return (
             <Table.Cell
-              {...(column.cellClassName
-                ? { className: column.cellClassName }
+              {...(column.cellClassName || column.isHidden
+                ? {
+                    className: cn(
+                      column.cellClassName,
+                      column.isHidden && "hidden",
+                    )!,
+                  }
                 : {})}
               {...(column.align ? { "data-align": column.align } : {})}
               {...(column.pinned ? { "data-pinned": column.pinned } : {})}
@@ -472,8 +473,13 @@ function DataGridInner<T extends object>({
               {...(column.allowsSorting === undefined
                 ? {}
                 : { allowsSorting: column.allowsSorting })}
-              {...(column.headerClassName
-                ? { className: column.headerClassName }
+              {...(column.headerClassName || column.isHidden
+                ? {
+                    className: cn(
+                      column.headerClassName,
+                      column.isHidden && "hidden",
+                    )!,
+                  }
                 : {})}
               {...(column.align ? { "data-align": column.align } : {})}
               {...(column.pinned ? { "data-pinned": column.pinned } : {})}
@@ -535,8 +541,8 @@ function DataGridInner<T extends object>({
             }
           : {})}
       >
-        <Table.Collection dependencies={[columns]} items={collectionItems}>
-          {({ item }) => renderRow(item)}
+        <Table.Collection dependencies={[columns]} items={sortedData}>
+          {(item: T) => renderRow(item)}
         </Table.Collection>
         {onLoadMore ? (
           <Table.LoadMore isLoading={isLoadingMore} onLoadMore={onLoadMore}>
@@ -585,12 +591,4 @@ function DataGridInner<T extends object>({
   );
 }
 
-function DataGridRoot<T extends object>(props: DataGridProps<T>): ReactElement {
-  const columnCollectionKey = props.columns
-    .map((column) => column.id)
-    .join(":");
-
-  return <DataGridInner key={columnCollectionKey} {...props} />;
-}
-
-export const DataGrid: typeof DataGridInner = DataGridRoot;
+export const DataGrid: typeof DataGridInner = DataGridInner;

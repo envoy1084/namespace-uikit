@@ -298,7 +298,10 @@ export const DemoWithChartsExample = function Demo() {
       id: "requests",
     },
   ];
-  const serverColumns = allColumns.filter((column) => visible.has(column.id));
+  const serverColumns = allColumns.map((column) => ({
+    ...column,
+    isHidden: !visible.has(column.id),
+  }));
 
   return (
     <div className="flex w-full max-w-5xl flex-col gap-4">

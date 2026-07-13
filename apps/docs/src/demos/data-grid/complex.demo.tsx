@@ -500,9 +500,10 @@ export const DemoComplexExample = function Demo() {
       width: 50,
     },
   ];
-  const displayedColumns = allColumns.filter((column) =>
-    visible.has(column.id),
-  );
+  const displayedColumns = allColumns.map((column) => ({
+    ...column,
+    isHidden: column.id !== "actions" && !visible.has(column.id),
+  }));
   const filterMenu = (
     value: string,
     setValue: (value: string) => void,
