@@ -105,7 +105,7 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 
 - [x] Compare Storybook typography, font loading, antialiasing, and perceived weight with the official HeroUI Storybook before applying component-specific weight overrides.
 - [x] Replace hardcoded SVGs, emoji, and mismatched icons throughout Storybook with HeroUI icons where available and Hugeicons otherwise.
-- [ ] Verify all follow-up fixes in light and dark mode, including hover, press, focus, disabled, animation, and responsive states where applicable.
+- [x] Verify all follow-up fixes in light and dark mode, including hover, press, focus, disabled, animation, and responsive states where applicable.
 
 ### Shared primitives and charts
 
@@ -156,5 +156,5 @@ This is the source of truth for the HeroUI Pro parity project. A component is on
 
 ### Completion gates
 
-- [ ] Every item above has official/local Storybook comparison evidence.
+- [x] Every item above has official/local Storybook comparison evidence.
 - [ ] Formatting, lint, typecheck, UIKit build, Storybook production build, package pack, and flat-subpath consumer imports pass.
