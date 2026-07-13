@@ -3,12 +3,15 @@
 import type {
   ComponentProps,
   ComponentPropsWithRef,
+  CSSProperties,
   ReactElement,
   ReactNode,
 } from "react";
 import { createContext, useCallback, useContext, useRef } from "react";
 
-import { Button, cn, ProgressBar } from "@heroui/react";
+import { Button, cn } from "@heroui/react";
+import { Cancel01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { DropZone as DropZonePrimitive } from "react-aria-components";
 
 interface DropZoneContextValue {
@@ -324,57 +327,77 @@ function DropZoneFileMeta({
   );
 }
 
-export type DropZoneFileProgressProps = ComponentProps<typeof ProgressBar>;
+export interface DropZoneFileProgressProps extends Omit<
+  ComponentPropsWithRef<"div">,
+  "children"
+> {
+  children: ReactNode;
+  maxValue?: number;
+  minValue?: number;
+  size?: "lg" | "md" | "sm";
+  value?: number;
+}
 function DropZoneFileProgress({
   children,
   className,
+  maxValue = 100,
+  minValue = 0,
   size = "sm",
+  style,
+  value = 0,
   ...props
 }: DropZoneFileProgressProps): ReactElement {
+  const progress = Math.max(
+    0,
+    Math.min(100, ((value - minValue) / (maxValue - minValue || 1)) * 100),
+  );
   return (
-    <ProgressBar
+    <div
       {...props}
-      aria-label={props["aria-label"] ?? "Upload progress"}
-      className={(state) =>
-        cn(
-          "drop-zone__file-progress",
-          typeof className === "function" ? className(state) : className,
-        ) ?? "drop-zone__file-progress"
-      }
+      className={cn(
+        "drop-zone__file-progress",
+        `progress-bar--${size}`,
+        className,
+      )}
       data-slot="drop-zone-file-progress"
-      size={size}
+      style={
+        {
+          ...style,
+          "--drop-zone-file-progress-value": `${progress}%`,
+        } as CSSProperties
+      }
     >
       {children}
-    </ProgressBar>
+    </div>
   );
 }
-function DropZoneFileProgressTrack(
-  props: ComponentProps<typeof ProgressBar.Track>,
-): ReactElement {
+function DropZoneFileProgressTrack({
+  className,
+  ...props
+}: ComponentPropsWithRef<"div">): ReactElement {
   return (
-    <ProgressBar.Track {...props} data-slot="drop-zone-file-progress-track" />
+    <div
+      {...props}
+      className={cn("progress-bar__track", className)}
+      data-slot="drop-zone-file-progress-track"
+    />
   );
 }
-function DropZoneFileProgressFill(
-  props: ComponentProps<typeof ProgressBar.Fill>,
-): ReactElement {
+function DropZoneFileProgressFill({
+  className,
+  style,
+  ...props
+}: ComponentPropsWithRef<"div">): ReactElement {
   return (
-    <ProgressBar.Fill {...props} data-slot="drop-zone-file-progress-fill" />
+    <div
+      {...props}
+      className={cn("progress-bar__fill", className)}
+      data-slot="drop-zone-file-progress-fill"
+      style={{ width: "var(--drop-zone-file-progress-value)", ...style }}
+    />
   );
 }
 
-function XIcon(): ReactElement {
-  return (
-    <svg aria-hidden="true" fill="none" viewBox="0 0 16 16">
-      <path
-        d="m3.5 3.5 9 9m0-9-9 9"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeWidth="1.5"
-      />
-    </svg>
-  );
-}
 export type DropZoneFileRemoveTriggerProps = ComponentProps<typeof Button>;
 function DropZoneFileRemoveTrigger({
   children,
@@ -392,7 +415,7 @@ function DropZoneFileRemoveTrigger({
       }
       data-slot="drop-zone-file-remove-trigger"
     >
-      {children ?? <XIcon />}
+      {children ?? <HugeiconsIcon aria-hidden icon={Cancel01Icon} size={16} />}
     </Button>
   );
 }

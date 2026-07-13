@@ -2,6 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { useState } from "react";
 
+import {
+  CheckmarkCircle02Icon,
+  Loading03Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
 import { Icon } from "../../icon";
 import { Button } from "../button";
 import { Link } from "../link";
@@ -71,11 +77,28 @@ function FileList({
             />
             <DropZone.FileInfo>
               <DropZone.FileName>{file.name}</DropZone.FileName>
-              <DropZone.FileMeta>
-                {formatSize(file.size)}
-                {file.status === "uploading" ? ` | ${file.progress}%` : null}
-                {file.status === "complete" ? " | 100%" : null}
-              </DropZone.FileMeta>
+              {file.status === "failed" ? (
+                <DropZone.FileMeta>{formatSize(file.size)}</DropZone.FileMeta>
+              ) : (
+                <DropZone.FileMeta>
+                  {formatSize(file.size)} |{" "}
+                  <HugeiconsIcon
+                    aria-hidden
+                    className={
+                      file.status === "complete"
+                        ? "text-success inline size-3 align-[-1px]"
+                        : "inline size-3 animate-spin align-[-1px]"
+                    }
+                    icon={
+                      file.status === "complete"
+                        ? CheckmarkCircle02Icon
+                        : Loading03Icon
+                    }
+                    size={12}
+                  />{" "}
+                  {file.status === "uploading" ? file.progress : 100}%
+                </DropZone.FileMeta>
+              )}
               {file.status !== "failed" ? (
                 <DropZone.FileProgress value={file.progress}>
                   <DropZone.FileProgressTrack>
@@ -169,23 +192,23 @@ export const Default: Story = { render: () => <UploadDemo /> };
 const initialFiles: Upload[] = [
   {
     id: "1",
-    name: "Annual report 2025.pdf",
+    name: "Logo dark.svg",
     progress: 100,
-    size: 2306867,
+    size: 24576,
     status: "complete",
   },
   {
     id: "2",
-    name: "Hero banner.png",
-    progress: 42,
-    size: 491520,
+    name: "Meeting notes.docx",
+    progress: 68,
+    size: 358400,
     status: "uploading",
   },
   {
     id: "3",
-    name: "Onboarding flow.mp4",
+    name: "Demo recording.mp4",
     progress: 18,
-    size: 8388608,
+    size: 5242880,
     status: "failed",
   },
 ];
