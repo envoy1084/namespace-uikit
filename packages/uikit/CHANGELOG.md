@@ -1,5 +1,13 @@
 # @thenamespace/uikit
 
+## 0.2.1
+
+### Patch Changes
+
+- [`dc131ee`](https://github.com/thenamespace/uikit/commit/dc131eed5e7dd594b344eaaefd072709f204a64e) Thanks [@envoy1084](https://github.com/envoy1084)! - Standardize icon usage on the native Hugeicons API exported from
+  `@thenamespace/uikit/icons`. Documentation, demos, and Storybook now render
+  icon data with `HugeiconsIcon`, and no longer depend on Gravity UI icons.
+
 ## 0.2.0
 
 ### Minor Changes
