@@ -250,6 +250,9 @@ function DataGridInner<T extends object>({
   });
   const activeDragHooks =
     dragAndDropHooks ?? (onReorder ? reorderHooks : undefined);
+  const columnStateKey = columns
+    .map((column) => `${column.id}:${column.isHidden ? "hidden" : "visible"}`)
+    .join("|");
   const hasDragHandle = !!activeDragHooks;
   const hasTree = typeof getChildren === "function";
   const hierarchyColumn =
@@ -413,7 +416,7 @@ function DataGridInner<T extends object>({
           );
         })}
         {children.length ? (
-          <Table.Collection dependencies={[columns]} items={children}>
+          <Table.Collection dependencies={[columnStateKey]} items={children}>
             {(child) => renderRow(child)}
           </Table.Collection>
         ) : null}
@@ -442,7 +445,7 @@ function DataGridInner<T extends object>({
         : {})}
       aria-label={ariaLabel}
     >
-      <Table.Header>
+      <Table.Header dependencies={[columnStateKey]}>
         {hasDragHandle ? (
           <Table.Column
             className="data-grid__drag-handle-column"
@@ -541,7 +544,7 @@ function DataGridInner<T extends object>({
             }
           : {})}
       >
-        <Table.Collection dependencies={[columns]} items={sortedData}>
+        <Table.Collection dependencies={[columnStateKey]} items={sortedData}>
           {(item: T) => renderRow(item)}
         </Table.Collection>
         {onLoadMore ? (
