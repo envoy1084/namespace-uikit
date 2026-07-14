@@ -66,7 +66,7 @@ export function ComponentDemoGallery() {
         collapsible="none"
         toggleShortcut={false}
       >
-        <Sidebar className="border-border !static !h-full !min-h-0 !w-60 !min-w-60 border-r shadow-none max-md:!h-56 max-md:!w-full max-md:!min-w-0 max-md:border-r-0 max-md:border-b">
+        <Sidebar className="border-border !static !h-full !min-h-0 !w-60 !min-w-60 border-r shadow-none max-md:!flex max-md:!h-56 max-md:!w-full max-md:!min-w-0 max-md:border-r-0 max-md:border-b">
           <Sidebar.Header className="border-border gap-3 border-b !p-3">
             <div className="flex items-center justify-between gap-3">
               <p className="text-sm font-semibold">Components</p>

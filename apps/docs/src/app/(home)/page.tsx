@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main className="flex min-h-[calc(100vh-4rem)] flex-col">
-      <section className="z-10 flex min-h-0 flex-1 flex-col items-center px-4 pt-12 text-center">
-        <div className="mx-auto flex max-w-2xl flex-col items-center justify-center">
+      <section className="z-10 flex min-h-0 w-full min-w-0 flex-1 flex-col items-center px-4 pt-12 text-center">
+        <div className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center">
           <LinkRoot
             className="bg-accent-soft text-accent-soft-foreground hover:bg-accent-soft-hover flex items-center gap-1 rounded-full px-2 py-1 text-xs transition-colors"
             href="/docs/getting-started"
