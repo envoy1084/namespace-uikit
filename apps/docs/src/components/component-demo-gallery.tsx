@@ -124,6 +124,7 @@ export function ComponentDemoGallery() {
       <section
         className="flex min-h-0 min-w-0 flex-col"
         data-gallery-component={selectedDemo.component}
+        data-gallery-status={Demo ? "ready" : loadError ? "error" : "loading"}
       >
         <div className="border-border flex min-h-14 items-center justify-between gap-3 border-b px-4 py-3">
           <div className="min-w-0">
