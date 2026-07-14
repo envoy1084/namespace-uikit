@@ -104,12 +104,6 @@ export const galleryDemos: GalleryDemo[] = [
       ),
   },
   {
-    component: "calendar-year-picker",
-    demo: "calendar-year-picker",
-    loader: () =>
-      import("./calendar/year-picker").then((module) => module.YearPicker),
-  },
-  {
     component: "card",
     demo: "card-default",
     loader: () => import("./card/default").then((module) => module.Default),
@@ -284,12 +278,6 @@ export const galleryDemos: GalleryDemo[] = [
     loader: () => import("./color-field/basic").then((module) => module.Basic),
   },
   {
-    component: "color-input-group",
-    demo: "color-picker-with-fields",
-    loader: () =>
-      import("./color-picker/with-fields").then((module) => module.WithFields),
-  },
-  {
     component: "color-picker",
     demo: "color-picker-basic",
     loader: () => import("./color-picker/basic").then((module) => module.Basic),
@@ -351,11 +339,6 @@ export const galleryDemos: GalleryDemo[] = [
   },
   {
     component: "date-field",
-    demo: "date-field-basic",
-    loader: () => import("./date-field/basic").then((module) => module.Basic),
-  },
-  {
-    component: "date-input-group",
     demo: "date-field-basic",
     loader: () => import("./date-field/basic").then((module) => module.Basic),
   },
@@ -468,12 +451,6 @@ export const galleryDemos: GalleryDemo[] = [
     loader: () => import("./form/basic").then((module) => module.Basic),
   },
   {
-    component: "header",
-    demo: "typography-primitives",
-    loader: () =>
-      import("./typography/primitives").then((module) => module.Primitives),
-  },
-  {
     component: "hover-card",
     demo: "hover-card-default",
     loader: () =>
@@ -572,16 +549,6 @@ export const galleryDemos: GalleryDemo[] = [
     loader: () => import("./list-box/default").then((module) => module.Default),
   },
   {
-    component: "list-box-item",
-    demo: "list-box-default",
-    loader: () => import("./list-box/default").then((module) => module.Default),
-  },
-  {
-    component: "list-box-section",
-    demo: "list-box-default",
-    loader: () => import("./list-box/default").then((module) => module.Default),
-  },
-  {
     component: "list-view",
     demo: "list-view-default",
     loader: () =>
@@ -604,21 +571,6 @@ export const galleryDemos: GalleryDemo[] = [
       import("./markdown/default.demo").then(
         (module) => module.DemoDefaultExample,
       ),
-  },
-  {
-    component: "menu",
-    demo: "dropdown-default",
-    loader: () => import("./dropdown/default").then((module) => module.Default),
-  },
-  {
-    component: "menu-item",
-    demo: "dropdown-default",
-    loader: () => import("./dropdown/default").then((module) => module.Default),
-  },
-  {
-    component: "menu-section",
-    demo: "dropdown-default",
-    loader: () => import("./dropdown/default").then((module) => module.Default),
   },
   {
     component: "meter",
@@ -737,11 +689,6 @@ export const galleryDemos: GalleryDemo[] = [
       import("./radial-chart/default.demo").then(
         (module) => module.DemoDefaultExample,
       ),
-  },
-  {
-    component: "radio",
-    demo: "radio-group-basic",
-    loader: () => import("./radio-group/basic").then((module) => module.Basic),
   },
   {
     component: "radio-button-group",
@@ -867,11 +814,6 @@ export const galleryDemos: GalleryDemo[] = [
     loader: () => import("./switch/basic").then((module) => module.Basic),
   },
   {
-    component: "switch-group",
-    demo: "switch-group",
-    loader: () => import("./switch/group").then((module) => module.Group),
-  },
-  {
     component: "table",
     demo: "table-custom-cells",
     loader: () =>
@@ -884,12 +826,6 @@ export const galleryDemos: GalleryDemo[] = [
       import("./tabs/custom-render-function").then(
         (module) => module.CustomRenderFunction,
       ),
-  },
-  {
-    component: "tag",
-    demo: "tag-group-basic",
-    loader: () =>
-      import("./tag-group/basic").then((module) => module.TagGroupBasic),
   },
   {
     component: "tag-group",
@@ -914,16 +850,6 @@ export const galleryDemos: GalleryDemo[] = [
       import("./text-shimmer/default.demo").then(
         (module) => module.DemoDefaultExample,
       ),
-  },
-  {
-    component: "textarea",
-    demo: "textarea-basic",
-    loader: () => import("./textarea/basic").then((module) => module.Basic),
-  },
-  {
-    component: "textfield",
-    demo: "textfield-basic",
-    loader: () => import("./textfield/basic").then((module) => module.Basic),
   },
   {
     component: "time-field",

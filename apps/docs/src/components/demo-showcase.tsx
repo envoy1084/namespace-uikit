@@ -19,7 +19,7 @@ import { useTheme } from "next-themes";
 import { ComponentDemoGallery } from "@/components/component-demo-gallery";
 import { cn } from "@/utils/cn";
 
-const tabs = ["components", "dashboard", "mail", "chat", "finances"] as const;
+const tabs = ["dashboard", "mail", "chat", "finances", "components"] as const;
 
 const labels: Record<(typeof tabs)[number], string> = {
   chat: "Chat",
@@ -107,7 +107,7 @@ export function DemoShowcase({
   return (
     <div
       className={cn(
-        "flex min-h-0 w-full max-w-[1200px] flex-1 flex-col py-6 lg:py-10",
+        "flex min-h-0 w-full flex-1 flex-col py-6 lg:py-10",
         className,
       )}
     >
@@ -169,25 +169,12 @@ export function DemoShowcase({
       <div
         data-theme={theme}
         className={cn(
-          "flex min-h-[420px] max-w-[1200px] flex-1 flex-col font-sans",
+          "flex min-h-[420px] w-full flex-1 flex-col font-sans",
           theme === "dark" && "dark",
         )}
         style={previewVars}
       >
-        <div
-          className={cn(
-            "bg-background w-full justify-center rounded-2xl",
-            alwaysShowTabs ? "hidden" : "flex lg:hidden",
-          )}
-        >
-          <ComponentDemoGallery />
-        </div>
-        <div
-          className={cn(
-            "relative min-h-0 flex-1 flex-col",
-            alwaysShowTabs ? "flex" : "hidden lg:flex",
-          )}
-        >
+        <div className="relative flex min-h-0 flex-1 flex-col">
           <div
             className={cn(
               "bg-background flex flex-1 justify-center overflow-x-hidden overflow-y-auto rounded-2xl",
