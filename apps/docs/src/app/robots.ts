@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
     host: site.url,
     rules: {
       allow: "/",
-      disallow: ["/api/", "/component-gallery-capture"],
+      disallow: ["/api/"],
       userAgent: "*",
     },
     sitemap: absoluteSiteUrl("/sitemap.xml"),
