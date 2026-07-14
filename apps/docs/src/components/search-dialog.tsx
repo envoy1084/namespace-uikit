@@ -8,7 +8,7 @@ import type {
 import { useRouter } from "next/navigation";
 import type { ComponentProps } from "react";
 
-import { Kbd } from "@thenamespace/uikit";
+import { Button, Kbd } from "@thenamespace/uikit";
 import { useDocsSearch } from "fumadocs-core/search/client";
 import {
   SearchDialog,
@@ -19,7 +19,7 @@ import {
   SearchDialogOverlay,
   useSearch,
 } from "fumadocs-ui/components/dialog/search";
-import { Blocks, BookOpen, Palette, Rocket } from "lucide-react";
+import { Blocks, BookOpen, Palette, Rocket, X } from "lucide-react";
 
 export default function CustomSearchDialog(props: SharedProps) {
   const { query, search, setSearch } = useDocsSearch({ type: "fetch" });
@@ -63,7 +63,7 @@ export default function CustomSearchDialog(props: SharedProps) {
     >
       <SearchDialogOverlay />
       <SearchDialogContent className="bg-surface border-none">
-        <SearchDialogHeader className="border-separator border-b">
+        <SearchDialogHeader className="border-separator flex items-center gap-2 border-b">
           <SearchDialogIcon />
           <SearchInput placeholder="Search Namespace UIKit documentation" />
           <SearchClose />
@@ -101,8 +101,17 @@ function SearchClose() {
   const { onOpenChange } = useSearch();
 
   return (
-    <Kbd onClick={() => onOpenChange(false)}>
-      <Kbd.Content>ESC</Kbd.Content>
-    </Kbd>
+    <Button
+      aria-label="Close search"
+      className="h-8 shrink-0 gap-1.5 px-2"
+      size="sm"
+      variant="ghost"
+      onPress={() => onOpenChange(false)}
+    >
+      <X aria-hidden="true" className="size-4 sm:hidden" />
+      <Kbd className="pointer-events-none hidden sm:inline-flex">
+        <Kbd.Content>ESC</Kbd.Content>
+      </Kbd>
+    </Button>
   );
 }
