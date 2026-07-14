@@ -36,6 +36,7 @@ export function FontPicker({
   onCustomFontsChange: (fonts: ThemeFont[]) => void;
 }) {
   const [mode, setMode] = useState<"fonts" | "source">("fonts");
+  const [isOpen, setOpen] = useState(false);
   const [source, setSource] = useState("");
   const [error, setError] = useState<string | null>(null);
   const fonts = useMemo(() => [...fontOptions, ...customFonts], [customFonts]);
@@ -47,14 +48,16 @@ export function FontPicker({
   }, [fonts]);
 
   function addFont() {
-    if (!isValidFontSource(source)) {
+    const normalizedSource = source.trim();
+
+    if (!isValidFontSource(normalizedSource)) {
       setError(
         "Use an HTTPS URL from Google Fonts, Fontshare, CDNFonts, or Fontsource.",
       );
       return;
     }
 
-    const nextFont = createThemeFont(source);
+    const nextFont = createThemeFont(normalizedSource);
     if (!nextFont) {
       setError("The font family could not be detected from this URL.");
       return;
@@ -80,6 +83,7 @@ export function FontPicker({
     setSource("");
     setError(null);
     setMode("fonts");
+    setOpen(false);
   }
 
   function removeFont(item: ThemeFont) {
@@ -89,7 +93,16 @@ export function FontPicker({
   }
 
   return (
-    <Popover>
+    <Popover
+      isOpen={isOpen}
+      onOpenChange={(open) => {
+        setOpen(open);
+        if (!open) {
+          setError(null);
+          setMode("fonts");
+        }
+      }}
+    >
       <Popover.Trigger
         aria-label={`Font family: ${font.label}`}
         className="w-full"
@@ -139,7 +152,10 @@ export function FontPicker({
                   onSelectionChange={(keys) => {
                     if (keys === "all") return;
                     const selected = fonts.find((item) => keys.has(item.id));
-                    if (selected) onChange(selected);
+
+                    if (!selected) return;
+                    onChange(selected);
+                    setOpen(false);
                   }}
                 >
                   {fonts.map((item) => {

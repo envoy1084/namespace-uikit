@@ -11,12 +11,12 @@ import {
   ColorPicker,
   ColorSlider,
   ColorSwatch,
+  Drawer,
   highlightCode,
   Input,
   Label,
   SearchField,
   Segment,
-  Sheet,
   TextField,
 } from "@thenamespace/uikit";
 import { Code2, Moon, RotateCcw, SlidersHorizontal, Sun } from "lucide-react";
@@ -164,7 +164,7 @@ function ModeSwitch({
   );
 }
 
-function ThemeControlsSheet({
+function ThemeControlsDrawer({
   config,
   isOpen,
   mode,
@@ -188,19 +188,19 @@ function ThemeControlsSheet({
   onQueryChange: (query: string) => void;
 }) {
   return (
-    <Sheet isOpen={isOpen} placement="left" onOpenChange={onOpenChange}>
-      <Sheet.Backdrop variant="blur">
-        <Sheet.Content className="w-[min(100vw,26rem)]">
-          <Sheet.Dialog className="h-full">
-            <Sheet.CloseTrigger />
-            <Sheet.Header>
-              <Sheet.Heading>Customize theme</Sheet.Heading>
+    <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Drawer.Backdrop variant="blur">
+        <Drawer.Content className="w-[min(100vw,26rem)]" placement="left">
+          <Drawer.Dialog className="h-full">
+            <Drawer.CloseTrigger />
+            <Drawer.Header>
+              <Drawer.Heading>Customize theme</Drawer.Heading>
               <p className="text-muted text-sm">
                 Editing the {mode} theme ·{" "}
                 {Object.keys(config.colors[mode]).length} color tokens
               </p>
-            </Sheet.Header>
-            <Sheet.Body className="min-h-0 space-y-7 overflow-y-auto px-4 pb-6">
+            </Drawer.Header>
+            <Drawer.Body className="min-h-0 space-y-7 overflow-y-auto px-4 pb-6">
               <SearchField
                 aria-label="Find a token"
                 value={query}
@@ -267,15 +267,15 @@ function ThemeControlsSheet({
                   />
                 </div>
               </section>
-            </Sheet.Body>
-          </Sheet.Dialog>
-        </Sheet.Content>
-      </Sheet.Backdrop>
-    </Sheet>
+            </Drawer.Body>
+          </Drawer.Dialog>
+        </Drawer.Content>
+      </Drawer.Backdrop>
+    </Drawer>
   );
 }
 
-function ThemeCodeSheet({
+function ThemeCodeDrawer({
   code,
   highlightedCode,
   isOpen,
@@ -287,18 +287,18 @@ function ThemeCodeSheet({
   onOpenChange: (open: boolean) => void;
 }) {
   return (
-    <Sheet isOpen={isOpen} placement="right" onOpenChange={onOpenChange}>
-      <Sheet.Backdrop variant="blur">
-        <Sheet.Content className="w-[min(100vw,48rem)]">
-          <Sheet.Dialog className="h-full">
-            <Sheet.CloseTrigger />
-            <Sheet.Header>
-              <Sheet.Heading>Theme CSS</Sheet.Heading>
+    <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Drawer.Backdrop variant="blur">
+        <Drawer.Content className="w-[min(100vw,48rem)]" placement="right">
+          <Drawer.Dialog className="h-full">
+            <Drawer.CloseTrigger />
+            <Drawer.Header>
+              <Drawer.Heading>Theme CSS</Drawer.Heading>
               <p className="text-muted text-sm">
                 Paste this into your globals.css file.
               </p>
-            </Sheet.Header>
-            <Sheet.Body className="min-h-0 p-3 sm:p-5">
+            </Drawer.Header>
+            <Drawer.Body className="min-h-0 p-3 sm:p-5">
               <CodeBlock className="m-0 min-h-full">
                 <CodeBlock.Header>
                   <span className="text-muted font-mono text-xs">
@@ -314,11 +314,11 @@ function ThemeCodeSheet({
                   language="css"
                 />
               </CodeBlock>
-            </Sheet.Body>
-          </Sheet.Dialog>
-        </Sheet.Content>
-      </Sheet.Backdrop>
-    </Sheet>
+            </Drawer.Body>
+          </Drawer.Dialog>
+        </Drawer.Content>
+      </Drawer.Backdrop>
+    </Drawer>
   );
 }
 
@@ -448,6 +448,11 @@ export function ThemeBuilder() {
               <DemoShowcase
                 alwaysShowTabs
                 className="h-full max-w-none py-3 lg:py-4"
+                font={{
+                  cdnUrl: config.font.source ?? "",
+                  family: config.font.label,
+                  variable: `--font-${config.font.id}`,
+                }}
                 showPalette={false}
                 theme={mode}
                 themeVars={previewStyles}
@@ -456,7 +461,7 @@ export function ThemeBuilder() {
           </div>
         </section>
       </div>
-      <ThemeControlsSheet
+      <ThemeControlsDrawer
         config={config}
         isOpen={showCustomize}
         mode={mode}
@@ -470,7 +475,7 @@ export function ThemeBuilder() {
         onOpenChange={setShowCustomize}
         onQueryChange={setQuery}
       />
-      <ThemeCodeSheet
+      <ThemeCodeDrawer
         code={code}
         highlightedCode={highlightedCode}
         isOpen={showCode}

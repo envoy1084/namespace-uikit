@@ -47,9 +47,16 @@ const colors = [
   "#A8ABFF",
 ];
 
+export interface DemoShowcaseFont {
+  cdnUrl: string;
+  family: string;
+  variable: string;
+}
+
 export interface DemoShowcaseProps {
   alwaysShowTabs?: boolean;
   className?: string;
+  font?: DemoShowcaseFont;
   showPalette?: boolean;
   theme?: "dark" | "light";
   themeVars?: CSSProperties;
@@ -58,11 +65,12 @@ export interface DemoShowcaseProps {
 export function DemoShowcase({
   alwaysShowTabs = false,
   className,
+  font,
   showPalette = true,
   theme,
   themeVars,
 }: DemoShowcaseProps = {}) {
-  const [selectedTab, setSelectedTab] = useState("components");
+  const [selectedTab, setSelectedTab] = useState("dashboard");
   const [selectedColor, setSelectedColor] = useState<Color | null>(null);
   const [iframeLoading, setIframeLoading] = useState(true);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -80,6 +88,16 @@ export function DemoShowcase({
     () => ({ ...themeVars, ...accentVars }) as CSSProperties,
     [accentVars, themeVars],
   );
+  const iframeThemeVars = useMemo(
+    () =>
+      font
+        ? ({
+            ...previewVars,
+            "--font-sans": `var(${font.variable})`,
+          } as CSSProperties)
+        : previewVars,
+    [font, previewVars],
+  );
 
   const sendMessageToIframe = useCallback(() => {
     const iframe = iframeRef.current;
@@ -90,13 +108,34 @@ export function DemoShowcase({
       "*",
     );
     iframe.contentWindow.postMessage(
-      { type: "heroui-accent", vars: previewVars },
+      { type: "heroui-accent", vars: iframeThemeVars },
       "*",
     );
-  }, [activeTheme, previewVars]);
+    if (font) {
+      iframe.contentWindow.postMessage(
+        {
+          cdnUrl: font.cdnUrl,
+          family: font.family,
+          type: "heroui-font",
+          variable: font.variable,
+        },
+        "*",
+      );
+    }
+  }, [activeTheme, font, iframeThemeVars]);
 
   useEffect(() => {
     sendMessageToIframe();
+  }, [sendMessageToIframe]);
+
+  useEffect(() => {
+    function handleMessage(event: MessageEvent) {
+      if (event.data?.type === "heroui-ready") sendMessageToIframe();
+    }
+
+    window.addEventListener("message", handleMessage);
+
+    return () => window.removeEventListener("message", handleMessage);
   }, [sendMessageToIframe]);
 
   const handleIframeLoad = useCallback(() => {
