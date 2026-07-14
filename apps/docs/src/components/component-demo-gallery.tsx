@@ -142,11 +142,15 @@ export function ComponentDemoGallery() {
               </div>
             </div>
           ) : loadError ? (
-            <div className="border-danger/30 bg-danger-soft text-danger-soft-foreground rounded-xl border px-4 py-3 text-sm">
-              This demo could not be loaded.
+            <div className="grid min-h-full min-w-full place-items-center p-4 sm:p-6">
+              <div className="border-danger/30 bg-danger-soft text-danger-soft-foreground rounded-xl border px-4 py-3 text-sm">
+                This demo could not be loaded.
+              </div>
             </div>
           ) : (
-            <Spinner aria-label={`Loading ${selectedDemo.component} demo`} />
+            <div className="grid min-h-full min-w-full place-items-center p-4 sm:p-6">
+              <Spinner aria-label={`Loading ${selectedDemo.component} demo`} />
+            </div>
           )}
         </div>
       </section>
