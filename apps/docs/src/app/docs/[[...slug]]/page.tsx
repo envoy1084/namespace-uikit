@@ -12,7 +12,8 @@ import {
 } from "@/components/fumadocs/layouts/notebook/page";
 import { PageActions } from "@/components/page-actions";
 import { getComponentResourceLinks } from "@/lib/component-resources";
-import { absoluteSiteUrl } from "@/lib/site";
+import { createPageMetadata } from "@/lib/metadata";
+import { absoluteSiteUrl, site } from "@/lib/site";
 import { source } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
 
@@ -74,10 +75,16 @@ export async function generateMetadata({
 
   if (!page) notFound();
 
-  return {
-    description: page.data.description,
-    title: page.data.title,
-  };
+  const path = `/docs/${page.slugs.join("/")}`;
+  const title = page.data.title;
+  const description = page.data.description ?? site.description;
+
+  return createPageMetadata({
+    description,
+    path,
+    title,
+    type: "article",
+  });
 }
 
 export function generateStaticParams() {

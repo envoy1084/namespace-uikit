@@ -1,4 +1,4 @@
-"use client";
+import type { Metadata } from "next";
 
 import { buttonVariants } from "@thenamespace/uikit";
 import { Rocket01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
@@ -6,6 +6,17 @@ import LinkRoot from "fumadocs-core/link";
 
 import { DemoShowcase } from "@/components/demo-showcase";
 import { GitHubIcon } from "@/icons/github";
+import { createPageMetadata } from "@/lib/metadata";
+import { site } from "@/lib/site";
+
+export const metadata: Metadata = {
+  ...createPageMetadata({
+    description: site.description,
+    title: site.name,
+    path: "/",
+  }),
+  title: { absolute: site.name },
+};
 
 export default function HomePage() {
   return (

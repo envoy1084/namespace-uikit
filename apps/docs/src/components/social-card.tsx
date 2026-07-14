@@ -1,0 +1,95 @@
+import { site } from "@/lib/site";
+
+const logoPath =
+  "M88.2187 33.2289C87.6829 32.2607 87.1095 31.3113 86.5267 30.3807C92.8811 25.7653 100.476 22.7479 108.72 21.9489V0C96.5001 3.47799 86.4045 11.9474 80.7363 23.0581C72.2012 14.2128 60.2162 8.70438 46.9529 8.70438C21.0277 8.69497 0 29.7133 0 55.6478C0 81.5824 21.0277 102.601 46.9529 102.601C72.878 102.601 93.9057 81.573 93.9057 55.6478C93.9057 50.3557 93.0127 45.2797 91.4053 40.5327C92.6273 40.7301 93.8587 40.9933 95.0713 41.3223C97.3555 41.9333 99.5175 42.7699 101.585 43.7475L108.889 31.1045C101.717 29.8355 94.6013 30.6721 88.2093 33.2289H88.2187ZM74.6358 67.5388V67.7268C71.6278 69.7854 67.5576 70.6878 63.8352 70.105C59.906 69.4564 56.5408 66.8902 53.2508 64.9538C50.1018 63.1584 46.7366 61.4758 43.0989 60.7802C35.5883 59.3608 29.2903 63.7412 23.9323 67.9148C22.2873 69.2026 20.3509 70.4246 18.1419 70.481C6.98418 70.9322 7.41658 52.01 8.55397 46.0223C9.12737 43.1929 10.9134 38.1733 13.9872 35.4661C15.6322 33.9903 17.7001 33.2101 20.0689 33.8587C21.5729 34.2441 22.7949 35.3345 23.7255 36.4907C24.9475 38.0323 25.7277 40.1567 27.9461 40.6737C28.9519 40.9275 30.0987 40.6737 31.0199 40.2225C33.6707 39.0005 35.5977 36.7445 37.6751 35.0055C41.9615 31.3395 46.9811 28.6417 52.9124 27.9931C59.7838 27.2881 67.0782 28.7639 72.7276 32.4299C84.3177 40.0251 86.5361 59.4548 74.664 67.5012L74.6358 67.5388Z";
+
+export function SocialCard({ eyebrow }: { eyebrow: string }) {
+  return (
+    <div
+      style={{
+        alignItems: "stretch",
+        background: "#050505",
+        color: "#f4f4f4",
+        display: "flex",
+        height: "100%",
+        padding: 56,
+        width: "100%",
+      }}
+    >
+      <div
+        style={{
+          alignItems: "stretch",
+          border: "1px solid #2b2b2b",
+          borderRadius: 32,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          padding: 52,
+          position: "relative",
+          width: "100%",
+        }}
+      >
+        <div style={{ alignItems: "center", display: "flex", fontSize: 30 }}>
+          <div
+            style={{
+              alignItems: "center",
+              background: "#000",
+              border: "1px solid #333",
+              borderRadius: 18,
+              display: "flex",
+              height: 64,
+              justifyContent: "center",
+              marginRight: 20,
+              width: 64,
+            }}
+          >
+            <svg height="40" viewBox="0 0 109 103" width="43">
+              <path d={logoPath} fill="#f4f4f4" />
+            </svg>
+          </div>
+          <span style={{ fontWeight: 700 }}>Namespace</span>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <span style={{ color: "#a1a1aa", fontSize: 22, marginBottom: 16 }}>
+            {eyebrow}
+          </span>
+          <span
+            style={{
+              fontSize: 68,
+              fontWeight: 750,
+              letterSpacing: "-3px",
+              lineHeight: 1,
+            }}
+          >
+            Beautiful by default.
+          </span>
+          <span
+            style={{
+              color: "#a1a1aa",
+              fontSize: 68,
+              fontWeight: 750,
+              letterSpacing: "-3px",
+              lineHeight: 1.05,
+            }}
+          >
+            Built for Namespace.
+          </span>
+        </div>
+        <div
+          style={{
+            alignItems: "center",
+            color: "#a1a1aa",
+            display: "flex",
+            fontSize: 22,
+            justifyContent: "space-between",
+          }}
+        >
+          <span>{site.description}</span>
+          <span style={{ marginLeft: 32, whiteSpace: "nowrap" }}>
+            React · TypeScript · Accessible
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}

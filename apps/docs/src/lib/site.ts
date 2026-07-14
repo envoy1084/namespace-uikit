@@ -1,5 +1,17 @@
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
+export const siteKeywords = [
+  "React component library",
+  "React UI components",
+  "Namespace UIKit",
+  "accessible components",
+  "design system",
+  "React Aria Components",
+  "Tailwind CSS",
+  "TypeScript",
+  "web3 interface",
+] as const;
+
 export function absoluteSiteUrl(path: string) {
   return new URL(path, siteUrl).toString();
 }
