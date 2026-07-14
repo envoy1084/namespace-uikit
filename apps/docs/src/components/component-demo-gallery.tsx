@@ -61,7 +61,7 @@ export function ComponentDemoGallery() {
   }, [selectedDemo]);
 
   return (
-    <div className="bg-background border-border grid h-[min(42rem,calc(100dvh-10rem))] min-h-[32rem] w-full overflow-hidden rounded-2xl border md:grid-cols-[15rem_minmax(0,1fr)]">
+    <div className="bg-background border-border grid h-[min(42rem,calc(100dvh-10rem))] min-h-[32rem] w-full overflow-hidden rounded-2xl border text-start md:grid-cols-[15rem_minmax(0,1fr)]">
       <aside className="border-border flex min-h-0 flex-col border-b md:border-r md:border-b-0">
         <div className="border-border space-y-3 border-b p-3">
           <div className="flex items-center justify-between gap-3">
@@ -71,14 +71,15 @@ export function ComponentDemoGallery() {
             </span>
           </div>
           <SearchField
+            fullWidth
             aria-label="Find a component"
             value={query}
             onChange={setQuery}
           >
-            <SearchField.Group>
+            <SearchField.Group className="w-full">
               <SearchField.SearchIcon />
               <SearchField.Input placeholder="Find a component…" />
-              <SearchField.ClearButton />
+              <SearchField.ClearButton className="self-center" />
             </SearchField.Group>
           </SearchField>
         </div>
@@ -133,10 +134,12 @@ export function ComponentDemoGallery() {
             <ArrowUpRight className="size-3.5" />
           </LinkRoot>
         </div>
-        <div className="relative flex min-h-0 min-w-0 flex-1 items-center justify-center overflow-auto p-4 sm:p-6">
+        <div className="relative min-h-0 min-w-0 flex-1 overflow-auto">
           {Demo ? (
-            <div className="flex min-w-full items-center justify-center">
-              <Demo />
+            <div className="grid min-h-full w-max min-w-full place-items-center p-4 sm:p-6">
+              <div className="max-w-full min-w-0">
+                <Demo />
+              </div>
             </div>
           ) : loadError ? (
             <div className="border-danger/30 bg-danger-soft text-danger-soft-foreground rounded-xl border px-4 py-3 text-sm">
