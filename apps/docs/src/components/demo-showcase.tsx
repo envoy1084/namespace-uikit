@@ -169,7 +169,8 @@ export function DemoShowcase({
       <div
         data-theme={theme}
         className={cn(
-          "flex min-h-[420px] w-full flex-1 flex-col font-sans",
+          "flex w-full flex-1 flex-col font-sans",
+          alwaysShowTabs ? "h-full min-h-0" : "h-[42rem] min-h-[32rem]",
           theme === "dark" && "dark",
         )}
         style={previewVars}

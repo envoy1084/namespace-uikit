@@ -60,13 +60,13 @@ export function ComponentDemoGallery() {
   }, [selectedDemo]);
 
   return (
-    <div className="bg-background border-border flex min-h-[42rem] w-full flex-1 overflow-hidden rounded-2xl border text-start">
+    <div className="bg-background border-border flex h-full min-h-0 w-full flex-1 overflow-hidden rounded-2xl border text-start">
       <Sidebar.Provider
-        className="!min-h-0 max-md:flex-col"
+        className="!h-full !min-h-0 max-md:flex-col"
         collapsible="none"
         toggleShortcut={false}
       >
-        <Sidebar className="border-border !static !h-auto !min-h-0 !w-60 !min-w-60 border-r shadow-none max-md:!h-56 max-md:!w-full max-md:!min-w-0 max-md:border-r-0 max-md:border-b">
+        <Sidebar className="border-border !static !h-full !min-h-0 !w-60 !min-w-60 border-r shadow-none max-md:!h-56 max-md:!w-full max-md:!min-w-0 max-md:border-r-0 max-md:border-b">
           <Sidebar.Header className="border-border gap-3 border-b !p-3">
             <div className="flex items-center justify-between gap-3">
               <p className="text-sm font-semibold">Components</p>
