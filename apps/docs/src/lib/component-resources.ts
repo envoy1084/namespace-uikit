@@ -69,7 +69,6 @@ export function getComponentResourceLinks(
     `${slug}.mdx`,
   );
   const docsSource = readFileSync(docsFile, "utf8");
-  const declaredStyle = frontmatterValue(docsSource, "styles");
   const reactAria = frontmatterValue(docsSource, "rac");
   const localStyle = join(
     root,
@@ -104,12 +103,9 @@ export function getComponentResourceLinks(
     }
   }
 
-  let styles: string | undefined;
-  if (existsSync(localStyle)) {
-    styles = `${repositoryUrl}/blob/main/packages/uikit/src/styles/components/${sourceName}.css`;
-  } else if (declaredStyle) {
-    styles = `/source/styles/${declaredStyle}`;
-  }
+  const styles = existsSync(localStyle)
+    ? `${repositoryUrl}/blob/main/packages/uikit/src/styles/components/${sourceName}.css`
+    : undefined;
 
   return {
     reactAria: reactAria

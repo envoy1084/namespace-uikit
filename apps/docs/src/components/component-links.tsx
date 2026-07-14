@@ -1,6 +1,6 @@
 import type { ComponentResourceLinks } from "@/lib/component-resources";
 
-import { Github } from "lucide-react";
+import { GitHubIcon } from "@/icons/github";
 
 function StorybookIcon() {
   return (
@@ -61,11 +61,17 @@ export function ComponentLinks({ links }: { links: ComponentResourceLinks }) {
           React Aria
         </ResourceLink>
       ) : null}
-      <ResourceLink href={links.source} icon={<Github className="size-4" />}>
+      <ResourceLink
+        href={links.source}
+        icon={<GitHubIcon className="size-4" />}
+      >
         Source
       </ResourceLink>
       {links.styles ? (
-        <ResourceLink href={links.styles} icon={<Github className="size-4" />}>
+        <ResourceLink
+          href={links.styles}
+          icon={<GitHubIcon className="size-4" />}
+        >
           Styles source
         </ResourceLink>
       ) : null}
