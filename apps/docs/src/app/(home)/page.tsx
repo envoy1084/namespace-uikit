@@ -1,3 +1,5 @@
+"use client";
+
 import { buttonVariants } from "@thenamespace/uikit";
 import { Rocket01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import LinkRoot from "fumadocs-core/link";
