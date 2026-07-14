@@ -18,22 +18,63 @@ export function absoluteUrl(path: string, origin = site.url) {
   return new URL(path, origin).toString();
 }
 
-export function requestOrigin(request: Request) {
-  const forwardedHost = request.headers
-    .get("x-forwarded-host")
-    ?.split(",")[0]
-    ?.trim();
-  const forwardedProtocol = request.headers
-    .get("x-forwarded-proto")
-    ?.split(",")[0]
-    ?.trim();
-  const host = forwardedHost ?? request.headers.get("host");
+function firstHeaderValue(value: string | null) {
+  return value?.split(",")[0]?.trim();
+}
 
-  if (host) {
-    return `${forwardedProtocol ?? new URL(request.url).protocol.replace(":", "")}://${host}`;
+function normalizeOrigin(value: string | undefined) {
+  if (!value) return undefined;
+
+  try {
+    return new URL(value.includes("://") ? value : `https://${value}`).origin;
+  } catch {
+    return undefined;
   }
+}
 
-  return new URL(request.url).origin;
+function isLocalOrigin(origin: string) {
+  const hostname = new URL(origin).hostname;
+
+  return (
+    hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1"
+  );
+}
+
+export function requestOrigin(request: Request) {
+  const forwarded = firstHeaderValue(request.headers.get("forwarded"));
+  const forwardedHost = forwarded?.match(
+    /(?:^|;)\s*host=(?:"([^"]+)"|([^;]+))/i,
+  );
+  const forwardedProtocol = forwarded?.match(
+    /(?:^|;)\s*proto=(?:"([^"]+)"|([^;]+))/i,
+  );
+  const requestUrl = new URL(request.url);
+  const protocol =
+    firstHeaderValue(request.headers.get("x-forwarded-proto")) ??
+    forwardedProtocol?.[1] ??
+    forwardedProtocol?.[2]?.trim() ??
+    requestUrl.protocol.replace(":", "");
+  const host =
+    firstHeaderValue(request.headers.get("x-forwarded-host")) ??
+    firstHeaderValue(request.headers.get("x-vercel-forwarded-host")) ??
+    firstHeaderValue(request.headers.get("x-original-host")) ??
+    forwardedHost?.[1] ??
+    forwardedHost?.[2]?.trim() ??
+    firstHeaderValue(request.headers.get("host"));
+  const derivedOrigin = normalizeOrigin(
+    host ? `${protocol}://${host}` : requestUrl.origin,
+  );
+  const configuredOrigin = [
+    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    process.env.VERCEL_URL,
+  ]
+    .map(normalizeOrigin)
+    .find((origin) => origin && !isLocalOrigin(origin));
+
+  if (derivedOrigin && !isLocalOrigin(derivedOrigin)) return derivedOrigin;
+
+  return configuredOrigin ?? derivedOrigin ?? site.url;
 }
 
 async function replaceAsync(
