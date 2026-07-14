@@ -7,13 +7,6 @@ import html2canvas from "html2canvas";
 
 import { galleryDemos } from "@/demos/gallery";
 
-declare global {
-  interface Window {
-    captureComponentGallery?: () => Promise<string>;
-    componentGalleryComponents?: string[];
-  }
-}
-
 export function ComponentGalleryCapture({
   component,
   theme,
@@ -22,8 +15,8 @@ export function ComponentGalleryCapture({
   theme: "dark" | "light";
 }) {
   const targetRef = useRef<HTMLDivElement>(null);
+  const [captureData, setCaptureData] = useState<string | null>(null);
   const [Demo, setDemo] = useState<ComponentType | null>(null);
-  const [isCaptureReady, setCaptureReady] = useState(false);
   const [hasError, setHasError] = useState(false);
   const selectedDemo = galleryDemos.find(
     (item) => item.component === component,
@@ -37,11 +30,8 @@ export function ComponentGalleryCapture({
   useEffect(() => {
     let isCurrent = true;
 
-    window.componentGalleryComponents = galleryDemos.map(
-      (item) => item.component,
-    );
+    setCaptureData(null);
     setDemo(null);
-    setCaptureReady(false);
     setHasError(false);
 
     if (!selectedDemo) {
@@ -68,8 +58,19 @@ export function ComponentGalleryCapture({
     if (!Demo || !targetRef.current) return;
 
     const target = targetRef.current;
-    window.captureComponentGallery = async () => {
+    let isCurrent = true;
+    void (async () => {
       await document.fonts.ready;
+      await Promise.all(
+        Array.from(target.querySelectorAll("img")).map((image) => {
+          if (image.complete) return Promise.resolve();
+
+          return new Promise<void>((resolve) => {
+            image.addEventListener("error", () => resolve(), { once: true });
+            image.addEventListener("load", () => resolve(), { once: true });
+          });
+        }),
+      );
       const canvas = await html2canvas(target, {
         backgroundColor: null,
         height: target.scrollHeight,
@@ -78,13 +79,13 @@ export function ComponentGalleryCapture({
         useCORS: true,
         width: target.scrollWidth,
       });
-
-      return canvas.toDataURL("image/png");
-    };
-    setCaptureReady(true);
+      if (isCurrent) setCaptureData(canvas.toDataURL("image/png"));
+    })().catch(() => {
+      if (isCurrent) setHasError(true);
+    });
 
     return () => {
-      delete window.captureComponentGallery;
+      isCurrent = false;
     };
   }, [Demo]);
 
@@ -92,7 +93,7 @@ export function ComponentGalleryCapture({
     <main
       className="bg-background grid min-h-screen place-items-center"
       data-capture-status={
-        hasError ? "error" : isCaptureReady ? "ready" : "loading"
+        hasError ? "error" : captureData ? "ready" : "loading"
       }
     >
       <div
@@ -102,6 +103,12 @@ export function ComponentGalleryCapture({
       >
         {Demo ? <Demo /> : null}
       </div>
+      <output hidden data-component-gallery-components="">
+        {JSON.stringify(galleryDemos.map((item) => item.component))}
+      </output>
+      <output hidden data-component-gallery-result="">
+        {captureData}
+      </output>
     </main>
   );
 }

@@ -69,9 +69,10 @@ try {
   await page.goto(`${baseUrl}/component-gallery-capture`, {
     waitUntil: "networkidle",
   });
-  const availableComponents = await page.evaluate(
-    () => window.componentGalleryComponents ?? [],
-  );
+  const componentManifest = await page
+    .locator("[data-component-gallery-components]")
+    .textContent();
+  const availableComponents = JSON.parse(componentManifest ?? "[]");
   const requestedComponent = option("--component");
   const components = requestedComponent
     ? availableComponents.filter(
@@ -95,9 +96,9 @@ try {
         state: "visible",
         timeout: 30_000,
       });
-      const dataUrl = await page.evaluate(() =>
-        window.captureComponentGallery?.(),
-      );
+      const dataUrl = await page
+        .locator("[data-component-gallery-result]")
+        .textContent();
       if (!dataUrl) throw new Error(`Capture failed for ${theme}-${component}`);
 
       const png = Buffer.from(dataUrl.split(",")[1], "base64");
