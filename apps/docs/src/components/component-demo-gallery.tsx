@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentType } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import {
   Button,
@@ -27,6 +27,7 @@ export function ComponentDemoGallery() {
   const [query, setQuery] = useState("");
   const [Demo, setDemo] = useState<ComponentType | null>(null);
   const [loadError, setLoadError] = useState(false);
+  const previewRef = useRef<HTMLDivElement>(null);
   const selectedDemo =
     galleryDemos.find((item) => item.component === selectedComponent) ??
     galleryDemos[0]!;
@@ -43,6 +44,10 @@ export function ComponentDemoGallery() {
   useEffect(() => {
     let isCurrent = true;
 
+    if (previewRef.current) {
+      previewRef.current.scrollLeft = 0;
+      previewRef.current.scrollTop = 0;
+    }
     setDemo(null);
     setLoadError(false);
     void (async () => {
@@ -116,7 +121,10 @@ export function ComponentDemoGallery() {
         </ScrollShadow>
       </aside>
 
-      <section className="flex min-h-0 min-w-0 flex-col">
+      <section
+        className="flex min-h-0 min-w-0 flex-col"
+        data-gallery-component={selectedDemo.component}
+      >
         <div className="border-border flex min-h-14 items-center justify-between gap-3 border-b px-4 py-3">
           <div className="min-w-0">
             <h2 className="truncate text-sm font-semibold">
@@ -134,7 +142,11 @@ export function ComponentDemoGallery() {
             <ArrowUpRight className="size-3.5" />
           </LinkRoot>
         </div>
-        <div className="relative min-h-0 min-w-0 flex-1 overflow-auto">
+        <div
+          ref={previewRef}
+          className="relative min-h-0 min-w-0 flex-1 overflow-auto"
+          data-gallery-preview=""
+        >
           {Demo ? (
             <div className="grid min-h-full w-max min-w-full place-items-center p-4 sm:p-6">
               <div className="max-w-full min-w-0">
