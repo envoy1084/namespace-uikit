@@ -169,8 +169,10 @@ export function DemoShowcase({
       <div
         data-theme={theme}
         className={cn(
-          "flex w-full flex-1 flex-col font-sans",
-          alwaysShowTabs ? "h-full min-h-0" : "h-[42rem] min-h-[32rem]",
+          "flex w-full flex-col font-sans",
+          alwaysShowTabs
+            ? "h-full min-h-0 flex-1"
+            : "h-[42rem] min-h-[32rem] flex-none",
           theme === "dark" && "dark",
         )}
         style={previewVars}
@@ -178,7 +180,7 @@ export function DemoShowcase({
         <div className="relative flex min-h-0 flex-1 flex-col">
           <div
             className={cn(
-              "bg-background flex flex-1 justify-center overflow-x-hidden overflow-y-auto rounded-2xl",
+              "bg-background flex min-h-0 flex-1 justify-center overflow-x-hidden overflow-y-auto rounded-2xl",
               selectedTab !== "components" && "invisible",
             )}
           >
