@@ -23,11 +23,8 @@ import {
 } from "@/components/fumadocs/ui/icons";
 import { LanguageToggle } from "@/components/fumadocs/ui/language-toggle";
 import { LinkItem } from "@/components/fumadocs/ui/link-item";
-import {
-  LargeSearchToggle,
-  SearchToggle,
-} from "@/components/fumadocs/ui/search-toggle";
 import { ThemeToggle } from "@/components/fumadocs/ui/theme-toggle";
+import { SiteNavbar } from "@/components/site-navbar";
 import { cn } from "@/utils/cn";
 
 import type { LayoutHeaderTabsProps } from "./client";
@@ -35,9 +32,7 @@ import {
   FilteredSidebarTabsDropdown,
   LayoutBody,
   LayoutContextProvider,
-  LayoutHeader,
   LayoutHeaderTabs,
-  NavbarLinkItem,
 } from "./client";
 import {
   Sidebar,
@@ -344,178 +339,37 @@ export function DocsLayout(props: DocsLayoutProps) {
 
 function DocsNavbar({
   headerTabsProps,
-  i18n,
-  links,
-  nav = {},
-  searchToggle = {},
-  sidebar: { collapsible: sidebarCollapsible = true } = {},
   tabMode = "sidebar",
   tabs,
-  themeSwitch = {},
 }: DocsLayoutProps & {
   headerTabsProps?: LayoutHeaderTabsProps;
   links: LinkItemType[];
   tabs: SidebarTabWithProps[];
 }) {
-  const navMode = nav.mode ?? "auto";
   const showLayoutTabs = tabMode === "navbar" && tabs.length > 0;
 
-  // Normalize nav.title to ReactNode
-  const titleNode: ReactNode =
-    typeof nav.title === "function"
-      ? (nav.title({} as ComponentProps<"a">) as ReactNode)
-      : nav.title;
-
   return (
-    <LayoutHeader
+    <div
       id="nd-subnav"
       className={cn(
-        "data-[transparent=false]:bg-fd-background/80 layout:[--fd-header-height:--spacing(23)] sticky top-(--fd-docs-row-1) z-10 flex flex-col backdrop-blur-sm transition-colors [grid-area:header]",
-        showLayoutTabs && "md:layout:[--fd-header-height:--spacing(25)]",
+        "data-[transparent=false]:bg-fd-background/80 layout:[--fd-header-height:--spacing(14)] sticky top-(--fd-docs-row-1) z-10 flex flex-col backdrop-blur-sm transition-colors [grid-area:header]",
+        showLayoutTabs && "layout:[--fd-header-height:--spacing(24)]",
       )}
     >
-      <div
-        className="flex h-14 gap-2 border-b px-4 md:px-6"
-        data-header-body=""
-      >
-        <div
-          className={cn(
-            "items-center",
-            navMode === "top" && "flex flex-1",
-            navMode === "auto" &&
-              "hidden max-md:flex has-data-[collapsed=true]:md:flex",
-          )}
-        >
-          {!!sidebarCollapsible && navMode === "auto" && (
-            <SidebarCollapseTrigger
-              className={cn(
-                buttonVariants({
-                  color: "ghost",
-                  size: "icon-sm",
-                }),
-                "text-fd-muted-foreground data-[collapsed=false]:hidden max-md:hidden",
-              )}
-            >
-              <SidebarIcon />
-            </SidebarCollapseTrigger>
-          )}
-          {nav.titleSuffix ? (
-            <div
-              className={cn("flex items-center", nav.titleSuffixGap ?? "gap-4")}
-            >
-              <Link
-                href={nav.url ?? "/"}
-                className={cn(
-                  "inline-flex items-center gap-2.5 font-semibold",
-                  navMode === "auto" && "md:hidden",
-                )}
-              >
-                {titleNode}
-              </Link>
-              {nav.titleSuffix}
-            </div>
-          ) : (
-            <Link
-              href={nav.url ?? "/"}
-              className={cn(
-                "inline-flex items-center gap-2.5 font-semibold",
-                navMode === "auto" && "md:hidden",
-              )}
-            >
-              {titleNode}
-            </Link>
-          )}
-        </div>
-        {searchToggle.enabled !== false &&
-          (searchToggle.components?.lg ? (
-            <div
-              className={cn(
-                "my-auto w-full max-md:hidden",
-                navMode === "top" ? "max-w-sm rounded-xl" : "max-w-[240px]",
-              )}
-            >
-              {searchToggle.components.lg}
-            </div>
-          ) : (
-            <LargeSearchToggle
-              hideIfDisabled
-              className={cn(
-                "my-auto w-full max-md:hidden",
-                navMode === "top"
-                  ? "max-w-sm rounded-xl ps-2.5"
-                  : "max-w-[240px]",
-              )}
-            />
-          ))}
-        <div className="flex flex-1 items-center justify-end md:gap-2">
-          <div className="flex items-center gap-6 empty:hidden max-lg:hidden">
-            {links
-              .filter((item) => item.type !== "icon")
-              .map((item, i) => (
-                <NavbarLinkItem key={i} item={item} />
-              ))}
-          </div>
-          {nav.children}
-          {links
-            .filter((item) => item.type === "icon")
-            .map((item, i) => (
-              <LinkItem
-                key={i}
-                aria-label={item.label}
-                item={item}
-                className={cn(
-                  buttonVariants({ color: "ghost", size: "icon-sm" }),
-                  "text-fd-muted-foreground max-lg:hidden",
-                )}
-              >
-                {item.icon}
-              </LinkItem>
-            ))}
-
-          <div className="flex items-center md:hidden">
-            {searchToggle.enabled !== false &&
-              (searchToggle.components?.sm ?? (
-                <SearchToggle hideIfDisabled className="p-2" />
-              ))}
-            <SidebarTrigger
-              className={cn(
-                buttonVariants({
-                  className: "-me-1.5 p-2",
-                  color: "ghost",
-                  size: "icon-sm",
-                }),
-              )}
-            >
-              <SidebarIcon />
-            </SidebarTrigger>
-          </div>
-
-          <div className="flex items-center gap-2 max-md:hidden">
-            {!!i18n && (
-              <LanguageToggle>
-                <Languages className="text-fd-muted-foreground size-4" />
-              </LanguageToggle>
+      <SiteNavbar
+        className="border-none"
+        mobileAction={
+          <SidebarTrigger
+            className={cn(
+              buttonVariants({ color: "ghost", size: "icon-sm" }),
+              "text-fd-muted-foreground md:hidden",
             )}
-            {themeSwitch.enabled !== false &&
-              (themeSwitch.component ?? (
-                <ThemeToggle mode={themeSwitch.mode ?? "light-dark-system"} />
-              ))}
-            {!!sidebarCollapsible && navMode === "top" && (
-              <SidebarCollapseTrigger
-                className={cn(
-                  buttonVariants({
-                    color: "secondary",
-                    size: "icon-sm",
-                  }),
-                  "text-fd-muted-foreground -me-1.5 rounded-full",
-                )}
-              >
-                <SidebarIcon />
-              </SidebarCollapseTrigger>
-            )}
-          </div>
-        </div>
-      </div>
+          >
+            <SidebarIcon />
+          </SidebarTrigger>
+        }
+        position="static"
+      />
       {!!showLayoutTabs && (
         <LayoutHeaderTabs
           className={cn(
@@ -527,6 +381,6 @@ function DocsNavbar({
           options={tabs}
         />
       )}
-    </LayoutHeader>
+    </div>
   );
 }
