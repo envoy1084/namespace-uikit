@@ -23,6 +23,7 @@ export function ComponentGalleryCapture({
 }) {
   const targetRef = useRef<HTMLDivElement>(null);
   const [Demo, setDemo] = useState<ComponentType | null>(null);
+  const [isCaptureReady, setCaptureReady] = useState(false);
   const [hasError, setHasError] = useState(false);
   const selectedDemo = galleryDemos.find(
     (item) => item.component === component,
@@ -40,6 +41,7 @@ export function ComponentGalleryCapture({
       (item) => item.component,
     );
     setDemo(null);
+    setCaptureReady(false);
     setHasError(false);
 
     if (!selectedDemo) {
@@ -79,6 +81,7 @@ export function ComponentGalleryCapture({
 
       return canvas.toDataURL("image/png");
     };
+    setCaptureReady(true);
 
     return () => {
       delete window.captureComponentGallery;
@@ -88,7 +91,9 @@ export function ComponentGalleryCapture({
   return (
     <main
       className="bg-background grid min-h-screen place-items-center"
-      data-capture-status={hasError ? "error" : Demo ? "ready" : "loading"}
+      data-capture-status={
+        hasError ? "error" : isCaptureReady ? "ready" : "loading"
+      }
     >
       <div
         ref={targetRef}
