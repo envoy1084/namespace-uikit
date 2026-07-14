@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation";
 
-import { pageText, requestOrigin, textHeaders } from "@/lib/llms";
+import { pageText, textHeaders } from "@/lib/llms";
 import { source } from "@/lib/source";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(
-  request: Request,
+  _request: Request,
   { params }: { params: Promise<{ slug: string[] }> },
 ) {
   const { slug } = await params;
@@ -14,7 +14,7 @@ export async function GET(
 
   if (!page) notFound();
 
-  return new Response(await pageText(page, requestOrigin(request)), {
+  return new Response(await pageText(page), {
     headers: textHeaders,
   });
 }

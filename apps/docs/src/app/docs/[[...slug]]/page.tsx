@@ -12,6 +12,7 @@ import {
 } from "@/components/fumadocs/layouts/notebook/page";
 import { PageActions } from "@/components/page-actions";
 import { getComponentResourceLinks } from "@/lib/component-resources";
+import { absoluteSiteUrl } from "@/lib/site";
 import { source } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
 
@@ -43,7 +44,9 @@ export default async function Page({
       <section className="flex flex-col gap-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <DocsTitle>{page.data.title}</DocsTitle>
-          <PageActions markdownUrl={`/docs/${slug.join("/")}.mdx`} />
+          <PageActions
+            markdownUrl={absoluteSiteUrl(`/docs/${slug.join("/")}.mdx`)}
+          />
         </div>
         <DocsDescription className="text-md mt-2 mb-4">
           {page.data.description}

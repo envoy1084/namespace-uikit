@@ -1,18 +1,17 @@
-import { absoluteUrl, requestOrigin, textHeaders } from "@/lib/llms";
-import { site } from "@/lib/site";
+import { textHeaders } from "@/lib/llms";
+import { absoluteSiteUrl, site } from "@/lib/site";
 import { source } from "@/lib/source";
 
 export const dynamic = "force-dynamic";
 
-export function GET(request: Request) {
-  const origin = requestOrigin(request);
+export function GET() {
   const pages = source.getPages();
   const lines = [
     `# ${site.name} Documentation`,
     "",
     `> ${site.description}`,
     "",
-    `- [Complete documentation](${absoluteUrl("/llms-full.txt", origin)}): All documentation in one text file.`,
+    `- [Complete documentation](${absoluteSiteUrl("/llms-full.txt")}): All documentation in one text file.`,
     "",
     "## Documentation",
     "",
@@ -21,7 +20,7 @@ export function GET(request: Request) {
         ? `: ${page.data.description}`
         : "";
 
-      return `- [${page.data.title}](${absoluteUrl(`${page.url}.mdx`, origin)})${description}`;
+      return `- [${page.data.title}](${absoluteSiteUrl(`${page.url}.mdx`)})${description}`;
     }),
   ];
 

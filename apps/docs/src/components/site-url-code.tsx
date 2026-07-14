@@ -1,25 +1,16 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
 import { Pre } from "fumadocs-ui/components/codeblock";
 
+import { absoluteSiteUrl } from "@/lib/site";
 import { FumadocsCustomCodeblock } from "@/mdx-components/fumadocs-custom-codeblock";
 
-export function OriginCode({
+export function SiteUrlCode({
   path,
   prefix = "",
 }: {
   path: `/${string}`;
   prefix?: string;
 }) {
-  const [origin, setOrigin] = useState("");
-
-  useEffect(() => {
-    setOrigin(window.location.origin);
-  }, []);
-
-  const code = `${prefix}${origin}${path}`;
+  const code = `${prefix}${absoluteSiteUrl(path)}`;
 
   return (
     <FumadocsCustomCodeblock code={code}>

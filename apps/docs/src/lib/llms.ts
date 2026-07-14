@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { getDemo } from "@/demos";
-import { site } from "@/lib/site";
+import { absoluteSiteUrl, site } from "@/lib/site";
 
 export const textHeaders = {
   "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
@@ -13,69 +13,6 @@ export const textHeaders = {
 
 const DEFAULT_CATEGORY = "docs";
 const DEFAULT_TITLE = "Untitled";
-
-export function absoluteUrl(path: string, origin = site.url) {
-  return new URL(path, origin).toString();
-}
-
-function firstHeaderValue(value: string | null) {
-  return value?.split(",")[0]?.trim();
-}
-
-function normalizeOrigin(value: string | undefined) {
-  if (!value) return undefined;
-
-  try {
-    return new URL(value.includes("://") ? value : `https://${value}`).origin;
-  } catch {
-    return undefined;
-  }
-}
-
-function isLocalOrigin(origin: string) {
-  const hostname = new URL(origin).hostname;
-
-  return (
-    hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1"
-  );
-}
-
-export function requestOrigin(request: Request) {
-  const forwarded = firstHeaderValue(request.headers.get("forwarded"));
-  const forwardedHost = forwarded?.match(
-    /(?:^|;)\s*host=(?:"([^"]+)"|([^;]+))/i,
-  );
-  const forwardedProtocol = forwarded?.match(
-    /(?:^|;)\s*proto=(?:"([^"]+)"|([^;]+))/i,
-  );
-  const requestUrl = new URL(request.url);
-  const protocol =
-    firstHeaderValue(request.headers.get("x-forwarded-proto")) ??
-    forwardedProtocol?.[1] ??
-    forwardedProtocol?.[2]?.trim() ??
-    requestUrl.protocol.replace(":", "");
-  const host =
-    firstHeaderValue(request.headers.get("x-forwarded-host")) ??
-    firstHeaderValue(request.headers.get("x-vercel-forwarded-host")) ??
-    firstHeaderValue(request.headers.get("x-original-host")) ??
-    forwardedHost?.[1] ??
-    forwardedHost?.[2]?.trim() ??
-    firstHeaderValue(request.headers.get("host"));
-  const derivedOrigin = normalizeOrigin(
-    host ? `${protocol}://${host}` : requestUrl.origin,
-  );
-  const configuredOrigin = [
-    process.env.NEXT_PUBLIC_SITE_URL,
-    process.env.VERCEL_PROJECT_PRODUCTION_URL,
-    process.env.VERCEL_URL,
-  ]
-    .map(normalizeOrigin)
-    .find((origin) => origin && !isLocalOrigin(origin));
-
-  if (derivedOrigin && !isLocalOrigin(derivedOrigin)) return derivedOrigin;
-
-  return configuredOrigin ?? derivedOrigin ?? site.url;
-}
 
 async function replaceAsync(
   source: string,
@@ -105,12 +42,12 @@ async function expandExamples(source: string) {
   return withFreeExamples;
 }
 
-function cleanMdx(source: string, origin: string) {
+function cleanMdx(source: string) {
   return source
     .replace(
-      /<OriginCode\s+prefix=["']([^"']*)["']\s+path=["']([^"']+)["']\s*\/>/g,
+      /<SiteUrlCode\s+prefix=["']([^"']*)["']\s+path=["']([^"']+)["']\s*\/>/g,
       (_match, prefix: string, path: string) =>
-        `${prefix}${absoluteUrl(path, origin)}`,
+        `${prefix}${absoluteSiteUrl(path)}`,
     )
     .replace(
       /<CollapsibleCode\s+lang\s*=\s*["']([^"']+)["']\s+code\s*=\s*{?`([\s\S]*?)`}?\s*\/>/g,
@@ -123,14 +60,14 @@ function cleanMdx(source: string, origin: string) {
     .trim();
 }
 
-export async function pageText(page: DocsPage, origin = site.url) {
+export async function pageText(page: DocsPage) {
   const filePath = join(process.cwd(), "content/docs", page.path);
   const source = await readFile(filePath, "utf8");
   const rawBody = source.replace(/^---\n[\s\S]*?\n---\n?/, "").trim();
-  const body = cleanMdx(await expandExamples(rawBody), origin);
+  const body = cleanMdx(await expandExamples(rawBody));
   const category = page.slugs[0] ?? DEFAULT_CATEGORY;
   const title = page.data.title || DEFAULT_TITLE;
-  const url = absoluteUrl(page.url, origin);
+  const url = absoluteSiteUrl(page.url);
   const sourceUrl = `${site.repository}/blob/main/apps/docs/content/docs/${page.path}`;
   const description = page.data.description
     ? `\n> ${page.data.description}\n`

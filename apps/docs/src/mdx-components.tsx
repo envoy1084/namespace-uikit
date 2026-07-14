@@ -16,7 +16,7 @@ import {
 import { ComponentPreview } from "@/components/component-preview";
 import { ComponentsCategory } from "@/components/components-category";
 import { DocsImage } from "@/components/docs-image";
-import { OriginCode } from "@/components/origin-code";
+import { SiteUrlCode } from "@/components/site-url-code";
 import { FumadocsCustomCodeblock as CodeBlock } from "@/mdx-components/fumadocs-custom-codeblock";
 import { cn } from "@/utils/cn";
 
@@ -48,7 +48,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ComponentPreview,
     ComponentsCategory,
     DocsImage,
-    OriginCode,
+    SiteUrlCode,
     Pre,
     pre: ({ children, ref: _ref, ...props }) => {
       const lineCount = extractText(children).split("\n").length;

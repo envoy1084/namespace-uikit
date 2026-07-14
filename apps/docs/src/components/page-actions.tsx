@@ -22,16 +22,12 @@ export function PageActions({ markdownUrl }: { markdownUrl: string }) {
   const [copied, setCopied] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const items = useMemo(() => {
-    const absolute =
-      typeof window === "undefined"
-        ? markdownUrl
-        : new URL(markdownUrl, window.location.origin).href;
-    const prompt = `Use this Namespace UIKit documentation as the source of truth: ${absolute}`;
+    const prompt = `Use this Namespace UIKit documentation as the source of truth: ${markdownUrl}`;
 
     return [
       {
         description: "View this page as clean Markdown",
-        href: absolute,
+        href: markdownUrl,
         icon: <FileText className="size-[18px]" />,
         key: "markdown",
         title: "View Markdown",
