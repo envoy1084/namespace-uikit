@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
 
 import { DocsLayout } from "@/components/fumadocs/layouts/notebook";
-import { GitHubLink } from "@/components/github-link";
-import { NamespaceLogo } from "@/components/namespace-logo";
 import { source } from "@/lib/source";
 
 export default function DocumentationLayout({
@@ -13,10 +11,7 @@ export default function DocumentationLayout({
   return (
     <DocsLayout
       nav={{
-        children: <GitHubLink />,
         mode: "top",
-        title: <NamespaceLogo />,
-        url: "/docs/getting-started",
       }}
       sidebar={{
         collapsible: false,
