@@ -6,6 +6,8 @@ import { useCallback } from "react";
 
 import { useLocalStorage } from "usehooks-ts";
 
+import { makeNameCommitment, type MakeNameCommitmentProps } from "#/actions";
+
 export const COMMITMENTS_STORAGE_KEY =
   "@thenamespace/ens-components:commitments:v1";
 
@@ -31,6 +33,14 @@ export type NameCommitmentInput = Omit<StoredNameCommitment, "createdAt"> & {
 export type NameCommitmentUpdate = Partial<StoredNameCommitment>;
 export type StoredNameCommitments = Record<string, StoredNameCommitment>;
 
+export interface FindNameCommitmentInput extends Omit<
+  MakeNameCommitmentProps,
+  "secret"
+> {
+  chainId: number;
+  registrarAddress: Address;
+}
+
 export function getCommitmentStorageId({
   chainId,
   commitment,
@@ -53,6 +63,40 @@ export function useCommitments() {
   );
 
   const get = useCallback((id: string) => commitments[id], [commitments]);
+
+  const find = useCallback(
+    ({
+      chainId,
+      registrarAddress,
+      ...commitmentInput
+    }: FindNameCommitmentInput) => {
+      for (const [id, storedCommitment] of Object.entries(commitments)) {
+        if (
+          storedCommitment.chainId !== chainId ||
+          storedCommitment.registrarAddress.toLowerCase() !==
+            registrarAddress.toLowerCase()
+        ) {
+          continue;
+        }
+
+        const result = makeNameCommitment({
+          ...commitmentInput,
+          secret: storedCommitment.secret,
+        });
+
+        if (
+          result.isOk() &&
+          result.value.commitment.toLowerCase() ===
+            storedCommitment.commitment.toLowerCase()
+        ) {
+          return { commitment: storedCommitment, id };
+        }
+      }
+
+      return undefined;
+    },
+    [commitments],
+  );
 
   const insert = useCallback(
     (input: NameCommitmentInput) => {
@@ -110,6 +154,7 @@ export function useCommitments() {
   return {
     commitments,
     delete: deleteCommitment,
+    find,
     get,
     insert,
     update,

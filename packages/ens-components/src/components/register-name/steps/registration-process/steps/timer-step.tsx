@@ -1,9 +1,13 @@
 import { Accordion, Typography } from "@thenamespace/uikit";
 
-export function TimerStep() {
+export interface TimerStepProps {
+  isDisabled?: boolean;
+}
+
+export function TimerStep({ isDisabled = true }: TimerStepProps) {
   return (
     <Accordion.Item
-      isDisabled
+      isDisabled={isDisabled}
       className="bg-surface overflow-hidden rounded-xl [&::after]:hidden"
       id="timer"
     >

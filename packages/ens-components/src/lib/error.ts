@@ -16,7 +16,9 @@ function getName(data: unknown) {
 }
 
 const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
+  CHAIN_SWITCH_FAILED: "Unable to switch networks. Please try again.",
   CONTRACT_READ_FAILED: "Unable to reach the network. Please try again.",
+  CONTRACT_WRITE_FAILED: "The commitment transaction could not be submitted.",
   EMPTY_INPUT: "Enter an ENS name.",
   EMPTY_LABEL: "The ENS name contains an empty label.",
   INPUT_TOO_LONG: "The ENS name is too long.",
@@ -36,6 +38,10 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
     return name ? `${name} is not available.` : "This name is not available.";
   },
   UNSUPPORTED_NAME: "Only second-level .eth names are supported.",
+  TRANSACTION_CONFIRMATION_FAILED:
+    "Unable to confirm the commitment transaction.",
+  TRANSACTION_REVERTED: "The commitment transaction was reverted.",
+  WALLET_NOT_CONNECTED: "Connect your wallet to continue.",
 };
 
 function getErrorCode(error: unknown) {

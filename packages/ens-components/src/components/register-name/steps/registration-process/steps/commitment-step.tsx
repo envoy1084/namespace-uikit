@@ -1,10 +1,146 @@
-import { Accordion, Button, Typography } from "@thenamespace/uikit";
+"use client";
 
-export function CommitmentStep() {
+import { useState } from "react";
+
+import { Accordion, Button, Typography } from "@thenamespace/uikit";
+import { bytesToHex, zeroAddress } from "viem";
+import {
+  useConnection,
+  usePublicClient,
+  useSwitchChain,
+  useWalletClient,
+} from "wagmi";
+
+import { commitName } from "#/actions";
+import { useRegisterName } from "#/components/register-name/context";
+import { useCommitments } from "#/hooks";
+import { formatError } from "#/lib";
+import { useEnsConfig } from "#/providers";
+
+type CommitmentStatus = "confirming" | "idle" | "signing" | "switching";
+
+export interface CommitmentStepProps {
+  isDisabled?: boolean;
+}
+
+export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
+  const connection = useConnection();
+  const { chain, contracts, network } = useEnsConfig();
+  const publicClient = usePublicClient({ chainId: chain.id });
+  const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const { switchChainAsync } = useSwitchChain();
+  const { insert } = useCommitments();
+  const { duration, input, referrer, setCommitmentId } = useRegisterName();
+  const [error, setError] = useState<unknown>();
+  const [status, setStatus] = useState<CommitmentStatus>("idle");
+  const isPending = status !== "idle";
+  const isWrongNetwork =
+    connection.chainId !== undefined && connection.chainId !== chain.id;
+
+  const handleCommit = async () => {
+    setError(undefined);
+
+    if (connection.address === undefined) {
+      setError("WALLET_NOT_CONNECTED");
+      return;
+    }
+
+    if (isWrongNetwork) {
+      setStatus("switching");
+
+      try {
+        await switchChainAsync({ chainId: chain.id });
+      } catch {
+        setError("CHAIN_SWITCH_FAILED");
+      } finally {
+        setStatus("idle");
+      }
+
+      return;
+    }
+
+    if (walletClient === undefined || publicClient === undefined) {
+      setError("WALLET_NOT_CONNECTED");
+      return;
+    }
+
+    const secret = bytesToHex(crypto.getRandomValues(new Uint8Array(32)));
+
+    setStatus("signing");
+
+    const result = await commitName(walletClient, {
+      account: connection.address,
+      duration,
+      input,
+      network,
+      owner: connection.address,
+      referrer,
+      registrarAddress: contracts.ethRegistrar.address,
+      resolverAddress: zeroAddress,
+      secret,
+      subregistryAddress: zeroAddress,
+    });
+
+    if (result.isErr()) {
+      setError(result.error);
+      setStatus("idle");
+      return;
+    }
+
+    setStatus("confirming");
+
+    try {
+      const receipt = await publicClient.waitForTransactionReceipt({
+        hash: result.value.transactionHash,
+      });
+
+      if (receipt.status !== "success") {
+        setError("TRANSACTION_REVERTED");
+        setStatus("idle");
+        return;
+      }
+
+      const block = await publicClient.getBlock({
+        blockNumber: receipt.blockNumber,
+      });
+      const commitmentId = insert({
+        chainId: chain.id,
+        commitment: result.value.commitment,
+        createdAt: Number(block.timestamp) * 1_000,
+        duration: duration.toString(),
+        label: result.value.label,
+        owner: connection.address,
+        referrer,
+        registrarAddress: contracts.ethRegistrar.address,
+        resolver: zeroAddress,
+        secret,
+        subregistry: zeroAddress,
+        transactionHash: result.value.transactionHash,
+      });
+
+      setCommitmentId(commitmentId);
+    } catch {
+      setError("TRANSACTION_CONFIRMATION_FAILED");
+      setStatus("idle");
+    }
+  };
+
+  const buttonLabel =
+    connection.address === undefined
+      ? "Connect wallet to continue"
+      : isWrongNetwork
+        ? `Switch to ${chain.name}`
+        : status === "confirming"
+          ? "Confirming commitment"
+          : status === "signing"
+            ? "Confirm in wallet"
+            : "Commit name";
+
   return (
     <Accordion.Item
       className="bg-surface overflow-hidden rounded-xl [&::after]:hidden"
       id="commitment"
+      isDisabled={isDisabled}
     >
       <Accordion.Heading>
         <Accordion.Trigger className="gap-3 px-4 py-3">
@@ -27,7 +163,23 @@ export function CommitmentStep() {
             Submit a commitment transaction to begin the secure registration
             process.
           </Typography.Paragraph>
-          <Button className="mt-4 w-full">Commit name</Button>
+          <Button
+            className="mt-4 w-full"
+            isDisabled={connection.address === undefined}
+            isPending={isPending}
+            onPress={handleCommit}
+          >
+            {buttonLabel}
+          </Button>
+          {error !== undefined ? (
+            <Typography.Paragraph
+              className="text-danger mt-2"
+              size="xs"
+              role="alert"
+            >
+              {formatError(error)}
+            </Typography.Paragraph>
+          ) : null}
         </Accordion.Body>
       </Accordion.Panel>
     </Accordion.Item>

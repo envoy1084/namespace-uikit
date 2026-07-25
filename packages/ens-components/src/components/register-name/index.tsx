@@ -4,15 +4,20 @@ import { useState } from "react";
 
 import { Button, Modal } from "@thenamespace/uikit";
 import { ArrowLeft01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
+import { zeroAddress } from "viem";
+import { useConnection } from "wagmi";
 
 import {
   RegisterNameProvider,
   type RegisterNameProviderProps,
+  useRegisterName,
 } from "#/components/register-name/context";
 import {
   NameSearchStep,
   RegistrationProcess,
 } from "#/components/register-name/steps";
+import { useCommitments } from "#/hooks";
+import { useEnsConfig } from "#/providers";
 
 export * from "#/components/register-name/context";
 
@@ -26,9 +31,32 @@ export type RegisterEnsProps = Omit<RegisterNameProviderProps, "children">;
 type RegisterNameView = "name-search" | "registration-process";
 
 function RegisterEnsContent() {
+  const connection = useConnection();
+  const { duration, input, referrer, setCommitmentId } = useRegisterName();
+  const { chain, contracts } = useEnsConfig();
+  const { find } = useCommitments();
   const [view, setView] = useState<RegisterNameView>("name-search");
   const [isNameAvailable, setIsNameAvailable] = useState(false);
   const isRegistrationProcess = view === "registration-process";
+
+  const handleNext = () => {
+    const storedCommitment =
+      connection.address === undefined
+        ? undefined
+        : find({
+            chainId: chain.id,
+            duration,
+            input,
+            owner: connection.address,
+            referrer,
+            registrarAddress: contracts.ethRegistrar.address,
+            resolverAddress: zeroAddress,
+            subregistryAddress: zeroAddress,
+          });
+
+    setCommitmentId(storedCommitment?.id ?? null);
+    setView("registration-process");
+  };
 
   return (
     <Modal>
@@ -79,7 +107,7 @@ function RegisterEnsContent() {
                 <Button
                   className="w-full"
                   isDisabled={!isNameAvailable}
-                  onPress={() => setView("registration-process")}
+                  onPress={handleNext}
                 >
                   Next
                 </Button>

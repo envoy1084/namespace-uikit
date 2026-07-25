@@ -19,9 +19,11 @@ export const REGISTRATION_SECONDS_PER_YEAR =
 export const DEFAULT_REGISTRATION_DURATION = REGISTRATION_SECONDS_PER_YEAR;
 
 export interface RegisterNameContextValue {
+  commitmentId: string | null;
   duration: bigint;
   input: string;
   referrer: Hex;
+  setCommitmentId: Dispatch<SetStateAction<string | null>>;
   setDuration: Dispatch<SetStateAction<bigint>>;
   setInput: Dispatch<SetStateAction<string>>;
   setReferrer: Dispatch<SetStateAction<Hex>>;
@@ -44,6 +46,7 @@ export function RegisterNameProvider({
   defaultInput = "",
   defaultReferrer = zeroHash,
 }: RegisterNameProviderProps) {
+  const [commitmentId, setCommitmentId] = useState<string | null>(null);
   const [duration, setDuration] = useState(defaultDuration);
   const [input, setInput] = useState(defaultInput);
   const [referrer, setReferrer] = useState(defaultReferrer);
@@ -51,9 +54,11 @@ export function RegisterNameProvider({
   return (
     <RegisterNameContext.Provider
       value={{
+        commitmentId,
         duration,
         input,
         referrer,
+        setCommitmentId,
         setDuration,
         setInput,
         setReferrer,

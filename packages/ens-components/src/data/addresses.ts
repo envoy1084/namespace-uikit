@@ -2,6 +2,7 @@ import { erc20Abi, type Hex } from "viem";
 
 import {
   ethPriceFeedAbiSnippet,
+  ethRegistrarCommitSnippet,
   ethRegistrarGetRegisterPriceSnippet,
   ethRegistrarIsAvailableSnippet,
 } from "#/data/abi";
@@ -16,6 +17,7 @@ export const testnetContracts = {
   ethRegistrar: {
     address: "0xa4449a0dd2b83007553d9b1d28b583a46a805a30" as Hex,
     snippets: {
+      ethRegistrarCommitSnippet,
       ethRegistrarGetRegisterPriceSnippet,
       ethRegistrarIsAvailableSnippet,
     },
