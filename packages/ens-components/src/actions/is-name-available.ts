@@ -2,10 +2,7 @@ import { errAsync, ResultAsync } from "neverthrow";
 import { isAddress, type PublicClient } from "viem";
 
 import { ensNetworkConfigurations } from "../data";
-import {
-  normalizeEthNameInput,
-  type NameAvailabilityValidationError,
-} from "../hooks/name-availability";
+import { parseNameInput, type ParseNameInputError } from "./parse-name-input";
 
 export type IsNameAvailableErrorCode =
   | "invalid-name"
@@ -16,14 +13,14 @@ export type IsNameAvailableErrorCode =
 export interface IsNameAvailableErrorOptions {
   readonly cause?: unknown;
   readonly chainId?: number;
-  readonly validationError?: NameAvailabilityValidationError;
+  readonly parseError?: ParseNameInputError;
 }
 
 export class IsNameAvailableError extends Error {
   override readonly name = "IsNameAvailableError";
   readonly code: IsNameAvailableErrorCode;
   readonly chainId: number | undefined;
-  readonly validationError: NameAvailabilityValidationError | undefined;
+  readonly parseError: ParseNameInputError | undefined;
 
   constructor(
     code: IsNameAvailableErrorCode,
@@ -36,7 +33,7 @@ export class IsNameAvailableError extends Error {
     );
     this.code = code;
     this.chainId = options.chainId;
-    this.validationError = options.validationError;
+    this.parseError = options.parseError;
   }
 }
 
@@ -57,13 +54,25 @@ export function isNameAvailable(
   publicClient: PublicClient,
   value: string | null | undefined,
 ): ResultAsync<boolean, IsNameAvailableError> {
-  const normalizedInput = normalizeEthNameInput(value);
+  const parsedInput = parseNameInput(value);
 
-  if (!normalizedInput.isValid) {
+  if (parsedInput.isErr()) {
     return errAsync(
-      new IsNameAvailableError("invalid-name", normalizedInput.error.message, {
-        validationError: normalizedInput.error,
+      new IsNameAvailableError("invalid-name", parsedInput.error.message, {
+        cause: parsedInput.error,
+        parseError: parsedInput.error,
       }),
+    );
+  }
+
+  const parsedName = parsedInput.value;
+
+  if (parsedName.tld !== "eth" || parsedName.nameLevel !== 2) {
+    return errAsync(
+      new IsNameAvailableError(
+        "invalid-name",
+        "Name availability can only be checked for second-level .eth names.",
+      ),
     );
   }
 
@@ -100,7 +109,7 @@ export function isNameAvailable(
       address: ethRegistrar.address,
       abi: ethRegistrar.snippets.ethRegistrarIsAvailableSnippet,
       functionName: "isAvailable",
-      args: [normalizedInput.label],
+      args: [parsedName.label],
     }),
     (cause) =>
       new IsNameAvailableError(

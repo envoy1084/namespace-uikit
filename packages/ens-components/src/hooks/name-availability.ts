@@ -1,8 +1,4 @@
-import { normalize } from "viem/ens";
-
-const MAX_LABEL_BYTES = 255;
-const MAX_INPUT_CODE_UNITS = 1_024;
-const UTF8_ENCODER = new TextEncoder();
+import { parseNameInput } from "../actions/parse-name-input";
 
 export type NameAvailabilityValidationErrorCode =
   | "empty"
@@ -41,57 +37,42 @@ function invalid(
 export function normalizeEthNameInput(
   input: string | null | undefined,
 ): NormalizedEthNameInput {
-  const value = (input ?? "").trim();
+  const parsedInput = parseNameInput(input);
 
-  if (value.length === 0) {
-    return invalid("empty", "Enter an ENS name.");
+  if (parsedInput.isErr()) {
+    if (parsedInput.error.code === "empty-input") {
+      return invalid("empty", parsedInput.error.message);
+    }
+
+    if (
+      parsedInput.error.code === "input-too-long" ||
+      parsedInput.error.code === "label-too-long"
+    ) {
+      return invalid("label-too-long", parsedInput.error.message);
+    }
+
+    return invalid("invalid-name", parsedInput.error.message);
   }
 
-  // Bound synchronous ENS normalization work for untrusted form input.
-  if (value.length > MAX_INPUT_CODE_UNITS) {
-    return invalid("label-too-long", "The ENS label is too long.");
-  }
+  const parsedName = parsedInput.value;
 
-  let normalizedInput: string;
-  try {
-    normalizedInput = normalize(value);
-  } catch {
-    return invalid(
-      "invalid-name",
-      "This name is not valid according to ENSIP-15.",
-    );
-  }
-
-  const labels = normalizedInput.split(".");
-  let label: string;
-
-  if (labels.length === 1) {
-    label = labels[0] ?? "";
-  } else if (labels.at(-1) !== "eth") {
+  if (parsedName.tld !== "eth") {
     return invalid(
       "unsupported-tld",
       "Only second-level .eth names are supported.",
     );
-  } else if (labels.length !== 2) {
+  }
+
+  if (parsedName.nameLevel !== 2) {
     return invalid(
       "subname-not-supported",
       "Subnames cannot be checked with the .eth registrar.",
     );
-  } else {
-    label = labels[0] ?? "";
-  }
-
-  if (label.length === 0) {
-    return invalid("invalid-name", "The ENS label cannot be empty.");
-  }
-
-  if (UTF8_ENCODER.encode(label).byteLength > MAX_LABEL_BYTES) {
-    return invalid("label-too-long", "The ENS label is too long.");
   }
 
   return {
     isValid: true,
-    label,
-    name: `${label}.eth`,
+    label: parsedName.label,
+    name: parsedName.normalizedName as `${string}.eth`,
   };
 }
