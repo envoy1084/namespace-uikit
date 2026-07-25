@@ -48,11 +48,12 @@
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },
   "dependencies": {
-    "@tanstack/react-query": "5.101.2",
     "@thenamespace/uikit": "workspace:*",
+    "neverthrow": "8.2.0",
     "usehooks-ts": "3.1.1"
   },
   "devDependencies": {
+    "@tanstack/react-query": "5.101.2",
     "@types/node": "26.0.1",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
@@ -63,6 +64,7 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
+    "@tanstack/react-query": "5.101.2",
     "react": ">=19.2.7 <20",
     "react-dom": ">=19.2.7 <20",
     "tailwindcss": ">=4.3.2 <5",

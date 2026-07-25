@@ -20,6 +20,7 @@ export default defineConfig({
     neverBundle: [
       "@tanstack/react-query",
       "@thenamespace/uikit",
+      "neverthrow",
       "react",
       "react-dom",
       "react/jsx-runtime",
