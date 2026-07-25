@@ -11,7 +11,7 @@ export default defineConfig({
       to: "dist/assets",
     },
     {
-      from: "src/styles/globals.css",
+      from: "src/styles.css",
       rename: "styles.css",
       to: "dist",
     },

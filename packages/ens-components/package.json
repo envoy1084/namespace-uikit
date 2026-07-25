@@ -24,12 +24,12 @@
       "import": "./dist/index.mjs"
     },
     "./styles": {
-      "@thenamespace/source": "./src/styles/globals.css",
+      "@thenamespace/source": "./src/styles.css",
       "style": "./dist/styles.css",
       "default": "./dist/styles.css"
     },
     "./styles.css": {
-      "@thenamespace/source": "./src/styles/globals.css",
+      "@thenamespace/source": "./src/styles.css",
       "style": "./dist/styles.css",
       "default": "./dist/styles.css"
     },
