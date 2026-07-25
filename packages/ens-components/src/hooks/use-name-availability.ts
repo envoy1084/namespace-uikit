@@ -27,16 +27,13 @@ export function useNameAvailability(
   const publicClient = usePublicClient({ chainId: chain.id });
   const [debouncedInput] = useDebounceValue(input, options.debounceMs ?? 300);
   const parsedInput = parseNameInput(debouncedInput);
-  const isDebouncing = input !== debouncedInput;
-  const validationError: ParseNameInputError | "UNSUPPORTED_NAME" | undefined =
-    parsedInput.isErr()
-      ? parsedInput.error
-      : parsedInput.value.nameLevel !== 2 || parsedInput.value.tld !== "eth"
-        ? "UNSUPPORTED_NAME"
-        : undefined;
+  const isValidInput =
+    parsedInput.isOk() &&
+    parsedInput.value.nameLevel === 2 &&
+    parsedInput.value.tld === "eth";
   const registrarAddress = contracts.ethRegistrar.address;
 
-  const query = useQuery<boolean, IsNameAvailableError | ParseNameInputError>({
+  return useQuery<boolean, IsNameAvailableError | ParseNameInputError>({
     queryKey: [
       "ens",
       "name-availability",
@@ -45,9 +42,7 @@ export function useNameAvailability(
       parsedInput.isOk() ? parsedInput.value.normalizedName : debouncedInput,
     ],
     enabled:
-      (options.enabled ?? true) &&
-      publicClient !== undefined &&
-      validationError === undefined,
+      (options.enabled ?? true) && publicClient !== undefined && isValidInput,
     retry: false,
     queryFn: async () => {
       if (publicClient === undefined) {
@@ -64,11 +59,4 @@ export function useNameAvailability(
       return result.value;
     },
   });
-
-  return {
-    ...query,
-    isAvailable: isDebouncing ? undefined : query.data,
-    isDebouncing,
-    validationError,
-  };
 }
