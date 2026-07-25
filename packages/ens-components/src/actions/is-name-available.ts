@@ -1,120 +1,59 @@
 import { errAsync, ResultAsync } from "neverthrow";
-import { isAddress, type PublicClient } from "viem";
+import { isAddress, type Address, type PublicClient } from "viem";
 
-import { ensNetworkConfigurations } from "../data";
-import { parseNameInput, type ParseNameInputError } from "./parse-name-input";
+import type { EnsNetwork } from "../data";
+import { ethRegistrarIsAvailableSnippet } from "../data/abi";
 
-export type IsNameAvailableErrorCode =
-  | "INVALID_NAME"
-  | "UNSUPPORTED_CHAIN"
-  | "CONFIGURATION_ERROR"
+const MAX_LABEL_BYTES = 255;
+const UTF8_ENCODER = new TextEncoder();
+
+export type IsNameAvailableError =
+  | "INVALID_LABEL"
+  | "INVALID_REGISTRAR_ADDRESS"
   | "CONTRACT_READ_FAILED";
 
-export interface IsNameAvailableErrorOptions {
-  readonly cause?: unknown;
-  readonly chainId?: number;
-  readonly parseError?: ParseNameInputError;
-}
-
-export class IsNameAvailableError extends Error {
-  override readonly name = "IsNameAvailableError";
-  readonly code: IsNameAvailableErrorCode;
-  readonly chainId: number | undefined;
-  readonly parseError: ParseNameInputError | undefined;
-
-  constructor(
-    code: IsNameAvailableErrorCode,
-    message: string,
-    options: IsNameAvailableErrorOptions = {},
-  ) {
-    super(
-      message,
-      options.cause === undefined ? undefined : { cause: options.cause },
-    );
-    this.code = code;
-    this.chainId = options.chainId;
-    this.parseError = options.parseError;
-  }
-}
-
-function getNetworkConfiguration(chainId: number | undefined) {
-  return Object.values(ensNetworkConfigurations).find(
-    (configuration) => configuration.chain.id === chainId,
-  );
+export interface IsNameAvailableProps {
+  /** Normalized label without `.eth`. */
+  readonly label: string;
+  /** Network associated with the supplied registrar address. */
+  readonly network: EnsNetwork;
+  /** ENSv2 ETHRegistrar address on the supplied network. */
+  readonly registrarAddress: Address;
 }
 
 /**
- * Checks an ENS label or second-level `.eth` name against the ENSv2
- * ETHRegistrar selected by the public client's chain.
+ * Checks a normalized label directly against the supplied ENSv2 ETHRegistrar.
  *
- * This action performs no caching or debouncing. It is safe to call from React
- * hooks, server code, command handlers, or other framework-independent code.
+ * All contract configuration is explicit. This action does not read React
+ * context, derive a network from the public client, normalize names, debounce,
+ * or cache.
  */
 export function isNameAvailable(
   publicClient: PublicClient,
-  value: string | null | undefined,
+  props: IsNameAvailableProps,
 ): ResultAsync<boolean, IsNameAvailableError> {
-  const parsedInput = parseNameInput(value);
+  const { label, registrarAddress } = props;
+  const labelLength = UTF8_ENCODER.encode(label).byteLength;
 
-  if (parsedInput.isErr()) {
-    return errAsync(
-      new IsNameAvailableError("INVALID_NAME", "The ENS name is invalid.", {
-        parseError: parsedInput.error,
-      }),
-    );
+  if (
+    labelLength === 0 ||
+    labelLength > MAX_LABEL_BYTES ||
+    label.includes(".")
+  ) {
+    return errAsync("INVALID_LABEL");
   }
 
-  const parsedName = parsedInput.value;
-
-  if (parsedName.tld !== "eth" || parsedName.nameLevel !== 2) {
-    return errAsync(
-      new IsNameAvailableError(
-        "INVALID_NAME",
-        "Name availability can only be checked for second-level .eth names.",
-      ),
-    );
-  }
-
-  const chainId = publicClient.chain?.id;
-  const networkConfiguration = getNetworkConfiguration(chainId);
-
-  if (networkConfiguration === undefined) {
-    return errAsync(
-      new IsNameAvailableError(
-        "UNSUPPORTED_CHAIN",
-        chainId === undefined
-          ? "The public client does not have a configured chain."
-          : `Chain ${chainId} is not supported by ENS Components.`,
-        chainId === undefined ? undefined : { chainId },
-      ),
-    );
-  }
-
-  const resolvedChainId = networkConfiguration.chain.id;
-  const ethRegistrar = networkConfiguration.contracts.ethRegistrar;
-
-  if (!isAddress(ethRegistrar.address)) {
-    return errAsync(
-      new IsNameAvailableError(
-        "CONFIGURATION_ERROR",
-        `The ENSv2 ETHRegistrar address for ${networkConfiguration.network} is invalid.`,
-        { chainId: resolvedChainId },
-      ),
-    );
+  if (!isAddress(registrarAddress)) {
+    return errAsync("INVALID_REGISTRAR_ADDRESS");
   }
 
   return ResultAsync.fromPromise(
     publicClient.readContract({
-      address: ethRegistrar.address,
-      abi: ethRegistrar.snippets.ethRegistrarIsAvailableSnippet,
+      address: registrarAddress,
+      abi: ethRegistrarIsAvailableSnippet,
       functionName: "isAvailable",
-      args: [parsedName.label],
+      args: [label],
     }),
-    (cause) =>
-      new IsNameAvailableError(
-        "CONTRACT_READ_FAILED",
-        `Failed to check name availability on chain ${resolvedChainId}.`,
-        { cause, chainId: resolvedChainId },
-      ),
+    () => "CONTRACT_READ_FAILED" as const,
   );
 }

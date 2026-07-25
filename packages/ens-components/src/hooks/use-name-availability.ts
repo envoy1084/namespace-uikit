@@ -5,10 +5,11 @@ import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { useDebounceValue } from "usehooks-ts";
-import { BaseError, ContractFunctionRevertedError, isAddress } from "viem";
+import { isAddress } from "viem";
 import { usePublicClient } from "wagmi";
 
 import { isNameAvailable } from "../actions";
+import type { IsNameAvailableError } from "../actions";
 import { useEnsConfig } from "../providers";
 import { normalizeEthNameInput } from "./name-availability";
 
@@ -20,7 +21,7 @@ const DEBOUNCE_OPTIONS = { trailing: true } as const;
 type RetryOption =
   | boolean
   | number
-  | ((failureCount: number, error: Error) => boolean);
+  | ((failureCount: number, error: Error | IsNameAvailableError) => boolean);
 
 export type NameAvailabilityStatus =
   | "idle"
@@ -60,7 +61,8 @@ export interface UseNameAvailabilityOptions {
    */
   gcTime?: number;
   /**
-   * TanStack Query retry behavior. Contract reverts are not retried by default.
+   * TanStack Query retry behavior. Contract read failures retry twice by
+   * default.
    */
   retry?: RetryOption;
 }
@@ -70,19 +72,11 @@ function toNonNegativeInteger(value: number | undefined, fallback: number) {
   return Math.max(0, Math.trunc(value));
 }
 
-function retryAvailabilityRequest(failureCount: number, error: Error) {
-  if (failureCount >= 2) return false;
-
-  if (
-    error instanceof ContractFunctionRevertedError ||
-    (error instanceof BaseError &&
-      error.walk((cause) => cause instanceof ContractFunctionRevertedError) !==
-        null)
-  ) {
-    return false;
-  }
-
-  return true;
+function retryAvailabilityRequest(
+  failureCount: number,
+  error: Error | IsNameAvailableError,
+) {
+  return failureCount < 2 && error === "CONTRACT_READ_FAILED";
 }
 
 /**
@@ -158,7 +152,7 @@ export function useNameAvailability(
     debouncedLabel ?? null,
   ] as const;
 
-  const query = useQuery<boolean, Error>({
+  const query = useQuery<boolean, Error | IsNameAvailableError>({
     queryKey,
     enabled: queryEnabled,
     staleTime,
@@ -178,7 +172,11 @@ export function useNameAvailability(
       }
 
       signal.throwIfAborted();
-      const result = await isNameAvailable(publicClient, debouncedLabel);
+      const result = await isNameAvailable(publicClient, {
+        label: debouncedLabel,
+        network,
+        registrarAddress: ethRegistrar.address,
+      });
       signal.throwIfAborted();
 
       if (result.isErr()) throw result.error;
