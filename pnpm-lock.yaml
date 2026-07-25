@@ -362,6 +362,9 @@ importers:
       '@internationalized/date':
         specifier: 3.12.2
         version: 3.12.2
+      '@number-flow/react':
+        specifier: 0.6.2
+        version: 0.6.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@thenamespace/uikit':
         specifier: workspace:*
         version: link:../uikit
@@ -1708,6 +1711,12 @@ packages:
 
   '@number-flow/react@0.6.1':
     resolution: {integrity: sha512-JsvB8FrmtRmn251jbJnFD7Tr6Sv/eQMLUAlbshGo4CfAPk0qgNYTio9HuFoETqtuflcJHQezeGsSTPbUn1oplw==}
+    peerDependencies:
+      react: ^18 || ^19
+      react-dom: ^18 || ^19
+
+  '@number-flow/react@0.6.2':
+    resolution: {integrity: sha512-WjZuV4aA+vhRCgCF+adGLgFVVAJ8vdvq6EchRT2FiBIgElTXtDOA3YgkcMr9UHpvpS9v4H70AB5wZv0D9jc3QA==}
     peerDependencies:
       react: ^18 || ^19
       react-dom: ^18 || ^19
@@ -5258,6 +5267,9 @@ packages:
   number-flow@0.6.1:
     resolution: {integrity: sha512-5NUCwZA6J/kZeEzqApOyq7KOf1Wu/oxjpp/95HB0NBNBFlpK/Pp7i4jH8h0LIXyRDKSTewDAUaYHL7IBrk19Ew==}
 
+  number-flow@0.6.2:
+    resolution: {integrity: sha512-MCnImG4Q5vPwhSXnov56nOuyyKn6LC+Qd7II1UiKc+ACRtug5iAtn0+CwXNxM38AC5lSowEY+oYEtZX2qMnUyw==}
+
   object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
@@ -7576,6 +7588,13 @@ snapshots:
     dependencies:
       esm-env: 1.2.2
       number-flow: 0.6.1
+      react: 19.2.7
+      react-dom: 19.2.7(react@19.2.7)
+
+  '@number-flow/react@0.6.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+    dependencies:
+      esm-env: 1.2.2
+      number-flow: 0.6.2
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
 
@@ -11248,6 +11267,10 @@ snapshots:
   node-releases@2.0.50: {}
 
   number-flow@0.6.1:
+    dependencies:
+      esm-env: 1.2.2
+
+  number-flow@0.6.2:
     dependencies:
       esm-env: 1.2.2
 

@@ -21,7 +21,7 @@ export function RegistrationProcess() {
   const [expandedKeys, setExpandedKeys] = useState(
     new Set<string | number>([activeStep]),
   );
-  const handleContinueToRegistration = useCallback(
+  const handleTimerComplete = useCallback(
     () => setActiveStep("complete-registration"),
     [],
   );
@@ -43,8 +43,9 @@ export function RegistrationProcess() {
       >
         <CommitmentStep isDisabled={activeStep !== "commitment"} />
         <TimerStep
+          isCompleted={activeStep === "complete-registration"}
           isDisabled={activeStep !== "timer"}
-          onContinue={handleContinueToRegistration}
+          onComplete={handleTimerComplete}
         />
         <CompleteRegistrationStep
           isDisabled={activeStep !== "complete-registration"}
