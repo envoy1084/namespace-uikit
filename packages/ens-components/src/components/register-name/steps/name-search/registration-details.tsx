@@ -11,8 +11,9 @@ import {
   DateField,
   DatePicker,
   NumberStepper,
-  Separator,
-  Spinner,
+  NumberValue,
+  Skeleton,
+  Surface,
   Typography,
 } from "@thenamespace/uikit";
 import { formatUnits } from "viem";
@@ -34,11 +35,8 @@ function getYears(duration: bigint) {
   return Math.min(MAX_REGISTRATION_YEARS, Math.max(1, years));
 }
 
-function formatTokenAmount(amount: bigint, decimals: number) {
-  const [integer, fraction = ""] = formatUnits(amount, decimals).split(".");
-  const visibleFraction = fraction.slice(0, 6).replace(/0+$/, "");
-
-  return visibleFraction.length > 0 ? `${integer}.${visibleFraction}` : integer;
+function getTokenValue(amount: bigint, decimals: number) {
+  return Number(formatUnits(amount, decimals));
 }
 
 function ExpirationDatePicker({
@@ -52,13 +50,14 @@ function ExpirationDatePicker({
 
   return (
     <DatePicker
+      aria-label="Registration expiration date"
       className="w-full"
       maxValue={today(timeZone).add({ years: MAX_REGISTRATION_YEARS })}
       minValue={today(timeZone).add({ days: 1 })}
       value={value}
       onChange={onChange}
     >
-      <DateField.Group fullWidth>
+      <DateField.Group fullWidth variant="secondary">
         <DateField.Input>
           {(segment) => <DateField.Segment segment={segment} />}
         </DateField.Input>
@@ -129,7 +128,7 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
   };
 
   return (
-    <div className="border-default bg-surface mt-4 rounded-2xl border p-4">
+    <Surface className="mt-4 rounded-2xl p-4" variant="secondary">
       {pickByDate ? (
         <ExpirationDatePicker
           value={expirationDate}
@@ -138,13 +137,23 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
       ) : (
         <NumberStepper
           aria-label="Registration duration in years"
+          className="w-full"
           maxValue={MAX_REGISTRATION_YEARS}
           minValue={1}
           value={years}
           onChange={updateYears}
         >
           <NumberStepper.Group className="border-default bg-background w-full border p-1">
-            <NumberStepper.DecrementButton aria-label="Decrease registration duration" />
+            <Button
+              isIconOnly
+              aria-label="Decrease registration duration"
+              className="rounded-full"
+              size="lg"
+              slot="decrement"
+              variant="primary"
+            >
+              −
+            </Button>
             <NumberStepper.Value>
               {({ value }) => (
                 <span className="text-foreground flex-1 text-center text-xl font-semibold">
@@ -152,7 +161,16 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
                 </span>
               )}
             </NumberStepper.Value>
-            <NumberStepper.IncrementButton aria-label="Increase registration duration" />
+            <Button
+              isIconOnly
+              aria-label="Increase registration duration"
+              className="rounded-full"
+              size="lg"
+              slot="increment"
+              variant="primary"
+            >
+              +
+            </Button>
           </NumberStepper.Group>
         </NumberStepper>
       )}
@@ -173,64 +191,42 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
         </Button>
       </div>
 
-      <div className="mt-4" aria-live="polite">
-        {price.isFetching ? (
-          <div className="flex items-center justify-center gap-2 py-6">
-            <Spinner className="size-3" size="sm" />
-            <Typography.Paragraph color="muted" size="xs">
-              Calculating price…
-            </Typography.Paragraph>
-          </div>
-        ) : price.isError ? (
+      <div className="mt-5" aria-live="polite">
+        <div className="flex items-center justify-between gap-4">
+          <Typography.Paragraph color="muted" size="sm">
+            Registration price
+          </Typography.Paragraph>
+          {price.isFetching ? (
+            <Skeleton
+              aria-label="Calculating registration price"
+              className="h-5 w-24 rounded-md"
+            />
+          ) : price.data ? (
+            <NumberValue
+              className="text-foreground text-base font-semibold"
+              maximumFractionDigits={6}
+              value={getTokenValue(price.data.total, price.data.decimals)}
+            >
+              <NumberValue.Suffix>
+                <span className="text-muted ml-1 text-xs font-medium">
+                  {PAYMENT_TOKEN_SYMBOL}
+                </span>
+              </NumberValue.Suffix>
+            </NumberValue>
+          ) : (
+            <span className="text-muted text-sm">—</span>
+          )}
+        </div>
+        {price.isError ? (
           <Typography.Paragraph
-            className="py-6 text-center"
+            className="mt-2 text-right"
             color="muted"
             size="xs"
           >
             {formatError(price.error, { name: input })}
           </Typography.Paragraph>
-        ) : price.data ? (
-          <div className="space-y-3">
-            <div className="text-muted space-y-2 text-sm">
-              <div className="flex items-center justify-between gap-4">
-                <span>Registration fee</span>
-                <span>
-                  {formatTokenAmount(price.data.base, price.data.decimals)}{" "}
-                  {PAYMENT_TOKEN_SYMBOL}
-                </span>
-              </div>
-              {price.data.premium > 0n ? (
-                <div className="flex items-center justify-between gap-4">
-                  <span>Expiry premium</span>
-                  <span>
-                    {formatTokenAmount(price.data.premium, price.data.decimals)}{" "}
-                    {PAYMENT_TOKEN_SYMBOL}
-                  </span>
-                </div>
-              ) : null}
-              <div className="flex items-center justify-between gap-4">
-                <span>Network fee</span>
-                <span>Calculated in wallet</span>
-              </div>
-            </div>
-            <Separator />
-            <div className="flex items-start justify-between gap-4">
-              <Typography.Heading className="text-base" level={4}>
-                Total
-              </Typography.Heading>
-              <div className="text-right">
-                <Typography.Heading className="text-base" level={4}>
-                  {formatTokenAmount(price.data.total, price.data.decimals)}{" "}
-                  {PAYMENT_TOKEN_SYMBOL}
-                </Typography.Heading>
-                <Typography.Paragraph color="muted" size="xs">
-                  ≈ ${formatTokenAmount(price.data.total, price.data.decimals)}
-                </Typography.Paragraph>
-              </div>
-            </div>
-          </div>
         ) : null}
       </div>
-    </div>
+    </Surface>
   );
 }
