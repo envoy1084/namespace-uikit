@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import {
-  Button,
   Description,
   Disclosure,
   FieldError,
@@ -37,17 +36,13 @@ export function ReferrerAddress() {
   return (
     <Disclosure className="border-default mt-4 border-t pt-3">
       <Disclosure.Heading>
-        <Button
-          className="h-auto w-full justify-between px-0 py-1 text-xs"
-          slot="trigger"
-          variant="tertiary"
-        >
-          <span>Referrer address</span>
+        <Disclosure.Trigger className="text-foreground flex w-full items-center bg-transparent px-0 py-1 text-xs font-medium">
+          <span>Advanced options</span>
           <Disclosure.Indicator className="text-muted size-4" />
-        </Button>
+        </Disclosure.Trigger>
       </Disclosure.Heading>
       <Disclosure.Content>
-        <Disclosure.Body className="pt-3">
+        <Disclosure.Body className="px-0 pt-3 pb-0" style={{ padding: 0 }}>
           <TextField
             fullWidth
             isInvalid={isInvalid}
