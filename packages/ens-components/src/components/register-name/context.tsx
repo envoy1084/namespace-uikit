@@ -1,5 +1,7 @@
 "use client";
 
+import type { Hex } from "viem";
+
 import {
   createContext,
   useContext,
@@ -9,6 +11,8 @@ import {
   type SetStateAction,
 } from "react";
 
+import { zeroHash } from "viem";
+
 export const REGISTRATION_SECONDS_PER_DAY = 86_400n;
 export const REGISTRATION_SECONDS_PER_YEAR =
   365n * REGISTRATION_SECONDS_PER_DAY;
@@ -17,14 +21,17 @@ export const DEFAULT_REGISTRATION_DURATION = REGISTRATION_SECONDS_PER_YEAR;
 export interface RegisterNameContextValue {
   duration: bigint;
   input: string;
+  referrer: Hex;
   setDuration: Dispatch<SetStateAction<bigint>>;
   setInput: Dispatch<SetStateAction<string>>;
+  setReferrer: Dispatch<SetStateAction<Hex>>;
 }
 
 export interface RegisterNameProviderProps {
   children: ReactNode;
   defaultDuration?: bigint;
   defaultInput?: string;
+  defaultReferrer?: Hex;
 }
 
 const RegisterNameContext = createContext<RegisterNameContextValue | null>(
@@ -35,13 +42,22 @@ export function RegisterNameProvider({
   children,
   defaultDuration = DEFAULT_REGISTRATION_DURATION,
   defaultInput = "",
+  defaultReferrer = zeroHash,
 }: RegisterNameProviderProps) {
   const [duration, setDuration] = useState(defaultDuration);
   const [input, setInput] = useState(defaultInput);
+  const [referrer, setReferrer] = useState(defaultReferrer);
 
   return (
     <RegisterNameContext.Provider
-      value={{ duration, input, setDuration, setInput }}
+      value={{
+        duration,
+        input,
+        referrer,
+        setDuration,
+        setInput,
+        setReferrer,
+      }}
     >
       {children}
     </RegisterNameContext.Provider>

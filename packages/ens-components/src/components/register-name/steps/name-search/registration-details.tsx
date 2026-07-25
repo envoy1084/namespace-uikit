@@ -29,6 +29,7 @@ import {
   REGISTRATION_SECONDS_PER_YEAR,
   useRegisterName,
 } from "#/components/register-name/context";
+import { ReferrerAddress } from "#/components/register-name/steps/name-search/referrer-address";
 import { useNamePrice } from "#/hooks";
 import { formatError } from "#/lib";
 import { useEnsConfig } from "#/providers";
@@ -282,6 +283,7 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
           </Typography.Paragraph>
         ) : null}
       </div>
+      <ReferrerAddress />
     </Surface>
   );
 }
