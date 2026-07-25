@@ -2,7 +2,17 @@
 
 import { useEffect, useState } from "react";
 
-import { Accordion, Button, Spinner, Typography } from "@thenamespace/uikit";
+import {
+  Accordion,
+  Button,
+  ProgressCircle,
+  Spinner,
+  Typography,
+} from "@thenamespace/uikit";
+import {
+  CheckmarkCircle02Icon,
+  HugeiconsIcon,
+} from "@thenamespace/uikit/icons";
 
 import { useRegisterName } from "#/components/register-name/context";
 import { useCommitments, useCommitmentStatus } from "#/hooks";
@@ -10,7 +20,7 @@ import { formatError } from "#/lib";
 
 export interface TimerStepProps {
   isDisabled?: boolean;
-  onReady?: () => void;
+  onContinue: () => void;
 }
 
 function formatRemainingTime(seconds: number) {
@@ -23,7 +33,7 @@ function formatRemainingTime(seconds: number) {
     .join(":");
 }
 
-export function TimerStep({ isDisabled = true, onReady }: TimerStepProps) {
+export function TimerStep({ isDisabled = true, onContinue }: TimerStepProps) {
   const { commitmentId, setCommitmentId } = useRegisterName();
   const { delete: deleteCommitment, get } = useCommitments();
   const storedCommitment =
@@ -54,11 +64,6 @@ export function TimerStep({ isDisabled = true, onReady }: TimerStepProps) {
       return;
     }
 
-    if (status.data?.state === "READY") {
-      onReady?.();
-      return;
-    }
-
     if (
       commitmentId !== null &&
       (status.data?.state === "EXPIRED" || status.data?.state === "NOT_FOUND")
@@ -69,7 +74,6 @@ export function TimerStep({ isDisabled = true, onReady }: TimerStepProps) {
   }, [
     commitmentId,
     deleteCommitment,
-    onReady,
     setCommitmentId,
     status.data?.state,
     storedCommitment,
@@ -83,6 +87,18 @@ export function TimerStep({ isDisabled = true, onReady }: TimerStepProps) {
     status.data?.state === "WAITING"
       ? Math.max(0, Number(status.data.remainingSeconds) - elapsedSeconds)
       : 0;
+  const totalSeconds =
+    status.data === undefined
+      ? 0
+      : Number(status.data.validFrom - status.data.submittedAt);
+  const progress =
+    status.data?.state === "READY" || totalSeconds <= 0
+      ? 100
+      : Math.min(
+          100,
+          Math.max(0, ((totalSeconds - remainingSeconds) / totalSeconds) * 100),
+        );
+  const isReady = status.data?.state === "READY";
 
   return (
     <Accordion.Item
@@ -95,7 +111,7 @@ export function TimerStep({ isDisabled = true, onReady }: TimerStepProps) {
           <span className="border-default text-muted flex size-7 shrink-0 items-center justify-center rounded-full border text-sm font-semibold">
             2
           </span>
-          <span>Timer started</span>
+          <span>{isReady ? "Commitment ready" : "Timer started"}</span>
           <Accordion.Indicator />
         </Accordion.Trigger>
       </Accordion.Heading>
@@ -122,23 +138,70 @@ export function TimerStep({ isDisabled = true, onReady }: TimerStepProps) {
                 Try again
               </Button>
             </div>
-          ) : status.data?.state === "WAITING" ? (
+          ) : status.data?.state === "WAITING" || isReady ? (
             <>
-              <Typography.Heading
-                className="text-foreground font-mono text-3xl font-semibold tabular-nums"
-                level={3}
+              <div className="relative mx-auto size-36">
+                <ProgressCircle
+                  aria-label={
+                    isReady
+                      ? "Commitment ready"
+                      : `${formatRemainingTime(remainingSeconds)} remaining`
+                  }
+                  className="size-full"
+                  color={isReady ? "success" : "default"}
+                  value={progress}
+                >
+                  <ProgressCircle.Track
+                    className="size-36!"
+                    strokeWidth={5}
+                    viewBox="0 0 36 36"
+                  >
+                    <ProgressCircle.TrackCircle
+                      cx={18}
+                      cy={18}
+                      r={15}
+                      strokeWidth={5}
+                    />
+                    <ProgressCircle.FillCircle
+                      cx={18}
+                      cy={18}
+                      r={15}
+                      strokeWidth={5}
+                    />
+                  </ProgressCircle.Track>
+                </ProgressCircle>
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                  {isReady ? (
+                    <div className="text-success flex flex-col items-center gap-1">
+                      <HugeiconsIcon
+                        className="size-7"
+                        icon={CheckmarkCircle02Icon}
+                        strokeWidth={2}
+                      />
+                      <span className="text-sm font-semibold">Ready</span>
+                    </div>
+                  ) : (
+                    <span className="text-foreground font-mono text-xl font-semibold tabular-nums">
+                      {formatRemainingTime(remainingSeconds)}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <Typography.Paragraph
+                className="mx-auto mt-4 max-w-72"
+                color="muted"
+                size="sm"
               >
-                {formatRemainingTime(remainingSeconds)}
-              </Typography.Heading>
-              <Typography.Paragraph className="mt-2" color="muted" size="sm">
-                Your commitment is confirmed. Registration will unlock
-                automatically.
+                {isReady
+                  ? "Your commitment has matured and the name is ready to register."
+                  : "Your commitment is confirmed. Keep this window open or return later."}
               </Typography.Paragraph>
+              {isReady ? (
+                <Button className="mt-4 w-full" onPress={onContinue}>
+                  Continue to registration
+                </Button>
+              ) : null}
             </>
-          ) : status.data?.state === "READY" ? (
-            <Typography.Paragraph color="muted" size="sm">
-              Your commitment is ready for registration.
-            </Typography.Paragraph>
           ) : null}
         </Accordion.Body>
       </Accordion.Panel>
