@@ -6,7 +6,7 @@ export const testnetContracts = {
     snippets: { ethPriceFeedAbiSnippet },
   },
   ethRegistrar: {
-    address: "",
+    address: "0xa4449a0dd2b83007553d9b1d28b583a46a805a30",
     snippets: { ethRegistrarIsAvailableSnippet },
   },
 } as const;
