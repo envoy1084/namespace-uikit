@@ -6,6 +6,7 @@ import { ethRegistrarIsAvailableSnippet } from "../data/abi";
 import { parseNameInput, type ParseNameInputError } from "./parse-name-input";
 
 export type IsNameAvailableError =
+  | "LABEL_TOO_SHORT"
   | "UNSUPPORTED_NAME"
   | "INVALID_REGISTRAR_ADDRESS"
   | "CONTRACT_READ_FAILED";
@@ -41,6 +42,10 @@ export function isNameAvailable(
 
   if (parsedName.nameLevel !== 2 || parsedName.tld !== "eth") {
     return errAsync("UNSUPPORTED_NAME");
+  }
+
+  if ([...parsedName.label].length < 3) {
+    return errAsync("LABEL_TOO_SHORT");
   }
 
   if (!isAddress(registrarAddress)) {

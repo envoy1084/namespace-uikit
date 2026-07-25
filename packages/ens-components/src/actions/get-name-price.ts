@@ -14,6 +14,7 @@ export type GetNamePriceError =
   | "INVALID_DURATION"
   | "INVALID_PAYMENT_TOKEN_ADDRESS"
   | "INVALID_REGISTRAR_ADDRESS"
+  | "LABEL_TOO_SHORT"
   | "NAME_NOT_AVAILABLE"
   | "UNSUPPORTED_NAME"
   | "CONTRACT_READ_FAILED";
@@ -66,6 +67,10 @@ export function getNamePrice(
 
   if (parsedInput.value.nameLevel !== 2 || parsedInput.value.tld !== "eth") {
     return errAsync("UNSUPPORTED_NAME");
+  }
+
+  if ([...parsedInput.value.label].length < 3) {
+    return errAsync("LABEL_TOO_SHORT");
   }
 
   if (!isAddress(registrarAddress)) {

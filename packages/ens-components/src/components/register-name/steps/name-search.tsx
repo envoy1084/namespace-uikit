@@ -9,7 +9,13 @@ import { useRegisterName } from "../context";
 
 export const NameSearchStep = () => {
   const { input, setInput } = useRegisterName();
-  const availability = useNameAvailability({ input });
+  const availability = useNameAvailability({
+    input,
+    query: {
+      retry: (failureCount, error) =>
+        error === "CONTRACT_READ_FAILED" && failureCount < 3,
+    },
+  });
   const parsedInput = parseNameInput(input);
   const name = parsedInput.isOk() ? parsedInput.value.normalizedName : input;
 
@@ -53,6 +59,14 @@ export const NameSearchStep = () => {
             {availability.data
               ? `${name} is available.`
               : `${name} is not available.`}
+          </Typography.Paragraph>
+        ) : availability.error === "LABEL_TOO_SHORT" ? (
+          <Typography.Paragraph
+            className="text-danger"
+            size="xs"
+            weight="medium"
+          >
+            {name} is not available.
           </Typography.Paragraph>
         ) : availability.isError ? (
           <Typography.Paragraph color="muted" size="xs">
