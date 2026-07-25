@@ -4,10 +4,6 @@ import { useEffect, useState } from "react";
 
 import NumberFlow, { NumberFlowGroup } from "@number-flow/react";
 import { Accordion, ProgressCircle, Typography } from "@thenamespace/uikit";
-import {
-  CheckmarkCircle02Icon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
 
 import { useRegisterName } from "#/components/register-name/context";
 import { useCommitments } from "#/hooks";
@@ -88,19 +84,11 @@ export function TimerStep({
           <span
             className={
               isCompleted
-                ? "bg-success text-success-foreground flex size-7 shrink-0 items-center justify-center rounded-full"
+                ? "bg-foreground text-background flex size-7 shrink-0 items-center justify-center rounded-full text-sm font-semibold"
                 : "border-default text-muted flex size-7 shrink-0 items-center justify-center rounded-full border text-sm font-semibold"
             }
           >
-            {isCompleted ? (
-              <HugeiconsIcon
-                className="size-4"
-                icon={CheckmarkCircle02Icon}
-                strokeWidth={2}
-              />
-            ) : (
-              2
-            )}
+            2
           </span>
           <span>{isCompleted ? "Timer complete" : "Timer started"}</span>
           <Accordion.Indicator />
@@ -154,7 +142,7 @@ export function TimerStep({
               </div>
             </div>
             <Typography.Paragraph
-              className="mx-auto mt-4 max-w-72"
+              className="text- mx-auto mt-4 max-w-72"
               color="muted"
               size="sm"
             >
