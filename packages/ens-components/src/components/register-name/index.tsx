@@ -8,6 +8,7 @@ import { zeroAddress } from "viem";
 import { useConnection } from "wagmi";
 
 import {
+  COMMITMENT_WAIT_DURATION_MS,
   RegisterNameProvider,
   type RegisterNameProviderProps,
   useRegisterName,
@@ -15,6 +16,7 @@ import {
 import {
   NameSearchStep,
   RegistrationProcess,
+  type RegistrationProcessStep,
 } from "#/components/register-name/steps";
 import { useCommitments } from "#/hooks";
 import { useEnsConfig } from "#/providers";
@@ -36,6 +38,8 @@ function RegisterEnsContent() {
   const { chain, contracts } = useEnsConfig();
   const { find } = useCommitments();
   const [view, setView] = useState<RegisterNameView>("name-search");
+  const [registrationStep, setRegistrationStep] =
+    useState<RegistrationProcessStep>("commitment");
   const [isNameAvailable, setIsNameAvailable] = useState(false);
   const isRegistrationProcess = view === "registration-process";
 
@@ -54,7 +58,16 @@ function RegisterEnsContent() {
             subregistryAddress: zeroAddress,
           });
 
+    const nextStep =
+      storedCommitment === undefined
+        ? "commitment"
+        : Date.now() >=
+            storedCommitment.commitment.createdAt + COMMITMENT_WAIT_DURATION_MS
+          ? "complete-registration"
+          : "timer";
+
     setCommitmentId(storedCommitment?.id ?? null);
+    setRegistrationStep(nextStep);
     setView("registration-process");
   };
 
@@ -97,7 +110,7 @@ function RegisterEnsContent() {
             </Modal.Header>
             <Modal.Body className="flex-none">
               {isRegistrationProcess ? (
-                <RegistrationProcess />
+                <RegistrationProcess initialStep={registrationStep} />
               ) : (
                 <NameSearchStep onAvailabilityChange={setIsNameAvailable} />
               )}

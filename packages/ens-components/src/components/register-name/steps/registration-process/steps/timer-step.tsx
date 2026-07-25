@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 import NumberFlow, { NumberFlowGroup } from "@number-flow/react";
 import { Accordion, ProgressCircle, Typography } from "@thenamespace/uikit";
 
-import { useRegisterName } from "#/components/register-name/context";
+import {
+  COMMITMENT_WAIT_DURATION_MS,
+  useRegisterName,
+} from "#/components/register-name/context";
 import { useCommitments } from "#/hooks";
 
-const COMMITMENT_WAIT_DURATION_MS = 60_000;
 const COMMITMENT_WAIT_DURATION_SECONDS = COMMITMENT_WAIT_DURATION_MS / 1_000;
 const TIMER_NUMBER_FORMAT = {
   minimumIntegerDigits: 2,

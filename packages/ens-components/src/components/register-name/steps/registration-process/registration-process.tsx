@@ -11,13 +11,21 @@ import {
   TimerStep,
 } from "#/components/register-name/steps/registration-process/steps";
 
-type RegistrationProcessStep = "commitment" | "complete-registration" | "timer";
+export type RegistrationProcessStep =
+  | "commitment"
+  | "complete-registration"
+  | "timer";
 
-export function RegistrationProcess() {
+export interface RegistrationProcessProps {
+  initialStep?: RegistrationProcessStep;
+}
+
+export function RegistrationProcess({
+  initialStep = "commitment",
+}: RegistrationProcessProps) {
   const { commitmentId } = useRegisterName();
-  const [activeStep, setActiveStep] = useState<RegistrationProcessStep>(
-    commitmentId === null ? "commitment" : "timer",
-  );
+  const [activeStep, setActiveStep] =
+    useState<RegistrationProcessStep>(initialStep);
   const [expandedKeys, setExpandedKeys] = useState(
     new Set<string | number>([activeStep]),
   );
@@ -27,8 +35,12 @@ export function RegistrationProcess() {
   );
 
   useEffect(() => {
-    setActiveStep(commitmentId === null ? "commitment" : "timer");
-  }, [commitmentId]);
+    if (commitmentId === null) {
+      setActiveStep("commitment");
+    } else if (activeStep === "commitment") {
+      setActiveStep("timer");
+    }
+  }, [activeStep, commitmentId]);
 
   useEffect(() => {
     setExpandedKeys(new Set([activeStep]));
