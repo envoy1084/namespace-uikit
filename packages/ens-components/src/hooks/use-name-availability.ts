@@ -59,7 +59,6 @@ export function useNameAvailability<selectData = boolean>(
     selectData,
     NameAvailabilityQueryKey
   >({
-    retry: false,
     ...parameters.query,
     queryKey: [
       "ens",
