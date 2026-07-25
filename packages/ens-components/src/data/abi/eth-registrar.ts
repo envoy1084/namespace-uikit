@@ -110,3 +110,36 @@ export const ethRegistrarCommitSnippet = [
     type: "function",
   },
 ] as const;
+
+export const ethRegistrarCommitmentAtSnippet = [
+  ...ethRegistrarErrors,
+  {
+    inputs: [{ internalType: "bytes32", name: "commitment", type: "bytes32" }],
+    name: "commitmentAt",
+    outputs: [{ internalType: "uint64", name: "", type: "uint64" }],
+    stateMutability: "view",
+    type: "function",
+  },
+] as const;
+
+export const ethRegistrarMinCommitmentAgeSnippet = [
+  ...ethRegistrarErrors,
+  {
+    inputs: [],
+    name: "MIN_COMMITMENT_AGE",
+    outputs: [{ internalType: "uint64", name: "", type: "uint64" }],
+    stateMutability: "view",
+    type: "function",
+  },
+] as const;
+
+export const ethRegistrarMaxCommitmentAgeSnippet = [
+  ...ethRegistrarErrors,
+  {
+    inputs: [],
+    name: "MAX_COMMITMENT_AGE",
+    outputs: [{ internalType: "uint64", name: "", type: "uint64" }],
+    stateMutability: "view",
+    type: "function",
+  },
+] as const;

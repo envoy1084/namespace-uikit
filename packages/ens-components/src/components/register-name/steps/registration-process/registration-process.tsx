@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { Accordion, Surface } from "@thenamespace/uikit";
 
@@ -11,12 +11,24 @@ import {
   TimerStep,
 } from "#/components/register-name/steps/registration-process/steps";
 
+type RegistrationProcessStep = "commitment" | "complete-registration" | "timer";
+
 export function RegistrationProcess() {
   const { commitmentId } = useRegisterName();
-  const activeStep = commitmentId === null ? "commitment" : "timer";
+  const [activeStep, setActiveStep] = useState<RegistrationProcessStep>(
+    commitmentId === null ? "commitment" : "timer",
+  );
   const [expandedKeys, setExpandedKeys] = useState(
     new Set<string | number>([activeStep]),
   );
+  const handleCommitmentReady = useCallback(
+    () => setActiveStep("complete-registration"),
+    [],
+  );
+
+  useEffect(() => {
+    setActiveStep(commitmentId === null ? "commitment" : "timer");
+  }, [commitmentId]);
 
   useEffect(() => {
     setExpandedKeys(new Set([activeStep]));
@@ -30,8 +42,13 @@ export function RegistrationProcess() {
         onExpandedChange={setExpandedKeys}
       >
         <CommitmentStep isDisabled={activeStep !== "commitment"} />
-        <TimerStep isDisabled={activeStep !== "timer"} />
-        <CompleteRegistrationStep />
+        <TimerStep
+          isDisabled={activeStep !== "timer"}
+          onReady={handleCommitmentReady}
+        />
+        <CompleteRegistrationStep
+          isDisabled={activeStep !== "complete-registration"}
+        />
       </Accordion>
     </Surface>
   );

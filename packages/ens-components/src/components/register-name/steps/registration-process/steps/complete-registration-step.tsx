@@ -1,11 +1,17 @@
 import { Accordion, Typography } from "@thenamespace/uikit";
 
-export function CompleteRegistrationStep() {
+export interface CompleteRegistrationStepProps {
+  isDisabled?: boolean;
+}
+
+export function CompleteRegistrationStep({
+  isDisabled = true,
+}: CompleteRegistrationStepProps) {
   return (
     <Accordion.Item
-      isDisabled
       className="bg-surface overflow-hidden rounded-xl [&::after]:hidden"
       id="complete-registration"
+      isDisabled={isDisabled}
     >
       <Accordion.Heading>
         <Accordion.Trigger className="gap-3 px-4 py-3">

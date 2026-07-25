@@ -23,6 +23,7 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   EMPTY_LABEL: "The ENS name contains an empty label.",
   INPUT_TOO_LONG: "The ENS name is too long.",
   INVALID_DURATION: "Select a valid registration duration.",
+  INVALID_COMMITMENT: "The saved commitment is invalid.",
   INVALID_NAME: "Enter a valid ENS name.",
   INVALID_PAYMENT_TOKEN_ADDRESS: "The payment token address is invalid.",
   INVALID_REGISTRAR_ADDRESS: "The registrar address is invalid.",

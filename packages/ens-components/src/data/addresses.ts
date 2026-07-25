@@ -3,8 +3,11 @@ import { erc20Abi, type Hex } from "viem";
 import {
   ethPriceFeedAbiSnippet,
   ethRegistrarCommitSnippet,
+  ethRegistrarCommitmentAtSnippet,
   ethRegistrarGetRegisterPriceSnippet,
   ethRegistrarIsAvailableSnippet,
+  ethRegistrarMaxCommitmentAgeSnippet,
+  ethRegistrarMinCommitmentAgeSnippet,
 } from "#/data/abi";
 
 const mockUsdcIcon = new URL("../assets/usdc.svg", import.meta.url).href;
@@ -18,8 +21,11 @@ export const testnetContracts = {
     address: "0xa4449a0dd2b83007553d9b1d28b583a46a805a30" as Hex,
     snippets: {
       ethRegistrarCommitSnippet,
+      ethRegistrarCommitmentAtSnippet,
       ethRegistrarGetRegisterPriceSnippet,
       ethRegistrarIsAvailableSnippet,
+      ethRegistrarMaxCommitmentAgeSnippet,
+      ethRegistrarMinCommitmentAgeSnippet,
     },
   },
   mockUsdc: {
