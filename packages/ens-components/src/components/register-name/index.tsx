@@ -1,13 +1,23 @@
+"use client";
+
 import { Button, Modal } from "@thenamespace/uikit";
 
+import {
+  RegisterNameProvider,
+  type RegisterNameProviderProps,
+} from "./context";
 import { NameSearchStep } from "./steps";
+
+export * from "./context";
 
 const RegisterEnsHeader = new URL(
   "../../assets/register-ens-header.png",
   import.meta.url,
 );
 
-export const RegisterEns = () => {
+export type RegisterEnsProps = Omit<RegisterNameProviderProps, "children">;
+
+function RegisterEnsContent() {
   return (
     <Modal>
       <Button variant="secondary">Register</Button>
@@ -41,4 +51,12 @@ export const RegisterEns = () => {
       </Modal.Backdrop>
     </Modal>
   );
-};
+}
+
+export function RegisterEns(props: RegisterEnsProps) {
+  return (
+    <RegisterNameProvider {...props}>
+      <RegisterEnsContent />
+    </RegisterNameProvider>
+  );
+}
