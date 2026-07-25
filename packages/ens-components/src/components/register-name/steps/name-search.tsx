@@ -5,6 +5,7 @@ import { Icon, Search01Icon } from "@thenamespace/uikit/icons";
 
 import { parseNameInput } from "../../../actions";
 import { useNameAvailability } from "../../../hooks";
+import { formatError } from "../../../lib";
 import { useRegisterName } from "../context";
 
 export const NameSearchStep = () => {
@@ -66,11 +67,11 @@ export const NameSearchStep = () => {
             size="xs"
             weight="medium"
           >
-            {name} is not available.
+            {formatError(availability.error, { name })}
           </Typography.Paragraph>
         ) : availability.isError ? (
           <Typography.Paragraph color="muted" size="xs">
-            Unable to check availability.
+            {formatError(availability.error, { name })}
           </Typography.Paragraph>
         ) : null}
       </div>
