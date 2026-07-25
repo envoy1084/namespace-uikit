@@ -77,3 +77,25 @@ export const ethRegistrarIsAvailableSnippet = [
     type: "function",
   },
 ] as const;
+
+export const ethRegistrarGetRegisterPriceSnippet = [
+  ...ethRegistrarErrors,
+  {
+    inputs: [
+      { internalType: "string", name: "label", type: "string" },
+      { internalType: "uint64", name: "duration", type: "uint64" },
+      {
+        internalType: "contract IERC20",
+        name: "paymentToken",
+        type: "address",
+      },
+    ],
+    name: "getRegisterPrice",
+    outputs: [
+      { internalType: "uint256", name: "base", type: "uint256" },
+      { internalType: "uint256", name: "premium", type: "uint256" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+] as const;

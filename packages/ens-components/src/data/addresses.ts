@@ -1,6 +1,11 @@
 import type { Hex } from "viem";
 
-import { ethPriceFeedAbiSnippet, ethRegistrarIsAvailableSnippet } from "./abi";
+import {
+  ethPriceFeedAbiSnippet,
+  ethRegistrarGetRegisterPriceSnippet,
+  ethRegistrarIsAvailableSnippet,
+  mockUsdcAbi,
+} from "./abi";
 
 export const testnetContracts = {
   ethPriceFeed: {
@@ -9,7 +14,14 @@ export const testnetContracts = {
   },
   ethRegistrar: {
     address: "0xa4449a0dd2b83007553d9b1d28b583a46a805a30" as Hex,
-    snippets: { ethRegistrarIsAvailableSnippet },
+    snippets: {
+      ethRegistrarGetRegisterPriceSnippet,
+      ethRegistrarIsAvailableSnippet,
+    },
+  },
+  mockUsdc: {
+    address: "0xd3322b29a7bdee707d1684676f149bf41aa3422f" as Hex,
+    abi: mockUsdcAbi,
   },
 };
 
