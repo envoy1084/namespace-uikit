@@ -148,8 +148,9 @@ export function TimerStep({
               color="muted"
               size="xs"
             >
-              Your commitment is confirmed. Wait for the timer to finish, or
-              return later on this device to complete registration.
+              This short waiting period protects your registration from
+              front-running. The final step will unlock automatically when your
+              commitment is ready.
             </Typography.Paragraph>
           </Accordion.Body>
         </Accordion.Panel>

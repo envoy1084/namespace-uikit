@@ -24,8 +24,13 @@ export function CompleteRegistrationStep({
       </Accordion.Heading>
       <Accordion.Panel>
         <Accordion.Body>
-          <Typography.Paragraph color="muted" size="sm">
-            Complete the registration transaction to claim your name.
+          <Typography.Paragraph
+            color="muted"
+            size="xs"
+            className="mx-auto text-center"
+          >
+            Your name is not registered yet. Complete the final transaction
+            before your commitment expires to claim it.
           </Typography.Paragraph>
         </Accordion.Body>
       </Accordion.Panel>
