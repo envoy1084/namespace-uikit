@@ -1,12 +1,11 @@
-import { errAsync, ResultAsync } from "neverthrow";
-import { isAddress, type Address, type PublicClient } from "viem";
+import { err, errAsync, ok, ResultAsync } from "neverthrow";
+import { erc20Abi, isAddress, type Address, type PublicClient } from "viem";
 
 import type { EnsNetwork } from "../data";
-import { ethRegistrarGetRegisterPriceSnippet } from "../data/abi";
 import {
-  isNameAvailable,
-  type IsNameAvailableError,
-} from "./is-name-available";
+  ethRegistrarGetRegisterPriceSnippet,
+  ethRegistrarIsAvailableSnippet,
+} from "../data/abi";
 import { parseNameInput, type ParseNameInputError } from "./parse-name-input";
 
 const MAX_UINT64 = (1n << 64n) - 1n;
@@ -14,7 +13,9 @@ const MAX_UINT64 = (1n << 64n) - 1n;
 export type GetNamePriceError =
   | "INVALID_DURATION"
   | "INVALID_PAYMENT_TOKEN_ADDRESS"
+  | "INVALID_REGISTRAR_ADDRESS"
   | "NAME_NOT_AVAILABLE"
+  | "UNSUPPORTED_NAME"
   | "CONTRACT_READ_FAILED";
 
 export interface GetNamePriceProps {
@@ -33,6 +34,8 @@ export interface GetNamePriceProps {
 export interface NamePrice {
   /** Registration price excluding any expiry premium. */
   readonly base: bigint;
+  /** Number of decimal places used by the payment token. */
+  readonly decimals: number;
   /** Additional premium for a recently expired name. */
   readonly premium: bigint;
   /** Total payment-token amount required for registration. */
@@ -49,12 +52,8 @@ export interface NamePrice {
 export function getNamePrice(
   publicClient: PublicClient,
   props: GetNamePriceProps,
-): ResultAsync<
-  NamePrice,
-  GetNamePriceError | IsNameAvailableError | ParseNameInputError
-> {
-  const { duration, input, network, paymentTokenAddress, registrarAddress } =
-    props;
+): ResultAsync<NamePrice, GetNamePriceError | ParseNameInputError> {
+  const { duration, input, paymentTokenAddress, registrarAddress } = props;
   const parsedInput = parseNameInput(input);
 
   if (parsedInput.isErr()) {
@@ -65,31 +64,64 @@ export function getNamePrice(
     return errAsync("INVALID_DURATION");
   }
 
+  if (parsedInput.value.nameLevel !== 2 || parsedInput.value.tld !== "eth") {
+    return errAsync("UNSUPPORTED_NAME");
+  }
+
+  if (!isAddress(registrarAddress)) {
+    return errAsync("INVALID_REGISTRAR_ADDRESS");
+  }
+
   if (!isAddress(paymentTokenAddress)) {
     return errAsync("INVALID_PAYMENT_TOKEN_ADDRESS");
   }
 
-  return isNameAvailable(publicClient, {
-    input,
-    network,
-    registrarAddress,
-  }).andThen((available) => {
-    if (!available) {
-      return errAsync("NAME_NOT_AVAILABLE" as const);
+  const label = parsedInput.value.label;
+
+  return ResultAsync.fromPromise(
+    publicClient.multicall({
+      allowFailure: true,
+      contracts: [
+        {
+          address: registrarAddress,
+          abi: ethRegistrarIsAvailableSnippet,
+          functionName: "isAvailable",
+          args: [label],
+        },
+        {
+          address: registrarAddress,
+          abi: ethRegistrarGetRegisterPriceSnippet,
+          functionName: "getRegisterPrice",
+          args: [label, duration, paymentTokenAddress],
+        },
+        {
+          address: paymentTokenAddress,
+          abi: erc20Abi,
+          functionName: "decimals",
+        },
+      ],
+    }),
+    () => "CONTRACT_READ_FAILED" as const,
+  ).andThen(([availability, price, tokenDecimals]) => {
+    if (availability.status === "failure") {
+      return err("CONTRACT_READ_FAILED" as const);
     }
 
-    return ResultAsync.fromPromise(
-      publicClient.readContract({
-        address: registrarAddress,
-        abi: ethRegistrarGetRegisterPriceSnippet,
-        functionName: "getRegisterPrice",
-        args: [parsedInput.value.label, duration, paymentTokenAddress],
-      }),
-      () => "CONTRACT_READ_FAILED" as const,
-    ).map(([base, premium]) => ({
+    if (!availability.result) {
+      return err("NAME_NOT_AVAILABLE" as const);
+    }
+
+    if (price.status === "failure" || tokenDecimals.status === "failure") {
+      return err("CONTRACT_READ_FAILED" as const);
+    }
+
+    const [base, premium] = price.result;
+
+    return ok({
       base,
+      decimals: tokenDecimals.result,
       premium,
       total: base + premium,
-    }));
+    });
   });
 }

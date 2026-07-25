@@ -1,10 +1,9 @@
-import type { Hex } from "viem";
+import { erc20Abi, type Hex } from "viem";
 
 import {
   ethPriceFeedAbiSnippet,
   ethRegistrarGetRegisterPriceSnippet,
   ethRegistrarIsAvailableSnippet,
-  mockUsdcAbi,
 } from "./abi";
 
 export const testnetContracts = {
@@ -21,7 +20,7 @@ export const testnetContracts = {
   },
   mockUsdc: {
     address: "0xd3322b29a7bdee707d1684676f149bf41aa3422f" as Hex,
-    abi: mockUsdcAbi,
+    abi: erc20Abi,
   },
 };
 
