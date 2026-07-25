@@ -142,12 +142,12 @@ export function TimerStep({
               </div>
             </div>
             <Typography.Paragraph
-              className="text- mx-auto mt-4 max-w-72"
+              className="mx-auto mt-4 max-w-72 text-center"
               color="muted"
-              size="sm"
+              size="xs"
             >
-              Your commitment is confirmed. Keep this window open or return
-              later.
+              Your commitment is confirmed. Wait for the timer to finish, or
+              return later on this device to complete registration.
             </Typography.Paragraph>
           </Accordion.Body>
         </Accordion.Panel>
