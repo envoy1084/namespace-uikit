@@ -32,15 +32,5 @@ export const ensNetworkConfigurations = {
 export function getEnsNetworkConfiguration(
   network: EnsNetwork,
 ): EnsNetworkConfiguration {
-  const configuration = (
-    ensNetworkConfigurations as Readonly<
-      Partial<Record<string, EnsNetworkConfiguration>>
-    >
-  )[network];
-
-  if (configuration === undefined) {
-    throw new Error(`Unsupported ENS network: ${String(network)}`);
-  }
-
-  return configuration;
+  return ensNetworkConfigurations[network];
 }

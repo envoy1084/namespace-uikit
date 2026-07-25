@@ -21,10 +21,6 @@ export interface EnsProviderProps {
 
 const EnsConfigContext = createContext<EnsNetworkConfiguration | null>(null);
 
-/**
- * Supplies the selected ENS network, Viem chain, and ENSv2 deployments to all
- * ENS Components hooks and components.
- */
 export function EnsProvider({ children, config }: EnsProviderProps) {
   const value = getEnsNetworkConfiguration(config.network);
 
