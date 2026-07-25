@@ -1,20 +1,16 @@
+"use client";
+
 import { useMemo } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 
 import { useDebounceValue } from "usehooks-ts";
-import {
-  BaseError,
-  ContractFunctionRevertedError,
-  isAddress,
-  type Address,
-} from "viem";
+import { BaseError, ContractFunctionRevertedError, isAddress } from "viem";
 import { usePublicClient } from "wagmi";
 
-import { testnetContracts } from "../data";
+import { useEnsConfig } from "../providers";
 import { normalizeEthNameInput } from "./name-availability";
 
-const DEFAULT_CHAIN_ID = 11155111;
 const DEFAULT_DEBOUNCE_MS = 350;
 const DEFAULT_STALE_TIME_MS = 15_000;
 const DEFAULT_GC_TIME_MS = 5 * 60_000;
@@ -50,18 +46,6 @@ export interface UseNameAvailabilityOptions {
    * @default 350
    */
   debounceMs?: number;
-  /**
-   * Chain containing the configured ENSv2 registrar.
-   *
-   * @default 11155111 (Sepolia)
-   */
-  chainId?: number;
-  /**
-   * ENSv2 ETHRegistrar address.
-   *
-   * @default The tracked ENSv2 Sepolia deployment
-   */
-  registrarAddress?: Address;
   /**
    * How long a successful result remains fresh.
    *
@@ -108,7 +92,7 @@ function retryAvailabilityRequest(failureCount: number, error: Error) {
  * (`"vitalik.eth"`). It is trimmed, normalized according to ENSIP-15, and
  * debounced before the contract is queried.
  *
- * A `WagmiProvider` configured for the requested chain and a
+ * `EnsProvider`, a `WagmiProvider` configured for the selected chain, and a
  * `QueryClientProvider` are required above the consuming component.
  */
 export function useNameAvailability(
@@ -117,9 +101,10 @@ export function useNameAvailability(
 ) {
   const input = name ?? "";
   const enabled = options.enabled ?? true;
-  const chainId = options.chainId ?? DEFAULT_CHAIN_ID;
-  const registrarAddress =
-    options.registrarAddress ?? testnetContracts.ethRegistrar.address;
+  const { chain, contracts, network } = useEnsConfig();
+  const chainId = chain.id;
+  const ethRegistrar = contracts.ethRegistrar;
+  const registrarAddress = ethRegistrar?.address;
   const debounceMs = toNonNegativeInteger(
     options.debounceMs,
     DEFAULT_DEBOUNCE_MS,
@@ -144,7 +129,8 @@ export function useNameAvailability(
   );
 
   const isDebouncing = input !== debouncedInput;
-  const hasValidRegistrarAddress = isAddress(registrarAddress);
+  const hasValidRegistrar =
+    ethRegistrar !== null && isAddress(ethRegistrar.address);
   const publicClient = usePublicClient({ chainId });
 
   const currentLabel = inputState.isValid ? inputState.label : undefined;
@@ -158,15 +144,16 @@ export function useNameAvailability(
   const queryEnabled =
     enabled &&
     isCurrentInput &&
-    hasValidRegistrarAddress &&
+    hasValidRegistrar &&
     publicClient !== undefined;
 
   const queryKey = [
     "ens-components",
     "ens-v2",
     "name-availability",
+    network,
     chainId,
-    registrarAddress,
+    registrarAddress ?? null,
     debouncedLabel ?? null,
   ] as const;
 
@@ -180,15 +167,19 @@ export function useNameAvailability(
     retry: options.retry ?? retryAvailabilityRequest,
     retryDelay: (attemptIndex) => Math.min(1_000 * 2 ** attemptIndex, 10_000),
     queryFn: async ({ signal }) => {
-      if (publicClient === undefined || debouncedLabel === undefined) {
+      if (
+        publicClient === undefined ||
+        debouncedLabel === undefined ||
+        ethRegistrar === null ||
+        !isAddress(ethRegistrar.address)
+      ) {
         throw new Error("The ENSv2 availability query is not ready.");
       }
 
       signal.throwIfAborted();
       const available = await publicClient.readContract({
-        address: registrarAddress,
-        abi: testnetContracts.ethRegistrar.snippets
-          .ethRegistrarIsAvailableSnippet,
+        address: ethRegistrar.address,
+        abi: ethRegistrar.snippets.ethRegistrarIsAvailableSnippet,
         functionName: "isAvailable",
         args: [debouncedLabel],
       });
@@ -205,7 +196,7 @@ export function useNameAvailability(
     status = inputState.error.code === "empty" ? "idle" : "invalid";
   } else if (isDebouncing) {
     status = "debouncing";
-  } else if (!hasValidRegistrarAddress) {
+  } else if (!hasValidRegistrar) {
     status = "configuration-error";
   } else if (publicClient === undefined) {
     status = "unsupported-chain";
@@ -220,6 +211,9 @@ export function useNameAvailability(
   const hasCurrentResult = isCurrentInput && query.isSuccess;
 
   return {
+    network,
+    chainId,
+    registrarAddress,
     input,
     debouncedInput,
     normalizedName: inputState.isValid ? inputState.name : undefined,

@@ -10,3 +10,19 @@ export const testnetContracts = {
     snippets: { ethRegistrarIsAvailableSnippet },
   },
 } as const;
+
+export type EnsContracts = {
+  readonly [ContractName in keyof typeof testnetContracts]:
+    | (typeof testnetContracts)[ContractName]
+    | null;
+};
+
+/**
+ * ENSv2 does not currently have a mainnet deployment in the tracked contracts
+ * repository. Null entries prevent consumers from accidentally querying ENSv1
+ * contracts with ENSv2 ABIs.
+ */
+export const mainnetContracts = {
+  ethPriceFeed: null,
+  ethRegistrar: null,
+} as const satisfies EnsContracts;
