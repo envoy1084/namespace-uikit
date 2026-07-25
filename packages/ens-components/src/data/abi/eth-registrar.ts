@@ -67,7 +67,8 @@ export const ethRegistrarErrors = [
   },
 ] as const;
 
-export const ethRegistrarIsAvaiableSnippet = [
+export const ethRegistrarIsAvailableSnippet = [
+  ...ethRegistrarErrors,
   {
     inputs: [{ internalType: "string", name: "label", type: "string" }],
     name: "isAvailable",
