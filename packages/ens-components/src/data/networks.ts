@@ -6,7 +6,7 @@ import {
   mainnetContracts,
   testnetContracts,
   type EnsContracts,
-} from "./addresses";
+} from "#/data/addresses";
 
 export type EnsNetwork = "mainnet" | "testnet";
 

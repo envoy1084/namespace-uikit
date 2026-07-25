@@ -12,8 +12,8 @@ import {
   parseNameInput,
   type IsNameAvailableError,
   type ParseNameInputError,
-} from "../actions";
-import { useEnsConfig } from "../providers";
+} from "#/actions";
+import { useEnsConfig } from "#/providers";
 
 type NameAvailabilityError = IsNameAvailableError | ParseNameInputError;
 type NameAvailabilityQueryKey = readonly [

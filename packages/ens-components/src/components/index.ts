@@ -1,1 +1,1 @@
-export * from "./register-name";
+export * from "#/components/register-name";

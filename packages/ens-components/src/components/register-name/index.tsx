@@ -5,10 +5,10 @@ import { Button, Modal } from "@thenamespace/uikit";
 import {
   RegisterNameProvider,
   type RegisterNameProviderProps,
-} from "./context";
-import { NameSearchStep } from "./steps";
+} from "#/components/register-name/context";
+import { NameSearchStep } from "#/components/register-name/steps";
 
-export * from "./context";
+export * from "#/components/register-name/context";
 
 const RegisterEnsHeader = new URL(
   "../../assets/register-ens-header.png",

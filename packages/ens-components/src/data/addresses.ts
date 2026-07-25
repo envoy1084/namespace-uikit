@@ -4,7 +4,7 @@ import {
   ethPriceFeedAbiSnippet,
   ethRegistrarGetRegisterPriceSnippet,
   ethRegistrarIsAvailableSnippet,
-} from "./abi";
+} from "#/data/abi";
 
 export const testnetContracts = {
   ethPriceFeed: {

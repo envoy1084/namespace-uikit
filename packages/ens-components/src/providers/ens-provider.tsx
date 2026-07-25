@@ -6,9 +6,9 @@ import {
   getEnsNetworkConfiguration,
   type EnsNetwork,
   type EnsNetworkConfiguration,
-} from "../data";
+} from "#/data";
 
-export type { EnsNetwork, EnsNetworkConfiguration } from "../data";
+export type { EnsNetwork, EnsNetworkConfiguration } from "#/data";
 
 export interface EnsConfig {
   network: EnsNetwork;

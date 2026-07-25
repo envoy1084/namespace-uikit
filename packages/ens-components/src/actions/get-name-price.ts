@@ -1,12 +1,16 @@
+import type { EnsNetwork } from "#/data";
+
 import { err, errAsync, ok, ResultAsync } from "neverthrow";
 import { erc20Abi, isAddress, type Address, type PublicClient } from "viem";
 
-import type { EnsNetwork } from "../data";
+import {
+  parseNameInput,
+  type ParseNameInputError,
+} from "#/actions/parse-name-input";
 import {
   ethRegistrarGetRegisterPriceSnippet,
   ethRegistrarIsAvailableSnippet,
-} from "../data/abi";
-import { parseNameInput, type ParseNameInputError } from "./parse-name-input";
+} from "#/data/abi";
 
 const MAX_UINT64 = (1n << 64n) - 1n;
 

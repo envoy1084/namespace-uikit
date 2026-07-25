@@ -1,2 +1,2 @@
-export * from "./use-name-availability";
-export * from "./use-name-price";
+export * from "#/hooks/use-name-availability";
+export * from "#/hooks/use-name-price";

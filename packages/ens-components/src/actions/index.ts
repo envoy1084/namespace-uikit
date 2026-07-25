@@ -1,3 +1,3 @@
-export * from "./get-name-price";
-export * from "./is-name-available";
-export * from "./parse-name-input";
+export * from "#/actions/get-name-price";
+export * from "#/actions/is-name-available";
+export * from "#/actions/parse-name-input";

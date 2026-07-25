@@ -1,9 +1,13 @@
+import type { EnsNetwork } from "#/data";
+
 import { errAsync, ResultAsync } from "neverthrow";
 import { isAddress, type Address, type PublicClient } from "viem";
 
-import type { EnsNetwork } from "../data";
-import { ethRegistrarIsAvailableSnippet } from "../data/abi";
-import { parseNameInput, type ParseNameInputError } from "./parse-name-input";
+import {
+  parseNameInput,
+  type ParseNameInputError,
+} from "#/actions/parse-name-input";
+import { ethRegistrarIsAvailableSnippet } from "#/data/abi";
 
 export type IsNameAvailableError =
   | "LABEL_TOO_SHORT"

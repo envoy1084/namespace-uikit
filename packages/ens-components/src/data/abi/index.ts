@@ -1,2 +1,2 @@
-export * from "./eth-registrar";
-export * from "./eth-price-feed";
+export * from "#/data/abi/eth-price-feed";
+export * from "#/data/abi/eth-registrar";

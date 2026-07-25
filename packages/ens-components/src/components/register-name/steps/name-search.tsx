@@ -3,10 +3,10 @@
 import { InputGroup, Spinner, Typography } from "@thenamespace/uikit";
 import { Icon, Search01Icon } from "@thenamespace/uikit/icons";
 
-import { parseNameInput } from "../../../actions";
-import { useNameAvailability } from "../../../hooks";
-import { formatError } from "../../../lib";
-import { useRegisterName } from "../context";
+import { parseNameInput } from "#/actions";
+import { useRegisterName } from "#/components/register-name/context";
+import { useNameAvailability } from "#/hooks";
+import { formatError } from "#/lib";
 
 export const NameSearchStep = () => {
   const { input, setInput } = useRegisterName();

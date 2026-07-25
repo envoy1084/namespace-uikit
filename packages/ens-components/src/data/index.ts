@@ -1,2 +1,2 @@
-export * from "./addresses";
-export * from "./networks";
+export * from "#/data/addresses";
+export * from "#/data/networks";

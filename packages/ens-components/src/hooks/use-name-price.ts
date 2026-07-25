@@ -13,8 +13,8 @@ import {
   type GetNamePriceError,
   type NamePrice,
   type ParseNameInputError,
-} from "../actions";
-import { useEnsConfig } from "../providers";
+} from "#/actions";
+import { useEnsConfig } from "#/providers";
 
 type NamePriceError = GetNamePriceError | ParseNameInputError;
 type NamePriceQueryKey = readonly [

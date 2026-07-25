@@ -1,1 +1,1 @@
-export * from "./ens-provider";
+export * from "#/providers/ens-provider";
