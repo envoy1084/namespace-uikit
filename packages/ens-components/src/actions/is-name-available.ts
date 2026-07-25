@@ -58,8 +58,7 @@ export function isNameAvailable(
 
   if (parsedInput.isErr()) {
     return errAsync(
-      new IsNameAvailableError("invalid-name", parsedInput.error.message, {
-        cause: parsedInput.error,
+      new IsNameAvailableError("invalid-name", "The ENS name is invalid.", {
         parseError: parsedInput.error,
       }),
     );

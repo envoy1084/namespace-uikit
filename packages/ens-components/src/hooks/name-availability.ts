@@ -40,18 +40,21 @@ export function normalizeEthNameInput(
   const parsedInput = parseNameInput(input);
 
   if (parsedInput.isErr()) {
-    if (parsedInput.error.code === "empty-input") {
-      return invalid("empty", parsedInput.error.message);
+    if (parsedInput.error === "empty-input") {
+      return invalid("empty", "Enter an ENS name or label.");
     }
 
     if (
-      parsedInput.error.code === "input-too-long" ||
-      parsedInput.error.code === "label-too-long"
+      parsedInput.error === "input-too-long" ||
+      parsedInput.error === "label-too-long"
     ) {
-      return invalid("label-too-long", parsedInput.error.message);
+      return invalid("label-too-long", "The ENS name or label is too long.");
     }
 
-    return invalid("invalid-name", parsedInput.error.message);
+    return invalid(
+      "invalid-name",
+      "This name is not valid according to ENSIP-15.",
+    );
   }
 
   const parsedName = parsedInput.value;
