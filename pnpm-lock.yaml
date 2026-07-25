@@ -359,6 +359,9 @@ importers:
 
   packages/ens-components:
     dependencies:
+      '@internationalized/date':
+        specifier: 3.12.2
+        version: 3.12.2
       '@thenamespace/uikit':
         specifier: workspace:*
         version: link:../uikit

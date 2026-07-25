@@ -5,6 +5,7 @@ import { Icon, Search01Icon } from "@thenamespace/uikit/icons";
 
 import { parseNameInput } from "#/actions";
 import { useRegisterName } from "#/components/register-name/context";
+import { RegistrationDetails } from "#/components/register-name/steps/name-search/registration-details";
 import { useNameAvailability } from "#/hooks";
 import { formatError } from "#/lib";
 
@@ -72,6 +73,9 @@ export const NameSearchStep = () => {
           </Typography.Paragraph>
         ) : null}
       </div>
+      {availability.isSuccess && availability.data ? (
+        <RegistrationDetails input={name} />
+      ) : null}
     </div>
   );
 };

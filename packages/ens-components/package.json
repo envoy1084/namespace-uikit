@@ -48,6 +48,7 @@
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },
   "dependencies": {
+    "@internationalized/date": "3.12.2",
     "@thenamespace/uikit": "workspace:*",
     "neverthrow": "8.2.0",
     "usehooks-ts": "3.1.1"
