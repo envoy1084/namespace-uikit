@@ -39,9 +39,8 @@ function RegisterEnsContent() {
                 </p>
               </div>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className="flex-none">
               <NameSearchStep />
-              <div className="bg-surface my-4 h-20 rounded-2xl border p-4"></div>
             </Modal.Body>
             <Modal.Footer>
               <Button className="w-full">Next</Button>

@@ -22,6 +22,8 @@ export const NameSearchStep = () => {
   const name = parsedInput.isOk() ? parsedInput.value.normalizedName : input;
   const isShortLabelError = availability.error === "LABEL_TOO_SHORT";
   const isAvailable = availability.isSuccess && availability.data;
+  const showAvailabilityStatus =
+    availability.isFetching || availability.isSuccess || availability.isError;
 
   return (
     <div>
@@ -43,7 +45,7 @@ export const NameSearchStep = () => {
           <span>.eth</span>
         </InputGroup.Suffix>
       </InputGroup>
-      {!isAvailable ? (
+      {!isAvailable && showAvailabilityStatus ? (
         <div
           className="mt-2 flex min-h-5 items-center justify-center"
           aria-live="polite"

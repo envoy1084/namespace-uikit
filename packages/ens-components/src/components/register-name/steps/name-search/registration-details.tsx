@@ -205,7 +205,7 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
             </Button>
             <NumberStepper.Value>
               {({ value }) => (
-                <span className="text-foreground flex-1 text-center text-xl font-semibold">
+                <span className="text-foreground flex-1 text-center text-lg font-medium">
                   {value} {value === 1 ? "year" : "years"}
                 </span>
               )}
@@ -231,9 +231,9 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
             : `${years} ${years === 1 ? "year" : "years"} registration.`}
         </Typography.Paragraph>
         <Button
-          className="h-auto min-w-0 px-1 py-0 text-[0.6875rem]"
+          className="h-auto min-w-0 px-2 py-px text-[10px]!"
           size="sm"
-          variant="tertiary"
+          variant="secondary"
           onPress={toggleDurationMode}
         >
           {pickByDate ? "Pick by duration" : "Pick by date"}
@@ -245,38 +245,32 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
           <Typography.Paragraph color="muted" size="sm">
             Registration price
           </Typography.Paragraph>
-          {price.isFetching ? (
-            <Skeleton
-              aria-label="Calculating registration price"
-              className="h-5 w-24 rounded-md"
-            />
-          ) : price.data ? (
-            <div className="flex items-center gap-2">
-              <Avatar className="size-5">
-                <Avatar.Image
-                  alt={`${paymentToken.symbol} logo`}
-                  src={paymentToken.icon}
-                />
-                <Avatar.Fallback>
-                  {paymentToken.symbol.slice(0, 1)}
-                </Avatar.Fallback>
-              </Avatar>
+          <div className="flex items-center gap-2">
+            <Avatar className="size-5">
+              <Avatar.Image
+                alt={`${paymentToken.symbol} logo`}
+                src={paymentToken.icon}
+              />
+              <Avatar.Fallback>
+                {paymentToken.symbol.slice(0, 1)}
+              </Avatar.Fallback>
+            </Avatar>
+            {price.isFetching ? (
+              <Skeleton
+                aria-label="Calculating registration price"
+                className="h-5 w-14 rounded-md"
+              />
+            ) : price.data ? (
               <NumberValue
                 className="text-foreground text-base font-semibold"
                 maximumFractionDigits={2}
                 minimumFractionDigits={2}
                 value={getTokenValue(price.data.total, price.data.decimals)}
-              >
-                <NumberValue.Suffix>
-                  <span className="text-muted ml-1 text-xs font-medium">
-                    {paymentToken.symbol}
-                  </span>
-                </NumberValue.Suffix>
-              </NumberValue>
-            </div>
-          ) : (
-            <span className="text-muted text-sm">—</span>
-          )}
+              />
+            ) : (
+              <span className="text-muted text-sm">—</span>
+            )}
+          </div>
         </div>
         {price.isError ? (
           <Typography.Paragraph
