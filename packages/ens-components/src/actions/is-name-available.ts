@@ -5,10 +5,10 @@ import { ensNetworkConfigurations } from "../data";
 import { parseNameInput, type ParseNameInputError } from "./parse-name-input";
 
 export type IsNameAvailableErrorCode =
-  | "invalid-name"
-  | "unsupported-chain"
-  | "configuration-error"
-  | "contract-read-failed";
+  | "INVALID_NAME"
+  | "UNSUPPORTED_CHAIN"
+  | "CONFIGURATION_ERROR"
+  | "CONTRACT_READ_FAILED";
 
 export interface IsNameAvailableErrorOptions {
   readonly cause?: unknown;
@@ -58,7 +58,7 @@ export function isNameAvailable(
 
   if (parsedInput.isErr()) {
     return errAsync(
-      new IsNameAvailableError("invalid-name", "The ENS name is invalid.", {
+      new IsNameAvailableError("INVALID_NAME", "The ENS name is invalid.", {
         parseError: parsedInput.error,
       }),
     );
@@ -69,7 +69,7 @@ export function isNameAvailable(
   if (parsedName.tld !== "eth" || parsedName.nameLevel !== 2) {
     return errAsync(
       new IsNameAvailableError(
-        "invalid-name",
+        "INVALID_NAME",
         "Name availability can only be checked for second-level .eth names.",
       ),
     );
@@ -81,7 +81,7 @@ export function isNameAvailable(
   if (networkConfiguration === undefined) {
     return errAsync(
       new IsNameAvailableError(
-        "unsupported-chain",
+        "UNSUPPORTED_CHAIN",
         chainId === undefined
           ? "The public client does not have a configured chain."
           : `Chain ${chainId} is not supported by ENS Components.`,
@@ -96,7 +96,7 @@ export function isNameAvailable(
   if (!isAddress(ethRegistrar.address)) {
     return errAsync(
       new IsNameAvailableError(
-        "configuration-error",
+        "CONFIGURATION_ERROR",
         `The ENSv2 ETHRegistrar address for ${networkConfiguration.network} is invalid.`,
         { chainId: resolvedChainId },
       ),
@@ -112,7 +112,7 @@ export function isNameAvailable(
     }),
     (cause) =>
       new IsNameAvailableError(
-        "contract-read-failed",
+        "CONTRACT_READ_FAILED",
         `Failed to check name availability on chain ${resolvedChainId}.`,
         { cause, chainId: resolvedChainId },
       ),

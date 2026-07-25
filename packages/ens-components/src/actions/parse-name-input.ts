@@ -6,11 +6,11 @@ const MAX_INPUT_CODE_UNITS = 1_024;
 const UTF8_ENCODER = new TextEncoder();
 
 export type ParseNameInputError =
-  | "empty-input"
-  | "empty-label"
-  | "input-too-long"
-  | "invalid-name"
-  | "label-too-long";
+  | "EMPTY_INPUT"
+  | "EMPTY_LABEL"
+  | "INPUT_TOO_LONG"
+  | "INVALID_NAME"
+  | "LABEL_TOO_LONG";
 
 export interface ParsedNameInput {
   /** The first (leftmost) label. */
@@ -39,18 +39,18 @@ export function parseNameInput(
   const value = (input ?? "").trim();
 
   if (value.length === 0) {
-    return err("empty-input");
+    return err("EMPTY_INPUT");
   }
 
   if (value.length > MAX_INPUT_CODE_UNITS) {
-    return err("input-too-long");
+    return err("INPUT_TOO_LONG");
   }
 
   let normalizedInput: string;
   try {
     normalizedInput = normalize(value);
   } catch {
-    return err("invalid-name");
+    return err("INVALID_NAME");
   }
 
   const isLabelInput = !normalizedInput.includes(".");
@@ -61,11 +61,11 @@ export function parseNameInput(
 
   for (const label of labels) {
     if (label.length === 0) {
-      return err("empty-label");
+      return err("EMPTY_LABEL");
     }
 
     if (UTF8_ENCODER.encode(label).byteLength > MAX_LABEL_BYTES) {
-      return err("label-too-long");
+      return err("LABEL_TOO_LONG");
     }
   }
 
