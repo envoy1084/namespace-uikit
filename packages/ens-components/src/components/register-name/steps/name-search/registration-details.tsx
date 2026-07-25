@@ -101,11 +101,8 @@ function ExpirationDatePicker({
           </DatePicker.Trigger>
         </DateField.Suffix>
       </DateField.Group>
-      <DatePicker.Popover className="w-[var(--trigger-width)] max-w-[var(--trigger-width)] p-0">
-        <Calendar
-          aria-label="Registration expiration date"
-          className="w-full max-w-none"
-        >
+      <DatePicker.Popover className="w-auto min-w-0 p-3" placement="bottom end">
+        <Calendar aria-label="Registration expiration date">
           <Calendar.Header>
             <Calendar.YearPickerTrigger>
               <Calendar.YearPickerTriggerHeading />
@@ -114,7 +111,7 @@ function ExpirationDatePicker({
             <Calendar.NavButton slot="previous" />
             <Calendar.NavButton slot="next" />
           </Calendar.Header>
-          <Calendar.Grid className="w-full table-fixed">
+          <Calendar.Grid>
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
