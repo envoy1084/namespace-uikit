@@ -173,7 +173,7 @@ export function useNameAvailability(
 
       signal.throwIfAborted();
       const result = await isNameAvailable(publicClient, {
-        label: debouncedLabel,
+        input: debouncedInput,
         network,
         registrarAddress: ethRegistrar.address,
       });
