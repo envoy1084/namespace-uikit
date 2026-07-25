@@ -18,11 +18,15 @@ export default defineConfig({
   ],
   deps: {
     neverBundle: [
+      "@tanstack/react-query",
       "@thenamespace/uikit",
       "react",
       "react-dom",
       "react/jsx-runtime",
       "tailwindcss",
+      "usehooks-ts",
+      "viem",
+      "wagmi",
     ],
   },
   dts: {

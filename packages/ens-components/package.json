@@ -45,6 +45,7 @@
     "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
     "lint": "oxlint . --no-error-on-unmatched-pattern",
     "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern",
+    "test": "node --test test/**/*.test.ts",
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },
   "dependencies": {
