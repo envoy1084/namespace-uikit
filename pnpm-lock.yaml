@@ -359,6 +359,9 @@ importers:
 
   packages/ens-components:
     dependencies:
+      '@tanstack/react-query':
+        specifier: 5.101.2
+        version: 5.101.2(react@19.2.7)
       '@thenamespace/uikit':
         specifier: workspace:*
         version: link:../uikit
