@@ -5,6 +5,7 @@ import "../styles.css";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { EnsProvider } from "@thenamespace/ens-components";
 import { WagmiProvider } from "wagmi";
 
 import { wagmiConfig } from "@/lib/wagmi";
@@ -19,9 +20,11 @@ function RootComponent() {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>
-          <Outlet />
-        </RainbowKitProvider>
+        <EnsProvider config={{ network: "testnet" }}>
+          <RainbowKitProvider>
+            <Outlet />
+          </RainbowKitProvider>
+        </EnsProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
