@@ -6,7 +6,6 @@ import { ethRegistrarIsAvailableSnippet } from "../data/abi";
 import { parseNameInput, type ParseNameInputError } from "./parse-name-input";
 
 export type IsNameAvailableError =
-  | ParseNameInputError
   | "UNSUPPORTED_NAME"
   | "INVALID_REGISTRAR_ADDRESS"
   | "CONTRACT_READ_FAILED";
@@ -30,7 +29,7 @@ export interface IsNameAvailableProps {
 export function isNameAvailable(
   publicClient: PublicClient,
   props: IsNameAvailableProps,
-): ResultAsync<boolean, IsNameAvailableError> {
+): ResultAsync<boolean, IsNameAvailableError | ParseNameInputError> {
   const { input, registrarAddress } = props;
   const parsedInput = parseNameInput(input);
 
