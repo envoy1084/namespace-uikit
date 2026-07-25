@@ -1,228 +1,74 @@
 "use client";
 
-import { useMemo } from "react";
-
 import { useQuery } from "@tanstack/react-query";
 
 import { useDebounceValue } from "usehooks-ts";
-import { isAddress } from "viem";
 import { usePublicClient } from "wagmi";
 
-import { isNameAvailable } from "../actions";
-import type { IsNameAvailableError } from "../actions";
+import {
+  isNameAvailable,
+  parseNameInput,
+  type IsNameAvailableError,
+  type ParseNameInputError,
+} from "../actions";
 import { useEnsConfig } from "../providers";
-import { normalizeEthNameInput } from "./name-availability";
-
-const DEFAULT_DEBOUNCE_MS = 350;
-const DEFAULT_STALE_TIME_MS = 15_000;
-const DEFAULT_GC_TIME_MS = 5 * 60_000;
-const DEBOUNCE_OPTIONS = { trailing: true } as const;
-
-type RetryOption =
-  | boolean
-  | number
-  | ((failureCount: number, error: Error | IsNameAvailableError) => boolean);
-
-export type NameAvailabilityStatus =
-  | "idle"
-  | "disabled"
-  | "invalid"
-  | "debouncing"
-  | "checking"
-  | "available"
-  | "unavailable"
-  | "unsupported-chain"
-  | "configuration-error"
-  | "error";
 
 export interface UseNameAvailabilityOptions {
-  /**
-   * Enables the availability request. Input parsing still runs when disabled.
-   *
-   * @default true
-   */
-  enabled?: boolean;
-  /**
-   * Delay applied before an RPC request is made.
-   *
-   * @default 350
-   */
   debounceMs?: number;
-  /**
-   * How long a successful result remains fresh.
-   *
-   * @default 15000
-   */
-  staleTime?: number;
-  /**
-   * How long an unused result remains in the query cache.
-   *
-   * @default 300000
-   */
-  gcTime?: number;
-  /**
-   * TanStack Query retry behavior. Contract read failures retry twice by
-   * default.
-   */
-  retry?: RetryOption;
+  enabled?: boolean;
 }
 
-function toNonNegativeInteger(value: number | undefined, fallback: number) {
-  if (value === undefined || !Number.isFinite(value)) return fallback;
-  return Math.max(0, Math.trunc(value));
-}
-
-function retryAvailabilityRequest(
-  failureCount: number,
-  error: Error | IsNameAvailableError,
-) {
-  return failureCount < 2 && error === "CONTRACT_READ_FAILED";
-}
-
-/**
- * Checks whether a second-level `.eth` name is available from the ENSv2
- * ETHRegistrar.
- *
- * The input may be either a label (`"vitalik"`) or a full name
- * (`"vitalik.eth"`). It is trimmed, normalized according to ENSIP-15, and
- * debounced before the contract is queried.
- *
- * `EnsProvider`, a `WagmiProvider` configured for the selected chain, and a
- * `QueryClientProvider` are required above the consuming component.
- */
 export function useNameAvailability(
-  name: string | null | undefined,
+  value: string | null | undefined,
   options: UseNameAvailabilityOptions = {},
 ) {
-  const input = name ?? "";
-  const enabled = options.enabled ?? true;
+  const input = value ?? "";
   const { chain, contracts, network } = useEnsConfig();
-  const chainId = chain.id;
-  const ethRegistrar = contracts.ethRegistrar;
-  const registrarAddress = ethRegistrar?.address;
-  const debounceMs = toNonNegativeInteger(
-    options.debounceMs,
-    DEFAULT_DEBOUNCE_MS,
-  );
-  const staleTime = toNonNegativeInteger(
-    options.staleTime,
-    DEFAULT_STALE_TIME_MS,
-  );
-  const gcTime = toNonNegativeInteger(options.gcTime, DEFAULT_GC_TIME_MS);
-
-  const [debouncedValue] = useDebounceValue(
-    input,
-    debounceMs,
-    DEBOUNCE_OPTIONS,
-  );
-  const debouncedInput = debounceMs === 0 ? input : debouncedValue;
-
-  const inputState = useMemo(() => normalizeEthNameInput(input), [input]);
-  const debouncedInputState = useMemo(
-    () => normalizeEthNameInput(debouncedInput),
-    [debouncedInput],
-  );
-
+  const publicClient = usePublicClient({ chainId: chain.id });
+  const [debouncedInput] = useDebounceValue(input, options.debounceMs ?? 300);
+  const parsedInput = parseNameInput(debouncedInput);
   const isDebouncing = input !== debouncedInput;
-  const hasValidRegistrar =
-    ethRegistrar !== null && isAddress(ethRegistrar.address);
-  const publicClient = usePublicClient({ chainId });
+  const validationError: ParseNameInputError | "UNSUPPORTED_NAME" | undefined =
+    parsedInput.isErr()
+      ? parsedInput.error
+      : parsedInput.value.nameLevel !== 2 || parsedInput.value.tld !== "eth"
+        ? "UNSUPPORTED_NAME"
+        : undefined;
+  const registrarAddress = contracts.ethRegistrar.address;
 
-  const currentLabel = inputState.isValid ? inputState.label : undefined;
-  const debouncedLabel = debouncedInputState.isValid
-    ? debouncedInputState.label
-    : undefined;
-  const isCurrentInput =
-    !isDebouncing &&
-    currentLabel !== undefined &&
-    currentLabel === debouncedLabel;
-  const queryEnabled =
-    enabled &&
-    isCurrentInput &&
-    hasValidRegistrar &&
-    publicClient !== undefined;
-
-  const queryKey = [
-    "ens-components",
-    "ens-v2",
-    "name-availability",
-    network,
-    chainId,
-    registrarAddress ?? null,
-    debouncedLabel ?? null,
-  ] as const;
-
-  const query = useQuery<boolean, Error | IsNameAvailableError>({
-    queryKey,
-    enabled: queryEnabled,
-    staleTime,
-    gcTime,
-    refetchOnReconnect: true,
-    refetchOnWindowFocus: true,
-    retry: options.retry ?? retryAvailabilityRequest,
-    retryDelay: (attemptIndex) => Math.min(1_000 * 2 ** attemptIndex, 10_000),
-    queryFn: async ({ signal }) => {
-      if (
-        publicClient === undefined ||
-        debouncedLabel === undefined ||
-        ethRegistrar === null ||
-        !isAddress(ethRegistrar.address)
-      ) {
-        throw new Error("The ENSv2 availability query is not ready.");
+  const query = useQuery<boolean, IsNameAvailableError | ParseNameInputError>({
+    queryKey: [
+      "ens",
+      "name-availability",
+      network,
+      registrarAddress,
+      parsedInput.isOk() ? parsedInput.value.normalizedName : debouncedInput,
+    ],
+    enabled:
+      (options.enabled ?? true) &&
+      publicClient !== undefined &&
+      validationError === undefined,
+    retry: false,
+    queryFn: async () => {
+      if (publicClient === undefined) {
+        throw "CONTRACT_READ_FAILED" satisfies IsNameAvailableError;
       }
 
-      signal.throwIfAborted();
       const result = await isNameAvailable(publicClient, {
         input: debouncedInput,
         network,
-        registrarAddress: ethRegistrar.address,
+        registrarAddress,
       });
-      signal.throwIfAborted();
 
       if (result.isErr()) throw result.error;
       return result.value;
     },
   });
 
-  let status: NameAvailabilityStatus;
-  if (!enabled) {
-    status = "disabled";
-  } else if (!inputState.isValid) {
-    status = inputState.error.code === "empty" ? "idle" : "invalid";
-  } else if (isDebouncing) {
-    status = "debouncing";
-  } else if (!hasValidRegistrar) {
-    status = "configuration-error";
-  } else if (publicClient === undefined) {
-    status = "unsupported-chain";
-  } else if (query.isPending) {
-    status = "checking";
-  } else if (query.isError) {
-    status = "error";
-  } else {
-    status = query.data ? "available" : "unavailable";
-  }
-
-  const hasCurrentResult = isCurrentInput && query.isSuccess;
-
   return {
-    network,
-    chainId,
-    registrarAddress,
-    input,
-    debouncedInput,
-    normalizedName: inputState.isValid ? inputState.name : undefined,
-    label: currentLabel,
-    validationError: inputState.isValid ? undefined : inputState.error,
-    isValid: inputState.isValid,
+    ...query,
+    isAvailable: isDebouncing ? undefined : query.data,
     isDebouncing,
-    isChecking: queryEnabled && query.isFetching,
-    isAvailable: hasCurrentResult ? query.data : undefined,
-    isUnavailable: hasCurrentResult ? !query.data : false,
-    status,
-    error: query.error,
-    queryKey,
-    query,
-    refetch: query.refetch,
-  } as const;
+    validationError,
+  };
 }
