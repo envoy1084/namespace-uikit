@@ -8,6 +8,7 @@ import { useDebounceValue } from "usehooks-ts";
 import { BaseError, ContractFunctionRevertedError, isAddress } from "viem";
 import { usePublicClient } from "wagmi";
 
+import { isNameAvailable } from "../actions";
 import { useEnsConfig } from "../providers";
 import { normalizeEthNameInput } from "./name-availability";
 
@@ -177,15 +178,11 @@ export function useNameAvailability(
       }
 
       signal.throwIfAborted();
-      const available = await publicClient.readContract({
-        address: ethRegistrar.address,
-        abi: ethRegistrar.snippets.ethRegistrarIsAvailableSnippet,
-        functionName: "isAvailable",
-        args: [debouncedLabel],
-      });
+      const result = await isNameAvailable(publicClient, debouncedLabel);
       signal.throwIfAborted();
 
-      return available;
+      if (result.isErr()) throw result.error;
+      return result.value;
     },
   });
 
