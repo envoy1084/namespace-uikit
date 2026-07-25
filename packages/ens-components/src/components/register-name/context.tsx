@@ -9,7 +9,10 @@ import {
   type SetStateAction,
 } from "react";
 
-export const DEFAULT_REGISTRATION_DURATION = 31_557_600n;
+export const REGISTRATION_SECONDS_PER_DAY = 86_400n;
+export const REGISTRATION_SECONDS_PER_YEAR =
+  365n * REGISTRATION_SECONDS_PER_DAY;
+export const DEFAULT_REGISTRATION_DURATION = REGISTRATION_SECONDS_PER_YEAR;
 
 export interface RegisterNameContextValue {
   duration: bigint;

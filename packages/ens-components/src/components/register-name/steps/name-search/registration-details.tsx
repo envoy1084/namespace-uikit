@@ -16,13 +16,21 @@ import {
   Surface,
   Typography,
 } from "@thenamespace/uikit";
+import {
+  HugeiconsIcon,
+  MinusSignIcon,
+  PlusSignIcon,
+} from "@thenamespace/uikit/icons";
 import { formatUnits } from "viem";
 
-import { useRegisterName } from "#/components/register-name/context";
+import {
+  REGISTRATION_SECONDS_PER_DAY,
+  REGISTRATION_SECONDS_PER_YEAR,
+  useRegisterName,
+} from "#/components/register-name/context";
 import { useNamePrice } from "#/hooks";
 import { formatError } from "#/lib";
 
-const SECONDS_PER_YEAR = 31_557_600n;
 const MAX_REGISTRATION_YEARS = 10;
 const PAYMENT_TOKEN_SYMBOL = "USDC";
 
@@ -31,8 +39,34 @@ interface RegistrationDetailsProps {
 }
 
 function getYears(duration: bigint) {
-  const years = Math.round(Number(duration) / Number(SECONDS_PER_YEAR));
+  const years = Math.round(
+    Number(duration) / Number(REGISTRATION_SECONDS_PER_YEAR),
+  );
   return Math.min(MAX_REGISTRATION_YEARS, Math.max(1, years));
+}
+
+function getDateDurationLabel(value: DateValue, timeZone: string) {
+  const start = today(timeZone);
+  let cursor: DateValue = start;
+  let months = 0;
+
+  while (cursor.add({ months: 1 }).compare(value) <= 0) {
+    cursor = cursor.add({ months: 1 });
+    months += 1;
+  }
+
+  const years = Math.floor(months / 12);
+  const remainingMonths = months % 12;
+  const days = value.compare(cursor);
+  const parts = [
+    years > 0 ? `${years} ${years === 1 ? "year" : "years"}` : null,
+    remainingMonths > 0
+      ? `${remainingMonths} ${remainingMonths === 1 ? "month" : "months"}`
+      : null,
+    days > 0 ? `${days} ${days === 1 ? "day" : "days"}` : null,
+  ].filter((part): part is string => part !== null);
+
+  return `${parts.join(", ")} registration.`;
 }
 
 function getTokenValue(amount: bigint, decimals: number) {
@@ -67,8 +101,11 @@ function ExpirationDatePicker({
           </DatePicker.Trigger>
         </DateField.Suffix>
       </DateField.Group>
-      <DatePicker.Popover>
-        <Calendar aria-label="Registration expiration date">
+      <DatePicker.Popover className="w-[var(--trigger-width)] max-w-[var(--trigger-width)] p-0">
+        <Calendar
+          aria-label="Registration expiration date"
+          className="w-full max-w-none"
+        >
           <Calendar.Header>
             <Calendar.YearPickerTrigger>
               <Calendar.YearPickerTriggerHeading />
@@ -77,7 +114,7 @@ function ExpirationDatePicker({
             <Calendar.NavButton slot="previous" />
             <Calendar.NavButton slot="next" />
           </Calendar.Header>
-          <Calendar.Grid>
+          <Calendar.Grid className="w-full table-fixed">
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
@@ -111,24 +148,32 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
       MAX_REGISTRATION_YEARS,
       Math.max(1, Math.round(value)),
     );
-    setDuration(BigInt(nextYears) * SECONDS_PER_YEAR);
+    setDuration(BigInt(nextYears) * REGISTRATION_SECONDS_PER_YEAR);
     setExpirationDate(today(timeZone).add({ years: nextYears }));
   };
 
   const updateExpirationDate = (value: DateValue | null) => {
     if (value === null) return;
 
-    const durationInSeconds = Math.floor(
-      (value.toDate(timeZone).getTime() - Date.now()) / 1000,
-    );
-    if (durationInSeconds <= 0) return;
+    const durationInDays = value.compare(today(timeZone));
+    if (durationInDays <= 0) return;
 
     setExpirationDate(value);
-    setDuration(BigInt(durationInSeconds));
+    setDuration(BigInt(durationInDays) * REGISTRATION_SECONDS_PER_DAY);
+  };
+
+  const toggleDurationMode = () => {
+    if (pickByDate) {
+      updateYears(years);
+    } else {
+      updateExpirationDate(expirationDate);
+    }
+
+    setPickByDate((current) => !current);
   };
 
   return (
-    <Surface className="mt-4 rounded-2xl p-4" variant="secondary">
+    <Surface className="mt-4 rounded-2xl border p-4" variant="transparent">
       {pickByDate ? (
         <ExpirationDatePicker
           value={expirationDate}
@@ -143,16 +188,16 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
           value={years}
           onChange={updateYears}
         >
-          <NumberStepper.Group className="border-default bg-background w-full border p-1">
+          <NumberStepper.Group className="border-default bg-background h-9 w-full border p-0.5">
             <Button
               isIconOnly
               aria-label="Decrease registration duration"
-              className="rounded-full"
-              size="lg"
+              className="size-8 min-w-8 rounded-full"
+              size="sm"
               slot="decrement"
               variant="primary"
             >
-              −
+              <HugeiconsIcon icon={MinusSignIcon} />
             </Button>
             <NumberStepper.Value>
               {({ value }) => (
@@ -164,12 +209,12 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
             <Button
               isIconOnly
               aria-label="Increase registration duration"
-              className="rounded-full"
-              size="lg"
+              className="size-8 min-w-8 rounded-full"
+              size="sm"
               slot="increment"
               variant="primary"
             >
-              +
+              <HugeiconsIcon icon={PlusSignIcon} />
             </Button>
           </NumberStepper.Group>
         </NumberStepper>
@@ -178,14 +223,14 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
       <div className="mt-2 flex items-center justify-center gap-1">
         <Typography.Paragraph color="muted" size="xs">
           {pickByDate
-            ? `Registration until ${expirationDate.toString()}.`
+            ? getDateDurationLabel(expirationDate, timeZone)
             : `${years} ${years === 1 ? "year" : "years"} registration.`}
         </Typography.Paragraph>
         <Button
           className="h-auto min-w-0 px-1 py-0 text-xs"
           size="sm"
           variant="tertiary"
-          onPress={() => setPickByDate((current) => !current)}
+          onPress={toggleDurationMode}
         >
           {pickByDate ? "Pick by duration" : "Pick by date"}
         </Button>
