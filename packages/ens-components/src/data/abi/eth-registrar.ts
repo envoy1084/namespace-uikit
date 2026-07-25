@@ -99,3 +99,14 @@ export const ethRegistrarGetRegisterPriceSnippet = [
     type: "function",
   },
 ] as const;
+
+export const ethRegistrarCommitSnippet = [
+  ...ethRegistrarErrors,
+  {
+    inputs: [{ internalType: "bytes32", name: "commitment", type: "bytes32" }],
+    name: "commit",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+] as const;
