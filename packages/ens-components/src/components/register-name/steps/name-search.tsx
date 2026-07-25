@@ -19,6 +19,7 @@ export const NameSearchStep = () => {
   });
   const parsedInput = parseNameInput(input);
   const name = parsedInput.isOk() ? parsedInput.value.normalizedName : input;
+  const isShortLabelError = availability.error === "LABEL_TOO_SHORT";
 
   return (
     <div>
@@ -61,16 +62,12 @@ export const NameSearchStep = () => {
               ? `${name} is available.`
               : `${name} is not available.`}
           </Typography.Paragraph>
-        ) : availability.error === "LABEL_TOO_SHORT" ? (
-          <Typography.Paragraph
-            className="text-danger"
-            size="xs"
-            weight="medium"
-          >
-            {formatError(availability.error, { name })}
-          </Typography.Paragraph>
         ) : availability.isError ? (
-          <Typography.Paragraph color="muted" size="xs">
+          <Typography.Paragraph
+            className={isShortLabelError ? "text-danger" : "text-muted"}
+            size="xs"
+            {...(isShortLabelError && { weight: "medium" })}
+          >
             {formatError(availability.error, { name })}
           </Typography.Paragraph>
         ) : null}
