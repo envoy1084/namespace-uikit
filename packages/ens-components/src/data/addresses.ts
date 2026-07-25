@@ -6,6 +6,8 @@ import {
   ethRegistrarIsAvailableSnippet,
 } from "#/data/abi";
 
+const mockUsdcIcon = new URL("../assets/usdc.svg", import.meta.url).href;
+
 export const testnetContracts = {
   ethPriceFeed: {
     address: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" as Hex,
@@ -21,6 +23,8 @@ export const testnetContracts = {
   mockUsdc: {
     address: "0xd3322b29a7bdee707d1684676f149bf41aa3422f" as Hex,
     abi: erc20Abi,
+    icon: mockUsdcIcon,
+    symbol: "USDC",
   },
 };
 

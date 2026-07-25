@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { getLocalTimeZone, today } from "@internationalized/date";
 import {
+  Avatar,
   Button,
   Calendar,
   DateField,
@@ -30,9 +31,9 @@ import {
 } from "#/components/register-name/context";
 import { useNamePrice } from "#/hooks";
 import { formatError } from "#/lib";
+import { useEnsConfig } from "#/providers";
 
 const MAX_REGISTRATION_YEARS = 10;
-const PAYMENT_TOKEN_SYMBOL = "USDC";
 
 interface RegistrationDetailsProps {
   input: string;
@@ -132,13 +133,19 @@ function ExpirationDatePicker({
 
 export function RegistrationDetails({ input }: RegistrationDetailsProps) {
   const { duration, setDuration } = useRegisterName();
+  const { contracts } = useEnsConfig();
+  const paymentToken = contracts.mockUsdc;
   const timeZone = getLocalTimeZone();
   const years = getYears(duration);
   const [pickByDate, setPickByDate] = useState(false);
   const [expirationDate, setExpirationDate] = useState<DateValue>(() =>
     today(timeZone).add({ years }),
   );
-  const price = useNamePrice({ duration, input });
+  const price = useNamePrice({
+    duration,
+    input,
+    paymentTokenAddress: paymentToken.address,
+  });
 
   const updateYears = (value: number) => {
     const nextYears = Math.min(
@@ -224,7 +231,7 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
             : `${years} ${years === 1 ? "year" : "years"} registration.`}
         </Typography.Paragraph>
         <Button
-          className="h-auto min-w-0 px-1 py-0 text-xs"
+          className="h-auto min-w-0 px-1 py-0 text-[0.6875rem]"
           size="sm"
           variant="tertiary"
           onPress={toggleDurationMode}
@@ -244,17 +251,29 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
               className="h-5 w-24 rounded-md"
             />
           ) : price.data ? (
-            <NumberValue
-              className="text-foreground text-base font-semibold"
-              maximumFractionDigits={6}
-              value={getTokenValue(price.data.total, price.data.decimals)}
-            >
-              <NumberValue.Suffix>
-                <span className="text-muted ml-1 text-xs font-medium">
-                  {PAYMENT_TOKEN_SYMBOL}
-                </span>
-              </NumberValue.Suffix>
-            </NumberValue>
+            <div className="flex items-center gap-2">
+              <Avatar className="size-5">
+                <Avatar.Image
+                  alt={`${paymentToken.symbol} logo`}
+                  src={paymentToken.icon}
+                />
+                <Avatar.Fallback>
+                  {paymentToken.symbol.slice(0, 1)}
+                </Avatar.Fallback>
+              </Avatar>
+              <NumberValue
+                className="text-foreground text-base font-semibold"
+                maximumFractionDigits={2}
+                minimumFractionDigits={2}
+                value={getTokenValue(price.data.total, price.data.decimals)}
+              >
+                <NumberValue.Suffix>
+                  <span className="text-muted ml-1 text-xs font-medium">
+                    {paymentToken.symbol}
+                  </span>
+                </NumberValue.Suffix>
+              </NumberValue>
+            </div>
           ) : (
             <span className="text-muted text-sm">—</span>
           )}
