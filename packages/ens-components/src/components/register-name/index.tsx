@@ -1,12 +1,18 @@
 "use client";
 
+import { useState } from "react";
+
 import { Button, Modal } from "@thenamespace/uikit";
+import { ArrowLeft01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import {
   RegisterNameProvider,
   type RegisterNameProviderProps,
 } from "#/components/register-name/context";
-import { NameSearchStep } from "#/components/register-name/steps";
+import {
+  NameSearchStep,
+  RegistrationProcess,
+} from "#/components/register-name/steps";
 
 export * from "#/components/register-name/context";
 
@@ -17,7 +23,13 @@ const RegisterEnsHeader = new URL(
 
 export type RegisterEnsProps = Omit<RegisterNameProviderProps, "children">;
 
+type RegisterNameView = "name-search" | "registration-process";
+
 function RegisterEnsContent() {
+  const [view, setView] = useState<RegisterNameView>("name-search");
+  const [isNameAvailable, setIsNameAvailable] = useState(false);
+  const isRegistrationProcess = view === "registration-process";
+
   return (
     <Modal>
       <Button variant="secondary">Register</Button>
@@ -25,6 +37,18 @@ function RegisterEnsContent() {
         <Modal.Container>
           <Modal.Dialog>
             <Modal.CloseTrigger />
+            {isRegistrationProcess ? (
+              <Button
+                isIconOnly
+                aria-label="Back to name search"
+                className="absolute top-4 left-4"
+                size="sm"
+                variant="secondary"
+                onPress={() => setView("name-search")}
+              >
+                <HugeiconsIcon icon={ArrowLeft01Icon} />
+              </Button>
+            ) : null}
             <Modal.Header className="mx-auto">
               <img
                 src={RegisterEnsHeader.href}
@@ -32,19 +56,35 @@ function RegisterEnsContent() {
               />
               <div>
                 <Modal.Heading className="mx-auto text-center">
-                  Register your ENS Name
+                  {isRegistrationProcess
+                    ? "ENS Registration Process"
+                    : "Register your ENS Name"}
                 </Modal.Heading>
                 <p className="text-muted text-center text-sm">
-                  Register your ENS name and set a profile
+                  {isRegistrationProcess
+                    ? "Registration consists of 3 steps"
+                    : "Register your ENS name and set a profile"}
                 </p>
               </div>
             </Modal.Header>
             <Modal.Body className="flex-none">
-              <NameSearchStep />
+              {isRegistrationProcess ? (
+                <RegistrationProcess />
+              ) : (
+                <NameSearchStep onAvailabilityChange={setIsNameAvailable} />
+              )}
             </Modal.Body>
-            <Modal.Footer>
-              <Button className="w-full">Next</Button>
-            </Modal.Footer>
+            {!isRegistrationProcess ? (
+              <Modal.Footer>
+                <Button
+                  className="w-full"
+                  isDisabled={!isNameAvailable}
+                  onPress={() => setView("registration-process")}
+                >
+                  Next
+                </Button>
+              </Modal.Footer>
+            ) : null}
           </Modal.Dialog>
         </Modal.Container>
       </Modal.Backdrop>

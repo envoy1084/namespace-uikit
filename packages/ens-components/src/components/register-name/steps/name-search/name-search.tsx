@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { InputGroup, Spinner, Typography } from "@thenamespace/uikit";
 import { Icon, Search01Icon } from "@thenamespace/uikit/icons";
 
@@ -9,7 +11,13 @@ import { RegistrationDetails } from "#/components/register-name/steps/name-searc
 import { useNameAvailability } from "#/hooks";
 import { formatError } from "#/lib";
 
-export const NameSearchStep = () => {
+export interface NameSearchStepProps {
+  onAvailabilityChange?: (isAvailable: boolean) => void;
+}
+
+export const NameSearchStep = ({
+  onAvailabilityChange,
+}: NameSearchStepProps) => {
   const { input, setInput } = useRegisterName();
   const availability = useNameAvailability({
     input,
@@ -25,6 +33,10 @@ export const NameSearchStep = () => {
   const showAvailabilityStatus =
     availability.isFetching || availability.isSuccess || availability.isError;
 
+  useEffect(() => {
+    onAvailabilityChange?.(isAvailable);
+  }, [isAvailable, onAvailabilityChange]);
+
   return (
     <div>
       <InputGroup className="w-full" variant="secondary">
@@ -39,7 +51,10 @@ export const NameSearchStep = () => {
           className="w-full"
           placeholder="Search Label, eg- vitalik"
           value={input}
-          onChange={(event) => setInput(event.target.value)}
+          onChange={(event) => {
+            onAvailabilityChange?.(false);
+            setInput(event.target.value);
+          }}
         />
         <InputGroup.Suffix>
           <span>.eth</span>
