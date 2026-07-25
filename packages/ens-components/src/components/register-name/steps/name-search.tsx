@@ -3,12 +3,15 @@
 import { InputGroup, Spinner, Typography } from "@thenamespace/uikit";
 import { Icon, Search01Icon } from "@thenamespace/uikit/icons";
 
+import { parseNameInput } from "../../../actions";
 import { useNameAvailability } from "../../../hooks";
 import { useRegisterName } from "../context";
 
 export const NameSearchStep = () => {
   const { input, setInput } = useRegisterName();
   const availability = useNameAvailability({ input });
+  const parsedInput = parseNameInput(input);
+  const name = parsedInput.isOk() ? parsedInput.value.normalizedName : input;
 
   return (
     <div>
@@ -30,26 +33,29 @@ export const NameSearchStep = () => {
           <span>.eth</span>
         </InputGroup.Suffix>
       </InputGroup>
-      <div className="mt-2 min-h-5" aria-live="polite">
+      <div
+        className="mt-2 flex min-h-5 items-center justify-center"
+        aria-live="polite"
+      >
         {availability.isFetching ? (
           <div className="flex items-center gap-2">
-            <Spinner size="sm" />
-            <Typography.Paragraph color="muted" size="sm">
+            <Spinner className="size-3" size="sm" />
+            <Typography.Paragraph color="muted" size="xs">
               Checking availability…
             </Typography.Paragraph>
           </div>
         ) : availability.isSuccess ? (
           <Typography.Paragraph
             className={availability.data ? "text-success" : "text-danger"}
-            size="sm"
+            size="xs"
             weight="medium"
           >
             {availability.data
-              ? "Name is available."
-              : "Name is not available."}
+              ? `${name} is available.`
+              : `${name} is not available.`}
           </Typography.Paragraph>
         ) : availability.isError ? (
-          <Typography.Paragraph color="muted" size="sm">
+          <Typography.Paragraph color="muted" size="xs">
             Unable to check availability.
           </Typography.Paragraph>
         ) : null}

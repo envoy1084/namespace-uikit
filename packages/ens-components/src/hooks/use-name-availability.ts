@@ -45,6 +45,7 @@ export function useNameAvailability<selectData = boolean>(
   const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const [debouncedInput] = useDebounceValue(input, 300);
+  const isDebounced = input === debouncedInput;
   const parsedInput = parseNameInput(debouncedInput);
   const isValidInput =
     parsedInput.isOk() &&
@@ -65,11 +66,14 @@ export function useNameAvailability<selectData = boolean>(
       "name-availability",
       network,
       registrarAddress,
-      parsedInput.isOk() ? parsedInput.value.normalizedName : debouncedInput,
+      isDebounced && parsedInput.isOk()
+        ? parsedInput.value.normalizedName
+        : input,
     ],
     enabled:
       (parameters.query?.enabled ?? true) &&
       publicClient !== undefined &&
+      isDebounced &&
       isValidInput,
     queryFn: async () => {
       if (publicClient === undefined) {
