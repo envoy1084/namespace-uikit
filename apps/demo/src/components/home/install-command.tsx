@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { Button, Typography } from "@thenamespace/uikit";
+import { Button, ButtonGroup, Typography } from "@thenamespace/uikit";
 import {
   Copy01Icon,
   HugeiconsIcon,
@@ -34,23 +34,34 @@ export function InstallCommand() {
   };
 
   return (
-    <Button
-      aria-label={`Copy ${installCommand}`}
-      className="mt-8 flex min-h-14 w-full max-w-[30rem] justify-between rounded-xl border-[#535353] bg-[#292929] px-4 text-white shadow-none hover:border-[#8c8c8c] hover:bg-[#303030]"
-      onPress={() => void handleCopy()}
+    <ButtonGroup
+      className="mt-8 w-full max-w-[30rem]"
+      fullWidth
+      size="lg"
       variant="outline"
     >
-      <Typography.Code className="bg-transparent p-0 font-mono text-sm text-white sm:text-[15px]">
-        {installCommand}
-      </Typography.Code>
-      <span className="flex items-center gap-2 text-xs font-semibold text-[#bcbcbc]">
-        {isCopied ? "Copied" : "Copy"}
+      <Button
+        aria-label={`Copy ${installCommand}`}
+        className="min-w-0 flex-1 justify-start border-[#535353] bg-[#292929] px-4 text-white shadow-none hover:bg-[#303030]"
+        onPress={() => void handleCopy()}
+      >
+        <Typography.Code className="truncate bg-transparent p-0 font-mono text-sm text-white sm:text-[15px]">
+          {installCommand}
+        </Typography.Code>
+      </Button>
+      <Button
+        aria-label={`${isCopied ? "Copied" : "Copy"} ${installCommand}`}
+        className="border-[#535353] bg-white text-[#1f1f1f] shadow-none hover:bg-[#f4f4f4]"
+        isIconOnly
+        onPress={() => void handleCopy()}
+      >
+        <ButtonGroup.Separator />
         <HugeiconsIcon
           aria-hidden
           icon={isCopied ? Tick02Icon : Copy01Icon}
           size={16}
         />
-      </span>
-    </Button>
+      </Button>
+    </ButtonGroup>
   );
 }

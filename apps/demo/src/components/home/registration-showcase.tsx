@@ -4,12 +4,6 @@ import { NameRegistration } from "ens-components";
 
 import { SectionLabel } from "@/components/home/section-label";
 
-const features = [
-  "Inline or dialog",
-  "Custom slots and messages",
-  "Lifecycle callbacks",
-] as const;
-
 export function RegistrationShowcase() {
   return (
     <section
@@ -18,17 +12,16 @@ export function RegistrationShowcase() {
       id="playground"
     >
       <div className="lg:sticky lg:top-28 lg:pt-6">
-        <SectionLabel>Available now · Component 01</SectionLabel>
+        <SectionLabel>Available now</SectionLabel>
         <Typography.Heading
           className="mt-4 text-[clamp(2.4rem,4vw,4.6rem)] leading-[0.98] font-bold tracking-[-0.05em] text-balance"
           id="registration-title"
           level={2}
         >
-          Name registration, end to end.
+          Name registration.
         </Typography.Heading>
         <Typography.Paragraph className="mt-6 max-w-lg text-[17px] leading-[1.6] text-[#666]">
-          Availability, pricing, commitment timing, payment approval, and
-          registration—composed into one production-ready flow.
+          Availability, pricing, commitment, approval, and registration.
         </Typography.Paragraph>
         <NameRegistration
           messages={{ triggerLabel: "Open dialog demo" }}
@@ -45,19 +38,6 @@ export function RegistrationShowcase() {
             ),
           }}
         />
-        <div className="mt-9 flex flex-col gap-2 border-t border-[#bcbcbc] pt-5">
-          {features.map((item) => (
-            <Typography.Paragraph
-              className="flex items-center gap-2.5 text-[#4b4b4b]"
-              key={item}
-              size="xs"
-              weight="medium"
-            >
-              <span aria-hidden className="size-2 rounded-full bg-[#5474f6]" />
-              {item}
-            </Typography.Paragraph>
-          ))}
-        </div>
       </div>
 
       <div className="mx-auto w-full max-w-md rounded-3xl border border-[#d7d7d7] bg-white shadow-sm">

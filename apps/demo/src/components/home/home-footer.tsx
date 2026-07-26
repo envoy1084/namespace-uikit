@@ -22,7 +22,7 @@ export function HomeFooter() {
         className="text-left text-[#666] lg:text-center"
         size="xs"
       >
-        Open source. Built by Namespace for the ENS ecosystem.
+        Built by Namespace.
       </Typography.Paragraph>
       <Link
         className="inline-flex w-fit gap-1.5 justify-self-start font-semibold text-[#1f1f1f] no-underline lg:justify-self-end"

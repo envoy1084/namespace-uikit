@@ -1,5 +1,4 @@
-import { Link, Typography } from "@thenamespace/uikit";
-import { GithubIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
+import { Typography } from "@thenamespace/uikit";
 
 import { InstallCommand } from "@/components/home/install-command";
 import { SectionLabel } from "@/components/home/section-label";
@@ -11,7 +10,7 @@ export function HomeHero() {
         <div className="flex max-w-[47rem] flex-col justify-center px-5 py-12 sm:px-8 sm:py-16 lg:px-12 lg:py-14">
           <div className="flex items-center gap-2.5">
             <span aria-hidden className="size-[9px] rounded-sm bg-[#5474f6]" />
-            <SectionLabel inverse>Open-source toolkit for ENS v2</SectionLabel>
+            <SectionLabel inverse>ENS v2 for React</SectionLabel>
           </div>
 
           <Typography.Heading
@@ -21,35 +20,19 @@ export function HomeHero() {
             Build the ENS layer your product needs.
           </Typography.Heading>
           <Typography.Paragraph className="mt-7 max-w-[38rem] text-[clamp(1.05rem,1.5vw,1.25rem)] leading-[1.55] text-[#d2d2d2]">
-            A growing set of React components, hooks, and typed actions for
-            names, records, profiles, and the ENS flows still to come.
+            Components, hooks, and typed actions for building ENS apps.
           </Typography.Paragraph>
 
           <InstallCommand />
-
-          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
-            <Link
-              className="inline-flex items-center gap-2 text-sm font-semibold text-white no-underline"
-              href="https://github.com/thenamespace/uikit/tree/main/packages/ens-components"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <HugeiconsIcon aria-hidden icon={GithubIcon} size={18} />
-              Read the source
-            </Link>
-            <Typography.Paragraph className="text-[#8f8f8f]" size="xs">
-              React 19 · Viem · Wagmi
-            </Typography.Paragraph>
-          </div>
         </div>
 
         <div className="flex min-h-[22rem] items-center overflow-hidden bg-[#f4f4f4] lg:min-h-full">
           <img
-            alt="Namespace ninja mascot holding a shuriken"
-            className="block h-auto w-full object-contain"
-            height="500"
-            src="/images/namespace-mascot.png"
-            width="628"
+            alt="Namespace ninja mascot illustration"
+            className="block h-full max-h-[44rem] w-full object-contain object-center"
+            height="1029"
+            src="/images/namespace-hero.svg"
+            width="1134"
           />
         </div>
       </div>

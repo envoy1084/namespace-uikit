@@ -16,7 +16,7 @@ export function PackageExportStrip() {
       aria-label="Selected package exports"
       className="flex min-h-[74px] items-center gap-9 overflow-x-auto rounded-none border-y border-[#363636] bg-[#1f1f1f] px-5 text-white shadow-none sm:px-8 lg:px-[max(3rem,calc((100vw-1184px)/2))]"
     >
-      <SectionLabel inverse>Inside the package</SectionLabel>
+      <SectionLabel inverse>Toolkit</SectionLabel>
       <div className="flex items-center gap-7 whitespace-nowrap">
         {packageAreas.map((item) => (
           <div
