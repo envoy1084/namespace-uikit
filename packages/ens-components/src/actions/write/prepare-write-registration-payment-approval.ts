@@ -49,6 +49,7 @@ export type PreparedRegistrationPaymentApprovalWrite = PreparedContractWrite<
   PrepareRegistrationPaymentApprovalWriteMetadata
 >;
 
+/** Validates and prepares an ERC-20 registration payment approval. */
 export function prepareRegistrationPaymentApprovalWrite(
   props: PrepareRegistrationPaymentApprovalWriteProps,
 ): Result<

@@ -48,7 +48,7 @@ export type PreparedCommitNameWrite = PreparedContractWrite<
   PrepareCommitNameWriteMetadata
 >;
 
-/** Validates and prepares an ENSv2 `.eth` commitment write. */
+/** Validates and prepares an ENS v2 `.eth` commitment write. */
 export function prepareCommitNameWrite(
   props: PrepareCommitNameWriteProps,
 ): Result<

@@ -18,7 +18,7 @@ import {
   prepareNameAvailabilityRead,
   type PrepareNameAvailabilityReadError,
   type PreparedNameAvailabilityRead,
-} from "#/actions/read/prepare-name-availability-read";
+} from "#/actions/read/prepare-read-name-availability";
 import { ethRegistrarAbi } from "#/data/abi";
 
 const MAX_UINT64 = (1n << 64n) - 1n;

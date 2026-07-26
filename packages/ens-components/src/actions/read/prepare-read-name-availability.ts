@@ -49,7 +49,7 @@ export type PreparedNameAvailabilityRead = PreparedContractRead<
 >;
 
 /**
- * Validates a label or ENS name and prepares its registrar availability read.
+ * Validates a label or ENS name and prepares its availability read.
  */
 export function prepareNameAvailabilityRead(
   props: PrepareNameAvailabilityReadProps,

@@ -5,7 +5,7 @@ import type {
 import type {
   PreparedNamePriceRead,
   PrepareNamePriceReadError,
-} from "#/actions/read/prepare-name-price-read";
+} from "#/actions/read/prepare-read-name-price";
 import type { EnsNetwork } from "#/data";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 
@@ -18,7 +18,7 @@ import {
   type ContractFunctionParameters,
 } from "viem";
 
-import { prepareNamePriceRead } from "#/actions/read/prepare-name-price-read";
+import { prepareNamePriceRead } from "#/actions/read/prepare-read-name-price";
 
 export type PrepareRegistrationPaymentStatusReadError =
   | "INVALID_ACCOUNT_ADDRESS"

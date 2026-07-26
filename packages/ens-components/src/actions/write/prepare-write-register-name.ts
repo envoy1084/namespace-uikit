@@ -53,6 +53,7 @@ export type PreparedRegisterNameWrite = PreparedContractWrite<
   PrepareRegisterNameWriteMetadata
 >;
 
+/** Validates and prepares the ENS v2 name registration write. */
 export function prepareRegisterNameWrite(
   props: PrepareRegisterNameWriteProps,
 ): Result<

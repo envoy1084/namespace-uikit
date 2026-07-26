@@ -76,7 +76,7 @@ export type PreparedCommitmentStatusRead = PreparedContractReadPlan<
   "commitment-status"
 >;
 
-/** Prepares the registrar reads required to evaluate a commitment window. */
+/** Validates and prepares the reads required to evaluate a commitment window. */
 export function prepareCommitmentStatusRead(
   props: PrepareCommitmentStatusReadProps,
 ): Result<PreparedCommitmentStatusRead, PrepareCommitmentStatusReadError> {

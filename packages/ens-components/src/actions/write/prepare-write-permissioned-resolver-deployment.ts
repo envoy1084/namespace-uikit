@@ -67,7 +67,7 @@ function isBytes32(value: Hex): boolean {
 }
 
 /**
- * Simulates a dedicated PermissionedResolver proxy deployment and returns the
+ * Simulates a PermissionedResolver proxy deployment and returns the
  * exact address and encoded call required by sequential or atomic submission.
  */
 export function preparePermissionedResolverDeploymentWrite(

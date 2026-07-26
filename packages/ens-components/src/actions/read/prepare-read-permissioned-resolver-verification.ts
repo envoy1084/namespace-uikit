@@ -40,7 +40,7 @@ export type PreparedPermissionedResolverVerificationRead = PreparedContractRead<
   }
 >;
 
-/** Prepares a VerifiableFactory resolver implementation check. */
+/** Validates and prepares a VerifiableFactory implementation check. */
 export function preparePermissionedResolverVerificationRead(
   props: PreparePermissionedResolverVerificationReadProps,
 ): Result<
