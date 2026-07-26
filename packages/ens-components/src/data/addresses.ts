@@ -16,11 +16,11 @@ const mockUsdcIcon = new URL("../assets/usdc.svg", import.meta.url).href;
 
 export const testnetContracts = {
   ethPriceFeed: {
-    address: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" as Hex,
+    address: "0x694AA1769357215DE4FAC081bf1f309aDC325306" as Hex,
     snippets: { ethPriceFeedAbiSnippet },
   },
   ethRegistrar: {
-    address: "0xa4449a0dd2b83007553d9b1d28b583a46a805a30" as Hex,
+    address: "0x8c2e866b439358c41ae05de9cbe8a00bfefaffca" as Hex,
     snippets: {
       ethRegistrarCommitSnippet,
       ethRegistrarCommitmentAtSnippet,
@@ -33,7 +33,7 @@ export const testnetContracts = {
     },
   },
   mockUsdc: {
-    address: "0xd3322b29a7bdee707d1684676f149bf41aa3422f" as Hex,
+    address: "0xba11ebdb3f9a2c5946d8629517f06364e53a2e10" as Hex,
     abi: erc20Abi,
     icon: mockUsdcIcon,
     symbol: "USDC",
