@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { Button, Modal } from "@thenamespace/uikit";
 import { ArrowLeft01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
+import { AnimatePresence, motion } from "motion/react";
 import { zeroAddress } from "viem";
 import { useConnection } from "wagmi";
 
@@ -34,6 +35,22 @@ const RegisterEnsHeader = new URL(
 export type RegisterEnsProps = Omit<RegisterNameProviderProps, "children">;
 
 type RegisterNameView = "name-search" | "registration-process";
+type TransitionDirection = -1 | 1;
+
+const viewVariants = {
+  center: {
+    opacity: 1,
+    x: 0,
+  },
+  enter: (direction: TransitionDirection) => ({
+    opacity: 0,
+    x: direction * 24,
+  }),
+  exit: (direction: TransitionDirection) => ({
+    opacity: 0,
+    x: direction * -24,
+  }),
+};
 
 function RegisterEnsContent() {
   const connection = useConnection();
@@ -47,8 +64,11 @@ function RegisterEnsContent() {
   const [registrationSuccess, setRegistrationSuccess] =
     useState<RegistrationSuccessDetails>();
   const [isNameAvailable, setIsNameAvailable] = useState(false);
+  const [transitionDirection, setTransitionDirection] =
+    useState<TransitionDirection>(1);
   const isRegistrationProcess = view === "registration-process";
   const isRegistrationSuccess = registrationSuccess !== undefined;
+  const viewKey = isRegistrationSuccess ? "success" : view;
 
   const handleNext = () => {
     let storedCommitment =
@@ -84,7 +104,18 @@ function RegisterEnsContent() {
 
     setCommitmentId(storedCommitment?.id ?? null);
     setRegistrationStep(nextStep);
+    setTransitionDirection(1);
     setView("registration-process");
+  };
+
+  const handleBack = () => {
+    setTransitionDirection(-1);
+    setView("name-search");
+  };
+
+  const handleRegistrationSuccess = (details: RegistrationSuccessDetails) => {
+    setTransitionDirection(1);
+    setRegistrationSuccess(details);
   };
 
   const handleDone = () => {
@@ -110,7 +141,7 @@ function RegisterEnsContent() {
                 className="absolute top-4 left-4"
                 size="sm"
                 variant="secondary"
-                onPress={() => setView("name-search")}
+                onPress={handleBack}
               >
                 <HugeiconsIcon icon={ArrowLeft01Icon} />
               </Button>
@@ -135,20 +166,43 @@ function RegisterEnsContent() {
                 </div>
               </Modal.Header>
             ) : null}
-            <Modal.Body className="flex-none">
-              {isRegistrationSuccess ? (
-                <RegistrationSuccess
-                  onDone={handleDone}
-                  registration={registrationSuccess}
-                />
-              ) : isRegistrationProcess ? (
-                <RegistrationProcess
-                  initialStep={registrationStep}
-                  onSuccess={setRegistrationSuccess}
-                />
-              ) : (
-                <NameSearchStep onAvailabilityChange={setIsNameAvailable} />
-              )}
+            <Modal.Body className="flex-none overflow-x-hidden">
+              <motion.div layout transition={{ duration: 0.22 }}>
+                <AnimatePresence
+                  custom={transitionDirection}
+                  initial={false}
+                  mode="wait"
+                >
+                  <motion.div
+                    animate="center"
+                    custom={transitionDirection}
+                    exit="exit"
+                    initial="enter"
+                    key={viewKey}
+                    transition={{
+                      duration: 0.22,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    variants={viewVariants}
+                  >
+                    {isRegistrationSuccess ? (
+                      <RegistrationSuccess
+                        onDone={handleDone}
+                        registration={registrationSuccess}
+                      />
+                    ) : isRegistrationProcess ? (
+                      <RegistrationProcess
+                        initialStep={registrationStep}
+                        onSuccess={handleRegistrationSuccess}
+                      />
+                    ) : (
+                      <NameSearchStep
+                        onAvailabilityChange={setIsNameAvailable}
+                      />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </motion.div>
             </Modal.Body>
             {!isRegistrationProcess ? (
               <Modal.Footer>
