@@ -14,8 +14,11 @@ export interface PreparedContractRead<
   readonly metadata: TMetadata;
   /** ABI-inferred request executed by a public client. */
   readonly request: TRequest;
-  /** @internal Type carrier for the decoded contract result. */
-  readonly result?: TResult;
+  /**
+   * Optional type marker for the decoded result. Prepare actions do not
+   * populate it at runtime.
+   */
+  readonly resultType?: TResult;
 }
 
 export type ContractReadRequest<TPrepared extends PreparedContractRead> =

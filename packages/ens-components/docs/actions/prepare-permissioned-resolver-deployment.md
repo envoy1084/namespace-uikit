@@ -47,10 +47,16 @@ function preparePermissionedResolverDeployment(
 
 ## Result
 
-The result contains `resolverAddress`, `salt`, `initData`, and `call`. Pass
-`initData` and `salt` to
-[`deployPermissionedResolver`](./deploy-permissioned-resolver.md), or include
-`call` in an atomic batch.
+The prepared write contains:
+
+- `call`, the encoded factory call used by `executeContractCalls`;
+- `request`, the ABI-inferred `deployProxy` request;
+- `metadata.resolverAddress`, the simulated proxy address;
+- `metadata.initData` and `metadata.salt`;
+- `account` and the stable kind `deploy-permissioned-resolver`.
+
+Compose it with `prepareCommitName` and use `strategy: "auto"` to select an
+atomic wallet batch when supported, otherwise an ordered sequence.
 
 ## Errors
 

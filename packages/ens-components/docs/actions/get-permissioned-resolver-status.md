@@ -3,6 +3,11 @@
 Checks whether a predicted resolver is deployed and verified against the
 expected implementation.
 
+The action first checks resolver bytecode. When deployed, it prepares the
+factory `verifyContract` read with
+`preparePermissionedResolverVerificationRead` and executes it through the
+generic read executor.
+
 ```ts
 import { getPermissionedResolverStatus } from "ens-components";
 

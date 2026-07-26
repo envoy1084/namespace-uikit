@@ -59,5 +59,5 @@ All amounts are payment-token atomic units. `total` is `base + premium`.
 The generated query key includes the network, registrar, payment token,
 duration, and normalized name.
 
-See [`getNamePrice`](../actions/get-name-price.md) for validation and error
-codes.
+See [`prepareNamePriceRead`](../actions/prepare-name-price-read.md) for
+validation and error codes.

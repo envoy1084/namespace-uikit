@@ -56,8 +56,10 @@ State rules:
 | `READY`     | Current block time is within the valid reveal window.                 |
 | `EXPIRED`   | Current block time is at or after `submittedAt + MAX_COMMITMENT_AGE`. |
 
-The action batches `commitmentAt`, `MIN_COMMITMENT_AGE`, and
-`MAX_COMMITMENT_AGE`, then reads the current block.
+The action prepares and executes `commitmentAt`, `MIN_COMMITMENT_AGE`, and
+`MAX_COMMITMENT_AGE` through `executeContractReadPlan`, then reads the current
+block. Use `prepareCommitmentStatusRead` directly when only the raw registrar
+timing values are required.
 
 ## Errors
 

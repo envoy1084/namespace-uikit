@@ -52,7 +52,7 @@ interface MakeNameCommitmentResult {
 ```
 
 The commitment hashes the label and every commitment-bound property. Persist
-all input values and reuse them unchanged for `registerName`.
+all input values and reuse them unchanged for `prepareRegisterName`.
 
 ## Errors
 

@@ -47,7 +47,7 @@ required before querying.
 Returns the standard TanStack Query result with:
 
 - `data: boolean | undefined`
-- `error: IsNameAvailableError | ParseNameInputError | null`
+- `error`: preparation, parsing, or `CONTRACT_READ_FAILED`
 
 The generated query key includes the network, registrar address, and normalized
 name. All normal TanStack options such as `enabled`, `retry`, `select`,

@@ -9,7 +9,10 @@ import type {
 
 import { err, errAsync, ok, ResultAsync, type Result } from "neverthrow";
 import {
+  isAddress,
   isAddressEqual,
+  isHex,
+  zeroAddress,
   type Chain,
   type PublicClient,
   type TransactionReceipt,
@@ -22,13 +25,13 @@ import { supportsAtomicBatchCalls } from "#/actions/supports-atomic-batch-calls"
 
 export type ExecuteContractCallsError =
   | "ATOMIC_BATCH_FAILED"
-  | "CAPABILITIES_REQUEST_FAILED"
   | "CONTRACT_CALLS_STATUS_FAILED"
   | "CONTRACT_WRITE_FAILED"
   | "EMPTY_CALLS"
   | "INVALID_ACCOUNT_ADDRESS"
   | "INVALID_CALLS_ID"
   | "INVALID_CHAIN_ID"
+  | "INVALID_CONTRACT_CALL"
   | "MISMATCHED_ACCOUNTS"
   | "SINGLE_CALL_REQUIRED"
   | "TRANSACTION_CONFIRMATION_FAILED"
@@ -66,6 +69,28 @@ function validateCalls(
 ): Result<void, ExecuteContractCallsError> {
   const first = calls[0];
   if (first === undefined) return err("EMPTY_CALLS");
+  if (!isAddress(first.account) || first.account === zeroAddress) {
+    return err("INVALID_ACCOUNT_ADDRESS");
+  }
+  if (
+    calls.some(
+      (prepared) =>
+        !isAddress(prepared.account) || prepared.account === zeroAddress,
+    )
+  ) {
+    return err("INVALID_ACCOUNT_ADDRESS");
+  }
+  if (
+    calls.some(
+      (prepared) =>
+        !isAddress(prepared.call.to) ||
+        prepared.call.to === zeroAddress ||
+        !isHex(prepared.call.data) ||
+        prepared.call.value < 0n,
+    )
+  ) {
+    return err("INVALID_CONTRACT_CALL");
+  }
 
   return calls.every((prepared) =>
     isAddressEqual(prepared.account, first.account),
@@ -109,9 +134,7 @@ async function resolveStrategy(
     chainId: chain.id,
   });
 
-  return capability.isErr()
-    ? err(capability.error)
-    : ok(capability.value ? "atomic" : "sequential");
+  return ok(capability.isOk() && capability.value ? "atomic" : "sequential");
 }
 
 async function executeTransactions(
@@ -261,6 +284,9 @@ export function executeContractCalls(
 ): ResultAsync<ExecuteContractCallsResult, ExecuteContractCallsError> {
   const validation = validateCalls(props.calls);
   if (validation.isErr()) return errAsync(validation.error);
+  if (!Number.isSafeInteger(props.chain.id) || props.chain.id <= 0) {
+    return errAsync("INVALID_CHAIN_ID");
+  }
 
   return ResultAsync.fromSafePromise(
     resolveStrategy(
