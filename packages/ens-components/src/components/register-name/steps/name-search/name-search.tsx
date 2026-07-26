@@ -42,11 +42,24 @@ export const NameSearchStep = ({
   });
   const parsedInput = parseNameInput(input);
   const name = parsedInput.isOk() ? parsedInput.value.normalizedName : input;
-  const isShortLabelError = availability.error === "LABEL_TOO_SHORT";
+  const inputError =
+    input.trim() === ""
+      ? undefined
+      : parsedInput.isErr()
+        ? parsedInput.error
+        : parsedInput.value.nameLevel !== 2 || parsedInput.value.tld !== "eth"
+          ? ("UNSUPPORTED_NAME" as const)
+          : undefined;
+  const displayedError = availability.error ?? inputError;
+  const isShortLabelError = displayedError === "LABEL_TOO_SHORT";
   const isAvailable = availability.isSuccess && availability.data;
   const canContinue = isAvailable && isPricingReady && isReferrerValid;
   const showAvailabilityStatus =
-    availability.isFetching || availability.isSuccess || availability.isError;
+    inputError !== undefined ||
+    availability.isFetching ||
+    availability.isSuccess ||
+    availability.isError;
+  const showEthSuffix = !input.trim().includes(".");
 
   useEffect(() => {
     onAvailabilityChange?.(isAvailable);
@@ -88,9 +101,11 @@ export const NameSearchStep = ({
                 setInput(event.target.value);
               }}
             />
-            <InputGroup.Suffix>
-              <span>.eth</span>
-            </InputGroup.Suffix>
+            {showEthSuffix ? (
+              <InputGroup.Suffix>
+                <span>.eth</span>
+              </InputGroup.Suffix>
+            ) : null}
           </InputGroup>
           {!isAvailable && showAvailabilityStatus ? (
             <div
@@ -112,13 +127,13 @@ export const NameSearchStep = ({
                 >
                   {name} is not available.
                 </Typography.Paragraph>
-              ) : availability.isError ? (
+              ) : availability.isError || inputError !== undefined ? (
                 <Typography.Paragraph
                   className={isShortLabelError ? "text-danger" : "text-muted"}
                   size="xs"
                   {...(isShortLabelError && { weight: "medium" })}
                 >
-                  {formatError(availability.error, { name })}
+                  {formatError(displayedError, { name })}
                 </Typography.Paragraph>
               ) : null}
             </div>
