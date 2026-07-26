@@ -110,6 +110,9 @@ importers:
       '@thenamespace/ens-components':
         specifier: workspace:*
         version: link:../../packages/ens-components
+      '@thenamespace/uikit':
+        specifier: workspace:*
+        version: link:../../packages/uikit
       react:
         specifier: 'catalog:'
         version: 19.2.7

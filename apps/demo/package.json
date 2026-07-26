@@ -16,6 +16,7 @@
     "@tanstack/react-router": "catalog:",
     "@tanstack/router-plugin": "catalog:",
     "@thenamespace/ens-components": "workspace:*",
+    "@thenamespace/uikit": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
     "tailwindcss": "catalog:",
