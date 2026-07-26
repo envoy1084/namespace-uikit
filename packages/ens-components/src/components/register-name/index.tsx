@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { Button, Modal } from "@thenamespace/uikit";
-import { zeroAddress } from "viem";
+import { zeroAddress, zeroHash } from "viem";
 import { useConnection } from "wagmi";
 
 import {
@@ -31,8 +31,15 @@ type RegisterNameView = "name-search" | "registration-process";
 
 function RegisterEnsContent() {
   const connection = useConnection();
-  const { duration, input, referrer, setCommitmentId, setInput } =
-    useRegisterName();
+  const {
+    duration,
+    input,
+    referrer,
+    setCommitmentId,
+    setInput,
+    setReferrer,
+    setReferrerInput,
+  } = useRegisterName();
   const { chain, contracts } = useEnsConfig();
   const { delete: deleteCommitment, find } = useCommitments();
   const [view, setView] = useState<RegisterNameView>("name-search");
@@ -40,7 +47,6 @@ function RegisterEnsContent() {
     useState<RegistrationProcessStep>("commitment");
   const [registrationSuccess, setRegistrationSuccess] =
     useState<RegistrationSuccessDetails>();
-  const [isNameAvailable, setIsNameAvailable] = useState(false);
   const isRegistrationSuccess = registrationSuccess !== undefined;
 
   const handleNext = () => {
@@ -87,7 +93,8 @@ function RegisterEnsContent() {
   const handleDone = () => {
     setCommitmentId(null);
     setInput("");
-    setIsNameAvailable(false);
+    setReferrer(zeroHash);
+    setReferrerInput("");
     setRegistrationSuccess(undefined);
     setRegistrationStep("commitment");
     setView("name-search");
@@ -112,11 +119,7 @@ function RegisterEnsContent() {
                 onSuccess={handleRegistrationSuccess}
               />
             ) : (
-              <NameSearchStep
-                isNextDisabled={!isNameAvailable}
-                onAvailabilityChange={setIsNameAvailable}
-                onNext={handleNext}
-              />
+              <NameSearchStep onNext={handleNext} />
             )}
           </Modal.Dialog>
         </Modal.Container>

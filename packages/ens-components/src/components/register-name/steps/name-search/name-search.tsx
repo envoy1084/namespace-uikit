@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Button,
@@ -23,17 +23,16 @@ const RegisterEnsHeader = new URL(
 );
 
 export interface NameSearchStepProps {
-  isNextDisabled: boolean;
   onAvailabilityChange?: (isAvailable: boolean) => void;
   onNext: () => void;
 }
 
 export const NameSearchStep = ({
-  isNextDisabled,
   onAvailabilityChange,
   onNext,
 }: NameSearchStepProps) => {
-  const { input, setInput } = useRegisterName();
+  const { input, isReferrerValid, setInput } = useRegisterName();
+  const [isPricingReady, setIsPricingReady] = useState(false);
   const availability = useNameAvailability({
     input,
     query: {
@@ -45,6 +44,7 @@ export const NameSearchStep = ({
   const name = parsedInput.isOk() ? parsedInput.value.normalizedName : input;
   const isShortLabelError = availability.error === "LABEL_TOO_SHORT";
   const isAvailable = availability.isSuccess && availability.data;
+  const canContinue = isAvailable && isPricingReady && isReferrerValid;
   const showAvailabilityStatus =
     availability.isFetching || availability.isSuccess || availability.isError;
 
@@ -123,11 +123,16 @@ export const NameSearchStep = ({
               ) : null}
             </div>
           ) : null}
-          {isAvailable ? <RegistrationDetails input={name} /> : null}
+          {isAvailable ? (
+            <RegistrationDetails
+              input={name}
+              onReadyChange={setIsPricingReady}
+            />
+          ) : null}
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button className="w-full" isDisabled={isNextDisabled} onPress={onNext}>
+        <Button className="w-full" isDisabled={!canContinue} onPress={onNext}>
           Next
         </Button>
       </Modal.Footer>

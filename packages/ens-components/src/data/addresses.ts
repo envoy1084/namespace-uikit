@@ -38,10 +38,4 @@ export const testnetContracts = {
   },
 };
 
-/**
- * ENSv2 does not currently have a mainnet deployment in the tracked contracts
- * repository. Fallback to testnet contracts for now.
- */
-export const mainnetContracts = testnetContracts;
-
 export type EnsContracts = typeof testnetContracts;

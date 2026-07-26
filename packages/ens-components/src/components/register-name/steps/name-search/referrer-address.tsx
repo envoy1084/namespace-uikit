@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import {
   Description,
   Disclosure,
@@ -10,26 +8,25 @@ import {
   Label,
   TextField,
 } from "@thenamespace/uikit";
-import { getAddress, isAddress, pad, slice, zeroHash } from "viem";
+import { getAddress, isAddress, pad, zeroHash } from "viem";
 
 import { useRegisterName } from "#/components/register-name/context";
 
 export function ReferrerAddress() {
-  const { referrer, setReferrer } = useRegisterName();
-  const [value, setValue] = useState(
-    referrer === zeroHash ? "" : getAddress(slice(referrer, 12)),
-  );
-  const trimmedValue = value.trim();
+  const { referrerInput, setReferrer, setReferrerInput } = useRegisterName();
+  const trimmedValue = referrerInput.trim();
   const isInvalid = trimmedValue !== "" && !isAddress(trimmedValue);
 
   const updateAddress = (nextValue: string) => {
-    setValue(nextValue);
+    setReferrerInput(nextValue);
 
     const address = nextValue.trim();
     if (address === "") {
       setReferrer(zeroHash);
     } else if (isAddress(address)) {
       setReferrer(pad(getAddress(address), { size: 32 }));
+    } else {
+      setReferrer(zeroHash);
     }
   };
 
@@ -47,7 +44,7 @@ export function ReferrerAddress() {
             fullWidth
             isInvalid={isInvalid}
             name="referrer-address"
-            value={value}
+            value={referrerInput}
             onChange={updateAddress}
           >
             <Label className="sr-only">Referrer address</Label>

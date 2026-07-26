@@ -1,12 +1,8 @@
 import type { Chain } from "viem";
 
-import { mainnet, sepolia } from "viem/chains";
+import { sepolia } from "viem/chains";
 
-import {
-  mainnetContracts,
-  testnetContracts,
-  type EnsContracts,
-} from "#/data/addresses";
+import { testnetContracts, type EnsContracts } from "#/data/addresses";
 
 export type EnsNetwork = "mainnet" | "testnet";
 
@@ -17,20 +13,24 @@ export interface EnsNetworkConfiguration {
 }
 
 export const ensNetworkConfigurations = {
-  mainnet: {
-    chain: mainnet,
-    contracts: mainnetContracts,
-    network: "mainnet",
-  },
   testnet: {
     chain: sepolia,
     contracts: testnetContracts,
     network: "testnet",
   },
-} as const satisfies Record<EnsNetwork, EnsNetworkConfiguration>;
+} as const satisfies Record<
+  Exclude<EnsNetwork, "mainnet">,
+  EnsNetworkConfiguration
+>;
 
 export function getEnsNetworkConfiguration(
   network: EnsNetwork,
 ): EnsNetworkConfiguration {
-  return ensNetworkConfigurations[network];
+  if (network === "mainnet") {
+    throw new Error(
+      "ENS v2 mainnet is not supported yet. Use the testnet network.",
+    );
+  }
+
+  return ensNetworkConfigurations.testnet;
 }

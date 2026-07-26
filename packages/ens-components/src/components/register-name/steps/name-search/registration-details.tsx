@@ -2,7 +2,7 @@
 
 import type { DateValue } from "@internationalized/date";
 
-import { useState } from "react";
+import { useEffect } from "react";
 
 import { getLocalTimeZone, today } from "@internationalized/date";
 import {
@@ -38,6 +38,7 @@ const MAX_REGISTRATION_YEARS = 10;
 
 interface RegistrationDetailsProps {
   input: string;
+  onReadyChange?: (isReady: boolean) => void;
 }
 
 function getYears(duration: bigint) {
@@ -132,21 +133,33 @@ function ExpirationDatePicker({
   );
 }
 
-export function RegistrationDetails({ input }: RegistrationDetailsProps) {
-  const { duration, setDuration } = useRegisterName();
+export function RegistrationDetails({
+  input,
+  onReadyChange,
+}: RegistrationDetailsProps) {
+  const { duration, durationMode, setDuration, setDurationMode } =
+    useRegisterName();
   const { contracts } = useEnsConfig();
   const paymentToken = contracts.mockUsdc;
   const timeZone = getLocalTimeZone();
   const years = getYears(duration);
-  const [pickByDate, setPickByDate] = useState(false);
-  const [expirationDate, setExpirationDate] = useState<DateValue>(() =>
-    today(timeZone).add({ years }),
-  );
+  const selectedDurationDays = Number(duration / REGISTRATION_SECONDS_PER_DAY);
+  const expirationDate = today(timeZone).add({
+    days: Math.max(1, selectedDurationDays),
+  });
+  const pickByDate = durationMode === "date";
   const price = useNamePrice({
     duration,
     input,
     paymentTokenAddress: paymentToken.address,
   });
+  const isReady =
+    price.isSuccess && price.data !== undefined && !price.isFetching;
+
+  useEffect(() => {
+    onReadyChange?.(isReady);
+    return () => onReadyChange?.(false);
+  }, [isReady, onReadyChange]);
 
   const updateYears = (value: number) => {
     const nextYears = Math.min(
@@ -154,7 +167,6 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
       Math.max(1, Math.round(value)),
     );
     setDuration(BigInt(nextYears) * REGISTRATION_SECONDS_PER_YEAR);
-    setExpirationDate(today(timeZone).add({ years: nextYears }));
   };
 
   const updateExpirationDate = (value: DateValue | null) => {
@@ -163,7 +175,6 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
     const durationInDays = value.compare(today(timeZone));
     if (durationInDays <= 0) return;
 
-    setExpirationDate(value);
     setDuration(BigInt(durationInDays) * REGISTRATION_SECONDS_PER_DAY);
   };
 
@@ -174,7 +185,7 @@ export function RegistrationDetails({ input }: RegistrationDetailsProps) {
       updateExpirationDate(expirationDate);
     }
 
-    setPickByDate((current) => !current);
+    setDurationMode(pickByDate ? "duration" : "date");
   };
 
   return (
