@@ -1,7 +1,7 @@
 # ENS Components
 
-React components, hooks, and contract actions for registering second-level
-`.eth` names with ENS v2.
+A growing collection of production-ready React components, hooks, and contract
+actions for building ENS v2 applications.
 
 > ENS v2 support is currently limited to the Sepolia testnet configuration.
 > The `"mainnet"` network value is reserved but is not implemented yet.
@@ -100,35 +100,36 @@ Use the inline presentation when the flow should remain in the page layout:
 />
 ```
 
-See [NameRegistration](docs/components/name-registration.md) for
-customization, lifecycle events, defaults, and flow behavior.
+See
+[NameRegistration](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-registration.md)
+for customization, lifecycle events, defaults, and flow behavior.
 
 ## Documentation
 
 ### Components
 
-- [NameRegistration](docs/components/name-registration.md)
-- [TransactionProgress](docs/components/transaction-progress.md)
+- [NameRegistration](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-registration.md)
+- [TransactionProgress](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/transaction-progress.md)
 
 ### Providers
 
-- [EnsProvider](docs/providers/ens-provider.md)
+- [EnsProvider](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/providers/ens-provider.md)
 
 ### Hooks
 
-- [useNameAvailability](docs/hooks/use-name-availability.md)
-- [useNamePrice](docs/hooks/use-name-price.md)
-- [useCommitmentStatus](docs/hooks/use-commitment-status.md)
-- [useRegistrationPaymentStatus](docs/hooks/use-registration-payment-status.md)
+- [useNameAvailability](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-availability.md)
+- [useNamePrice](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-price.md)
+- [useCommitmentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-commitment-status.md)
+- [useRegistrationPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-registration-payment-status.md)
 
 ### Actions
 
-- [parseNameInput](docs/actions/parse-name-input.md)
-- [isNameAvailable](docs/actions/is-name-available.md)
-- [getNamePrice](docs/actions/get-name-price.md)
-- [makeNameCommitment](docs/actions/make-name-commitment.md)
-- [commitName](docs/actions/commit-name.md)
-- [getCommitmentStatus](docs/actions/get-commitment-status.md)
-- [getRegistrationPaymentStatus](docs/actions/get-registration-payment-status.md)
-- [approveRegistrationPayment](docs/actions/approve-registration-payment.md)
-- [registerName](docs/actions/register-name.md)
+- [parseNameInput](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/parse-name-input.md)
+- [isNameAvailable](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/is-name-available.md)
+- [getNamePrice](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/get-name-price.md)
+- [makeNameCommitment](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/make-name-commitment.md)
+- [commitName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/commit-name.md)
+- [getCommitmentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/get-commitment-status.md)
+- [getRegistrationPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/get-registration-payment-status.md)
+- [approveRegistrationPayment](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/approve-registration-payment.md)
+- [registerName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/register-name.md)
