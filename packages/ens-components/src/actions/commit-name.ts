@@ -197,7 +197,7 @@ export function commitName(
     return errAsync("INVALID_ACCOUNT_ADDRESS");
   }
 
-  if (!isAddress(registrarAddress)) {
+  if (!isAddress(registrarAddress) || registrarAddress === zeroAddress) {
     return errAsync("INVALID_REGISTRAR_ADDRESS");
   }
 

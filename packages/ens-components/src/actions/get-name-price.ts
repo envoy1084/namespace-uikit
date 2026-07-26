@@ -1,7 +1,13 @@
 import type { EnsNetwork } from "#/data";
 
 import { err, errAsync, ok, ResultAsync } from "neverthrow";
-import { erc20Abi, isAddress, type Address, type PublicClient } from "viem";
+import {
+  erc20Abi,
+  isAddress,
+  zeroAddress,
+  type Address,
+  type PublicClient,
+} from "viem";
 
 import {
   parseNameInput,
@@ -77,11 +83,11 @@ export function getNamePrice(
     return errAsync("LABEL_TOO_SHORT");
   }
 
-  if (!isAddress(registrarAddress)) {
+  if (!isAddress(registrarAddress) || registrarAddress === zeroAddress) {
     return errAsync("INVALID_REGISTRAR_ADDRESS");
   }
 
-  if (!isAddress(paymentTokenAddress)) {
+  if (!isAddress(paymentTokenAddress) || paymentTokenAddress === zeroAddress) {
     return errAsync("INVALID_PAYMENT_TOKEN_ADDRESS");
   }
 

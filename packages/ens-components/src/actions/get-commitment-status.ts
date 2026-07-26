@@ -5,6 +5,7 @@ import {
   isAddress,
   isHex,
   size,
+  zeroAddress,
   type Address,
   type Hex,
   type PublicClient,
@@ -61,7 +62,7 @@ export function getCommitmentStatus(
     return errAsync("INVALID_COMMITMENT");
   }
 
-  if (!isAddress(registrarAddress)) {
+  if (!isAddress(registrarAddress) || registrarAddress === zeroAddress) {
     return errAsync("INVALID_REGISTRAR_ADDRESS");
   }
 

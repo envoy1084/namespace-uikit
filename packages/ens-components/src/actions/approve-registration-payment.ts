@@ -40,11 +40,11 @@ export function approveRegistrationPayment(
     return errAsync("INVALID_ACCOUNT_ADDRESS");
   }
 
-  if (!isAddress(paymentTokenAddress)) {
+  if (!isAddress(paymentTokenAddress) || paymentTokenAddress === zeroAddress) {
     return errAsync("INVALID_PAYMENT_TOKEN_ADDRESS");
   }
 
-  if (!isAddress(registrarAddress)) {
+  if (!isAddress(registrarAddress) || registrarAddress === zeroAddress) {
     return errAsync("INVALID_REGISTRAR_ADDRESS");
   }
 

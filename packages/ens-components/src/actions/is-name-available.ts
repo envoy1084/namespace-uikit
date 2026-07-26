@@ -1,7 +1,7 @@
 import type { EnsNetwork } from "#/data";
 
 import { errAsync, ResultAsync } from "neverthrow";
-import { isAddress, type Address, type PublicClient } from "viem";
+import { isAddress, zeroAddress, type Address, type PublicClient } from "viem";
 
 import {
   parseNameInput,
@@ -52,7 +52,7 @@ export function isNameAvailable(
     return errAsync("LABEL_TOO_SHORT");
   }
 
-  if (!isAddress(registrarAddress)) {
+  if (!isAddress(registrarAddress) || registrarAddress === zeroAddress) {
     return errAsync("INVALID_REGISTRAR_ADDRESS");
   }
 
