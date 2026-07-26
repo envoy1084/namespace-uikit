@@ -1,10 +1,10 @@
-# prepareRegisterName
+# prepareRegisterNameWrite
 
 Validates the reveal parameters and prepares the registrar `register` write.
 The inputs must match the original commitment exactly.
 
 ```ts
-const registration = prepareRegisterName({
+const registration = prepareRegisterNameWrite({
   account,
   duration,
   input: "example.eth",
@@ -19,7 +19,7 @@ const registration = prepareRegisterName({
 });
 
 if (registration.isOk()) {
-  const result = await executeContractCalls(walletClient, publicClient, {
+  const result = await executeContractWrites(walletClient, publicClient, {
     calls: [registration.value],
     chain,
     strategy: "single",

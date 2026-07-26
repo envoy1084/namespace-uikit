@@ -66,5 +66,5 @@ Amounts are payment-token atomic units. The generated query key includes the
 network, contract addresses, account, duration, and input.
 
 See
-[`prepareRegistrationPaymentStatusRead`](../actions/prepare-registration-payment-status-read.md)
+[`prepareRegistrationPaymentStatusRead`](../actions/read/prepare-read-registration-payment-status.md)
 for reads and error codes.

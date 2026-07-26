@@ -14,7 +14,7 @@ const prepared = prepareRegistrationPaymentStatusRead({
 });
 
 if (prepared.isOk()) {
-  const status = await executeContractReadPlan(publicClient, prepared.value);
+  const status = await executeContractReads(publicClient, prepared.value);
 }
 ```
 

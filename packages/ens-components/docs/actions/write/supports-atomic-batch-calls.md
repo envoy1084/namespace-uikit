@@ -1,6 +1,6 @@
 # supportsAtomicBatchCalls
 
-Checks whether a connected wallet supports atomic EIP-5792 batch calls on a
+Checks whether a connected wallet supports atomic EIP-5792 calls on a
 specific chain.
 
 ```ts

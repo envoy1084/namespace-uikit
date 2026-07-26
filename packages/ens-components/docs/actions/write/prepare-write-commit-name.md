@@ -1,10 +1,10 @@
-# prepareCommitName
+# prepareCommitNameWrite
 
 Validates commitment-bound registration input and prepares the registrar
 `commit(bytes32)` write. No transaction is submitted.
 
 ```ts
-const prepared = prepareCommitName({
+const prepared = prepareCommitNameWrite({
   account,
   duration,
   input: "example.eth",
@@ -18,7 +18,7 @@ const prepared = prepareCommitName({
 });
 
 if (prepared.isOk()) {
-  const result = await executeContractCalls(walletClient, publicClient, {
+  const result = await executeContractWrites(walletClient, publicClient, {
     calls: [prepared.value],
     chain,
     strategy: "single",

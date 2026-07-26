@@ -4,7 +4,7 @@ Read actions validate domain input and return typed read requests. They do not
 access an RPC endpoint until passed to an executor.
 
 Use `executeContractRead` for one prepared read and
-`executeContractReadPlan` for a prepared multicall plan.
+`executeContractReads` for a prepared multicall plan.
 
 ```ts
 import {
@@ -39,7 +39,7 @@ const prepared = prepareNamePriceRead({
 
 if (prepared.isErr()) throw new Error(prepared.error);
 
-const price = await executeContractReadPlan(publicClient, prepared.value);
+const price = await executeContractReads(publicClient, prepared.value);
 ```
 
 Both executors return `ResultAsync`. RPC or decode failures use

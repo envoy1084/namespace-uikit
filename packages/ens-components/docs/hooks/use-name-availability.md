@@ -39,8 +39,7 @@ interface UseNameAvailabilityParameters<selectData = boolean> {
 The query is disabled while input is changing, when no public client is
 available, or when the normalized input is not a second-level `.eth` name.
 Invalid input therefore does not produce an error in the query result. Use
-[`parseNameInput`](../actions/parse-name-input.md) when validation feedback is
-required before querying.
+`parseNameInput` when validation feedback is required before querying.
 
 ## Return value
 

@@ -1,7 +1,7 @@
 # prepareNameAvailabilityRead
 
 Validates and normalizes a second-level `.eth` name, then prepares the
-registrar `isAvailable` read.
+registrar `isAvailable` contract read.
 
 ```ts
 const prepared = prepareNameAvailabilityRead({

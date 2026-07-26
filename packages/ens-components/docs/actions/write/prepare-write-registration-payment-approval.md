@@ -1,9 +1,9 @@
-# prepareRegistrationPaymentApproval
+# prepareRegistrationPaymentApprovalWrite
 
 Prepares an ERC-20 approval for the registrar.
 
 ```ts
-const approval = prepareRegistrationPaymentApproval({
+const approval = prepareRegistrationPaymentApprovalWrite({
   account,
   amount,
   network: "testnet",
@@ -13,7 +13,7 @@ const approval = prepareRegistrationPaymentApproval({
 ```
 
 The prepared call approves exactly `amount`. Execute it with
-`executeContractCalls`.
+`executeContractWrites`.
 
 ## Errors
 

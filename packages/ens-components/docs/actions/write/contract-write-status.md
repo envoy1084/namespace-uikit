@@ -1,4 +1,4 @@
-# Contract call status
+# Contract write status
 
 `getContractCallsStatus` reads an EIP-5792 call bundle once.
 `waitForContractCalls` waits for a terminal wallet status.

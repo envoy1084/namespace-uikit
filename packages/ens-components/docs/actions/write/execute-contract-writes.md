@@ -1,10 +1,10 @@
-# executeContractCalls
+# executeContractWrites
 
 Executes one or more prepared writes using a single transaction, an atomic
 EIP-5792 batch, or an ordered transaction sequence.
 
 ```ts
-const result = await executeContractCalls(walletClient, publicClient, {
+const result = await executeContractWrites(walletClient, publicClient, {
   calls: [resolverDeployment, commitment],
   chain,
   confirmation: "confirmed",

@@ -1,4 +1,4 @@
-# preparePermissionedResolverDeployment
+# preparePermissionedResolverDeploymentWrite
 
 Simulates a `PermissionedResolver` proxy deployment and returns its
 deterministic address and encoded factory call. It does not send a transaction.
@@ -6,13 +6,13 @@ deterministic address and encoded factory call. It does not send a transaction.
 ```ts
 import {
   createResolverSalt,
-  preparePermissionedResolverDeployment,
+  preparePermissionedResolverDeploymentWrite,
 } from "ens-components";
 
 const salt = createResolverSalt({ input: "example.eth" });
 if (salt.isErr()) throw new Error(salt.error);
 
-const result = await preparePermissionedResolverDeployment(publicClient, {
+const result = await preparePermissionedResolverDeploymentWrite(publicClient, {
   account,
   factoryAddress,
   implementationAddress,
@@ -25,12 +25,12 @@ const result = await preparePermissionedResolverDeployment(publicClient, {
 ## Signature
 
 ```ts
-function preparePermissionedResolverDeployment(
+function preparePermissionedResolverDeploymentWrite(
   publicClient: PublicClient,
-  props: PreparePermissionedResolverDeploymentProps,
+  props: PreparePermissionedResolverDeploymentWriteProps,
 ): ResultAsync<
-  PreparedPermissionedResolverDeployment,
-  PreparePermissionedResolverDeploymentError
+  PreparedPermissionedResolverDeploymentWrite,
+  PreparePermissionedResolverDeploymentWriteError
 >;
 ```
 
@@ -49,13 +49,13 @@ function preparePermissionedResolverDeployment(
 
 The prepared write contains:
 
-- `call`, the encoded factory call used by `executeContractCalls`;
+- `call`, the encoded factory call used by `executeContractWrites`;
 - `request`, the ABI-inferred `deployProxy` request;
 - `metadata.resolverAddress`, the simulated proxy address;
 - `metadata.initData` and `metadata.salt`;
 - `account` and the stable kind `deploy-permissioned-resolver`.
 
-Compose it with `prepareCommitName` and use `strategy: "auto"` to select an
+Compose it with `prepareCommitNameWrite` and use `strategy: "auto"` to select an
 atomic wallet batch when supported, otherwise an ordered sequence.
 
 ## Errors

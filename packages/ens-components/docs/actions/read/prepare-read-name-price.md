@@ -13,7 +13,7 @@ const prepared = prepareNamePriceRead({
 });
 
 if (prepared.isOk()) {
-  const price = await executeContractReadPlan(publicClient, prepared.value);
+  const price = await executeContractReads(publicClient, prepared.value);
 }
 ```
 

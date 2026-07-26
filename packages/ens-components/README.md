@@ -124,20 +124,21 @@ for customization, lifecycle events, defaults, and flow behavior.
 
 ### Actions
 
-- [parseNameInput](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/parse-name-input.md)
-- [Prepared reads and read executors](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/contract-reads.md)
-- [prepareNameAvailabilityRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/prepare-name-availability-read.md)
-- [prepareNamePriceRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/prepare-name-price-read.md)
-- [prepareRegistrationPaymentStatusRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/prepare-registration-payment-status-read.md)
-- [makeNameCommitment](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/make-name-commitment.md)
-- [prepareCommitName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/prepare-commit-name.md)
-- [getCommitmentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/get-commitment-status.md)
-- [prepareRegistrationPaymentApproval](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/prepare-registration-payment-approval.md)
-- [prepareRegisterName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/prepare-register-name.md)
-- [executeContractCalls](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/execute-contract-calls.md)
-- [supportsAtomicBatchCalls](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/supports-atomic-batch-calls.md)
-- [createResolverSalt](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/create-resolver-salt.md)
-- [preparePermissionedResolverDeployment](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/prepare-permissioned-resolver-deployment.md)
-- [getPermissionedResolverStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/get-permissioned-resolver-status.md)
-- [isResolverDeployed](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/is-resolver-deployed.md)
-- [getContractCallsStatus and waitForContractCalls](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/contract-call-status.md)
+#### Reads
+
+- [Prepared reads and executors](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/contract-reads.md)
+- [prepareNameAvailabilityRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-availability.md)
+- [prepareNamePriceRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-price.md)
+- [prepareRegistrationPaymentStatusRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-registration-payment-status.md)
+- [prepareCommitmentStatusRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-commitment-status.md)
+- [preparePermissionedResolverVerificationRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-permissioned-resolver-verification.md)
+
+#### Writes
+
+- [prepareCommitNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-commit-name.md)
+- [prepareRegistrationPaymentApprovalWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-registration-payment-approval.md)
+- [prepareRegisterNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-register-name.md)
+- [preparePermissionedResolverDeploymentWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-permissioned-resolver-deployment.md)
+- [executeContractWrites](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/execute-contract-writes.md)
+- [supportsAtomicBatchCalls](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/supports-atomic-batch-calls.md)
+- [getContractCallsStatus and waitForContractCalls](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/contract-write-status.md)
