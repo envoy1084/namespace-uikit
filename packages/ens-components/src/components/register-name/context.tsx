@@ -18,15 +18,17 @@ import {
   type SetStateAction,
 } from "react";
 
-import { getAddress, isAddress, slice, zeroAddress, zeroHash } from "viem";
+import { isAddress, isAddressEqual, zeroAddress, zeroHash } from "viem";
 
 import { DEFAULT_NAME_REGISTRATION_MESSAGES } from "#/components/register-name/customization";
+import {
+  decodeReferrerAddress,
+  DEFAULT_REGISTRATION_DURATION,
+  MIN_REGISTRATION_DURATION,
+  resolvePaymentToken,
+} from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
-export const REGISTRATION_SECONDS_PER_DAY = 86_400n;
-export const REGISTRATION_SECONDS_PER_YEAR = 31_557_600n;
-export const MIN_REGISTRATION_DURATION = 28n * REGISTRATION_SECONDS_PER_DAY;
-export const DEFAULT_REGISTRATION_DURATION = REGISTRATION_SECONDS_PER_YEAR;
 export const COMMITMENT_WAIT_DURATION_MS = 60_000;
 export const COMMITMENT_VALID_DURATION_MS = 24 * 60 * 60 * 1_000;
 
@@ -76,14 +78,9 @@ export interface NameRegistrationProviderProps {
 const NameRegistrationContext =
   createContext<NameRegistrationContextValue | null>(null);
 
-function getReferrerInput(referrer: Hex) {
+function getReferrerInput(referrer: Hex): string {
   if (referrer === zeroHash) return "";
-
-  try {
-    return getAddress(slice(referrer, 12));
-  } catch {
-    return "";
-  }
+  return decodeReferrerAddress(referrer) ?? "";
 }
 
 export function NameRegistrationProvider({
@@ -100,12 +97,10 @@ export function NameRegistrationProvider({
   slots = {},
 }: NameRegistrationProviderProps) {
   const { contracts } = useEnsConfig();
-  const initialPaymentToken =
-    contracts.paymentTokens.find(
-      (token) =>
-        token.address.toLowerCase() ===
-        defaultPaymentTokenAddress?.toLowerCase(),
-    ) ?? contracts.paymentTokens[0];
+  const initialPaymentToken = resolvePaymentToken(
+    contracts.paymentTokens,
+    defaultPaymentTokenAddress,
+  );
   const [registrationAttemptId, setRegistrationAttemptId] = useState<
     string | null
   >(null);
@@ -136,7 +131,7 @@ export function NameRegistrationProvider({
   const isResolverValid =
     trimmedResolverInput === "" ||
     (isAddress(trimmedResolverInput) &&
-      getAddress(trimmedResolverInput) !== zeroAddress);
+      !isAddressEqual(trimmedResolverInput, zeroAddress));
   const resolvedMessages = {
     ...DEFAULT_NAME_REGISTRATION_MESSAGES,
     ...messages,

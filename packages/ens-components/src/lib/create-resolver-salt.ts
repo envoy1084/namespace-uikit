@@ -1,6 +1,7 @@
 import { err, ok, type Result } from "neverthrow";
-import { bytesToHex, keccak256, toBytes, type Hex } from "viem";
+import { keccak256, toBytes, type Hex } from "viem";
 
+import { createRandomBytes32 } from "#/lib/helpers";
 import {
   parseNameInput,
   type ParseNameInputError,
@@ -40,7 +41,7 @@ export function createResolverSalt(
     return err("UNSUPPORTED_NAME");
   }
 
-  const random = bytesToHex(crypto.getRandomValues(new Uint8Array(32)));
+  const random = createRandomBytes32();
   const normalizedName = parsedInput.value.normalizedName;
 
   return ok({

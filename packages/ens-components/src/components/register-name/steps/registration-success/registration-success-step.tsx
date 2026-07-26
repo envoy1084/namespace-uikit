@@ -1,12 +1,9 @@
 import { Avatar, Button, Surface, Typography } from "@thenamespace/uikit";
 
-import {
-  REGISTRATION_SECONDS_PER_DAY,
-  REGISTRATION_SECONDS_PER_YEAR,
-  useNameRegistration,
-} from "#/components/register-name/context";
+import { useNameRegistration } from "#/components/register-name/context";
 import { NameRegistrationBody } from "#/components/register-name/layout";
 import { formatTokenAmount } from "#/lib";
+import { formatRegistrationDuration } from "#/lib/helpers";
 
 const RegistrationSuccessGraphic = new URL(
   "../../../../assets/register-ens-success.svg",
@@ -26,16 +23,6 @@ export interface RegistrationSuccessDetails {
 export interface RegistrationSuccessStepProps {
   onDone: () => void;
   registration: RegistrationSuccessDetails;
-}
-
-function formatDuration(duration: bigint) {
-  if (duration % REGISTRATION_SECONDS_PER_YEAR === 0n) {
-    const years = duration / REGISTRATION_SECONDS_PER_YEAR;
-    return `${years} ${years === 1n ? "year" : "years"}`;
-  }
-
-  const days = duration / REGISTRATION_SECONDS_PER_DAY;
-  return `${days} ${days === 1n ? "day" : "days"}`;
 }
 
 export function RegistrationSuccessStep({
@@ -80,7 +67,7 @@ export function RegistrationSuccessStep({
                 Registration duration
               </Typography.Paragraph>
               <Typography.Paragraph size="sm" weight="medium">
-                {formatDuration(registration.duration)}
+                {formatRegistrationDuration(registration.duration)}
               </Typography.Paragraph>
             </div>
             <div className="border-default mt-3 flex items-center justify-between gap-4 border-t pt-3">

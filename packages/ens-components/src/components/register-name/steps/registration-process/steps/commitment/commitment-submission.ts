@@ -175,19 +175,6 @@ function buildSuccess(
   result: ExecuteContractWritesResult,
 ): CommitmentSubmissionSuccess {
   const confirmedAt = Date.now();
-  if (result.strategy === "atomic") {
-    const resolverTransactionHash = result.transactionHashes.at(0);
-    const transactionHash = result.transactionHashes.at(-1);
-    return {
-      callsId: result.callsId,
-      confirmedAt,
-      ...(resolverTransactionHash === undefined
-        ? {}
-        : { resolverTransactionHash }),
-      ...(transactionHash === undefined ? {} : { transactionHash }),
-    };
-  }
-
   const resolver = result.transactions.find(
     ({ prepared }) => prepared.kind === "deploy-permissioned-resolver",
   );
@@ -196,6 +183,7 @@ function buildSuccess(
   );
 
   return {
+    ...(result.strategy === "atomic" ? { callsId: result.callsId } : {}),
     ...(commitment?.receipt === undefined
       ? {}
       : { commitmentReceipt: commitment.receipt }),

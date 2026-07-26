@@ -22,6 +22,7 @@ import { sendCalls } from "viem/actions";
 
 import { waitForContractCalls } from "#/actions/write/contract-write-status";
 import { supportsAtomicBatchCalls } from "#/actions/write/wallet-capabilities";
+import { waitForSuccessfulTransactionReceipt } from "#/lib/helpers";
 
 export type ExecuteContractWritesError =
   | "ATOMIC_BATCH_FAILED"
@@ -99,25 +100,6 @@ function validateCalls(
     : err("MISMATCHED_ACCOUNTS");
 }
 
-async function waitForReceipt(
-  publicClient: PublicClient,
-  transactionHash: `0x${string}`,
-  timeout?: number,
-): Promise<Result<TransactionReceipt, ExecuteContractWritesError>> {
-  try {
-    const receipt = await publicClient.waitForTransactionReceipt({
-      hash: transactionHash,
-      ...(timeout === undefined ? {} : { timeout }),
-    });
-
-    return receipt.status === "success"
-      ? ok(receipt)
-      : err("TRANSACTION_REVERTED");
-  } catch {
-    return err("TRANSACTION_CONFIRMATION_FAILED");
-  }
-}
-
 async function resolveStrategy(
   walletClient: WalletClient,
   calls: ExecuteContractWritesProps["calls"],
@@ -185,11 +167,10 @@ async function executeTransactions(
       continue;
     }
 
-    const receipt = await waitForReceipt(
-      publicClient,
+    const receipt = await waitForSuccessfulTransactionReceipt(publicClient, {
       transactionHash,
-      props.timeout,
-    );
+      ...(props.timeout === undefined ? {} : { timeout: props.timeout }),
+    });
     if (receipt.isErr()) return err(receipt.error);
 
     transactions.push({
@@ -271,7 +252,10 @@ async function executeAtomic(
 
   const receipts = await Promise.all(
     transactionHashes.map((transactionHash) =>
-      waitForReceipt(publicClient, transactionHash, props.timeout),
+      waitForSuccessfulTransactionReceipt(publicClient, {
+        transactionHash,
+        ...(props.timeout === undefined ? {} : { timeout: props.timeout }),
+      }),
     ),
   );
   const confirmedReceipts: TransactionReceipt[] = [];

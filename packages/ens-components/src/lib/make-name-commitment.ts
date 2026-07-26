@@ -2,14 +2,13 @@ import { err, ok, type Result } from "neverthrow";
 import {
   encodeAbiParameters,
   isAddress,
-  isHex,
   keccak256,
-  size,
   zeroAddress,
   type Address,
   type Hex,
 } from "viem";
 
+import { isBytes32 } from "#/lib/helpers";
 import {
   parseNameInput,
   type ParseNameInputError,
@@ -40,10 +39,6 @@ export interface MakeNameCommitmentProps {
 export interface MakeNameCommitmentResult {
   readonly commitment: Hex;
   readonly label: string;
-}
-
-function isBytes32(value: Hex): boolean {
-  return isHex(value) && size(value) === 32;
 }
 
 /** Builds the commitment hash used by the ENSv2 ETHRegistrar. */

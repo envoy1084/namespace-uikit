@@ -14,22 +14,13 @@ import { useNameRegistration } from "#/components/register-name/context";
 import { useRegistrationPayment } from "#/components/register-name/steps/registration-process/steps/registration-payment/use-registration-payment";
 import { TransactionProgress } from "#/components/transaction-progress";
 import { formatError, formatTokenAmount } from "#/lib";
+import { formatRegistrationTimeRemaining } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export interface RegistrationPaymentProps {
   onCommitmentInvalid: (error: unknown) => void;
   onPendingChange?: (isPending: boolean) => void;
   onSuccess: (registration: RegistrationSuccessDetails) => void;
-}
-
-function formatTimeRemaining(milliseconds: number) {
-  const totalMinutes = Math.max(0, Math.ceil(milliseconds / 60_000));
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-
-  if (hours === 0) return `${minutes} min`;
-  if (minutes === 0) return `${hours} hr`;
-  return `${hours} hr ${minutes} min`;
 }
 
 export function RegistrationPayment({
@@ -83,7 +74,7 @@ export function RegistrationPayment({
         size="xs"
       >
         Complete registration within{" "}
-        {formatTimeRemaining(registration.timeRemaining)}.
+        {formatRegistrationTimeRemaining(registration.timeRemaining)}.
       </Typography.Paragraph>
       {(registration.actionStatus === "confirming-approval" ||
         registration.actionStatus === "confirming-batch" ||

@@ -8,6 +8,10 @@ import type {
 
 import { useEffect } from "react";
 
+import { isAddressEqual } from "viem";
+
+import { resolvePaymentToken } from "#/lib/helpers";
+
 export interface UseRegistrationPaymentTokenProps {
   attempt: StoredRegistrationAttempt | undefined;
   paymentTokens: EnsPaymentTokens;
@@ -19,18 +23,15 @@ export function useRegistrationPaymentToken({
   paymentTokens,
   updateAttempt,
 }: UseRegistrationPaymentTokenProps) {
-  const paymentToken =
-    paymentTokens.find(
-      (token) =>
-        token.address.toLowerCase() ===
-        attempt?.paymentTokenAddress.toLowerCase(),
-    ) ?? paymentTokens[0];
+  const paymentToken = resolvePaymentToken(
+    paymentTokens,
+    attempt?.paymentTokenAddress,
+  );
 
   useEffect(() => {
     if (
       attempt !== undefined &&
-      attempt.paymentTokenAddress.toLowerCase() !==
-        paymentToken.address.toLowerCase()
+      !isAddressEqual(attempt.paymentTokenAddress, paymentToken.address)
     ) {
       updateAttempt(attempt.id, {
         paymentTokenAddress: paymentToken.address,

@@ -26,6 +26,7 @@ import {
   useRegistrationAttempts,
   type StoredRegistrationAttempt,
 } from "#/hooks/use-registration-attempts";
+import { delay, parseRegistrationDuration } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export type CommitmentSubmissionStatus =
@@ -120,12 +121,7 @@ export function useCommitmentSubmission({
       setStatus(progress.state === "signing" ? "signing" : "confirming");
 
       if (progress.state === "confirmed") {
-        await new Promise((resolve) =>
-          window.setTimeout(
-            resolve,
-            TRANSACTION_PROGRESS_COMPLETION_DURATION_MS,
-          ),
-        );
+        await delay(TRANSACTION_PROGRESS_COMPLETION_DURATION_MS);
       }
     },
     [],
@@ -184,6 +180,8 @@ export function useCommitmentSubmission({
       attempt: StoredRegistrationAttempt,
       result: CommitmentSubmissionSuccess,
     ) => {
+      const attemptDuration = parseRegistrationDuration(attempt.duration);
+
       if (
         attempt.resolver.type === "dedicated" &&
         result.resolverReceipt !== undefined &&
@@ -202,6 +200,7 @@ export function useCommitmentSubmission({
       }
 
       if (
+        attemptDuration !== undefined &&
         result.commitmentReceipt !== undefined &&
         result.transactionHash !== undefined
       ) {
@@ -209,7 +208,7 @@ export function useCommitmentSubmission({
           chainId: chain.id,
           commitment: attempt.commitment,
           registrationAttemptId: attempt.id,
-          duration: BigInt(attempt.duration),
+          duration: attemptDuration,
           name: attempt.normalizedName,
           network,
           owner: attempt.owner,

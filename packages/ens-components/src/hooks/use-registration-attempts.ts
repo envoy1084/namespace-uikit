@@ -5,7 +5,9 @@ import type { Address, Hex } from "viem";
 import { useCallback } from "react";
 
 import { useLocalStorage } from "usehooks-ts";
+import { isAddressEqual } from "viem";
 
+import { areHexValuesEqual } from "#/lib/helpers";
 import { parseNameInput } from "#/lib/parse-name-input";
 
 export const REGISTRATION_ATTEMPTS_STORAGE_KEY =
@@ -106,10 +108,6 @@ export interface FindRegistrationAttemptInput {
   subregistry: Address;
 }
 
-function addressesEqual(left: Address, right: Address): boolean {
-  return left.toLowerCase() === right.toLowerCase();
-}
-
 function resolverMatches(
   resolver: StoredRegistrationResolver,
   resolverAddress: Address | null | undefined,
@@ -120,7 +118,7 @@ function resolverMatches(
 
   return (
     resolver.type === "custom" &&
-    addressesEqual(resolver.address, resolverAddress)
+    isAddressEqual(resolver.address, resolverAddress)
   );
 }
 
@@ -142,13 +140,13 @@ export function useRegistrationAttempts() {
       >((latest, candidate) => {
         const matches =
           candidate.chainId === input.chainId &&
-          addressesEqual(candidate.account, input.account) &&
-          addressesEqual(candidate.owner, input.owner) &&
-          addressesEqual(candidate.registrarAddress, input.registrarAddress) &&
+          isAddressEqual(candidate.account, input.account) &&
+          isAddressEqual(candidate.owner, input.owner) &&
+          isAddressEqual(candidate.registrarAddress, input.registrarAddress) &&
           candidate.normalizedName === parsedInput.value.normalizedName &&
           candidate.duration === input.duration.toString() &&
-          candidate.referrer.toLowerCase() === input.referrer.toLowerCase() &&
-          addressesEqual(candidate.subregistry, input.subregistry) &&
+          areHexValuesEqual(candidate.referrer, input.referrer) &&
+          isAddressEqual(candidate.subregistry, input.subregistry) &&
           resolverMatches(candidate.resolver, input.resolverAddress);
 
         if (

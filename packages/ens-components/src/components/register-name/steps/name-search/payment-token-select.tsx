@@ -7,6 +7,8 @@ import type { EnsPaymentToken, EnsPaymentTokens } from "#/data";
 import { Avatar, InlineSelect } from "@thenamespace/uikit";
 import { ListBox } from "@thenamespace/uikit/list-box";
 
+import { findPaymentToken, resolvePaymentToken } from "#/lib/helpers";
+
 interface PaymentTokenIconProps {
   token: EnsPaymentToken;
 }
@@ -33,10 +35,7 @@ export function PaymentTokenSelect({
   tokens,
   value,
 }: PaymentTokenSelectProps) {
-  const selectedToken =
-    tokens.find(
-      (token) => token.address.toLowerCase() === value.toLowerCase(),
-    ) ?? tokens[0];
+  const selectedToken = resolvePaymentToken(tokens, value);
 
   return (
     <InlineSelect
@@ -44,11 +43,7 @@ export function PaymentTokenSelect({
       isDisabled={isDisabled}
       value={selectedToken.address}
       onChange={(nextValue) => {
-        const token = tokens.find(
-          (candidate) =>
-            candidate.address.toLowerCase() ===
-            nextValue?.toString().toLowerCase(),
-        );
+        const token = findPaymentToken(tokens, nextValue?.toString());
 
         if (token !== undefined) onChange(token.address);
       }}

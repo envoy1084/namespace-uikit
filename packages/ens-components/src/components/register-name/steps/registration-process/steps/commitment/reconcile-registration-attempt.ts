@@ -6,11 +6,7 @@ import type {
 } from "#/hooks/use-registration-attempts";
 
 import { err, ok, type Result } from "neverthrow";
-import {
-  type PublicClient,
-  type TransactionReceipt,
-  type WalletClient,
-} from "viem";
+import { type PublicClient, type WalletClient } from "viem";
 
 import { waitForContractCalls } from "#/actions";
 import {
@@ -19,6 +15,7 @@ import {
 } from "#/components/register-name/steps/registration-process/steps/commitment/read-commitment-status";
 import { readPermissionedResolverStatus } from "#/components/register-name/steps/registration-process/steps/commitment/read-resolver-status";
 import { renewRegistrationAttempt } from "#/components/register-name/steps/registration-process/steps/commitment/registration-attempt";
+import { waitForSuccessfulTransactionReceipt } from "#/lib/helpers";
 
 export type RegistrationAttemptReconciliation =
   | {
@@ -39,23 +36,6 @@ export interface ReconcileRegistrationAttemptProps {
   publicClient: PublicClient;
   walletClient?: WalletClient;
   onUpdate: (updates: RegistrationAttemptUpdate) => void;
-}
-
-async function waitForReceipt(
-  publicClient: PublicClient,
-  transactionHash: `0x${string}`,
-): Promise<Result<TransactionReceipt, string>> {
-  try {
-    const receipt = await publicClient.waitForTransactionReceipt({
-      hash: transactionHash,
-    });
-
-    return receipt.status === "success"
-      ? ok(receipt)
-      : err("TRANSACTION_REVERTED");
-  } catch {
-    return err("TRANSACTION_CONFIRMATION_FAILED");
-  }
 }
 
 function getConfirmedSubmission(
@@ -114,9 +94,9 @@ async function reconcileResolver(
     return ok({ state: "READY" });
   }
 
-  const receipt = await waitForReceipt(
+  const receipt = await waitForSuccessfulTransactionReceipt(
     props.publicClient,
-    attempt.submission.transactionHash,
+    { transactionHash: attempt.submission.transactionHash },
   );
   if (receipt.isErr()) {
     if (receipt.error === "TRANSACTION_REVERTED") {
@@ -221,9 +201,9 @@ export async function reconcileRegistrationAttempt(
   }
 
   if (props.attempt.submission.type === "commitment-pending") {
-    const receipt = await waitForReceipt(
+    const receipt = await waitForSuccessfulTransactionReceipt(
       props.publicClient,
-      props.attempt.submission.transactionHash,
+      { transactionHash: props.attempt.submission.transactionHash },
     );
     if (receipt.isErr()) {
       if (receipt.error === "TRANSACTION_REVERTED") {

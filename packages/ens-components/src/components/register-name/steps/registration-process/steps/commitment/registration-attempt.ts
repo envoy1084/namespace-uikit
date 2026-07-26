@@ -15,17 +15,12 @@ import type { MakeNameCommitmentError } from "#/lib/make-name-commitment";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 
 import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
-import {
-  bytesToHex,
-  zeroAddress,
-  type Address,
-  type Hex,
-  type PublicClient,
-} from "viem";
+import { zeroAddress, type Address, type Hex, type PublicClient } from "viem";
 
 import { preparePermissionedResolverDeploymentWrite } from "#/actions";
 import { isResolverDeployed } from "#/components/register-name/steps/registration-process/steps/commitment/read-resolver-status";
 import { createResolverSalt, makeNameCommitment, parseNameInput } from "#/lib";
+import { createRandomBytes32, parseRegistrationDuration } from "#/lib/helpers";
 
 export type PrepareRegistrationAttemptError =
   | "INVALID_DURATION"
@@ -49,10 +44,6 @@ export interface PrepareRegistrationAttemptProps {
   referrer: Hex;
   registrarAddress: Address;
   resolverAddress: Address | null;
-}
-
-function createSecret(): Hex {
-  return bytesToHex(crypto.getRandomValues(new Uint8Array(32)));
 }
 
 function buildRegistrationAttempt(
@@ -100,7 +91,7 @@ export function prepareRegistrationAttempt(
   publicClient: PublicClient,
   props: PrepareRegistrationAttemptProps,
 ): ResultAsync<RegistrationAttemptInput, PrepareRegistrationAttemptError> {
-  const secret = createSecret();
+  const secret = createRandomBytes32();
 
   if (props.resolverAddress !== null) {
     const resolverAddress = props.resolverAddress;
@@ -155,15 +146,10 @@ export function renewRegistrationAttempt(
   RegistrationAttemptUpdate,
   "INVALID_DURATION" | MakeNameCommitmentError | ParseNameInputError
 > {
-  let duration: bigint;
+  const duration = parseRegistrationDuration(attempt.duration);
+  if (duration === undefined) return err("INVALID_DURATION");
 
-  try {
-    duration = BigInt(attempt.duration);
-  } catch {
-    return err("INVALID_DURATION");
-  }
-
-  const secret = createSecret();
+  const secret = createRandomBytes32();
   const commitment = makeNameCommitment({
     duration,
     input: attempt.normalizedName,
@@ -187,20 +173,19 @@ export function getAttemptCommitNameProps(
   attempt: StoredRegistrationAttempt,
   network: EnsNetwork,
 ): PrepareCommitNameWriteProps | undefined {
-  try {
-    return {
-      account: attempt.account,
-      duration: BigInt(attempt.duration),
-      input: attempt.normalizedName,
-      network,
-      owner: attempt.owner,
-      referrer: attempt.referrer,
-      registrarAddress: attempt.registrarAddress,
-      resolverAddress: attempt.resolver.address,
-      secret: attempt.secret,
-      subregistryAddress: attempt.subregistry,
-    };
-  } catch {
-    return undefined;
-  }
+  const duration = parseRegistrationDuration(attempt.duration);
+  if (duration === undefined) return undefined;
+
+  return {
+    account: attempt.account,
+    duration,
+    input: attempt.normalizedName,
+    network,
+    owner: attempt.owner,
+    referrer: attempt.referrer,
+    registrarAddress: attempt.registrarAddress,
+    resolverAddress: attempt.resolver.address,
+    secret: attempt.secret,
+    subregistryAddress: attempt.subregistry,
+  };
 }

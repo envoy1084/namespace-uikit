@@ -1,6 +1,11 @@
 import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-success";
 
-import { parseEventLogs, type Address, type TransactionReceipt } from "viem";
+import {
+  isAddressEqual,
+  parseEventLogs,
+  type Address,
+  type TransactionReceipt,
+} from "viem";
 
 import { ethRegistrarAbi } from "#/data/abi";
 
@@ -34,16 +39,6 @@ export type PaymentActionStatus =
   | "registering"
   | "switching";
 
-export function parseStoredDuration(value: string | undefined) {
-  if (value === undefined) return 0n;
-
-  try {
-    return BigInt(value);
-  } catch {
-    return 0n;
-  }
-}
-
 export function getRegistrationDetails({
   decimals,
   fallbackAmount,
@@ -60,8 +55,8 @@ export function getRegistrationDetails({
       return parseEventLogs({
         abi: ethRegistrarAbi,
         eventName: "NameRegistered",
-        logs: receipt.logs.filter(
-          (log) => log.address.toLowerCase() === registrarAddress.toLowerCase(),
+        logs: receipt.logs.filter((log) =>
+          isAddressEqual(log.address, registrarAddress),
         ),
         strict: true,
       })[0];

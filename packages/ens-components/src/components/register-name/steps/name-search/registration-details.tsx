@@ -21,16 +21,17 @@ import {
   PlusSignIcon,
 } from "@thenamespace/uikit/icons";
 
-import {
-  MIN_REGISTRATION_DURATION,
-  REGISTRATION_SECONDS_PER_DAY,
-  REGISTRATION_SECONDS_PER_YEAR,
-  useNameRegistration,
-} from "#/components/register-name/context";
+import { useNameRegistration } from "#/components/register-name/context";
 import { AdvancedOptions } from "#/components/register-name/steps/name-search/advanced-options";
 import { PaymentTokenSelect } from "#/components/register-name/steps/name-search/payment-token-select";
 import { useNamePrice } from "#/hooks";
 import { formatError, formatTokenAmount } from "#/lib";
+import {
+  MIN_REGISTRATION_DURATION,
+  REGISTRATION_SECONDS_PER_DAY,
+  REGISTRATION_SECONDS_PER_YEAR,
+  resolvePaymentToken,
+} from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 const MAX_REGISTRATION_YEARS = 10;
@@ -144,11 +145,10 @@ export function RegistrationDetails({
     setPaymentTokenAddress,
   } = useNameRegistration();
   const { contracts } = useEnsConfig();
-  const paymentToken =
-    contracts.paymentTokens.find(
-      (token) =>
-        token.address.toLowerCase() === paymentTokenAddress.toLowerCase(),
-    ) ?? contracts.paymentTokens[0];
+  const paymentToken = resolvePaymentToken(
+    contracts.paymentTokens,
+    paymentTokenAddress,
+  );
   const timeZone = getLocalTimeZone();
   const years = getYears(duration);
   const selectedDurationDays = Number(duration / REGISTRATION_SECONDS_PER_DAY);

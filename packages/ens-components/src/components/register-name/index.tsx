@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { Button, Modal, Surface } from "@thenamespace/uikit";
-import { zeroAddress, zeroHash } from "viem";
+import { isAddressEqual, zeroAddress, zeroHash } from "viem";
 import { useConnection } from "wagmi";
 
 import {
@@ -21,6 +21,7 @@ import {
   type RegistrationProcessStep,
 } from "#/components/register-name/steps";
 import { useRegistrationAttempts } from "#/hooks/use-registration-attempts";
+import { findPaymentToken } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export * from "#/components/register-name/context";
@@ -78,10 +79,9 @@ function NameRegistrationContent() {
           resolverAddress,
           subregistry: zeroAddress,
         });
-  const storedPaymentToken = contracts.paymentTokens.find(
-    (token) =>
-      token.address.toLowerCase() ===
-      storedAttempt?.attempt.paymentTokenAddress.toLowerCase(),
+  const storedPaymentToken = findPaymentToken(
+    contracts.paymentTokens,
+    storedAttempt?.attempt.paymentTokenAddress,
   );
 
   useEffect(() => {
@@ -93,8 +93,10 @@ function NameRegistrationContent() {
   const handleNext = () => {
     if (
       storedAttempt !== undefined &&
-      storedAttempt.attempt.paymentTokenAddress.toLowerCase() !==
-        paymentTokenAddress.toLowerCase()
+      !isAddressEqual(
+        storedAttempt.attempt.paymentTokenAddress,
+        paymentTokenAddress,
+      )
     ) {
       update(storedAttempt.id, { paymentTokenAddress });
     }

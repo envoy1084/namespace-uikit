@@ -4,11 +4,11 @@ Reads the current ENS v2 registration price and payment-token decimals through
 TanStack Query. Input is normalized and debounced for 300 milliseconds.
 
 ```tsx
-import { REGISTRATION_SECONDS_PER_YEAR, useNamePrice } from "ens-components";
+import { useNamePrice } from "ens-components";
 import { formatUnits } from "viem";
 
 const price = useNamePrice({
-  duration: REGISTRATION_SECONDS_PER_YEAR,
+  duration: 31_557_600n,
   input: "example",
 });
 

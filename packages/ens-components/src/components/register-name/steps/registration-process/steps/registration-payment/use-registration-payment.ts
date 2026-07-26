@@ -23,7 +23,6 @@ import {
   useNameRegistration,
 } from "#/components/register-name/context";
 import { emitNameRegistrationEvent } from "#/components/register-name/emit-event";
-import { parseStoredDuration } from "#/components/register-name/steps/registration-process/steps/registration-payment/get-registration-details";
 import {
   submitRegistrationPayment,
   type RegistrationPaymentSubmissionSuccess,
@@ -32,6 +31,7 @@ import { useRegistrationPaymentToken } from "#/components/register-name/steps/re
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
 import { useRegistrationPaymentStatus } from "#/hooks";
 import { useRegistrationAttempts } from "#/hooks/use-registration-attempts";
+import { delay, parseRegistrationDuration } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export interface UseRegistrationPaymentProps {
@@ -59,7 +59,7 @@ export function useRegistrationPayment({
   const { delete: deleteAttempt, get, update } = useRegistrationAttempts();
   const storedAttempt =
     registrationAttemptId === null ? undefined : get(registrationAttemptId);
-  const duration = parseStoredDuration(storedAttempt?.duration);
+  const duration = parseRegistrationDuration(storedAttempt?.duration) ?? 0n;
   const paymentToken = useRegistrationPaymentToken({
     attempt: storedAttempt,
     paymentTokens: contracts.paymentTokens,
@@ -202,9 +202,7 @@ export function useRegistrationPayment({
       });
     }
 
-    await new Promise((resolve) =>
-      window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
-    );
+    await delay(TRANSACTION_PROGRESS_COMPLETION_DURATION_MS);
     deleteAttempt(attemptId);
     setRegistrationAttemptId(null);
     emitNameRegistrationEvent(events.onRegister, {

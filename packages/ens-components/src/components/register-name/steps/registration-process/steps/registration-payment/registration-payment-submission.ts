@@ -23,6 +23,10 @@ import {
 } from "#/actions";
 import { readCommitmentStatus } from "#/components/register-name/steps/registration-process/steps/commitment/read-commitment-status";
 import { getRegistrationDetails } from "#/components/register-name/steps/registration-process/steps/registration-payment/get-registration-details";
+import {
+  getTransactionTimestamp,
+  parseRegistrationDuration,
+} from "#/lib/helpers";
 
 export interface ConfirmedRegistrationWrite {
   receipt: TransactionReceipt;
@@ -78,20 +82,6 @@ function findConfirmedWrite(
   });
 }
 
-async function getRegisteredAt(
-  publicClient: PublicClient,
-  receipt: TransactionReceipt,
-) {
-  try {
-    const block = await publicClient.getBlock({
-      blockNumber: receipt.blockNumber,
-    });
-    return Number(block.timestamp) * 1_000;
-  } catch {
-    return Date.now();
-  }
-}
-
 export async function submitRegistrationPayment(
   props: SubmitRegistrationPaymentProps,
 ): Promise<Result<RegistrationPaymentSubmissionSuccess, unknown>> {
@@ -106,12 +96,8 @@ export async function submitRegistrationPayment(
     return err(getCommitmentStateError(commitment.value.state));
   }
 
-  let duration: bigint;
-  try {
-    duration = BigInt(attempt.duration);
-  } catch {
-    return err("INVALID_DURATION");
-  }
+  const duration = parseRegistrationDuration(attempt.duration);
+  if (duration === undefined) return err("INVALID_DURATION");
 
   const registration = prepareRegisterNameWrite({
     account: attempt.account,
@@ -165,7 +151,7 @@ export async function submitRegistrationPayment(
   );
   if (confirmedRegistration.isErr()) return err(confirmedRegistration.error);
 
-  const registeredAt = await getRegisteredAt(
+  const registeredAt = await getTransactionTimestamp(
     publicClient,
     confirmedRegistration.value.receipt,
   );

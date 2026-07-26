@@ -5,8 +5,6 @@ import { errAsync, ok, ResultAsync } from "neverthrow";
 import {
   encodeFunctionData,
   isAddress,
-  isHex,
-  size,
   zeroAddress,
   type Address,
   type ContractFunctionParameters,
@@ -15,6 +13,7 @@ import {
 } from "viem";
 
 import { permissionedResolverAbi, verifiableFactoryAbi } from "#/data/abi";
+import { isBytes32 } from "#/lib/helpers";
 
 export const PERMISSIONED_RESOLVER_ALL_ROLES =
   0x1111111111111111111111111111111111111111111111111111111111111111n;
@@ -61,10 +60,6 @@ export type PreparedPermissionedResolverDeploymentWrite = PreparedContractWrite<
   "deploy-permissioned-resolver",
   PreparedPermissionedResolverDeploymentWriteMetadata
 >;
-
-function isBytes32(value: Hex): boolean {
-  return isHex(value) && size(value) === 32;
-}
 
 /**
  * Simulates a PermissionedResolver proxy deployment and returns the
