@@ -17,6 +17,7 @@ import {
 import {
   NameSearchStep,
   RegistrationProcess,
+  RegistrationSuccess,
   type RegistrationProcessStep,
 } from "#/components/register-name/steps";
 import { useCommitments } from "#/hooks";
@@ -42,8 +43,10 @@ function RegisterEnsContent() {
   const [view, setView] = useState<RegisterNameView>("name-search");
   const [registrationStep, setRegistrationStep] =
     useState<RegistrationProcessStep>("commitment");
+  const [registeredName, setRegisteredName] = useState<string>();
   const [isNameAvailable, setIsNameAvailable] = useState(false);
   const isRegistrationProcess = view === "registration-process";
+  const isRegistrationSuccess = registeredName !== undefined;
 
   const handleNext = () => {
     let storedCommitment =
@@ -86,6 +89,7 @@ function RegisterEnsContent() {
     setCommitmentId(null);
     setInput("");
     setIsNameAvailable(false);
+    setRegisteredName(undefined);
     setRegistrationStep("commitment");
     setView("name-search");
   };
@@ -97,7 +101,7 @@ function RegisterEnsContent() {
         <Modal.Container>
           <Modal.Dialog>
             <Modal.CloseTrigger />
-            {isRegistrationProcess ? (
+            {isRegistrationProcess && !isRegistrationSuccess ? (
               <Button
                 isIconOnly
                 aria-label="Back to name search"
@@ -109,29 +113,36 @@ function RegisterEnsContent() {
                 <HugeiconsIcon icon={ArrowLeft01Icon} />
               </Button>
             ) : null}
-            <Modal.Header className="mx-auto">
-              <img
-                src={RegisterEnsHeader.href}
-                className="mx-auto w-full max-w-64"
-              />
-              <div>
-                <Modal.Heading className="mx-auto text-center">
-                  {isRegistrationProcess
-                    ? "ENS Registration Process"
-                    : "Register your ENS Name"}
-                </Modal.Heading>
-                <p className="text-muted text-center text-sm">
-                  {isRegistrationProcess
-                    ? "Registration consists of 3 steps"
-                    : "Register your ENS name and set a profile"}
-                </p>
-              </div>
-            </Modal.Header>
+            {!isRegistrationSuccess ? (
+              <Modal.Header className="mx-auto">
+                <img
+                  src={RegisterEnsHeader.href}
+                  className="mx-auto w-full max-w-64"
+                />
+                <div>
+                  <Modal.Heading className="mx-auto text-center">
+                    {isRegistrationProcess
+                      ? "ENS Registration Process"
+                      : "Register your ENS Name"}
+                  </Modal.Heading>
+                  <p className="text-muted text-center text-sm">
+                    {isRegistrationProcess
+                      ? "Registration consists of 3 steps"
+                      : "Register your ENS name and set a profile"}
+                  </p>
+                </div>
+              </Modal.Header>
+            ) : null}
             <Modal.Body className="flex-none">
-              {isRegistrationProcess ? (
+              {isRegistrationSuccess ? (
+                <RegistrationSuccess
+                  name={registeredName}
+                  onDone={handleDone}
+                />
+              ) : isRegistrationProcess ? (
                 <RegistrationProcess
                   initialStep={registrationStep}
-                  onDone={handleDone}
+                  onSuccess={setRegisteredName}
                 />
               ) : (
                 <NameSearchStep onAvailabilityChange={setIsNameAvailable} />

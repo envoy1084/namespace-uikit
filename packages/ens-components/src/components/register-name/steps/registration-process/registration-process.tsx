@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from "react";
 import { Accordion, Surface } from "@thenamespace/uikit";
 
 import { useRegisterName } from "#/components/register-name/context";
-import { RegistrationSuccess } from "#/components/register-name/steps/registration-process/registration-success";
 import {
   CommitmentStep,
   CompleteRegistrationStep,
@@ -19,12 +18,12 @@ export type RegistrationProcessStep =
 
 export interface RegistrationProcessProps {
   initialStep?: RegistrationProcessStep;
-  onDone: () => void;
+  onSuccess: (name: string) => void;
 }
 
 export function RegistrationProcess({
   initialStep = "commitment",
-  onDone,
+  onSuccess,
 }: RegistrationProcessProps) {
   const { commitmentId } = useRegisterName();
   const [activeStep, setActiveStep] =
@@ -32,7 +31,6 @@ export function RegistrationProcess({
   const [expandedKeys, setExpandedKeys] = useState(
     new Set<string | number>([activeStep]),
   );
-  const [registeredName, setRegisteredName] = useState<string>();
   const handleTimerComplete = useCallback(
     () => setActiveStep("complete-registration"),
     [],
@@ -50,10 +48,6 @@ export function RegistrationProcess({
     setExpandedKeys(new Set([activeStep]));
   }, [activeStep]);
 
-  if (registeredName !== undefined) {
-    return <RegistrationSuccess name={registeredName} onDone={onDone} />;
-  }
-
   return (
     <Surface className="mt-2 rounded-2xl p-3" variant="secondary">
       <Accordion
@@ -69,7 +63,7 @@ export function RegistrationProcess({
         />
         <CompleteRegistrationStep
           isDisabled={activeStep !== "complete-registration"}
-          onSuccess={(name) => setRegisteredName(name)}
+          onSuccess={(name) => onSuccess(name)}
         />
       </Accordion>
     </Surface>
