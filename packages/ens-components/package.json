@@ -1,6 +1,31 @@
 {
   "name": "ens-components",
   "version": "0.1.0",
+  "description": "Production-ready React components, hooks, and contract actions for building ENS v2 applications.",
+  "keywords": [
+    "components",
+    "ens",
+    "ens-v2",
+    "ethereum",
+    "ethereum-name-service",
+    "hooks",
+    "react",
+    "tailwindcss",
+    "typescript",
+    "viem",
+    "wagmi",
+    "web3"
+  ],
+  "homepage": "https://github.com/thenamespace/uikit/tree/main/packages/ens-components#readme",
+  "bugs": {
+    "url": "https://github.com/thenamespace/uikit/issues"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thenamespace/uikit.git",
+    "directory": "packages/ens-components"
+  },
   "files": [
     "dist",
     "README.md",
