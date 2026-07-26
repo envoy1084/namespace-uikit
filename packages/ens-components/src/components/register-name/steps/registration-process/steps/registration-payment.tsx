@@ -9,6 +9,7 @@ import {
   Button,
   NumberValue,
   Skeleton,
+  Surface,
   Typography,
 } from "@thenamespace/uikit";
 import { formatUnits, type Hex } from "viem";
@@ -285,7 +286,10 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
 
   return (
     <div className="mt-4">
-      <div className="flex items-center justify-between gap-4">
+      <Surface
+        className="flex items-center justify-between gap-4 rounded-full px-3 py-2"
+        variant="secondary"
+      >
         <Typography.Paragraph color="muted" size="xs">
           Registration price
         </Typography.Paragraph>
@@ -312,7 +316,7 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
             <span className="text-muted text-sm">—</span>
           )}
         </div>
-      </div>
+      </Surface>
       <Typography.Paragraph
         className="mt-2 text-center"
         color="muted"
