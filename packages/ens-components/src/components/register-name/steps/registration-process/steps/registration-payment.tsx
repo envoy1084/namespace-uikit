@@ -22,6 +22,7 @@ import {
   COMMITMENT_VALID_DURATION_MS,
   useRegisterName,
 } from "#/components/register-name/context";
+import { TransactionProgress } from "#/components/transaction-progress";
 import { useCommitments, useRegistrationPaymentStatus } from "#/hooks";
 import { formatError } from "#/lib";
 import { useEnsConfig } from "#/providers";
@@ -85,6 +86,7 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
     },
   });
   const [actionStatus, setActionStatus] = useState<PaymentActionStatus>("idle");
+  const [transactionHash, setTransactionHash] = useState<Hex>();
   const [error, setError] = useState<unknown>();
   const [now, setNow] = useState(Date.now());
   const isPending = actionStatus !== "idle";
@@ -121,13 +123,13 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
     storedCommitment,
   ]);
 
-  const waitForSuccess = async (transactionHash: Hex) => {
+  const waitForSuccess = async (hash: Hex) => {
     if (publicClient === undefined) {
       throw new Error("Public client unavailable.");
     }
 
     const receipt = await publicClient.waitForTransactionReceipt({
-      hash: transactionHash,
+      hash,
     });
 
     if (receipt.status !== "success") {
@@ -137,6 +139,7 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
 
   const handlePayment = async () => {
     setError(undefined);
+    setTransactionHash(undefined);
 
     if (connection.address === undefined) {
       setError("WALLET_NOT_CONNECTED");
@@ -192,6 +195,7 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
       }
 
       setActionStatus("confirming-approval");
+      setTransactionHash(approval.value);
 
       try {
         await waitForSuccess(approval.value);
@@ -200,6 +204,7 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
         setError(approvalError);
       } finally {
         setActionStatus("idle");
+        setTransactionHash(undefined);
       }
 
       return;
@@ -227,6 +232,7 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
     }
 
     setActionStatus("confirming-registration");
+    setTransactionHash(registration.value.transactionHash);
 
     try {
       await waitForSuccess(registration.value.transactionHash);
@@ -239,6 +245,7 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
     } catch (registrationError) {
       setError(registrationError);
       setActionStatus("idle");
+      setTransactionHash(undefined);
     }
   };
 
@@ -301,18 +308,28 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
       >
         Complete registration within {formatTimeRemaining(timeRemaining)}.
       </Typography.Paragraph>
-      <Button
-        className="mt-4 w-full"
-        isDisabled={
-          connection.address === undefined ||
-          payment.isPending ||
-          (payment.data !== undefined && !payment.data.hasSufficientBalance)
-        }
-        isPending={isPending}
-        onPress={handlePayment}
-      >
-        {buttonLabel}
-      </Button>
+      {(actionStatus === "confirming-approval" ||
+        actionStatus === "confirming-registration") &&
+      transactionHash !== undefined ? (
+        <TransactionProgress
+          blockExplorerUrl={chain.blockExplorers?.default.url}
+          className="mt-4"
+          transactionHash={transactionHash}
+        />
+      ) : (
+        <Button
+          className="mt-4 w-full"
+          isDisabled={
+            connection.address === undefined ||
+            payment.isPending ||
+            (payment.data !== undefined && !payment.data.hasSufficientBalance)
+          }
+          isPending={isPending}
+          onPress={handlePayment}
+        >
+          {buttonLabel}
+        </Button>
+      )}
       {payment.isError || error !== undefined ? (
         <Typography.Paragraph
           className="text-danger mt-2 text-center"

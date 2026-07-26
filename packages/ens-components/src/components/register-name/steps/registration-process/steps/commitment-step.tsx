@@ -1,5 +1,7 @@
 "use client";
 
+import type { Hex } from "viem";
+
 import { useState } from "react";
 
 import { Accordion, Button, Typography } from "@thenamespace/uikit";
@@ -13,6 +15,7 @@ import {
 
 import { commitName } from "#/actions";
 import { useRegisterName } from "#/components/register-name/context";
+import { TransactionProgress } from "#/components/transaction-progress";
 import { useCommitments } from "#/hooks";
 import { formatError } from "#/lib";
 import { useEnsConfig } from "#/providers";
@@ -33,12 +36,14 @@ export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
   const { duration, input, referrer, setCommitmentId } = useRegisterName();
   const [error, setError] = useState<unknown>();
   const [status, setStatus] = useState<CommitmentStatus>("idle");
+  const [transactionHash, setTransactionHash] = useState<Hex>();
   const isPending = status !== "idle";
   const isWrongNetwork =
     connection.chainId !== undefined && connection.chainId !== chain.id;
 
   const handleCommit = async () => {
     setError(undefined);
+    setTransactionHash(undefined);
 
     if (connection.address === undefined) {
       setError("WALLET_NOT_CONNECTED");
@@ -88,6 +93,7 @@ export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
     }
 
     setStatus("confirming");
+    setTransactionHash(result.value.transactionHash);
 
     try {
       const receipt = await publicClient.waitForTransactionReceipt({
@@ -97,6 +103,7 @@ export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
       if (receipt.status !== "success") {
         setError("TRANSACTION_REVERTED");
         setStatus("idle");
+        setTransactionHash(undefined);
         return;
       }
 
@@ -122,6 +129,7 @@ export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
     } catch {
       setError("TRANSACTION_CONFIRMATION_FAILED");
       setStatus("idle");
+      setTransactionHash(undefined);
     }
   };
 
@@ -159,18 +167,26 @@ export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
           >
             Start your registration
           </Typography.Heading>
-          <Typography.Paragraph className="mt-2" color="muted" size="sm">
+          <Typography.Paragraph className="mt-1" color="muted" size="xs">
             Submit a commitment transaction to begin the secure registration
             process.
           </Typography.Paragraph>
-          <Button
-            className="mt-4 w-full"
-            isDisabled={connection.address === undefined}
-            isPending={isPending}
-            onPress={handleCommit}
-          >
-            {buttonLabel}
-          </Button>
+          {status === "confirming" && transactionHash !== undefined ? (
+            <TransactionProgress
+              blockExplorerUrl={chain.blockExplorers?.default.url}
+              className="mt-4"
+              transactionHash={transactionHash}
+            />
+          ) : (
+            <Button
+              className="mt-4 w-full"
+              isDisabled={connection.address === undefined}
+              isPending={isPending}
+              onPress={handleCommit}
+            >
+              {buttonLabel}
+            </Button>
+          )}
           {error !== undefined ? (
             <Typography.Paragraph
               className="text-danger mt-2"
