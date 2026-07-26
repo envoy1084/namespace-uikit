@@ -39,7 +39,7 @@ Inline mode renders the flow directly and ignores `slots.trigger`.
 | ------------------------ | ----------------------------------- | -------------------- | ----------------------------------------------------------------------- |
 | `presentation`           | `"dialog" \| "inline"`              | `"dialog"`           | Selects the outer presentation.                                         |
 | `defaultInput`           | `string`                            | `""`                 | Initial name input.                                                     |
-| `defaultDuration`        | `bigint`                            | `31_536_000n`        | Initial duration in seconds. Values below 28 days are clamped.          |
+| `defaultDuration`        | `bigint`                            | `31_557_600n`        | Initial duration in seconds. Values below 28 days are clamped.          |
 | `defaultDurationMode`    | `"date" \| "duration"`              | `"duration"`         | Initial duration control.                                               |
 | `defaultReferrer`        | `Hex`                               | `zeroHash`           | Initial 32-byte referrer identifier.                                    |
 | `defaultResolverAddress` | `Address`                           | `undefined`          | Initial custom resolver. A dedicated resolver is deployed when omitted. |

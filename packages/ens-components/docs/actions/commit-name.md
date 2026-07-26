@@ -14,7 +14,7 @@ const secret = bytesToHex(crypto.getRandomValues(new Uint8Array(32)));
 
 const result = await commitName(walletClient, {
   account,
-  duration: 31_536_000n,
+  duration: 31_557_600n,
   input: "example",
   network: "testnet",
   owner: account,

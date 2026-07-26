@@ -13,7 +13,7 @@ declare const registrarAddress: Address;
 
 const result = await getRegistrationPaymentStatus(publicClient, {
   account,
-  duration: 31_536_000n,
+  duration: 31_557_600n,
   input: "example",
   network: "testnet",
   paymentTokenAddress,

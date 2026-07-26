@@ -1,6 +1,10 @@
 import { Avatar, Button, Surface, Typography } from "@thenamespace/uikit";
 
-import { useNameRegistration } from "#/components/register-name/context";
+import {
+  REGISTRATION_SECONDS_PER_DAY,
+  REGISTRATION_SECONDS_PER_YEAR,
+  useNameRegistration,
+} from "#/components/register-name/context";
 import { NameRegistrationBody } from "#/components/register-name/layout";
 import { formatTokenAmount } from "#/lib";
 
@@ -8,9 +12,6 @@ const RegistrationSuccessGraphic = new URL(
   "../../../../assets/register-ens-success.svg",
   import.meta.url,
 );
-
-const SECONDS_PER_DAY = 86_400n;
-const SECONDS_PER_YEAR = 365n * SECONDS_PER_DAY;
 
 export interface RegistrationSuccessDetails {
   amount: bigint;
@@ -28,12 +29,12 @@ export interface RegistrationSuccessProps {
 }
 
 function formatDuration(duration: bigint) {
-  if (duration % SECONDS_PER_YEAR === 0n) {
-    const years = duration / SECONDS_PER_YEAR;
+  if (duration % REGISTRATION_SECONDS_PER_YEAR === 0n) {
+    const years = duration / REGISTRATION_SECONDS_PER_YEAR;
     return `${years} ${years === 1n ? "year" : "years"}`;
   }
 
-  const days = duration / SECONDS_PER_DAY;
+  const days = duration / REGISTRATION_SECONDS_PER_DAY;
   return `${days} ${days === 1n ? "day" : "days"}`;
 }
 

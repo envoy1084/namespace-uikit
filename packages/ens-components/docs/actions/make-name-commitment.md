@@ -9,7 +9,7 @@ import { bytesToHex, zeroAddress, zeroHash } from "viem";
 const secret = bytesToHex(crypto.getRandomValues(new Uint8Array(32)));
 
 const result = makeNameCommitment({
-  duration: 31_536_000n,
+  duration: 31_557_600n,
   input: "example",
   owner,
   referrer: zeroHash,

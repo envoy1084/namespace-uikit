@@ -23,8 +23,7 @@ import { getAddress, isAddress, slice, zeroAddress, zeroHash } from "viem";
 import { DEFAULT_NAME_REGISTRATION_MESSAGES } from "#/components/register-name/customization";
 
 export const REGISTRATION_SECONDS_PER_DAY = 86_400n;
-export const REGISTRATION_SECONDS_PER_YEAR =
-  365n * REGISTRATION_SECONDS_PER_DAY;
+export const REGISTRATION_SECONDS_PER_YEAR = 31_557_600n;
 export const MIN_REGISTRATION_DURATION = 28n * REGISTRATION_SECONDS_PER_DAY;
 export const DEFAULT_REGISTRATION_DURATION = REGISTRATION_SECONDS_PER_YEAR;
 export const COMMITMENT_WAIT_DURATION_MS = 60_000;
