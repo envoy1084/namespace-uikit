@@ -23,6 +23,7 @@ import {
 } from "@thenamespace/uikit/icons";
 
 import {
+  MIN_REGISTRATION_DURATION,
   REGISTRATION_SECONDS_PER_DAY,
   REGISTRATION_SECONDS_PER_YEAR,
   useRegisterName,
@@ -33,6 +34,9 @@ import { formatError, formatTokenAmount } from "#/lib";
 import { useEnsConfig } from "#/providers";
 
 const MAX_REGISTRATION_YEARS = 10;
+const MIN_REGISTRATION_DAYS = Number(
+  MIN_REGISTRATION_DURATION / REGISTRATION_SECONDS_PER_DAY,
+);
 
 interface RegistrationDetailsProps {
   input: string;
@@ -84,7 +88,7 @@ function ExpirationDatePicker({
       aria-label="Registration expiration date"
       className="w-full"
       maxValue={today(timeZone).add({ years: MAX_REGISTRATION_YEARS })}
-      minValue={today(timeZone).add({ days: 1 })}
+      minValue={today(timeZone).add({ days: MIN_REGISTRATION_DAYS })}
       value={value}
       onChange={onChange}
     >
@@ -139,7 +143,7 @@ export function RegistrationDetails({
   const years = getYears(duration);
   const selectedDurationDays = Number(duration / REGISTRATION_SECONDS_PER_DAY);
   const expirationDate = today(timeZone).add({
-    days: Math.max(1, selectedDurationDays),
+    days: Math.max(MIN_REGISTRATION_DAYS, selectedDurationDays),
   });
   const pickByDate = durationMode === "date";
   const price = useNamePrice({
@@ -167,7 +171,7 @@ export function RegistrationDetails({
     if (value === null) return;
 
     const durationInDays = value.compare(today(timeZone));
-    if (durationInDays <= 0) return;
+    if (durationInDays < MIN_REGISTRATION_DAYS) return;
 
     setDuration(BigInt(durationInDays) * REGISTRATION_SECONDS_PER_DAY);
   };
