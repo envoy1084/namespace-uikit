@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { Button, InputGroup, Spinner, Typography } from "@thenamespace/uikit";
 import { Icon, Search01Icon } from "@thenamespace/uikit/icons";
 
-import { parseNameInput } from "#/actions";
 import { useNameRegistration } from "#/components/register-name/context";
 import {
   NameRegistrationBody,
@@ -16,6 +15,7 @@ import {
 import { RegistrationDetails } from "#/components/register-name/steps/name-search/registration-details";
 import { useNameAvailability } from "#/hooks";
 import { formatError } from "#/lib";
+import { parseNameInput } from "#/lib/parse-name-input";
 
 const DefaultNameRegistrationGraphic = new URL(
   "../../../../assets/register-ens-header.svg",

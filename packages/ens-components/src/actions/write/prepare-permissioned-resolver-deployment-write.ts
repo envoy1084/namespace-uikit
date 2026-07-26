@@ -1,4 +1,4 @@
-import type { PreparedContractWrite } from "#/actions/contract-calls";
+import type { PreparedContractWrite } from "#/actions/write/contract-writes";
 import type { EnsNetwork } from "#/data";
 
 import { errAsync, ok, ResultAsync } from "neverthrow";
@@ -19,7 +19,7 @@ import { permissionedResolverAbi, verifiableFactoryAbi } from "#/data/abi";
 export const PERMISSIONED_RESOLVER_ALL_ROLES =
   0x1111111111111111111111111111111111111111111111111111111111111111n;
 
-export type PreparePermissionedResolverDeploymentError =
+export type PreparePermissionedResolverDeploymentWriteError =
   | "CONTRACT_SIMULATION_FAILED"
   | "INVALID_ACCOUNT_ADDRESS"
   | "INVALID_FACTORY_ADDRESS"
@@ -28,7 +28,7 @@ export type PreparePermissionedResolverDeploymentError =
   | "INVALID_RESOLVER_ADDRESS"
   | "INVALID_SALT";
 
-export interface PreparePermissionedResolverDeploymentProps {
+export interface PreparePermissionedResolverDeploymentWriteProps {
   /** Account that will call the factory. This affects the proxy address. */
   readonly account: Address;
   /** ENS VerifiableFactory address. */
@@ -50,16 +50,16 @@ type PermissionedResolverDeploymentRequest = ContractFunctionParameters<
   readonly [Address, bigint, Hex]
 >;
 
-export interface PreparedPermissionedResolverDeploymentMetadata {
+export interface PreparedPermissionedResolverDeploymentWriteMetadata {
   readonly initData: Hex;
   readonly resolverAddress: Address;
   readonly salt: Hex;
 }
 
-export type PreparedPermissionedResolverDeployment = PreparedContractWrite<
+export type PreparedPermissionedResolverDeploymentWrite = PreparedContractWrite<
   PermissionedResolverDeploymentRequest,
   "deploy-permissioned-resolver",
-  PreparedPermissionedResolverDeploymentMetadata
+  PreparedPermissionedResolverDeploymentWriteMetadata
 >;
 
 function isBytes32(value: Hex): boolean {
@@ -70,12 +70,12 @@ function isBytes32(value: Hex): boolean {
  * Simulates a dedicated PermissionedResolver proxy deployment and returns the
  * exact address and encoded call required by sequential or atomic submission.
  */
-export function preparePermissionedResolverDeployment(
+export function preparePermissionedResolverDeploymentWrite(
   publicClient: PublicClient,
-  props: PreparePermissionedResolverDeploymentProps,
+  props: PreparePermissionedResolverDeploymentWriteProps,
 ): ResultAsync<
-  PreparedPermissionedResolverDeployment,
-  PreparePermissionedResolverDeploymentError
+  PreparedPermissionedResolverDeploymentWrite,
+  PreparePermissionedResolverDeploymentWriteError
 > {
   const { account, factoryAddress, implementationAddress, owner, salt } = props;
 

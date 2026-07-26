@@ -1,9 +1,9 @@
 import type {
   PreparedContractRead,
   PreparedContractReadPlan,
-} from "#/actions/contract-reads";
-import type { ParseNameInputError } from "#/actions/parse-name-input";
+} from "#/actions/read/contract-reads";
 import type { EnsNetwork } from "#/data";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 
 import { err, ok, type Result } from "neverthrow";
 import {
@@ -18,7 +18,7 @@ import {
   prepareNameAvailabilityRead,
   type PrepareNameAvailabilityReadError,
   type PreparedNameAvailabilityRead,
-} from "#/actions/prepare-name-availability-read";
+} from "#/actions/read/prepare-name-availability-read";
 import { ethRegistrarAbi } from "#/data/abi";
 
 const MAX_UINT64 = (1n << 64n) - 1n;

@@ -12,12 +12,12 @@ import {
   type WalletClient,
 } from "viem";
 
+import { waitForContractCalls } from "#/actions";
 import {
+  readCommitmentStatus,
   type CommitmentStatus,
-  getCommitmentStatus,
-  getPermissionedResolverStatus,
-  waitForContractCalls,
-} from "#/actions";
+} from "#/components/register-name/steps/registration-process/steps/commitment/read-commitment-status";
+import { readPermissionedResolverStatus } from "#/components/register-name/steps/registration-process/steps/commitment/read-resolver-status";
 import { renewRegistrationAttempt } from "#/components/register-name/steps/registration-process/steps/commitment/registration-attempt";
 
 export type RegistrationAttemptReconciliation =
@@ -94,7 +94,7 @@ function getConfirmedSubmission(
 async function readCommitment(
   props: ReconcileRegistrationAttemptProps,
 ): Promise<Result<CommitmentStatus, unknown>> {
-  const status = await getCommitmentStatus(props.publicClient, {
+  const status = await readCommitmentStatus(props.publicClient, {
     commitment: props.attempt.commitment,
     network: props.network,
     registrarAddress: props.attempt.registrarAddress,
@@ -125,7 +125,7 @@ async function reconcileResolver(
     return err(receipt.error);
   }
 
-  const status = await getPermissionedResolverStatus(props.publicClient, {
+  const status = await readPermissionedResolverStatus(props.publicClient, {
     factoryAddress: attempt.resolver.factoryAddress,
     implementationAddress: attempt.resolver.implementationAddress,
     network: props.network,

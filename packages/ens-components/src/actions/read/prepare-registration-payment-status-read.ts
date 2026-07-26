@@ -1,13 +1,13 @@
 import type {
   PreparedContractRead,
   PreparedContractReadPlan,
-} from "#/actions/contract-reads";
-import type { ParseNameInputError } from "#/actions/parse-name-input";
+} from "#/actions/read/contract-reads";
 import type {
   PreparedNamePriceRead,
   PrepareNamePriceReadError,
-} from "#/actions/prepare-name-price-read";
+} from "#/actions/read/prepare-name-price-read";
 import type { EnsNetwork } from "#/data";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 
 import { err, ok, type Result } from "neverthrow";
 import {
@@ -18,7 +18,7 @@ import {
   type ContractFunctionParameters,
 } from "viem";
 
-import { prepareNamePriceRead } from "#/actions/prepare-name-price-read";
+import { prepareNamePriceRead } from "#/actions/read/prepare-name-price-read";
 
 export type PrepareRegistrationPaymentStatusReadError =
   | "INVALID_ACCOUNT_ADDRESS"

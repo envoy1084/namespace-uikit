@@ -14,16 +14,16 @@ import {
 } from "wagmi";
 
 import {
-  executeContractCalls,
-  getCommitmentStatus,
-  prepareRegisterName,
-  prepareRegistrationPaymentApproval,
+  executeContractWrites,
+  prepareRegisterNameWrite,
+  prepareRegistrationPaymentApprovalWrite,
 } from "#/actions";
 import {
   COMMITMENT_VALID_DURATION_MS,
   useNameRegistration,
 } from "#/components/register-name/context";
 import { emitNameRegistrationEvent } from "#/components/register-name/emit-event";
+import { readCommitmentStatus } from "#/components/register-name/steps/registration-process/steps/commitment/read-commitment-status";
 import {
   getRegistrationDetails,
   parseStoredDuration,
@@ -193,7 +193,7 @@ export function useRegistrationPayment({
     if (!paymentData.hasSufficientAllowance) {
       let approvalHash: Hex | undefined;
       setActionStatus("approving");
-      const approval = prepareRegistrationPaymentApproval({
+      const approval = prepareRegistrationPaymentApprovalWrite({
         account: connection.address,
         amount: paymentData.total,
         network,
@@ -207,23 +207,27 @@ export function useRegistrationPayment({
         return;
       }
 
-      const execution = await executeContractCalls(walletClient, publicClient, {
-        calls: [approval.value],
-        chain,
-        confirmation: "confirmed",
-        onProgress: (progress) => {
-          if (progress.strategy === "atomic") return;
-          if (progress.state === "submitted") {
-            approvalHash = progress.transactionHash;
-            setActionStatus("confirming-approval");
-            setTransactionHash(progress.transactionHash);
-          }
-          if (progress.state === "confirmed") {
-            setIsTransactionConfirmed(true);
-          }
+      const execution = await executeContractWrites(
+        walletClient,
+        publicClient,
+        {
+          calls: [approval.value],
+          chain,
+          confirmation: "confirmed",
+          onProgress: (progress) => {
+            if (progress.strategy === "atomic") return;
+            if (progress.state === "submitted") {
+              approvalHash = progress.transactionHash;
+              setActionStatus("confirming-approval");
+              setTransactionHash(progress.transactionHash);
+            }
+            if (progress.state === "confirmed") {
+              setIsTransactionConfirmed(true);
+            }
+          },
+          strategy: "single",
         },
-        strategy: "single",
-      });
+      );
       if (execution.isErr()) {
         reportError(execution.error, "approval", approvalHash);
         setActionStatus("idle");
@@ -264,7 +268,7 @@ export function useRegistrationPayment({
       return;
     }
 
-    const commitmentStatus = await getCommitmentStatus(publicClient, {
+    const commitmentStatus = await readCommitmentStatus(publicClient, {
       commitment: storedAttempt.commitment,
       network,
       registrarAddress: storedAttempt.registrarAddress,
@@ -293,7 +297,7 @@ export function useRegistrationPayment({
 
     setActionStatus("registering");
     let registrationHash: Hex | undefined;
-    const registration = prepareRegisterName({
+    const registration = prepareRegisterNameWrite({
       account: connection.address,
       duration,
       input: storedAttempt.label,
@@ -312,7 +316,7 @@ export function useRegistrationPayment({
       return;
     }
 
-    const execution = await executeContractCalls(walletClient, publicClient, {
+    const execution = await executeContractWrites(walletClient, publicClient, {
       calls: [registration.value],
       chain,
       confirmation: "confirmed",

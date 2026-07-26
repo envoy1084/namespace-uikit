@@ -1,9 +1,9 @@
 import type {
-  ContractCallProgress,
-  ExecuteContractCallsResult,
-  PreparedCommitName,
+  ContractWriteProgress,
+  ExecuteContractWritesResult,
+  PreparedCommitNameWrite,
   PreparedContractWrite,
-  PreparedPermissionedResolverDeployment,
+  PreparedPermissionedResolverDeploymentWrite,
 } from "#/actions";
 import type { EnsNetwork } from "#/data";
 import type {
@@ -22,11 +22,11 @@ import {
 } from "viem";
 
 import {
-  executeContractCalls,
-  getPermissionedResolverStatus,
-  prepareCommitName,
-  preparePermissionedResolverDeployment,
+  executeContractWrites,
+  prepareCommitNameWrite,
+  preparePermissionedResolverDeploymentWrite,
 } from "#/actions";
+import { readPermissionedResolverStatus } from "#/components/register-name/steps/registration-process/steps/commitment/read-resolver-status";
 import { getAttemptCommitNameProps } from "#/components/register-name/steps/registration-process/steps/commitment/registration-attempt";
 
 export type CommitmentTransactionPhase = "commitment" | "resolver";
@@ -64,7 +64,7 @@ function phaseFor(prepared: PreparedContractWrite): CommitmentTransactionPhase {
 
 function createProgressHandler(
   props: SubmitRegistrationAttemptProps,
-): (progress: ContractCallProgress) => Promise<void> {
+): (progress: ContractWriteProgress) => Promise<void> {
   let resolverTransactionHash = getResolverHash(props.attempt);
 
   return async (progress) => {
@@ -172,7 +172,7 @@ function getResolverHash(attempt: StoredRegistrationAttempt): Hex | undefined {
 }
 
 function buildSuccess(
-  result: ExecuteContractCallsResult,
+  result: ExecuteContractWritesResult,
 ): CommitmentSubmissionSuccess {
   const confirmedAt = Date.now();
   if (result.strategy === "atomic") {
@@ -214,19 +214,19 @@ function buildSuccess(
 
 async function prepareCommitment(
   props: SubmitRegistrationAttemptProps,
-): Promise<Result<PreparedCommitName, unknown>> {
+): Promise<Result<PreparedCommitNameWrite, unknown>> {
   const commitProps = getAttemptCommitNameProps(props.attempt, props.network);
   if (commitProps === undefined) return err("INVALID_DURATION");
-  return prepareCommitName(commitProps);
+  return prepareCommitNameWrite(commitProps);
 }
 
 async function prepareResolver(
   props: SubmitRegistrationAttemptProps,
-): Promise<Result<PreparedPermissionedResolverDeployment, unknown>> {
+): Promise<Result<PreparedPermissionedResolverDeploymentWrite, unknown>> {
   const resolver = props.attempt.resolver;
   if (resolver.type !== "dedicated") return err("INVALID_RESOLVER_ADDRESS");
 
-  const prepared = await preparePermissionedResolverDeployment(
+  const prepared = await preparePermissionedResolverDeploymentWrite(
     props.publicClient,
     {
       account: props.attempt.account,
@@ -258,7 +258,7 @@ export async function submitRegistrationAttempt(
 
   if (props.attempt.resolver.type === "dedicated") {
     const resolver = props.attempt.resolver;
-    const status = await getPermissionedResolverStatus(props.publicClient, {
+    const status = await readPermissionedResolverStatus(props.publicClient, {
       factoryAddress: resolver.factoryAddress,
       implementationAddress: resolver.implementationAddress,
       network: props.network,
@@ -274,7 +274,7 @@ export async function submitRegistrationAttempt(
     }
   }
 
-  const result = await executeContractCalls(
+  const result = await executeContractWrites(
     props.walletClient,
     props.publicClient,
     {

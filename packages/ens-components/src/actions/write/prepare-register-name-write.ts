@@ -1,6 +1,6 @@
-import type { PreparedContractWrite } from "#/actions/contract-calls";
-import type { ParseNameInputError } from "#/actions/parse-name-input";
+import type { PreparedContractWrite } from "#/actions/write/contract-writes";
 import type { EnsNetwork } from "#/data";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 
 import { err, ok, type Result } from "neverthrow";
 import {
@@ -12,20 +12,20 @@ import {
   type Hex,
 } from "viem";
 
+import { ethRegistrarAbi } from "#/data/abi";
 import {
   makeNameCommitment,
   type MakeNameCommitmentError,
   type MakeNameCommitmentProps,
-} from "#/actions/commit-name";
-import { ethRegistrarAbi } from "#/data/abi";
+} from "#/lib/make-name-commitment";
 
-export type PrepareRegisterNameError =
+export type PrepareRegisterNameWriteError =
   | "INVALID_ACCOUNT_ADDRESS"
   | "INVALID_PAYMENT_TOKEN_ADDRESS"
   | "INVALID_REGISTRAR_ADDRESS"
   | MakeNameCommitmentError;
 
-export interface PrepareRegisterNameProps extends MakeNameCommitmentProps {
+export interface PrepareRegisterNameWriteProps extends MakeNameCommitmentProps {
   /** Account that pays for and submits the registration. */
   readonly account: Address;
   /** Network associated with the supplied contract addresses. */
@@ -43,21 +43,21 @@ type RegisterNameRequest = ContractFunctionParameters<
   readonly [string, Address, Hex, Address, Address, bigint, Address, Hex]
 >;
 
-export interface PrepareRegisterNameMetadata {
+export interface PrepareRegisterNameWriteMetadata {
   readonly label: string;
 }
 
-export type PreparedRegisterName = PreparedContractWrite<
+export type PreparedRegisterNameWrite = PreparedContractWrite<
   RegisterNameRequest,
   "register-name",
-  PrepareRegisterNameMetadata
+  PrepareRegisterNameWriteMetadata
 >;
 
-export function prepareRegisterName(
-  props: PrepareRegisterNameProps,
+export function prepareRegisterNameWrite(
+  props: PrepareRegisterNameWriteProps,
 ): Result<
-  PreparedRegisterName,
-  PrepareRegisterNameError | ParseNameInputError
+  PreparedRegisterNameWrite,
+  PrepareRegisterNameWriteError | ParseNameInputError
 > {
   const {
     account,

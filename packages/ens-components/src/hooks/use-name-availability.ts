@@ -9,11 +9,13 @@ import { usePublicClient } from "wagmi";
 
 import {
   executeContractRead,
-  parseNameInput,
-  type ParseNameInputError,
   prepareNameAvailabilityRead,
   type PrepareNameAvailabilityReadError,
 } from "#/actions";
+import {
+  parseNameInput,
+  type ParseNameInputError,
+} from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
 type NameAvailabilityError =

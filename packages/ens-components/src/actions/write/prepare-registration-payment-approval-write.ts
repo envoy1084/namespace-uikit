@@ -1,4 +1,4 @@
-import type { PreparedContractWrite } from "#/actions/contract-calls";
+import type { PreparedContractWrite } from "#/actions/write/contract-writes";
 import type { EnsNetwork } from "#/data";
 
 import { err, ok, type Result } from "neverthrow";
@@ -11,13 +11,13 @@ import {
   type ContractFunctionParameters,
 } from "viem";
 
-export type PrepareRegistrationPaymentApprovalError =
+export type PrepareRegistrationPaymentApprovalWriteError =
   | "INVALID_ACCOUNT_ADDRESS"
   | "INVALID_APPROVAL_AMOUNT"
   | "INVALID_PAYMENT_TOKEN_ADDRESS"
   | "INVALID_REGISTRAR_ADDRESS";
 
-export interface PrepareRegistrationPaymentApprovalProps {
+export interface PrepareRegistrationPaymentApprovalWriteProps {
   /** Account that owns the payment tokens. */
   readonly account: Address;
   /** Atomic token amount approved for registration. */
@@ -37,23 +37,23 @@ type RegistrationPaymentApprovalRequest = ContractFunctionParameters<
   readonly [Address, bigint]
 >;
 
-export interface PrepareRegistrationPaymentApprovalMetadata {
+export interface PrepareRegistrationPaymentApprovalWriteMetadata {
   readonly amount: bigint;
   readonly paymentTokenAddress: Address;
   readonly registrarAddress: Address;
 }
 
-export type PreparedRegistrationPaymentApproval = PreparedContractWrite<
+export type PreparedRegistrationPaymentApprovalWrite = PreparedContractWrite<
   RegistrationPaymentApprovalRequest,
   "approve-registration-payment",
-  PrepareRegistrationPaymentApprovalMetadata
+  PrepareRegistrationPaymentApprovalWriteMetadata
 >;
 
-export function prepareRegistrationPaymentApproval(
-  props: PrepareRegistrationPaymentApprovalProps,
+export function prepareRegistrationPaymentApprovalWrite(
+  props: PrepareRegistrationPaymentApprovalWriteProps,
 ): Result<
-  PreparedRegistrationPaymentApproval,
-  PrepareRegistrationPaymentApprovalError
+  PreparedRegistrationPaymentApprovalWrite,
+  PrepareRegistrationPaymentApprovalWriteError
 > {
   const { account, amount, paymentTokenAddress, registrarAddress } = props;
 

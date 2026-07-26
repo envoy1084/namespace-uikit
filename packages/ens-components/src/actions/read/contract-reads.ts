@@ -87,7 +87,7 @@ export function executeContractRead<TPrepared extends PreparedContractRead>(
   );
 }
 
-export function executeContractReadPlan<
+export function executeContractReads<
   TReads extends readonly [PreparedContractRead, ...PreparedContractRead[]],
   TData,
   TError,

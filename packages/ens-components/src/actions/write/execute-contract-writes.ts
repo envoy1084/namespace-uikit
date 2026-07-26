@@ -1,11 +1,11 @@
 import type {
-  ContractCallProgress,
-  ContractCallStrategy,
-  ExecuteContractCallsResult,
+  ContractWriteProgress,
+  ContractWriteStrategy,
+  ExecuteContractWritesResult,
   PreparedContractWrite,
-  ResolvedContractCallStrategy,
+  ResolvedContractWriteStrategy,
   SubmittedContractTransaction,
-} from "#/actions/contract-calls";
+} from "#/actions/write/contract-writes";
 
 import { err, errAsync, ok, ResultAsync, type Result } from "neverthrow";
 import {
@@ -20,10 +20,10 @@ import {
 } from "viem";
 import { sendCalls } from "viem/actions";
 
-import { waitForContractCalls } from "#/actions/contract-call-status";
-import { supportsAtomicBatchCalls } from "#/actions/supports-atomic-batch-calls";
+import { waitForContractCalls } from "#/actions/write/contract-write-status";
+import { supportsAtomicBatchCalls } from "#/actions/write/wallet-capabilities";
 
-export type ExecuteContractCallsError =
+export type ExecuteContractWritesError =
   | "ATOMIC_BATCH_FAILED"
   | "CONTRACT_CALLS_STATUS_FAILED"
   | "CONTRACT_WRITE_FAILED"
@@ -37,7 +37,7 @@ export type ExecuteContractCallsError =
   | "TRANSACTION_CONFIRMATION_FAILED"
   | "TRANSACTION_REVERTED";
 
-export interface ExecuteContractCallsProps {
+export interface ExecuteContractWritesProps {
   readonly calls: readonly [PreparedContractWrite, ...PreparedContractWrite[]];
   readonly chain: Chain;
   /**
@@ -46,15 +46,15 @@ export interface ExecuteContractCallsProps {
    */
   readonly confirmation?: "confirmed" | "submitted";
   readonly onProgress?: (
-    progress: ContractCallProgress,
+    progress: ContractWriteProgress,
   ) => Promise<void> | void;
-  readonly strategy?: ContractCallStrategy;
+  readonly strategy?: ContractWriteStrategy;
   readonly timeout?: number;
 }
 
 async function notify(
-  callback: ExecuteContractCallsProps["onProgress"],
-  progress: ContractCallProgress,
+  callback: ExecuteContractWritesProps["onProgress"],
+  progress: ContractWriteProgress,
 ): Promise<void> {
   try {
     await callback?.(progress);
@@ -66,7 +66,7 @@ async function notify(
 
 function validateCalls(
   calls: readonly PreparedContractWrite[],
-): Result<void, ExecuteContractCallsError> {
+): Result<void, ExecuteContractWritesError> {
   const first = calls[0];
   if (first === undefined) return err("EMPTY_CALLS");
   if (!isAddress(first.account) || first.account === zeroAddress) {
@@ -103,7 +103,7 @@ async function waitForReceipt(
   publicClient: PublicClient,
   transactionHash: `0x${string}`,
   timeout?: number,
-): Promise<Result<TransactionReceipt, ExecuteContractCallsError>> {
+): Promise<Result<TransactionReceipt, ExecuteContractWritesError>> {
   try {
     const receipt = await publicClient.waitForTransactionReceipt({
       hash: transactionHash,
@@ -120,10 +120,10 @@ async function waitForReceipt(
 
 async function resolveStrategy(
   walletClient: WalletClient,
-  calls: ExecuteContractCallsProps["calls"],
+  calls: ExecuteContractWritesProps["calls"],
   chain: Chain,
-  strategy: ContractCallStrategy,
-): Promise<Result<ResolvedContractCallStrategy, ExecuteContractCallsError>> {
+  strategy: ContractWriteStrategy,
+): Promise<Result<ResolvedContractWriteStrategy, ExecuteContractWritesError>> {
   if (strategy === "single") {
     return calls.length === 1 ? ok("single") : err("SINGLE_CALL_REQUIRED");
   }
@@ -142,9 +142,9 @@ async function resolveStrategy(
 async function executeTransactions(
   walletClient: WalletClient,
   publicClient: PublicClient,
-  props: ExecuteContractCallsProps,
+  props: ExecuteContractWritesProps,
   strategy: "sequential" | "single",
-): Promise<Result<ExecuteContractCallsResult, ExecuteContractCallsError>> {
+): Promise<Result<ExecuteContractWritesResult, ExecuteContractWritesError>> {
   const transactions: SubmittedContractTransaction[] = [];
   const confirmation = props.confirmation ?? "confirmed";
 
@@ -217,8 +217,8 @@ async function executeTransactions(
 
 async function executeAtomic(
   walletClient: WalletClient,
-  props: ExecuteContractCallsProps,
-): Promise<Result<ExecuteContractCallsResult, ExecuteContractCallsError>> {
+  props: ExecuteContractWritesProps,
+): Promise<Result<ExecuteContractWritesResult, ExecuteContractWritesError>> {
   await notify(props.onProgress, {
     callIndex: 0,
     prepared: props.calls[0],
@@ -283,11 +283,11 @@ async function executeAtomic(
  * an ordered sequence. Sequential calls are confirmed before their dependent
  * successor is submitted.
  */
-export function executeContractCalls(
+export function executeContractWrites(
   walletClient: WalletClient,
   publicClient: PublicClient,
-  props: ExecuteContractCallsProps,
-): ResultAsync<ExecuteContractCallsResult, ExecuteContractCallsError> {
+  props: ExecuteContractWritesProps,
+): ResultAsync<ExecuteContractWritesResult, ExecuteContractWritesError> {
   const validation = validateCalls(props.calls);
   if (validation.isErr()) return errAsync(validation.error);
   if (!Number.isSafeInteger(props.chain.id) || props.chain.id <= 0) {

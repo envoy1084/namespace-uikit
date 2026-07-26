@@ -2,13 +2,14 @@
 
 import type { Address } from "viem";
 
+import type { ParseNameInputError } from "#/lib/parse-name-input";
+
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 
 import { usePublicClient } from "wagmi";
 
 import {
-  executeContractReadPlan,
-  type ParseNameInputError,
+  executeContractReads,
   prepareRegistrationPaymentStatusRead,
   type PrepareRegistrationPaymentStatusReadError,
   type RegistrationPaymentStatus,
@@ -98,10 +99,7 @@ export function useRegistrationPaymentStatus<
       });
       if (prepared.isErr()) throw prepared.error;
 
-      const result = await executeContractReadPlan(
-        publicClient,
-        prepared.value,
-      );
+      const result = await executeContractReads(publicClient, prepared.value);
       if (result.isErr()) throw result.error;
       return result.value;
     },

@@ -5,7 +5,7 @@ import type {
   TransactionReceipt,
 } from "viem";
 
-export interface ContractCall {
+export interface ContractWriteCall {
   readonly data: Hex;
   readonly to: Address;
   readonly value: bigint;
@@ -23,7 +23,7 @@ export interface PreparedContractWrite<
   /** Account whose wallet must submit this call. */
   readonly account: Address;
   /** Encoded EIP-5792-compatible call. */
-  readonly call: ContractCall;
+  readonly call: ContractWriteCall;
   /** Stable domain discriminator for logging and progress handling. */
   readonly kind: TKind;
   /** Domain data produced while preparing the call. */
@@ -32,16 +32,16 @@ export interface PreparedContractWrite<
   readonly request: TRequest;
 }
 
-export type ContractCallStrategy = "atomic" | "auto" | "sequential" | "single";
+export type ContractWriteStrategy = "atomic" | "auto" | "sequential" | "single";
 
-export type ResolvedContractCallStrategy = "atomic" | "sequential" | "single";
+export type ResolvedContractWriteStrategy = "atomic" | "sequential" | "single";
 
-export type ContractCallProgress =
+export type ContractWriteProgress =
   | {
       readonly callIndex: number;
       readonly prepared: PreparedContractWrite;
       readonly state: "signing";
-      readonly strategy: ResolvedContractCallStrategy;
+      readonly strategy: ResolvedContractWriteStrategy;
     }
   | {
       readonly callIndex: number;
@@ -78,7 +78,7 @@ export interface SubmittedContractTransaction {
   readonly transactionHash: Hex;
 }
 
-export type ExecuteContractCallsResult =
+export type ExecuteContractWritesResult =
   | {
       readonly callsId: string;
       readonly status: "confirmed" | "submitted";

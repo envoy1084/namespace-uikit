@@ -1,4 +1,4 @@
-import type { PreparedContractRead } from "#/actions/contract-reads";
+import type { PreparedContractRead } from "#/actions/read/contract-reads";
 import type { EnsNetwork } from "#/data";
 
 import { err, ok, type Result } from "neverthrow";
@@ -9,11 +9,11 @@ import {
   type ContractFunctionParameters,
 } from "viem";
 
+import { ethRegistrarAbi } from "#/data/abi";
 import {
   parseNameInput,
   type ParseNameInputError,
-} from "#/actions/parse-name-input";
-import { ethRegistrarAbi } from "#/data/abi";
+} from "#/lib/parse-name-input";
 
 export type PrepareNameAvailabilityReadError =
   | "LABEL_TOO_SHORT"

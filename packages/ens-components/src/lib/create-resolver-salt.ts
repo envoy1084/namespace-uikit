@@ -4,7 +4,7 @@ import { bytesToHex, keccak256, toBytes, type Hex } from "viem";
 import {
   parseNameInput,
   type ParseNameInputError,
-} from "#/actions/parse-name-input";
+} from "#/lib/parse-name-input";
 
 export type CreateResolverSaltError = "UNSUPPORTED_NAME";
 

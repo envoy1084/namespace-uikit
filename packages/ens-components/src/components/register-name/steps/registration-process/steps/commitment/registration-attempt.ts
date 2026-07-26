@@ -1,11 +1,8 @@
 import type {
-  CreateResolverSaltError,
-  IsResolverDeployedError,
-  MakeNameCommitmentError,
-  ParseNameInputError,
-  PrepareCommitNameProps,
-  PreparePermissionedResolverDeploymentError,
+  PrepareCommitNameWriteProps,
+  PreparePermissionedResolverDeploymentWriteError,
 } from "#/actions";
+import type { IsResolverDeployedError } from "#/components/register-name/steps/registration-process/steps/commitment/read-resolver-status";
 import type { EnsNetwork } from "#/data";
 import type {
   RegistrationAttemptInput,
@@ -13,6 +10,9 @@ import type {
   StoredRegistrationAttempt,
   StoredRegistrationResolver,
 } from "#/hooks/use-registration-attempts";
+import type { CreateResolverSaltError } from "#/lib/create-resolver-salt";
+import type { MakeNameCommitmentError } from "#/lib/make-name-commitment";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 
 import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
 import {
@@ -23,13 +23,9 @@ import {
   type PublicClient,
 } from "viem";
 
-import {
-  createResolverSalt,
-  isResolverDeployed,
-  makeNameCommitment,
-  parseNameInput,
-  preparePermissionedResolverDeployment,
-} from "#/actions";
+import { preparePermissionedResolverDeploymentWrite } from "#/actions";
+import { isResolverDeployed } from "#/components/register-name/steps/registration-process/steps/commitment/read-resolver-status";
+import { createResolverSalt, makeNameCommitment, parseNameInput } from "#/lib";
 
 export type PrepareRegistrationAttemptError =
   | "INVALID_DURATION"
@@ -38,7 +34,7 @@ export type PrepareRegistrationAttemptError =
   | IsResolverDeployedError
   | MakeNameCommitmentError
   | ParseNameInputError
-  | PreparePermissionedResolverDeploymentError;
+  | PreparePermissionedResolverDeploymentWriteError;
 
 export interface PrepareRegistrationAttemptProps {
   account: Address;
@@ -109,27 +105,26 @@ export function prepareRegistrationAttempt(
   if (props.resolverAddress !== null) {
     const resolverAddress = props.resolverAddress;
 
-    return isResolverDeployed(publicClient, {
-      network: props.network,
-      resolverAddress,
-    }).andThen((isDeployed) => {
-      if (!isDeployed) return err("RESOLVER_NOT_DEPLOYED" as const);
+    return isResolverDeployed(publicClient, resolverAddress).andThen(
+      (isDeployed) => {
+        if (!isDeployed) return err("RESOLVER_NOT_DEPLOYED" as const);
 
-      return buildRegistrationAttempt(
-        props,
-        {
-          address: resolverAddress,
-          type: "custom",
-        },
-        secret,
-      );
-    });
+        return buildRegistrationAttempt(
+          props,
+          {
+            address: resolverAddress,
+            type: "custom",
+          },
+          secret,
+        );
+      },
+    );
   }
 
   const salt = createResolverSalt({ input: props.input });
   if (salt.isErr()) return errAsync(salt.error);
 
-  return preparePermissionedResolverDeployment(publicClient, {
+  return preparePermissionedResolverDeploymentWrite(publicClient, {
     account: props.account,
     factoryAddress: props.factoryAddress,
     implementationAddress: props.implementationAddress,
@@ -191,7 +186,7 @@ export function renewRegistrationAttempt(
 export function getAttemptCommitNameProps(
   attempt: StoredRegistrationAttempt,
   network: EnsNetwork,
-): PrepareCommitNameProps | undefined {
+): PrepareCommitNameWriteProps | undefined {
   try {
     return {
       account: attempt.account,

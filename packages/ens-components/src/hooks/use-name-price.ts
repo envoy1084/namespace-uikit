@@ -8,14 +8,16 @@ import { useDebounceValue } from "usehooks-ts";
 import { usePublicClient } from "wagmi";
 
 import {
-  executeContractReadPlan,
-  parseNameInput,
+  executeContractReads,
   type NamePrice,
-  type ParseNameInputError,
   prepareNamePriceRead,
   type NamePriceReadError,
   type PrepareNamePriceReadError,
 } from "#/actions";
+import {
+  parseNameInput,
+  type ParseNameInputError,
+} from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
 type NamePriceError =
@@ -90,10 +92,7 @@ export function useNamePrice<selectData = NamePrice>(
       });
       if (prepared.isErr()) throw prepared.error;
 
-      const result = await executeContractReadPlan(
-        publicClient,
-        prepared.value,
-      );
+      const result = await executeContractReads(publicClient, prepared.value);
       if (result.isErr()) throw result.error;
       return result.value;
     },

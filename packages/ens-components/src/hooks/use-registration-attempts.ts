@@ -6,7 +6,7 @@ import { useCallback } from "react";
 
 import { useLocalStorage } from "usehooks-ts";
 
-import { parseNameInput } from "#/actions";
+import { parseNameInput } from "#/lib/parse-name-input";
 
 export const REGISTRATION_ATTEMPTS_STORAGE_KEY =
   "@thenamespace/ens-components:registration-attempts:v2";
