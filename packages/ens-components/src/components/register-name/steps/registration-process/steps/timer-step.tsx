@@ -7,7 +7,7 @@ import { Accordion, ProgressCircle, Typography } from "@thenamespace/uikit";
 
 import {
   COMMITMENT_WAIT_DURATION_MS,
-  useRegisterName,
+  useNameRegistration,
 } from "#/components/register-name/context";
 import { useCommitments } from "#/hooks";
 
@@ -28,7 +28,7 @@ export function TimerStep({
   isDisabled = true,
   onComplete,
 }: TimerStepProps) {
-  const { commitmentId, setCommitmentId } = useRegisterName();
+  const { commitmentId, setCommitmentId } = useNameRegistration();
   const { get } = useCommitments();
   const storedCommitment =
     commitmentId === null ? undefined : get(commitmentId);

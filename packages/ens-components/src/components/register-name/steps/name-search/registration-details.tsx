@@ -26,7 +26,7 @@ import {
   MIN_REGISTRATION_DURATION,
   REGISTRATION_SECONDS_PER_DAY,
   REGISTRATION_SECONDS_PER_YEAR,
-  useRegisterName,
+  useNameRegistration,
 } from "#/components/register-name/context";
 import { ReferrerAddress } from "#/components/register-name/steps/name-search/referrer-address";
 import { useNamePrice } from "#/hooks";
@@ -136,7 +136,7 @@ export function RegistrationDetails({
   onReadyChange,
 }: RegistrationDetailsProps) {
   const { duration, durationMode, setDuration, setDurationMode } =
-    useRegisterName();
+    useNameRegistration();
   const { contracts } = useEnsConfig();
   const paymentToken = contracts.mockUsdc;
   const timeZone = getLocalTimeZone();

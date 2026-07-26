@@ -2,7 +2,7 @@
 
 import type { Hex } from "viem";
 
-import type { RegisterNameEvents } from "#/components/register-name/events";
+import type { NameRegistrationEvents } from "#/components/register-name/events";
 
 import {
   createContext,
@@ -25,11 +25,11 @@ export const COMMITMENT_VALID_DURATION_MS = 24 * 60 * 60 * 1_000;
 
 export type RegistrationDurationMode = "date" | "duration";
 
-export interface RegisterNameContextValue {
+export interface NameRegistrationContextValue {
   commitmentId: string | null;
   duration: bigint;
   durationMode: RegistrationDurationMode;
-  events: RegisterNameEvents;
+  events: NameRegistrationEvents;
   input: string;
   isReferrerValid: boolean;
   referrer: Hex;
@@ -42,18 +42,17 @@ export interface RegisterNameContextValue {
   setReferrerInput: Dispatch<SetStateAction<string>>;
 }
 
-export interface RegisterNameProviderProps {
+export interface NameRegistrationProviderProps {
   children: ReactNode;
   defaultDuration?: bigint;
   defaultDurationMode?: RegistrationDurationMode;
   defaultInput?: string;
   defaultReferrer?: Hex;
-  events?: RegisterNameEvents;
+  events?: NameRegistrationEvents;
 }
 
-const RegisterNameContext = createContext<RegisterNameContextValue | null>(
-  null,
-);
+const NameRegistrationContext =
+  createContext<NameRegistrationContextValue | null>(null);
 
 function getReferrerInput(referrer: Hex) {
   if (referrer === zeroHash) return "";
@@ -65,14 +64,14 @@ function getReferrerInput(referrer: Hex) {
   }
 }
 
-export function RegisterNameProvider({
+export function NameRegistrationProvider({
   children,
   defaultDuration = DEFAULT_REGISTRATION_DURATION,
   defaultDurationMode = "duration",
   defaultInput = "",
   defaultReferrer = zeroHash,
   events = {},
-}: RegisterNameProviderProps) {
+}: NameRegistrationProviderProps) {
   const [commitmentId, setCommitmentId] = useState<string | null>(null);
   const [duration, setDuration] = useState(() =>
     defaultDuration < MIN_REGISTRATION_DURATION
@@ -90,7 +89,7 @@ export function RegisterNameProvider({
     trimmedReferrerInput === "" || isAddress(trimmedReferrerInput);
 
   return (
-    <RegisterNameContext.Provider
+    <NameRegistrationContext.Provider
       value={{
         commitmentId,
         duration,
@@ -109,16 +108,16 @@ export function RegisterNameProvider({
       }}
     >
       {children}
-    </RegisterNameContext.Provider>
+    </NameRegistrationContext.Provider>
   );
 }
 
-export function useRegisterName() {
-  const value = useContext(RegisterNameContext);
+export function useNameRegistration() {
+  const value = useContext(NameRegistrationContext);
 
   if (value === null) {
     throw new Error(
-      "useRegisterName must be used within a RegisterNameProvider.",
+      "useNameRegistration must be used within a NameRegistrationProvider.",
     );
   }
 

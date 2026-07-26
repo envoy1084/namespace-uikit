@@ -26,9 +26,9 @@ import {
 } from "#/actions";
 import {
   COMMITMENT_VALID_DURATION_MS,
-  useRegisterName,
+  useNameRegistration,
 } from "#/components/register-name/context";
-import { emitRegisterNameEvent } from "#/components/register-name/emit-event";
+import { emitNameRegistrationEvent } from "#/components/register-name/emit-event";
 import {
   TRANSACTION_PROGRESS_COMPLETION_DURATION_MS,
   TransactionProgress,
@@ -83,7 +83,7 @@ export function RegistrationPayment({
   const publicClient = usePublicClient({ chainId: chain.id });
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
   const { switchChainAsync } = useSwitchChain();
-  const { commitmentId, events, setCommitmentId } = useRegisterName();
+  const { commitmentId, events, setCommitmentId } = useNameRegistration();
   const { delete: deleteCommitment, get } = useCommitments();
   const storedCommitment =
     commitmentId === null ? undefined : get(commitmentId);
@@ -116,6 +116,22 @@ export function RegistrationPayment({
       ? 0
       : storedCommitment.createdAt + COMMITMENT_VALID_DURATION_MS;
   const timeRemaining = Math.max(0, expiresAt - now);
+
+  const reportError = (
+    nextError: unknown,
+    phase: "approval" | "registration",
+    hash?: Hex,
+  ) => {
+    setError(nextError);
+    emitNameRegistrationEvent(events.onError, {
+      chainId: chain.id,
+      error: nextError,
+      input: storedCommitment?.label ?? "",
+      network,
+      phase,
+      ...(hash === undefined ? {} : { transactionHash: hash }),
+    });
+  };
 
   useEffect(() => {
     onPendingChange?.(isPending);
@@ -175,7 +191,7 @@ export function RegistrationPayment({
     setTransactionHash(undefined);
 
     if (connection.address === undefined) {
-      setError("WALLET_NOT_CONNECTED");
+      reportError("WALLET_NOT_CONNECTED", "registration");
       return;
     }
 
@@ -185,7 +201,7 @@ export function RegistrationPayment({
       try {
         await switchChainAsync({ chainId: chain.id });
       } catch {
-        setError("CHAIN_SWITCH_FAILED");
+        reportError("CHAIN_SWITCH_FAILED", "registration");
       } finally {
         setActionStatus("idle");
       }
@@ -199,7 +215,7 @@ export function RegistrationPayment({
       storedCommitment === undefined ||
       commitmentId === null
     ) {
-      setError("CONTRACT_READ_FAILED");
+      reportError("CONTRACT_READ_FAILED", "registration");
       return;
     }
 
@@ -207,7 +223,10 @@ export function RegistrationPayment({
     const refreshedPayment = await payment.refetch();
 
     if (refreshedPayment.isError || refreshedPayment.data === undefined) {
-      setError(refreshedPayment.error ?? "CONTRACT_READ_FAILED");
+      reportError(
+        refreshedPayment.error ?? "CONTRACT_READ_FAILED",
+        "registration",
+      );
       setActionStatus("idle");
       return;
     }
@@ -230,7 +249,7 @@ export function RegistrationPayment({
       });
 
       if (approval.isErr()) {
-        setError(approval.error);
+        reportError(approval.error, "approval");
         setActionStatus("idle");
         return;
       }
@@ -241,7 +260,7 @@ export function RegistrationPayment({
       try {
         const approvalReceipt = await waitForSuccess(approval.value);
         setIsTransactionConfirmed(true);
-        emitRegisterNameEvent(events.onApprove, {
+        emitNameRegistrationEvent(events.onApprove, {
           account: connection.address,
           amount: paymentData.total,
           chainId: chain.id,
@@ -259,7 +278,7 @@ export function RegistrationPayment({
         );
         await payment.refetch();
       } catch (approvalError) {
-        setError(approvalError);
+        reportError(approvalError, "approval", approval.value);
       } finally {
         setActionStatus("idle");
         setIsTransactionConfirmed(false);
@@ -276,7 +295,7 @@ export function RegistrationPayment({
     });
 
     if (commitmentStatus.isErr()) {
-      setError(commitmentStatus.error);
+      reportError(commitmentStatus.error, "registration");
       setActionStatus("idle");
       return;
     }
@@ -289,7 +308,7 @@ export function RegistrationPayment({
             ? "COMMITMENT_EXPIRED"
             : "COMMITMENT_NOT_FOUND";
 
-      setError(statusError);
+      reportError(statusError, "registration");
       setActionStatus("idle");
 
       if (commitmentStatus.value.state !== "WAITING") {
@@ -317,7 +336,7 @@ export function RegistrationPayment({
     });
 
     if (registration.isErr()) {
-      setError(registration.error);
+      reportError(registration.error, "registration");
       setActionStatus("idle");
       return;
     }
@@ -330,7 +349,11 @@ export function RegistrationPayment({
     try {
       receipt = await waitForSuccess(registration.value.transactionHash);
     } catch (registrationError) {
-      setError(registrationError);
+      reportError(
+        registrationError,
+        "registration",
+        registration.value.transactionHash,
+      );
       setActionStatus("idle");
       setTransactionHash(undefined);
       return;
@@ -389,7 +412,7 @@ export function RegistrationPayment({
     deleteCommitment(commitmentId);
     setCommitmentId(null);
     onSuccess(registrationDetails);
-    emitRegisterNameEvent(events.onRegister, {
+    emitNameRegistrationEvent(events.onRegister, {
       account: connection.address,
       amount: registrationAmount,
       chainId: chain.id,

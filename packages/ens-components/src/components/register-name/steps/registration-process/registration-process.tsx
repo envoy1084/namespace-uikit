@@ -7,14 +7,14 @@ import { useCallback, useEffect, useState } from "react";
 import { Accordion, Button, Modal, Surface } from "@thenamespace/uikit";
 import { ArrowLeft01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
-import { useRegisterName } from "#/components/register-name/context";
+import { useNameRegistration } from "#/components/register-name/context";
 import {
   CommitmentStep,
   CompleteRegistrationStep,
   TimerStep,
 } from "#/components/register-name/steps/registration-process/steps";
 
-const RegisterEnsHeader = new URL(
+const NameRegistrationHeader = new URL(
   "../../../../assets/register-ens-header.svg",
   import.meta.url,
 );
@@ -37,7 +37,7 @@ export function RegistrationProcess({
   onPendingChange,
   onSuccess,
 }: RegistrationProcessProps) {
-  const { commitmentId } = useRegisterName();
+  const { commitmentId } = useNameRegistration();
   const [activeStep, setActiveStep] =
     useState<RegistrationProcessStep>(initialStep);
   const [expandedKeys, setExpandedKeys] = useState(
@@ -86,7 +86,7 @@ export function RegistrationProcess({
         <img
           alt=""
           className="mx-auto w-full max-w-64"
-          src={RegisterEnsHeader.href}
+          src={NameRegistrationHeader.href}
         />
         <div>
           <Modal.Heading className="mx-auto text-center">

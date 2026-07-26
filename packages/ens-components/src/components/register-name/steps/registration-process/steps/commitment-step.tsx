@@ -14,8 +14,8 @@ import {
 } from "wagmi";
 
 import { commitName } from "#/actions";
-import { useRegisterName } from "#/components/register-name/context";
-import { emitRegisterNameEvent } from "#/components/register-name/emit-event";
+import { useNameRegistration } from "#/components/register-name/context";
+import { emitNameRegistrationEvent } from "#/components/register-name/emit-event";
 import {
   TRANSACTION_PROGRESS_COMPLETION_DURATION_MS,
   TransactionProgress,
@@ -46,7 +46,7 @@ export function CommitmentStep({
   const { switchChainAsync } = useSwitchChain();
   const { insert } = useCommitments();
   const { duration, events, input, referrer, setCommitmentId } =
-    useRegisterName();
+    useNameRegistration();
   const [error, setError] = useState<unknown>();
   const [isTransactionConfirmed, setIsTransactionConfirmed] = useState(false);
   const [status, setStatus] = useState<CommitmentStatus>("idle");
@@ -54,6 +54,18 @@ export function CommitmentStep({
   const isPending = status !== "idle";
   const isWrongNetwork =
     connection.chainId !== undefined && connection.chainId !== chain.id;
+
+  const reportError = (nextError: unknown, hash?: Hex) => {
+    setError(nextError);
+    emitNameRegistrationEvent(events.onError, {
+      chainId: chain.id,
+      error: nextError,
+      input,
+      network,
+      phase: "commitment",
+      ...(hash === undefined ? {} : { transactionHash: hash }),
+    });
+  };
 
   useEffect(() => {
     onPendingChange?.(isPending);
@@ -73,7 +85,7 @@ export function CommitmentStep({
     setTransactionHash(undefined);
 
     if (connection.address === undefined) {
-      setError("WALLET_NOT_CONNECTED");
+      reportError("WALLET_NOT_CONNECTED");
       return;
     }
 
@@ -83,7 +95,7 @@ export function CommitmentStep({
       try {
         await switchChainAsync({ chainId: chain.id });
       } catch {
-        setError("CHAIN_SWITCH_FAILED");
+        reportError("CHAIN_SWITCH_FAILED");
       } finally {
         setStatus("idle");
       }
@@ -92,7 +104,7 @@ export function CommitmentStep({
     }
 
     if (walletClient === undefined || publicClient === undefined) {
-      setError("WALLET_NOT_CONNECTED");
+      reportError("WALLET_NOT_CONNECTED");
       return;
     }
 
@@ -114,7 +126,7 @@ export function CommitmentStep({
     });
 
     if (result.isErr()) {
-      setError(result.error);
+      reportError(result.error);
       setStatus("idle");
       return;
     }
@@ -132,13 +144,16 @@ export function CommitmentStep({
       });
 
       if (receipt.status !== "success") {
-        setError("TRANSACTION_REVERTED");
+        reportError("TRANSACTION_REVERTED", result.value.transactionHash);
         setStatus("idle");
         setTransactionHash(undefined);
         return;
       }
     } catch {
-      setError("TRANSACTION_CONFIRMATION_FAILED");
+      reportError(
+        "TRANSACTION_CONFIRMATION_FAILED",
+        result.value.transactionHash,
+      );
       setStatus("idle");
       setTransactionHash(undefined);
       return;
@@ -177,7 +192,7 @@ export function CommitmentStep({
     });
 
     setCommitmentId(commitmentId);
-    emitRegisterNameEvent(events.onCommit, {
+    emitNameRegistrationEvent(events.onCommit, {
       chainId: chain.id,
       commitment: result.value.commitment,
       commitmentId,

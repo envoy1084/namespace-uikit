@@ -10,10 +10,11 @@ import {
 } from "@thenamespace/uikit";
 import { getAddress, isAddress, pad, zeroHash } from "viem";
 
-import { useRegisterName } from "#/components/register-name/context";
+import { useNameRegistration } from "#/components/register-name/context";
 
 export function ReferrerAddress() {
-  const { referrerInput, setReferrer, setReferrerInput } = useRegisterName();
+  const { referrerInput, setReferrer, setReferrerInput } =
+    useNameRegistration();
   const trimmedValue = referrerInput.trim();
   const isInvalid = trimmedValue !== "" && !isAddress(trimmedValue);
 

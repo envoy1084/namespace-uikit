@@ -2,14 +2,14 @@ import type { Address, Hex, TransactionReceipt } from "viem";
 
 import type { EnsNetwork } from "#/data";
 
-export interface RegisterNameTransactionEvent {
+export interface NameRegistrationTransactionEvent {
   chainId: number;
   network: EnsNetwork;
   receipt: TransactionReceipt;
   transactionHash: Hex;
 }
 
-export interface RegisterNameCommitEvent extends RegisterNameTransactionEvent {
+export interface NameRegistrationCommitEvent extends NameRegistrationTransactionEvent {
   commitment: Hex;
   commitmentId: string;
   duration: bigint;
@@ -19,14 +19,14 @@ export interface RegisterNameCommitEvent extends RegisterNameTransactionEvent {
   registrarAddress: Address;
 }
 
-export interface RegisterNameApproveEvent extends RegisterNameTransactionEvent {
+export interface NameRegistrationApproveEvent extends NameRegistrationTransactionEvent {
   account: Address;
   amount: bigint;
   paymentTokenAddress: Address;
   registrarAddress: Address;
 }
 
-export interface RegisterNameRegisterEvent extends RegisterNameTransactionEvent {
+export interface NameRegistrationRegisterEvent extends NameRegistrationTransactionEvent {
   account: Address;
   amount: bigint;
   decimals: number;
@@ -40,15 +40,31 @@ export interface RegisterNameRegisterEvent extends RegisterNameTransactionEvent 
   tokenId?: bigint;
 }
 
-export type RegisterNameEventHandler<TEvent> = (
+export type NameRegistrationErrorPhase =
+  | "approval"
+  | "commitment"
+  | "registration";
+
+export interface NameRegistrationErrorEvent {
+  chainId: number;
+  error: unknown;
+  input: string;
+  network: EnsNetwork;
+  phase: NameRegistrationErrorPhase;
+  transactionHash?: Hex;
+}
+
+export type NameRegistrationEventHandler<TEvent> = (
   event: TEvent,
 ) => Promise<void> | void;
 
-export interface RegisterNameEvents {
+export interface NameRegistrationEvents {
   /** Called after an approval transaction is successfully confirmed. */
-  onApprove?: RegisterNameEventHandler<RegisterNameApproveEvent>;
+  onApprove?: NameRegistrationEventHandler<NameRegistrationApproveEvent>;
   /** Called after a commitment is confirmed and persisted for resuming later. */
-  onCommit?: RegisterNameEventHandler<RegisterNameCommitEvent>;
+  onCommit?: NameRegistrationEventHandler<NameRegistrationCommitEvent>;
+  /** Called when an attempted transaction phase cannot be completed. */
+  onError?: NameRegistrationEventHandler<NameRegistrationErrorEvent>;
   /** Called after a registration transaction is successfully confirmed. */
-  onRegister?: RegisterNameEventHandler<RegisterNameRegisterEvent>;
+  onRegister?: NameRegistrationEventHandler<NameRegistrationRegisterEvent>;
 }

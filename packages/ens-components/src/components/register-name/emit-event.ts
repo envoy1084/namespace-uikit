@@ -1,7 +1,7 @@
-import type { RegisterNameEventHandler } from "#/components/register-name/events";
+import type { NameRegistrationEventHandler } from "#/components/register-name/events";
 
-export function emitRegisterNameEvent<TEvent>(
-  handler: RegisterNameEventHandler<TEvent> | undefined,
+export function emitNameRegistrationEvent<TEvent>(
+  handler: NameRegistrationEventHandler<TEvent> | undefined,
   event: TEvent,
 ) {
   if (handler === undefined) return;

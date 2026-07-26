@@ -9,9 +9,9 @@ import { useConnection } from "wagmi";
 import {
   COMMITMENT_VALID_DURATION_MS,
   COMMITMENT_WAIT_DURATION_MS,
-  RegisterNameProvider,
-  type RegisterNameProviderProps,
-  useRegisterName,
+  NameRegistrationProvider,
+  type NameRegistrationProviderProps,
+  useNameRegistration,
 } from "#/components/register-name/context";
 import {
   NameSearchStep,
@@ -26,11 +26,14 @@ import { useEnsConfig } from "#/providers";
 export * from "#/components/register-name/context";
 export * from "#/components/register-name/events";
 
-export type RegisterEnsProps = Omit<RegisterNameProviderProps, "children">;
+export type NameRegistrationProps = Omit<
+  NameRegistrationProviderProps,
+  "children"
+>;
 
-type RegisterNameView = "name-search" | "registration-process";
+type NameRegistrationView = "name-search" | "registration-process";
 
-function RegisterEnsContent() {
+function NameRegistrationContent() {
   const connection = useConnection();
   const {
     duration,
@@ -40,10 +43,10 @@ function RegisterEnsContent() {
     setInput,
     setReferrer,
     setReferrerInput,
-  } = useRegisterName();
+  } = useNameRegistration();
   const { chain, contracts } = useEnsConfig();
   const { delete: deleteCommitment, find } = useCommitments();
-  const [view, setView] = useState<RegisterNameView>("name-search");
+  const [view, setView] = useState<NameRegistrationView>("name-search");
   const [registrationStep, setRegistrationStep] =
     useState<RegistrationProcessStep>("commitment");
   const [registrationSuccess, setRegistrationSuccess] =
@@ -134,10 +137,10 @@ function RegisterEnsContent() {
   );
 }
 
-export function RegisterEns(props: RegisterEnsProps) {
+export function NameRegistration(props: NameRegistrationProps) {
   return (
-    <RegisterNameProvider {...props}>
-      <RegisterEnsContent />
-    </RegisterNameProvider>
+    <NameRegistrationProvider {...props}>
+      <NameRegistrationContent />
+    </NameRegistrationProvider>
   );
 }

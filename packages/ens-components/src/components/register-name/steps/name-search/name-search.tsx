@@ -12,12 +12,12 @@ import {
 import { Icon, Search01Icon } from "@thenamespace/uikit/icons";
 
 import { parseNameInput } from "#/actions";
-import { useRegisterName } from "#/components/register-name/context";
+import { useNameRegistration } from "#/components/register-name/context";
 import { RegistrationDetails } from "#/components/register-name/steps/name-search/registration-details";
 import { useNameAvailability } from "#/hooks";
 import { formatError } from "#/lib";
 
-const RegisterEnsHeader = new URL(
+const NameRegistrationHeader = new URL(
   "../../../../assets/register-ens-header.svg",
   import.meta.url,
 );
@@ -31,7 +31,7 @@ export const NameSearchStep = ({
   onAvailabilityChange,
   onNext,
 }: NameSearchStepProps) => {
-  const { input, isReferrerValid, setInput } = useRegisterName();
+  const { input, isReferrerValid, setInput } = useNameRegistration();
   const [isPricingReady, setIsPricingReady] = useState(false);
   const availability = useNameAvailability({
     input,
@@ -71,7 +71,7 @@ export const NameSearchStep = ({
         <img
           alt=""
           className="mx-auto w-full max-w-64"
-          src={RegisterEnsHeader.href}
+          src={NameRegistrationHeader.href}
         />
         <div>
           <Modal.Heading className="mx-auto text-center">
