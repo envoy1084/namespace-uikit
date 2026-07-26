@@ -14,7 +14,7 @@ export function RegistrationShowcase() {
       <div className="lg:sticky lg:top-28 lg:pt-6">
         <SectionLabel>Available now</SectionLabel>
         <Typography.Heading
-          className="mt-4 text-[clamp(2.4rem,4vw,4.6rem)] leading-[0.98] font-bold tracking-[-0.05em] text-balance"
+          className="mt-4 text-[clamp(2.4rem,4vw,4.6rem)] leading-[1.06] font-semibold tracking-[-0.04em] text-balance"
           id="registration-title"
           level={2}
         >

@@ -31,7 +31,7 @@ export function ToolkitOverview() {
             <SectionLabel inverse>What this provides</SectionLabel>
           </div>
           <Typography.Heading
-            className="mt-4 text-[clamp(2.4rem,4vw,4.6rem)] leading-[0.98] font-bold tracking-[-0.05em] text-balance text-white"
+            className="mt-4 text-[clamp(2.4rem,4vw,4.6rem)] leading-[1.06] font-semibold tracking-[-0.04em] text-balance text-white"
             id="toolkit-title"
             level={2}
           >
@@ -46,7 +46,7 @@ export function ToolkitOverview() {
               key={layer.label}
             >
               <Typography.Heading
-                className="flex items-center gap-3 text-[19px] tracking-[-0.02em] text-white"
+                className="flex items-center gap-3 text-[19px] leading-[1.35] font-medium tracking-[-0.01em] text-white"
                 level={3}
               >
                 <span aria-hidden className="size-2 rounded-sm bg-[#5474f6]" />
