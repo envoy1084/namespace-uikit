@@ -42,7 +42,7 @@ export function TransactionProgress({
     >
       <div
         aria-label="Transaction confirmation in progress"
-        className="bg-foreground h-10 w-full overflow-hidden rounded-xl p-1"
+        className="bg-foreground h-9 w-full overflow-hidden rounded-xl p-1"
       >
         <motion.div
           animate={{ width: isConfirmed ? "100%" : "99%" }}
@@ -62,7 +62,7 @@ export function TransactionProgress({
             src={Shuriken.href}
             style={{ y: "-50%" }}
             transition={{
-              duration: 1.1,
+              duration: 2,
               ease: "linear",
               repeat: Infinity,
             }}
