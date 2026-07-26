@@ -9,6 +9,7 @@ export * from "#/actions/get-name-price";
 export * from "#/actions/get-permissioned-resolver-status";
 export * from "#/actions/get-registration-payment-status";
 export * from "#/actions/is-name-available";
+export * from "#/actions/is-resolver-deployed";
 export * from "#/actions/parse-name-input";
 export * from "#/actions/prepare-permissioned-resolver-deployment";
 export * from "#/actions/register-name";

@@ -19,6 +19,7 @@ export type StoredRegistrationResolver =
   | {
       address: Address;
       deployer: Address;
+      deploymentData: Hex;
       factoryAddress: Address;
       implementationAddress: Address;
       initData: Hex;
@@ -185,7 +186,7 @@ export function useRegistrationAttempts() {
         [id]: attempt,
       }));
 
-      return id;
+      return { attempt, id };
     },
     [setAttempts],
   );

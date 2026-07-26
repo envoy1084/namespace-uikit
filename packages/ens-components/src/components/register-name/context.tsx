@@ -33,7 +33,7 @@ export const COMMITMENT_VALID_DURATION_MS = 24 * 60 * 60 * 1_000;
 export type RegistrationDurationMode = "date" | "duration";
 
 export interface NameRegistrationContextValue {
-  commitmentId: string | null;
+  registrationAttemptId: string | null;
   duration: bigint;
   durationMode: RegistrationDurationMode;
   events: NameRegistrationEvents;
@@ -46,7 +46,7 @@ export interface NameRegistrationContextValue {
   referrerInput: string;
   resolverAddress: Address | null;
   resolverInput: string;
-  setCommitmentId: Dispatch<SetStateAction<string | null>>;
+  setRegistrationAttemptId: Dispatch<SetStateAction<string | null>>;
   setDuration: Dispatch<SetStateAction<bigint>>;
   setDurationMode: Dispatch<SetStateAction<RegistrationDurationMode>>;
   setInput: Dispatch<SetStateAction<string>>;
@@ -95,7 +95,9 @@ export function NameRegistrationProvider({
   presentation = "dialog",
   slots = {},
 }: NameRegistrationProviderProps) {
-  const [commitmentId, setCommitmentId] = useState<string | null>(null);
+  const [registrationAttemptId, setRegistrationAttemptId] = useState<
+    string | null
+  >(null);
   const [duration, setDuration] = useState(() =>
     defaultDuration < MIN_REGISTRATION_DURATION
       ? MIN_REGISTRATION_DURATION
@@ -129,7 +131,7 @@ export function NameRegistrationProvider({
   return (
     <NameRegistrationContext.Provider
       value={{
-        commitmentId,
+        registrationAttemptId,
         duration,
         durationMode,
         events,
@@ -142,7 +144,7 @@ export function NameRegistrationProvider({
         referrerInput,
         resolverAddress,
         resolverInput,
-        setCommitmentId,
+        setRegistrationAttemptId,
         setDuration,
         setDurationMode,
         setInput,

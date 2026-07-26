@@ -1,17 +1,11 @@
 "use client";
 
+import type { Hex } from "viem";
+
 import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-process/registration-success";
 
 import { useEffect, useState } from "react";
 
-import {
-  Avatar,
-  Button,
-  Skeleton,
-  Surface,
-  Typography,
-} from "@thenamespace/uikit";
-import { parseEventLogs, type Hex } from "viem";
 import {
   useConnection,
   usePublicClient,
@@ -30,76 +24,48 @@ import {
 } from "#/components/register-name/context";
 import { emitNameRegistrationEvent } from "#/components/register-name/emit-event";
 import {
-  TRANSACTION_PROGRESS_COMPLETION_DURATION_MS,
-  TransactionProgress,
-} from "#/components/transaction-progress";
-import { ethRegistrarAbi } from "#/data/abi";
-import { useCommitments, useRegistrationPaymentStatus } from "#/hooks";
-import { formatError, formatTokenAmount } from "#/lib";
+  getRegistrationDetails,
+  parseStoredDuration,
+  type PaymentActionStatus,
+} from "#/components/register-name/steps/registration-process/steps/registration-payment/get-registration-details";
+import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
+import { useRegistrationPaymentStatus } from "#/hooks";
+import { useRegistrationAttempts } from "#/hooks/use-registration-attempts";
 import { useEnsConfig } from "#/providers";
 
-type PaymentActionStatus =
-  | "approving"
-  | "confirming-approval"
-  | "confirming-registration"
-  | "idle"
-  | "refreshing"
-  | "registering"
-  | "switching";
-
-export interface RegistrationPaymentProps {
+export interface UseRegistrationPaymentProps {
   onCommitmentInvalid: (error: unknown) => void;
   onPendingChange?: (isPending: boolean) => void;
   onSuccess: (registration: RegistrationSuccessDetails) => void;
 }
 
-function formatTimeRemaining(milliseconds: number) {
-  const totalMinutes = Math.max(0, Math.ceil(milliseconds / 60_000));
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-
-  if (hours === 0) return `${minutes} min`;
-  if (minutes === 0) return `${hours} hr`;
-  return `${hours} hr ${minutes} min`;
-}
-
-function parseDuration(value: string | undefined) {
-  if (value === undefined) return 0n;
-
-  try {
-    return BigInt(value);
-  } catch {
-    return 0n;
-  }
-}
-
-export function RegistrationPayment({
+export function useRegistrationPayment({
   onCommitmentInvalid,
   onPendingChange,
   onSuccess,
-}: RegistrationPaymentProps) {
+}: UseRegistrationPaymentProps) {
   const connection = useConnection();
   const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
   const { switchChainAsync } = useSwitchChain();
-  const { commitmentId, events, setCommitmentId, slots } =
+  const { events, registrationAttemptId, setRegistrationAttemptId } =
     useNameRegistration();
-  const { delete: deleteCommitment, get } = useCommitments();
-  const storedCommitment =
-    commitmentId === null ? undefined : get(commitmentId);
-  const duration = parseDuration(storedCommitment?.duration);
+  const { delete: deleteAttempt, get } = useRegistrationAttempts();
+  const storedAttempt =
+    registrationAttemptId === null ? undefined : get(registrationAttemptId);
+  const duration = parseStoredDuration(storedAttempt?.duration);
   const paymentToken = contracts.mockUsdc;
   const payment = useRegistrationPaymentStatus({
     account: connection.address,
     duration,
-    input: storedCommitment?.label,
+    input: storedAttempt?.label,
     paymentTokenAddress: paymentToken.address,
-    ...(storedCommitment === undefined
+    ...(storedAttempt === undefined
       ? {}
-      : { registrarAddress: storedCommitment.registrarAddress }),
+      : { registrarAddress: storedAttempt.registrarAddress }),
     query: {
-      enabled: storedCommitment !== undefined && duration > 0n,
+      enabled: storedAttempt !== undefined && duration > 0n,
       retry: (failureCount, error) =>
         error === "CONTRACT_READ_FAILED" && failureCount < 3,
     },
@@ -113,9 +79,9 @@ export function RegistrationPayment({
   const isWrongNetwork =
     connection.chainId !== undefined && connection.chainId !== chain.id;
   const expiresAt =
-    storedCommitment === undefined
+    storedAttempt?.submission.type !== "confirmed"
       ? 0
-      : storedCommitment.createdAt + COMMITMENT_VALID_DURATION_MS;
+      : storedAttempt.submission.confirmedAt + COMMITMENT_VALID_DURATION_MS;
   const timeRemaining = Math.max(0, expiresAt - now);
 
   const reportError = (
@@ -127,7 +93,7 @@ export function RegistrationPayment({
     emitNameRegistrationEvent(events.onError, {
       chainId: chain.id,
       error: nextError,
-      input: storedCommitment?.label ?? "",
+      input: storedAttempt?.label ?? "",
       network,
       phase,
       ...(hash === undefined ? {} : { transactionHash: hash }),
@@ -146,15 +112,14 @@ export function RegistrationPayment({
   );
 
   useEffect(() => {
-    if (storedCommitment === undefined || isPending) return;
+    if (storedAttempt === undefined || isPending) return;
 
     const updateExpiry = () => {
       const currentTime = Date.now();
       setNow(currentTime);
 
-      if (currentTime >= expiresAt && commitmentId !== null) {
-        deleteCommitment(commitmentId);
-        setCommitmentId(null);
+      if (currentTime >= expiresAt && registrationAttemptId !== null) {
+        onCommitmentInvalid("COMMITMENT_EXPIRED");
       }
     };
 
@@ -162,12 +127,11 @@ export function RegistrationPayment({
     const interval = window.setInterval(updateExpiry, 30_000);
     return () => window.clearInterval(interval);
   }, [
-    commitmentId,
-    deleteCommitment,
     expiresAt,
     isPending,
-    setCommitmentId,
-    storedCommitment,
+    onCommitmentInvalid,
+    registrationAttemptId,
+    storedAttempt,
   ]);
 
   const waitForSuccess = async (hash: Hex) => {
@@ -175,14 +139,8 @@ export function RegistrationPayment({
       throw new Error("Public client unavailable.");
     }
 
-    const receipt = await publicClient.waitForTransactionReceipt({
-      hash,
-    });
-
-    if (receipt.status !== "success") {
-      throw "TRANSACTION_REVERTED";
-    }
-
+    const receipt = await publicClient.waitForTransactionReceipt({ hash });
+    if (receipt.status !== "success") throw "TRANSACTION_REVERTED";
     return receipt;
   };
 
@@ -206,15 +164,14 @@ export function RegistrationPayment({
       } finally {
         setActionStatus("idle");
       }
-
       return;
     }
 
     if (
       walletClient === undefined ||
       publicClient === undefined ||
-      storedCommitment === undefined ||
-      commitmentId === null
+      storedAttempt === undefined ||
+      registrationAttemptId === null
     ) {
       reportError("CONTRACT_READ_FAILED", "registration");
       return;
@@ -222,7 +179,6 @@ export function RegistrationPayment({
 
     setActionStatus("refreshing");
     const refreshedPayment = await payment.refetch();
-
     if (refreshedPayment.isError || refreshedPayment.data === undefined) {
       reportError(
         refreshedPayment.error ?? "CONTRACT_READ_FAILED",
@@ -233,7 +189,6 @@ export function RegistrationPayment({
     }
 
     const paymentData = refreshedPayment.data;
-
     if (!paymentData.hasSufficientBalance) {
       setActionStatus("idle");
       return;
@@ -246,7 +201,7 @@ export function RegistrationPayment({
         amount: paymentData.total,
         network,
         paymentTokenAddress: paymentToken.address,
-        registrarAddress: storedCommitment.registrarAddress,
+        registrarAddress: storedAttempt.registrarAddress,
       });
 
       if (approval.isErr()) {
@@ -259,7 +214,7 @@ export function RegistrationPayment({
       setTransactionHash(approval.value);
 
       try {
-        const approvalReceipt = await waitForSuccess(approval.value);
+        const receipt = await waitForSuccess(approval.value);
         setIsTransactionConfirmed(true);
         emitNameRegistrationEvent(events.onApprove, {
           account: connection.address,
@@ -267,8 +222,8 @@ export function RegistrationPayment({
           chainId: chain.id,
           network,
           paymentTokenAddress: paymentToken.address,
-          receipt: approvalReceipt,
-          registrarAddress: storedCommitment.registrarAddress,
+          receipt,
+          registrarAddress: storedAttempt.registrarAddress,
           transactionHash: approval.value,
         });
         await new Promise((resolve) =>
@@ -285,16 +240,14 @@ export function RegistrationPayment({
         setIsTransactionConfirmed(false);
         setTransactionHash(undefined);
       }
-
       return;
     }
 
     const commitmentStatus = await getCommitmentStatus(publicClient, {
-      commitment: storedCommitment.commitment,
+      commitment: storedAttempt.commitment,
       network,
-      registrarAddress: storedCommitment.registrarAddress,
+      registrarAddress: storedAttempt.registrarAddress,
     });
-
     if (commitmentStatus.isErr()) {
       reportError(commitmentStatus.error, "registration");
       setActionStatus("idle");
@@ -308,16 +261,12 @@ export function RegistrationPayment({
           : commitmentStatus.value.state === "EXPIRED"
             ? "COMMITMENT_EXPIRED"
             : "COMMITMENT_NOT_FOUND";
-
       reportError(statusError, "registration");
       setActionStatus("idle");
 
       if (commitmentStatus.value.state !== "WAITING") {
-        deleteCommitment(commitmentId);
-        setCommitmentId(null);
         onCommitmentInvalid(statusError);
       }
-
       return;
     }
 
@@ -325,17 +274,16 @@ export function RegistrationPayment({
     const registration = await registerName(walletClient, {
       account: connection.address,
       duration,
-      input: storedCommitment.label,
+      input: storedAttempt.label,
       network,
-      owner: storedCommitment.owner,
+      owner: storedAttempt.owner,
       paymentTokenAddress: paymentToken.address,
-      referrer: storedCommitment.referrer,
-      registrarAddress: storedCommitment.registrarAddress,
-      resolverAddress: storedCommitment.resolver,
-      secret: storedCommitment.secret,
-      subregistryAddress: storedCommitment.subregistry,
+      referrer: storedAttempt.referrer,
+      registrarAddress: storedAttempt.registrarAddress,
+      resolverAddress: storedAttempt.resolver.address,
+      secret: storedAttempt.secret,
+      subregistryAddress: storedAttempt.subregistry,
     });
-
     if (registration.isErr()) {
       reportError(registration.error, "registration");
       setActionStatus("idle");
@@ -346,7 +294,6 @@ export function RegistrationPayment({
     setTransactionHash(registration.value.transactionHash);
 
     let receipt: Awaited<ReturnType<typeof waitForSuccess>>;
-
     try {
       receipt = await waitForSuccess(registration.value.transactionHash);
     } catch (registrationError) {
@@ -361,7 +308,6 @@ export function RegistrationPayment({
     }
 
     setIsTransactionConfirmed(true);
-
     let registeredAt = Date.now();
 
     try {
@@ -370,66 +316,44 @@ export function RegistrationPayment({
       });
       registeredAt = Number(block.timestamp) * 1_000;
     } catch {
-      // The successful receipt is authoritative. A secondary timestamp read
-      // must not turn a completed registration into a failed UI state.
+      // Receipt success remains authoritative if the timestamp read fails.
     }
 
-    const registrationEvent = (() => {
-      try {
-        return parseEventLogs({
-          abi: ethRegistrarAbi,
-          eventName: "NameRegistered",
-          logs: receipt.logs.filter(
-            (log) =>
-              log.address.toLowerCase() ===
-              storedCommitment.registrarAddress.toLowerCase(),
-          ),
-          strict: true,
-        })[0];
-      } catch {
-        return undefined;
-      }
-    })();
-    const registeredDuration = registrationEvent?.args.duration ?? duration;
-    const registrationAmount =
-      registrationEvent === undefined
-        ? paymentData.total
-        : registrationEvent.args.base + registrationEvent.args.premium;
-    const registeredLabel =
-      registrationEvent?.args.label ?? registration.value.label;
-    const registrationDetails: RegistrationSuccessDetails = {
-      amount: registrationAmount,
+    const confirmedRegistration = getRegistrationDetails({
       decimals: paymentData.decimals,
-      duration: registeredDuration,
-      expiresAt: registeredAt + Number(registeredDuration) * 1_000,
-      name: `${registeredLabel}.eth`,
+      fallbackAmount: paymentData.total,
+      fallbackDuration: duration,
+      fallbackLabel: registration.value.label,
       paymentTokenIcon: paymentToken.icon,
       paymentTokenSymbol: paymentToken.symbol,
-    };
+      receipt,
+      registeredAt,
+      registrarAddress: storedAttempt.registrarAddress,
+    });
 
     await new Promise((resolve) =>
       window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
     );
-    deleteCommitment(commitmentId);
-    setCommitmentId(null);
-    onSuccess(registrationDetails);
+    deleteAttempt(registrationAttemptId);
+    setRegistrationAttemptId(null);
+    onSuccess(confirmedRegistration.details);
     emitNameRegistrationEvent(events.onRegister, {
       account: connection.address,
-      amount: registrationAmount,
+      amount: confirmedRegistration.amount,
       chainId: chain.id,
       decimals: paymentData.decimals,
-      duration: registeredDuration,
-      expiresAt: registrationDetails.expiresAt,
-      name: registrationDetails.name,
+      duration: confirmedRegistration.duration,
+      expiresAt: confirmedRegistration.details.expiresAt,
+      name: confirmedRegistration.details.name,
       network,
-      owner: storedCommitment.owner,
+      owner: storedAttempt.owner,
       paymentTokenAddress: paymentToken.address,
       receipt,
-      referrer: storedCommitment.referrer,
-      registrarAddress: storedCommitment.registrarAddress,
-      ...(registrationEvent === undefined
+      referrer: storedAttempt.referrer,
+      registrarAddress: storedAttempt.registrarAddress,
+      ...(confirmedRegistration.tokenId === undefined
         ? {}
-        : { tokenId: registrationEvent.args.tokenId }),
+        : { tokenId: confirmedRegistration.tokenId }),
       transactionHash: registration.value.transactionHash,
     });
   };
@@ -458,80 +382,17 @@ export function RegistrationPayment({
                         ? "Register name"
                         : `Approve ${paymentToken.symbol}`;
 
-  return (
-    <div className="mt-4">
-      <Surface
-        className="flex items-center justify-between gap-4 rounded-xl px-3 py-2"
-        variant="secondary"
-      >
-        <Typography.Paragraph color="muted" size="xs">
-          Registration price
-        </Typography.Paragraph>
-        <div className="flex items-center gap-2">
-          <Avatar className="size-5">
-            <Avatar.Image
-              alt={`${paymentToken.symbol} logo`}
-              src={paymentToken.icon}
-            />
-            <Avatar.Fallback>{paymentToken.symbol.slice(0, 1)}</Avatar.Fallback>
-          </Avatar>
-          {payment.isPending || payment.isFetching ? (
-            <Skeleton className="h-5 w-14 rounded-md" />
-          ) : payment.data ? (
-            <span className="text-foreground text-sm font-semibold">
-              {formatTokenAmount(payment.data.total, payment.data.decimals, {
-                maximumFractionDigits: 2,
-                minimumFractionDigits: 2,
-              })}
-            </span>
-          ) : (
-            <span className="text-muted text-sm">N/A</span>
-          )}
-        </div>
-      </Surface>
-      <Typography.Paragraph
-        className="mt-2 text-center"
-        color="muted"
-        size="xs"
-      >
-        Complete registration within {formatTimeRemaining(timeRemaining)}.
-      </Typography.Paragraph>
-      {(actionStatus === "confirming-approval" ||
-        actionStatus === "confirming-registration") &&
-      transactionHash !== undefined ? (
-        <TransactionProgress
-          blockExplorerUrl={chain.blockExplorers?.default.url}
-          chainId={chain.id}
-          className="mt-4"
-          icon={slots.transactionProgressIcon}
-          isConfirmed={isTransactionConfirmed}
-          transactionHash={transactionHash}
-        />
-      ) : (
-        <Button
-          className="mt-4 w-full"
-          isDisabled={
-            connection.address === undefined ||
-            payment.isPending ||
-            (payment.data !== undefined && !payment.data.hasSufficientBalance)
-          }
-          isPending={isPending}
-          onPress={handlePayment}
-        >
-          {buttonLabel}
-        </Button>
-      )}
-      {payment.isError || error !== undefined ? (
-        <Typography.Paragraph
-          className="text-danger mt-2 text-center"
-          size="xs"
-          role="alert"
-        >
-          {formatError(error ?? payment.error, {
-            name: storedCommitment?.label,
-          })}
-        </Typography.Paragraph>
-      ) : null}
-    </div>
-  );
+  return {
+    actionStatus,
+    buttonLabel,
+    error,
+    handlePayment,
+    isPending,
+    isTransactionConfirmed,
+    payment,
+    paymentToken,
+    storedAttempt,
+    timeRemaining,
+    transactionHash,
+  };
 }

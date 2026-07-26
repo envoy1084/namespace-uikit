@@ -20,7 +20,7 @@ export interface TransactionProgressProps {
   className?: string;
   icon?: ReactNode;
   isConfirmed?: boolean;
-  transactionHash: Hex;
+  transactionHash?: Hex | undefined;
 }
 
 export function TransactionProgress({
@@ -34,7 +34,7 @@ export function TransactionProgress({
   const confirmationDuration =
     CHAIN_CONFIRMATION_DURATION_MS[chainId] ?? DEFAULT_CONFIRMATION_DURATION_MS;
   const transactionUrl =
-    blockExplorerUrl === undefined
+    blockExplorerUrl === undefined || transactionHash === undefined
       ? undefined
       : `${blockExplorerUrl.replace(/\/$/, "")}/tx/${transactionHash}`;
 

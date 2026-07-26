@@ -42,7 +42,7 @@ export function RegistrationProcess({
   onPendingChange,
   onSuccess,
 }: RegistrationProcessProps) {
-  const { commitmentId, messages, slots } = useNameRegistration();
+  const { messages, registrationAttemptId, slots } = useNameRegistration();
   const [activeStep, setActiveStep] =
     useState<RegistrationProcessStep>(initialStep);
   const [expandedKeys, setExpandedKeys] = useState(
@@ -63,12 +63,10 @@ export function RegistrationProcess({
   );
 
   useEffect(() => {
-    if (commitmentId === null) {
+    if (registrationAttemptId === null) {
       setActiveStep("commitment");
-    } else if (activeStep === "commitment") {
-      setActiveStep("timer");
     }
-  }, [activeStep, commitmentId]);
+  }, [activeStep, registrationAttemptId]);
 
   useEffect(() => {
     setExpandedKeys(new Set([activeStep]));
@@ -116,6 +114,7 @@ export function RegistrationProcess({
             <CommitmentStep
               error={commitmentError}
               isDisabled={activeStep !== "commitment"}
+              onConfirmed={() => setActiveStep("timer")}
               onErrorClear={() => setCommitmentError(undefined)}
               {...(activeStep === "commitment"
                 ? { onPendingChange: handlePendingChange }

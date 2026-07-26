@@ -11,12 +11,19 @@ export interface NameRegistrationTransactionEvent {
 
 export interface NameRegistrationCommitEvent extends NameRegistrationTransactionEvent {
   commitment: Hex;
-  commitmentId: string;
+  registrationAttemptId: string;
   duration: bigint;
   name: string;
   owner: Address;
   referrer: Hex;
   registrarAddress: Address;
+}
+
+export interface NameRegistrationResolverDeployEvent extends NameRegistrationTransactionEvent {
+  factoryAddress: Address;
+  implementationAddress: Address;
+  owner: Address;
+  resolverAddress: Address;
 }
 
 export interface NameRegistrationApproveEvent extends NameRegistrationTransactionEvent {
@@ -43,6 +50,7 @@ export interface NameRegistrationRegisterEvent extends NameRegistrationTransacti
 export type NameRegistrationErrorPhase =
   | "approval"
   | "commitment"
+  | "resolver"
   | "registration";
 
 export interface NameRegistrationErrorEvent {
@@ -65,6 +73,8 @@ export interface NameRegistrationEvents {
   onCommit?: NameRegistrationEventHandler<NameRegistrationCommitEvent>;
   /** Called when an attempted transaction phase cannot be completed. */
   onError?: NameRegistrationEventHandler<NameRegistrationErrorEvent>;
+  /** Called after a dedicated resolver deployment is confirmed. */
+  onResolverDeploy?: NameRegistrationEventHandler<NameRegistrationResolverDeployEvent>;
   /** Called after a registration transaction is successfully confirmed. */
   onRegister?: NameRegistrationEventHandler<NameRegistrationRegisterEvent>;
 }

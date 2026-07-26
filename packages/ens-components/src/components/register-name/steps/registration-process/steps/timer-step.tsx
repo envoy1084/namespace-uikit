@@ -9,7 +9,7 @@ import {
   COMMITMENT_WAIT_DURATION_MS,
   useNameRegistration,
 } from "#/components/register-name/context";
-import { useCommitments } from "#/hooks";
+import { useRegistrationAttempts } from "#/hooks/use-registration-attempts";
 
 const COMMITMENT_WAIT_DURATION_SECONDS = COMMITMENT_WAIT_DURATION_MS / 1_000;
 const TIMER_NUMBER_FORMAT = {
@@ -28,21 +28,22 @@ export function TimerStep({
   isDisabled = true,
   onComplete,
 }: TimerStepProps) {
-  const { commitmentId, setCommitmentId } = useNameRegistration();
-  const { get } = useCommitments();
-  const storedCommitment =
-    commitmentId === null ? undefined : get(commitmentId);
+  const { registrationAttemptId, setRegistrationAttemptId } =
+    useNameRegistration();
+  const { get } = useRegistrationAttempts();
+  const storedAttempt =
+    registrationAttemptId === null ? undefined : get(registrationAttemptId);
   const [now, setNow] = useState(Date.now());
   const deadline =
-    storedCommitment === undefined
+    storedAttempt?.submission.type !== "confirmed"
       ? null
-      : storedCommitment.createdAt + COMMITMENT_WAIT_DURATION_MS;
+      : storedAttempt.submission.confirmedAt + COMMITMENT_WAIT_DURATION_MS;
 
   useEffect(() => {
-    if (commitmentId !== null && storedCommitment === undefined) {
-      setCommitmentId(null);
+    if (registrationAttemptId !== null && storedAttempt === undefined) {
+      setRegistrationAttemptId(null);
     }
-  }, [commitmentId, setCommitmentId, storedCommitment]);
+  }, [registrationAttemptId, setRegistrationAttemptId, storedAttempt]);
 
   useEffect(() => {
     if (deadline === null || isCompleted) return;

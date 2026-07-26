@@ -20,7 +20,7 @@ import {
   type RegistrationSuccessDetails,
   type RegistrationProcessStep,
 } from "#/components/register-name/steps";
-import { useCommitments } from "#/hooks";
+import { useRegistrationAttempts } from "#/hooks/use-registration-attempts";
 import { useEnsConfig } from "#/providers";
 
 export * from "#/components/register-name/context";
@@ -42,7 +42,8 @@ function NameRegistrationContent() {
     messages,
     presentation,
     referrer,
-    setCommitmentId,
+    resolverAddress,
+    setRegistrationAttemptId,
     setInput,
     setReferrer,
     setReferrerInput,
@@ -51,7 +52,7 @@ function NameRegistrationContent() {
     slots,
   } = useNameRegistration();
   const { chain, contracts } = useEnsConfig();
-  const { delete: deleteCommitment, find } = useCommitments();
+  const { find } = useRegistrationAttempts();
   const [view, setView] = useState<NameRegistrationView>("name-search");
   const [registrationStep, setRegistrationStep] =
     useState<RegistrationProcessStep>("commitment");
@@ -61,38 +62,35 @@ function NameRegistrationContent() {
   const isRegistrationSuccess = registrationSuccess !== undefined;
 
   const handleNext = () => {
-    let storedCommitment =
+    const storedAttempt =
       connection.address === undefined
         ? undefined
         : find({
+            account: connection.address,
             chainId: chain.id,
             duration,
             input,
             owner: connection.address,
             referrer,
             registrarAddress: contracts.ethRegistrar.address,
-            resolverAddress: zeroAddress,
-            subregistryAddress: zeroAddress,
+            resolverAddress,
+            subregistry: zeroAddress,
           });
 
-    if (
-      storedCommitment !== undefined &&
-      Date.now() >=
-        storedCommitment.commitment.createdAt + COMMITMENT_VALID_DURATION_MS
-    ) {
-      deleteCommitment(storedCommitment.id);
-      storedCommitment = undefined;
-    }
+    const confirmedAt =
+      storedAttempt?.attempt.submission.type === "confirmed"
+        ? storedAttempt.attempt.submission.confirmedAt
+        : undefined;
+    const isConfirmedAndValid =
+      confirmedAt !== undefined &&
+      Date.now() < confirmedAt + COMMITMENT_VALID_DURATION_MS;
+    const nextStep = !isConfirmedAndValid
+      ? "commitment"
+      : Date.now() >= confirmedAt + COMMITMENT_WAIT_DURATION_MS
+        ? "complete-registration"
+        : "timer";
 
-    const nextStep =
-      storedCommitment === undefined
-        ? "commitment"
-        : Date.now() >=
-            storedCommitment.commitment.createdAt + COMMITMENT_WAIT_DURATION_MS
-          ? "complete-registration"
-          : "timer";
-
-    setCommitmentId(storedCommitment?.id ?? null);
+    setRegistrationAttemptId(storedAttempt?.id ?? null);
     setRegistrationStep(nextStep);
     setView("registration-process");
   };
@@ -102,7 +100,7 @@ function NameRegistrationContent() {
   };
 
   const handleDone = () => {
-    setCommitmentId(null);
+    setRegistrationAttemptId(null);
     setInput("");
     setReferrer(zeroHash);
     setReferrerInput("");
