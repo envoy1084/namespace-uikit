@@ -13,10 +13,7 @@ import {
   parseNameInput,
   type ParseNameInputError,
 } from "#/actions/parse-name-input";
-import {
-  ethRegistrarGetRegisterPriceSnippet,
-  ethRegistrarIsAvailableSnippet,
-} from "#/data/abi";
+import { ethRegistrarAbi } from "#/data/abi";
 
 const MAX_UINT64 = (1n << 64n) - 1n;
 
@@ -99,13 +96,13 @@ export function getNamePrice(
       contracts: [
         {
           address: registrarAddress,
-          abi: ethRegistrarIsAvailableSnippet,
+          abi: ethRegistrarAbi,
           functionName: "isAvailable",
           args: [label],
         },
         {
           address: registrarAddress,
-          abi: ethRegistrarGetRegisterPriceSnippet,
+          abi: ethRegistrarAbi,
           functionName: "getRegisterPrice",
           args: [label, duration, paymentTokenAddress],
         },

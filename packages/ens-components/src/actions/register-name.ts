@@ -15,7 +15,7 @@ import {
   type MakeNameCommitmentError,
   type MakeNameCommitmentProps,
 } from "#/actions/commit-name";
-import { ethRegistrarRegisterSnippet } from "#/data/abi";
+import { ethRegistrarAbi } from "#/data/abi";
 
 export type RegisterNameError =
   | "CONTRACT_WRITE_FAILED"
@@ -78,7 +78,7 @@ export function registerName(
     walletClient.writeContract({
       account,
       address: registrarAddress,
-      abi: ethRegistrarRegisterSnippet,
+      abi: ethRegistrarAbi,
       chain: walletClient.chain,
       functionName: "register",
       args: [

@@ -11,11 +11,7 @@ import {
   type PublicClient,
 } from "viem";
 
-import {
-  ethRegistrarCommitmentAtSnippet,
-  ethRegistrarMaxCommitmentAgeSnippet,
-  ethRegistrarMinCommitmentAgeSnippet,
-} from "#/data/abi";
+import { ethRegistrarAbi } from "#/data/abi";
 
 export type CommitmentState = "EXPIRED" | "NOT_FOUND" | "READY" | "WAITING";
 
@@ -73,18 +69,18 @@ export function getCommitmentStatus(
         contracts: [
           {
             address: registrarAddress,
-            abi: ethRegistrarCommitmentAtSnippet,
+            abi: ethRegistrarAbi,
             functionName: "commitmentAt",
             args: [commitment],
           },
           {
             address: registrarAddress,
-            abi: ethRegistrarMinCommitmentAgeSnippet,
+            abi: ethRegistrarAbi,
             functionName: "MIN_COMMITMENT_AGE",
           },
           {
             address: registrarAddress,
-            abi: ethRegistrarMaxCommitmentAgeSnippet,
+            abi: ethRegistrarAbi,
             functionName: "MAX_COMMITMENT_AGE",
           },
         ],

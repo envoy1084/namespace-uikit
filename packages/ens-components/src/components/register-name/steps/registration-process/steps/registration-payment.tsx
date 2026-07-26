@@ -33,7 +33,7 @@ import {
   TRANSACTION_PROGRESS_COMPLETION_DURATION_MS,
   TransactionProgress,
 } from "#/components/transaction-progress";
-import { ethRegistrarNameRegisteredEventSnippet } from "#/data/abi";
+import { ethRegistrarAbi } from "#/data/abi";
 import { useCommitments, useRegistrationPaymentStatus } from "#/hooks";
 import { formatError, formatTokenAmount } from "#/lib";
 import { useEnsConfig } from "#/providers";
@@ -377,7 +377,7 @@ export function RegistrationPayment({
     const registrationEvent = (() => {
       try {
         return parseEventLogs({
-          abi: ethRegistrarNameRegisteredEventSnippet,
+          abi: ethRegistrarAbi,
           eventName: "NameRegistered",
           logs: receipt.logs.filter(
             (log) =>

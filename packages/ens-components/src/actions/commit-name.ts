@@ -17,7 +17,7 @@ import {
   parseNameInput,
   type ParseNameInputError,
 } from "#/actions/parse-name-input";
-import { ethRegistrarCommitSnippet } from "#/data/abi";
+import { ethRegistrarAbi } from "#/data/abi";
 
 const MAX_UINT64 = (1n << 64n) - 1n;
 
@@ -211,7 +211,7 @@ export function commitName(
     walletClient.writeContract({
       account,
       address: registrarAddress,
-      abi: ethRegistrarCommitSnippet,
+      abi: ethRegistrarAbi,
       chain: walletClient.chain,
       functionName: "commit",
       args: [result.value.commitment],

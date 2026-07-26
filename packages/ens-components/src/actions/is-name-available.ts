@@ -7,7 +7,7 @@ import {
   parseNameInput,
   type ParseNameInputError,
 } from "#/actions/parse-name-input";
-import { ethRegistrarIsAvailableSnippet } from "#/data/abi";
+import { ethRegistrarAbi } from "#/data/abi";
 
 export type IsNameAvailableError =
   | "LABEL_TOO_SHORT"
@@ -59,7 +59,7 @@ export function isNameAvailable(
   return ResultAsync.fromPromise(
     publicClient.readContract({
       address: registrarAddress,
-      abi: ethRegistrarIsAvailableSnippet,
+      abi: ethRegistrarAbi,
       functionName: "isAvailable",
       args: [parsedName.label],
     }),
