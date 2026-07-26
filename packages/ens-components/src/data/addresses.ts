@@ -10,6 +10,11 @@ import {
   ethRegistrarMinCommitmentAgeSnippet,
   ethRegistrarNameRegisteredEventSnippet,
   ethRegistrarRegisterSnippet,
+  permissionedResolverHasRootRolesSnippet,
+  permissionedResolverInitializeSnippet,
+  verifiableFactoryDeployProxySnippet,
+  verifiableFactoryProxyDeployedEventSnippet,
+  verifiableFactoryVerifyContractSnippet,
 } from "#/data/abi";
 
 const mockUsdcIcon = new URL("../assets/usdc.svg", import.meta.url).href;
@@ -37,6 +42,21 @@ export const testnetContracts = {
     abi: erc20Abi,
     icon: mockUsdcIcon,
     symbol: "USDC",
+  },
+  permissionedResolverImplementation: {
+    address: "0xdce5205a553573ffd47629327dddf36186022ffa" as Hex,
+    snippets: {
+      permissionedResolverHasRootRolesSnippet,
+      permissionedResolverInitializeSnippet,
+    },
+  },
+  verifiableFactory: {
+    address: "0xd2a632d8a8b67c2c4398c255cbd7af8dd7236198" as Hex,
+    snippets: {
+      verifiableFactoryDeployProxySnippet,
+      verifiableFactoryProxyDeployedEventSnippet,
+      verifiableFactoryVerifyContractSnippet,
+    },
   },
 };
 
