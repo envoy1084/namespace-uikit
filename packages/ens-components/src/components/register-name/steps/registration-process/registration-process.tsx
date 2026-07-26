@@ -1,5 +1,7 @@
 "use client";
 
+import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-process/registration-success";
+
 import { useCallback, useEffect, useState } from "react";
 
 import { Accordion, Surface } from "@thenamespace/uikit";
@@ -18,7 +20,7 @@ export type RegistrationProcessStep =
 
 export interface RegistrationProcessProps {
   initialStep?: RegistrationProcessStep;
-  onSuccess: (name: string) => void;
+  onSuccess: (registration: RegistrationSuccessDetails) => void;
 }
 
 export function RegistrationProcess({
@@ -63,7 +65,7 @@ export function RegistrationProcess({
         />
         <CompleteRegistrationStep
           isDisabled={activeStep !== "complete-registration"}
-          onSuccess={(name) => onSuccess(name)}
+          onSuccess={onSuccess}
         />
       </Accordion>
     </Surface>

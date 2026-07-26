@@ -1,4 +1,4 @@
-import type { Hex } from "viem";
+import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-process/registration-success";
 
 import { Accordion, Typography } from "@thenamespace/uikit";
 
@@ -6,7 +6,7 @@ import { RegistrationPayment } from "#/components/register-name/steps/registrati
 
 export interface CompleteRegistrationStepProps {
   isDisabled?: boolean;
-  onSuccess: (name: string, transactionHash: Hex) => void;
+  onSuccess: (registration: RegistrationSuccessDetails) => void;
 }
 
 export function CompleteRegistrationStep({

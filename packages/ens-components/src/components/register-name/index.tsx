@@ -18,6 +18,7 @@ import {
   NameSearchStep,
   RegistrationProcess,
   RegistrationSuccess,
+  type RegistrationSuccessDetails,
   type RegistrationProcessStep,
 } from "#/components/register-name/steps";
 import { useCommitments } from "#/hooks";
@@ -43,10 +44,11 @@ function RegisterEnsContent() {
   const [view, setView] = useState<RegisterNameView>("name-search");
   const [registrationStep, setRegistrationStep] =
     useState<RegistrationProcessStep>("commitment");
-  const [registeredName, setRegisteredName] = useState<string>();
+  const [registrationSuccess, setRegistrationSuccess] =
+    useState<RegistrationSuccessDetails>();
   const [isNameAvailable, setIsNameAvailable] = useState(false);
   const isRegistrationProcess = view === "registration-process";
-  const isRegistrationSuccess = registeredName !== undefined;
+  const isRegistrationSuccess = registrationSuccess !== undefined;
 
   const handleNext = () => {
     let storedCommitment =
@@ -89,7 +91,7 @@ function RegisterEnsContent() {
     setCommitmentId(null);
     setInput("");
     setIsNameAvailable(false);
-    setRegisteredName(undefined);
+    setRegistrationSuccess(undefined);
     setRegistrationStep("commitment");
     setView("name-search");
   };
@@ -136,13 +138,13 @@ function RegisterEnsContent() {
             <Modal.Body className="flex-none">
               {isRegistrationSuccess ? (
                 <RegistrationSuccess
-                  name={registeredName}
                   onDone={handleDone}
+                  registration={registrationSuccess}
                 />
               ) : isRegistrationProcess ? (
                 <RegistrationProcess
                   initialStep={registrationStep}
-                  onSuccess={setRegisteredName}
+                  onSuccess={setRegistrationSuccess}
                 />
               ) : (
                 <NameSearchStep onAvailabilityChange={setIsNameAvailable} />

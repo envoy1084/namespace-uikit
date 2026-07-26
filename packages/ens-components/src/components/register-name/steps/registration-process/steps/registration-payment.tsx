@@ -1,5 +1,7 @@
 "use client";
 
+import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-process/registration-success";
+
 import { useEffect, useState } from "react";
 
 import {
@@ -36,7 +38,7 @@ type PaymentActionStatus =
   | "switching";
 
 export interface RegistrationPaymentProps {
-  onSuccess: (name: string, transactionHash: Hex) => void;
+  onSuccess: (registration: RegistrationSuccessDetails) => void;
 }
 
 function formatTimeRemaining(milliseconds: number) {
@@ -135,6 +137,8 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
     if (receipt.status !== "success") {
       throw "TRANSACTION_REVERTED";
     }
+
+    return receipt;
   };
 
   const handlePayment = async () => {
@@ -235,13 +239,21 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
     setTransactionHash(registration.value.transactionHash);
 
     try {
-      await waitForSuccess(registration.value.transactionHash);
+      const receipt = await waitForSuccess(registration.value.transactionHash);
+      const block = await publicClient.getBlock({
+        blockNumber: receipt.blockNumber,
+      });
       deleteCommitment(commitmentId);
       setCommitmentId(null);
-      onSuccess(
-        `${registration.value.label}.eth`,
-        registration.value.transactionHash,
-      );
+      onSuccess({
+        amount: payment.data.total,
+        decimals: payment.data.decimals,
+        duration,
+        expiresAt: Number(block.timestamp + duration) * 1_000,
+        name: `${registration.value.label}.eth`,
+        paymentTokenIcon: paymentToken.icon,
+        paymentTokenSymbol: paymentToken.symbol,
+      });
     } catch (registrationError) {
       setError(registrationError);
       setActionStatus("idle");
