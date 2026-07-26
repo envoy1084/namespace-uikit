@@ -1,11 +1,7 @@
-import {
-  Avatar,
-  Button,
-  Modal,
-  Surface,
-  Typography,
-} from "@thenamespace/uikit";
+import { Avatar, Button, Surface, Typography } from "@thenamespace/uikit";
 
+import { useNameRegistration } from "#/components/register-name/context";
+import { NameRegistrationBody } from "#/components/register-name/layout";
 import { formatTokenAmount } from "#/lib";
 
 const RegistrationSuccessGraphic = new URL(
@@ -45,6 +41,7 @@ export function RegistrationSuccess({
   onDone,
   registration,
 }: RegistrationSuccessProps) {
+  const { messages, presentation, slots } = useNameRegistration();
   const expirationDate = new Intl.DateTimeFormat(undefined, {
     day: "numeric",
     month: "long",
@@ -52,16 +49,20 @@ export function RegistrationSuccess({
   }).format(new Date(registration.expiresAt));
 
   return (
-    <Modal.Body className="flex-none">
+    <NameRegistrationBody className="flex-none">
       <div className="flex flex-col items-center px-1 py-4 text-center">
-        <img
-          alt=""
-          className="h-auto w-full max-w-48"
-          src={RegistrationSuccessGraphic.href}
-        />
+        {slots.successGraphic === undefined ? (
+          <img
+            alt=""
+            className="h-auto w-full max-w-48"
+            src={RegistrationSuccessGraphic.href}
+          />
+        ) : (
+          slots.successGraphic
+        )}
         <div>
           <Typography.Paragraph className="mt-5" color="muted" size="sm">
-            Hooray! You&apos;ve registered
+            {messages.successTitle}
           </Typography.Paragraph>
           <Typography.Heading
             className="mt-1 max-w-full text-2xl font-semibold break-all"
@@ -123,11 +124,15 @@ export function RegistrationSuccess({
         </div>
 
         <div className="w-full">
-          <Button className="mt-6 w-full" slot="close" onPress={onDone}>
-            Done
+          <Button
+            className="mt-6 w-full"
+            onPress={onDone}
+            {...(presentation === "dialog" ? { slot: "close" } : {})}
+          >
+            {messages.doneLabel}
           </Button>
         </div>
       </div>
-    </Modal.Body>
+    </NameRegistrationBody>
   );
 }

@@ -45,7 +45,7 @@ export function CommitmentStep({
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
   const { switchChainAsync } = useSwitchChain();
   const { insert } = useCommitments();
-  const { duration, events, input, referrer, setCommitmentId } =
+  const { duration, events, input, referrer, setCommitmentId, slots } =
     useNameRegistration();
   const [error, setError] = useState<unknown>();
   const [isTransactionConfirmed, setIsTransactionConfirmed] = useState(false);
@@ -254,6 +254,7 @@ export function CommitmentStep({
               blockExplorerUrl={chain.blockExplorers?.default.url}
               chainId={chain.id}
               className="mt-4"
+              icon={slots.transactionProgressIcon}
               isConfirmed={isTransactionConfirmed}
               transactionHash={transactionHash}
             />

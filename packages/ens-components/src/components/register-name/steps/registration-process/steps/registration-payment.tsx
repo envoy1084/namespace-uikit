@@ -83,7 +83,8 @@ export function RegistrationPayment({
   const publicClient = usePublicClient({ chainId: chain.id });
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
   const { switchChainAsync } = useSwitchChain();
-  const { commitmentId, events, setCommitmentId } = useNameRegistration();
+  const { commitmentId, events, setCommitmentId, slots } =
+    useNameRegistration();
   const { delete: deleteCommitment, get } = useCommitments();
   const storedCommitment =
     commitmentId === null ? undefined : get(commitmentId);
@@ -502,6 +503,7 @@ export function RegistrationPayment({
           blockExplorerUrl={chain.blockExplorers?.default.url}
           chainId={chain.id}
           className="mt-4"
+          icon={slots.transactionProgressIcon}
           isConfirmed={isTransactionConfirmed}
           transactionHash={transactionHash}
         />

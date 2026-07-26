@@ -2,22 +2,22 @@
 
 import { useEffect, useState } from "react";
 
-import {
-  Button,
-  InputGroup,
-  Modal,
-  Spinner,
-  Typography,
-} from "@thenamespace/uikit";
+import { Button, InputGroup, Spinner, Typography } from "@thenamespace/uikit";
 import { Icon, Search01Icon } from "@thenamespace/uikit/icons";
 
 import { parseNameInput } from "#/actions";
 import { useNameRegistration } from "#/components/register-name/context";
+import {
+  NameRegistrationBody,
+  NameRegistrationFooter,
+  NameRegistrationHeader,
+  NameRegistrationHeading,
+} from "#/components/register-name/layout";
 import { RegistrationDetails } from "#/components/register-name/steps/name-search/registration-details";
 import { useNameAvailability } from "#/hooks";
 import { formatError } from "#/lib";
 
-const NameRegistrationHeader = new URL(
+const DefaultNameRegistrationGraphic = new URL(
   "../../../../assets/register-ens-header.svg",
   import.meta.url,
 );
@@ -31,7 +31,8 @@ export const NameSearchStep = ({
   onAvailabilityChange,
   onNext,
 }: NameSearchStepProps) => {
-  const { input, isReferrerValid, setInput } = useNameRegistration();
+  const { input, isReferrerValid, messages, setInput, slots } =
+    useNameRegistration();
   const [isPricingReady, setIsPricingReady] = useState(false);
   const availability = useNameAvailability({
     input,
@@ -67,22 +68,26 @@ export const NameSearchStep = ({
 
   return (
     <>
-      <Modal.Header className="mx-auto">
-        <img
-          alt=""
-          className="mx-auto w-full max-w-64"
-          src={NameRegistrationHeader.href}
-        />
+      <NameRegistrationHeader className="mx-auto">
+        {slots.searchGraphic === undefined ? (
+          <img
+            alt=""
+            className="mx-auto w-full max-w-64"
+            src={DefaultNameRegistrationGraphic.href}
+          />
+        ) : (
+          slots.searchGraphic
+        )}
         <div>
-          <Modal.Heading className="mx-auto text-center">
-            Register your ENS Name
-          </Modal.Heading>
+          <NameRegistrationHeading className="mx-auto text-center">
+            {messages.searchTitle}
+          </NameRegistrationHeading>
           <p className="text-muted text-center text-sm">
-            Register your ENS name and set a profile
+            {messages.searchDescription}
           </p>
         </div>
-      </Modal.Header>
-      <Modal.Body className="flex-none">
+      </NameRegistrationHeader>
+      <NameRegistrationBody className="mt-2 flex-none">
         <div>
           <InputGroup className="w-full" variant="secondary">
             <InputGroup.Prefix>
@@ -94,7 +99,7 @@ export const NameSearchStep = ({
             </InputGroup.Prefix>
             <InputGroup.Input
               className="w-full"
-              placeholder="Search Label, eg- vitalik"
+              placeholder={messages.searchPlaceholder}
               value={input}
               onChange={(event) => {
                 onAvailabilityChange?.(false);
@@ -145,12 +150,12 @@ export const NameSearchStep = ({
             />
           ) : null}
         </div>
-      </Modal.Body>
-      <Modal.Footer>
+      </NameRegistrationBody>
+      <NameRegistrationFooter className="mt-5">
         <Button className="w-full" isDisabled={!canContinue} onPress={onNext}>
           Next
         </Button>
-      </Modal.Footer>
+      </NameRegistrationFooter>
     </>
   );
 };

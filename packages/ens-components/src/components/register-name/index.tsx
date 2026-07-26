@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Button, Modal } from "@thenamespace/uikit";
+import { Button, Modal, Surface } from "@thenamespace/uikit";
 import { zeroAddress, zeroHash } from "viem";
 import { useConnection } from "wagmi";
 
@@ -24,6 +24,7 @@ import { useCommitments } from "#/hooks";
 import { useEnsConfig } from "#/providers";
 
 export * from "#/components/register-name/context";
+export * from "#/components/register-name/customization";
 export * from "#/components/register-name/events";
 
 export type NameRegistrationProps = Omit<
@@ -38,11 +39,14 @@ function NameRegistrationContent() {
   const {
     duration,
     input,
+    messages,
+    presentation,
     referrer,
     setCommitmentId,
     setInput,
     setReferrer,
     setReferrerInput,
+    slots,
   } = useNameRegistration();
   const { chain, contracts } = useEnsConfig();
   const { delete: deleteCommitment, find } = useCommitments();
@@ -105,31 +109,47 @@ function NameRegistrationContent() {
     setView("name-search");
   };
 
+  const content = isRegistrationSuccess ? (
+    <RegistrationSuccess
+      onDone={handleDone}
+      registration={registrationSuccess}
+    />
+  ) : view === "registration-process" ? (
+    <RegistrationProcess
+      initialStep={registrationStep}
+      onBack={() => setView("name-search")}
+      onPendingChange={setIsTransactionPending}
+      onSuccess={handleRegistrationSuccess}
+    />
+  ) : (
+    <NameSearchStep onNext={handleNext} />
+  );
+
+  if (presentation === "inline") {
+    return (
+      <Surface
+        className="relative flex w-full max-w-md flex-col rounded-3xl p-6"
+        data-name-registration-presentation="inline"
+      >
+        {content}
+      </Surface>
+    );
+  }
+
   return (
     <Modal>
-      <Button variant="secondary">Register</Button>
+      {slots.trigger ?? (
+        <Button variant="secondary">{messages.triggerLabel}</Button>
+      )}
       <Modal.Backdrop
+        data-name-registration-presentation="dialog"
         isDismissable={!isTransactionPending}
         isKeyboardDismissDisabled={isTransactionPending}
       >
         <Modal.Container>
           <Modal.Dialog>
             <Modal.CloseTrigger isDisabled={isTransactionPending} />
-            {isRegistrationSuccess ? (
-              <RegistrationSuccess
-                onDone={handleDone}
-                registration={registrationSuccess}
-              />
-            ) : view === "registration-process" ? (
-              <RegistrationProcess
-                initialStep={registrationStep}
-                onBack={() => setView("name-search")}
-                onPendingChange={setIsTransactionPending}
-                onSuccess={handleRegistrationSuccess}
-              />
-            ) : (
-              <NameSearchStep onNext={handleNext} />
-            )}
+            {content}
           </Modal.Dialog>
         </Modal.Container>
       </Modal.Backdrop>

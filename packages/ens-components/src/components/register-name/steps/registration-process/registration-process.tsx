@@ -4,17 +4,22 @@ import type { RegistrationSuccessDetails } from "#/components/register-name/step
 
 import { useCallback, useEffect, useState } from "react";
 
-import { Accordion, Button, Modal, Surface } from "@thenamespace/uikit";
+import { Accordion, Button, Surface } from "@thenamespace/uikit";
 import { ArrowLeft01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { useNameRegistration } from "#/components/register-name/context";
+import {
+  NameRegistrationBody,
+  NameRegistrationHeader,
+  NameRegistrationHeading,
+} from "#/components/register-name/layout";
 import {
   CommitmentStep,
   CompleteRegistrationStep,
   TimerStep,
 } from "#/components/register-name/steps/registration-process/steps";
 
-const NameRegistrationHeader = new URL(
+const DefaultNameRegistrationGraphic = new URL(
   "../../../../assets/register-ens-header.svg",
   import.meta.url,
 );
@@ -37,7 +42,7 @@ export function RegistrationProcess({
   onPendingChange,
   onSuccess,
 }: RegistrationProcessProps) {
-  const { commitmentId } = useNameRegistration();
+  const { commitmentId, messages, slots } = useNameRegistration();
   const [activeStep, setActiveStep] =
     useState<RegistrationProcessStep>(initialStep);
   const [expandedKeys, setExpandedKeys] = useState(
@@ -82,22 +87,26 @@ export function RegistrationProcess({
       >
         <HugeiconsIcon icon={ArrowLeft01Icon} />
       </Button>
-      <Modal.Header className="mx-auto">
-        <img
-          alt=""
-          className="mx-auto w-full max-w-64"
-          src={NameRegistrationHeader.href}
-        />
+      <NameRegistrationHeader className="mx-auto">
+        {slots.processGraphic === undefined ? (
+          <img
+            alt=""
+            className="mx-auto w-full max-w-64"
+            src={DefaultNameRegistrationGraphic.href}
+          />
+        ) : (
+          slots.processGraphic
+        )}
         <div>
-          <Modal.Heading className="mx-auto text-center">
-            ENS Registration Process
-          </Modal.Heading>
+          <NameRegistrationHeading className="mx-auto text-center">
+            {messages.processTitle}
+          </NameRegistrationHeading>
           <p className="text-muted text-center text-sm">
-            Registration consists of 3 steps
+            {messages.processDescription}
           </p>
         </div>
-      </Modal.Header>
-      <Modal.Body className="flex-none">
+      </NameRegistrationHeader>
+      <NameRegistrationBody className="mt-2 flex-none">
         <Surface className="mt-2 rounded-2xl p-3" variant="secondary">
           <Accordion
             className="flex flex-col gap-2"
@@ -130,7 +139,7 @@ export function RegistrationProcess({
             />
           </Accordion>
         </Surface>
-      </Modal.Body>
+      </NameRegistrationBody>
     </>
   );
 }

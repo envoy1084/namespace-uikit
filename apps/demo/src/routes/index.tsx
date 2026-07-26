@@ -7,11 +7,12 @@ export const Route = createFileRoute("/")({ component: Home });
 
 function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-start gap-4 p-6">
+    <main className="flex min-h-screen flex-col items-start gap-8 p-6">
       <div className="flex items-center gap-3">
         <ConnectButton showBalance={false} />
-        <NameRegistration />
+        <NameRegistration messages={{ triggerLabel: "Open registration" }} />
       </div>
+      <NameRegistration presentation="inline" />
     </main>
   );
 }

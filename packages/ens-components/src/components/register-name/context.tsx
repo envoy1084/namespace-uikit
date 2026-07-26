@@ -2,6 +2,11 @@
 
 import type { Hex } from "viem";
 
+import type {
+  NameRegistrationMessages,
+  NameRegistrationPresentation,
+  NameRegistrationSlots,
+} from "#/components/register-name/customization";
 import type { NameRegistrationEvents } from "#/components/register-name/events";
 
 import {
@@ -14,6 +19,8 @@ import {
 } from "react";
 
 import { getAddress, isAddress, slice, zeroHash } from "viem";
+
+import { DEFAULT_NAME_REGISTRATION_MESSAGES } from "#/components/register-name/customization";
 
 export const REGISTRATION_SECONDS_PER_DAY = 86_400n;
 export const REGISTRATION_SECONDS_PER_YEAR =
@@ -32,6 +39,8 @@ export interface NameRegistrationContextValue {
   events: NameRegistrationEvents;
   input: string;
   isReferrerValid: boolean;
+  messages: NameRegistrationMessages;
+  presentation: NameRegistrationPresentation;
   referrer: Hex;
   referrerInput: string;
   setCommitmentId: Dispatch<SetStateAction<string | null>>;
@@ -40,6 +49,7 @@ export interface NameRegistrationContextValue {
   setInput: Dispatch<SetStateAction<string>>;
   setReferrer: Dispatch<SetStateAction<Hex>>;
   setReferrerInput: Dispatch<SetStateAction<string>>;
+  slots: NameRegistrationSlots;
 }
 
 export interface NameRegistrationProviderProps {
@@ -49,6 +59,9 @@ export interface NameRegistrationProviderProps {
   defaultInput?: string;
   defaultReferrer?: Hex;
   events?: NameRegistrationEvents;
+  messages?: Partial<NameRegistrationMessages>;
+  presentation?: NameRegistrationPresentation;
+  slots?: NameRegistrationSlots;
 }
 
 const NameRegistrationContext =
@@ -71,6 +84,9 @@ export function NameRegistrationProvider({
   defaultInput = "",
   defaultReferrer = zeroHash,
   events = {},
+  messages,
+  presentation = "dialog",
+  slots = {},
 }: NameRegistrationProviderProps) {
   const [commitmentId, setCommitmentId] = useState<string | null>(null);
   const [duration, setDuration] = useState(() =>
@@ -87,6 +103,10 @@ export function NameRegistrationProvider({
   const trimmedReferrerInput = referrerInput.trim();
   const isReferrerValid =
     trimmedReferrerInput === "" || isAddress(trimmedReferrerInput);
+  const resolvedMessages = {
+    ...DEFAULT_NAME_REGISTRATION_MESSAGES,
+    ...messages,
+  };
 
   return (
     <NameRegistrationContext.Provider
@@ -97,6 +117,8 @@ export function NameRegistrationProvider({
         events,
         input,
         isReferrerValid,
+        messages: resolvedMessages,
+        presentation,
         referrer,
         referrerInput,
         setCommitmentId,
@@ -105,6 +127,7 @@ export function NameRegistrationProvider({
         setInput,
         setReferrer,
         setReferrerInput,
+        slots,
       }}
     >
       {children}

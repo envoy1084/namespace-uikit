@@ -1,5 +1,7 @@
 import type { Hex } from "viem";
 
+import type { ReactNode } from "react";
+
 import { motion } from "motion/react";
 
 const Shuriken = new URL("../assets/shuriken.svg", import.meta.url);
@@ -16,6 +18,7 @@ export interface TransactionProgressProps {
   blockExplorerUrl?: string | undefined;
   chainId: number;
   className?: string;
+  icon?: ReactNode;
   isConfirmed?: boolean;
   transactionHash: Hex;
 }
@@ -24,6 +27,7 @@ export function TransactionProgress({
   blockExplorerUrl,
   chainId,
   className,
+  icon,
   isConfirmed = false,
   transactionHash,
 }: TransactionProgressProps) {
@@ -55,18 +59,19 @@ export function TransactionProgress({
             ease: isConfirmed ? [0.16, 1, 0.3, 1] : "linear",
           }}
         >
-          <motion.img
-            alt=""
+          <motion.span
+            aria-hidden="true"
             animate={{ rotate: 360 }}
-            className="absolute top-1/2 right-1 size-6"
-            src={Shuriken.href}
+            className="absolute top-1/2 right-1 flex size-6 items-center justify-center [&>img]:size-full [&>svg]:size-full"
             style={{ y: "-50%" }}
             transition={{
               duration: 2,
               ease: "linear",
               repeat: Infinity,
             }}
-          />
+          >
+            {icon === undefined ? <img alt="" src={Shuriken.href} /> : icon}
+          </motion.span>
         </motion.div>
       </div>
       {transactionUrl === undefined ? null : (
