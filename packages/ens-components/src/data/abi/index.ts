@@ -1,4 +1,3 @@
-export * from "#/data/abi/eth-price-feed";
 export * from "#/data/abi/eth-registrar";
 export * from "#/data/abi/permissioned-resolver";
 export * from "#/data/abi/verifiable-factory";

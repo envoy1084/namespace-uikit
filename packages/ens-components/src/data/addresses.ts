@@ -1,7 +1,6 @@
 import { erc20Abi, type Hex } from "viem";
 
 import {
-  ethPriceFeedAbi,
   ethRegistrarAbi,
   permissionedResolverAbi,
   verifiableFactoryAbi,
@@ -10,10 +9,6 @@ import {
 const mockUsdcIcon = new URL("../assets/usdc.svg", import.meta.url).href;
 
 export const testnetContracts = {
-  ethPriceFeed: {
-    address: "0x694AA1769357215DE4FAC081bf1f309aDC325306" as Hex,
-    abi: ethPriceFeedAbi,
-  },
   ethRegistrar: {
     address: "0x8c2e866b439358c41ae05de9cbe8a00bfefaffca" as Hex,
     abi: ethRegistrarAbi,
