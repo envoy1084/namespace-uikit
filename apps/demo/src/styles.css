@@ -5,3 +5,74 @@
 /* Scan linked package source during development and package output after publishing. */
 @source "../../../packages/ens-components/src";
 @source "../../../packages/uikit/src";
+
+:root {
+  color-scheme: light;
+  font-family:
+    Inter, "SF Pro Display", "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  background: #f6f6f3;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #f6f6f3;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.demo-hero {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 72%), transparent 36%),
+    #f6f6f3;
+}
+
+.demo-grid {
+  background-image:
+    linear-gradient(rgb(31 31 31 / 4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(31 31 31 / 4%) 1px, transparent 1px);
+  background-position: center top;
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+.demo-glow {
+  width: min(58rem, 100vw);
+  height: 34rem;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 38% 42%, rgb(103 142 255 / 20%), transparent 45%),
+    radial-gradient(circle at 66% 35%, rgb(118 232 206 / 18%), transparent 43%);
+  filter: blur(44px);
+}
+
+.demo-component-frame {
+  border: 1px solid rgb(31 31 31 / 9%);
+  background: rgb(255 255 255 / 46%);
+  box-shadow:
+    0 32px 80px rgb(31 31 31 / 10%),
+    0 2px 8px rgb(31 31 31 / 5%);
+  backdrop-filter: blur(20px);
+}
+
+.demo-component-frame [data-name-registration-presentation="inline"] {
+  max-width: none;
+  border: 1px solid rgb(31 31 31 / 7%);
+  box-shadow: 0 1px 2px rgb(31 31 31 / 5%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

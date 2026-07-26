@@ -8,6 +8,7 @@ import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { EnsProvider } from "ens-components";
 import { WagmiProvider } from "wagmi";
 
+import { AppNavbar } from "@/components/navbar";
 import { wagmiConfig } from "@/lib/wagmi";
 
 export const Route = createRootRoute({
@@ -22,7 +23,10 @@ function RootComponent() {
       <QueryClientProvider client={queryClient}>
         <EnsProvider config={{ network: "testnet" }}>
           <RainbowKitProvider>
-            <Outlet />
+            <AppNavbar />
+            <main id="content">
+              <Outlet />
+            </main>
           </RainbowKitProvider>
         </EnsProvider>
       </QueryClientProvider>
