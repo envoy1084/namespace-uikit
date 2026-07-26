@@ -31,5 +31,6 @@ The Wagmi configuration must include the chain selected by `EnsProvider`.
 Only `"testnet"` is currently implemented. It resolves to Sepolia and the
 package's ENS v2 test deployments. Passing `"mainnet"` throws an error.
 
-The provider supplies the selected chain, registrar, price feed, and payment
-token configuration to package hooks and components.
+The provider supplies the selected chain, registrar, resolver factory,
+resolver implementation, and payment token configuration to package hooks and
+components.

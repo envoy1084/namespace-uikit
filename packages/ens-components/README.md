@@ -8,7 +8,7 @@ actions for building ENS v2 applications.
 
 ## Features
 
-- Complete commit, wait, approve, and register flow
+- Complete resolver, commit, wait, approve, and register flow
 - Dialog and inline registration presentations
 - TanStack Query hooks for availability, pricing, commitments, and payments
 - Framework-independent actions returning `neverthrow` results
@@ -134,3 +134,10 @@ for customization, lifecycle events, defaults, and flow behavior.
 - [approveRegistrationPayment](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/approve-registration-payment.md)
 - [registerName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/register-name.md)
 - [supportsAtomicBatchCalls](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/supports-atomic-batch-calls.md)
+- [createResolverSalt](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/create-resolver-salt.md)
+- [preparePermissionedResolverDeployment](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/prepare-permissioned-resolver-deployment.md)
+- [deployPermissionedResolver](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/deploy-permissioned-resolver.md)
+- [getPermissionedResolverStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/get-permissioned-resolver-status.md)
+- [isResolverDeployed](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/is-resolver-deployed.md)
+- [deployResolverAndCommitName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/deploy-resolver-and-commit-name.md)
+- [getAtomicBatchStatus and waitForAtomicBatch](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/atomic-batch-status.md)

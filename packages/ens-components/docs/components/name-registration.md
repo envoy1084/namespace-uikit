@@ -4,11 +4,12 @@
 second-level `.eth` names:
 
 1. Check availability and price.
-2. Submit and persist a commitment.
-3. Wait for the commitment minimum age.
-4. Approve the ERC-20 payment token when required.
-5. Submit the registration transaction.
-6. Display the confirmed registration.
+2. Select a custom resolver or prepare a dedicated resolver.
+3. Deploy the resolver and submit a persisted commitment.
+4. Wait for the commitment minimum age.
+5. Approve the ERC-20 payment token when required.
+6. Submit the registration transaction.
+7. Display the confirmed registration.
 
 It requires `WagmiProvider`, `QueryClientProvider`, and
 [`EnsProvider`](../providers/ens-provider.md).
@@ -34,16 +35,17 @@ Inline mode renders the flow directly and ignores `slots.trigger`.
 
 ## Props
 
-| Prop                  | Type                                | Default              | Description                                                    |
-| --------------------- | ----------------------------------- | -------------------- | -------------------------------------------------------------- |
-| `presentation`        | `"dialog" \| "inline"`              | `"dialog"`           | Selects the outer presentation.                                |
-| `defaultInput`        | `string`                            | `""`                 | Initial name input.                                            |
-| `defaultDuration`     | `bigint`                            | `31_536_000n`        | Initial duration in seconds. Values below 28 days are clamped. |
-| `defaultDurationMode` | `"date" \| "duration"`              | `"duration"`         | Initial duration control.                                      |
-| `defaultReferrer`     | `Hex`                               | `zeroHash`           | Initial 32-byte referrer identifier.                           |
-| `slots`               | `NameRegistrationSlots`             | `{}`                 | Replaces branded visual elements.                              |
-| `messages`            | `Partial<NameRegistrationMessages>` | Default English copy | Overrides high-level interface copy.                           |
-| `events`              | `NameRegistrationEvents`            | `{}`                 | Receives confirmed transactions and flow errors.               |
+| Prop                     | Type                                | Default              | Description                                                             |
+| ------------------------ | ----------------------------------- | -------------------- | ----------------------------------------------------------------------- |
+| `presentation`           | `"dialog" \| "inline"`              | `"dialog"`           | Selects the outer presentation.                                         |
+| `defaultInput`           | `string`                            | `""`                 | Initial name input.                                                     |
+| `defaultDuration`        | `bigint`                            | `31_536_000n`        | Initial duration in seconds. Values below 28 days are clamped.          |
+| `defaultDurationMode`    | `"date" \| "duration"`              | `"duration"`         | Initial duration control.                                               |
+| `defaultReferrer`        | `Hex`                               | `zeroHash`           | Initial 32-byte referrer identifier.                                    |
+| `defaultResolverAddress` | `Address`                           | `undefined`          | Initial custom resolver. A dedicated resolver is deployed when omitted. |
+| `slots`                  | `NameRegistrationSlots`             | `{}`                 | Replaces branded visual elements.                                       |
+| `messages`               | `Partial<NameRegistrationMessages>` | Default English copy | Overrides high-level interface copy.                                    |
+| `events`                 | `NameRegistrationEvents`            | `{}`                 | Receives confirmed transactions and flow errors.                        |
 
 The default values initialize internal state. They are not controlled props.
 
@@ -103,6 +105,7 @@ customizable through `messages`.
 <NameRegistration
   events={{
     onCommit: ({ commitment, transactionHash }) => {},
+    onResolverDeploy: ({ resolverAddress, transactionHash }) => {},
     onApprove: ({ amount, transactionHash }) => {},
     onRegister: ({ name, tokenId, transactionHash }) => {},
     onError: ({ error, phase, transactionHash }) => {},
@@ -110,28 +113,46 @@ customizable through `messages`.
 />
 ```
 
-| Event        | When it runs                                                                                            |
-| ------------ | ------------------------------------------------------------------------------------------------------- |
-| `onCommit`   | The commitment receipt succeeds and the commitment is stored locally.                                   |
-| `onApprove`  | A required ERC-20 approval receipt succeeds. It does not run when the existing allowance is sufficient. |
-| `onRegister` | The registration receipt succeeds and registration details are available.                               |
-| `onError`    | An attempted commitment, approval, or registration phase cannot complete.                               |
+| Event              | When it runs                                                                                            |
+| ------------------ | ------------------------------------------------------------------------------------------------------- |
+| `onResolverDeploy` | A dedicated resolver deployment is confirmed. It does not run when a custom resolver is used.           |
+| `onCommit`         | The commitment receipt succeeds and the registration attempt is stored locally.                         |
+| `onApprove`        | A required ERC-20 approval receipt succeeds. It does not run when the existing allowance is sufficient. |
+| `onRegister`       | The registration receipt succeeds and registration details are available.                               |
+| `onError`          | An attempted resolver, commitment, approval, or registration phase cannot complete.                     |
 
 Confirmed transaction events contain `chainId`, `network`,
 `transactionHash`, and the Viem `TransactionReceipt`. Operation-specific
 payloads include the related addresses and values.
 
-`onError.phase` is `"commitment"`, `"approval"`, or `"registration"`.
+`onError.phase` is `"resolver"`, `"commitment"`, `"approval"`, or
+`"registration"`.
 `transactionHash` is included when a transaction was submitted.
 
 Callbacks may return a promise, but the flow does not wait for it. Thrown or
 rejected callback errors do not change an already-confirmed transaction flow.
 
+## Resolver behavior
+
+Leave the custom resolver field blank to deploy a dedicated
+`PermissionedResolver` proxy owned by the connected account. If the wallet
+supports atomic EIP-5792 calls, resolver deployment and commitment submission
+are sent as one atomic batch. Other wallets receive the same operations as two
+sequential transactions.
+
+Set `defaultResolverAddress` or enter an address under Advanced options to use
+an existing resolver. The component checks that the address contains deployed
+bytecode. The caller is responsible for ensuring that the resolver supports
+the records and permissions required by the application.
+
 ## Resuming registration
 
-The component can resume a confirmed commitment from the same browser origin
-when the name, wallet, duration, referrer, network, and contracts still match.
-Progress is not synchronized across browsers or devices.
+The component persists the prepared resolver, salt, secret, commitment, and
+submitted transaction identifiers before waiting for confirmation. It can
+resume a pending or confirmed attempt from the same browser origin when the
+name, wallet, duration, referrer, resolver choice, network, and contracts still
+match. Progress is not synchronized across browsers or devices. Clearing site
+storage removes resume data but does not change onchain state.
 
 ## Current constraints
 

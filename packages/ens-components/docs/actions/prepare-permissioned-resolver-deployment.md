@@ -1,0 +1,63 @@
+# preparePermissionedResolverDeployment
+
+Simulates a `PermissionedResolver` proxy deployment and returns its
+deterministic address and encoded factory call. It does not send a transaction.
+
+```ts
+import {
+  createResolverSalt,
+  preparePermissionedResolverDeployment,
+} from "ens-components";
+
+const salt = createResolverSalt({ input: "example.eth" });
+if (salt.isErr()) throw new Error(salt.error);
+
+const result = await preparePermissionedResolverDeployment(publicClient, {
+  account,
+  factoryAddress,
+  implementationAddress,
+  network: "testnet",
+  owner: account,
+  salt: salt.value.salt,
+});
+```
+
+## Signature
+
+```ts
+function preparePermissionedResolverDeployment(
+  publicClient: PublicClient,
+  props: PreparePermissionedResolverDeploymentProps,
+): ResultAsync<
+  PreparedPermissionedResolverDeployment,
+  PreparePermissionedResolverDeploymentError
+>;
+```
+
+## Props
+
+| Prop                    | Type                     | Description                                                       |
+| ----------------------- | ------------------------ | ----------------------------------------------------------------- |
+| `account`               | `Address`                | Account that will call the factory. It affects the proxy address. |
+| `factoryAddress`        | `Address`                | ENS v2 `VerifiableFactory`.                                       |
+| `implementationAddress` | `Address`                | `PermissionedResolver` implementation.                            |
+| `network`               | `"mainnet" \| "testnet"` | Network associated with the addresses.                            |
+| `owner`                 | `Address`                | Account receiving all resolver roles.                             |
+| `salt`                  | `Hex`                    | Random `bytes32` deployment salt.                                 |
+
+## Result
+
+The result contains `resolverAddress`, `salt`, `initData`, and `call`. Pass
+`initData` and `salt` to
+[`deployPermissionedResolver`](./deploy-permissioned-resolver.md), or include
+`call` in an atomic batch.
+
+## Errors
+
+- `CONTRACT_SIMULATION_FAILED`
+- `INVALID_ACCOUNT_ADDRESS`
+- `INVALID_FACTORY_ADDRESS`
+- `INVALID_IMPLEMENTATION_ADDRESS`
+- `INVALID_OWNER_ADDRESS`
+- `INVALID_RESOLVER_ADDRESS`
+- `INVALID_SALT`
