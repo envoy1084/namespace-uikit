@@ -344,7 +344,11 @@ export function RegistrationPayment({
         return parseEventLogs({
           abi: ethRegistrarNameRegisteredEventSnippet,
           eventName: "NameRegistered",
-          logs: receipt.logs,
+          logs: receipt.logs.filter(
+            (log) =>
+              log.address.toLowerCase() ===
+              storedCommitment.registrarAddress.toLowerCase(),
+          ),
           strict: true,
         })[0];
       } catch {
