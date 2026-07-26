@@ -268,7 +268,7 @@ export function useRegistrationPayment({
       return;
     }
     if (!isAddressEqual(connection.address, storedAttempt.account)) {
-      reportError("MISMATCHED_ACCOUNTS", "registration");
+      reportError("WALLET_ACCOUNT_CHANGED", "registration");
       return;
     }
 
@@ -359,6 +359,7 @@ export function useRegistrationPayment({
     handlePayment,
     isPending,
     isTransactionConfirmed,
+    isWalletConnected: connection.address !== undefined,
     payment,
     paymentToken,
     storedAttempt,

@@ -107,9 +107,9 @@ An `undefined` slot uses the default. Passing `null` hides a graphic.
 | `triggerLabel`       | `Register`                                 |
 | `searchTitle`        | `Register your ENS Name`                   |
 | `searchDescription`  | `Register your ENS name and set a profile` |
-| `searchPlaceholder`  | `Search Label, eg- vitalik`                |
+| `searchPlaceholder`  | `Search a name, e.g. vitalik`              |
 | `processTitle`       | `ENS Registration Process`                 |
-| `processDescription` | `Registration consists of 3 steps`         |
+| `processDescription` | `Registration consists of three steps.`    |
 | `successTitle`       | `Hooray! You've registered`                |
 | `doneLabel`          | `Done`                                     |
 

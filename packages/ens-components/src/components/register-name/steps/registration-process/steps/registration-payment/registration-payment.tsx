@@ -92,6 +92,7 @@ export function RegistrationPayment({
         <Button
           className="mt-4 w-full"
           isDisabled={
+            !registration.isWalletConnected ||
             payment.isPending ||
             (payment.data !== undefined && !payment.data.hasSufficientBalance)
           }

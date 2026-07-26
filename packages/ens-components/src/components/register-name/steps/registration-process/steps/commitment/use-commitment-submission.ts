@@ -1,9 +1,8 @@
 "use client";
 
-import type { Hex } from "viem";
-
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { isAddressEqual, type Hex } from "viem";
 import {
   useConnection,
   usePublicClient,
@@ -257,6 +256,14 @@ export function useCommitmentSubmission({
 
     activeSubmission.current = true;
     let attempt = storedAttempt;
+    if (
+      attempt !== undefined &&
+      !isAddressEqual(connection.address, attempt.account)
+    ) {
+      reportError("WALLET_ACCOUNT_CHANGED", "commitment");
+      activeSubmission.current = false;
+      return;
+    }
 
     if (attempt === undefined) {
       setStatus("preparing");

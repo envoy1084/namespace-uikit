@@ -29,10 +29,10 @@ export interface NameRegistrationMessages {
 export const DEFAULT_NAME_REGISTRATION_MESSAGES: Readonly<NameRegistrationMessages> =
   {
     doneLabel: "Done",
-    processDescription: "Registration consists of 3 steps",
+    processDescription: "Registration consists of three steps.",
     processTitle: "ENS Registration Process",
     searchDescription: "Register your ENS name and set a profile",
-    searchPlaceholder: "Search Label, eg- vitalik",
+    searchPlaceholder: "Search a name, e.g. vitalik",
     searchTitle: "Register your ENS Name",
     successTitle: "Hooray! You've registered",
     triggerLabel: "Register",

@@ -77,6 +77,8 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   UNSUPPORTED_NAME: "Only second-level .eth names are supported.",
   TRANSACTION_CONFIRMATION_FAILED: "Unable to confirm the transaction.",
   TRANSACTION_REVERTED: "The transaction was reverted.",
+  WALLET_ACCOUNT_CHANGED:
+    "The connected account changed. Reopen this registration with the original wallet.",
   WALLET_NOT_CONNECTED: "Connect your wallet to continue.",
 };
 
