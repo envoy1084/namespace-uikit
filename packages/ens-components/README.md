@@ -78,6 +78,14 @@ export function Providers({ children }: { children: ReactNode }) {
 
 Your application must also provide a wallet connection interface.
 
+Use the same built-in configuration with direct actions:
+
+```ts
+import { getEnsNetworkConfiguration } from "ens-components";
+
+const { chain, contracts } = getEnsNetworkConfiguration("testnet");
+```
+
 ## Name registration
 
 Render the complete registration flow as a dialog:

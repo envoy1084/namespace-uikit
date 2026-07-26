@@ -8,14 +8,6 @@ import {
   type EnsNetworkConfiguration,
 } from "#/data";
 
-export type {
-  EnsContracts,
-  EnsNetwork,
-  EnsNetworkConfiguration,
-  EnsPaymentToken,
-  EnsPaymentTokens,
-} from "#/data";
-
 export interface EnsConfig {
   network: EnsNetwork;
 }
