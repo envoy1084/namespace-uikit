@@ -8,6 +8,7 @@ import {
   ethRegistrarIsAvailableSnippet,
   ethRegistrarMaxCommitmentAgeSnippet,
   ethRegistrarMinCommitmentAgeSnippet,
+  ethRegistrarRegisterSnippet,
 } from "#/data/abi";
 
 const mockUsdcIcon = new URL("../assets/usdc.svg", import.meta.url).href;
@@ -26,6 +27,7 @@ export const testnetContracts = {
       ethRegistrarIsAvailableSnippet,
       ethRegistrarMaxCommitmentAgeSnippet,
       ethRegistrarMinCommitmentAgeSnippet,
+      ethRegistrarRegisterSnippet,
     },
   },
   mockUsdc: {

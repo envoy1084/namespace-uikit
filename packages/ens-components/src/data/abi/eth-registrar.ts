@@ -143,3 +143,31 @@ export const ethRegistrarMaxCommitmentAgeSnippet = [
     type: "function",
   },
 ] as const;
+
+export const ethRegistrarRegisterSnippet = [
+  ...ethRegistrarErrors,
+  {
+    inputs: [
+      { internalType: "string", name: "label", type: "string" },
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "bytes32", name: "secret", type: "bytes32" },
+      {
+        internalType: "contract IRegistry",
+        name: "subregistry",
+        type: "address",
+      },
+      { internalType: "address", name: "resolver", type: "address" },
+      { internalType: "uint64", name: "duration", type: "uint64" },
+      {
+        internalType: "contract IERC20",
+        name: "paymentToken",
+        type: "address",
+      },
+      { internalType: "bytes32", name: "referrer", type: "bytes32" },
+    ],
+    name: "register",
+    outputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+] as const;

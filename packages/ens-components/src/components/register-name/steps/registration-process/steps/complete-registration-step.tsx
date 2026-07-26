@@ -1,11 +1,17 @@
+import type { Hex } from "viem";
+
 import { Accordion, Typography } from "@thenamespace/uikit";
+
+import { RegistrationPayment } from "#/components/register-name/steps/registration-process/steps/registration-payment";
 
 export interface CompleteRegistrationStepProps {
   isDisabled?: boolean;
+  onSuccess: (name: string, transactionHash: Hex) => void;
 }
 
 export function CompleteRegistrationStep({
   isDisabled = true,
+  onSuccess,
 }: CompleteRegistrationStepProps) {
   return (
     <Accordion.Item
@@ -32,6 +38,7 @@ export function CompleteRegistrationStep({
             Your name is not registered yet. Complete the final transaction
             before your commitment expires to claim it.
           </Typography.Paragraph>
+          <RegistrationPayment onSuccess={onSuccess} />
         </Accordion.Body>
       </Accordion.Panel>
     </Accordion.Item>

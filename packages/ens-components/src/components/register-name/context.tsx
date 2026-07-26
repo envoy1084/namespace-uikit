@@ -18,6 +18,7 @@ export const REGISTRATION_SECONDS_PER_YEAR =
   365n * REGISTRATION_SECONDS_PER_DAY;
 export const DEFAULT_REGISTRATION_DURATION = REGISTRATION_SECONDS_PER_YEAR;
 export const COMMITMENT_WAIT_DURATION_MS = 60_000;
+export const COMMITMENT_VALID_DURATION_MS = 24 * 60 * 60 * 1_000;
 
 export interface RegisterNameContextValue {
   commitmentId: string | null;

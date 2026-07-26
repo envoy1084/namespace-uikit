@@ -8,6 +8,7 @@ import { zeroAddress } from "viem";
 import { useConnection } from "wagmi";
 
 import {
+  COMMITMENT_VALID_DURATION_MS,
   COMMITMENT_WAIT_DURATION_MS,
   RegisterNameProvider,
   type RegisterNameProviderProps,
@@ -24,7 +25,7 @@ import { useEnsConfig } from "#/providers";
 export * from "#/components/register-name/context";
 
 const RegisterEnsHeader = new URL(
-  "../../assets/register-ens-header.png",
+  "../../assets/register-ens-header.svg",
   import.meta.url,
 );
 
@@ -34,9 +35,10 @@ type RegisterNameView = "name-search" | "registration-process";
 
 function RegisterEnsContent() {
   const connection = useConnection();
-  const { duration, input, referrer, setCommitmentId } = useRegisterName();
+  const { duration, input, referrer, setCommitmentId, setInput } =
+    useRegisterName();
   const { chain, contracts } = useEnsConfig();
-  const { find } = useCommitments();
+  const { delete: deleteCommitment, find } = useCommitments();
   const [view, setView] = useState<RegisterNameView>("name-search");
   const [registrationStep, setRegistrationStep] =
     useState<RegistrationProcessStep>("commitment");
@@ -44,7 +46,7 @@ function RegisterEnsContent() {
   const isRegistrationProcess = view === "registration-process";
 
   const handleNext = () => {
-    const storedCommitment =
+    let storedCommitment =
       connection.address === undefined
         ? undefined
         : find({
@@ -58,6 +60,15 @@ function RegisterEnsContent() {
             subregistryAddress: zeroAddress,
           });
 
+    if (
+      storedCommitment !== undefined &&
+      Date.now() >=
+        storedCommitment.commitment.createdAt + COMMITMENT_VALID_DURATION_MS
+    ) {
+      deleteCommitment(storedCommitment.id);
+      storedCommitment = undefined;
+    }
+
     const nextStep =
       storedCommitment === undefined
         ? "commitment"
@@ -69,6 +80,14 @@ function RegisterEnsContent() {
     setCommitmentId(storedCommitment?.id ?? null);
     setRegistrationStep(nextStep);
     setView("registration-process");
+  };
+
+  const handleDone = () => {
+    setCommitmentId(null);
+    setInput("");
+    setIsNameAvailable(false);
+    setRegistrationStep("commitment");
+    setView("name-search");
   };
 
   return (
@@ -110,7 +129,10 @@ function RegisterEnsContent() {
             </Modal.Header>
             <Modal.Body className="flex-none">
               {isRegistrationProcess ? (
-                <RegistrationProcess initialStep={registrationStep} />
+                <RegistrationProcess
+                  initialStep={registrationStep}
+                  onDone={handleDone}
+                />
               ) : (
                 <NameSearchStep onAvailabilityChange={setIsNameAvailable} />
               )}
