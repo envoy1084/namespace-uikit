@@ -27,12 +27,14 @@ export type RegistrationProcessStep =
 export interface RegistrationProcessProps {
   initialStep?: RegistrationProcessStep;
   onBack: () => void;
+  onPendingChange?: (isPending: boolean) => void;
   onSuccess: (registration: RegistrationSuccessDetails) => void;
 }
 
 export function RegistrationProcess({
   initialStep = "commitment",
   onBack,
+  onPendingChange,
   onSuccess,
 }: RegistrationProcessProps) {
   const { commitmentId } = useRegisterName();
@@ -42,9 +44,17 @@ export function RegistrationProcess({
     new Set<string | number>([activeStep]),
   );
   const [commitmentError, setCommitmentError] = useState<unknown>();
+  const [isPending, setIsPending] = useState(false);
   const handleTimerComplete = useCallback(
     () => setActiveStep("complete-registration"),
     [],
+  );
+  const handlePendingChange = useCallback(
+    (pending: boolean) => {
+      setIsPending(pending);
+      onPendingChange?.(pending);
+    },
+    [onPendingChange],
   );
 
   useEffect(() => {
@@ -65,6 +75,7 @@ export function RegistrationProcess({
         isIconOnly
         aria-label="Back to name search"
         className="absolute top-4 left-4 z-10"
+        isDisabled={isPending}
         size="sm"
         variant="secondary"
         onPress={onBack}
@@ -97,6 +108,9 @@ export function RegistrationProcess({
               error={commitmentError}
               isDisabled={activeStep !== "commitment"}
               onErrorClear={() => setCommitmentError(undefined)}
+              {...(activeStep === "commitment"
+                ? { onPendingChange: handlePendingChange }
+                : {})}
             />
             <TimerStep
               isCompleted={activeStep === "complete-registration"}
@@ -110,6 +124,9 @@ export function RegistrationProcess({
                 setActiveStep("commitment");
               }}
               onSuccess={onSuccess}
+              {...(activeStep === "complete-registration"
+                ? { onPendingChange: handlePendingChange }
+                : {})}
             />
           </Accordion>
         </Surface>

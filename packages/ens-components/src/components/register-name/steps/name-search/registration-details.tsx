@@ -12,7 +12,6 @@ import {
   DateField,
   DatePicker,
   NumberStepper,
-  NumberValue,
   Skeleton,
   Surface,
   Typography,
@@ -22,7 +21,6 @@ import {
   MinusSignIcon,
   PlusSignIcon,
 } from "@thenamespace/uikit/icons";
-import { formatUnits } from "viem";
 
 import {
   REGISTRATION_SECONDS_PER_DAY,
@@ -31,7 +29,7 @@ import {
 } from "#/components/register-name/context";
 import { ReferrerAddress } from "#/components/register-name/steps/name-search/referrer-address";
 import { useNamePrice } from "#/hooks";
-import { formatError } from "#/lib";
+import { formatError, formatTokenAmount } from "#/lib";
 import { useEnsConfig } from "#/providers";
 
 const MAX_REGISTRATION_YEARS = 10;
@@ -70,10 +68,6 @@ function getDateDurationLabel(value: DateValue, timeZone: string) {
   ].filter((part): part is string => part !== null);
 
   return `${parts.join(", ")} registration.`;
-}
-
-function getTokenValue(amount: bigint, decimals: number) {
-  return Number(formatUnits(amount, decimals));
 }
 
 function ExpirationDatePicker({
@@ -273,12 +267,12 @@ export function RegistrationDetails({
                 className="h-5 w-14 rounded-md"
               />
             ) : price.data ? (
-              <NumberValue
-                className="text-foreground text-base font-semibold"
-                maximumFractionDigits={2}
-                minimumFractionDigits={2}
-                value={getTokenValue(price.data.total, price.data.decimals)}
-              />
+              <span className="text-foreground text-base font-semibold">
+                {formatTokenAmount(price.data.total, price.data.decimals, {
+                  maximumFractionDigits: 2,
+                  minimumFractionDigits: 2,
+                })}
+              </span>
             ) : (
               <span className="text-muted text-sm">—</span>
             )}

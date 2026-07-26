@@ -2,11 +2,11 @@ import {
   Avatar,
   Button,
   Modal,
-  NumberValue,
   Surface,
   Typography,
 } from "@thenamespace/uikit";
-import { formatUnits } from "viem";
+
+import { formatTokenAmount } from "#/lib";
 
 const RegistrationSuccessGraphic = new URL(
   "../../../../assets/register-ens-success.svg",
@@ -95,14 +95,16 @@ export function RegistrationSuccess({
                     {registration.paymentTokenSymbol.slice(0, 1)}
                   </Avatar.Fallback>
                 </Avatar>
-                <NumberValue
-                  className="text-foreground text-sm font-medium"
-                  maximumFractionDigits={2}
-                  minimumFractionDigits={2}
-                  value={Number(
-                    formatUnits(registration.amount, registration.decimals),
+                <span className="text-foreground text-sm font-medium">
+                  {formatTokenAmount(
+                    registration.amount,
+                    registration.decimals,
+                    {
+                      maximumFractionDigits: 2,
+                      minimumFractionDigits: 2,
+                    },
                   )}
-                />
+                </span>
               </div>
             </div>
           </Surface>

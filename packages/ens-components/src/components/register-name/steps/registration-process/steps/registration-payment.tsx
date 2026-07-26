@@ -7,12 +7,11 @@ import { useEffect, useState } from "react";
 import {
   Avatar,
   Button,
-  NumberValue,
   Skeleton,
   Surface,
   Typography,
 } from "@thenamespace/uikit";
-import { formatUnits, parseEventLogs, type Hex } from "viem";
+import { parseEventLogs, type Hex } from "viem";
 import {
   useConnection,
   usePublicClient,
@@ -35,7 +34,7 @@ import {
 } from "#/components/transaction-progress";
 import { ethRegistrarNameRegisteredEventSnippet } from "#/data/abi";
 import { useCommitments, useRegistrationPaymentStatus } from "#/hooks";
-import { formatError } from "#/lib";
+import { formatError, formatTokenAmount } from "#/lib";
 import { useEnsConfig } from "#/providers";
 
 type PaymentActionStatus =
@@ -49,6 +48,7 @@ type PaymentActionStatus =
 
 export interface RegistrationPaymentProps {
   onCommitmentInvalid: (error: unknown) => void;
+  onPendingChange?: (isPending: boolean) => void;
   onSuccess: (registration: RegistrationSuccessDetails) => void;
 }
 
@@ -74,6 +74,7 @@ function parseDuration(value: string | undefined) {
 
 export function RegistrationPayment({
   onCommitmentInvalid,
+  onPendingChange,
   onSuccess,
 }: RegistrationPaymentProps) {
   const connection = useConnection();
@@ -114,6 +115,17 @@ export function RegistrationPayment({
       ? 0
       : storedCommitment.createdAt + COMMITMENT_VALID_DURATION_MS;
   const timeRemaining = Math.max(0, expiresAt - now);
+
+  useEffect(() => {
+    onPendingChange?.(isPending);
+  }, [isPending, onPendingChange]);
+
+  useEffect(
+    () => () => {
+      onPendingChange?.(false);
+    },
+    [onPendingChange],
+  );
 
   useEffect(() => {
     if (storedCommitment === undefined || isPending) return;
@@ -407,14 +419,12 @@ export function RegistrationPayment({
           {payment.isPending || payment.isFetching ? (
             <Skeleton className="h-5 w-14 rounded-md" />
           ) : payment.data ? (
-            <NumberValue
-              className="text-foreground text-sm font-semibold"
-              maximumFractionDigits={2}
-              minimumFractionDigits={2}
-              value={Number(
-                formatUnits(payment.data.total, payment.data.decimals),
-              )}
-            />
+            <span className="text-foreground text-sm font-semibold">
+              {formatTokenAmount(payment.data.total, payment.data.decimals, {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })}
+            </span>
           ) : (
             <span className="text-muted text-sm">—</span>
           )}

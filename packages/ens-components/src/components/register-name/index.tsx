@@ -47,6 +47,7 @@ function RegisterEnsContent() {
     useState<RegistrationProcessStep>("commitment");
   const [registrationSuccess, setRegistrationSuccess] =
     useState<RegistrationSuccessDetails>();
+  const [isTransactionPending, setIsTransactionPending] = useState(false);
   const isRegistrationSuccess = registrationSuccess !== undefined;
 
   const handleNext = () => {
@@ -103,10 +104,13 @@ function RegisterEnsContent() {
   return (
     <Modal>
       <Button variant="secondary">Register</Button>
-      <Modal.Backdrop>
+      <Modal.Backdrop
+        isDismissable={!isTransactionPending}
+        isKeyboardDismissDisabled={isTransactionPending}
+      >
         <Modal.Container>
           <Modal.Dialog>
-            <Modal.CloseTrigger />
+            <Modal.CloseTrigger isDisabled={isTransactionPending} />
             {isRegistrationSuccess ? (
               <RegistrationSuccess
                 onDone={handleDone}
@@ -116,6 +120,7 @@ function RegisterEnsContent() {
               <RegistrationProcess
                 initialStep={registrationStep}
                 onBack={() => setView("name-search")}
+                onPendingChange={setIsTransactionPending}
                 onSuccess={handleRegistrationSuccess}
               />
             ) : (

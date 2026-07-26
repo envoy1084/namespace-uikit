@@ -2,7 +2,7 @@
 
 import type { Hex } from "viem";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Accordion, Button, Typography } from "@thenamespace/uikit";
 import { bytesToHex, zeroAddress } from "viem";
@@ -29,12 +29,14 @@ export interface CommitmentStepProps {
   error?: unknown;
   isDisabled?: boolean;
   onErrorClear?: () => void;
+  onPendingChange?: (isPending: boolean) => void;
 }
 
 export function CommitmentStep({
   error: externalError,
   isDisabled = false,
   onErrorClear,
+  onPendingChange,
 }: CommitmentStepProps) {
   const connection = useConnection();
   const { chain, contracts, network } = useEnsConfig();
@@ -50,6 +52,17 @@ export function CommitmentStep({
   const isPending = status !== "idle";
   const isWrongNetwork =
     connection.chainId !== undefined && connection.chainId !== chain.id;
+
+  useEffect(() => {
+    onPendingChange?.(isPending);
+  }, [isPending, onPendingChange]);
+
+  useEffect(
+    () => () => {
+      onPendingChange?.(false);
+    },
+    [onPendingChange],
+  );
 
   const handleCommit = async () => {
     setError(undefined);

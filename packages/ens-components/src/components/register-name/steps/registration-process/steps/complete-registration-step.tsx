@@ -7,12 +7,14 @@ import { RegistrationPayment } from "#/components/register-name/steps/registrati
 export interface CompleteRegistrationStepProps {
   isDisabled?: boolean;
   onCommitmentInvalid: (error: unknown) => void;
+  onPendingChange?: (isPending: boolean) => void;
   onSuccess: (registration: RegistrationSuccessDetails) => void;
 }
 
 export function CompleteRegistrationStep({
   isDisabled = true,
   onCommitmentInvalid,
+  onPendingChange,
   onSuccess,
 }: CompleteRegistrationStepProps) {
   return (
@@ -43,6 +45,7 @@ export function CompleteRegistrationStep({
           <RegistrationPayment
             onCommitmentInvalid={onCommitmentInvalid}
             onSuccess={onSuccess}
+            {...(onPendingChange === undefined ? {} : { onPendingChange })}
           />
         </Accordion.Body>
       </Accordion.Panel>
