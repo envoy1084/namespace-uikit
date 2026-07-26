@@ -1,7 +1,7 @@
 {
   "name": "ENS Components",
   "short_name": "ENS Components",
-  "description": "Production-ready React components for building ENS v2 experiences.",
+  "description": "Production-ready React components, hooks, and typed actions for ENS v2 apps.",
   "id": "/",
   "start_url": "/",
   "scope": "/",
