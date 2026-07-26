@@ -217,6 +217,7 @@ async function executeTransactions(
 
 async function executeAtomic(
   walletClient: WalletClient,
+  publicClient: PublicClient,
   props: ExecuteContractWritesProps,
 ): Promise<Result<ExecuteContractWritesResult, ExecuteContractWritesError>> {
   await notify(props.onProgress, {
@@ -251,6 +252,7 @@ async function executeAtomic(
       callsId,
       status: "submitted",
       strategy: "atomic",
+      transactions: [],
       transactionHashes: [],
     });
   }
@@ -262,19 +264,56 @@ async function executeAtomic(
   if (status.isErr()) return err(status.error);
   if (status.value.state !== "SUCCESS") return err("ATOMIC_BATCH_FAILED");
 
+  const transactionHashes = status.value.transactionHashes;
+  if (transactionHashes.length === 0) {
+    return err("TRANSACTION_CONFIRMATION_FAILED");
+  }
+
+  const receipts = await Promise.all(
+    transactionHashes.map((transactionHash) =>
+      waitForReceipt(publicClient, transactionHash, props.timeout),
+    ),
+  );
+  const confirmedReceipts: TransactionReceipt[] = [];
+  for (const receipt of receipts) {
+    if (receipt.isErr()) return err(receipt.error);
+    confirmedReceipts.push(receipt.value);
+  }
+  const fallbackReceipt = confirmedReceipts.at(-1);
+  const fallbackTransactionHash = transactionHashes.at(-1);
+  if (fallbackReceipt === undefined || fallbackTransactionHash === undefined) {
+    return err("TRANSACTION_CONFIRMATION_FAILED");
+  }
+
+  const transactions = props.calls.map((prepared, callIndex) => {
+    const transactionIndex =
+      transactionHashes.length === 1
+        ? 0
+        : Math.min(callIndex, transactionHashes.length - 1);
+
+    return {
+      prepared,
+      receipt: confirmedReceipts[transactionIndex] ?? fallbackReceipt,
+      transactionHash:
+        transactionHashes[transactionIndex] ?? fallbackTransactionHash,
+    };
+  });
+
   await notify(props.onProgress, {
     callsId,
     prepared: props.calls,
     state: "confirmed",
     strategy: "atomic",
-    transactionHashes: status.value.transactionHashes,
+    transactions,
+    transactionHashes,
   });
 
   return ok({
     callsId,
     status: "confirmed",
     strategy: "atomic",
-    transactionHashes: status.value.transactionHashes,
+    transactions,
+    transactionHashes,
   });
 }
 
@@ -306,7 +345,7 @@ export function executeContractWrites(
 
     return ResultAsync.fromSafePromise(
       strategy.value === "atomic"
-        ? executeAtomic(walletClient, props)
+        ? executeAtomic(walletClient, publicClient, props)
         : executeTransactions(
             walletClient,
             publicClient,

@@ -69,6 +69,7 @@ export type ContractWriteProgress =
       readonly prepared: readonly PreparedContractWrite[];
       readonly state: "confirmed";
       readonly strategy: "atomic";
+      readonly transactions: readonly SubmittedContractTransaction[];
       readonly transactionHashes: readonly Hex[];
     };
 
@@ -83,6 +84,7 @@ export type ExecuteContractWritesResult =
       readonly callsId: string;
       readonly status: "confirmed" | "submitted";
       readonly strategy: "atomic";
+      readonly transactions: readonly SubmittedContractTransaction[];
       readonly transactionHashes: readonly Hex[];
     }
   | {

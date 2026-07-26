@@ -29,9 +29,9 @@ All calls must use the same prepared `account`. `confirmation` defaults to
 a sequential execution are still confirmed before dependent calls are sent.
 `timeout` applies to transaction receipt and atomic call-status waits.
 
-The result is discriminated by `strategy`. Atomic results contain a `callsId`
-and transaction hashes. Single and sequential results contain submitted
-transactions and confirmed receipts when requested.
+The result is discriminated by `strategy`. Every confirmed strategy contains
+prepared transactions and receipts. Atomic results additionally contain a
+`callsId` and the wallet-reported transaction hashes.
 
 `onProgress` reports signing, submitted, and confirmed states. Observer errors
 do not change the chain result.
