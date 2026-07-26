@@ -1,9 +1,9 @@
 import type {
-  CommitNameProps,
   CreateResolverSaltError,
   IsResolverDeployedError,
   MakeNameCommitmentError,
   ParseNameInputError,
+  PrepareCommitNameProps,
   PreparePermissionedResolverDeploymentError,
 } from "#/actions";
 import type { EnsNetwork } from "#/data";
@@ -140,13 +140,13 @@ export function prepareRegistrationAttempt(
     buildRegistrationAttempt(
       props,
       {
-        address: prepared.resolverAddress,
+        address: prepared.metadata.resolverAddress,
         deployer: props.account,
         deploymentData: prepared.call.data,
         factoryAddress: props.factoryAddress,
         implementationAddress: props.implementationAddress,
-        initData: prepared.initData,
-        salt: prepared.salt,
+        initData: prepared.metadata.initData,
+        salt: prepared.metadata.salt,
         type: "dedicated",
       },
       secret,
@@ -191,7 +191,7 @@ export function renewRegistrationAttempt(
 export function getAttemptCommitNameProps(
   attempt: StoredRegistrationAttempt,
   network: EnsNetwork,
-): CommitNameProps | undefined {
+): PrepareCommitNameProps | undefined {
   try {
     return {
       account: attempt.account,

@@ -1,16 +1,18 @@
+import type { PreparedContractWrite } from "#/actions/contract-calls";
 import type { EnsNetwork } from "#/data";
 
-import { err, errAsync, ok, type Result, ResultAsync } from "neverthrow";
+import { err, ok, type Result } from "neverthrow";
 import {
   encodeAbiParameters,
+  encodeFunctionData,
   isAddress,
   isHex,
   keccak256,
   size,
   zeroAddress,
   type Address,
+  type ContractFunctionParameters,
   type Hex,
-  type WalletClient,
 } from "viem";
 
 import {
@@ -21,8 +23,7 @@ import { ethRegistrarAbi } from "#/data/abi";
 
 const MAX_UINT64 = (1n << 64n) - 1n;
 
-export type CommitNameError =
-  | "CONTRACT_WRITE_FAILED"
+export type PrepareCommitNameError =
   | "INVALID_ACCOUNT_ADDRESS"
   | "INVALID_REGISTRAR_ADDRESS"
   | MakeNameCommitmentError;
@@ -59,7 +60,7 @@ export type MakeNameCommitmentResult = {
   readonly label: string;
 };
 
-export interface CommitNameProps {
+export interface PrepareCommitNameProps {
   /** Account that submits the commitment transaction. */
   readonly account: Address;
   /** Registration duration in seconds. */
@@ -82,14 +83,25 @@ export interface CommitNameProps {
   readonly subregistryAddress: Address;
 }
 
-export interface CommitNameResult {
-  /** Commitment submitted to the registrar. */
+type CommitNameRequest = ContractFunctionParameters<
+  typeof ethRegistrarAbi,
+  "nonpayable",
+  "commit",
+  readonly [Hex]
+>;
+
+export interface PrepareCommitNameMetadata {
+  /** Commitment submitted by the prepared registrar call. */
   readonly commitment: Hex;
   /** Normalized second-level label bound to the commitment. */
   readonly label: string;
-  /** Hash of the commitment transaction. */
-  readonly transactionHash: Hex;
 }
+
+export type PreparedCommitName = PreparedContractWrite<
+  CommitNameRequest,
+  "commit-name",
+  PrepareCommitNameMetadata
+>;
 
 function isBytes32(value: Hex): boolean {
   return isHex(value) && size(value) === 32;
@@ -182,44 +194,46 @@ export function makeNameCommitment(
 }
 
 /**
- * Creates and submits an ENSv2 `.eth` registration commitment.
+ * Validates and encodes an ENSv2 `.eth` registration commitment.
  *
  * The returned commitment and every commitment-bound input must be persisted
  * and reused unchanged when revealing the registration.
  */
-export function commitName(
-  walletClient: WalletClient,
-  props: CommitNameProps,
-): ResultAsync<CommitNameResult, CommitNameError | ParseNameInputError> {
+export function prepareCommitName(
+  props: PrepareCommitNameProps,
+): Result<PreparedCommitName, PrepareCommitNameError | ParseNameInputError> {
   const { account, registrarAddress } = props;
 
   if (!isAddress(account) || account === zeroAddress) {
-    return errAsync("INVALID_ACCOUNT_ADDRESS");
+    return err("INVALID_ACCOUNT_ADDRESS");
   }
 
   if (!isAddress(registrarAddress) || registrarAddress === zeroAddress) {
-    return errAsync("INVALID_REGISTRAR_ADDRESS");
+    return err("INVALID_REGISTRAR_ADDRESS");
   }
 
   const result = makeNameCommitment(props);
 
   if (result.isErr()) {
-    return errAsync(result.error);
+    return err(result.error);
   }
 
-  return ResultAsync.fromPromise(
-    walletClient.writeContract({
-      account,
-      address: registrarAddress,
-      abi: ethRegistrarAbi,
-      chain: walletClient.chain,
-      functionName: "commit",
-      args: [result.value.commitment],
-    }),
-    () => "CONTRACT_WRITE_FAILED" as const,
-  ).map((transactionHash) => ({
-    commitment: result.value.commitment,
-    label: result.value.label,
-    transactionHash,
-  }));
+  const request = {
+    address: registrarAddress,
+    abi: ethRegistrarAbi,
+    functionName: "commit",
+    args: [result.value.commitment],
+  } as const satisfies CommitNameRequest;
+
+  return ok({
+    account,
+    call: {
+      data: encodeFunctionData(request),
+      to: registrarAddress,
+      value: 0n,
+    },
+    kind: "commit-name",
+    metadata: result.value,
+    request,
+  });
 }

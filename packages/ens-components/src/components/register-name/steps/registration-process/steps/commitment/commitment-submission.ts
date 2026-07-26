@@ -1,3 +1,10 @@
+import type {
+  ContractCallProgress,
+  ExecuteContractCallsResult,
+  PreparedCommitName,
+  PreparedContractWrite,
+  PreparedPermissionedResolverDeployment,
+} from "#/actions";
 import type { EnsNetwork } from "#/data";
 import type {
   RegistrationAttemptSubmission,
@@ -6,6 +13,7 @@ import type {
 
 import { err, ok, type Result } from "neverthrow";
 import {
+  isAddressEqual,
   type Chain,
   type Hex,
   type PublicClient,
@@ -14,12 +22,10 @@ import {
 } from "viem";
 
 import {
-  commitName,
-  deployPermissionedResolver,
-  deployResolverAndCommitName,
+  executeContractCalls,
   getPermissionedResolverStatus,
-  supportsAtomicBatchCalls,
-  waitForAtomicBatch,
+  prepareCommitName,
+  preparePermissionedResolverDeployment,
 } from "#/actions";
 import { getAttemptCommitNameProps } from "#/components/register-name/steps/registration-process/steps/commitment/registration-attempt";
 
@@ -50,263 +56,245 @@ export interface SubmitRegistrationAttemptProps {
   onSubmissionChange: (submission: RegistrationAttemptSubmission) => void;
 }
 
-async function waitForSuccessfulReceipt(
-  publicClient: PublicClient,
-  transactionHash: Hex,
-): Promise<Result<TransactionReceipt, string>> {
-  try {
-    const receipt = await publicClient.waitForTransactionReceipt({
-      hash: transactionHash,
-    });
-
-    return receipt.status === "success"
-      ? ok(receipt)
-      : err("TRANSACTION_REVERTED");
-  } catch {
-    return err("TRANSACTION_CONFIRMATION_FAILED");
-  }
+function phaseFor(prepared: PreparedContractWrite): CommitmentTransactionPhase {
+  return prepared.kind === "deploy-permissioned-resolver"
+    ? "resolver"
+    : "commitment";
 }
 
-async function submitCommitmentOnly(
+function createProgressHandler(
   props: SubmitRegistrationAttemptProps,
-  resolverTransactionHash?: Hex,
-): Promise<Result<CommitmentSubmissionSuccess, unknown>> {
+): (progress: ContractCallProgress) => Promise<void> {
+  let resolverTransactionHash = getResolverHash(props.attempt);
+
+  return async (progress) => {
+    if (progress.strategy === "atomic") {
+      if (progress.state === "signing") {
+        await props.onProgress({ phase: "commitment", state: "signing" });
+        return;
+      }
+
+      if (progress.state === "submitted") {
+        props.onSubmissionChange({
+          callsId: progress.callsId,
+          type: "atomic-pending",
+        });
+        await props.onProgress({ phase: "commitment", state: "confirming" });
+        return;
+      }
+
+      const transactionHash = progress.transactionHashes.at(-1);
+      const confirmedAt = Date.now();
+      props.onSubmissionChange({
+        callsId: progress.callsId,
+        confirmedAt,
+        ...(transactionHash === undefined ? {} : { transactionHash }),
+        type: "confirmed",
+      });
+      await props.onProgress({
+        ...(transactionHash === undefined ? {} : { hash: transactionHash }),
+        phase: "commitment",
+        state: "confirmed",
+      });
+      return;
+    }
+
+    const phase = phaseFor(progress.prepared);
+    if (progress.state === "signing") {
+      await props.onProgress({ phase, state: "signing" });
+      return;
+    }
+
+    if (progress.state === "submitted") {
+      if (phase === "resolver") {
+        resolverTransactionHash = progress.transactionHash;
+        props.onSubmissionChange({
+          transactionHash: progress.transactionHash,
+          type: "resolver-pending",
+        });
+      } else {
+        props.onSubmissionChange({
+          ...(resolverTransactionHash === undefined
+            ? {}
+            : { resolverTransactionHash }),
+          transactionHash: progress.transactionHash,
+          type: "commitment-pending",
+        });
+      }
+      await props.onProgress({
+        hash: progress.transactionHash,
+        phase,
+        state: "confirming",
+      });
+      return;
+    }
+
+    if (phase === "resolver") {
+      resolverTransactionHash = progress.transactionHash;
+      props.onSubmissionChange({
+        transactionHash: progress.transactionHash,
+        type: "resolver-confirmed",
+      });
+    } else {
+      const confirmedAt = Date.now();
+      props.onSubmissionChange({
+        confirmedAt,
+        ...(resolverTransactionHash === undefined
+          ? {}
+          : { resolverTransactionHash }),
+        transactionHash: progress.transactionHash,
+        type: "confirmed",
+      });
+    }
+    await props.onProgress({
+      hash: progress.transactionHash,
+      phase,
+      state: "confirmed",
+    });
+  };
+}
+
+function getResolverHash(attempt: StoredRegistrationAttempt): Hex | undefined {
+  const submission = attempt.submission;
+  if (
+    submission.type === "resolver-pending" ||
+    submission.type === "resolver-confirmed"
+  ) {
+    return submission.transactionHash;
+  }
+  if (
+    submission.type === "commitment-pending" ||
+    submission.type === "confirmed"
+  ) {
+    return submission.resolverTransactionHash;
+  }
+  return undefined;
+}
+
+function buildSuccess(
+  result: ExecuteContractCallsResult,
+): CommitmentSubmissionSuccess {
+  const confirmedAt = Date.now();
+  if (result.strategy === "atomic") {
+    const resolverTransactionHash = result.transactionHashes.at(0);
+    const transactionHash = result.transactionHashes.at(-1);
+    return {
+      callsId: result.callsId,
+      confirmedAt,
+      ...(resolverTransactionHash === undefined
+        ? {}
+        : { resolverTransactionHash }),
+      ...(transactionHash === undefined ? {} : { transactionHash }),
+    };
+  }
+
+  const resolver = result.transactions.find(
+    ({ prepared }) => prepared.kind === "deploy-permissioned-resolver",
+  );
+  const commitment = result.transactions.find(
+    ({ prepared }) => prepared.kind === "commit-name",
+  );
+
+  return {
+    ...(commitment?.receipt === undefined
+      ? {}
+      : { commitmentReceipt: commitment.receipt }),
+    confirmedAt,
+    ...(resolver?.receipt === undefined
+      ? {}
+      : { resolverReceipt: resolver.receipt }),
+    ...(resolver === undefined
+      ? {}
+      : { resolverTransactionHash: resolver.transactionHash }),
+    ...(commitment === undefined
+      ? {}
+      : { transactionHash: commitment.transactionHash }),
+  };
+}
+
+async function prepareCommitment(
+  props: SubmitRegistrationAttemptProps,
+): Promise<Result<PreparedCommitName, unknown>> {
   const commitProps = getAttemptCommitNameProps(props.attempt, props.network);
   if (commitProps === undefined) return err("INVALID_DURATION");
-
-  await props.onProgress({ phase: "commitment", state: "signing" });
-  const commitment = await commitName(props.walletClient, commitProps);
-  if (commitment.isErr()) return err(commitment.error);
-
-  props.onSubmissionChange({
-    ...(resolverTransactionHash === undefined
-      ? {}
-      : { resolverTransactionHash }),
-    transactionHash: commitment.value.transactionHash,
-    type: "commitment-pending",
-  });
-  await props.onProgress({
-    hash: commitment.value.transactionHash,
-    phase: "commitment",
-    state: "confirming",
-  });
-
-  const receipt = await waitForSuccessfulReceipt(
-    props.publicClient,
-    commitment.value.transactionHash,
-  );
-  if (receipt.isErr()) {
-    if (receipt.error === "TRANSACTION_REVERTED") {
-      props.onSubmissionChange(
-        resolverTransactionHash === undefined
-          ? { type: "prepared" }
-          : {
-              transactionHash: resolverTransactionHash,
-              type: "resolver-confirmed",
-            },
-      );
-    }
-    return err(receipt.error);
-  }
-
-  const confirmedAt = Date.now();
-
-  props.onSubmissionChange({
-    confirmedAt,
-    ...(resolverTransactionHash === undefined
-      ? {}
-      : { resolverTransactionHash }),
-    transactionHash: commitment.value.transactionHash,
-    type: "confirmed",
-  });
-  await props.onProgress({
-    hash: commitment.value.transactionHash,
-    phase: "commitment",
-    state: "confirmed",
-  });
-
-  return ok({
-    commitmentReceipt: receipt.value,
-    confirmedAt,
-    ...(resolverTransactionHash === undefined
-      ? {}
-      : { resolverTransactionHash }),
-    transactionHash: commitment.value.transactionHash,
-  });
+  return prepareCommitName(commitProps);
 }
 
-async function submitSequentially(
+async function prepareResolver(
   props: SubmitRegistrationAttemptProps,
-): Promise<Result<CommitmentSubmissionSuccess, unknown>> {
+): Promise<Result<PreparedPermissionedResolverDeployment, unknown>> {
   const resolver = props.attempt.resolver;
   if (resolver.type !== "dedicated") return err("INVALID_RESOLVER_ADDRESS");
 
-  await props.onProgress({ phase: "resolver", state: "signing" });
-  const deployment = await deployPermissionedResolver(props.walletClient, {
-    account: props.attempt.account,
-    factoryAddress: resolver.factoryAddress,
-    implementationAddress: resolver.implementationAddress,
-    initData: resolver.initData,
-    network: props.network,
-    salt: resolver.salt,
-  });
-  if (deployment.isErr()) return err(deployment.error);
-
-  props.onSubmissionChange({
-    transactionHash: deployment.value,
-    type: "resolver-pending",
-  });
-  await props.onProgress({
-    hash: deployment.value,
-    phase: "resolver",
-    state: "confirming",
-  });
-
-  const receipt = await waitForSuccessfulReceipt(
-    props.publicClient,
-    deployment.value,
-  );
-  if (receipt.isErr()) {
-    if (receipt.error === "TRANSACTION_REVERTED") {
-      props.onSubmissionChange({ type: "prepared" });
-    }
-    return err(receipt.error);
-  }
-
-  const resolverStatus = await getPermissionedResolverStatus(
+  const prepared = await preparePermissionedResolverDeployment(
     props.publicClient,
     {
+      account: props.attempt.account,
       factoryAddress: resolver.factoryAddress,
       implementationAddress: resolver.implementationAddress,
       network: props.network,
-      resolverAddress: resolver.address,
+      owner: props.attempt.owner,
+      salt: resolver.salt,
     },
   );
-  if (resolverStatus.isErr()) return err(resolverStatus.error);
-  if (resolverStatus.value !== "VERIFIED") {
-    return err("RESOLVER_DEPLOYMENT_INVALID");
+  if (prepared.isErr()) return err(prepared.error);
+  if (
+    !isAddressEqual(prepared.value.metadata.resolverAddress, resolver.address)
+  ) {
+    return err("INVALID_RESOLVER_ADDRESS");
   }
-
-  props.onSubmissionChange({
-    transactionHash: deployment.value,
-    type: "resolver-confirmed",
-  });
-  await props.onProgress({
-    hash: deployment.value,
-    phase: "resolver",
-    state: "confirmed",
-  });
-
-  const commitment = await submitCommitmentOnly(props, deployment.value);
-  if (commitment.isErr()) return commitment;
-
-  return ok({
-    ...commitment.value,
-    resolverReceipt: receipt.value,
-    resolverTransactionHash: deployment.value,
-  });
-}
-
-async function submitAtomically(
-  props: SubmitRegistrationAttemptProps,
-): Promise<Result<CommitmentSubmissionSuccess, unknown>> {
-  const resolver = props.attempt.resolver;
-  const commitProps = getAttemptCommitNameProps(props.attempt, props.network);
-  if (resolver.type !== "dedicated") return err("INVALID_RESOLVER_ADDRESS");
-  if (commitProps === undefined) return err("INVALID_DURATION");
-
-  await props.onProgress({ phase: "commitment", state: "signing" });
-  const submission = await deployResolverAndCommitName(props.walletClient, {
-    ...commitProps,
-    chain: props.chain,
-    deploymentCall: {
-      data: resolver.deploymentData,
-      to: resolver.factoryAddress,
-      value: 0n,
-    },
-  });
-  if (submission.isErr()) return err(submission.error);
-
-  props.onSubmissionChange({
-    callsId: submission.value.callsId,
-    type: "atomic-pending",
-  });
-  await props.onProgress({ phase: "commitment", state: "confirming" });
-
-  const batch = await waitForAtomicBatch(props.walletClient, {
-    callsId: submission.value.callsId,
-    timeout: 120_000,
-  });
-  if (batch.isErr()) return err(batch.error);
-  if (batch.value.state !== "SUCCESS") {
-    props.onSubmissionChange({ type: "prepared" });
-    return err("ATOMIC_BATCH_FAILED");
-  }
-
-  const transactionHash = batch.value.transactionHashes.at(-1);
-  const receipt =
-    transactionHash === undefined
-      ? undefined
-      : await waitForSuccessfulReceipt(props.publicClient, transactionHash);
-  if (receipt?.isErr()) return err(receipt.error);
-
-  const confirmedAt = Date.now();
-
-  props.onSubmissionChange({
-    callsId: submission.value.callsId,
-    confirmedAt,
-    ...(transactionHash === undefined ? {} : { transactionHash }),
-    type: "confirmed",
-  });
-  await props.onProgress({
-    ...(transactionHash === undefined ? {} : { hash: transactionHash }),
-    phase: "commitment",
-    state: "confirmed",
-  });
-
-  return ok({
-    callsId: submission.value.callsId,
-    ...(receipt?.isOk() ? { commitmentReceipt: receipt.value } : {}),
-    confirmedAt,
-    ...(receipt?.isOk() ? { resolverReceipt: receipt.value } : {}),
-    ...(transactionHash === undefined
-      ? {}
-      : { resolverTransactionHash: transactionHash }),
-    ...(transactionHash === undefined ? {} : { transactionHash }),
-  });
+  return ok(prepared.value);
 }
 
 export async function submitRegistrationAttempt(
   props: SubmitRegistrationAttemptProps,
 ): Promise<Result<CommitmentSubmissionSuccess, unknown>> {
-  if (props.attempt.resolver.type === "custom") {
-    return submitCommitmentOnly(props);
+  const commitment = await prepareCommitment(props);
+  if (commitment.isErr()) return err(commitment.error);
+
+  let calls: readonly [PreparedContractWrite, ...PreparedContractWrite[]] = [
+    commitment.value,
+  ];
+
+  if (props.attempt.resolver.type === "dedicated") {
+    const resolver = props.attempt.resolver;
+    const status = await getPermissionedResolverStatus(props.publicClient, {
+      factoryAddress: resolver.factoryAddress,
+      implementationAddress: resolver.implementationAddress,
+      network: props.network,
+      resolverAddress: resolver.address,
+    });
+    if (status.isErr()) return err(status.error);
+    if (status.value === "INVALID") return err("RESOLVER_DEPLOYMENT_INVALID");
+
+    if (status.value === "NOT_DEPLOYED") {
+      const deployment = await prepareResolver(props);
+      if (deployment.isErr()) return err(deployment.error);
+      calls = [deployment.value, commitment.value];
+    }
   }
 
-  const resolver = props.attempt.resolver;
-  const status = await getPermissionedResolverStatus(props.publicClient, {
-    factoryAddress: resolver.factoryAddress,
-    implementationAddress: resolver.implementationAddress,
-    network: props.network,
-    resolverAddress: resolver.address,
-  });
-
-  if (status.isErr()) return err(status.error);
-  if (status.value === "INVALID") return err("RESOLVER_DEPLOYMENT_INVALID");
-  if (status.value === "VERIFIED") {
-    const resolverHash =
-      props.attempt.submission.type === "resolver-confirmed"
-        ? props.attempt.submission.transactionHash
-        : undefined;
-    return submitCommitmentOnly(props, resolverHash);
+  const result = await executeContractCalls(
+    props.walletClient,
+    props.publicClient,
+    {
+      calls,
+      chain: props.chain,
+      confirmation: "confirmed",
+      onProgress: createProgressHandler(props),
+      strategy: "auto",
+      timeout: 120_000,
+    },
+  );
+  if (result.isErr()) {
+    if (
+      result.error === "ATOMIC_BATCH_FAILED" ||
+      result.error === "TRANSACTION_REVERTED"
+    ) {
+      props.onSubmissionChange({ type: "prepared" });
+    }
+    return err(result.error);
   }
 
-  const capability = await supportsAtomicBatchCalls(props.walletClient, {
-    account: props.attempt.account,
-    chainId: props.chain.id,
-  });
-
-  return capability.isOk() && capability.value
-    ? submitAtomically(props)
-    : submitSequentially(props);
+  return ok(buildSuccess(result.value));
 }

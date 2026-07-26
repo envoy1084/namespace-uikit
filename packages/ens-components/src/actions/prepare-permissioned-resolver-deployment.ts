@@ -1,3 +1,4 @@
+import type { PreparedContractWrite } from "#/actions/contract-calls";
 import type { EnsNetwork } from "#/data";
 
 import { errAsync, ok, ResultAsync } from "neverthrow";
@@ -8,6 +9,7 @@ import {
   size,
   zeroAddress,
   type Address,
+  type ContractFunctionParameters,
   type Hex,
   type PublicClient,
 } from "viem";
@@ -41,18 +43,24 @@ export interface PreparePermissionedResolverDeploymentProps {
   readonly salt: Hex;
 }
 
-export interface ResolverDeploymentCall {
-  readonly data: Hex;
-  readonly to: Address;
-  readonly value: bigint;
-}
+type PermissionedResolverDeploymentRequest = ContractFunctionParameters<
+  typeof verifiableFactoryAbi,
+  "nonpayable",
+  "deployProxy",
+  readonly [Address, bigint, Hex]
+>;
 
-export interface PreparedPermissionedResolverDeployment {
-  readonly call: ResolverDeploymentCall;
+export interface PreparedPermissionedResolverDeploymentMetadata {
   readonly initData: Hex;
   readonly resolverAddress: Address;
   readonly salt: Hex;
 }
+
+export type PreparedPermissionedResolverDeployment = PreparedContractWrite<
+  PermissionedResolverDeploymentRequest,
+  "deploy-permissioned-resolver",
+  PreparedPermissionedResolverDeploymentMetadata
+>;
 
 function isBytes32(value: Hex): boolean {
   return isHex(value) && size(value) === 32;
@@ -105,6 +113,12 @@ export function preparePermissionedResolverDeployment(
     functionName: "deployProxy",
     args: [implementationAddress, saltValue, initData],
   });
+  const request = {
+    address: factoryAddress,
+    abi: verifiableFactoryAbi,
+    functionName: "deployProxy",
+    args: [implementationAddress, saltValue, initData],
+  } as const satisfies PermissionedResolverDeploymentRequest;
 
   return ResultAsync.fromPromise(
     publicClient.simulateContract({
@@ -121,14 +135,19 @@ export function preparePermissionedResolverDeployment(
     }
 
     return ok({
+      account,
       call: {
         data,
         to: factoryAddress,
         value: 0n,
       },
-      initData,
-      resolverAddress,
-      salt,
+      kind: "deploy-permissioned-resolver" as const,
+      metadata: {
+        initData,
+        resolverAddress,
+        salt,
+      },
+      request,
     });
   });
 }

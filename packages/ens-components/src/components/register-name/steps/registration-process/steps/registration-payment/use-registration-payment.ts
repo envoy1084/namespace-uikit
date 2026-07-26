@@ -14,9 +14,10 @@ import {
 } from "wagmi";
 
 import {
-  approveRegistrationPayment,
+  executeContractCalls,
   getCommitmentStatus,
-  registerName,
+  prepareRegisterName,
+  prepareRegistrationPaymentApproval,
 } from "#/actions";
 import {
   COMMITMENT_VALID_DURATION_MS,
@@ -139,16 +140,6 @@ export function useRegistrationPayment({
     storedAttempt,
   ]);
 
-  const waitForSuccess = async (hash: Hex) => {
-    if (publicClient === undefined) {
-      throw new Error("Public client unavailable.");
-    }
-
-    const receipt = await publicClient.waitForTransactionReceipt({ hash });
-    if (receipt.status !== "success") throw "TRANSACTION_REVERTED";
-    return receipt;
-  };
-
   const handlePayment = async () => {
     setError(undefined);
     setIsTransactionConfirmed(false);
@@ -200,8 +191,9 @@ export function useRegistrationPayment({
     }
 
     if (!paymentData.hasSufficientAllowance) {
+      let approvalHash: Hex | undefined;
       setActionStatus("approving");
-      const approval = await approveRegistrationPayment(walletClient, {
+      const approval = prepareRegistrationPaymentApproval({
         account: connection.address,
         amount: paymentData.total,
         network,
@@ -215,36 +207,60 @@ export function useRegistrationPayment({
         return;
       }
 
-      setActionStatus("confirming-approval");
-      setTransactionHash(approval.value);
-
-      try {
-        const receipt = await waitForSuccess(approval.value);
-        setIsTransactionConfirmed(true);
-        emitNameRegistrationEvent(events.onApprove, {
-          account: connection.address,
-          amount: paymentData.total,
-          chainId: chain.id,
-          network,
-          paymentTokenAddress: paymentToken.address,
-          receipt,
-          registrarAddress: storedAttempt.registrarAddress,
-          transactionHash: approval.value,
-        });
-        await new Promise((resolve) =>
-          window.setTimeout(
-            resolve,
-            TRANSACTION_PROGRESS_COMPLETION_DURATION_MS,
-          ),
-        );
-        await payment.refetch();
-      } catch (approvalError) {
-        reportError(approvalError, "approval", approval.value);
-      } finally {
+      const execution = await executeContractCalls(walletClient, publicClient, {
+        calls: [approval.value],
+        chain,
+        confirmation: "confirmed",
+        onProgress: (progress) => {
+          if (progress.strategy === "atomic") return;
+          if (progress.state === "submitted") {
+            approvalHash = progress.transactionHash;
+            setActionStatus("confirming-approval");
+            setTransactionHash(progress.transactionHash);
+          }
+          if (progress.state === "confirmed") {
+            setIsTransactionConfirmed(true);
+          }
+        },
+        strategy: "single",
+      });
+      if (execution.isErr()) {
+        reportError(execution.error, "approval", approvalHash);
         setActionStatus("idle");
         setIsTransactionConfirmed(false);
         setTransactionHash(undefined);
+        return;
       }
+
+      if (execution.value.strategy === "atomic") {
+        reportError("TRANSACTION_CONFIRMATION_FAILED", "approval");
+        setActionStatus("idle");
+        return;
+      }
+      const approvedTransaction = execution.value.transactions[0];
+      if (approvedTransaction?.receipt === undefined) {
+        reportError("TRANSACTION_CONFIRMATION_FAILED", "approval");
+        setActionStatus("idle");
+        return;
+      }
+
+      emitNameRegistrationEvent(events.onApprove, {
+        account: connection.address,
+        amount: paymentData.total,
+        chainId: chain.id,
+        network,
+        paymentTokenAddress: paymentToken.address,
+        receipt: approvedTransaction.receipt,
+        registrarAddress: storedAttempt.registrarAddress,
+        transactionHash: approvedTransaction.transactionHash,
+      });
+      await new Promise((resolve) =>
+        window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
+      );
+      await payment.refetch();
+      setActionStatus("idle");
+      setIsTransactionConfirmed(false);
+      setTransactionHash(undefined);
       return;
     }
 
@@ -276,7 +292,8 @@ export function useRegistrationPayment({
     }
 
     setActionStatus("registering");
-    const registration = await registerName(walletClient, {
+    let registrationHash: Hex | undefined;
+    const registration = prepareRegisterName({
       account: connection.address,
       duration,
       input: storedAttempt.label,
@@ -295,24 +312,42 @@ export function useRegistrationPayment({
       return;
     }
 
-    setActionStatus("confirming-registration");
-    setTransactionHash(registration.value.transactionHash);
-
-    let receipt: Awaited<ReturnType<typeof waitForSuccess>>;
-    try {
-      receipt = await waitForSuccess(registration.value.transactionHash);
-    } catch (registrationError) {
-      reportError(
-        registrationError,
-        "registration",
-        registration.value.transactionHash,
-      );
+    const execution = await executeContractCalls(walletClient, publicClient, {
+      calls: [registration.value],
+      chain,
+      confirmation: "confirmed",
+      onProgress: (progress) => {
+        if (progress.strategy === "atomic") return;
+        if (progress.state === "submitted") {
+          registrationHash = progress.transactionHash;
+          setActionStatus("confirming-registration");
+          setTransactionHash(progress.transactionHash);
+        }
+        if (progress.state === "confirmed") {
+          setIsTransactionConfirmed(true);
+        }
+      },
+      strategy: "single",
+    });
+    if (execution.isErr()) {
+      reportError(execution.error, "registration", registrationHash);
       setActionStatus("idle");
       setTransactionHash(undefined);
       return;
     }
 
-    setIsTransactionConfirmed(true);
+    if (execution.value.strategy === "atomic") {
+      reportError("TRANSACTION_CONFIRMATION_FAILED", "registration");
+      setActionStatus("idle");
+      return;
+    }
+    const registeredTransaction = execution.value.transactions[0];
+    if (registeredTransaction?.receipt === undefined) {
+      reportError("TRANSACTION_CONFIRMATION_FAILED", "registration");
+      setActionStatus("idle");
+      return;
+    }
+    const receipt = registeredTransaction.receipt;
     let registeredAt = Date.now();
 
     try {
@@ -328,7 +363,7 @@ export function useRegistrationPayment({
       decimals: paymentData.decimals,
       fallbackAmount: paymentData.total,
       fallbackDuration: duration,
-      fallbackLabel: registration.value.label,
+      fallbackLabel: registration.value.metadata.label,
       paymentTokenIcon: paymentToken.icon,
       paymentTokenSymbol: paymentToken.symbol,
       receipt,
@@ -359,7 +394,7 @@ export function useRegistrationPayment({
       ...(confirmedRegistration.tokenId === undefined
         ? {}
         : { tokenId: confirmedRegistration.tokenId }),
-      transactionHash: registration.value.transactionHash,
+      transactionHash: registeredTransaction.transactionHash,
     });
   };
 

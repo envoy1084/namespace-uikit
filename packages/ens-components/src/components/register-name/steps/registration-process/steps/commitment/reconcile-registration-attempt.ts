@@ -16,7 +16,7 @@ import {
   type CommitmentStatus,
   getCommitmentStatus,
   getPermissionedResolverStatus,
-  waitForAtomicBatch,
+  waitForContractCalls,
 } from "#/actions";
 import { renewRegistrationAttempt } from "#/components/register-name/steps/registration-process/steps/commitment/registration-attempt";
 
@@ -154,7 +154,7 @@ async function reconcileAtomicBatch(
     return ok({ state: "PENDING" });
   }
 
-  const batch = await waitForAtomicBatch(props.walletClient, {
+  const batch = await waitForContractCalls(props.walletClient, {
     callsId: props.attempt.submission.callsId,
     timeout: 120_000,
   });

@@ -2,29 +2,29 @@ import { errAsync, ResultAsync } from "neverthrow";
 import { type Hex, type WalletClient } from "viem";
 import { getCallsStatus, waitForCallsStatus } from "viem/actions";
 
-export type AtomicBatchStatusError =
-  | "ATOMIC_BATCH_STATUS_FAILED"
+export type ContractCallsStatusError =
+  | "CONTRACT_CALLS_STATUS_FAILED"
   | "INVALID_CALLS_ID";
 
-export type AtomicBatchState = "FAILURE" | "PENDING" | "SUCCESS" | "UNKNOWN";
+export type ContractCallsState = "FAILURE" | "PENDING" | "SUCCESS" | "UNKNOWN";
 
-export interface AtomicBatchStatus {
-  readonly state: AtomicBatchState;
+export interface ContractCallsStatus {
+  readonly state: ContractCallsState;
   readonly statusCode: number;
   readonly transactionHashes: readonly Hex[];
 }
 
-export interface GetAtomicBatchStatusProps {
+export interface GetContractCallsStatusProps {
   readonly callsId: string;
 }
 
-export interface WaitForAtomicBatchProps extends GetAtomicBatchStatusProps {
+export interface WaitForContractCallsProps extends GetContractCallsStatusProps {
   readonly timeout?: number;
 }
 
 function mapStatus(
   result: Awaited<ReturnType<typeof getCallsStatus>>,
-): AtomicBatchStatus {
+): ContractCallsStatus {
   const state =
     result.status === "failure"
       ? "FAILURE"
@@ -42,24 +42,24 @@ function mapStatus(
   };
 }
 
-export function getAtomicBatchStatus(
+export function getContractCallsStatus(
   walletClient: WalletClient,
-  props: GetAtomicBatchStatusProps,
-): ResultAsync<AtomicBatchStatus, AtomicBatchStatusError> {
+  props: GetContractCallsStatusProps,
+): ResultAsync<ContractCallsStatus, ContractCallsStatusError> {
   if (props.callsId.trim() === "") {
     return errAsync("INVALID_CALLS_ID");
   }
 
   return ResultAsync.fromPromise(
     getCallsStatus(walletClient, { id: props.callsId }),
-    () => "ATOMIC_BATCH_STATUS_FAILED" as const,
+    () => "CONTRACT_CALLS_STATUS_FAILED" as const,
   ).map(mapStatus);
 }
 
-export function waitForAtomicBatch(
+export function waitForContractCalls(
   walletClient: WalletClient,
-  props: WaitForAtomicBatchProps,
-): ResultAsync<AtomicBatchStatus, AtomicBatchStatusError> {
+  props: WaitForContractCallsProps,
+): ResultAsync<ContractCallsStatus, ContractCallsStatusError> {
   if (props.callsId.trim() === "") {
     return errAsync("INVALID_CALLS_ID");
   }
@@ -70,6 +70,6 @@ export function waitForAtomicBatch(
       throwOnFailure: false,
       ...(props.timeout === undefined ? {} : { timeout: props.timeout }),
     }),
-    () => "ATOMIC_BATCH_STATUS_FAILED" as const,
+    () => "CONTRACT_CALLS_STATUS_FAILED" as const,
   ).map(mapStatus);
 }
