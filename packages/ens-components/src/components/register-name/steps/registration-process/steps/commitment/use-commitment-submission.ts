@@ -14,6 +14,10 @@ import {
 import { useNameRegistration } from "#/components/register-name/context";
 import { emitNameRegistrationEvent } from "#/components/register-name/emit-event";
 import {
+  useRegistrationAttempts,
+  type StoredRegistrationAttempt,
+} from "#/components/register-name/hooks/use-registration-attempts";
+import {
   type CommitmentSubmissionSuccess,
   type CommitmentTransactionPhase,
   type CommitmentTransactionProgress,
@@ -22,10 +26,6 @@ import {
 import { reconcileRegistrationAttempt } from "#/components/register-name/steps/registration-process/steps/commitment/reconcile-registration-attempt";
 import { prepareRegistrationAttempt } from "#/components/register-name/steps/registration-process/steps/commitment/registration-attempt";
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
-import {
-  useRegistrationAttempts,
-  type StoredRegistrationAttempt,
-} from "#/hooks/use-registration-attempts";
 import { delay, parseRegistrationDuration } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 

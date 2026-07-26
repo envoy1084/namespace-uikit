@@ -16,8 +16,7 @@ function getName(data: unknown) {
 }
 
 const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
-  ATOMIC_BATCH_FAILED:
-    "The resolver and commitment batch could not be completed.",
+  ATOMIC_BATCH_FAILED: "The batched transactions could not be completed.",
   CAPABILITIES_REQUEST_FAILED:
     "Unable to check whether this wallet supports batched transactions.",
   CHAIN_SWITCH_FAILED: "Unable to switch networks. Please try again.",

@@ -18,12 +18,13 @@ import {
   type SetStateAction,
 } from "react";
 
-import { isAddress, isAddressEqual, zeroAddress, zeroHash } from "viem";
+import { isAddress, zeroHash } from "viem";
 
 import { DEFAULT_NAME_REGISTRATION_MESSAGES } from "#/components/register-name/customization";
 import {
   decodeReferrerAddress,
   DEFAULT_REGISTRATION_DURATION,
+  isNonZeroAddress,
   MIN_REGISTRATION_DURATION,
   resolvePaymentToken,
 } from "#/lib/helpers";
@@ -129,9 +130,7 @@ export function NameRegistrationProvider({
     trimmedReferrerInput === "" || isAddress(trimmedReferrerInput);
   const trimmedResolverInput = resolverInput.trim();
   const isResolverValid =
-    trimmedResolverInput === "" ||
-    (isAddress(trimmedResolverInput) &&
-      !isAddressEqual(trimmedResolverInput, zeroAddress));
+    trimmedResolverInput === "" || isNonZeroAddress(trimmedResolverInput);
   const resolvedMessages = {
     ...DEFAULT_NAME_REGISTRATION_MESSAGES,
     ...messages,

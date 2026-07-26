@@ -7,9 +7,6 @@ import { useEffect } from "react";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   Button,
-  Calendar,
-  DateField,
-  DatePicker,
   NumberStepper,
   Skeleton,
   Surface,
@@ -23,21 +20,21 @@ import {
 
 import { useNameRegistration } from "#/components/register-name/context";
 import { AdvancedOptions } from "#/components/register-name/steps/name-search/advanced-options";
+import {
+  ExpirationDatePicker,
+  getDateDurationLabel,
+  MAX_REGISTRATION_YEARS,
+  MIN_REGISTRATION_DAYS,
+} from "#/components/register-name/steps/name-search/expiration-date-picker";
 import { PaymentTokenSelect } from "#/components/register-name/steps/name-search/payment-token-select";
 import { useNamePrice } from "#/hooks";
 import { formatError, formatTokenAmount } from "#/lib";
 import {
-  MIN_REGISTRATION_DURATION,
   REGISTRATION_SECONDS_PER_DAY,
   REGISTRATION_SECONDS_PER_YEAR,
   resolvePaymentToken,
 } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
-
-const MAX_REGISTRATION_YEARS = 10;
-const MIN_REGISTRATION_DAYS = Number(
-  MIN_REGISTRATION_DURATION / REGISTRATION_SECONDS_PER_DAY,
-);
 
 interface RegistrationDetailsProps {
   input: string;
@@ -49,87 +46,6 @@ function getYears(duration: bigint) {
     Number(duration) / Number(REGISTRATION_SECONDS_PER_YEAR),
   );
   return Math.min(MAX_REGISTRATION_YEARS, Math.max(1, years));
-}
-
-function getDateDurationLabel(value: DateValue, timeZone: string) {
-  const start = today(timeZone);
-  let cursor: DateValue = start;
-  let months = 0;
-
-  while (cursor.add({ months: 1 }).compare(value) <= 0) {
-    cursor = cursor.add({ months: 1 });
-    months += 1;
-  }
-
-  const years = Math.floor(months / 12);
-  const remainingMonths = months % 12;
-  const days = value.compare(cursor);
-  const parts = [
-    years > 0 ? `${years} ${years === 1 ? "year" : "years"}` : null,
-    remainingMonths > 0
-      ? `${remainingMonths} ${remainingMonths === 1 ? "month" : "months"}`
-      : null,
-    days > 0 ? `${days} ${days === 1 ? "day" : "days"}` : null,
-  ].filter((part): part is string => part !== null);
-
-  return `${parts.join(", ")} registration.`;
-}
-
-function ExpirationDatePicker({
-  value,
-  onChange,
-}: {
-  value: DateValue;
-  onChange: (value: DateValue | null) => void;
-}) {
-  const timeZone = getLocalTimeZone();
-
-  return (
-    <DatePicker
-      aria-label="Registration expiration date"
-      className="w-full"
-      maxValue={today(timeZone).add({ years: MAX_REGISTRATION_YEARS })}
-      minValue={today(timeZone).add({ days: MIN_REGISTRATION_DAYS })}
-      value={value}
-      onChange={onChange}
-    >
-      <DateField.Group fullWidth variant="secondary">
-        <DateField.Input>
-          {(segment) => <DateField.Segment segment={segment} />}
-        </DateField.Input>
-        <DateField.Suffix>
-          <DatePicker.Trigger aria-label="Choose expiration date">
-            <DatePicker.TriggerIndicator />
-          </DatePicker.Trigger>
-        </DateField.Suffix>
-      </DateField.Group>
-      <DatePicker.Popover className="w-auto min-w-0 p-3" placement="bottom end">
-        <Calendar aria-label="Registration expiration date">
-          <Calendar.Header>
-            <Calendar.YearPickerTrigger>
-              <Calendar.YearPickerTriggerHeading />
-              <Calendar.YearPickerTriggerIndicator />
-            </Calendar.YearPickerTrigger>
-            <Calendar.NavButton slot="previous" />
-            <Calendar.NavButton slot="next" />
-          </Calendar.Header>
-          <Calendar.Grid>
-            <Calendar.GridHeader>
-              {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
-            </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
-          </Calendar.Grid>
-          <Calendar.YearPickerGrid>
-            <Calendar.YearPickerGridBody>
-              {({ year }) => <Calendar.YearPickerCell year={year} />}
-            </Calendar.YearPickerGridBody>
-          </Calendar.YearPickerGrid>
-        </Calendar>
-      </DatePicker.Popover>
-    </DatePicker>
-  );
 }
 
 export function RegistrationDetails({

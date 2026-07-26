@@ -10,6 +10,7 @@ import { isAddressEqual } from "viem";
 import { areHexValuesEqual } from "#/lib/helpers";
 import { parseNameInput } from "#/lib/parse-name-input";
 
+/** Versioned storage key for resumable NameRegistration state. */
 export const REGISTRATION_ATTEMPTS_STORAGE_KEY =
   "@thenamespace/ens-components:registration-attempts:v2";
 

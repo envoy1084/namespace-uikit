@@ -9,14 +9,13 @@ import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { err, ok, type Result } from "neverthrow";
 import {
   encodeFunctionData,
-  isAddress,
-  zeroAddress,
   type Address,
   type ContractFunctionParameters,
   type Hex,
 } from "viem";
 
 import { ethRegistrarAbi } from "#/data/abi";
+import { isNonZeroAddress } from "#/lib/helpers";
 import { makeNameCommitment } from "#/lib/make-name-commitment";
 
 export type PrepareCommitNameWriteError =
@@ -55,13 +54,10 @@ export function prepareCommitNameWrite(
   PreparedCommitNameWrite,
   PrepareCommitNameWriteError | ParseNameInputError
 > {
-  if (!isAddress(props.account) || props.account === zeroAddress) {
+  if (!isNonZeroAddress(props.account)) {
     return err("INVALID_ACCOUNT_ADDRESS");
   }
-  if (
-    !isAddress(props.registrarAddress) ||
-    props.registrarAddress === zeroAddress
-  ) {
+  if (!isNonZeroAddress(props.registrarAddress)) {
     return err("INVALID_REGISTRAR_ADDRESS");
   }
 

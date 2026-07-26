@@ -1,10 +1,10 @@
 "use client";
 
-import type { EnsPaymentTokens } from "#/data";
 import type {
   RegistrationAttemptUpdate,
   StoredRegistrationAttempt,
-} from "#/hooks/use-registration-attempts";
+} from "#/components/register-name/hooks/use-registration-attempts";
+import type { EnsPaymentTokens } from "#/data";
 
 import { useEffect } from "react";
 

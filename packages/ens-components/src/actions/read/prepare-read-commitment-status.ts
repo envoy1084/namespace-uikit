@@ -6,16 +6,15 @@ import type { EnsNetwork } from "#/data";
 
 import { err, ok, type Result } from "neverthrow";
 import {
-  isAddress,
   isHex,
   size,
-  zeroAddress,
   type Address,
   type ContractFunctionParameters,
   type Hex,
 } from "viem";
 
 import { ethRegistrarAbi } from "#/data/abi";
+import { isNonZeroAddress } from "#/lib/helpers";
 
 export type PrepareCommitmentStatusReadError =
   | "INVALID_COMMITMENT"
@@ -83,10 +82,7 @@ export function prepareCommitmentStatusRead(
   if (!isHex(props.commitment) || size(props.commitment) !== 32) {
     return err("INVALID_COMMITMENT");
   }
-  if (
-    !isAddress(props.registrarAddress) ||
-    props.registrarAddress === zeroAddress
-  ) {
+  if (!isNonZeroAddress(props.registrarAddress)) {
     return err("INVALID_REGISTRAR_ADDRESS");
   }
 

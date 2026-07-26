@@ -1,7 +1,7 @@
 {
   "name": "ens-components",
   "version": "0.1.0",
-  "description": "Production-ready React components, hooks, and contract actions for building ENS v2 applications.",
+  "description": "Production-ready React components, hooks, and contract actions for integrating ENS v2 into React applications.",
   "keywords": [
     "components",
     "ens",

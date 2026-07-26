@@ -1,7 +1,7 @@
 # ENS Components
 
 A growing collection of production-ready React components, hooks, and contract
-actions for building ENS v2 applications.
+actions for integrating ENS v2 into React applications.
 
 > ENS v2 support is currently limited to the Sepolia testnet configuration.
 > The `"mainnet"` network value is reserved but is not implemented yet.
@@ -11,7 +11,7 @@ actions for building ENS v2 applications.
 - Complete resolver, commit, wait, approve, and register flow
 - Configured payment-token selection with resumable state
 - Dialog and inline registration presentations
-- TanStack Query hooks for availability, pricing, commitments, and payments
+- TanStack Query hooks for availability, pricing, and payment status
 - Framework-independent actions returning `neverthrow` results
 - Resumable registration flow
 

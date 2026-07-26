@@ -4,9 +4,8 @@ import type {
   ContractWriteProgress,
   RegistrationPaymentStatus,
 } from "#/actions";
-import type { PaymentActionStatus } from "#/components/register-name/steps/registration-process/steps/registration-payment/get-registration-details";
+import type { StoredRegistrationAttempt } from "#/components/register-name/hooks/use-registration-attempts";
 import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-success";
-import type { StoredRegistrationAttempt } from "#/hooks/use-registration-attempts";
 
 import { useEffect, useRef, useState } from "react";
 
@@ -23,6 +22,7 @@ import {
   useNameRegistration,
 } from "#/components/register-name/context";
 import { emitNameRegistrationEvent } from "#/components/register-name/emit-event";
+import { useRegistrationAttempts } from "#/components/register-name/hooks/use-registration-attempts";
 import {
   submitRegistrationPayment,
   type RegistrationPaymentSubmissionSuccess,
@@ -30,7 +30,6 @@ import {
 import { useRegistrationPaymentToken } from "#/components/register-name/steps/registration-process/steps/registration-payment/use-registration-payment-token";
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
 import { useRegistrationPaymentStatus } from "#/hooks";
-import { useRegistrationAttempts } from "#/hooks/use-registration-attempts";
 import { delay, parseRegistrationDuration } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
@@ -39,6 +38,17 @@ export interface UseRegistrationPaymentProps {
   onPendingChange?: (isPending: boolean) => void;
   onSuccess: (registration: RegistrationSuccessDetails) => void;
 }
+
+type PaymentActionStatus =
+  | "approving"
+  | "batching"
+  | "confirming-approval"
+  | "confirming-batch"
+  | "confirming-registration"
+  | "idle"
+  | "refreshing"
+  | "registering"
+  | "switching";
 
 function isCommitmentInvalid(error: unknown) {
   return error === "COMMITMENT_EXPIRED" || error === "COMMITMENT_NOT_FOUND";

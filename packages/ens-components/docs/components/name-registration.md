@@ -7,9 +7,8 @@ second-level `.eth` names:
 2. Select a custom resolver or prepare a dedicated resolver.
 3. Deploy the resolver and submit a persisted commitment.
 4. Wait for the commitment minimum age.
-5. Approve the ERC-20 payment token when required.
-6. Submit the registration transaction.
-7. Display the confirmed registration.
+5. Approve the ERC-20 payment token when required and register the name.
+6. Display the confirmed registration.
 
 It requires `WagmiProvider`, `QueryClientProvider`, and
 [`EnsProvider`](../providers/ens-provider.md).
@@ -55,6 +54,9 @@ The default values initialize internal state. They are not controlled props.
 The name-search screen lists the payment tokens configured for the selected
 network. Changing the token refetches its registration price. The selected
 token is then used for balance, allowance, approval, and registration calls.
+When approval is required, wallets with atomic EIP-5792 support receive the
+approval and registration as one batch. Other wallets receive two ordered
+transactions, with approval confirmed before registration is submitted.
 
 ```tsx
 <NameRegistration defaultPaymentTokenAddress="0x2922bcd677af690fcd1ecc699519e4bfabc73ff8" />

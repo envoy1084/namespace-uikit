@@ -1,5 +1,3 @@
-import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-success";
-
 import {
   isAddressEqual,
   parseEventLogs,
@@ -9,47 +7,28 @@ import {
 
 import { ethRegistrarAbi } from "#/data/abi";
 
-export interface GetRegistrationDetailsProps {
-  decimals: number;
+export interface ParseRegistrationReceiptProps {
   fallbackAmount: bigint;
   fallbackDuration: bigint;
   fallbackLabel: string;
-  paymentTokenIcon: string;
-  paymentTokenSymbol: string;
   receipt: TransactionReceipt;
-  registeredAt: number;
   registrarAddress: Address;
 }
 
-export interface ConfirmedRegistrationDetails {
+export interface ParsedRegistrationReceipt {
   amount: bigint;
-  details: RegistrationSuccessDetails;
   duration: bigint;
+  label: string;
   tokenId?: bigint;
 }
 
-export type PaymentActionStatus =
-  | "approving"
-  | "batching"
-  | "confirming-approval"
-  | "confirming-batch"
-  | "confirming-registration"
-  | "idle"
-  | "refreshing"
-  | "registering"
-  | "switching";
-
-export function getRegistrationDetails({
-  decimals,
+export function parseRegistrationReceipt({
   fallbackAmount,
   fallbackDuration,
   fallbackLabel,
-  paymentTokenIcon,
-  paymentTokenSymbol,
   receipt,
-  registeredAt,
   registrarAddress,
-}: GetRegistrationDetailsProps): ConfirmedRegistrationDetails {
+}: ParseRegistrationReceiptProps): ParsedRegistrationReceipt {
   const registrationEvent = (() => {
     try {
       return parseEventLogs({
@@ -69,20 +48,11 @@ export function getRegistrationDetails({
     registrationEvent === undefined
       ? fallbackAmount
       : registrationEvent.args.base + registrationEvent.args.premium;
-  const label = registrationEvent?.args.label ?? fallbackLabel;
 
   return {
     amount,
-    details: {
-      amount,
-      decimals,
-      duration,
-      expiresAt: registeredAt + Number(duration) * 1_000,
-      name: `${label}.eth`,
-      paymentTokenIcon,
-      paymentTokenSymbol,
-    },
     duration,
+    label: registrationEvent?.args.label ?? fallbackLabel,
     ...(registrationEvent === undefined
       ? {}
       : { tokenId: registrationEvent.args.tokenId }),

@@ -7,27 +7,21 @@ import {
   Label,
   TextField,
 } from "@thenamespace/uikit";
-import { getAddress, isAddress, zeroAddress } from "viem";
 
 import { useNameRegistration } from "#/components/register-name/context";
+import { isNonZeroAddress } from "#/lib/helpers";
 
 export function CustomResolverAddress() {
   const { resolverInput, setResolverAddress, setResolverInput } =
     useNameRegistration();
   const trimmedValue = resolverInput.trim();
-  const isInvalid =
-    trimmedValue !== "" &&
-    (!isAddress(trimmedValue) || getAddress(trimmedValue) === zeroAddress);
+  const isInvalid = trimmedValue !== "" && !isNonZeroAddress(trimmedValue);
 
   const updateAddress = (nextValue: string) => {
     setResolverInput(nextValue);
 
     const address = nextValue.trim();
-    setResolverAddress(
-      isAddress(address) && getAddress(address) !== zeroAddress
-        ? getAddress(address)
-        : null,
-    );
+    setResolverAddress(isNonZeroAddress(address) ? address : null);
   };
 
   return (

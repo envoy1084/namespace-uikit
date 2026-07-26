@@ -4,12 +4,12 @@ import {
   MethodNotFoundRpcError,
   MethodNotSupportedRpcError,
   UnsupportedProviderMethodError,
-  isAddress,
-  zeroAddress,
   type Address,
   type WalletClient,
 } from "viem";
 import { getCapabilities } from "viem/actions";
+
+import { isNonZeroAddress } from "#/lib/helpers";
 
 export type SupportsAtomicBatchCallsError =
   | "CAPABILITIES_REQUEST_FAILED"
@@ -69,7 +69,7 @@ export function supportsAtomicBatchCalls(
 ): ResultAsync<boolean, SupportsAtomicBatchCallsError> {
   const { account, chainId } = props;
 
-  if (!isAddress(account) || account === zeroAddress) {
+  if (!isNonZeroAddress(account)) {
     return errAsync("INVALID_ACCOUNT_ADDRESS");
   }
 

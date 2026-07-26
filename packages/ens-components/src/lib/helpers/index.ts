@@ -3,4 +3,6 @@ export * from "#/lib/helpers/delay";
 export * from "#/lib/helpers/payment-token";
 export * from "#/lib/helpers/referrer";
 export * from "#/lib/helpers/registration-duration";
+export * from "#/lib/helpers/registration-receipt";
 export * from "#/lib/helpers/transaction-receipt";
+export * from "#/lib/helpers/validation";

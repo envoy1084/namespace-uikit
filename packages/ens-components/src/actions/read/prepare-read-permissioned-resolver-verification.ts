@@ -2,14 +2,10 @@ import type { PreparedContractRead } from "#/actions/read/contract-reads";
 import type { EnsNetwork } from "#/data";
 
 import { err, ok, type Result } from "neverthrow";
-import {
-  isAddress,
-  zeroAddress,
-  type Address,
-  type ContractFunctionParameters,
-} from "viem";
+import { type Address, type ContractFunctionParameters } from "viem";
 
 import { verifiableFactoryAbi } from "#/data/abi";
+import { isNonZeroAddress } from "#/lib/helpers";
 
 export type PreparePermissionedResolverVerificationReadError =
   | "INVALID_FACTORY_ADDRESS"
@@ -47,22 +43,13 @@ export function preparePermissionedResolverVerificationRead(
   PreparedPermissionedResolverVerificationRead,
   PreparePermissionedResolverVerificationReadError
 > {
-  if (
-    !isAddress(props.factoryAddress) ||
-    props.factoryAddress === zeroAddress
-  ) {
+  if (!isNonZeroAddress(props.factoryAddress)) {
     return err("INVALID_FACTORY_ADDRESS");
   }
-  if (
-    !isAddress(props.implementationAddress) ||
-    props.implementationAddress === zeroAddress
-  ) {
+  if (!isNonZeroAddress(props.implementationAddress)) {
     return err("INVALID_IMPLEMENTATION_ADDRESS");
   }
-  if (
-    !isAddress(props.resolverAddress) ||
-    props.resolverAddress === zeroAddress
-  ) {
+  if (!isNonZeroAddress(props.resolverAddress)) {
     return err("INVALID_RESOLVER_ADDRESS");
   }
 

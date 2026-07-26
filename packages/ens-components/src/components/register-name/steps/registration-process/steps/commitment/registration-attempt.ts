@@ -2,14 +2,14 @@ import type {
   PrepareCommitNameWriteProps,
   PreparePermissionedResolverDeploymentWriteError,
 } from "#/actions";
-import type { IsResolverDeployedError } from "#/components/register-name/steps/registration-process/steps/commitment/read-resolver-status";
-import type { EnsNetwork } from "#/data";
 import type {
   RegistrationAttemptInput,
   RegistrationAttemptUpdate,
   StoredRegistrationAttempt,
   StoredRegistrationResolver,
-} from "#/hooks/use-registration-attempts";
+} from "#/components/register-name/hooks/use-registration-attempts";
+import type { IsResolverDeployedError } from "#/components/register-name/steps/registration-process/steps/commitment/read-resolver-status";
+import type { EnsNetwork } from "#/data";
 import type { CreateResolverSaltError } from "#/lib/create-resolver-salt";
 import type { MakeNameCommitmentError } from "#/lib/make-name-commitment";
 import type { ParseNameInputError } from "#/lib/parse-name-input";

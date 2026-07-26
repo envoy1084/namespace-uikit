@@ -5,11 +5,11 @@ import type {
   PreparedContractWrite,
   PreparedPermissionedResolverDeploymentWrite,
 } from "#/actions";
-import type { EnsNetwork } from "#/data";
 import type {
   RegistrationAttemptSubmission,
   StoredRegistrationAttempt,
-} from "#/hooks/use-registration-attempts";
+} from "#/components/register-name/hooks/use-registration-attempts";
+import type { EnsNetwork } from "#/data";
 
 import { err, ok, type Result } from "neverthrow";
 import {

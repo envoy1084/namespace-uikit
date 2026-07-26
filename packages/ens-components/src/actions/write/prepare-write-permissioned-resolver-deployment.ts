@@ -4,8 +4,6 @@ import type { EnsNetwork } from "#/data";
 import { errAsync, ok, ResultAsync } from "neverthrow";
 import {
   encodeFunctionData,
-  isAddress,
-  zeroAddress,
   type Address,
   type ContractFunctionParameters,
   type Hex,
@@ -13,7 +11,7 @@ import {
 } from "viem";
 
 import { permissionedResolverAbi, verifiableFactoryAbi } from "#/data/abi";
-import { isBytes32 } from "#/lib/helpers";
+import { isBytes32, isNonZeroAddress } from "#/lib/helpers";
 
 export const PERMISSIONED_RESOLVER_ALL_ROLES =
   0x1111111111111111111111111111111111111111111111111111111111111111n;
@@ -74,22 +72,19 @@ export function preparePermissionedResolverDeploymentWrite(
 > {
   const { account, factoryAddress, implementationAddress, owner, salt } = props;
 
-  if (!isAddress(account) || account === zeroAddress) {
+  if (!isNonZeroAddress(account)) {
     return errAsync("INVALID_ACCOUNT_ADDRESS");
   }
 
-  if (!isAddress(factoryAddress) || factoryAddress === zeroAddress) {
+  if (!isNonZeroAddress(factoryAddress)) {
     return errAsync("INVALID_FACTORY_ADDRESS");
   }
 
-  if (
-    !isAddress(implementationAddress) ||
-    implementationAddress === zeroAddress
-  ) {
+  if (!isNonZeroAddress(implementationAddress)) {
     return errAsync("INVALID_IMPLEMENTATION_ADDRESS");
   }
 
-  if (!isAddress(owner) || owner === zeroAddress) {
+  if (!isNonZeroAddress(owner)) {
     return errAsync("INVALID_OWNER_ADDRESS");
   }
 
@@ -125,7 +120,7 @@ export function preparePermissionedResolverDeploymentWrite(
     }),
     () => "CONTRACT_SIMULATION_FAILED" as const,
   ).andThen(({ result: resolverAddress }) => {
-    if (!isAddress(resolverAddress) || resolverAddress === zeroAddress) {
+    if (!isNonZeroAddress(resolverAddress)) {
       return errAsync("INVALID_RESOLVER_ADDRESS" as const);
     }
 

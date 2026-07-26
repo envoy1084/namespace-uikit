@@ -1,13 +1,14 @@
 import type { EnsNetwork } from "#/data";
 
 import { errAsync, okAsync, ResultAsync } from "neverthrow";
-import { isAddress, zeroAddress, type Address, type PublicClient } from "viem";
+import { type Address, type PublicClient } from "viem";
 
 import {
   executeContractRead,
   preparePermissionedResolverVerificationRead,
   type PreparePermissionedResolverVerificationReadError,
 } from "#/actions";
+import { isNonZeroAddress } from "#/lib/helpers";
 
 export type PermissionedResolverStatus =
   | "INVALID"
@@ -33,7 +34,7 @@ export function isResolverDeployed(
   publicClient: PublicClient,
   resolverAddress: Address,
 ): ResultAsync<boolean, IsResolverDeployedError> {
-  if (!isAddress(resolverAddress) || resolverAddress === zeroAddress) {
+  if (!isNonZeroAddress(resolverAddress)) {
     return errAsync("INVALID_RESOLVER_ADDRESS");
   }
 

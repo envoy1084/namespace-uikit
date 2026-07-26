@@ -3,18 +3,15 @@ import {
   encodeAbiParameters,
   isAddress,
   keccak256,
-  zeroAddress,
   type Address,
   type Hex,
 } from "viem";
 
-import { isBytes32 } from "#/lib/helpers";
+import { isBytes32, isNonZeroAddress, isUint64Duration } from "#/lib/helpers";
 import {
   parseNameInput,
   type ParseNameInputError,
 } from "#/lib/parse-name-input";
-
-const MAX_UINT64 = (1n << 64n) - 1n;
 
 export type MakeNameCommitmentError =
   | "INVALID_DURATION"
@@ -57,7 +54,7 @@ export function makeNameCommitment(
   if ([...parsedInput.value.label].length < 3) {
     return err("LABEL_TOO_SHORT");
   }
-  if (!isAddress(props.owner) || props.owner === zeroAddress) {
+  if (!isNonZeroAddress(props.owner)) {
     return err("INVALID_OWNER_ADDRESS");
   }
   if (!isAddress(props.resolverAddress)) {
@@ -66,7 +63,7 @@ export function makeNameCommitment(
   if (!isAddress(props.subregistryAddress)) {
     return err("INVALID_SUBREGISTRY_ADDRESS");
   }
-  if (props.duration <= 0n || props.duration > MAX_UINT64) {
+  if (!isUint64Duration(props.duration)) {
     return err("INVALID_DURATION");
   }
   if (!isBytes32(props.secret)) return err("INVALID_SECRET");

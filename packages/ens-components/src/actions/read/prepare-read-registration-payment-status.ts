@@ -10,15 +10,10 @@ import type { EnsNetwork } from "#/data";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 
 import { err, ok, type Result } from "neverthrow";
-import {
-  erc20Abi,
-  isAddress,
-  zeroAddress,
-  type Address,
-  type ContractFunctionParameters,
-} from "viem";
+import { erc20Abi, type Address, type ContractFunctionParameters } from "viem";
 
 import { prepareNamePriceRead } from "#/actions/read/prepare-read-name-price";
+import { isNonZeroAddress } from "#/lib/helpers";
 
 export type PrepareRegistrationPaymentStatusReadError =
   | "INVALID_ACCOUNT_ADDRESS"
@@ -102,7 +97,7 @@ export function prepareRegistrationPaymentStatusRead(
   PreparedRegistrationPaymentStatusRead,
   PrepareRegistrationPaymentStatusReadError | ParseNameInputError
 > {
-  if (!isAddress(props.account) || props.account === zeroAddress) {
+  if (!isNonZeroAddress(props.account)) {
     return err("INVALID_ACCOUNT_ADDRESS");
   }
 

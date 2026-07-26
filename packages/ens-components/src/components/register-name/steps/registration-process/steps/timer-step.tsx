@@ -9,7 +9,7 @@ import {
   COMMITMENT_WAIT_DURATION_MS,
   useNameRegistration,
 } from "#/components/register-name/context";
-import { useRegistrationAttempts } from "#/hooks/use-registration-attempts";
+import { useRegistrationAttempts } from "#/components/register-name/hooks/use-registration-attempts";
 
 const COMMITMENT_WAIT_DURATION_SECONDS = COMMITMENT_WAIT_DURATION_MS / 1_000;
 const TIMER_NUMBER_FORMAT = {

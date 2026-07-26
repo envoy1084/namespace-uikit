@@ -2,14 +2,10 @@ import type { PreparedContractRead } from "#/actions/read/contract-reads";
 import type { EnsNetwork } from "#/data";
 
 import { err, ok, type Result } from "neverthrow";
-import {
-  isAddress,
-  zeroAddress,
-  type Address,
-  type ContractFunctionParameters,
-} from "viem";
+import { type Address, type ContractFunctionParameters } from "viem";
 
 import { ethRegistrarAbi } from "#/data/abi";
+import { isNonZeroAddress } from "#/lib/helpers";
 import {
   parseNameInput,
   type ParseNameInputError,
@@ -71,7 +67,7 @@ export function prepareNameAvailabilityRead(
     return err("LABEL_TOO_SHORT");
   }
 
-  if (!isAddress(registrarAddress) || registrarAddress === zeroAddress) {
+  if (!isNonZeroAddress(registrarAddress)) {
     return err("INVALID_REGISTRAR_ADDRESS");
   }
 

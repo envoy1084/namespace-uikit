@@ -13,6 +13,7 @@ import {
   type NameRegistrationProviderProps,
   useNameRegistration,
 } from "#/components/register-name/context";
+import { useRegistrationAttempts } from "#/components/register-name/hooks/use-registration-attempts";
 import {
   NameSearchStep,
   RegistrationProcess,
@@ -20,7 +21,6 @@ import {
   type RegistrationSuccessDetails,
   type RegistrationProcessStep,
 } from "#/components/register-name/steps";
-import { useRegistrationAttempts } from "#/hooks/use-registration-attempts";
 import { findPaymentToken } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 

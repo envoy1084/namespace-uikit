@@ -6,13 +6,7 @@ import type { EnsNetwork } from "#/data";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 
 import { err, ok, type Result } from "neverthrow";
-import {
-  erc20Abi,
-  isAddress,
-  zeroAddress,
-  type Address,
-  type ContractFunctionParameters,
-} from "viem";
+import { erc20Abi, type Address, type ContractFunctionParameters } from "viem";
 
 import {
   prepareNameAvailabilityRead,
@@ -20,8 +14,7 @@ import {
   type PreparedNameAvailabilityRead,
 } from "#/actions/read/prepare-read-name-availability";
 import { ethRegistrarAbi } from "#/data/abi";
-
-const MAX_UINT64 = (1n << 64n) - 1n;
+import { isNonZeroAddress, isUint64Duration } from "#/lib/helpers";
 
 export type PrepareNamePriceReadError =
   | "INVALID_DURATION"
@@ -108,11 +101,11 @@ export function prepareNamePriceRead(
   PrepareNamePriceReadError | ParseNameInputError
 > {
   const { duration, paymentTokenAddress, registrarAddress } = props;
-  if (duration <= 0n || duration > MAX_UINT64) {
+  if (!isUint64Duration(duration)) {
     return err("INVALID_DURATION");
   }
 
-  if (!isAddress(paymentTokenAddress) || paymentTokenAddress === zeroAddress) {
+  if (!isNonZeroAddress(paymentTokenAddress)) {
     return err("INVALID_PAYMENT_TOKEN_ADDRESS");
   }
 

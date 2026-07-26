@@ -10,9 +10,9 @@ import type {
   PreparedContractWrite,
   RegistrationPaymentStatus,
 } from "#/actions";
+import type { StoredRegistrationAttempt } from "#/components/register-name/hooks/use-registration-attempts";
 import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-success";
 import type { EnsNetwork, EnsPaymentToken } from "#/data";
-import type { StoredRegistrationAttempt } from "#/hooks/use-registration-attempts";
 
 import { err, ok, type Result } from "neverthrow";
 
@@ -22,9 +22,9 @@ import {
   prepareRegistrationPaymentApprovalWrite,
 } from "#/actions";
 import { readCommitmentStatus } from "#/components/register-name/steps/registration-process/steps/commitment/read-commitment-status";
-import { getRegistrationDetails } from "#/components/register-name/steps/registration-process/steps/registration-payment/get-registration-details";
 import {
   getTransactionTimestamp,
+  parseRegistrationReceipt,
   parseRegistrationDuration,
 } from "#/lib/helpers";
 
@@ -155,15 +155,11 @@ export async function submitRegistrationPayment(
     publicClient,
     confirmedRegistration.value.receipt,
   );
-  const registrationDetails = getRegistrationDetails({
-    decimals: payment.decimals,
+  const registrationDetails = parseRegistrationReceipt({
     fallbackAmount: payment.total,
     fallbackDuration: duration,
     fallbackLabel: registration.value.metadata.label,
-    paymentTokenIcon: paymentToken.icon,
-    paymentTokenSymbol: paymentToken.symbol,
     receipt: confirmedRegistration.value.receipt,
-    registeredAt,
     registrarAddress: attempt.registrarAddress,
   });
   let confirmedApproval: ConfirmedRegistrationWrite | undefined;
@@ -178,7 +174,15 @@ export async function submitRegistrationPayment(
 
   return ok({
     ...(confirmedApproval === undefined ? {} : { approval: confirmedApproval }),
-    details: registrationDetails.details,
+    details: {
+      amount: registrationDetails.amount,
+      decimals: payment.decimals,
+      duration: registrationDetails.duration,
+      expiresAt: registeredAt + Number(registrationDetails.duration) * 1_000,
+      name: `${registrationDetails.label}.eth`,
+      paymentTokenIcon: paymentToken.icon,
+      paymentTokenSymbol: paymentToken.symbol,
+    },
     registration: confirmedRegistration.value,
     registrationAmount: registrationDetails.amount,
     registrationDuration: registrationDetails.duration,

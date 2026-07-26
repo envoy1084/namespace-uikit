@@ -5,11 +5,11 @@ import { err, ok, type Result } from "neverthrow";
 import {
   encodeFunctionData,
   erc20Abi,
-  isAddress,
-  zeroAddress,
   type Address,
   type ContractFunctionParameters,
 } from "viem";
+
+import { isNonZeroAddress } from "#/lib/helpers";
 
 export type PrepareRegistrationPaymentApprovalWriteError =
   | "INVALID_ACCOUNT_ADDRESS"
@@ -58,15 +58,15 @@ export function prepareRegistrationPaymentApprovalWrite(
 > {
   const { account, amount, paymentTokenAddress, registrarAddress } = props;
 
-  if (!isAddress(account) || account === zeroAddress) {
+  if (!isNonZeroAddress(account)) {
     return err("INVALID_ACCOUNT_ADDRESS");
   }
 
-  if (!isAddress(paymentTokenAddress) || paymentTokenAddress === zeroAddress) {
+  if (!isNonZeroAddress(paymentTokenAddress)) {
     return err("INVALID_PAYMENT_TOKEN_ADDRESS");
   }
 
-  if (!isAddress(registrarAddress) || registrarAddress === zeroAddress) {
+  if (!isNonZeroAddress(registrarAddress)) {
     return err("INVALID_REGISTRAR_ADDRESS");
   }
 

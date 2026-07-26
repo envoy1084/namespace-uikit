@@ -5,14 +5,13 @@ import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { err, ok, type Result } from "neverthrow";
 import {
   encodeFunctionData,
-  isAddress,
-  zeroAddress,
   type Address,
   type ContractFunctionParameters,
   type Hex,
 } from "viem";
 
 import { ethRegistrarAbi } from "#/data/abi";
+import { isNonZeroAddress } from "#/lib/helpers";
 import {
   makeNameCommitment,
   type MakeNameCommitmentError,
@@ -72,15 +71,15 @@ export function prepareRegisterNameWrite(
     subregistryAddress,
   } = props;
 
-  if (!isAddress(account) || account === zeroAddress) {
+  if (!isNonZeroAddress(account)) {
     return err("INVALID_ACCOUNT_ADDRESS");
   }
 
-  if (!isAddress(registrarAddress) || registrarAddress === zeroAddress) {
+  if (!isNonZeroAddress(registrarAddress)) {
     return err("INVALID_REGISTRAR_ADDRESS");
   }
 
-  if (!isAddress(paymentTokenAddress) || paymentTokenAddress === zeroAddress) {
+  if (!isNonZeroAddress(paymentTokenAddress)) {
     return err("INVALID_PAYMENT_TOKEN_ADDRESS");
   }
 

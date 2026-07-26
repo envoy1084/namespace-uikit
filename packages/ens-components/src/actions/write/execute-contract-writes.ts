@@ -9,10 +9,8 @@ import type {
 
 import { err, errAsync, ok, ResultAsync, type Result } from "neverthrow";
 import {
-  isAddress,
   isAddressEqual,
   isHex,
-  zeroAddress,
   type Chain,
   type PublicClient,
   type TransactionReceipt,
@@ -22,7 +20,10 @@ import { sendCalls } from "viem/actions";
 
 import { waitForContractCalls } from "#/actions/write/contract-write-status";
 import { supportsAtomicBatchCalls } from "#/actions/write/wallet-capabilities";
-import { waitForSuccessfulTransactionReceipt } from "#/lib/helpers";
+import {
+  isNonZeroAddress,
+  waitForSuccessfulTransactionReceipt,
+} from "#/lib/helpers";
 
 export type ExecuteContractWritesError =
   | "ATOMIC_BATCH_FAILED"
@@ -70,22 +71,16 @@ function validateCalls(
 ): Result<void, ExecuteContractWritesError> {
   const first = calls[0];
   if (first === undefined) return err("EMPTY_CALLS");
-  if (!isAddress(first.account) || first.account === zeroAddress) {
+  if (!isNonZeroAddress(first.account)) {
+    return err("INVALID_ACCOUNT_ADDRESS");
+  }
+  if (calls.some((prepared) => !isNonZeroAddress(prepared.account))) {
     return err("INVALID_ACCOUNT_ADDRESS");
   }
   if (
     calls.some(
       (prepared) =>
-        !isAddress(prepared.account) || prepared.account === zeroAddress,
-    )
-  ) {
-    return err("INVALID_ACCOUNT_ADDRESS");
-  }
-  if (
-    calls.some(
-      (prepared) =>
-        !isAddress(prepared.call.to) ||
-        prepared.call.to === zeroAddress ||
+        !isNonZeroAddress(prepared.call.to) ||
         !isHex(prepared.call.data) ||
         prepared.call.value < 0n,
     )
