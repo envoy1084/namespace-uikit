@@ -2,12 +2,12 @@ import { Surface, Typography } from "@thenamespace/uikit";
 
 import { SectionLabel } from "@/components/home/section-label";
 
-const publicExports = [
-  "NameRegistration",
-  "useNameAvailability",
-  "getNamePrice",
-  "commitName",
-  "registerName",
+const packageAreas = [
+  { isAvailable: true, label: "Name registration" },
+  { isAvailable: false, label: "Profile update" },
+  { isAvailable: false, label: "Name card" },
+  { isAvailable: true, label: "Actions" },
+  { isAvailable: true, label: "Hooks" },
 ] as const;
 
 export function PackageExportStrip() {
@@ -18,14 +18,27 @@ export function PackageExportStrip() {
     >
       <SectionLabel inverse>Inside the package</SectionLabel>
       <div className="flex items-center gap-7 whitespace-nowrap">
-        {publicExports.map((item) => (
-          <div className="flex items-center gap-7" key={item}>
-            <span aria-hidden className="text-[#5474f6]">
+        {packageAreas.map((item) => (
+          <div
+            aria-label={
+              item.isAvailable ? item.label : `${item.label}, coming soon`
+            }
+            className="flex items-center gap-7"
+            key={item.label}
+          >
+            <span
+              aria-hidden
+              className={item.isAvailable ? "text-[#5474f6]" : "text-[#4b4b4b]"}
+            >
               ✦
             </span>
-            <Typography.Code className="bg-transparent p-0 font-sans text-sm font-medium text-white">
-              {item}
-            </Typography.Code>
+            <Typography.Paragraph
+              className={item.isAvailable ? "text-white" : "text-[#6f6f6f]"}
+              size="sm"
+              weight="medium"
+            >
+              {item.label}
+            </Typography.Paragraph>
           </div>
         ))}
       </div>
