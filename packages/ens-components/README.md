@@ -120,7 +120,6 @@ for customization, lifecycle events, defaults, and flow behavior.
 
 - [useNameAvailability](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-availability.md)
 - [useNamePrice](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-price.md)
-- [useCommitmentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-commitment-status.md)
 - [useRegistrationPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-registration-payment-status.md)
 
 ### Actions
