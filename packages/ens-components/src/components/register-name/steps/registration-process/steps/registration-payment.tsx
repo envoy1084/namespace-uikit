@@ -25,7 +25,10 @@ import {
   COMMITMENT_VALID_DURATION_MS,
   useRegisterName,
 } from "#/components/register-name/context";
-import { TransactionProgress } from "#/components/transaction-progress";
+import {
+  TRANSACTION_PROGRESS_COMPLETION_DURATION_MS,
+  TransactionProgress,
+} from "#/components/transaction-progress";
 import { useCommitments, useRegistrationPaymentStatus } from "#/hooks";
 import { formatError } from "#/lib";
 import { useEnsConfig } from "#/providers";
@@ -89,6 +92,7 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
     },
   });
   const [actionStatus, setActionStatus] = useState<PaymentActionStatus>("idle");
+  const [isTransactionConfirmed, setIsTransactionConfirmed] = useState(false);
   const [transactionHash, setTransactionHash] = useState<Hex>();
   const [error, setError] = useState<unknown>();
   const [now, setNow] = useState(Date.now());
@@ -144,6 +148,7 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
 
   const handlePayment = async () => {
     setError(undefined);
+    setIsTransactionConfirmed(false);
     setTransactionHash(undefined);
 
     if (connection.address === undefined) {
@@ -204,11 +209,19 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
 
       try {
         await waitForSuccess(approval.value);
+        setIsTransactionConfirmed(true);
+        await new Promise((resolve) =>
+          window.setTimeout(
+            resolve,
+            TRANSACTION_PROGRESS_COMPLETION_DURATION_MS,
+          ),
+        );
         await payment.refetch();
       } catch (approvalError) {
         setError(approvalError);
       } finally {
         setActionStatus("idle");
+        setIsTransactionConfirmed(false);
         setTransactionHash(undefined);
       }
 
@@ -241,9 +254,13 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
 
     try {
       const receipt = await waitForSuccess(registration.value.transactionHash);
+      setIsTransactionConfirmed(true);
       const block = await publicClient.getBlock({
         blockNumber: receipt.blockNumber,
       });
+      await new Promise((resolve) =>
+        window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
+      );
       deleteCommitment(commitmentId);
       setCommitmentId(null);
       onSuccess({
@@ -329,7 +346,9 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
       transactionHash !== undefined ? (
         <TransactionProgress
           blockExplorerUrl={chain.blockExplorers?.default.url}
+          chainId={chain.id}
           className="mt-4"
+          isConfirmed={isTransactionConfirmed}
           transactionHash={transactionHash}
         />
       ) : (

@@ -4,19 +4,33 @@ import { motion } from "motion/react";
 
 const Shuriken = new URL("../assets/shuriken.svg", import.meta.url);
 
+const CHAIN_CONFIRMATION_DURATION_MS: Readonly<Record<number, number>> = {
+  1: 16_000,
+  11_155_111: 16_000,
+};
+
+const DEFAULT_CONFIRMATION_DURATION_MS = 16_000;
+export const TRANSACTION_PROGRESS_COMPLETION_DURATION_MS = 400;
+
 export interface TransactionProgressProps {
   blockExplorerUrl?: string | undefined;
+  chainId: number;
   className?: string;
-  transactionHash?: Hex | undefined;
+  isConfirmed?: boolean;
+  transactionHash: Hex;
 }
 
 export function TransactionProgress({
   blockExplorerUrl,
+  chainId,
   className,
+  isConfirmed = false,
   transactionHash,
 }: TransactionProgressProps) {
+  const confirmationDuration =
+    CHAIN_CONFIRMATION_DURATION_MS[chainId] ?? DEFAULT_CONFIRMATION_DURATION_MS;
   const transactionUrl =
-    blockExplorerUrl === undefined || transactionHash === undefined
+    blockExplorerUrl === undefined
       ? undefined
       : `${blockExplorerUrl.replace(/\/$/, "")}/tx/${transactionHash}`;
 
@@ -31,14 +45,14 @@ export function TransactionProgress({
         className="bg-foreground h-10 w-full overflow-hidden rounded-xl p-1"
       >
         <motion.div
-          animate={{ width: ["2rem", "100%", "100%"] }}
+          animate={{ width: isConfirmed ? "100%" : "99%" }}
           className="bg-background relative h-full rounded-lg"
           initial={{ width: "2rem" }}
           transition={{
-            duration: 2.4,
-            ease: [0.4, 0, 0.2, 1],
-            repeat: Infinity,
-            times: [0, 0.8, 1],
+            duration: isConfirmed
+              ? TRANSACTION_PROGRESS_COMPLETION_DURATION_MS / 1_000
+              : confirmationDuration / 1_000,
+            ease: isConfirmed ? [0.16, 1, 0.3, 1] : "linear",
           }}
         >
           <motion.img

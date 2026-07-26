@@ -15,7 +15,10 @@ import {
 
 import { commitName } from "#/actions";
 import { useRegisterName } from "#/components/register-name/context";
-import { TransactionProgress } from "#/components/transaction-progress";
+import {
+  TRANSACTION_PROGRESS_COMPLETION_DURATION_MS,
+  TransactionProgress,
+} from "#/components/transaction-progress";
 import { useCommitments } from "#/hooks";
 import { formatError } from "#/lib";
 import { useEnsConfig } from "#/providers";
@@ -35,6 +38,7 @@ export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
   const { insert } = useCommitments();
   const { duration, input, referrer, setCommitmentId } = useRegisterName();
   const [error, setError] = useState<unknown>();
+  const [isTransactionConfirmed, setIsTransactionConfirmed] = useState(false);
   const [status, setStatus] = useState<CommitmentStatus>("idle");
   const [transactionHash, setTransactionHash] = useState<Hex>();
   const isPending = status !== "idle";
@@ -43,6 +47,7 @@ export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
 
   const handleCommit = async () => {
     setError(undefined);
+    setIsTransactionConfirmed(false);
     setTransactionHash(undefined);
 
     if (connection.address === undefined) {
@@ -107,9 +112,13 @@ export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
         return;
       }
 
+      setIsTransactionConfirmed(true);
       const block = await publicClient.getBlock({
         blockNumber: receipt.blockNumber,
       });
+      await new Promise((resolve) =>
+        window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
+      );
       const commitmentId = insert({
         chainId: chain.id,
         commitment: result.value.commitment,
@@ -178,7 +187,9 @@ export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
           {status === "confirming" && transactionHash !== undefined ? (
             <TransactionProgress
               blockExplorerUrl={chain.blockExplorers?.default.url}
+              chainId={chain.id}
               className="mt-4"
+              isConfirmed={isTransactionConfirmed}
               transactionHash={transactionHash}
             />
           ) : (
