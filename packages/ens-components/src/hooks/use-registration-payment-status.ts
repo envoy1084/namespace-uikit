@@ -7,16 +7,20 @@ import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 import { usePublicClient } from "wagmi";
 
 import {
-  getRegistrationPaymentStatus,
-  type GetRegistrationPaymentStatusError,
+  executeContractReadPlan,
   type ParseNameInputError,
+  prepareRegistrationPaymentStatusRead,
+  type PrepareRegistrationPaymentStatusReadError,
   type RegistrationPaymentStatus,
+  type RegistrationPaymentStatusReadError,
 } from "#/actions";
 import { useEnsConfig } from "#/providers";
 
 type RegistrationPaymentStatusError =
-  | GetRegistrationPaymentStatusError
-  | ParseNameInputError;
+  | "CONTRACT_READ_FAILED"
+  | ParseNameInputError
+  | PrepareRegistrationPaymentStatusReadError
+  | RegistrationPaymentStatusReadError;
 type RegistrationPaymentStatusQueryKey = readonly [
   "ens",
   "registration-payment-status",
@@ -81,10 +85,10 @@ export function useRegistrationPaymentStatus<
       account !== null,
     queryFn: async () => {
       if (publicClient === undefined || account === null) {
-        throw "CONTRACT_READ_FAILED" satisfies GetRegistrationPaymentStatusError;
+        throw "CONTRACT_READ_FAILED" satisfies RegistrationPaymentStatusError;
       }
 
-      const result = await getRegistrationPaymentStatus(publicClient, {
+      const prepared = prepareRegistrationPaymentStatusRead({
         account,
         duration: parameters.duration,
         input: parameters.input,
@@ -92,7 +96,12 @@ export function useRegistrationPaymentStatus<
         paymentTokenAddress,
         registrarAddress,
       });
+      if (prepared.isErr()) throw prepared.error;
 
+      const result = await executeContractReadPlan(
+        publicClient,
+        prepared.value,
+      );
       if (result.isErr()) throw result.error;
       return result.value;
     },

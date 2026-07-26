@@ -8,15 +8,21 @@ import { useDebounceValue } from "usehooks-ts";
 import { usePublicClient } from "wagmi";
 
 import {
-  getNamePrice,
+  executeContractReadPlan,
   parseNameInput,
-  type GetNamePriceError,
   type NamePrice,
   type ParseNameInputError,
+  prepareNamePriceRead,
+  type NamePriceReadError,
+  type PrepareNamePriceReadError,
 } from "#/actions";
 import { useEnsConfig } from "#/providers";
 
-type NamePriceError = GetNamePriceError | ParseNameInputError;
+type NamePriceError =
+  | "CONTRACT_READ_FAILED"
+  | NamePriceReadError
+  | ParseNameInputError
+  | PrepareNamePriceReadError;
 type NamePriceQueryKey = readonly [
   "ens",
   "name-price",
@@ -72,17 +78,22 @@ export function useNamePrice<selectData = NamePrice>(
       isValidInput,
     queryFn: async () => {
       if (publicClient === undefined) {
-        throw "CONTRACT_READ_FAILED" satisfies GetNamePriceError;
+        throw "CONTRACT_READ_FAILED" satisfies NamePriceError;
       }
 
-      const result = await getNamePrice(publicClient, {
+      const prepared = prepareNamePriceRead({
         duration: parameters.duration,
         input: debouncedInput,
         network,
         paymentTokenAddress,
         registrarAddress,
       });
+      if (prepared.isErr()) throw prepared.error;
 
+      const result = await executeContractReadPlan(
+        publicClient,
+        prepared.value,
+      );
       if (result.isErr()) throw result.error;
       return result.value;
     },

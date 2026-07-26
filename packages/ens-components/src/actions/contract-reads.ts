@@ -1,0 +1,107 @@
+import type { ContractFunctionParameters, PublicClient } from "viem";
+
+import { ResultAsync, type Result } from "neverthrow";
+
+export interface PreparedContractRead<
+  TRequest extends ContractFunctionParameters = ContractFunctionParameters,
+  TResult = unknown,
+  TKind extends string = string,
+  TMetadata = unknown,
+> {
+  /** Stable domain discriminator for logging and cache-key construction. */
+  readonly kind: TKind;
+  /** Domain data produced while preparing the read. */
+  readonly metadata: TMetadata;
+  /** ABI-inferred request executed by a public client. */
+  readonly request: TRequest;
+  /** @internal Type carrier for the decoded contract result. */
+  readonly result?: TResult;
+}
+
+export type ContractReadRequest<TPrepared extends PreparedContractRead> =
+  TPrepared extends PreparedContractRead<
+    infer TRequest,
+    infer _TResult,
+    infer _TKind,
+    infer _TMetadata
+  >
+    ? TRequest
+    : never;
+
+export type ContractReadValue<TPrepared extends PreparedContractRead> =
+  TPrepared extends PreparedContractRead<
+    infer _TRequest,
+    infer TResult,
+    infer _TKind,
+    infer _TMetadata
+  >
+    ? TResult
+    : never;
+
+export type ContractReadRequests<
+  TReads extends readonly PreparedContractRead[],
+> = {
+  readonly [TIndex in keyof TReads]: ContractReadRequest<TReads[TIndex]>;
+};
+
+export type ContractReadResults<
+  TReads extends readonly PreparedContractRead[],
+> = {
+  readonly [TIndex in keyof TReads]:
+    | {
+        readonly result: ContractReadValue<TReads[TIndex]>;
+        readonly status: "success";
+      }
+    | {
+        readonly error: Error;
+        readonly result?: undefined;
+        readonly status: "failure";
+      };
+};
+
+export interface PreparedContractReadPlan<
+  TReads extends readonly [PreparedContractRead, ...PreparedContractRead[]],
+  TData,
+  TError,
+  TKind extends string = string,
+> {
+  readonly kind: TKind;
+  readonly reads: TReads;
+  readonly select: (
+    results: ContractReadResults<TReads>,
+  ) => Result<TData, TError>;
+}
+
+export function executeContractRead<TPrepared extends PreparedContractRead>(
+  publicClient: PublicClient,
+  prepared: TPrepared,
+): ResultAsync<ContractReadValue<TPrepared>, "CONTRACT_READ_FAILED"> {
+  return ResultAsync.fromPromise(
+    publicClient.readContract(
+      prepared.request as ContractFunctionParameters,
+    ) as Promise<ContractReadValue<TPrepared>>,
+    () => "CONTRACT_READ_FAILED" as const,
+  );
+}
+
+export function executeContractReadPlan<
+  TReads extends readonly [PreparedContractRead, ...PreparedContractRead[]],
+  TData,
+  TError,
+  TKind extends string,
+>(
+  publicClient: PublicClient,
+  plan: PreparedContractReadPlan<TReads, TData, TError, TKind>,
+): ResultAsync<TData, TError | "CONTRACT_READ_FAILED"> {
+  const requests = plan.reads.map(
+    ({ request }) => request,
+  ) as unknown as ContractReadRequests<TReads>;
+
+  return ResultAsync.fromPromise(
+    publicClient.multicall({
+      allowFailure: true,
+      contracts: requests as never,
+    }) as unknown as Promise<ContractReadResults<TReads>>,
+    () => "CONTRACT_READ_FAILED" as const,
+  ).andThen(plan.select);
+}

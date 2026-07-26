@@ -8,14 +8,18 @@ import { useDebounceValue } from "usehooks-ts";
 import { usePublicClient } from "wagmi";
 
 import {
-  isNameAvailable,
+  executeContractRead,
   parseNameInput,
-  type IsNameAvailableError,
   type ParseNameInputError,
+  prepareNameAvailabilityRead,
+  type PrepareNameAvailabilityReadError,
 } from "#/actions";
 import { useEnsConfig } from "#/providers";
 
-type NameAvailabilityError = IsNameAvailableError | ParseNameInputError;
+type NameAvailabilityError =
+  | "CONTRACT_READ_FAILED"
+  | ParseNameInputError
+  | PrepareNameAvailabilityReadError;
 type NameAvailabilityQueryKey = readonly [
   "ens",
   "name-availability",
@@ -77,15 +81,17 @@ export function useNameAvailability<selectData = boolean>(
       isValidInput,
     queryFn: async () => {
       if (publicClient === undefined) {
-        throw "CONTRACT_READ_FAILED" satisfies IsNameAvailableError;
+        throw "CONTRACT_READ_FAILED" satisfies NameAvailabilityError;
       }
 
-      const result = await isNameAvailable(publicClient, {
+      const prepared = prepareNameAvailabilityRead({
         input: debouncedInput,
         network,
         registrarAddress,
       });
+      if (prepared.isErr()) throw prepared.error;
 
+      const result = await executeContractRead(publicClient, prepared.value);
       if (result.isErr()) throw result.error;
       return result.value;
     },
