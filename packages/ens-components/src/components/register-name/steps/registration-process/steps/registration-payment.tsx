@@ -28,6 +28,7 @@ import {
   COMMITMENT_VALID_DURATION_MS,
   useRegisterName,
 } from "#/components/register-name/context";
+import { emitRegisterNameEvent } from "#/components/register-name/emit-event";
 import {
   TRANSACTION_PROGRESS_COMPLETION_DURATION_MS,
   TransactionProgress,
@@ -82,7 +83,7 @@ export function RegistrationPayment({
   const publicClient = usePublicClient({ chainId: chain.id });
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
   const { switchChainAsync } = useSwitchChain();
-  const { commitmentId, setCommitmentId } = useRegisterName();
+  const { commitmentId, events, setCommitmentId } = useRegisterName();
   const { delete: deleteCommitment, get } = useCommitments();
   const storedCommitment =
     commitmentId === null ? undefined : get(commitmentId);
@@ -238,8 +239,18 @@ export function RegistrationPayment({
       setTransactionHash(approval.value);
 
       try {
-        await waitForSuccess(approval.value);
+        const approvalReceipt = await waitForSuccess(approval.value);
         setIsTransactionConfirmed(true);
+        emitRegisterNameEvent(events.onApprove, {
+          account: connection.address,
+          amount: paymentData.total,
+          chainId: chain.id,
+          network,
+          paymentTokenAddress: paymentToken.address,
+          receipt: approvalReceipt,
+          registrarAddress: storedCommitment.registrarAddress,
+          transactionHash: approval.value,
+        });
         await new Promise((resolve) =>
           window.setTimeout(
             resolve,
@@ -362,13 +373,7 @@ export function RegistrationPayment({
         : registrationEvent.args.base + registrationEvent.args.premium;
     const registeredLabel =
       registrationEvent?.args.label ?? registration.value.label;
-
-    await new Promise((resolve) =>
-      window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
-    );
-    deleteCommitment(commitmentId);
-    setCommitmentId(null);
-    onSuccess({
+    const registrationDetails: RegistrationSuccessDetails = {
       amount: registrationAmount,
       decimals: paymentData.decimals,
       duration: registeredDuration,
@@ -376,6 +381,32 @@ export function RegistrationPayment({
       name: `${registeredLabel}.eth`,
       paymentTokenIcon: paymentToken.icon,
       paymentTokenSymbol: paymentToken.symbol,
+    };
+
+    await new Promise((resolve) =>
+      window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
+    );
+    deleteCommitment(commitmentId);
+    setCommitmentId(null);
+    onSuccess(registrationDetails);
+    emitRegisterNameEvent(events.onRegister, {
+      account: connection.address,
+      amount: registrationAmount,
+      chainId: chain.id,
+      decimals: paymentData.decimals,
+      duration: registeredDuration,
+      expiresAt: registrationDetails.expiresAt,
+      name: registrationDetails.name,
+      network,
+      owner: storedCommitment.owner,
+      paymentTokenAddress: paymentToken.address,
+      receipt,
+      referrer: storedCommitment.referrer,
+      registrarAddress: storedCommitment.registrarAddress,
+      ...(registrationEvent === undefined
+        ? {}
+        : { tokenId: registrationEvent.args.tokenId }),
+      transactionHash: registration.value.transactionHash,
     });
   };
 

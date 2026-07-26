@@ -24,6 +24,7 @@ import { useCommitments } from "#/hooks";
 import { useEnsConfig } from "#/providers";
 
 export * from "#/components/register-name/context";
+export * from "#/components/register-name/events";
 
 export type RegisterEnsProps = Omit<RegisterNameProviderProps, "children">;
 

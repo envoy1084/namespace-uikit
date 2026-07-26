@@ -15,6 +15,7 @@ import {
 
 import { commitName } from "#/actions";
 import { useRegisterName } from "#/components/register-name/context";
+import { emitRegisterNameEvent } from "#/components/register-name/emit-event";
 import {
   TRANSACTION_PROGRESS_COMPLETION_DURATION_MS,
   TransactionProgress,
@@ -44,7 +45,8 @@ export function CommitmentStep({
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
   const { switchChainAsync } = useSwitchChain();
   const { insert } = useCommitments();
-  const { duration, input, referrer, setCommitmentId } = useRegisterName();
+  const { duration, events, input, referrer, setCommitmentId } =
+    useRegisterName();
   const [error, setError] = useState<unknown>();
   const [isTransactionConfirmed, setIsTransactionConfirmed] = useState(false);
   const [status, setStatus] = useState<CommitmentStatus>("idle");
@@ -175,6 +177,19 @@ export function CommitmentStep({
     });
 
     setCommitmentId(commitmentId);
+    emitRegisterNameEvent(events.onCommit, {
+      chainId: chain.id,
+      commitment: result.value.commitment,
+      commitmentId,
+      duration,
+      name: `${result.value.label}.eth`,
+      network,
+      owner: connection.address,
+      receipt,
+      referrer,
+      registrarAddress: contracts.ethRegistrar.address,
+      transactionHash: result.value.transactionHash,
+    });
   };
 
   const buttonLabel =

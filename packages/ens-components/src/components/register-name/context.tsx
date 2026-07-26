@@ -2,6 +2,8 @@
 
 import type { Hex } from "viem";
 
+import type { RegisterNameEvents } from "#/components/register-name/events";
+
 import {
   createContext,
   useContext,
@@ -27,6 +29,7 @@ export interface RegisterNameContextValue {
   commitmentId: string | null;
   duration: bigint;
   durationMode: RegistrationDurationMode;
+  events: RegisterNameEvents;
   input: string;
   isReferrerValid: boolean;
   referrer: Hex;
@@ -45,6 +48,7 @@ export interface RegisterNameProviderProps {
   defaultDurationMode?: RegistrationDurationMode;
   defaultInput?: string;
   defaultReferrer?: Hex;
+  events?: RegisterNameEvents;
 }
 
 const RegisterNameContext = createContext<RegisterNameContextValue | null>(
@@ -67,6 +71,7 @@ export function RegisterNameProvider({
   defaultDurationMode = "duration",
   defaultInput = "",
   defaultReferrer = zeroHash,
+  events = {},
 }: RegisterNameProviderProps) {
   const [commitmentId, setCommitmentId] = useState<string | null>(null);
   const [duration, setDuration] = useState(() =>
@@ -90,6 +95,7 @@ export function RegisterNameProvider({
         commitmentId,
         duration,
         durationMode,
+        events,
         input,
         isReferrerValid,
         referrer,
