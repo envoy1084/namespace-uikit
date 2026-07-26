@@ -50,6 +50,7 @@ export function ReferrerAddress() {
             <Label className="sr-only">Referrer address</Label>
             <Input
               autoComplete="off"
+              className="ring-inset"
               placeholder="0x0000…"
               spellCheck={false}
               variant="secondary"
