@@ -107,12 +107,12 @@ importers:
       '@tanstack/router-plugin':
         specifier: 'catalog:'
         version: 1.168.19(@tanstack/react-router@1.170.17(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(esbuild@0.28.1)(rolldown@1.1.4)(vite@8.1.4(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0))
-      '@thenamespace/ens-components':
-        specifier: workspace:*
-        version: link:../../packages/ens-components
       '@thenamespace/uikit':
         specifier: workspace:*
         version: link:../../packages/uikit
+      ens-components:
+        specifier: workspace:*
+        version: link:../../packages/ens-components
       react:
         specifier: 'catalog:'
         version: 19.2.7

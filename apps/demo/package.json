@@ -7,7 +7,8 @@
     "dev": "vite dev",
     "generate-routes": "tsr generate",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --pretty false"
   },
   "dependencies": {
     "@rainbow-me/rainbowkit": "2.2.11",
@@ -15,8 +16,8 @@
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-router": "catalog:",
     "@tanstack/router-plugin": "catalog:",
-    "@thenamespace/ens-components": "workspace:*",
     "@thenamespace/uikit": "workspace:*",
+    "ens-components": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
     "tailwindcss": "catalog:",

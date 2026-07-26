@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { NameRegistration } from "@thenamespace/ens-components";
+import { NameRegistration } from "ens-components";
 
 export const Route = createFileRoute("/")({ component: Home });
 

@@ -1,7 +1,6 @@
 {
-  "name": "@thenamespace/ens-components",
+  "name": "ens-components",
   "version": "0.1.0",
-  "private": "true",
   "files": [
     "dist",
     "README.md",

@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
 
 const config = defineConfig({
   optimizeDeps: {
-    exclude: ["@thenamespace/ens-components", "@thenamespace/uikit"],
+    exclude: ["@thenamespace/uikit", "ens-components"],
   },
   resolve: {
     conditions: [

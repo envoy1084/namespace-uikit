@@ -6,7 +6,7 @@ import { testnetContracts, type EnsContracts } from "#/data/addresses";
 
 export type EnsNetwork = "mainnet" | "testnet";
 
-export interface EnsNetworkConfiguration {
+interface EnsNetworkConfigurationShape {
   readonly chain: Chain;
   readonly contracts: EnsContracts;
   readonly network: EnsNetwork;
@@ -20,8 +20,11 @@ export const ensNetworkConfigurations = {
   },
 } as const satisfies Record<
   Exclude<EnsNetwork, "mainnet">,
-  EnsNetworkConfiguration
+  EnsNetworkConfigurationShape
 >;
+
+export type EnsNetworkConfiguration =
+  (typeof ensNetworkConfigurations)[keyof typeof ensNetworkConfigurations];
 
 export function getEnsNetworkConfiguration(
   network: EnsNetwork,

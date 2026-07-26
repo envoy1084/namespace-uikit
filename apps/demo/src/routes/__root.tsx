@@ -5,7 +5,7 @@ import "../styles.css";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { EnsProvider } from "@thenamespace/ens-components";
+import { EnsProvider } from "ens-components";
 import { WagmiProvider } from "wagmi";
 
 import { wagmiConfig } from "@/lib/wagmi";
