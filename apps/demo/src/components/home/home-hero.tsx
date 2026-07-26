@@ -17,10 +17,11 @@ export function HomeHero() {
             className="mt-6 max-w-[41.25rem] text-[clamp(3.2rem,6vw,5.75rem)] leading-[0.94] font-bold tracking-[-0.055em] text-balance text-[#1f1f1f]"
             level={1}
           >
-            Build the ENS layer your product needs.
+            Integrate ENS into your app.
           </Typography.Heading>
           <Typography.Paragraph className="mt-7 max-w-[34rem] text-[clamp(1.05rem,1.5vw,1.25rem)] leading-[1.55] text-[#5f5f5f]">
-            Components, hooks, and typed actions for building ENS apps.
+            Production-ready React components, hooks, and typed actions for ENS
+            v2.
           </Typography.Paragraph>
 
           <InstallCommand />
