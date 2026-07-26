@@ -120,8 +120,12 @@ export function CommitmentStep({
     setStatus("confirming");
     setTransactionHash(result.value.transactionHash);
 
+    let receipt: Awaited<
+      ReturnType<typeof publicClient.waitForTransactionReceipt>
+    >;
+
     try {
-      const receipt = await publicClient.waitForTransactionReceipt({
+      receipt = await publicClient.waitForTransactionReceipt({
         hash: result.value.transactionHash,
       });
 
@@ -131,35 +135,46 @@ export function CommitmentStep({
         setTransactionHash(undefined);
         return;
       }
-
-      setIsTransactionConfirmed(true);
-      const block = await publicClient.getBlock({
-        blockNumber: receipt.blockNumber,
-      });
-      await new Promise((resolve) =>
-        window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
-      );
-      const commitmentId = insert({
-        chainId: chain.id,
-        commitment: result.value.commitment,
-        createdAt: Number(block.timestamp) * 1_000,
-        duration: duration.toString(),
-        label: result.value.label,
-        owner: connection.address,
-        referrer,
-        registrarAddress: contracts.ethRegistrar.address,
-        resolver: zeroAddress,
-        secret,
-        subregistry: zeroAddress,
-        transactionHash: result.value.transactionHash,
-      });
-
-      setCommitmentId(commitmentId);
     } catch {
       setError("TRANSACTION_CONFIRMATION_FAILED");
       setStatus("idle");
       setTransactionHash(undefined);
+      return;
     }
+
+    setIsTransactionConfirmed(true);
+
+    let createdAt = Date.now();
+
+    try {
+      const block = await publicClient.getBlock({
+        blockNumber: receipt.blockNumber,
+      });
+      createdAt = Number(block.timestamp) * 1_000;
+    } catch {
+      // The successful receipt is authoritative. Local time is sufficient for
+      // the countdown when the secondary timestamp read is unavailable.
+    }
+
+    await new Promise((resolve) =>
+      window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
+    );
+    const commitmentId = insert({
+      chainId: chain.id,
+      commitment: result.value.commitment,
+      createdAt,
+      duration: duration.toString(),
+      label: result.value.label,
+      owner: connection.address,
+      referrer,
+      registrarAddress: contracts.ethRegistrar.address,
+      resolver: zeroAddress,
+      secret,
+      subregistry: zeroAddress,
+      transactionHash: result.value.transactionHash,
+    });
+
+    setCommitmentId(commitmentId);
   };
 
   const buttonLabel =
