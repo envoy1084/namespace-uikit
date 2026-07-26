@@ -162,12 +162,16 @@ export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
       <Accordion.Panel>
         <Accordion.Body className="px-4 pt-2 pb-4 text-center">
           <Typography.Heading
-            className="text-foreground text-base font-semibold"
+            className="text-foreground text-center text-base font-semibold"
             level={3}
           >
             Start your registration
           </Typography.Heading>
-          <Typography.Paragraph className="mt-1" color="muted" size="xs">
+          <Typography.Paragraph
+            className="mx-auto mt-1 text-center leading-[1.2]"
+            color="muted"
+            size="xs"
+          >
             Submit a commitment transaction to begin the secure registration
             process.
           </Typography.Paragraph>

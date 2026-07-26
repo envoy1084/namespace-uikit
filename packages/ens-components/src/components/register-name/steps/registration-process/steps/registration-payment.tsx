@@ -287,7 +287,7 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
   return (
     <div className="mt-4">
       <Surface
-        className="flex items-center justify-between gap-4 rounded-full px-3 py-2"
+        className="flex items-center justify-between gap-4 rounded-xl px-3 py-2"
         variant="secondary"
       >
         <Typography.Paragraph color="muted" size="xs">

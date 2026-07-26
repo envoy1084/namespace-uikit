@@ -127,7 +127,7 @@ export function TimerStep({
               </ProgressCircle>
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                 <NumberFlowGroup>
-                  <span className="text-foreground font-mono text-xl font-semibold tabular-nums">
+                  <span className="text-foreground font-mono text-xl font-medium tabular-nums">
                     <NumberFlow
                       format={TIMER_NUMBER_FORMAT}
                       trend={-1}
@@ -149,8 +149,7 @@ export function TimerStep({
               size="xs"
             >
               This short waiting period protects your registration from
-              front-running. The final step will unlock automatically when your
-              commitment is ready.
+              front-running.
             </Typography.Paragraph>
           </Accordion.Body>
         </Accordion.Panel>

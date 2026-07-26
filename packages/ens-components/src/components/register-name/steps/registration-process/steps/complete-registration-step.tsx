@@ -33,7 +33,7 @@ export function CompleteRegistrationStep({
           <Typography.Paragraph
             color="muted"
             size="xs"
-            className="mx-auto text-center"
+            className="mx-auto text-center leading-[1.2]"
           >
             Your name is not registered yet. Complete the final transaction
             before your commitment expires to claim it.
