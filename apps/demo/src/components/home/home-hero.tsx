@@ -14,14 +14,13 @@ export function HomeHero() {
           </div>
 
           <Typography.Heading
-            className="mt-6 max-w-[41.25rem] text-[clamp(3.2rem,6vw,5.75rem)] leading-[1.02] font-semibold tracking-[-0.045em] text-balance text-[#1f1f1f]"
+            className="mt-6 max-w-[41.25rem] text-[clamp(3.2rem,6vw,5.75rem)] leading-[1.04] font-medium tracking-[-0.035em] text-balance text-[#1f1f1f]"
             level={1}
           >
-            ENS integration, ready to ship.
+            Add ENS, without the busywork.
           </Typography.Heading>
           <Typography.Paragraph className="mt-7 max-w-[34rem] text-[clamp(1.05rem,1.5vw,1.25rem)] leading-[1.55] text-[#5f5f5f]">
-            Production-ready React components, hooks, and typed actions for ENS
-            v2.
+            React components, hooks, and typed actions for ENS v2.
           </Typography.Paragraph>
 
           <InstallCommand />
