@@ -8,6 +8,7 @@ import {
   ethRegistrarIsAvailableSnippet,
   ethRegistrarMaxCommitmentAgeSnippet,
   ethRegistrarMinCommitmentAgeSnippet,
+  ethRegistrarNameRegisteredEventSnippet,
   ethRegistrarRegisterSnippet,
 } from "#/data/abi";
 
@@ -27,6 +28,7 @@ export const testnetContracts = {
       ethRegistrarIsAvailableSnippet,
       ethRegistrarMaxCommitmentAgeSnippet,
       ethRegistrarMinCommitmentAgeSnippet,
+      ethRegistrarNameRegisteredEventSnippet,
       ethRegistrarRegisterSnippet,
     },
   },

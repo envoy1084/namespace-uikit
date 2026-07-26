@@ -6,11 +6,13 @@ import { RegistrationPayment } from "#/components/register-name/steps/registrati
 
 export interface CompleteRegistrationStepProps {
   isDisabled?: boolean;
+  onCommitmentInvalid: (error: unknown) => void;
   onSuccess: (registration: RegistrationSuccessDetails) => void;
 }
 
 export function CompleteRegistrationStep({
   isDisabled = true,
+  onCommitmentInvalid,
   onSuccess,
 }: CompleteRegistrationStepProps) {
   return (
@@ -38,7 +40,10 @@ export function CompleteRegistrationStep({
             Your name is not registered yet. Complete the final transaction
             before your commitment expires to claim it.
           </Typography.Paragraph>
-          <RegistrationPayment onSuccess={onSuccess} />
+          <RegistrationPayment
+            onCommitmentInvalid={onCommitmentInvalid}
+            onSuccess={onSuccess}
+          />
         </Accordion.Body>
       </Accordion.Panel>
     </Accordion.Item>

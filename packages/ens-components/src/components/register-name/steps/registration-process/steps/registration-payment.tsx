@@ -12,7 +12,7 @@ import {
   Surface,
   Typography,
 } from "@thenamespace/uikit";
-import { formatUnits, type Hex } from "viem";
+import { formatUnits, parseEventLogs, type Hex } from "viem";
 import {
   useConnection,
   usePublicClient,
@@ -20,7 +20,11 @@ import {
   useWalletClient,
 } from "wagmi";
 
-import { approveRegistrationPayment, registerName } from "#/actions";
+import {
+  approveRegistrationPayment,
+  getCommitmentStatus,
+  registerName,
+} from "#/actions";
 import {
   COMMITMENT_VALID_DURATION_MS,
   useRegisterName,
@@ -29,6 +33,7 @@ import {
   TRANSACTION_PROGRESS_COMPLETION_DURATION_MS,
   TransactionProgress,
 } from "#/components/transaction-progress";
+import { ethRegistrarNameRegisteredEventSnippet } from "#/data/abi";
 import { useCommitments, useRegistrationPaymentStatus } from "#/hooks";
 import { formatError } from "#/lib";
 import { useEnsConfig } from "#/providers";
@@ -38,10 +43,12 @@ type PaymentActionStatus =
   | "confirming-approval"
   | "confirming-registration"
   | "idle"
+  | "refreshing"
   | "registering"
   | "switching";
 
 export interface RegistrationPaymentProps {
+  onCommitmentInvalid: (error: unknown) => void;
   onSuccess: (registration: RegistrationSuccessDetails) => void;
 }
 
@@ -65,7 +72,10 @@ function parseDuration(value: string | undefined) {
   }
 }
 
-export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
+export function RegistrationPayment({
+  onCommitmentInvalid,
+  onSuccess,
+}: RegistrationPaymentProps) {
   const connection = useConnection();
   const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
@@ -170,29 +180,37 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
       return;
     }
 
-    if (payment.isError) {
-      await payment.refetch();
-      return;
-    }
-
     if (
       walletClient === undefined ||
       publicClient === undefined ||
       storedCommitment === undefined ||
-      commitmentId === null ||
-      payment.data === undefined
+      commitmentId === null
     ) {
       setError("CONTRACT_READ_FAILED");
       return;
     }
 
-    if (!payment.data.hasSufficientBalance) return;
+    setActionStatus("refreshing");
+    const refreshedPayment = await payment.refetch();
 
-    if (!payment.data.hasSufficientAllowance) {
+    if (refreshedPayment.isError || refreshedPayment.data === undefined) {
+      setError(refreshedPayment.error ?? "CONTRACT_READ_FAILED");
+      setActionStatus("idle");
+      return;
+    }
+
+    const paymentData = refreshedPayment.data;
+
+    if (!paymentData.hasSufficientBalance) {
+      setActionStatus("idle");
+      return;
+    }
+
+    if (!paymentData.hasSufficientAllowance) {
       setActionStatus("approving");
       const approval = await approveRegistrationPayment(walletClient, {
         account: connection.address,
-        amount: payment.data.total,
+        amount: paymentData.total,
         network,
         paymentTokenAddress: paymentToken.address,
         registrarAddress: storedCommitment.registrarAddress,
@@ -228,6 +246,38 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
       return;
     }
 
+    const commitmentStatus = await getCommitmentStatus(publicClient, {
+      commitment: storedCommitment.commitment,
+      network,
+      registrarAddress: storedCommitment.registrarAddress,
+    });
+
+    if (commitmentStatus.isErr()) {
+      setError(commitmentStatus.error);
+      setActionStatus("idle");
+      return;
+    }
+
+    if (commitmentStatus.value.state !== "READY") {
+      const statusError =
+        commitmentStatus.value.state === "WAITING"
+          ? "COMMITMENT_NOT_READY"
+          : commitmentStatus.value.state === "EXPIRED"
+            ? "COMMITMENT_EXPIRED"
+            : "COMMITMENT_NOT_FOUND";
+
+      setError(statusError);
+      setActionStatus("idle");
+
+      if (commitmentStatus.value.state !== "WAITING") {
+        deleteCommitment(commitmentId);
+        setCommitmentId(null);
+        onCommitmentInvalid(statusError);
+      }
+
+      return;
+    }
+
     setActionStatus("registering");
     const registration = await registerName(walletClient, {
       account: connection.address,
@@ -252,31 +302,65 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
     setActionStatus("confirming-registration");
     setTransactionHash(registration.value.transactionHash);
 
+    let receipt: Awaited<ReturnType<typeof waitForSuccess>>;
+
     try {
-      const receipt = await waitForSuccess(registration.value.transactionHash);
-      setIsTransactionConfirmed(true);
-      const block = await publicClient.getBlock({
-        blockNumber: receipt.blockNumber,
-      });
-      await new Promise((resolve) =>
-        window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
-      );
-      deleteCommitment(commitmentId);
-      setCommitmentId(null);
-      onSuccess({
-        amount: payment.data.total,
-        decimals: payment.data.decimals,
-        duration,
-        expiresAt: Number(block.timestamp + duration) * 1_000,
-        name: `${registration.value.label}.eth`,
-        paymentTokenIcon: paymentToken.icon,
-        paymentTokenSymbol: paymentToken.symbol,
-      });
+      receipt = await waitForSuccess(registration.value.transactionHash);
     } catch (registrationError) {
       setError(registrationError);
       setActionStatus("idle");
       setTransactionHash(undefined);
+      return;
     }
+
+    setIsTransactionConfirmed(true);
+
+    let registeredAt = Date.now();
+
+    try {
+      const block = await publicClient.getBlock({
+        blockNumber: receipt.blockNumber,
+      });
+      registeredAt = Number(block.timestamp) * 1_000;
+    } catch {
+      // The successful receipt is authoritative. A secondary timestamp read
+      // must not turn a completed registration into a failed UI state.
+    }
+
+    const registrationEvent = (() => {
+      try {
+        return parseEventLogs({
+          abi: ethRegistrarNameRegisteredEventSnippet,
+          eventName: "NameRegistered",
+          logs: receipt.logs,
+          strict: true,
+        })[0];
+      } catch {
+        return undefined;
+      }
+    })();
+    const registeredDuration = registrationEvent?.args.duration ?? duration;
+    const registrationAmount =
+      registrationEvent === undefined
+        ? paymentData.total
+        : registrationEvent.args.base + registrationEvent.args.premium;
+    const registeredLabel =
+      registrationEvent?.args.label ?? registration.value.label;
+
+    await new Promise((resolve) =>
+      window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
+    );
+    deleteCommitment(commitmentId);
+    setCommitmentId(null);
+    onSuccess({
+      amount: registrationAmount,
+      decimals: paymentData.decimals,
+      duration: registeredDuration,
+      expiresAt: registeredAt + Number(registeredDuration) * 1_000,
+      name: `${registeredLabel}.eth`,
+      paymentTokenIcon: paymentToken.icon,
+      paymentTokenSymbol: paymentToken.symbol,
+    });
   };
 
   const buttonLabel =
@@ -292,14 +376,16 @@ export function RegistrationPayment({ onSuccess }: RegistrationPaymentProps) {
               ? "Confirm registration in wallet"
               : actionStatus === "confirming-registration"
                 ? "Confirming registration"
-                : payment.isError
-                  ? "Try again"
-                  : payment.data !== undefined &&
-                      !payment.data.hasSufficientBalance
-                    ? `Insufficient ${paymentToken.symbol} balance`
-                    : payment.data?.hasSufficientAllowance
-                      ? "Register name"
-                      : `Approve ${paymentToken.symbol}`;
+                : actionStatus === "refreshing"
+                  ? "Refreshing registration price"
+                  : payment.isError
+                    ? "Try again"
+                    : payment.data !== undefined &&
+                        !payment.data.hasSufficientBalance
+                      ? `Insufficient ${paymentToken.symbol} balance`
+                      : payment.data?.hasSufficientAllowance
+                        ? "Register name"
+                        : `Approve ${paymentToken.symbol}`;
 
   return (
     <div className="mt-4">

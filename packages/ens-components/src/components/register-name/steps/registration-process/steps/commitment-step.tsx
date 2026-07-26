@@ -26,10 +26,16 @@ import { useEnsConfig } from "#/providers";
 type CommitmentStatus = "confirming" | "idle" | "signing" | "switching";
 
 export interface CommitmentStepProps {
+  error?: unknown;
   isDisabled?: boolean;
+  onErrorClear?: () => void;
 }
 
-export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
+export function CommitmentStep({
+  error: externalError,
+  isDisabled = false,
+  onErrorClear,
+}: CommitmentStepProps) {
   const connection = useConnection();
   const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
@@ -47,6 +53,7 @@ export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
 
   const handleCommit = async () => {
     setError(undefined);
+    onErrorClear?.();
     setIsTransactionConfirmed(false);
     setTransactionHash(undefined);
 
@@ -202,13 +209,13 @@ export function CommitmentStep({ isDisabled = false }: CommitmentStepProps) {
               {buttonLabel}
             </Button>
           )}
-          {error !== undefined ? (
+          {error !== undefined || externalError !== undefined ? (
             <Typography.Paragraph
               className="text-danger mt-2"
               size="xs"
               role="alert"
             >
-              {formatError(error)}
+              {formatError(error ?? externalError)}
             </Typography.Paragraph>
           ) : null}
         </Accordion.Body>

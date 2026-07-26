@@ -17,18 +17,29 @@ function getName(data: unknown) {
 
 const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   CHAIN_SWITCH_FAILED: "Unable to switch networks. Please try again.",
+  COMMITMENT_EXPIRED:
+    "This commitment has expired. Create a new commitment to continue.",
+  COMMITMENT_NOT_FOUND:
+    "This commitment was not found on-chain. Create a new commitment to continue.",
+  COMMITMENT_NOT_READY:
+    "This commitment is still waiting. Try the registration again shortly.",
   CONTRACT_READ_FAILED: "Unable to reach the network. Please try again.",
   CONTRACT_WRITE_FAILED: "The transaction could not be submitted.",
   EMPTY_INPUT: "Enter an ENS name.",
   EMPTY_LABEL: "The ENS name contains an empty label.",
   INPUT_TOO_LONG: "The ENS name is too long.",
   INVALID_DURATION: "Select a valid registration duration.",
+  INVALID_OWNER_ADDRESS: "The name owner address is invalid.",
   INVALID_ACCOUNT_ADDRESS: "The connected wallet address is invalid.",
   INVALID_APPROVAL_AMOUNT: "The token approval amount is invalid.",
   INVALID_COMMITMENT: "The saved commitment is invalid.",
   INVALID_NAME: "Enter a valid ENS name.",
   INVALID_PAYMENT_TOKEN_ADDRESS: "The payment token address is invalid.",
   INVALID_REGISTRAR_ADDRESS: "The registrar address is invalid.",
+  INVALID_REFERRER: "The referrer value is invalid.",
+  INVALID_RESOLVER_ADDRESS: "The resolver address is invalid.",
+  INVALID_SECRET: "The saved commitment secret is invalid.",
+  INVALID_SUBREGISTRY_ADDRESS: "The subregistry address is invalid.",
   LABEL_TOO_LONG: "The ENS label is too long.",
   LABEL_TOO_SHORT: (data) => {
     const name = getName(data);
@@ -43,7 +54,7 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   UNSUPPORTED_NAME: "Only second-level .eth names are supported.",
   TRANSACTION_CONFIRMATION_FAILED:
     "Unable to confirm the commitment transaction.",
-  TRANSACTION_REVERTED: "The commitment transaction was reverted.",
+  TRANSACTION_REVERTED: "The transaction was reverted.",
   WALLET_NOT_CONNECTED: "Connect your wallet to continue.",
 };
 

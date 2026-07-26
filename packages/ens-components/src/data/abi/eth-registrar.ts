@@ -171,3 +171,73 @@ export const ethRegistrarRegisterSnippet = [
     type: "function",
   },
 ] as const;
+
+export const ethRegistrarNameRegisteredEventSnippet = [
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "label",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "contract IRegistry",
+        name: "subregistry",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "resolver",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint64",
+        name: "duration",
+        type: "uint64",
+      },
+      {
+        indexed: false,
+        internalType: "contract IERC20",
+        name: "paymentToken",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "referrer",
+        type: "bytes32",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "base",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "premium",
+        type: "uint256",
+      },
+    ],
+    name: "NameRegistered",
+    type: "event",
+  },
+] as const;

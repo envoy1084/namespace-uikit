@@ -41,6 +41,7 @@ export function RegistrationProcess({
   const [expandedKeys, setExpandedKeys] = useState(
     new Set<string | number>([activeStep]),
   );
+  const [commitmentError, setCommitmentError] = useState<unknown>();
   const handleTimerComplete = useCallback(
     () => setActiveStep("complete-registration"),
     [],
@@ -92,7 +93,11 @@ export function RegistrationProcess({
             expandedKeys={expandedKeys}
             onExpandedChange={setExpandedKeys}
           >
-            <CommitmentStep isDisabled={activeStep !== "commitment"} />
+            <CommitmentStep
+              error={commitmentError}
+              isDisabled={activeStep !== "commitment"}
+              onErrorClear={() => setCommitmentError(undefined)}
+            />
             <TimerStep
               isCompleted={activeStep === "complete-registration"}
               isDisabled={activeStep !== "timer"}
@@ -100,6 +105,10 @@ export function RegistrationProcess({
             />
             <CompleteRegistrationStep
               isDisabled={activeStep !== "complete-registration"}
+              onCommitmentInvalid={(error) => {
+                setCommitmentError(error);
+                setActiveStep("commitment");
+              }}
               onSuccess={onSuccess}
             />
           </Accordion>
