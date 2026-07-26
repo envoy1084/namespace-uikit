@@ -56,7 +56,7 @@ export function useRegistrationPaymentStatus<
   const registrarAddress =
     parameters.registrarAddress ?? contracts.ethRegistrar.address;
   const paymentTokenAddress =
-    parameters.paymentTokenAddress ?? contracts.mockUsdc.address;
+    parameters.paymentTokenAddress ?? contracts.paymentTokens[0].address;
 
   return useQuery<
     RegistrationPaymentStatus,

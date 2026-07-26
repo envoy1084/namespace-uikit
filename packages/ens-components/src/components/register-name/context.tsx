@@ -21,6 +21,7 @@ import {
 import { getAddress, isAddress, slice, zeroAddress, zeroHash } from "viem";
 
 import { DEFAULT_NAME_REGISTRATION_MESSAGES } from "#/components/register-name/customization";
+import { useEnsConfig } from "#/providers";
 
 export const REGISTRATION_SECONDS_PER_DAY = 86_400n;
 export const REGISTRATION_SECONDS_PER_YEAR = 31_557_600n;
@@ -40,6 +41,7 @@ export interface NameRegistrationContextValue {
   isReferrerValid: boolean;
   isResolverValid: boolean;
   messages: NameRegistrationMessages;
+  paymentTokenAddress: Address;
   presentation: NameRegistrationPresentation;
   referrer: Hex;
   referrerInput: string;
@@ -49,6 +51,7 @@ export interface NameRegistrationContextValue {
   setDuration: Dispatch<SetStateAction<bigint>>;
   setDurationMode: Dispatch<SetStateAction<RegistrationDurationMode>>;
   setInput: Dispatch<SetStateAction<string>>;
+  setPaymentTokenAddress: Dispatch<SetStateAction<Address>>;
   setReferrer: Dispatch<SetStateAction<Hex>>;
   setReferrerInput: Dispatch<SetStateAction<string>>;
   setResolverAddress: Dispatch<SetStateAction<Address | null>>;
@@ -61,6 +64,7 @@ export interface NameRegistrationProviderProps {
   defaultDuration?: bigint;
   defaultDurationMode?: RegistrationDurationMode;
   defaultInput?: string;
+  defaultPaymentTokenAddress?: Address;
   defaultReferrer?: Hex;
   defaultResolverAddress?: Address;
   events?: NameRegistrationEvents;
@@ -87,6 +91,7 @@ export function NameRegistrationProvider({
   defaultDuration = DEFAULT_REGISTRATION_DURATION,
   defaultDurationMode = "duration",
   defaultInput = "",
+  defaultPaymentTokenAddress,
   defaultReferrer = zeroHash,
   defaultResolverAddress,
   events = {},
@@ -94,6 +99,13 @@ export function NameRegistrationProvider({
   presentation = "dialog",
   slots = {},
 }: NameRegistrationProviderProps) {
+  const { contracts } = useEnsConfig();
+  const initialPaymentToken =
+    contracts.paymentTokens.find(
+      (token) =>
+        token.address.toLowerCase() ===
+        defaultPaymentTokenAddress?.toLowerCase(),
+    ) ?? contracts.paymentTokens[0];
   const [registrationAttemptId, setRegistrationAttemptId] = useState<
     string | null
   >(null);
@@ -104,6 +116,9 @@ export function NameRegistrationProvider({
   );
   const [durationMode, setDurationMode] = useState(defaultDurationMode);
   const [input, setInput] = useState(defaultInput);
+  const [paymentTokenAddress, setPaymentTokenAddress] = useState<Address>(
+    initialPaymentToken.address,
+  );
   const [referrer, setReferrer] = useState(defaultReferrer);
   const [referrerInput, setReferrerInput] = useState(() =>
     getReferrerInput(defaultReferrer),
@@ -138,6 +153,7 @@ export function NameRegistrationProvider({
         isReferrerValid,
         isResolverValid,
         messages: resolvedMessages,
+        paymentTokenAddress,
         presentation,
         referrer,
         referrerInput,
@@ -147,6 +163,7 @@ export function NameRegistrationProvider({
         setDuration,
         setDurationMode,
         setInput,
+        setPaymentTokenAddress,
         setReferrer,
         setReferrerInput,
         setResolverAddress,

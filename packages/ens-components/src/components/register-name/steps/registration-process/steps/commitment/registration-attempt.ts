@@ -49,6 +49,7 @@ export interface PrepareRegistrationAttemptProps {
   input: string | null | undefined;
   network: EnsNetwork;
   owner: Address;
+  paymentTokenAddress: Address;
   referrer: Hex;
   registrarAddress: Address;
   resolverAddress: Address | null;
@@ -89,6 +90,7 @@ function buildRegistrationAttempt(
     label: commitment.value.label,
     normalizedName: parsedInput.value.normalizedName,
     owner: props.owner,
+    paymentTokenAddress: props.paymentTokenAddress,
     referrer: props.referrer,
     registrarAddress: props.registrarAddress,
     resolver,

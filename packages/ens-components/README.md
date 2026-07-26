@@ -9,6 +9,7 @@ actions for building ENS v2 applications.
 ## Features
 
 - Complete resolver, commit, wait, approve, and register flow
+- Configured payment-token selection with resumable state
 - Dialog and inline registration presentations
 - TanStack Query hooks for availability, pricing, commitments, and payments
 - Framework-independent actions returning `neverthrow` results

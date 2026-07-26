@@ -53,7 +53,7 @@ export function useNamePrice<selectData = NamePrice>(
   const registrarAddress =
     parameters.registrarAddress ?? contracts.ethRegistrar.address;
   const paymentTokenAddress =
-    parameters.paymentTokenAddress ?? contracts.mockUsdc.address;
+    parameters.paymentTokenAddress ?? contracts.paymentTokens[0].address;
 
   return useQuery<NamePrice, NamePriceError, selectData, NamePriceQueryKey>({
     ...parameters.query,

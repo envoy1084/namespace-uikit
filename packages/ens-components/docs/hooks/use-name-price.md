@@ -32,13 +32,13 @@ interface UseNamePriceParameters<selectData = NamePrice> {
 }
 ```
 
-| Parameter             | Default                | Description                                             |
-| --------------------- | ---------------------- | ------------------------------------------------------- |
-| `duration`            | Required               | Registration duration in seconds.                       |
-| `input`               | Required               | Label or second-level `.eth` name.                      |
-| `paymentTokenAddress` | Provider payment token | ERC-20 token used for the quote.                        |
-| `registrarAddress`    | Provider registrar     | ENS v2 registrar to query.                              |
-| `query`               | `undefined`            | TanStack Query options except `queryFn` and `queryKey`. |
+| Parameter             | Default              | Description                                             |
+| --------------------- | -------------------- | ------------------------------------------------------- |
+| `duration`            | Required             | Registration duration in seconds.                       |
+| `input`               | Required             | Label or second-level `.eth` name.                      |
+| `paymentTokenAddress` | First provider token | ERC-20 token used for the quote.                        |
+| `registrarAddress`    | Provider registrar   | ENS v2 registrar to query.                              |
+| `query`               | `undefined`          | TanStack Query options except `queryFn` and `queryKey`. |
 
 The query is disabled when the normalized input is not a second-level `.eth`
 name or no public client is available.

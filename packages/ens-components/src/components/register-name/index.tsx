@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button, Modal, Surface } from "@thenamespace/uikit";
 import { zeroAddress, zeroHash } from "viem";
@@ -40,11 +40,13 @@ function NameRegistrationContent() {
     duration,
     input,
     messages,
+    paymentTokenAddress,
     presentation,
     referrer,
     resolverAddress,
     setRegistrationAttemptId,
     setInput,
+    setPaymentTokenAddress,
     setReferrer,
     setReferrerInput,
     setResolverAddress,
@@ -52,7 +54,7 @@ function NameRegistrationContent() {
     slots,
   } = useNameRegistration();
   const { chain, contracts } = useEnsConfig();
-  const { find } = useRegistrationAttempts();
+  const { find, update } = useRegistrationAttempts();
   const [view, setView] = useState<NameRegistrationView>("name-search");
   const [registrationStep, setRegistrationStep] =
     useState<RegistrationProcessStep>("commitment");
@@ -60,22 +62,40 @@ function NameRegistrationContent() {
     useState<RegistrationSuccessDetails>();
   const [isTransactionPending, setIsTransactionPending] = useState(false);
   const isRegistrationSuccess = registrationSuccess !== undefined;
+  const storedAttempt =
+    connection.address === undefined
+      ? undefined
+      : find({
+          account: connection.address,
+          chainId: chain.id,
+          duration,
+          input,
+          owner: connection.address,
+          referrer,
+          registrarAddress: contracts.ethRegistrar.address,
+          resolverAddress,
+          subregistry: zeroAddress,
+        });
+  const storedPaymentToken = contracts.paymentTokens.find(
+    (token) =>
+      token.address.toLowerCase() ===
+      storedAttempt?.attempt.paymentTokenAddress.toLowerCase(),
+  );
+
+  useEffect(() => {
+    if (storedPaymentToken !== undefined) {
+      setPaymentTokenAddress(storedPaymentToken.address);
+    }
+  }, [setPaymentTokenAddress, storedAttempt?.id, storedPaymentToken?.address]);
 
   const handleNext = () => {
-    const storedAttempt =
-      connection.address === undefined
-        ? undefined
-        : find({
-            account: connection.address,
-            chainId: chain.id,
-            duration,
-            input,
-            owner: connection.address,
-            referrer,
-            registrarAddress: contracts.ethRegistrar.address,
-            resolverAddress,
-            subregistry: zeroAddress,
-          });
+    if (
+      storedAttempt !== undefined &&
+      storedAttempt.attempt.paymentTokenAddress.toLowerCase() !==
+        paymentTokenAddress.toLowerCase()
+    ) {
+      update(storedAttempt.id, { paymentTokenAddress });
+    }
 
     const confirmedAt =
       storedAttempt?.attempt.submission.type === "confirmed"

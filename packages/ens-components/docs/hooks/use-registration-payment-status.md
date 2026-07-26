@@ -44,7 +44,8 @@ interface UseRegistrationPaymentStatusParameters<
 The query is disabled when `account` is `null` or `undefined`, when no public
 client is available, or when `query.enabled` is `false`.
 
-Addresses default to the contracts selected by `EnsProvider`.
+The registrar defaults to the contract selected by `EnsProvider`. The payment
+token defaults to the first token in the provider configuration.
 
 ## Result data
 

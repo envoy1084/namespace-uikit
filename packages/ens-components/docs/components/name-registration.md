@@ -3,7 +3,7 @@
 `NameRegistration` provides the complete ENS v2 registration flow for
 second-level `.eth` names:
 
-1. Check availability and price.
+1. Check availability, select a payment token, and read its price.
 2. Select a custom resolver or prepare a dedicated resolver.
 3. Deploy the resolver and submit a persisted commitment.
 4. Wait for the commitment minimum age.
@@ -35,19 +35,34 @@ Inline mode renders the flow directly and ignores `slots.trigger`.
 
 ## Props
 
-| Prop                     | Type                                | Default              | Description                                                             |
-| ------------------------ | ----------------------------------- | -------------------- | ----------------------------------------------------------------------- |
-| `presentation`           | `"dialog" \| "inline"`              | `"dialog"`           | Selects the outer presentation.                                         |
-| `defaultInput`           | `string`                            | `""`                 | Initial name input.                                                     |
-| `defaultDuration`        | `bigint`                            | `31_557_600n`        | Initial duration in seconds. Values below 28 days are clamped.          |
-| `defaultDurationMode`    | `"date" \| "duration"`              | `"duration"`         | Initial duration control.                                               |
-| `defaultReferrer`        | `Hex`                               | `zeroHash`           | Initial 32-byte referrer identifier.                                    |
-| `defaultResolverAddress` | `Address`                           | `undefined`          | Initial custom resolver. A dedicated resolver is deployed when omitted. |
-| `slots`                  | `NameRegistrationSlots`             | `{}`                 | Replaces branded visual elements.                                       |
-| `messages`               | `Partial<NameRegistrationMessages>` | Default English copy | Overrides high-level interface copy.                                    |
-| `events`                 | `NameRegistrationEvents`            | `{}`                 | Receives confirmed transactions and flow errors.                        |
+| Prop                         | Type                                | Default              | Description                                                             |
+| ---------------------------- | ----------------------------------- | -------------------- | ----------------------------------------------------------------------- |
+| `presentation`               | `"dialog" \| "inline"`              | `"dialog"`           | Selects the outer presentation.                                         |
+| `defaultInput`               | `string`                            | `""`                 | Initial name input.                                                     |
+| `defaultPaymentTokenAddress` | `Address`                           | First provider token | Initial payment token. Unknown addresses fall back to the first token.  |
+| `defaultDuration`            | `bigint`                            | `31_557_600n`        | Initial duration in seconds. Values below 28 days are clamped.          |
+| `defaultDurationMode`        | `"date" \| "duration"`              | `"duration"`         | Initial duration control.                                               |
+| `defaultReferrer`            | `Hex`                               | `zeroHash`           | Initial 32-byte referrer identifier.                                    |
+| `defaultResolverAddress`     | `Address`                           | `undefined`          | Initial custom resolver. A dedicated resolver is deployed when omitted. |
+| `slots`                      | `NameRegistrationSlots`             | `{}`                 | Replaces branded visual elements.                                       |
+| `messages`                   | `Partial<NameRegistrationMessages>` | Default English copy | Overrides high-level interface copy.                                    |
+| `events`                     | `NameRegistrationEvents`            | `{}`                 | Receives confirmed transactions and flow errors.                        |
 
 The default values initialize internal state. They are not controlled props.
+
+## Payment tokens
+
+The name-search screen lists the payment tokens configured for the selected
+network. Changing the token refetches its registration price. The selected
+token is then used for balance, allowance, approval, and registration calls.
+
+```tsx
+<NameRegistration defaultPaymentTokenAddress="0x2922bcd677af690fcd1ecc699519e4bfabc73ff8" />
+```
+
+The default Sepolia configuration provides Mock USDC and Mock DAI. The payment
+token is not part of the ENS commitment, so selecting another configured token
+does not require a new commitment.
 
 ## Slots
 
@@ -148,15 +163,17 @@ the records and permissions required by the application.
 ## Resuming registration
 
 The component persists the prepared resolver, salt, secret, commitment, and
-submitted transaction identifiers before waiting for confirmation. It can
-resume a pending or confirmed attempt from the same browser origin when the
-name, wallet, duration, referrer, resolver choice, network, and contracts still
-match. Progress is not synchronized across browsers or devices. Clearing site
-storage removes resume data but does not change onchain state.
+submitted transaction identifiers before waiting for confirmation. It also
+persists the selected payment-token address so a resumed registration uses the
+same token. It can resume a pending or confirmed attempt from the same browser
+origin when the name, wallet, duration, referrer, resolver choice, network, and
+contracts still match. Progress is not synchronized across browsers or
+devices. Clearing site storage removes resume data but does not change onchain
+state.
 
 ## Current constraints
 
 - Only second-level `.eth` names are supported.
 - Labels must contain at least three Unicode code points.
-- Registration uses the payment token configured by `EnsProvider`.
+- Registration uses one of the payment tokens configured by `EnsProvider`.
 - Only the ENS v2 Sepolia testnet configuration is currently available.

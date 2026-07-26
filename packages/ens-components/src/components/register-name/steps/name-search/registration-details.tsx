@@ -6,7 +6,6 @@ import { useEffect } from "react";
 
 import { getLocalTimeZone, today } from "@internationalized/date";
 import {
-  Avatar,
   Button,
   Calendar,
   DateField,
@@ -29,6 +28,7 @@ import {
   useNameRegistration,
 } from "#/components/register-name/context";
 import { AdvancedOptions } from "#/components/register-name/steps/name-search/advanced-options";
+import { PaymentTokenSelect } from "#/components/register-name/steps/name-search/payment-token-select";
 import { useNamePrice } from "#/hooks";
 import { formatError, formatTokenAmount } from "#/lib";
 import { useEnsConfig } from "#/providers";
@@ -135,10 +135,20 @@ export function RegistrationDetails({
   input,
   onReadyChange,
 }: RegistrationDetailsProps) {
-  const { duration, durationMode, setDuration, setDurationMode } =
-    useNameRegistration();
+  const {
+    duration,
+    durationMode,
+    paymentTokenAddress,
+    setDuration,
+    setDurationMode,
+    setPaymentTokenAddress,
+  } = useNameRegistration();
   const { contracts } = useEnsConfig();
-  const paymentToken = contracts.mockUsdc;
+  const paymentToken =
+    contracts.paymentTokens.find(
+      (token) =>
+        token.address.toLowerCase() === paymentTokenAddress.toLowerCase(),
+    ) ?? contracts.paymentTokens[0];
   const timeZone = getLocalTimeZone();
   const years = getYears(duration);
   const selectedDurationDays = Number(duration / REGISTRATION_SECONDS_PER_DAY);
@@ -259,15 +269,6 @@ export function RegistrationDetails({
             Registration price
           </Typography.Paragraph>
           <div className="flex items-center gap-2">
-            <Avatar className="size-5">
-              <Avatar.Image
-                alt={`${paymentToken.symbol} logo`}
-                src={paymentToken.icon}
-              />
-              <Avatar.Fallback>
-                {paymentToken.symbol.slice(0, 1)}
-              </Avatar.Fallback>
-            </Avatar>
             {price.isFetching ? (
               <Skeleton
                 aria-label="Calculating registration price"
@@ -283,6 +284,11 @@ export function RegistrationDetails({
             ) : (
               <span className="text-muted text-sm">N/A</span>
             )}
+            <PaymentTokenSelect
+              tokens={contracts.paymentTokens}
+              value={paymentToken.address}
+              onChange={setPaymentTokenAddress}
+            />
           </div>
         </div>
         {price.isError ? (

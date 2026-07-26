@@ -9,7 +9,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { parseNameInput } from "#/actions";
 
 export const REGISTRATION_ATTEMPTS_STORAGE_KEY =
-  "@thenamespace/ens-components:registration-attempts:v1";
+  "@thenamespace/ens-components:registration-attempts:v2";
 
 export type StoredRegistrationResolver =
   | {
@@ -66,6 +66,7 @@ export interface StoredRegistrationAttempt {
   label: string;
   normalizedName: string;
   owner: Address;
+  paymentTokenAddress: Address;
   referrer: Hex;
   registrarAddress: Address;
   resolver: StoredRegistrationResolver;

@@ -28,6 +28,7 @@ import {
   parseStoredDuration,
   type PaymentActionStatus,
 } from "#/components/register-name/steps/registration-process/steps/registration-payment/get-registration-details";
+import { useRegistrationPaymentToken } from "#/components/register-name/steps/registration-process/steps/registration-payment/use-registration-payment-token";
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
 import { useRegistrationPaymentStatus } from "#/hooks";
 import { useRegistrationAttempts } from "#/hooks/use-registration-attempts";
@@ -51,11 +52,15 @@ export function useRegistrationPayment({
   const { switchChainAsync } = useSwitchChain();
   const { events, registrationAttemptId, setRegistrationAttemptId } =
     useNameRegistration();
-  const { delete: deleteAttempt, get } = useRegistrationAttempts();
+  const { delete: deleteAttempt, get, update } = useRegistrationAttempts();
   const storedAttempt =
     registrationAttemptId === null ? undefined : get(registrationAttemptId);
   const duration = parseStoredDuration(storedAttempt?.duration);
-  const paymentToken = contracts.mockUsdc;
+  const paymentToken = useRegistrationPaymentToken({
+    attempt: storedAttempt,
+    paymentTokens: contracts.paymentTokens,
+    updateAttempt: update,
+  });
   const payment = useRegistrationPaymentStatus({
     account: connection.address,
     duration,
