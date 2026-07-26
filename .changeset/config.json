@@ -10,7 +10,7 @@
   "fixed": [],
   "ignore": [
     "@thenamespace/storybook",
-    "@thenamespace/ens-components",
+    "ens-components",
     "@thenamespace/docs",
     "@thenamespace/demo"
   ],
