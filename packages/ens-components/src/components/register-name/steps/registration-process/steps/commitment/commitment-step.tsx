@@ -83,7 +83,7 @@ export function CommitmentStep({
               {submission.buttonLabel}
             </Button>
           )}
-          {submission.error !== undefined ? (
+          {!submission.isPending && submission.error !== undefined ? (
             <Typography.Paragraph
               className="text-danger mt-2"
               size="xs"

@@ -17,7 +17,6 @@ import {
   commitName,
   deployPermissionedResolver,
   deployResolverAndCommitName,
-  getCommitmentStatus,
   getPermissionedResolverStatus,
   supportsAtomicBatchCalls,
   waitForAtomicBatch,
@@ -68,24 +67,6 @@ async function waitForSuccessfulReceipt(
   }
 }
 
-async function getConfirmedAt(
-  publicClient: PublicClient,
-  attempt: StoredRegistrationAttempt,
-  network: EnsNetwork,
-): Promise<Result<number, string>> {
-  const status = await getCommitmentStatus(publicClient, {
-    commitment: attempt.commitment,
-    network,
-    registrarAddress: attempt.registrarAddress,
-  });
-
-  if (status.isErr()) return err(status.error);
-  if (status.value.state === "NOT_FOUND") return err("COMMITMENT_NOT_FOUND");
-  if (status.value.state === "EXPIRED") return err("COMMITMENT_EXPIRED");
-
-  return ok(Number(status.value.submittedAt) * 1_000);
-}
-
 async function submitCommitmentOnly(
   props: SubmitRegistrationAttemptProps,
   resolverTransactionHash?: Hex,
@@ -128,15 +109,10 @@ async function submitCommitmentOnly(
     return err(receipt.error);
   }
 
-  const confirmedAt = await getConfirmedAt(
-    props.publicClient,
-    props.attempt,
-    props.network,
-  );
-  if (confirmedAt.isErr()) return err(confirmedAt.error);
+  const confirmedAt = Date.now();
 
   props.onSubmissionChange({
-    confirmedAt: confirmedAt.value,
+    confirmedAt,
     ...(resolverTransactionHash === undefined
       ? {}
       : { resolverTransactionHash }),
@@ -151,7 +127,7 @@ async function submitCommitmentOnly(
 
   return ok({
     commitmentReceipt: receipt.value,
-    confirmedAt: confirmedAt.value,
+    confirmedAt,
     ...(resolverTransactionHash === undefined
       ? {}
       : { resolverTransactionHash }),
@@ -274,16 +250,11 @@ async function submitAtomically(
       : await waitForSuccessfulReceipt(props.publicClient, transactionHash);
   if (receipt?.isErr()) return err(receipt.error);
 
-  const confirmedAt = await getConfirmedAt(
-    props.publicClient,
-    props.attempt,
-    props.network,
-  );
-  if (confirmedAt.isErr()) return err(confirmedAt.error);
+  const confirmedAt = Date.now();
 
   props.onSubmissionChange({
     callsId: submission.value.callsId,
-    confirmedAt: confirmedAt.value,
+    confirmedAt,
     ...(transactionHash === undefined ? {} : { transactionHash }),
     type: "confirmed",
   });
@@ -296,7 +267,7 @@ async function submitAtomically(
   return ok({
     callsId: submission.value.callsId,
     ...(receipt?.isOk() ? { commitmentReceipt: receipt.value } : {}),
-    confirmedAt: confirmedAt.value,
+    confirmedAt,
     ...(receipt?.isOk() ? { resolverReceipt: receipt.value } : {}),
     ...(transactionHash === undefined
       ? {}
