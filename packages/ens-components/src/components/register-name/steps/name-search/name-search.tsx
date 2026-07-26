@@ -2,7 +2,13 @@
 
 import { useEffect } from "react";
 
-import { InputGroup, Spinner, Typography } from "@thenamespace/uikit";
+import {
+  Button,
+  InputGroup,
+  Modal,
+  Spinner,
+  Typography,
+} from "@thenamespace/uikit";
 import { Icon, Search01Icon } from "@thenamespace/uikit/icons";
 
 import { parseNameInput } from "#/actions";
@@ -11,12 +17,21 @@ import { RegistrationDetails } from "#/components/register-name/steps/name-searc
 import { useNameAvailability } from "#/hooks";
 import { formatError } from "#/lib";
 
+const RegisterEnsHeader = new URL(
+  "../../../../assets/register-ens-header.svg",
+  import.meta.url,
+);
+
 export interface NameSearchStepProps {
+  isNextDisabled: boolean;
   onAvailabilityChange?: (isAvailable: boolean) => void;
+  onNext: () => void;
 }
 
 export const NameSearchStep = ({
+  isNextDisabled,
   onAvailabilityChange,
+  onNext,
 }: NameSearchStepProps) => {
   const { input, setInput } = useRegisterName();
   const availability = useNameAvailability({
@@ -38,60 +53,84 @@ export const NameSearchStep = ({
   }, [isAvailable, onAvailabilityChange]);
 
   return (
-    <div>
-      <InputGroup className="w-full" variant="secondary">
-        <InputGroup.Prefix>
-          <Icon
-            icon={Search01Icon}
-            className="text-muted size-4"
-            strokeWidth={2}
-          />
-        </InputGroup.Prefix>
-        <InputGroup.Input
-          className="w-full"
-          placeholder="Search Label, eg- vitalik"
-          value={input}
-          onChange={(event) => {
-            onAvailabilityChange?.(false);
-            setInput(event.target.value);
-          }}
+    <>
+      <Modal.Header className="mx-auto">
+        <img
+          alt=""
+          className="mx-auto w-full max-w-64"
+          src={RegisterEnsHeader.href}
         />
-        <InputGroup.Suffix>
-          <span>.eth</span>
-        </InputGroup.Suffix>
-      </InputGroup>
-      {!isAvailable && showAvailabilityStatus ? (
-        <div
-          className="mt-2 flex min-h-5 items-center justify-center"
-          aria-live="polite"
-        >
-          {availability.isFetching ? (
-            <div className="flex items-center gap-2">
-              <Spinner className="size-3" size="sm" />
-              <Typography.Paragraph color="muted" size="xs">
-                Checking availability…
-              </Typography.Paragraph>
-            </div>
-          ) : availability.isSuccess ? (
-            <Typography.Paragraph
-              className="text-danger"
-              size="xs"
-              weight="medium"
-            >
-              {name} is not available.
-            </Typography.Paragraph>
-          ) : availability.isError ? (
-            <Typography.Paragraph
-              className={isShortLabelError ? "text-danger" : "text-muted"}
-              size="xs"
-              {...(isShortLabelError && { weight: "medium" })}
-            >
-              {formatError(availability.error, { name })}
-            </Typography.Paragraph>
-          ) : null}
+        <div>
+          <Modal.Heading className="mx-auto text-center">
+            Register your ENS Name
+          </Modal.Heading>
+          <p className="text-muted text-center text-sm">
+            Register your ENS name and set a profile
+          </p>
         </div>
-      ) : null}
-      {isAvailable ? <RegistrationDetails input={name} /> : null}
-    </div>
+      </Modal.Header>
+      <Modal.Body className="flex-none">
+        <div>
+          <InputGroup className="w-full" variant="secondary">
+            <InputGroup.Prefix>
+              <Icon
+                icon={Search01Icon}
+                className="text-muted size-4"
+                strokeWidth={2}
+              />
+            </InputGroup.Prefix>
+            <InputGroup.Input
+              className="w-full"
+              placeholder="Search Label, eg- vitalik"
+              value={input}
+              onChange={(event) => {
+                onAvailabilityChange?.(false);
+                setInput(event.target.value);
+              }}
+            />
+            <InputGroup.Suffix>
+              <span>.eth</span>
+            </InputGroup.Suffix>
+          </InputGroup>
+          {!isAvailable && showAvailabilityStatus ? (
+            <div
+              className="mt-2 flex min-h-5 items-center justify-center"
+              aria-live="polite"
+            >
+              {availability.isFetching ? (
+                <div className="flex items-center gap-2">
+                  <Spinner className="size-3" size="sm" />
+                  <Typography.Paragraph color="muted" size="xs">
+                    Checking availability…
+                  </Typography.Paragraph>
+                </div>
+              ) : availability.isSuccess ? (
+                <Typography.Paragraph
+                  className="text-danger"
+                  size="xs"
+                  weight="medium"
+                >
+                  {name} is not available.
+                </Typography.Paragraph>
+              ) : availability.isError ? (
+                <Typography.Paragraph
+                  className={isShortLabelError ? "text-danger" : "text-muted"}
+                  size="xs"
+                  {...(isShortLabelError && { weight: "medium" })}
+                >
+                  {formatError(availability.error, { name })}
+                </Typography.Paragraph>
+              ) : null}
+            </div>
+          ) : null}
+          {isAvailable ? <RegistrationDetails input={name} /> : null}
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button className="w-full" isDisabled={isNextDisabled} onPress={onNext}>
+          Next
+        </Button>
+      </Modal.Footer>
+    </>
   );
 };

@@ -4,7 +4,8 @@ import type { RegistrationSuccessDetails } from "#/components/register-name/step
 
 import { useCallback, useEffect, useState } from "react";
 
-import { Accordion, Surface } from "@thenamespace/uikit";
+import { Accordion, Button, Modal, Surface } from "@thenamespace/uikit";
+import { ArrowLeft01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { useRegisterName } from "#/components/register-name/context";
 import {
@@ -13,6 +14,11 @@ import {
   TimerStep,
 } from "#/components/register-name/steps/registration-process/steps";
 
+const RegisterEnsHeader = new URL(
+  "../../../../assets/register-ens-header.svg",
+  import.meta.url,
+);
+
 export type RegistrationProcessStep =
   | "commitment"
   | "complete-registration"
@@ -20,11 +26,13 @@ export type RegistrationProcessStep =
 
 export interface RegistrationProcessProps {
   initialStep?: RegistrationProcessStep;
+  onBack: () => void;
   onSuccess: (registration: RegistrationSuccessDetails) => void;
 }
 
 export function RegistrationProcess({
   initialStep = "commitment",
+  onBack,
   onSuccess,
 }: RegistrationProcessProps) {
   const { commitmentId } = useRegisterName();
@@ -51,23 +59,52 @@ export function RegistrationProcess({
   }, [activeStep]);
 
   return (
-    <Surface className="mt-2 rounded-2xl p-3" variant="secondary">
-      <Accordion
-        className="flex flex-col gap-2"
-        expandedKeys={expandedKeys}
-        onExpandedChange={setExpandedKeys}
+    <>
+      <Button
+        isIconOnly
+        aria-label="Back to name search"
+        className="absolute top-4 left-4 z-10"
+        size="sm"
+        variant="secondary"
+        onPress={onBack}
       >
-        <CommitmentStep isDisabled={activeStep !== "commitment"} />
-        <TimerStep
-          isCompleted={activeStep === "complete-registration"}
-          isDisabled={activeStep !== "timer"}
-          onComplete={handleTimerComplete}
+        <HugeiconsIcon icon={ArrowLeft01Icon} />
+      </Button>
+      <Modal.Header className="mx-auto">
+        <img
+          alt=""
+          className="mx-auto w-full max-w-64"
+          src={RegisterEnsHeader.href}
         />
-        <CompleteRegistrationStep
-          isDisabled={activeStep !== "complete-registration"}
-          onSuccess={onSuccess}
-        />
-      </Accordion>
-    </Surface>
+        <div>
+          <Modal.Heading className="mx-auto text-center">
+            ENS Registration Process
+          </Modal.Heading>
+          <p className="text-muted text-center text-sm">
+            Registration consists of 3 steps
+          </p>
+        </div>
+      </Modal.Header>
+      <Modal.Body className="flex-none">
+        <Surface className="mt-2 rounded-2xl p-3" variant="secondary">
+          <Accordion
+            className="flex flex-col gap-2"
+            expandedKeys={expandedKeys}
+            onExpandedChange={setExpandedKeys}
+          >
+            <CommitmentStep isDisabled={activeStep !== "commitment"} />
+            <TimerStep
+              isCompleted={activeStep === "complete-registration"}
+              isDisabled={activeStep !== "timer"}
+              onComplete={handleTimerComplete}
+            />
+            <CompleteRegistrationStep
+              isDisabled={activeStep !== "complete-registration"}
+              onSuccess={onSuccess}
+            />
+          </Accordion>
+        </Surface>
+      </Modal.Body>
+    </>
   );
 }
