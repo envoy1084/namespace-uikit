@@ -65,7 +65,7 @@ export function RegistrationSuccess({
             {messages.successTitle}
           </Typography.Paragraph>
           <Typography.Heading
-            className="mt-1 max-w-full text-2xl font-semibold break-all"
+            className="mt-1 max-w-full text-center text-2xl font-semibold break-all"
             level={3}
           >
             {registration.name}
