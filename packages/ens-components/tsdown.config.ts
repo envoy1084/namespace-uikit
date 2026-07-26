@@ -20,6 +20,7 @@ export default defineConfig({
     neverBundle: [
       "@tanstack/react-query",
       "@thenamespace/uikit",
+      "motion",
       "neverthrow",
       "react",
       "react-dom",

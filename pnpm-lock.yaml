@@ -371,6 +371,9 @@ importers:
       '@thenamespace/uikit':
         specifier: workspace:*
         version: link:../uikit
+      motion:
+        specifier: 12.42.2
+        version: 12.42.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       neverthrow:
         specifier: 8.2.0
         version: 8.2.0

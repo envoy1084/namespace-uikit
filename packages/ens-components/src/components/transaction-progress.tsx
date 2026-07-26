@@ -1,11 +1,13 @@
 import type { Hex } from "viem";
 
+import { motion } from "motion/react";
+
 const Shuriken = new URL("../assets/shuriken.svg", import.meta.url);
 
 export interface TransactionProgressProps {
   blockExplorerUrl?: string | undefined;
   className?: string;
-  transactionHash: Hex;
+  transactionHash?: Hex | undefined;
 }
 
 export function TransactionProgress({
@@ -14,7 +16,7 @@ export function TransactionProgress({
   transactionHash,
 }: TransactionProgressProps) {
   const transactionUrl =
-    blockExplorerUrl === undefined
+    blockExplorerUrl === undefined || transactionHash === undefined
       ? undefined
       : `${blockExplorerUrl.replace(/\/$/, "")}/tx/${transactionHash}`;
 
@@ -28,13 +30,30 @@ export function TransactionProgress({
         aria-label="Transaction confirmation in progress"
         className="bg-foreground h-10 w-full overflow-hidden rounded-xl p-1"
       >
-        <div className="ens-transaction-progress-bar bg-background relative h-full w-8 rounded-lg">
-          <img
+        <motion.div
+          animate={{ width: ["2rem", "100%", "100%"] }}
+          className="bg-background relative h-full rounded-lg"
+          initial={{ width: "2rem" }}
+          transition={{
+            duration: 2.4,
+            ease: [0.4, 0, 0.2, 1],
+            repeat: Infinity,
+            times: [0, 0.8, 1],
+          }}
+        >
+          <motion.img
             alt=""
-            className="ens-transaction-progress-shuriken absolute top-1/2 right-1 size-6 -translate-y-1/2"
+            animate={{ rotate: 360 }}
+            className="absolute top-1/2 right-1 size-6"
             src={Shuriken.href}
+            style={{ y: "-50%" }}
+            transition={{
+              duration: 1.1,
+              ease: "linear",
+              repeat: Infinity,
+            }}
           />
-        </div>
+        </motion.div>
       </div>
       {transactionUrl === undefined ? null : (
         <a

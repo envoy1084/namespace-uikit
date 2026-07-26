@@ -51,6 +51,7 @@
     "@internationalized/date": "3.12.2",
     "@number-flow/react": "0.6.2",
     "@thenamespace/uikit": "workspace:*",
+    "motion": "12.42.2",
     "neverthrow": "8.2.0",
     "usehooks-ts": "3.1.1"
   },
