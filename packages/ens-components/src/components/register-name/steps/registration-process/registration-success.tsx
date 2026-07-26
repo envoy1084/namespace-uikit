@@ -6,7 +6,6 @@ import {
   Surface,
   Typography,
 } from "@thenamespace/uikit";
-import { motion } from "motion/react";
 import { formatUnits } from "viem";
 
 const RegistrationSuccessGraphic = new URL(
@@ -55,19 +54,12 @@ export function RegistrationSuccess({
   return (
     <Modal.Body className="flex-none">
       <div className="flex flex-col items-center px-1 py-4 text-center">
-        <motion.img
+        <img
           alt=""
-          animate={{ opacity: 1, rotate: 0, scale: 1, y: 0 }}
           className="h-auto w-full max-w-48"
-          initial={{ opacity: 0, rotate: -3, scale: 0.94, y: 8 }}
           src={RegistrationSuccessGraphic.href}
-          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         />
-        <motion.div
-          animate={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 6 }}
-          transition={{ delay: 0.08, duration: 0.25 }}
-        >
+        <div>
           <Typography.Paragraph className="mt-5" color="muted" size="sm">
             Hooray! You&apos;ve registered
           </Typography.Paragraph>
@@ -77,14 +69,9 @@ export function RegistrationSuccess({
           >
             {registration.name}
           </Typography.Heading>
-        </motion.div>
+        </div>
 
-        <motion.div
-          animate={{ opacity: 1, y: 0 }}
-          className="w-full"
-          initial={{ opacity: 0, y: 8 }}
-          transition={{ delay: 0.14, duration: 0.28 }}
-        >
+        <div className="w-full">
           <Surface className="mt-6 w-full rounded-2xl p-4" variant="secondary">
             <div className="flex items-center justify-between gap-4">
               <Typography.Paragraph color="muted" size="sm">
@@ -131,18 +118,13 @@ export function RegistrationSuccess({
               {expirationDate}
             </Typography.Paragraph>
           </Surface>
-        </motion.div>
+        </div>
 
-        <motion.div
-          animate={{ opacity: 1, y: 0 }}
-          className="w-full"
-          initial={{ opacity: 0, y: 6 }}
-          transition={{ delay: 0.2, duration: 0.25 }}
-        >
+        <div className="w-full">
           <Button className="mt-6 w-full" slot="close" onPress={onDone}>
             Done
           </Button>
-        </motion.div>
+        </div>
       </div>
     </Modal.Body>
   );

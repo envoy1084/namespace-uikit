@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import { Button, Modal } from "@thenamespace/uikit";
-import { AnimatePresence, motion, type Variants } from "motion/react";
 import { zeroAddress } from "viem";
 import { useConnection } from "wagmi";
 
@@ -29,34 +28,6 @@ export * from "#/components/register-name/context";
 export type RegisterEnsProps = Omit<RegisterNameProviderProps, "children">;
 
 type RegisterNameView = "name-search" | "registration-process";
-type TransitionDirection = -1 | 1;
-
-const screenVariants: Variants = {
-  animate: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      delay: 0.055,
-      duration: 0.165,
-      ease: [0.26, 0.08, 0.25, 1],
-    },
-  },
-  exit: (direction: TransitionDirection) => ({
-    opacity: 0,
-    pointerEvents: "none" as const,
-    position: "absolute" as const,
-    scale: direction === 1 ? 1.1 : 0.85,
-    transition: {
-      duration: 0.22,
-      ease: [0.26, 0.08, 0.25, 1],
-    },
-    width: "100%",
-  }),
-  initial: (direction: TransitionDirection) => ({
-    opacity: 0,
-    scale: direction === 1 ? 0.85 : 1.1,
-  }),
-};
 
 function RegisterEnsContent() {
   const connection = useConnection();
@@ -70,10 +41,7 @@ function RegisterEnsContent() {
   const [registrationSuccess, setRegistrationSuccess] =
     useState<RegistrationSuccessDetails>();
   const [isNameAvailable, setIsNameAvailable] = useState(false);
-  const [transitionDirection, setTransitionDirection] =
-    useState<TransitionDirection>(1);
   const isRegistrationSuccess = registrationSuccess !== undefined;
-  const viewKey = isRegistrationSuccess ? "success" : view;
 
   const handleNext = () => {
     let storedCommitment =
@@ -109,17 +77,10 @@ function RegisterEnsContent() {
 
     setCommitmentId(storedCommitment?.id ?? null);
     setRegistrationStep(nextStep);
-    setTransitionDirection(1);
     setView("registration-process");
   };
 
-  const handleBack = () => {
-    setTransitionDirection(-1);
-    setView("name-search");
-  };
-
   const handleRegistrationSuccess = (details: RegistrationSuccessDetails) => {
-    setTransitionDirection(1);
     setRegistrationSuccess(details);
   };
 
@@ -137,49 +98,26 @@ function RegisterEnsContent() {
       <Button variant="secondary">Register</Button>
       <Modal.Backdrop>
         <Modal.Container>
-          <Modal.Dialog className="overflow-hidden">
+          <Modal.Dialog>
             <Modal.CloseTrigger />
-            <motion.div
-              className="relative w-full"
-              layout="size"
-              transition={{
-                layout: {
-                  duration: 0.2,
-                  ease: [0.26, 0.08, 0.25, 1],
-                },
-              }}
-            >
-              <AnimatePresence custom={transitionDirection} initial={false}>
-                <motion.div
-                  animate="animate"
-                  className="w-full origin-center"
-                  custom={transitionDirection}
-                  exit="exit"
-                  initial="initial"
-                  key={viewKey}
-                  variants={screenVariants}
-                >
-                  {isRegistrationSuccess ? (
-                    <RegistrationSuccess
-                      onDone={handleDone}
-                      registration={registrationSuccess}
-                    />
-                  ) : view === "registration-process" ? (
-                    <RegistrationProcess
-                      initialStep={registrationStep}
-                      onBack={handleBack}
-                      onSuccess={handleRegistrationSuccess}
-                    />
-                  ) : (
-                    <NameSearchStep
-                      isNextDisabled={!isNameAvailable}
-                      onAvailabilityChange={setIsNameAvailable}
-                      onNext={handleNext}
-                    />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </motion.div>
+            {isRegistrationSuccess ? (
+              <RegistrationSuccess
+                onDone={handleDone}
+                registration={registrationSuccess}
+              />
+            ) : view === "registration-process" ? (
+              <RegistrationProcess
+                initialStep={registrationStep}
+                onBack={() => setView("name-search")}
+                onSuccess={handleRegistrationSuccess}
+              />
+            ) : (
+              <NameSearchStep
+                isNextDisabled={!isNameAvailable}
+                onAvailabilityChange={setIsNameAvailable}
+                onNext={handleNext}
+              />
+            )}
           </Modal.Dialog>
         </Modal.Container>
       </Modal.Backdrop>
