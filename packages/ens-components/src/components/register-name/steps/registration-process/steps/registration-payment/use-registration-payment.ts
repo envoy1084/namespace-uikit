@@ -4,8 +4,8 @@ import type {
   ContractWriteProgress,
   RegistrationPaymentStatus,
 } from "#/actions";
-import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-process/registration-success";
 import type { PaymentActionStatus } from "#/components/register-name/steps/registration-process/steps/registration-payment/get-registration-details";
+import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-success";
 import type { StoredRegistrationAttempt } from "#/hooks/use-registration-attempts";
 
 import { useEffect, useRef, useState } from "react";

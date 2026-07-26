@@ -16,7 +16,7 @@ import {
 import {
   NameSearchStep,
   RegistrationProcess,
-  RegistrationSuccess,
+  RegistrationSuccessStep,
   type RegistrationSuccessDetails,
   type RegistrationProcessStep,
 } from "#/components/register-name/steps";
@@ -32,7 +32,10 @@ export type NameRegistrationProps = Omit<
   "children"
 >;
 
-type NameRegistrationView = "name-search" | "registration-process";
+type NameRegistrationView =
+  | "name-search"
+  | "registration-process"
+  | "registration-success";
 
 function NameRegistrationContent() {
   const connection = useConnection();
@@ -61,7 +64,6 @@ function NameRegistrationContent() {
   const [registrationSuccess, setRegistrationSuccess] =
     useState<RegistrationSuccessDetails>();
   const [isTransactionPending, setIsTransactionPending] = useState(false);
-  const isRegistrationSuccess = registrationSuccess !== undefined;
   const storedAttempt =
     connection.address === undefined
       ? undefined
@@ -117,6 +119,7 @@ function NameRegistrationContent() {
 
   const handleRegistrationSuccess = (details: RegistrationSuccessDetails) => {
     setRegistrationSuccess(details);
+    setView("registration-success");
   };
 
   const handleDone = () => {
@@ -131,21 +134,22 @@ function NameRegistrationContent() {
     setView("name-search");
   };
 
-  const content = isRegistrationSuccess ? (
-    <RegistrationSuccess
-      onDone={handleDone}
-      registration={registrationSuccess}
-    />
-  ) : view === "registration-process" ? (
-    <RegistrationProcess
-      initialStep={registrationStep}
-      onBack={() => setView("name-search")}
-      onPendingChange={setIsTransactionPending}
-      onSuccess={handleRegistrationSuccess}
-    />
-  ) : (
-    <NameSearchStep onNext={handleNext} />
-  );
+  const content =
+    view === "registration-success" && registrationSuccess !== undefined ? (
+      <RegistrationSuccessStep
+        onDone={handleDone}
+        registration={registrationSuccess}
+      />
+    ) : view === "registration-process" ? (
+      <RegistrationProcess
+        initialStep={registrationStep}
+        onBack={() => setView("name-search")}
+        onPendingChange={setIsTransactionPending}
+        onSuccess={handleRegistrationSuccess}
+      />
+    ) : (
+      <NameSearchStep onNext={handleNext} />
+    );
 
   if (presentation === "inline") {
     return (

@@ -23,7 +23,7 @@ export interface RegistrationSuccessDetails {
   paymentTokenSymbol: string;
 }
 
-export interface RegistrationSuccessProps {
+export interface RegistrationSuccessStepProps {
   onDone: () => void;
   registration: RegistrationSuccessDetails;
 }
@@ -38,10 +38,10 @@ function formatDuration(duration: bigint) {
   return `${days} ${days === 1n ? "day" : "days"}`;
 }
 
-export function RegistrationSuccess({
+export function RegistrationSuccessStep({
   onDone,
   registration,
-}: RegistrationSuccessProps) {
+}: RegistrationSuccessStepProps) {
   const { messages, presentation, slots } = useNameRegistration();
   const expirationDate = new Intl.DateTimeFormat(undefined, {
     day: "numeric",

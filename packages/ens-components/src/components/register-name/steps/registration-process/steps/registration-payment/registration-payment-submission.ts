@@ -10,7 +10,7 @@ import type {
   PreparedContractWrite,
   RegistrationPaymentStatus,
 } from "#/actions";
-import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-process/registration-success";
+import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-success";
 import type { EnsNetwork, EnsPaymentToken } from "#/data";
 import type { StoredRegistrationAttempt } from "#/hooks/use-registration-attempts";
 

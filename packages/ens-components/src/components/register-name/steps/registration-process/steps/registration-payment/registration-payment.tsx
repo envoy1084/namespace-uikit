@@ -1,6 +1,6 @@
 "use client";
 
-import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-process/registration-success";
+import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-success";
 
 import {
   Avatar,
