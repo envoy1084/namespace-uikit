@@ -32,7 +32,7 @@ interface UseNameAvailabilityParameters<selectData = boolean> {
 
 | Parameter          | Default            | Description                                                        |
 | ------------------ | ------------------ | ------------------------------------------------------------------ |
-| `input`            | —                  | Label or ENS name. A single label is interpreted as `<label>.eth`. |
+| `input`            | Required           | Label or ENS name. A single label is interpreted as `<label>.eth`. |
 | `registrarAddress` | Provider registrar | Overrides the ENS v2 registrar address.                            |
 | `query`            | `undefined`        | TanStack Query options except `queryFn` and `queryKey`.            |
 

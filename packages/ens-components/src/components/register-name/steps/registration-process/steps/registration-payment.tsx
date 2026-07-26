@@ -485,7 +485,7 @@ export function RegistrationPayment({
               })}
             </span>
           ) : (
-            <span className="text-muted text-sm">—</span>
+            <span className="text-muted text-sm">N/A</span>
           )}
         </div>
       </Surface>

@@ -19,8 +19,8 @@ import { sepolia } from "viem/chains";
 
 | Prop               | Type        | Default           | Description                                           |
 | ------------------ | ----------- | ----------------- | ----------------------------------------------------- |
-| `transactionHash`  | `Hex`       | —                 | Transaction displayed by the progress indicator.      |
-| `chainId`          | `number`    | —                 | Selects the estimated confirmation duration.          |
+| `transactionHash`  | `Hex`       | Required          | Transaction displayed by the progress indicator.      |
+| `chainId`          | `number`    | Required          | Selects the estimated confirmation duration.          |
 | `isConfirmed`      | `boolean`   | `false`           | Completes the progress animation when `true`.         |
 | `blockExplorerUrl` | `string`    | `undefined`       | Base explorer URL used to build the transaction link. |
 | `icon`             | `ReactNode` | Built-in shuriken | Decorative icon rotated inside the progress bar.      |

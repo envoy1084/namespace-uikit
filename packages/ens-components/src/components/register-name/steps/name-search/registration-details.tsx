@@ -187,7 +187,10 @@ export function RegistrationDetails({
   };
 
   return (
-    <Surface className="mt-4 rounded-2xl border p-4" variant="transparent">
+    <Surface
+      className="border-default mt-4 rounded-2xl border p-4"
+      variant="transparent"
+    >
       {pickByDate ? (
         <ExpirationDatePicker
           value={expirationDate}
@@ -278,7 +281,7 @@ export function RegistrationDetails({
                 })}
               </span>
             ) : (
-              <span className="text-muted text-sm">—</span>
+              <span className="text-muted text-sm">N/A</span>
             )}
           </div>
         </div>

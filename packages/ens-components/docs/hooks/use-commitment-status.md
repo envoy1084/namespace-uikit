@@ -30,7 +30,7 @@ interface UseCommitmentStatusParameters<selectData = CommitmentStatus> {
 
 | Parameter          | Default            | Description                                                                  |
 | ------------------ | ------------------ | ---------------------------------------------------------------------------- |
-| `commitment`       | —                  | Submitted 32-byte commitment hash. `null` or `undefined` disables the query. |
+| `commitment`       | Required           | Submitted 32-byte commitment hash. `null` or `undefined` disables the query. |
 | `registrarAddress` | Provider registrar | ENS v2 registrar that received the commitment.                               |
 | `query`            | `undefined`        | TanStack Query options except `queryFn` and `queryKey`.                      |
 
