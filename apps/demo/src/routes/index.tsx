@@ -3,8 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { RegisterEns } from "@thenamespace/ens-components";
 
-import { TransactionProgressDemo } from "@/components/transaction-progress-demo";
-
 export const Route = createFileRoute("/")({ component: Home });
 
 function Home() {
@@ -14,7 +12,6 @@ function Home() {
         <ConnectButton showBalance={false} />
         <RegisterEns />
       </div>
-      <TransactionProgressDemo />
     </main>
   );
 }
