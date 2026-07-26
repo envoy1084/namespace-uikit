@@ -1,0 +1,19 @@
+{
+  "name": "ENS Components",
+  "short_name": "ENS Components",
+  "description": "Production-ready React components for building ENS v2 experiences.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f6f6f3",
+  "theme_color": "#f6f6f3",
+  "icons": [
+    {
+      "src": "/namespace.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
