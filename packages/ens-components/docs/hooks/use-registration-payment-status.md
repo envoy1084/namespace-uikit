@@ -1,0 +1,69 @@
+# useRegistrationPaymentStatus
+
+Reads registration price, ERC-20 balance, and registrar allowance in one
+batched query.
+
+```tsx
+import {
+  REGISTRATION_SECONDS_PER_YEAR,
+  useRegistrationPaymentStatus,
+} from "ens-components";
+
+const payment = useRegistrationPaymentStatus({
+  account: address,
+  duration: REGISTRATION_SECONDS_PER_YEAR,
+  input: "example",
+});
+
+const canRegister =
+  payment.data?.hasSufficientBalance && payment.data.hasSufficientAllowance;
+```
+
+## Parameters
+
+```ts
+interface UseRegistrationPaymentStatusParameters<
+  selectData = RegistrationPaymentStatus,
+> {
+  account: Address | null | undefined;
+  duration: bigint;
+  input: string | null | undefined;
+  paymentTokenAddress?: Address;
+  registrarAddress?: Address;
+  query?: Omit<
+    UseQueryOptions<
+      RegistrationPaymentStatus,
+      RegistrationPaymentStatusError,
+      selectData
+    >,
+    "queryFn" | "queryKey"
+  >;
+}
+```
+
+The query is disabled when `account` is `null` or `undefined`, when no public
+client is available, or when `query.enabled` is `false`.
+
+Addresses default to the contracts selected by `EnsProvider`.
+
+## Result data
+
+```ts
+interface RegistrationPaymentStatus {
+  readonly allowance: bigint;
+  readonly balance: bigint;
+  readonly base: bigint;
+  readonly decimals: number;
+  readonly hasSufficientAllowance: boolean;
+  readonly hasSufficientBalance: boolean;
+  readonly premium: bigint;
+  readonly total: bigint;
+}
+```
+
+Amounts are payment-token atomic units. The generated query key includes the
+network, contract addresses, account, duration, and input.
+
+See
+[`getRegistrationPaymentStatus`](../actions/get-registration-payment-status.md)
+for reads and error codes.
