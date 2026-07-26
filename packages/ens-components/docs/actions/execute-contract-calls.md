@@ -27,6 +27,7 @@ const result = await executeContractCalls(walletClient, publicClient, {
 All calls must use the same prepared `account`. `confirmation` defaults to
 `confirmed`; `submitted` returns after the final submission. Earlier calls in
 a sequential execution are still confirmed before dependent calls are sent.
+`timeout` applies to transaction receipt and atomic call-status waits.
 
 The result is discriminated by `strategy`. Atomic results contain a `callsId`
 and transaction hashes. Single and sequential results contain submitted

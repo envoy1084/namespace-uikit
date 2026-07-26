@@ -102,10 +102,12 @@ function validateCalls(
 async function waitForReceipt(
   publicClient: PublicClient,
   transactionHash: `0x${string}`,
+  timeout?: number,
 ): Promise<Result<TransactionReceipt, ExecuteContractCallsError>> {
   try {
     const receipt = await publicClient.waitForTransactionReceipt({
       hash: transactionHash,
+      ...(timeout === undefined ? {} : { timeout }),
     });
 
     return receipt.status === "success"
@@ -183,7 +185,11 @@ async function executeTransactions(
       continue;
     }
 
-    const receipt = await waitForReceipt(publicClient, transactionHash);
+    const receipt = await waitForReceipt(
+      publicClient,
+      transactionHash,
+      props.timeout,
+    );
     if (receipt.isErr()) return err(receipt.error);
 
     transactions.push({
