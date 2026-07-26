@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { Button, ButtonGroup, Typography } from "@thenamespace/uikit";
+import { Button, ButtonGroup } from "@thenamespace/uikit";
 import {
   Copy01Icon,
   HugeiconsIcon,
@@ -34,24 +34,17 @@ export function InstallCommand() {
   };
 
   return (
-    <ButtonGroup
-      className="mt-8 w-full max-w-[30rem]"
-      fullWidth
-      size="lg"
-      variant="outline"
-    >
+    <ButtonGroup className="mt-8 w-full max-w-[30rem]" fullWidth size="lg">
       <Button
         aria-label={`Copy ${installCommand}`}
-        className="min-w-0 flex-1 justify-start border-[#535353] bg-[#292929] px-4 text-white shadow-none hover:bg-[#303030]"
         onPress={() => void handleCopy()}
       >
-        <Typography.Code className="truncate bg-transparent p-0 font-mono text-sm text-white sm:text-[15px]">
+        <span className="truncate font-mono text-sm sm:text-[15px]">
           {installCommand}
-        </Typography.Code>
+        </span>
       </Button>
       <Button
         aria-label={`${isCopied ? "Copied" : "Copy"} ${installCommand}`}
-        className="border-[#535353] bg-white text-[#1f1f1f] shadow-none hover:bg-[#f4f4f4]"
         isIconOnly
         onPress={() => void handleCopy()}
       >
