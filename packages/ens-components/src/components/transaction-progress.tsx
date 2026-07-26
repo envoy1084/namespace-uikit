@@ -28,7 +28,7 @@ export function TransactionProgress({
         aria-label="Transaction confirmation in progress"
         className="bg-foreground h-10 w-full overflow-hidden rounded-xl p-1"
       >
-        <div className="ens-transaction-progress-bar bg-background relative h-full rounded-lg">
+        <div className="ens-transaction-progress-bar bg-background relative h-full w-8 rounded-lg">
           <img
             alt=""
             className="ens-transaction-progress-shuriken absolute top-1/2 right-1 size-6 -translate-y-1/2"
