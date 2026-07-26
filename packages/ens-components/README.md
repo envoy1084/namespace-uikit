@@ -133,3 +133,4 @@ for customization, lifecycle events, defaults, and flow behavior.
 - [getRegistrationPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/get-registration-payment-status.md)
 - [approveRegistrationPayment](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/approve-registration-payment.md)
 - [registerName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/register-name.md)
+- [supportsAtomicBatchCalls](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/supports-atomic-batch-calls.md)

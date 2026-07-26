@@ -6,3 +6,4 @@ export * from "#/actions/get-registration-payment-status";
 export * from "#/actions/is-name-available";
 export * from "#/actions/parse-name-input";
 export * from "#/actions/register-name";
+export * from "#/actions/supports-atomic-batch-calls";
