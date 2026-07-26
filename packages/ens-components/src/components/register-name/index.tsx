@@ -46,6 +46,8 @@ function NameRegistrationContent() {
     setInput,
     setReferrer,
     setReferrerInput,
+    setResolverAddress,
+    setResolverInput,
     slots,
   } = useNameRegistration();
   const { chain, contracts } = useEnsConfig();
@@ -104,6 +106,8 @@ function NameRegistrationContent() {
     setInput("");
     setReferrer(zeroHash);
     setReferrerInput("");
+    setResolverAddress(null);
+    setResolverInput("");
     setRegistrationSuccess(undefined);
     setRegistrationStep("commitment");
     setView("name-search");

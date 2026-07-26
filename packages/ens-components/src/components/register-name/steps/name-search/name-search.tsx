@@ -31,7 +31,7 @@ export const NameSearchStep = ({
   onAvailabilityChange,
   onNext,
 }: NameSearchStepProps) => {
-  const { input, isReferrerValid, messages, setInput, slots } =
+  const { input, isReferrerValid, isResolverValid, messages, setInput, slots } =
     useNameRegistration();
   const [isPricingReady, setIsPricingReady] = useState(false);
   const availability = useNameAvailability({
@@ -54,7 +54,8 @@ export const NameSearchStep = ({
   const displayedError = availability.error ?? inputError;
   const isShortLabelError = displayedError === "LABEL_TOO_SHORT";
   const isAvailable = availability.isSuccess && availability.data;
-  const canContinue = isAvailable && isPricingReady && isReferrerValid;
+  const canContinue =
+    isAvailable && isPricingReady && isReferrerValid && isResolverValid;
   const showAvailabilityStatus =
     inputError !== undefined ||
     availability.isFetching ||

@@ -1,6 +1,6 @@
 "use client";
 
-import type { Hex } from "viem";
+import type { Address, Hex } from "viem";
 
 import type {
   NameRegistrationMessages,
@@ -18,7 +18,7 @@ import {
   type SetStateAction,
 } from "react";
 
-import { getAddress, isAddress, slice, zeroHash } from "viem";
+import { getAddress, isAddress, slice, zeroAddress, zeroHash } from "viem";
 
 import { DEFAULT_NAME_REGISTRATION_MESSAGES } from "#/components/register-name/customization";
 
@@ -39,16 +39,21 @@ export interface NameRegistrationContextValue {
   events: NameRegistrationEvents;
   input: string;
   isReferrerValid: boolean;
+  isResolverValid: boolean;
   messages: NameRegistrationMessages;
   presentation: NameRegistrationPresentation;
   referrer: Hex;
   referrerInput: string;
+  resolverAddress: Address | null;
+  resolverInput: string;
   setCommitmentId: Dispatch<SetStateAction<string | null>>;
   setDuration: Dispatch<SetStateAction<bigint>>;
   setDurationMode: Dispatch<SetStateAction<RegistrationDurationMode>>;
   setInput: Dispatch<SetStateAction<string>>;
   setReferrer: Dispatch<SetStateAction<Hex>>;
   setReferrerInput: Dispatch<SetStateAction<string>>;
+  setResolverAddress: Dispatch<SetStateAction<Address | null>>;
+  setResolverInput: Dispatch<SetStateAction<string>>;
   slots: NameRegistrationSlots;
 }
 
@@ -58,6 +63,7 @@ export interface NameRegistrationProviderProps {
   defaultDurationMode?: RegistrationDurationMode;
   defaultInput?: string;
   defaultReferrer?: Hex;
+  defaultResolverAddress?: Address;
   events?: NameRegistrationEvents;
   messages?: Partial<NameRegistrationMessages>;
   presentation?: NameRegistrationPresentation;
@@ -83,6 +89,7 @@ export function NameRegistrationProvider({
   defaultDurationMode = "duration",
   defaultInput = "",
   defaultReferrer = zeroHash,
+  defaultResolverAddress,
   events = {},
   messages,
   presentation = "dialog",
@@ -100,9 +107,20 @@ export function NameRegistrationProvider({
   const [referrerInput, setReferrerInput] = useState(() =>
     getReferrerInput(defaultReferrer),
   );
+  const [resolverAddress, setResolverAddress] = useState<Address | null>(
+    defaultResolverAddress ?? null,
+  );
+  const [resolverInput, setResolverInput] = useState(
+    defaultResolverAddress ?? "",
+  );
   const trimmedReferrerInput = referrerInput.trim();
   const isReferrerValid =
     trimmedReferrerInput === "" || isAddress(trimmedReferrerInput);
+  const trimmedResolverInput = resolverInput.trim();
+  const isResolverValid =
+    trimmedResolverInput === "" ||
+    (isAddress(trimmedResolverInput) &&
+      getAddress(trimmedResolverInput) !== zeroAddress);
   const resolvedMessages = {
     ...DEFAULT_NAME_REGISTRATION_MESSAGES,
     ...messages,
@@ -117,16 +135,21 @@ export function NameRegistrationProvider({
         events,
         input,
         isReferrerValid,
+        isResolverValid,
         messages: resolvedMessages,
         presentation,
         referrer,
         referrerInput,
+        resolverAddress,
+        resolverInput,
         setCommitmentId,
         setDuration,
         setDurationMode,
         setInput,
         setReferrer,
         setReferrerInput,
+        setResolverAddress,
+        setResolverInput,
         slots,
       }}
     >
