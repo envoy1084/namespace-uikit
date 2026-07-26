@@ -25,7 +25,9 @@ export interface ConfirmedRegistrationDetails {
 
 export type PaymentActionStatus =
   | "approving"
+  | "batching"
   | "confirming-approval"
+  | "confirming-batch"
   | "confirming-registration"
   | "idle"
   | "refreshing"

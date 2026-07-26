@@ -86,6 +86,7 @@ export function RegistrationPayment({
         {formatTimeRemaining(registration.timeRemaining)}.
       </Typography.Paragraph>
       {(registration.actionStatus === "confirming-approval" ||
+        registration.actionStatus === "confirming-batch" ||
         registration.actionStatus === "confirming-registration") &&
       registration.transactionHash !== undefined ? (
         <TransactionProgress

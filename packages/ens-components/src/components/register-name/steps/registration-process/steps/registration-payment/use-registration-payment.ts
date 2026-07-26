@@ -1,11 +1,16 @@
 "use client";
 
-import type { Hex } from "viem";
-
+import type {
+  ContractWriteProgress,
+  RegistrationPaymentStatus,
+} from "#/actions";
 import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-process/registration-success";
+import type { PaymentActionStatus } from "#/components/register-name/steps/registration-process/steps/registration-payment/get-registration-details";
+import type { StoredRegistrationAttempt } from "#/hooks/use-registration-attempts";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
+import { isAddressEqual, type Hex } from "viem";
 import {
   useConnection,
   usePublicClient,
@@ -14,21 +19,15 @@ import {
 } from "wagmi";
 
 import {
-  executeContractWrites,
-  prepareRegisterNameWrite,
-  prepareRegistrationPaymentApprovalWrite,
-} from "#/actions";
-import {
   COMMITMENT_VALID_DURATION_MS,
   useNameRegistration,
 } from "#/components/register-name/context";
 import { emitNameRegistrationEvent } from "#/components/register-name/emit-event";
-import { readCommitmentStatus } from "#/components/register-name/steps/registration-process/steps/commitment/read-commitment-status";
+import { parseStoredDuration } from "#/components/register-name/steps/registration-process/steps/registration-payment/get-registration-details";
 import {
-  getRegistrationDetails,
-  parseStoredDuration,
-  type PaymentActionStatus,
-} from "#/components/register-name/steps/registration-process/steps/registration-payment/get-registration-details";
+  submitRegistrationPayment,
+  type RegistrationPaymentSubmissionSuccess,
+} from "#/components/register-name/steps/registration-process/steps/registration-payment/registration-payment-submission";
 import { useRegistrationPaymentToken } from "#/components/register-name/steps/registration-process/steps/registration-payment/use-registration-payment-token";
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
 import { useRegistrationPaymentStatus } from "#/hooks";
@@ -39,6 +38,10 @@ export interface UseRegistrationPaymentProps {
   onCommitmentInvalid: (error: unknown) => void;
   onPendingChange?: (isPending: boolean) => void;
   onSuccess: (registration: RegistrationSuccessDetails) => void;
+}
+
+function isCommitmentInvalid(error: unknown) {
+  return error === "COMMITMENT_EXPIRED" || error === "COMMITMENT_NOT_FOUND";
 }
 
 export function useRegistrationPayment({
@@ -79,6 +82,10 @@ export function useRegistrationPayment({
   const [actionStatus, setActionStatus] = useState<PaymentActionStatus>("idle");
   const [isTransactionConfirmed, setIsTransactionConfirmed] = useState(false);
   const [transactionHash, setTransactionHash] = useState<Hex>();
+  const transactionHashRef = useRef<Hex | undefined>(undefined);
+  const transactionPhaseRef = useRef<"approval" | "registration">(
+    "registration",
+  );
   const [error, setError] = useState<unknown>();
   const [now, setNow] = useState(Date.now());
   const isPending = actionStatus !== "idle";
@@ -140,10 +147,91 @@ export function useRegistrationPayment({
     storedAttempt,
   ]);
 
+  const handleProgress = (progress: ContractWriteProgress) => {
+    if (progress.strategy === "atomic") {
+      transactionPhaseRef.current = "registration";
+      setActionStatus(
+        progress.state === "signing" ? "batching" : "confirming-batch",
+      );
+      if (progress.state === "confirmed") {
+        const registration = progress.transactions.find(
+          ({ prepared }) => prepared.kind === "register-name",
+        );
+        setTransactionHash(registration?.transactionHash);
+        transactionHashRef.current = registration?.transactionHash;
+        setIsTransactionConfirmed(true);
+      }
+      return;
+    }
+
+    const isApproval =
+      progress.prepared.kind === "approve-registration-payment";
+    transactionPhaseRef.current = isApproval ? "approval" : "registration";
+    if (progress.state === "signing") {
+      setActionStatus(isApproval ? "approving" : "registering");
+      setTransactionHash(undefined);
+      transactionHashRef.current = undefined;
+      setIsTransactionConfirmed(false);
+      return;
+    }
+
+    setTransactionHash(progress.transactionHash);
+    transactionHashRef.current = progress.transactionHash;
+    setActionStatus(
+      isApproval ? "confirming-approval" : "confirming-registration",
+    );
+    setIsTransactionConfirmed(progress.state === "confirmed");
+  };
+
+  const handleSuccess = async (
+    attempt: StoredRegistrationAttempt,
+    attemptId: string,
+    paymentData: RegistrationPaymentStatus,
+    result: RegistrationPaymentSubmissionSuccess,
+  ) => {
+    if (result.approval !== undefined) {
+      emitNameRegistrationEvent(events.onApprove, {
+        account: attempt.account,
+        amount: paymentData.total,
+        chainId: chain.id,
+        network,
+        paymentTokenAddress: paymentToken.address,
+        receipt: result.approval.receipt,
+        registrarAddress: attempt.registrarAddress,
+        transactionHash: result.approval.transactionHash,
+      });
+    }
+
+    await new Promise((resolve) =>
+      window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
+    );
+    deleteAttempt(attemptId);
+    setRegistrationAttemptId(null);
+    emitNameRegistrationEvent(events.onRegister, {
+      account: attempt.account,
+      amount: result.registrationAmount,
+      chainId: chain.id,
+      decimals: paymentData.decimals,
+      duration: result.registrationDuration,
+      expiresAt: result.details.expiresAt,
+      name: result.details.name,
+      network,
+      owner: attempt.owner,
+      paymentTokenAddress: paymentToken.address,
+      receipt: result.registration.receipt,
+      referrer: attempt.referrer,
+      registrarAddress: attempt.registrarAddress,
+      ...(result.tokenId === undefined ? {} : { tokenId: result.tokenId }),
+      transactionHash: result.registration.transactionHash,
+    });
+    onSuccess(result.details);
+  };
+
   const handlePayment = async () => {
     setError(undefined);
     setIsTransactionConfirmed(false);
     setTransactionHash(undefined);
+    transactionHashRef.current = undefined;
 
     if (connection.address === undefined) {
       reportError("WALLET_NOT_CONNECTED", "registration");
@@ -152,7 +240,6 @@ export function useRegistrationPayment({
 
     if (isWrongNetwork) {
       setActionStatus("switching");
-
       try {
         await switchChainAsync({ chainId: chain.id });
       } catch {
@@ -172,6 +259,10 @@ export function useRegistrationPayment({
       reportError("CONTRACT_READ_FAILED", "registration");
       return;
     }
+    if (!isAddressEqual(connection.address, storedAttempt.account)) {
+      reportError("MISMATCHED_ACCOUNTS", "registration");
+      return;
+    }
 
     setActionStatus("refreshing");
     const refreshedPayment = await payment.refetch();
@@ -183,223 +274,46 @@ export function useRegistrationPayment({
       setActionStatus("idle");
       return;
     }
-
-    const paymentData = refreshedPayment.data;
-    if (!paymentData.hasSufficientBalance) {
+    if (!refreshedPayment.data.hasSufficientBalance) {
       setActionStatus("idle");
       return;
     }
+    transactionPhaseRef.current = refreshedPayment.data.hasSufficientAllowance
+      ? "registration"
+      : "approval";
 
-    if (!paymentData.hasSufficientAllowance) {
-      let approvalHash: Hex | undefined;
-      setActionStatus("approving");
-      const approval = prepareRegistrationPaymentApprovalWrite({
-        account: connection.address,
-        amount: paymentData.total,
-        network,
-        paymentTokenAddress: paymentToken.address,
-        registrarAddress: storedAttempt.registrarAddress,
-      });
-
-      if (approval.isErr()) {
-        reportError(approval.error, "approval");
-        setActionStatus("idle");
-        return;
-      }
-
-      const execution = await executeContractWrites(
-        walletClient,
-        publicClient,
-        {
-          calls: [approval.value],
-          chain,
-          confirmation: "confirmed",
-          onProgress: (progress) => {
-            if (progress.strategy === "atomic") return;
-            if (progress.state === "submitted") {
-              approvalHash = progress.transactionHash;
-              setActionStatus("confirming-approval");
-              setTransactionHash(progress.transactionHash);
-            }
-            if (progress.state === "confirmed") {
-              setIsTransactionConfirmed(true);
-            }
-          },
-          strategy: "single",
-        },
+    const result = await submitRegistrationPayment({
+      attempt: storedAttempt,
+      chain,
+      network,
+      payment: refreshedPayment.data,
+      paymentToken,
+      publicClient,
+      walletClient,
+      onProgress: handleProgress,
+    });
+    if (result.isErr()) {
+      reportError(
+        result.error,
+        transactionPhaseRef.current,
+        transactionHashRef.current,
       );
-      if (execution.isErr()) {
-        reportError(execution.error, "approval", approvalHash);
-        setActionStatus("idle");
-        setIsTransactionConfirmed(false);
-        setTransactionHash(undefined);
-        return;
-      }
-
-      if (execution.value.strategy === "atomic") {
-        reportError("TRANSACTION_CONFIRMATION_FAILED", "approval");
-        setActionStatus("idle");
-        return;
-      }
-      const approvedTransaction = execution.value.transactions[0];
-      if (approvedTransaction?.receipt === undefined) {
-        reportError("TRANSACTION_CONFIRMATION_FAILED", "approval");
-        setActionStatus("idle");
-        return;
-      }
-
-      emitNameRegistrationEvent(events.onApprove, {
-        account: connection.address,
-        amount: paymentData.total,
-        chainId: chain.id,
-        network,
-        paymentTokenAddress: paymentToken.address,
-        receipt: approvedTransaction.receipt,
-        registrarAddress: storedAttempt.registrarAddress,
-        transactionHash: approvedTransaction.transactionHash,
-      });
-      await new Promise((resolve) =>
-        window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
-      );
-      await payment.refetch();
       setActionStatus("idle");
       setIsTransactionConfirmed(false);
       setTransactionHash(undefined);
-      return;
-    }
-
-    const commitmentStatus = await readCommitmentStatus(publicClient, {
-      commitment: storedAttempt.commitment,
-      network,
-      registrarAddress: storedAttempt.registrarAddress,
-    });
-    if (commitmentStatus.isErr()) {
-      reportError(commitmentStatus.error, "registration");
-      setActionStatus("idle");
-      return;
-    }
-
-    if (commitmentStatus.value.state !== "READY") {
-      const statusError =
-        commitmentStatus.value.state === "WAITING"
-          ? "COMMITMENT_NOT_READY"
-          : commitmentStatus.value.state === "EXPIRED"
-            ? "COMMITMENT_EXPIRED"
-            : "COMMITMENT_NOT_FOUND";
-      reportError(statusError, "registration");
-      setActionStatus("idle");
-
-      if (commitmentStatus.value.state !== "WAITING") {
-        onCommitmentInvalid(statusError);
+      transactionHashRef.current = undefined;
+      if (isCommitmentInvalid(result.error)) {
+        onCommitmentInvalid(result.error);
       }
       return;
     }
 
-    setActionStatus("registering");
-    let registrationHash: Hex | undefined;
-    const registration = prepareRegisterNameWrite({
-      account: connection.address,
-      duration,
-      input: storedAttempt.label,
-      network,
-      owner: storedAttempt.owner,
-      paymentTokenAddress: paymentToken.address,
-      referrer: storedAttempt.referrer,
-      registrarAddress: storedAttempt.registrarAddress,
-      resolverAddress: storedAttempt.resolver.address,
-      secret: storedAttempt.secret,
-      subregistryAddress: storedAttempt.subregistry,
-    });
-    if (registration.isErr()) {
-      reportError(registration.error, "registration");
-      setActionStatus("idle");
-      return;
-    }
-
-    const execution = await executeContractWrites(walletClient, publicClient, {
-      calls: [registration.value],
-      chain,
-      confirmation: "confirmed",
-      onProgress: (progress) => {
-        if (progress.strategy === "atomic") return;
-        if (progress.state === "submitted") {
-          registrationHash = progress.transactionHash;
-          setActionStatus("confirming-registration");
-          setTransactionHash(progress.transactionHash);
-        }
-        if (progress.state === "confirmed") {
-          setIsTransactionConfirmed(true);
-        }
-      },
-      strategy: "single",
-    });
-    if (execution.isErr()) {
-      reportError(execution.error, "registration", registrationHash);
-      setActionStatus("idle");
-      setTransactionHash(undefined);
-      return;
-    }
-
-    if (execution.value.strategy === "atomic") {
-      reportError("TRANSACTION_CONFIRMATION_FAILED", "registration");
-      setActionStatus("idle");
-      return;
-    }
-    const registeredTransaction = execution.value.transactions[0];
-    if (registeredTransaction?.receipt === undefined) {
-      reportError("TRANSACTION_CONFIRMATION_FAILED", "registration");
-      setActionStatus("idle");
-      return;
-    }
-    const receipt = registeredTransaction.receipt;
-    let registeredAt = Date.now();
-
-    try {
-      const block = await publicClient.getBlock({
-        blockNumber: receipt.blockNumber,
-      });
-      registeredAt = Number(block.timestamp) * 1_000;
-    } catch {
-      // Receipt success remains authoritative if the timestamp read fails.
-    }
-
-    const confirmedRegistration = getRegistrationDetails({
-      decimals: paymentData.decimals,
-      fallbackAmount: paymentData.total,
-      fallbackDuration: duration,
-      fallbackLabel: registration.value.metadata.label,
-      paymentTokenIcon: paymentToken.icon,
-      paymentTokenSymbol: paymentToken.symbol,
-      receipt,
-      registeredAt,
-      registrarAddress: storedAttempt.registrarAddress,
-    });
-
-    await new Promise((resolve) =>
-      window.setTimeout(resolve, TRANSACTION_PROGRESS_COMPLETION_DURATION_MS),
+    await handleSuccess(
+      storedAttempt,
+      registrationAttemptId,
+      refreshedPayment.data,
+      result.value,
     );
-    deleteAttempt(registrationAttemptId);
-    setRegistrationAttemptId(null);
-    onSuccess(confirmedRegistration.details);
-    emitNameRegistrationEvent(events.onRegister, {
-      account: connection.address,
-      amount: confirmedRegistration.amount,
-      chainId: chain.id,
-      decimals: paymentData.decimals,
-      duration: confirmedRegistration.duration,
-      expiresAt: confirmedRegistration.details.expiresAt,
-      name: confirmedRegistration.details.name,
-      network,
-      owner: storedAttempt.owner,
-      paymentTokenAddress: paymentToken.address,
-      receipt,
-      referrer: storedAttempt.referrer,
-      registrarAddress: storedAttempt.registrarAddress,
-      ...(confirmedRegistration.tokenId === undefined
-        ? {}
-        : { tokenId: confirmedRegistration.tokenId }),
-      transactionHash: registeredTransaction.transactionHash,
-    });
   };
 
   const buttonLabel =
@@ -415,16 +329,20 @@ export function useRegistrationPayment({
               ? "Confirm registration in wallet"
               : actionStatus === "confirming-registration"
                 ? "Confirming registration"
-                : actionStatus === "refreshing"
-                  ? "Refreshing registration price"
-                  : payment.isError
-                    ? "Try again"
-                    : payment.data !== undefined &&
-                        !payment.data.hasSufficientBalance
-                      ? `Insufficient ${paymentToken.symbol} balance`
-                      : payment.data?.hasSufficientAllowance
-                        ? "Register name"
-                        : `Approve ${paymentToken.symbol}`;
+                : actionStatus === "batching"
+                  ? "Confirm approval and registration"
+                  : actionStatus === "confirming-batch"
+                    ? "Confirming approval and registration"
+                    : actionStatus === "refreshing"
+                      ? "Refreshing registration price"
+                      : payment.isError
+                        ? "Try again"
+                        : payment.data !== undefined &&
+                            !payment.data.hasSufficientBalance
+                          ? `Insufficient ${paymentToken.symbol} balance`
+                          : payment.data?.hasSufficientAllowance
+                            ? "Register name"
+                            : `Approve ${paymentToken.symbol} and register`;
 
   return {
     actionStatus,
