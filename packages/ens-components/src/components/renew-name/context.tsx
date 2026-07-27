@@ -19,11 +19,15 @@ import {
   decodeReferrerAddress,
   DEFAULT_REGISTRATION_DURATION,
   MIN_REGISTRATION_DURATION,
+  REGISTRATION_SECONDS_PER_YEAR,
   resolvePaymentToken,
 } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export type NameRenewalDurationMode = "date" | "duration";
+export const MAX_NAME_RENEWAL_YEARS = 10;
+const MAX_NAME_RENEWAL_DURATION =
+  BigInt(MAX_NAME_RENEWAL_YEARS) * REGISTRATION_SECONDS_PER_YEAR;
 
 export interface NameRenewalContextValue {
   duration: bigint;
@@ -86,7 +90,9 @@ export function NameRenewalProvider({
   const initialDuration =
     defaultDuration < MIN_REGISTRATION_DURATION
       ? MIN_REGISTRATION_DURATION
-      : defaultDuration;
+      : defaultDuration > MAX_NAME_RENEWAL_DURATION
+        ? MAX_NAME_RENEWAL_DURATION
+        : defaultDuration;
   const [duration, setDuration] = useState(() => initialDuration);
   const [durationMode, setDurationMode] = useState(defaultDurationMode);
   const [input, setInput] = useState(defaultLabel);

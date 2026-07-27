@@ -21,7 +21,10 @@ import {
 } from "@thenamespace/uikit/icons";
 
 import { PaymentTokenSelect } from "#/components/payment-token-select";
-import { useNameRenewal } from "#/components/renew-name/context";
+import {
+  MAX_NAME_RENEWAL_YEARS,
+  useNameRenewal,
+} from "#/components/renew-name/context";
 import { RenewalAdvancedOptions } from "#/components/renew-name/steps/renewal-form/referrer-option";
 import { RenewalDatePicker } from "#/components/renew-name/steps/renewal-form/renewal-date-picker";
 import { formatTokenAmount } from "#/lib";
@@ -33,7 +36,6 @@ import {
 } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
-const MAX_RENEWAL_YEARS = 10;
 const MIN_RENEWAL_DAYS = Number(
   MIN_REGISTRATION_DURATION / REGISTRATION_SECONDS_PER_DAY,
 );
@@ -49,7 +51,7 @@ function timestampToCalendarDate(timestamp: bigint) {
 
 function getYears(duration: bigint) {
   return Math.min(
-    MAX_RENEWAL_YEARS,
+    MAX_NAME_RENEWAL_YEARS,
     Math.max(
       1,
       Math.round(Number(duration) / Number(REGISTRATION_SECONDS_PER_YEAR)),
@@ -108,13 +110,13 @@ export function RenewalDetails({
     days: MIN_RENEWAL_DAYS,
   });
   const maximumTargetDate = currentExpiryDate.add({
-    years: MAX_RENEWAL_YEARS,
+    years: MAX_NAME_RENEWAL_YEARS,
   });
   const pickByDate = durationMode === "date";
 
   const updateYears = (value: number) => {
     const nextYears = Math.min(
-      MAX_RENEWAL_YEARS,
+      MAX_NAME_RENEWAL_YEARS,
       Math.max(1, Math.round(value)),
     );
     setDuration(BigInt(nextYears) * REGISTRATION_SECONDS_PER_YEAR);
@@ -162,7 +164,7 @@ export function RenewalDetails({
           aria-label="Renewal duration in years"
           className="w-full"
           isDisabled={isDisabled}
-          maxValue={MAX_RENEWAL_YEARS}
+          maxValue={MAX_NAME_RENEWAL_YEARS}
           minValue={1}
           value={years}
           onChange={updateYears}
