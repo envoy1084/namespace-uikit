@@ -138,10 +138,7 @@ async function buildRegistrationSuccess(
     receipt: confirmedRegistration.value.receipt,
     registrarAddress: writes.registration.request.address,
   });
-  const approval = getConfirmedWrite(
-    transactions,
-    "approve-registration-payment",
-  );
+  const approval = getConfirmedWrite(transactions, "approve-payment-token");
   const addressRecord = getConfirmedWrite(transactions, "set-address-record");
   const l2PrimaryName = getConfirmedWrite(transactions, "set-l2-primary-name");
   const l1PrimaryName = getConfirmedWrite(transactions, "set-l1-primary-name");

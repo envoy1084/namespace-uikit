@@ -34,7 +34,8 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   EMPTY_CALLS: "There are no transactions to submit.",
   EMPTY_LABEL: "The ENS name contains an empty label.",
   INPUT_TOO_LONG: "The ENS name is too long.",
-  INVALID_DURATION: "Select a valid registration duration.",
+  INVALID_DURATION: "Select a valid duration.",
+  INVALID_ETH_REGISTRY_ADDRESS: "The ENS registry address is invalid.",
   INVALID_OWNER_ADDRESS: "The name owner address is invalid.",
   INVALID_ACCOUNT_ADDRESS: "The connected wallet address is invalid.",
   INVALID_APPROVAL_AMOUNT: "The token approval amount is invalid.",
@@ -54,6 +55,7 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   INVALID_INIT_DATA: "The resolver initialization data is invalid.",
   INVALID_PAYMENT_TOKEN_ADDRESS: "The payment token address is invalid.",
   INVALID_REGISTRAR_ADDRESS: "The registrar address is invalid.",
+  INVALID_SPENDER_ADDRESS: "The token spender address is invalid.",
   INVALID_REFERRER: "The referrer value is invalid.",
   INVALID_RESOLVER_ADDRESS: "The resolver address is invalid.",
   INVALID_SALT: "The saved resolver salt is invalid.",
@@ -69,6 +71,12 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   NAME_NOT_AVAILABLE: (data) => {
     const name = getName(data);
     return name ? `${name} is not available.` : "This name is not available.";
+  },
+  NAME_NOT_RENEWABLE: (data) => {
+    const name = getName(data);
+    return name
+      ? `${name} cannot be renewed right now.`
+      : "This name cannot be renewed right now.";
   },
   RESOLVER_DEPLOYMENT_INVALID:
     "The dedicated resolver deployment could not be verified.",

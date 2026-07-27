@@ -11,12 +11,12 @@ import { err, ok, type Result } from "neverthrow";
 
 import {
   prepareRegisterNameWrite,
-  prepareRegistrationPaymentApprovalWrite,
+  preparePaymentTokenApprovalWrite,
   prepareSetAddressRecordWrite,
   prepareSetL1PrimaryNameWrite,
   prepareSetL2PrimaryNameWrite,
   type PreparedRegisterNameWrite,
-  type PreparedRegistrationPaymentApprovalWrite,
+  type PreparedPaymentTokenApprovalWrite,
   type PreparedSetAddressRecordWrite,
   type PreparedSetL1PrimaryNameWrite,
   type PreparedSetL2PrimaryNameWrite,
@@ -25,7 +25,7 @@ import { parseRegistrationDuration } from "#/lib/helpers";
 
 export interface PreparedRegistrationPaymentWrites {
   addressRecord?: PreparedSetAddressRecordWrite;
-  approval?: PreparedRegistrationPaymentApprovalWrite;
+  approval?: PreparedPaymentTokenApprovalWrite;
   calls: readonly [PreparedContractWrite, ...PreparedContractWrite[]];
   l1PrimaryName?: PreparedSetL1PrimaryNameWrite;
   l2PrimaryName?: PreparedSetL2PrimaryNameWrite;
@@ -70,14 +70,14 @@ export function prepareRegistrationPaymentWrites(
   });
   if (registration.isErr()) return err(registration.error);
 
-  let approval: PreparedRegistrationPaymentApprovalWrite | undefined;
+  let approval: PreparedPaymentTokenApprovalWrite | undefined;
   if (!payment.hasSufficientAllowance) {
-    const preparedApproval = prepareRegistrationPaymentApprovalWrite({
+    const preparedApproval = preparePaymentTokenApprovalWrite({
       account: attempt.account,
       amount: payment.total,
       network,
       paymentTokenAddress: paymentToken.address,
-      registrarAddress: attempt.registrarAddress,
+      spenderAddress: attempt.registrarAddress,
     });
     if (preparedApproval.isErr()) return err(preparedApproval.error);
     approval = preparedApproval.value;

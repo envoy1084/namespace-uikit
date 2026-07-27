@@ -27,7 +27,7 @@ export type PaymentTransactionPhase =
 export function getPaymentTransactionPhase(
   prepared: PreparedContractWrite,
 ): PaymentTransactionPhase {
-  if (prepared.kind === "approve-registration-payment") return "approval";
+  if (prepared.kind === "approve-payment-token") return "approval";
   if (prepared.kind === "set-address-record") return "address-record";
   if (prepared.kind === "set-l1-primary-name") return "l1-primary-name";
   if (prepared.kind === "set-l2-primary-name") return "l2-primary-name";

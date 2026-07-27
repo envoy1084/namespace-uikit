@@ -2,5 +2,7 @@ export * from "#/actions/read/contract-reads";
 export * from "#/actions/read/prepare-read-commitment-status";
 export * from "#/actions/read/prepare-read-name-availability";
 export * from "#/actions/read/prepare-read-name-price";
+export * from "#/actions/read/prepare-read-name-renewal-payment-status";
+export * from "#/actions/read/prepare-read-name-renewal-price";
 export * from "#/actions/read/prepare-read-permissioned-resolver-verification";
 export * from "#/actions/read/prepare-read-registration-payment-status";
