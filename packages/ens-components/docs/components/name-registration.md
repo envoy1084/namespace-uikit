@@ -175,7 +175,7 @@ The **Set as primary name** switch is in Advanced options and is off by
 default. When selected, the component appends two writes after registration:
 
 1. `setAddr(node, 0x80000000, addressBytes)` on the registered name's resolver;
-2. `setName(name)` on the canonical ENS `DefaultReverseRegistrar`.
+2. `setName(name)` on the ENS `L2ReverseRegistrar`.
 
 The forward address record is required for ENSIP-19 primary-name verification.
 The reverse registrar updates the connected account because `setName` derives

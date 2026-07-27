@@ -9,7 +9,7 @@ import {
   type ContractFunctionParameters,
 } from "viem";
 
-import { defaultReverseRegistrarAbi } from "#/data/abi";
+import { l2ReverseRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import { parseNameInput } from "#/lib/parse-name-input";
 
@@ -19,18 +19,18 @@ export type PrepareSetPrimaryNameWriteError =
   | ParseNameInputError;
 
 export interface PrepareSetPrimaryNameWriteProps {
-  /** Account whose default primary name will be updated. */
+  /** Account whose primary name will be updated. */
   readonly account: Address;
   /** ENS name or `.eth` label to use as the primary name. */
   readonly input: string | null | undefined;
   /** Network associated with the reverse registrar. */
   readonly network: EnsNetwork;
-  /** Canonical ENS default reverse registrar address. */
+  /** ENS L2ReverseRegistrar address. */
   readonly reverseRegistrarAddress: Address;
 }
 
 type SetPrimaryNameRequest = ContractFunctionParameters<
-  typeof defaultReverseRegistrarAbi,
+  typeof l2ReverseRegistrarAbi,
   "nonpayable",
   "setName",
   readonly [string]
@@ -47,7 +47,7 @@ export type PreparedSetPrimaryNameWrite = PreparedContractWrite<
   PrepareSetPrimaryNameWriteMetadata
 >;
 
-/** Prepares an ENS v2 default reverse-name update. */
+/** Prepares an ENS reverse-name update for the submitting account. */
 export function prepareSetPrimaryNameWrite(
   props: PrepareSetPrimaryNameWriteProps,
 ): Result<PreparedSetPrimaryNameWrite, PrepareSetPrimaryNameWriteError> {
@@ -67,7 +67,7 @@ export function prepareSetPrimaryNameWrite(
   const name = parsedInput.value.normalizedName;
   const request = {
     address: reverseRegistrarAddress,
-    abi: defaultReverseRegistrarAbi,
+    abi: l2ReverseRegistrarAbi,
     functionName: "setName",
     args: [name],
   } as const satisfies SetPrimaryNameRequest;

@@ -26,6 +26,7 @@ import { useRegistrationAttempts } from "#/components/register-name/hooks/use-re
 import {
   getPaymentActionStatus,
   getPaymentTransactionPhase,
+  getRegistrationPaymentButtonLabel,
   type PaymentActionStatus,
   type PaymentTransactionPhase,
 } from "#/components/register-name/steps/registration-process/steps/registration-payment/registration-payment-state";
@@ -236,7 +237,7 @@ export function useRegistrationPayment({
         owner: attempt.owner,
         receipt: result.primaryName.receipt,
         resolverAddress: attempt.resolver.address,
-        reverseRegistrarAddress: contracts.defaultReverseRegistrar.address,
+        reverseRegistrarAddress: contracts.l2ReverseRegistrar.address,
         transactionHash: result.primaryName.transactionHash,
       });
     }
@@ -315,7 +316,7 @@ export function useRegistrationPayment({
       payment: refreshedPayment.data,
       paymentToken,
       publicClient,
-      reverseRegistrarAddress: contracts.defaultReverseRegistrar.address,
+      reverseRegistrarAddress: contracts.l2ReverseRegistrar.address,
       walletClient,
       onProgress: handleProgress,
     });
@@ -343,8 +344,22 @@ export function useRegistrationPayment({
     );
   };
 
+  const buttonLabel = getRegistrationPaymentButtonLabel({
+    actionStatus,
+    chainName: chain.name,
+    hasPaymentData: payment.data !== undefined,
+    hasSufficientAllowance: payment.data?.hasSufficientAllowance ?? false,
+    hasSufficientBalance: payment.data?.hasSufficientBalance ?? false,
+    isPaymentError: payment.isError,
+    isWalletConnected: connection.address !== undefined,
+    isWrongNetwork,
+    paymentTokenSymbol: paymentToken.symbol,
+    setPrimaryName: storedAttempt?.setPrimaryName ?? false,
+  });
+
   return {
     actionStatus,
+    buttonLabel,
     error,
     handlePayment,
     isPending,

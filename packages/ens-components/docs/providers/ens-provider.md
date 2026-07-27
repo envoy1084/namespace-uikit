@@ -32,14 +32,14 @@ Only `"testnet"` is currently implemented. It resolves to Sepolia and the
 package's ENS v2 test deployments. Passing `"mainnet"` throws an error.
 
 The provider supplies the selected chain, registrar, resolver factory,
-resolver implementation, default reverse registrar, and non-empty
+resolver implementation, L2 reverse registrar, and non-empty
 payment-token configuration to package hooks and components.
 
 The built-in testnet configuration currently includes:
 
-| Contract                | Address                                      |
-| ----------------------- | -------------------------------------------- |
-| DefaultReverseRegistrar | `0x4F382928805ba0e23B30cFB75fC9E848e82DFD47` |
+| Contract           | Address                                      |
+| ------------------ | -------------------------------------------- |
+| L2ReverseRegistrar | `0xEb8269Fb39290F31C4c29CEc548807cA2133AbB4` |
 
 | Token     | Address                                      | Decimals |
 | --------- | -------------------------------------------- | -------- |

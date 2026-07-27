@@ -101,7 +101,7 @@ export function RegistrationPayment({
           isPending={registration.isPending}
           onPress={registration.handlePayment}
         >
-          Register
+          {registration.buttonLabel}
         </Button>
       )}
       {payment.isError || registration.error !== undefined ? (

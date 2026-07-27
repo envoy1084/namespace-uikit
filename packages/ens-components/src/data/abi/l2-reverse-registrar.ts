@@ -1,8 +1,29 @@
-/** Full ABI from the canonical ENS Sepolia DefaultReverseRegistrar deployment. */
-export const defaultReverseRegistrarAbi = [
+/** Full ABI from the ENS Sepolia L2ReverseRegistrar deployment. */
+export const l2ReverseRegistrarAbi = [
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "coinType_",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [],
+    name: "CoinTypeNotFound",
+    type: "error",
+  },
   {
     inputs: [],
     name: "InvalidSignature",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NotOwnerOfContract",
     type: "error",
   },
   {
@@ -16,23 +37,9 @@ export const defaultReverseRegistrarAbi = [
     type: "error",
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "controller",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "bool",
-        name: "enabled",
-        type: "bool",
-      },
-    ],
-    name: "ControllerChanged",
-    type: "event",
+    inputs: [],
+    name: "Unauthorised",
+    type: "error",
   },
   {
     anonymous: false,
@@ -54,38 +61,13 @@ export const defaultReverseRegistrarAbi = [
     type: "event",
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "OwnershipTransferred",
-    type: "event",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    name: "controllers",
+    inputs: [],
+    name: "coinType",
     outputs: [
       {
-        internalType: "bool",
+        internalType: "uint256",
         name: "",
-        type: "bool",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -108,44 +90,6 @@ export const defaultReverseRegistrarAbi = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "owner",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "renounceOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "controller",
-        type: "address",
-      },
-      {
-        internalType: "bool",
-        name: "enabled",
-        type: "bool",
-      },
-    ],
-    name: "setController",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -197,12 +141,55 @@ export const defaultReverseRegistrarAbi = [
         type: "string",
       },
       {
+        internalType: "uint256[]",
+        name: "coinTypes",
+        type: "uint256[]",
+      },
+      {
         internalType: "bytes",
         name: "signature",
         type: "bytes",
       },
     ],
     name: "setNameForAddrWithSignature",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "contractAddr",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "signatureExpiry",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "uint256[]",
+        name: "coinTypes",
+        type: "uint256[]",
+      },
+      {
+        internalType: "bytes",
+        name: "signature",
+        type: "bytes",
+      },
+    ],
+    name: "setNameForOwnableWithSignature",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -224,19 +211,6 @@ export const defaultReverseRegistrarAbi = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
 ] as const;
