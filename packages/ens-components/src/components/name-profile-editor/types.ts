@@ -135,10 +135,7 @@ export type NameProfileRecordChange =
   | NameProfilePublicKeyRecordChange
   | NameProfileTextRecordChange;
 
-/**
- * Canonical map-based representation used internally for draft operations.
- * This is intentionally not re-exported from the component's public barrel.
- */
+/** Canonical map-based representation used for draft and diff operations. */
 export interface NormalizedNameProfileRecords {
   readonly abi: ReadonlyMap<bigint, Hex>;
   readonly addresses: ReadonlyMap<bigint, string>;

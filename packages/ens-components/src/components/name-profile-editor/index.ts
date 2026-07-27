@@ -1,3 +1,4 @@
+export { diffProfileRecords } from "#/components/name-profile-editor/diff-profile-records";
 export { normalizeProfileRecords } from "#/components/name-profile-editor/normalize-profile-records";
 export type {
   NormalizeProfileRecordsError,
