@@ -25,9 +25,11 @@ export function SetPrimaryName() {
         name="set-primary-name"
         onChange={setShouldSetPrimaryName}
       >
-        <Switch.Control className="shrink-0">
-          <Switch.Thumb />
-        </Switch.Control>
+        <Switch.Content aria-label="Set as primary name">
+          <Switch.Control className="shrink-0">
+            <Switch.Thumb />
+          </Switch.Control>
+        </Switch.Content>
       </Switch>
     </div>
   );
