@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button, Modal, Surface } from "@thenamespace/uikit";
 import { isAddressEqual, zeroAddress, zeroHash } from "viem";
@@ -67,6 +67,7 @@ function NameRegistrationContent() {
   const [registrationSuccess, setRegistrationSuccess] =
     useState<RegistrationSuccessDetails>();
   const [isTransactionPending, setIsTransactionPending] = useState(false);
+  const shouldResetOnOpenRef = useRef(false);
   const storedAttempt =
     connection.address === undefined
       ? undefined
@@ -140,7 +141,7 @@ function NameRegistrationContent() {
     setView("registration-success");
   };
 
-  const handleDone = () => {
+  const resetRegistration = () => {
     setRegistrationAttemptId(null);
     setInput("");
     setReferrer(zeroHash);
@@ -151,6 +152,22 @@ function NameRegistrationContent() {
     setRegistrationSuccess(undefined);
     setRegistrationStep("commitment");
     setView("name-search");
+  };
+
+  const handleDone = () => {
+    if (presentation === "dialog") {
+      shouldResetOnOpenRef.current = true;
+      return;
+    }
+
+    resetRegistration();
+  };
+
+  const handleDialogOpenChange = (isOpen: boolean) => {
+    if (!isOpen || !shouldResetOnOpenRef.current) return;
+
+    shouldResetOnOpenRef.current = false;
+    resetRegistration();
   };
 
   const content =
@@ -182,7 +199,7 @@ function NameRegistrationContent() {
   }
 
   return (
-    <Modal>
+    <Modal onOpenChange={handleDialogOpenChange}>
       {slots.trigger ?? (
         <Button variant="secondary">{messages.triggerLabel}</Button>
       )}
