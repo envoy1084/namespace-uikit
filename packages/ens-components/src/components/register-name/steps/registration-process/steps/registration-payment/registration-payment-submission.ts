@@ -37,9 +37,13 @@ export interface RegistrationPaymentSubmissionSuccess {
   addressRecord?: ConfirmedRegistrationWrite;
   approval?: ConfirmedRegistrationWrite;
   details: RegistrationSuccessDetails;
-  primaryName?: ConfirmedRegistrationWrite;
+  l1PrimaryName?: ConfirmedRegistrationWrite;
+  l2PrimaryName?: ConfirmedRegistrationWrite;
   primaryNameError?: unknown;
-  primaryNameErrorPhase?: "address-record" | "primary-name";
+  primaryNameErrorPhase?:
+    | "address-record"
+    | "l1-primary-name"
+    | "l2-primary-name";
   registration: ConfirmedRegistrationWrite;
   registrationAmount: bigint;
   registrationDuration: bigint;
@@ -53,7 +57,8 @@ export interface SubmitRegistrationPaymentProps {
   payment: RegistrationPaymentStatus;
   paymentToken: EnsPaymentToken;
   publicClient: PublicClient;
-  reverseRegistrarAddress: `0x${string}`;
+  l1ReverseRegistrarAddress: `0x${string}`;
+  l2ReverseRegistrarAddress: `0x${string}`;
   walletClient: WalletClient;
   onProgress?: (progress: ContractWriteProgress) => Promise<void> | void;
 }
@@ -138,13 +143,16 @@ async function buildRegistrationSuccess(
     "approve-registration-payment",
   );
   const addressRecord = getConfirmedWrite(transactions, "set-address-record");
-  const primaryName = getConfirmedWrite(transactions, "set-primary-name");
+  const l2PrimaryName = getConfirmedWrite(transactions, "set-l2-primary-name");
+  const l1PrimaryName = getConfirmedWrite(transactions, "set-l1-primary-name");
   const primaryNameErrorPhase =
     primaryNameError === undefined
       ? undefined
       : addressRecord === undefined
         ? ("address-record" as const)
-        : ("primary-name" as const);
+        : l2PrimaryName === undefined
+          ? ("l2-primary-name" as const)
+          : ("l1-primary-name" as const);
 
   return ok({
     ...(addressRecord === undefined ? {} : { addressRecord }),
@@ -158,13 +166,16 @@ async function buildRegistrationSuccess(
       paymentTokenIcon: paymentToken.icon,
       paymentTokenSymbol: paymentToken.symbol,
       primaryNameStatus:
-        writes.primaryName === undefined
+        writes.l1PrimaryName === undefined || writes.l2PrimaryName === undefined
           ? "not-requested"
-          : primaryName === undefined
+          : addressRecord === undefined ||
+              l1PrimaryName === undefined ||
+              l2PrimaryName === undefined
             ? "failed"
             : "set",
     },
-    ...(primaryName === undefined ? {} : { primaryName }),
+    ...(l1PrimaryName === undefined ? {} : { l1PrimaryName }),
+    ...(l2PrimaryName === undefined ? {} : { l2PrimaryName }),
     ...(primaryNameError === undefined ? {} : { primaryNameError }),
     ...(primaryNameErrorPhase === undefined ? {} : { primaryNameErrorPhase }),
     registration: confirmedRegistration.value,
@@ -192,10 +203,11 @@ export async function submitRegistrationPayment(
 
   const writes = prepareRegistrationPaymentWrites({
     attempt,
+    l1ReverseRegistrarAddress: props.l1ReverseRegistrarAddress,
+    l2ReverseRegistrarAddress: props.l2ReverseRegistrarAddress,
     network,
     payment,
     paymentToken,
-    reverseRegistrarAddress: props.reverseRegistrarAddress,
   });
   if (writes.isErr()) return err(writes.error);
 

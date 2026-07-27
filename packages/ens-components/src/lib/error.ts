@@ -47,12 +47,14 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   INVALID_FACTORY_ADDRESS: "The resolver factory address is invalid.",
   INVALID_IMPLEMENTATION_ADDRESS:
     "The resolver implementation address is invalid.",
+  INVALID_L1_REVERSE_REGISTRAR_ADDRESS:
+    "The L1 primary-name registrar address is invalid.",
+  INVALID_L2_REVERSE_REGISTRAR_ADDRESS:
+    "The ENS v2 primary-name registrar address is invalid.",
   INVALID_INIT_DATA: "The resolver initialization data is invalid.",
   INVALID_PAYMENT_TOKEN_ADDRESS: "The payment token address is invalid.",
   INVALID_REGISTRAR_ADDRESS: "The registrar address is invalid.",
   INVALID_REFERRER: "The referrer value is invalid.",
-  INVALID_REVERSE_REGISTRAR_ADDRESS:
-    "The primary-name registrar address is invalid.",
   INVALID_RESOLVER_ADDRESS: "The resolver address is invalid.",
   INVALID_SALT: "The saved resolver salt is invalid.",
   INVALID_SECRET: "The saved commitment secret is invalid.",

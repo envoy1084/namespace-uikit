@@ -9,56 +9,56 @@ import {
   type ContractFunctionParameters,
 } from "viem";
 
-import { l2ReverseRegistrarAbi } from "#/data/abi";
+import { l1ReverseRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import { parseNameInput } from "#/lib/parse-name-input";
 
-export type PrepareSetPrimaryNameWriteError =
+export type PrepareSetL1PrimaryNameWriteError =
   | "INVALID_ACCOUNT_ADDRESS"
-  | "INVALID_REVERSE_REGISTRAR_ADDRESS"
+  | "INVALID_L1_REVERSE_REGISTRAR_ADDRESS"
   | ParseNameInputError;
 
-export interface PrepareSetPrimaryNameWriteProps {
+export interface PrepareSetL1PrimaryNameWriteProps {
   /** Account whose primary name will be updated. */
   readonly account: Address;
   /** ENS name or `.eth` label to use as the primary name. */
   readonly input: string | null | undefined;
+  /** ENS L1 ReverseRegistrar address. */
+  readonly l1ReverseRegistrarAddress: Address;
   /** Network associated with the reverse registrar. */
   readonly network: EnsNetwork;
-  /** ENS L2ReverseRegistrar address. */
-  readonly reverseRegistrarAddress: Address;
 }
 
-type SetPrimaryNameRequest = ContractFunctionParameters<
-  typeof l2ReverseRegistrarAbi,
+type SetL1PrimaryNameRequest = ContractFunctionParameters<
+  typeof l1ReverseRegistrarAbi,
   "nonpayable",
   "setName",
   readonly [string]
 >;
 
-export interface PrepareSetPrimaryNameWriteMetadata {
+export interface PrepareSetL1PrimaryNameWriteMetadata {
   readonly name: string;
   readonly owner: Address;
 }
 
-export type PreparedSetPrimaryNameWrite = PreparedContractWrite<
-  SetPrimaryNameRequest,
-  "set-primary-name",
-  PrepareSetPrimaryNameWriteMetadata
+export type PreparedSetL1PrimaryNameWrite = PreparedContractWrite<
+  SetL1PrimaryNameRequest,
+  "set-l1-primary-name",
+  PrepareSetL1PrimaryNameWriteMetadata
 >;
 
-/** Prepares an ENS reverse-name update for the submitting account. */
-export function prepareSetPrimaryNameWrite(
-  props: PrepareSetPrimaryNameWriteProps,
-): Result<PreparedSetPrimaryNameWrite, PrepareSetPrimaryNameWriteError> {
-  const { account, input, reverseRegistrarAddress } = props;
+/** Prepares the registry-backed L1 reverse-name update for the submitting account. */
+export function prepareSetL1PrimaryNameWrite(
+  props: PrepareSetL1PrimaryNameWriteProps,
+): Result<PreparedSetL1PrimaryNameWrite, PrepareSetL1PrimaryNameWriteError> {
+  const { account, input, l1ReverseRegistrarAddress } = props;
 
   if (!isNonZeroAddress(account)) {
     return err("INVALID_ACCOUNT_ADDRESS");
   }
 
-  if (!isNonZeroAddress(reverseRegistrarAddress)) {
-    return err("INVALID_REVERSE_REGISTRAR_ADDRESS");
+  if (!isNonZeroAddress(l1ReverseRegistrarAddress)) {
+    return err("INVALID_L1_REVERSE_REGISTRAR_ADDRESS");
   }
 
   const parsedInput = parseNameInput(input);
@@ -66,20 +66,20 @@ export function prepareSetPrimaryNameWrite(
 
   const name = parsedInput.value.normalizedName;
   const request = {
-    address: reverseRegistrarAddress,
-    abi: l2ReverseRegistrarAbi,
+    address: l1ReverseRegistrarAddress,
+    abi: l1ReverseRegistrarAbi,
     functionName: "setName",
     args: [name],
-  } as const satisfies SetPrimaryNameRequest;
+  } as const satisfies SetL1PrimaryNameRequest;
 
   return ok({
     account,
     call: {
       data: encodeFunctionData(request),
-      to: reverseRegistrarAddress,
+      to: l1ReverseRegistrarAddress,
       value: 0n,
     },
-    kind: "set-primary-name" as const,
+    kind: "set-l1-primary-name" as const,
     metadata: { name, owner: account },
     request,
   });

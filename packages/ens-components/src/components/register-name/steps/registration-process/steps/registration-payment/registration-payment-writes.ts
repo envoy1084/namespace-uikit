@@ -13,11 +13,13 @@ import {
   prepareRegisterNameWrite,
   prepareRegistrationPaymentApprovalWrite,
   prepareSetAddressRecordWrite,
-  prepareSetPrimaryNameWrite,
+  prepareSetL1PrimaryNameWrite,
+  prepareSetL2PrimaryNameWrite,
   type PreparedRegisterNameWrite,
   type PreparedRegistrationPaymentApprovalWrite,
   type PreparedSetAddressRecordWrite,
-  type PreparedSetPrimaryNameWrite,
+  type PreparedSetL1PrimaryNameWrite,
+  type PreparedSetL2PrimaryNameWrite,
 } from "#/actions";
 import { parseRegistrationDuration } from "#/lib/helpers";
 
@@ -25,7 +27,8 @@ export interface PreparedRegistrationPaymentWrites {
   addressRecord?: PreparedSetAddressRecordWrite;
   approval?: PreparedRegistrationPaymentApprovalWrite;
   calls: readonly [PreparedContractWrite, ...PreparedContractWrite[]];
-  primaryName?: PreparedSetPrimaryNameWrite;
+  l1PrimaryName?: PreparedSetL1PrimaryNameWrite;
+  l2PrimaryName?: PreparedSetL2PrimaryNameWrite;
   registration: PreparedRegisterNameWrite;
 }
 
@@ -34,14 +37,21 @@ export interface PrepareRegistrationPaymentWritesProps {
   network: EnsNetwork;
   payment: RegistrationPaymentStatus;
   paymentToken: EnsPaymentToken;
-  reverseRegistrarAddress: Address;
+  l1ReverseRegistrarAddress: Address;
+  l2ReverseRegistrarAddress: Address;
 }
 
 export function prepareRegistrationPaymentWrites(
   props: PrepareRegistrationPaymentWritesProps,
 ): Result<PreparedRegistrationPaymentWrites, unknown> {
-  const { attempt, network, payment, paymentToken, reverseRegistrarAddress } =
-    props;
+  const {
+    attempt,
+    l1ReverseRegistrarAddress,
+    l2ReverseRegistrarAddress,
+    network,
+    payment,
+    paymentToken,
+  } = props;
   const duration = parseRegistrationDuration(attempt.duration);
   if (duration === undefined) return err("INVALID_DURATION");
 
@@ -74,41 +84,53 @@ export function prepareRegistrationPaymentWrites(
   }
 
   let addressRecord: PreparedSetAddressRecordWrite | undefined;
-  let primaryName: PreparedSetPrimaryNameWrite | undefined;
+  let l1PrimaryName: PreparedSetL1PrimaryNameWrite | undefined;
+  let l2PrimaryName: PreparedSetL2PrimaryNameWrite | undefined;
   if (attempt.setPrimaryName) {
     const preparedAddressRecord = prepareSetAddressRecordWrite({
       account: attempt.account,
       input: attempt.normalizedName,
       network,
-      owner: attempt.owner,
+      owner: attempt.account,
       resolverAddress: attempt.resolver.address,
     });
     if (preparedAddressRecord.isErr()) return err(preparedAddressRecord.error);
 
-    const preparedPrimaryName = prepareSetPrimaryNameWrite({
+    const preparedL2PrimaryName = prepareSetL2PrimaryNameWrite({
       account: attempt.account,
       input: attempt.normalizedName,
+      l2ReverseRegistrarAddress,
       network,
-      reverseRegistrarAddress,
     });
-    if (preparedPrimaryName.isErr()) return err(preparedPrimaryName.error);
+    if (preparedL2PrimaryName.isErr()) return err(preparedL2PrimaryName.error);
+
+    const preparedL1PrimaryName = prepareSetL1PrimaryNameWrite({
+      account: attempt.account,
+      input: attempt.normalizedName,
+      l1ReverseRegistrarAddress,
+      network,
+    });
+    if (preparedL1PrimaryName.isErr()) return err(preparedL1PrimaryName.error);
 
     addressRecord = preparedAddressRecord.value;
-    primaryName = preparedPrimaryName.value;
+    l1PrimaryName = preparedL1PrimaryName.value;
+    l2PrimaryName = preparedL2PrimaryName.value;
   }
 
   const calls: PreparedContractWrite[] = [
     ...(approval === undefined ? [] : [approval]),
     registration.value,
     ...(addressRecord === undefined ? [] : [addressRecord]),
-    ...(primaryName === undefined ? [] : [primaryName]),
+    ...(l2PrimaryName === undefined ? [] : [l2PrimaryName]),
+    ...(l1PrimaryName === undefined ? [] : [l1PrimaryName]),
   ];
 
   return ok({
     ...(addressRecord === undefined ? {} : { addressRecord }),
     ...(approval === undefined ? {} : { approval }),
     calls: calls as [PreparedContractWrite, ...PreparedContractWrite[]],
-    ...(primaryName === undefined ? {} : { primaryName }),
+    ...(l1PrimaryName === undefined ? {} : { l1PrimaryName }),
+    ...(l2PrimaryName === undefined ? {} : { l2PrimaryName }),
     registration: registration.value,
   });
 }

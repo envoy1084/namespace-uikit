@@ -16,8 +16,8 @@ import { permissionedResolverAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import { parseNameInput } from "#/lib/parse-name-input";
 
-/** ENSIP-19 default EVM coin type used by `default.reverse`. */
-export const DEFAULT_EVM_COIN_TYPE = 0x80000000n;
+/** SLIP-44 coin type for Ethereum. */
+export const ETH_COIN_TYPE = 60n;
 
 export type PrepareSetAddressRecordWriteError =
   | "INVALID_ACCOUNT_ADDRESS"
@@ -58,7 +58,7 @@ export type PreparedSetAddressRecordWrite = PreparedContractWrite<
   PrepareSetAddressRecordWriteMetadata
 >;
 
-/** Prepares the default EVM forward address record required by ENSIP-19. */
+/** Prepares the Ethereum forward address record required for L1 reverse verification. */
 export function prepareSetAddressRecordWrite(
   props: PrepareSetAddressRecordWriteProps,
 ): Result<PreparedSetAddressRecordWrite, PrepareSetAddressRecordWriteError> {
@@ -86,7 +86,7 @@ export function prepareSetAddressRecordWrite(
     address: resolverAddress,
     abi: permissionedResolverAbi,
     functionName: "setAddr",
-    args: [node, DEFAULT_EVM_COIN_TYPE, addressBytes],
+    args: [node, ETH_COIN_TYPE, addressBytes],
   } as const satisfies SetAddressRecordRequest;
 
   return ok({
@@ -98,7 +98,7 @@ export function prepareSetAddressRecordWrite(
     },
     kind: "set-address-record" as const,
     metadata: {
-      coinType: DEFAULT_EVM_COIN_TYPE,
+      coinType: ETH_COIN_TYPE,
       name,
       node,
       owner,

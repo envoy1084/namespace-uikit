@@ -225,20 +225,24 @@ export function useRegistrationPayment({
     });
     if (
       result.addressRecord !== undefined &&
-      result.primaryName !== undefined
+      result.l1PrimaryName !== undefined &&
+      result.l2PrimaryName !== undefined
     ) {
       emitNameRegistrationEvent(events.onSetPrimaryName, {
         account: attempt.account,
         addressRecordReceipt: result.addressRecord.receipt,
         addressRecordTransactionHash: result.addressRecord.transactionHash,
         chainId: chain.id,
+        l1ReverseRegistrarAddress: contracts.l1ReverseRegistrar.address,
+        l2ReverseReceipt: result.l2PrimaryName.receipt,
+        l2ReverseRegistrarAddress: contracts.l2ReverseRegistrar.address,
+        l2ReverseTransactionHash: result.l2PrimaryName.transactionHash,
         name: result.details.name,
         network,
         owner: attempt.owner,
-        receipt: result.primaryName.receipt,
+        receipt: result.l1PrimaryName.receipt,
         resolverAddress: attempt.resolver.address,
-        reverseRegistrarAddress: contracts.l2ReverseRegistrar.address,
-        transactionHash: result.primaryName.transactionHash,
+        transactionHash: result.l1PrimaryName.transactionHash,
       });
     }
     if (
@@ -316,7 +320,8 @@ export function useRegistrationPayment({
       payment: refreshedPayment.data,
       paymentToken,
       publicClient,
-      reverseRegistrarAddress: contracts.l2ReverseRegistrar.address,
+      l1ReverseRegistrarAddress: contracts.l1ReverseRegistrar.address,
+      l2ReverseRegistrarAddress: contracts.l2ReverseRegistrar.address,
       walletClient,
       onProgress: handleProgress,
     });

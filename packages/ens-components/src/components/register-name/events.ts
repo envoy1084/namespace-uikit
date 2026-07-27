@@ -51,17 +51,21 @@ export interface NameRegistrationPrimaryNameEvent extends NameRegistrationTransa
   account: Address;
   addressRecordReceipt: TransactionReceipt;
   addressRecordTransactionHash: Hex;
+  l1ReverseRegistrarAddress: Address;
+  l2ReverseRegistrarAddress: Address;
+  l2ReverseReceipt: TransactionReceipt;
+  l2ReverseTransactionHash: Hex;
   name: string;
   owner: Address;
   resolverAddress: Address;
-  reverseRegistrarAddress: Address;
 }
 
 export type NameRegistrationErrorPhase =
   | "address-record"
   | "approval"
   | "commitment"
-  | "primary-name"
+  | "l1-primary-name"
+  | "l2-primary-name"
   | "resolver"
   | "registration";
 
@@ -89,6 +93,6 @@ export interface NameRegistrationEvents {
   onResolverDeploy?: NameRegistrationEventHandler<NameRegistrationResolverDeployEvent>;
   /** Called after a registration transaction is successfully confirmed. */
   onRegister?: NameRegistrationEventHandler<NameRegistrationRegisterEvent>;
-  /** Called after the forward and reverse records for a primary name are confirmed. */
+  /** Called after the forward, ENS v2 reverse, and L1 reverse writes are confirmed. */
   onSetPrimaryName?: NameRegistrationEventHandler<NameRegistrationPrimaryNameEvent>;
 }

@@ -1,13 +1,10 @@
 # prepareSetAddressRecordWrite
 
-Prepares the default EVM forward address record used to verify an ENS primary
+Prepares the Ethereum forward address record used to verify an L1 ENS primary
 name. It does not submit a transaction.
 
 ```ts
-import {
-  DEFAULT_EVM_COIN_TYPE,
-  prepareSetAddressRecordWrite,
-} from "ens-components";
+import { ETH_COIN_TYPE, prepareSetAddressRecordWrite } from "ens-components";
 
 const prepared = prepareSetAddressRecordWrite({
   account,
@@ -30,11 +27,11 @@ const prepared = prepareSetAddressRecordWrite({
 
 The prepared request calls the multicoin
 `setAddr(bytes32,uint256,bytes)` overload with coin type
-`DEFAULT_EVM_COIN_TYPE` (`0x80000000`) and the packed owner address. Its stable
-write kind is `set-address-record`.
+`ETH_COIN_TYPE` (`60`) and the packed owner address. Its stable write kind is
+`set-address-record`.
 
 Execute the result with `executeContractWrites`. When setting a primary name,
-place this write after registration and before `prepareSetPrimaryNameWrite`.
+place this write after registration and before the L2 and L1 reverse writes.
 
 ## Errors
 
