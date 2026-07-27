@@ -5,6 +5,7 @@ import {
   l1ReverseRegistrarAbi,
   l2ReverseRegistrarAbi,
   permissionedResolverAbi,
+  universalResolverV2Abi,
   verifiableFactoryAbi,
 } from "#/data/abi";
 
@@ -37,6 +38,10 @@ export interface EnsContracts {
   readonly paymentTokens: EnsPaymentTokens;
   readonly permissionedResolverImplementation: {
     readonly abi: typeof permissionedResolverAbi;
+    readonly address: Address;
+  };
+  readonly universalResolverV2: {
+    readonly abi: typeof universalResolverV2Abi;
     readonly address: Address;
   };
   readonly verifiableFactory: {
@@ -77,6 +82,10 @@ export const testnetContracts = {
   permissionedResolverImplementation: {
     address: "0xdce5205a553573ffd47629327dddf36186022ffa" as Address,
     abi: permissionedResolverAbi,
+  },
+  universalResolverV2: {
+    address: "0xeEeEEEeE14D718C2B47D9923Deab1335E144EeEe" as Address,
+    abi: universalResolverV2Abi,
   },
   verifiableFactory: {
     address: "0xd2a632d8a8b67c2c4398c255cbd7af8dd7236198" as Address,
