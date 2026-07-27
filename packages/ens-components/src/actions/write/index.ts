@@ -5,4 +5,6 @@ export * from "#/actions/write/prepare-write-commit-name";
 export * from "#/actions/write/prepare-write-permissioned-resolver-deployment";
 export * from "#/actions/write/prepare-write-register-name";
 export * from "#/actions/write/prepare-write-registration-payment-approval";
+export * from "#/actions/write/prepare-write-set-address-record";
+export * from "#/actions/write/prepare-write-set-primary-name";
 export * from "#/actions/write/wallet-capabilities";

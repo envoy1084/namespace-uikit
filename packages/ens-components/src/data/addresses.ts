@@ -1,6 +1,7 @@
 import type { Address } from "viem";
 
 import {
+  defaultReverseRegistrarAdapterAbi,
   ethRegistrarAbi,
   permissionedResolverAbi,
   verifiableFactoryAbi,
@@ -20,6 +21,10 @@ export interface EnsPaymentToken {
 export type EnsPaymentTokens = readonly [EnsPaymentToken, ...EnsPaymentToken[]];
 
 export interface EnsContracts {
+  readonly defaultReverseRegistrarAdapter: {
+    readonly abi: typeof defaultReverseRegistrarAdapterAbi;
+    readonly address: Address;
+  };
   readonly ethRegistrar: {
     readonly abi: typeof ethRegistrarAbi;
     readonly address: Address;
@@ -36,6 +41,10 @@ export interface EnsContracts {
 }
 
 export const testnetContracts = {
+  defaultReverseRegistrarAdapter: {
+    address: "0x1f7b9461d17d5cf43553253c6b78d252d9575954" as Address,
+    abi: defaultReverseRegistrarAdapterAbi,
+  },
   ethRegistrar: {
     address: "0x8c2e866b439358c41ae05de9cbe8a00bfefaffca" as Address,
     abi: ethRegistrarAbi,
