@@ -4,7 +4,7 @@ import { NameRenewal } from "ens-components";
 
 import { SectionLabel } from "@/components/home/section-label";
 
-const DEMO_NAME = "achilles.eth";
+const DEMO_NAME = "enscomponents.eth";
 
 export function RenewalShowcase() {
   return (
