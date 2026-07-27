@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   HomeFooter,
   HomeHero,
+  ProfileEditorShowcase,
   RegistrationShowcase,
   RenewalShowcase,
   ToolkitOverview,
@@ -17,6 +18,7 @@ function Home() {
       <ToolkitOverview />
       <RegistrationShowcase />
       <RenewalShowcase />
+      <ProfileEditorShowcase />
       <HomeFooter />
     </div>
   );

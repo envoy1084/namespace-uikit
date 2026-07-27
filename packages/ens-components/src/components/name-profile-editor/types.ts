@@ -68,6 +68,18 @@ export interface NameProfileFormValues {
   text: NameProfileTextRecord[];
 }
 
+/** Empty resolver profile suitable for form defaults. */
+export const emptyNameProfileFormValues: NameProfileFormValues = {
+  abi: [],
+  addresses: [],
+  contenthash: "",
+  data: [],
+  interfaces: [],
+  name: "",
+  pubkey: { x: "", y: "" },
+  text: [],
+};
+
 export interface NameProfileAbiRecordChange {
   contentType: string;
   previousValue: string | null;
