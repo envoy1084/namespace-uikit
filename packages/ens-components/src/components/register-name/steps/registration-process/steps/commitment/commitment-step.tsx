@@ -66,6 +66,7 @@ export function CommitmentStep({
           </Typography.Paragraph>
           {submission.status === "confirming" ? (
             <TransactionProgress
+              account={connection.address}
               blockExplorerUrl={chain.blockExplorers?.default.url}
               chainId={chain.id}
               className="mt-4"

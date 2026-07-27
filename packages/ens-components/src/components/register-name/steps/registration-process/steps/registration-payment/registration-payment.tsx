@@ -76,13 +76,13 @@ export function RegistrationPayment({
         Complete registration within{" "}
         {formatRegistrationTimeRemaining(registration.timeRemaining)}.
       </Typography.Paragraph>
-      {(registration.actionStatus === "confirming-approval" ||
-        registration.actionStatus === "confirming-address-record" ||
-        registration.actionStatus === "confirming-batch" ||
-        registration.actionStatus === "confirming-primary-name" ||
-        registration.actionStatus === "confirming-registration") &&
-      registration.transactionHash !== undefined ? (
+      {registration.actionStatus === "confirming-approval" ||
+      registration.actionStatus === "confirming-address-record" ||
+      registration.actionStatus === "confirming-batch" ||
+      registration.actionStatus === "confirming-primary-name" ||
+      registration.actionStatus === "confirming-registration" ? (
         <TransactionProgress
+          account={storedAttempt?.account}
           blockExplorerUrl={chain.blockExplorers?.default.url}
           chainId={chain.id}
           className="mt-4"
@@ -101,7 +101,7 @@ export function RegistrationPayment({
           isPending={registration.isPending}
           onPress={registration.handlePayment}
         >
-          {registration.buttonLabel}
+          Register
         </Button>
       )}
       {payment.isError || registration.error !== undefined ? (

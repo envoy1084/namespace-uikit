@@ -89,7 +89,6 @@ export function prepareRegistrationPaymentWrites(
       account: attempt.account,
       input: attempt.normalizedName,
       network,
-      owner: attempt.owner,
       reverseRegistrarAddress,
     });
     if (preparedPrimaryName.isErr()) return err(preparedPrimaryName.error);

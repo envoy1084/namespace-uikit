@@ -9,34 +9,31 @@ import {
   type ContractFunctionParameters,
 } from "viem";
 
-import { defaultReverseRegistrarAdapterAbi } from "#/data/abi";
+import { defaultReverseRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import { parseNameInput } from "#/lib/parse-name-input";
 
 export type PrepareSetPrimaryNameWriteError =
   | "INVALID_ACCOUNT_ADDRESS"
-  | "INVALID_OWNER_ADDRESS"
   | "INVALID_REVERSE_REGISTRAR_ADDRESS"
   | ParseNameInputError;
 
 export interface PrepareSetPrimaryNameWriteProps {
-  /** Account authorized to name `owner`. */
+  /** Account whose default primary name will be updated. */
   readonly account: Address;
   /** ENS name or `.eth` label to use as the primary name. */
   readonly input: string | null | undefined;
   /** Network associated with the reverse registrar. */
   readonly network: EnsNetwork;
-  /** Address whose default primary name will be updated. */
-  readonly owner: Address;
-  /** ENS v2 DefaultReverseRegistrarAdapter address. */
+  /** Canonical ENS default reverse registrar address. */
   readonly reverseRegistrarAddress: Address;
 }
 
 type SetPrimaryNameRequest = ContractFunctionParameters<
-  typeof defaultReverseRegistrarAdapterAbi,
+  typeof defaultReverseRegistrarAbi,
   "nonpayable",
   "setName",
-  readonly [Address, string]
+  readonly [string]
 >;
 
 export interface PrepareSetPrimaryNameWriteMetadata {
@@ -54,14 +51,10 @@ export type PreparedSetPrimaryNameWrite = PreparedContractWrite<
 export function prepareSetPrimaryNameWrite(
   props: PrepareSetPrimaryNameWriteProps,
 ): Result<PreparedSetPrimaryNameWrite, PrepareSetPrimaryNameWriteError> {
-  const { account, input, owner, reverseRegistrarAddress } = props;
+  const { account, input, reverseRegistrarAddress } = props;
 
   if (!isNonZeroAddress(account)) {
     return err("INVALID_ACCOUNT_ADDRESS");
-  }
-
-  if (!isNonZeroAddress(owner)) {
-    return err("INVALID_OWNER_ADDRESS");
   }
 
   if (!isNonZeroAddress(reverseRegistrarAddress)) {
@@ -74,9 +67,9 @@ export function prepareSetPrimaryNameWrite(
   const name = parsedInput.value.normalizedName;
   const request = {
     address: reverseRegistrarAddress,
-    abi: defaultReverseRegistrarAdapterAbi,
+    abi: defaultReverseRegistrarAbi,
     functionName: "setName",
-    args: [owner, name],
+    args: [name],
   } as const satisfies SetPrimaryNameRequest;
 
   return ok({
@@ -87,7 +80,7 @@ export function prepareSetPrimaryNameWrite(
       value: 0n,
     },
     kind: "set-primary-name" as const,
-    metadata: { name, owner },
+    metadata: { name, owner: account },
     request,
   });
 }

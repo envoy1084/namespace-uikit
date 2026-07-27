@@ -1,7 +1,8 @@
-import type { Hex } from "viem";
+import type { Address, Hex } from "viem";
 
 import type { ReactNode } from "react";
 
+import { ArrowUpRight01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { motion } from "motion/react";
 
 const Shuriken = new URL("../assets/shuriken.svg", import.meta.url);
@@ -15,6 +16,7 @@ const DEFAULT_CONFIRMATION_DURATION_MS = 16_000;
 export const TRANSACTION_PROGRESS_COMPLETION_DURATION_MS = 400;
 
 export interface TransactionProgressProps {
+  account?: Address | undefined;
   blockExplorerUrl?: string | undefined;
   chainId: number;
   className?: string;
@@ -24,6 +26,7 @@ export interface TransactionProgressProps {
 }
 
 export function TransactionProgress({
+  account,
   blockExplorerUrl,
   chainId,
   className,
@@ -33,10 +36,15 @@ export function TransactionProgress({
 }: TransactionProgressProps) {
   const confirmationDuration =
     CHAIN_CONFIRMATION_DURATION_MS[chainId] ?? DEFAULT_CONFIRMATION_DURATION_MS;
+  const explorerUrl = blockExplorerUrl?.replace(/\/$/, "");
   const transactionUrl =
-    blockExplorerUrl === undefined || transactionHash === undefined
+    explorerUrl === undefined
       ? undefined
-      : `${blockExplorerUrl.replace(/\/$/, "")}/tx/${transactionHash}`;
+      : transactionHash === undefined
+        ? account === undefined
+          ? undefined
+          : `${explorerUrl}/address/${account}`
+        : `${explorerUrl}/tx/${transactionHash}`;
 
   return (
     <div
@@ -76,12 +84,17 @@ export function TransactionProgress({
       </div>
       {transactionUrl === undefined ? null : (
         <a
-          className="text-foreground text-xs underline underline-offset-4"
+          className="text-foreground inline-flex items-center gap-1 text-xs underline underline-offset-4"
           href={transactionUrl}
           rel="noreferrer"
           target="_blank"
         >
           Check on Etherscan
+          <HugeiconsIcon
+            aria-hidden="true"
+            className="size-3.5"
+            icon={ArrowUpRight01Icon}
+          />
         </a>
       )}
     </div>
