@@ -74,6 +74,8 @@
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },
   "dependencies": {
+    "@ensdomains/address-encoder": "1.1.4",
+    "@ensdomains/content-hash": "3.1.1",
     "@internationalized/date": "3.12.2",
     "@number-flow/react": "0.6.2",
     "@thenamespace/uikit": "workspace:*",

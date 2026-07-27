@@ -1,3 +1,8 @@
+export { normalizeProfileRecords } from "#/components/name-profile-editor/normalize-profile-records";
+export type {
+  NormalizeProfileRecordsError,
+  NormalizeProfileRecordsResult,
+} from "#/components/name-profile-editor/normalize-profile-records";
 export type {
   NameProfileAbiRecord,
   NameProfileAbiRecordChange,
@@ -16,4 +21,5 @@ export type {
   NameProfileRecordType,
   NameProfileTextRecord,
   NameProfileTextRecordChange,
+  NormalizedNameProfileRecords,
 } from "#/components/name-profile-editor/types";
