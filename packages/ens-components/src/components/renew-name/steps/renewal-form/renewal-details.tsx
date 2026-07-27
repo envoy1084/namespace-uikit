@@ -61,6 +61,14 @@ function maxDate(left: DateValue, right: DateValue) {
   return left.compare(right) >= 0 ? left : right;
 }
 
+function formatDate(value: DateValue, timeZone: string) {
+  return new Intl.DateTimeFormat(undefined, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(value.toDate(timeZone));
+}
+
 export interface RenewalDetailsProps {
   isDisabled?: boolean;
   isPriceFetching: boolean;
@@ -138,7 +146,7 @@ export function RenewalDetails({
           Current expiry
         </Typography.Paragraph>
         <Typography.Paragraph size="xs" weight="medium">
-          {currentExpiryDate.toDate(timeZone).toLocaleDateString()}
+          {formatDate(currentExpiryDate, timeZone)}
         </Typography.Paragraph>
       </div>
       {pickByDate ? (
@@ -194,7 +202,7 @@ export function RenewalDetails({
       <div className="mt-2 flex items-center justify-center gap-1">
         <Typography.Paragraph color="muted" size="xs">
           {pickByDate
-            ? `New expiry: ${targetDate.toDate(timeZone).toLocaleDateString()}`
+            ? `New expiry: ${formatDate(targetDate, timeZone)}`
             : `Extend by ${years} ${years === 1 ? "year" : "years"}.`}
         </Typography.Paragraph>
         <Button
