@@ -40,7 +40,9 @@ export function CustomResolverAddress() {
         spellCheck={false}
         variant="secondary"
       />
-      <FieldError>Enter a valid non-zero contract address.</FieldError>
+      <FieldError className="mx-auto text-center">
+        Enter a valid non-zero contract address.
+      </FieldError>
     </TextField>
   );
 }

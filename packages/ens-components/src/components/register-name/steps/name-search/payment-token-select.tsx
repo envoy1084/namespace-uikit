@@ -53,7 +53,7 @@ export function PaymentTokenSelect({
         <span className="text-xs font-medium">{selectedToken.symbol}</span>
         <InlineSelect.Indicator />
       </InlineSelect.Trigger>
-      <InlineSelect.Popover className="min-w-28">
+      <InlineSelect.Popover className="min-w-32">
         <ListBox>
           {tokens.map((token) => (
             <ListBox.Item

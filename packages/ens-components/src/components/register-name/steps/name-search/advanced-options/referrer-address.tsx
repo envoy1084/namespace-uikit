@@ -46,7 +46,9 @@ export function ReferrerAddress() {
         spellCheck={false}
         variant="secondary"
       />
-      <FieldError>Enter a valid Ethereum address.</FieldError>
+      <FieldError className="mx-auto text-center">
+        Enter a valid Ethereum address.
+      </FieldError>
     </TextField>
   );
 }

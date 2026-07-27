@@ -24,14 +24,12 @@ export function AdvancedOptionInfo({
         <HugeiconsIcon icon={InformationCircleIcon} height={12} width={12} />
       </Tooltip.Trigger>
       <Tooltip.Content
-        className="w-64 max-w-[calc(100vw-2rem)] break-normal! [overflow-wrap:normal]! whitespace-normal!"
+        className="w-64 max-w-[calc(100vw-2rem)] break-normal! wrap-normal! whitespace-normal!"
         placement="top"
         showArrow
       >
         <Tooltip.Arrow />
-        <p className="break-normal [overflow-wrap:normal] whitespace-normal">
-          {children}
-        </p>
+        <p className="break-normal wrap-normal whitespace-normal">{children}</p>
       </Tooltip.Content>
     </Tooltip>
   );

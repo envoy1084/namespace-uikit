@@ -127,7 +127,7 @@ export const NameSearchStep = ({
                 </div>
               ) : availability.isSuccess ? (
                 <Typography.Paragraph
-                  className="text-danger"
+                  className="text-danger mx-auto text-center"
                   size="xs"
                   weight="medium"
                 >
@@ -135,7 +135,9 @@ export const NameSearchStep = ({
                 </Typography.Paragraph>
               ) : availability.isError || inputError !== undefined ? (
                 <Typography.Paragraph
-                  className={isShortLabelError ? "text-danger" : "text-muted"}
+                  className={`mx-auto text-center ${
+                    isShortLabelError ? "text-danger" : "text-muted"
+                  }`}
                   size="xs"
                   {...(isShortLabelError && { weight: "medium" })}
                 >

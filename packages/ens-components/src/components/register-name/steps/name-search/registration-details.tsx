@@ -209,7 +209,7 @@ export function RegistrationDetails({
         </div>
         {price.isError ? (
           <Typography.Paragraph
-            className="mt-2 text-right"
+            className="mx-auto mt-2 text-center"
             color="muted"
             size="xs"
           >

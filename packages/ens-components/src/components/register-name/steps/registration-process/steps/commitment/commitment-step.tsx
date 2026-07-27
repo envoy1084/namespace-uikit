@@ -85,7 +85,7 @@ export function CommitmentStep({
           )}
           {!submission.isPending && submission.error !== undefined ? (
             <Typography.Paragraph
-              className="text-danger mt-2"
+              className="text-danger mx-auto mt-2 text-center"
               size="xs"
               role="alert"
             >
