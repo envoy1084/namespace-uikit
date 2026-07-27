@@ -42,7 +42,7 @@ Done resets it to the initial form.
 | `presentation`               | `"dialog" \| "inline"`         | `"dialog"`           | Selects the outer presentation.                                        |
 | `defaultLabel`               | `string`                       | `""`                 | Initial label or second-level `.eth` name.                             |
 | `defaultPaymentTokenAddress` | `Address`                      | First provider token | Initial payment token. Unknown addresses fall back to the first token. |
-| `defaultDuration`            | `bigint`                       | `31_557_600n`        | Initial extension in seconds. Values below 28 days are clamped.        |
+| `defaultDuration`            | `bigint`                       | `31_557_600n`        | Initial extension in seconds, clamped from 28 days to 10 years.        |
 | `defaultDurationMode`        | `"date" \| "duration"`         | `"duration"`         | Initial duration control.                                              |
 | `defaultReferrer`            | `Hex`                          | `zeroHash`           | Initial 32-byte referrer identifier.                                   |
 | `slots`                      | `NameRenewalSlots`             | `{}`                 | Replaces visual elements.                                              |
