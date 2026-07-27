@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { Button, Tooltip } from "@thenamespace/uikit";
+import { Tooltip } from "@thenamespace/uikit";
 import {
   HugeiconsIcon,
   InformationCircleIcon,
@@ -17,18 +17,21 @@ export function AdvancedOptionInfo({
 }: AdvancedOptionInfoProps) {
   return (
     <Tooltip delay={150}>
-      <Button
-        isIconOnly
+      <Tooltip.Trigger
         aria-label={`About ${label}`}
-        className="text-muted size-5 min-w-5"
-        size="sm"
-        variant="tertiary"
+        className="text-muted inline-flex size-4 shrink-0 cursor-help items-center justify-center"
       >
-        <HugeiconsIcon icon={InformationCircleIcon} width={14} />
-      </Button>
-      <Tooltip.Content className="max-w-64" placement="top" showArrow>
+        <HugeiconsIcon icon={InformationCircleIcon} height={12} width={12} />
+      </Tooltip.Trigger>
+      <Tooltip.Content
+        className="w-64 max-w-[calc(100vw-2rem)] break-normal! [overflow-wrap:normal]! whitespace-normal!"
+        placement="top"
+        showArrow
+      >
         <Tooltip.Arrow />
-        <p>{children}</p>
+        <p className="break-normal [overflow-wrap:normal] whitespace-normal">
+          {children}
+        </p>
       </Tooltip.Content>
     </Tooltip>
   );
