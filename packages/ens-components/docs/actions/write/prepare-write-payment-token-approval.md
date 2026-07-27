@@ -1,14 +1,14 @@
-# prepareRegistrationPaymentApprovalWrite
+# preparePaymentTokenApprovalWrite
 
-Prepares an ERC-20 approval for the registrar.
+Prepares an ERC-20 approval for any payment-token spender.
 
 ```ts
-const approval = prepareRegistrationPaymentApprovalWrite({
+const approval = preparePaymentTokenApprovalWrite({
   account,
   amount,
   network: "testnet",
   paymentTokenAddress,
-  registrarAddress,
+  spenderAddress: registrarAddress,
 });
 ```
 
@@ -20,4 +20,4 @@ The prepared call approves exactly `amount`. Execute it with
 - `INVALID_ACCOUNT_ADDRESS`
 - `INVALID_APPROVAL_AMOUNT`
 - `INVALID_PAYMENT_TOKEN_ADDRESS`
-- `INVALID_REGISTRAR_ADDRESS`
+- `INVALID_SPENDER_ADDRESS`

@@ -9,6 +9,7 @@ actions for integrating ENS v2 into React applications.
 ## Features
 
 - Complete resolver, commit, wait, approve, register, and primary-name flow
+- Complete ERC-20 name renewal flow
 - Configured payment-token selection with resumable state
 - Dialog and inline registration presentations
 - TanStack Query hooks for availability, pricing, and payment status
@@ -113,11 +114,28 @@ See
 [NameRegistration](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-registration.md)
 for customization, lifecycle events, defaults, and flow behavior.
 
+## Name renewal
+
+Render the renewal flow as a dialog:
+
+```tsx
+import { NameRenewal } from "ens-components";
+
+export function RenewName() {
+  return <NameRenewal defaultLabel="vitalik" />;
+}
+```
+
+Use `presentation="inline"` to place the flow directly in a page. See
+[NameRenewal](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-renewal.md)
+for duration controls, lifecycle events, slots, and messages.
+
 ## Documentation
 
 ### Components
 
 - [NameRegistration](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-registration.md)
+- [NameRenewal](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-renewal.md)
 - [TransactionProgress](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/transaction-progress.md)
 
 ### Providers
@@ -129,6 +147,8 @@ for customization, lifecycle events, defaults, and flow behavior.
 - [useNameAvailability](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-availability.md)
 - [useNamePrice](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-price.md)
 - [useRegistrationPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-registration-payment-status.md)
+- [useNameRenewalPrice](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-renewal-price.md)
+- [useNameRenewalPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-renewal-payment-status.md)
 
 ### Actions
 
@@ -138,14 +158,17 @@ for customization, lifecycle events, defaults, and flow behavior.
 - [prepareNameAvailabilityRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-availability.md)
 - [prepareNamePriceRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-price.md)
 - [prepareRegistrationPaymentStatusRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-registration-payment-status.md)
+- [prepareNameRenewalPriceRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-renewal-price.md)
+- [prepareNameRenewalPaymentStatusRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-renewal-payment-status.md)
 - [prepareCommitmentStatusRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-commitment-status.md)
 - [preparePermissionedResolverVerificationRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-permissioned-resolver-verification.md)
 
 #### Writes
 
 - [prepareCommitNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-commit-name.md)
-- [prepareRegistrationPaymentApprovalWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-registration-payment-approval.md)
+- [preparePaymentTokenApprovalWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-payment-token-approval.md)
 - [prepareRegisterNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-register-name.md)
+- [prepareRenewNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-renew-name.md)
 - [prepareSetAddressRecordWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-set-address-record.md)
 - [prepareSetL2PrimaryNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-set-l2-primary-name.md)
 - [prepareSetL1PrimaryNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-set-l1-primary-name.md)
