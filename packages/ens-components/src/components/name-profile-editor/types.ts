@@ -1,5 +1,3 @@
-import type { Address, Hex } from "viem";
-
 export type NameProfileRecordType =
   | "abi"
   | "address"
@@ -12,116 +10,123 @@ export type NameProfileRecordType =
 
 /** ABI payload stored for one ENSIP-4 content type. */
 export interface NameProfileAbiRecord {
-  readonly contentType: bigint;
-  readonly value: Hex;
+  /** Canonical unsigned decimal integer. */
+  contentType: string;
+  /** Even-length hex bytes. */
+  value: string;
 }
 
 /** Human-readable value for one ENSIP-9 multicoin address record. */
 export interface NameProfileAddressRecord {
-  readonly coinType: bigint;
-  readonly value: string;
+  /** Canonical unsigned decimal integer. */
+  coinType: string;
+  value: string;
 }
 
 /** Arbitrary keyed binary resolver data. */
 export interface NameProfileDataRecord {
-  readonly key: string;
-  readonly value: Hex;
+  key: string;
+  /** Even-length hex bytes. */
+  value: string;
 }
 
 /** Contract implementing an EIP-165 interface for the name. */
 export interface NameProfileInterfaceRecord {
-  readonly implementer: Address;
-  readonly interfaceId: Hex;
+  implementer: string;
+  /** Four-byte EIP-165 interface ID. */
+  interfaceId: string;
 }
 
 /** SECP256k1 public key coordinates stored by the resolver. */
 export interface NameProfilePublicKeyRecord {
-  readonly x: Hex;
-  readonly y: Hex;
+  /** A bytes32 hex value, or an empty string when unset. */
+  x: string;
+  /** A bytes32 hex value, or an empty string when unset. */
+  y: string;
 }
 
 /** Human-readable value for one ENS text record. */
 export interface NameProfileTextRecord {
-  readonly key: string;
-  readonly value: string;
+  key: string;
+  value: string;
 }
 
 /**
- * Complete editable resolver profile supplied to the profile editor.
+ * Input-compatible resolver profile used by React Hook Form and editor state.
  *
- * Missing array entries are treated as unset. Nullable scalar records use
- * `null` when no value is set.
+ * Unset scalar records use empty strings. Unset keyed records are omitted from
+ * their arrays.
  */
-export interface NameProfileRecords {
-  readonly abi: readonly NameProfileAbiRecord[];
-  readonly addresses: readonly NameProfileAddressRecord[];
-  readonly contenthash: string | null;
-  readonly data: readonly NameProfileDataRecord[];
-  readonly interfaces: readonly NameProfileInterfaceRecord[];
-  readonly name: string | null;
-  readonly pubkey: NameProfilePublicKeyRecord | null;
-  readonly text: readonly NameProfileTextRecord[];
+export interface NameProfileFormValues {
+  abi: NameProfileAbiRecord[];
+  addresses: NameProfileAddressRecord[];
+  contenthash: string;
+  data: NameProfileDataRecord[];
+  interfaces: NameProfileInterfaceRecord[];
+  name: string;
+  pubkey: NameProfilePublicKeyRecord;
+  text: NameProfileTextRecord[];
 }
 
 export interface NameProfileAbiRecordChange {
-  readonly contentType: bigint;
-  readonly previousValue: Hex | null;
-  readonly type: "abi";
+  contentType: string;
+  previousValue: string | null;
+  type: "abi";
   /** `null` removes the record. */
-  readonly value: Hex | null;
+  value: string | null;
 }
 
 export interface NameProfileAddressRecordChange {
-  readonly coinType: bigint;
-  readonly previousValue: string | null;
-  readonly type: "address";
+  coinType: string;
+  previousValue: string | null;
+  type: "address";
   /** `null` removes the record. */
-  readonly value: string | null;
+  value: string | null;
 }
 
 export interface NameProfileContenthashRecordChange {
-  readonly previousValue: string | null;
-  readonly type: "contenthash";
+  previousValue: string | null;
+  type: "contenthash";
   /** `null` removes the record. */
-  readonly value: string | null;
+  value: string | null;
 }
 
 export interface NameProfileDataRecordChange {
-  readonly key: string;
-  readonly previousValue: Hex | null;
-  readonly type: "data";
+  key: string;
+  previousValue: string | null;
+  type: "data";
   /** `null` removes the record. */
-  readonly value: Hex | null;
+  value: string | null;
 }
 
 export interface NameProfileInterfaceRecordChange {
-  readonly interfaceId: Hex;
-  readonly previousValue: Address | null;
-  readonly type: "interface";
+  interfaceId: string;
+  previousValue: string | null;
+  type: "interface";
   /** `null` removes the record. */
-  readonly value: Address | null;
+  value: string | null;
 }
 
 export interface NameProfileNameRecordChange {
-  readonly previousValue: string | null;
-  readonly type: "name";
+  previousValue: string | null;
+  type: "name";
   /** `null` removes the record. */
-  readonly value: string | null;
+  value: string | null;
 }
 
 export interface NameProfilePublicKeyRecordChange {
-  readonly previousValue: NameProfilePublicKeyRecord | null;
-  readonly type: "pubkey";
+  previousValue: NameProfilePublicKeyRecord | null;
+  type: "pubkey";
   /** `null` removes the record. */
-  readonly value: NameProfilePublicKeyRecord | null;
+  value: NameProfilePublicKeyRecord | null;
 }
 
 export interface NameProfileTextRecordChange {
-  readonly key: string;
-  readonly previousValue: string | null;
-  readonly type: "text";
+  key: string;
+  previousValue: string | null;
+  type: "text";
   /** `null` removes the record. */
-  readonly value: string | null;
+  value: string | null;
 }
 
 /** One semantic difference between the editor baseline and current draft. */
@@ -135,18 +140,6 @@ export type NameProfileRecordChange =
   | NameProfilePublicKeyRecordChange
   | NameProfileTextRecordChange;
 
-/** Canonical map-based representation used for draft and diff operations. */
-export interface NormalizedNameProfileRecords {
-  readonly abi: ReadonlyMap<bigint, Hex>;
-  readonly addresses: ReadonlyMap<bigint, string>;
-  readonly contenthash: string | null;
-  readonly data: ReadonlyMap<string, Hex>;
-  readonly interfaces: ReadonlyMap<Hex, Address>;
-  readonly name: string | null;
-  readonly pubkey: NameProfilePublicKeyRecord | null;
-  readonly text: ReadonlyMap<string, string>;
-}
-
 /**
  * Profile update flow:
  *
@@ -156,12 +149,9 @@ export interface NormalizedNameProfileRecords {
  */
 export type NameProfileEditorView = "diff" | "editor" | "success";
 
-/**
- * Internal state model. Confirmed drafts replace the baseline before the
- * success view is displayed.
- */
+/** Canonical snapshots used by the editor flow. */
 export interface NameProfileEditorState {
-  readonly baseline: NormalizedNameProfileRecords;
-  readonly draft: NormalizedNameProfileRecords;
-  readonly view: NameProfileEditorView;
+  baseline: NameProfileFormValues;
+  draft: NameProfileFormValues;
+  view: NameProfileEditorView;
 }
