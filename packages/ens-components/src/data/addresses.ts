@@ -2,6 +2,7 @@ import type { Address } from "viem";
 
 import {
   ethRegistrarAbi,
+  ethRegistryAbi,
   l1ReverseRegistrarAbi,
   l2ReverseRegistrarAbi,
   permissionedResolverAbi,
@@ -35,6 +36,10 @@ export interface EnsContracts {
     readonly abi: typeof ethRegistrarAbi;
     readonly address: Address;
   };
+  readonly ethRegistry: {
+    readonly abi: typeof ethRegistryAbi;
+    readonly address: Address;
+  };
   readonly paymentTokens: EnsPaymentTokens;
   readonly permissionedResolverImplementation: {
     readonly abi: typeof permissionedResolverAbi;
@@ -62,6 +67,10 @@ export const testnetContracts = {
   ethRegistrar: {
     address: "0x8c2e866b439358c41ae05de9cbe8a00bfefaffca" as Address,
     abi: ethRegistrarAbi,
+  },
+  ethRegistry: {
+    address: "0xdedb92913a25abe1f7bcdd85d8a344a43b398b67" as Address,
+    abi: ethRegistryAbi,
   },
   paymentTokens: [
     {

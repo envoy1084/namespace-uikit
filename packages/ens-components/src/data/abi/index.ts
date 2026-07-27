@@ -1,4 +1,5 @@
 export * from "#/data/abi/eth-registrar";
+export * from "#/data/abi/eth-registry";
 export * from "#/data/abi/l1-reverse-registrar";
 export * from "#/data/abi/l2-reverse-registrar";
 export * from "#/data/abi/permissioned-resolver";
