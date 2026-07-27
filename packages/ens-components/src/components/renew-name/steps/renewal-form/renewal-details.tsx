@@ -2,9 +2,11 @@
 
 import type { DateValue } from "@internationalized/date";
 
-import { useEffect } from "react";
+import type { NameRenewalPrice } from "#/actions";
 
-import { getLocalTimeZone, today } from "@internationalized/date";
+import { useMemo } from "react";
+
+import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date";
 import {
   Button,
   NumberStepper,
@@ -19,39 +21,57 @@ import {
 } from "@thenamespace/uikit/icons";
 
 import { PaymentTokenSelect } from "#/components/payment-token-select";
-import { useNameRegistration } from "#/components/register-name/context";
-import { AdvancedOptions } from "#/components/register-name/steps/name-search/advanced-options";
+import { useNameRenewal } from "#/components/renew-name/context";
+import { RenewalAdvancedOptions } from "#/components/renew-name/steps/renewal-form/referrer-option";
+import { RenewalDatePicker } from "#/components/renew-name/steps/renewal-form/renewal-date-picker";
+import { formatTokenAmount } from "#/lib";
 import {
-  ExpirationDatePicker,
-  getDateDurationLabel,
-  MAX_REGISTRATION_YEARS,
-  MIN_REGISTRATION_DAYS,
-} from "#/components/register-name/steps/name-search/expiration-date-picker";
-import { useNamePrice } from "#/hooks";
-import { formatError, formatTokenAmount } from "#/lib";
-import {
+  MIN_REGISTRATION_DURATION,
   REGISTRATION_SECONDS_PER_DAY,
   REGISTRATION_SECONDS_PER_YEAR,
   resolvePaymentToken,
 } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
-interface RegistrationDetailsProps {
-  input: string;
-  onReadyChange?: (isReady: boolean) => void;
+const MAX_RENEWAL_YEARS = 10;
+const MIN_RENEWAL_DAYS = Number(
+  MIN_REGISTRATION_DURATION / REGISTRATION_SECONDS_PER_DAY,
+);
+
+function timestampToCalendarDate(timestamp: bigint) {
+  const date = new Date(Number(timestamp) * 1_000);
+  return new CalendarDate(
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate(),
+  );
 }
 
 function getYears(duration: bigint) {
-  const years = Math.round(
-    Number(duration) / Number(REGISTRATION_SECONDS_PER_YEAR),
+  return Math.min(
+    MAX_RENEWAL_YEARS,
+    Math.max(
+      1,
+      Math.round(Number(duration) / Number(REGISTRATION_SECONDS_PER_YEAR)),
+    ),
   );
-  return Math.min(MAX_REGISTRATION_YEARS, Math.max(1, years));
 }
 
-export function RegistrationDetails({
-  input,
-  onReadyChange,
-}: RegistrationDetailsProps) {
+function maxDate(left: DateValue, right: DateValue) {
+  return left.compare(right) >= 0 ? left : right;
+}
+
+export interface RenewalDetailsProps {
+  isDisabled?: boolean;
+  isPriceFetching: boolean;
+  price: NameRenewalPrice;
+}
+
+export function RenewalDetails({
+  isDisabled = false,
+  isPriceFetching,
+  price,
+}: RenewalDetailsProps) {
   const {
     duration,
     durationMode,
@@ -59,56 +79,52 @@ export function RegistrationDetails({
     setDuration,
     setDurationMode,
     setPaymentTokenAddress,
-  } = useNameRegistration();
+  } = useNameRenewal();
   const { contracts } = useEnsConfig();
-  const paymentToken = resolvePaymentToken(
+  const token = resolvePaymentToken(
     contracts.paymentTokens,
     paymentTokenAddress,
   );
   const timeZone = getLocalTimeZone();
+  const currentExpiryDate = useMemo(
+    () => timestampToCalendarDate(price.currentExpiry),
+    [price.currentExpiry],
+  );
   const years = getYears(duration);
-  const selectedDurationDays = Number(duration / REGISTRATION_SECONDS_PER_DAY);
-  const expirationDate = today(timeZone).add({
-    days: Math.max(MIN_REGISTRATION_DAYS, selectedDurationDays),
+  const durationDays = Math.max(
+    MIN_RENEWAL_DAYS,
+    Number(duration / REGISTRATION_SECONDS_PER_DAY),
+  );
+  const targetDate = currentExpiryDate.add({ days: durationDays });
+  const minimumTargetDate = maxDate(currentExpiryDate, today(timeZone)).add({
+    days: MIN_RENEWAL_DAYS,
+  });
+  const maximumTargetDate = currentExpiryDate.add({
+    years: MAX_RENEWAL_YEARS,
   });
   const pickByDate = durationMode === "date";
-  const price = useNamePrice({
-    duration,
-    input,
-    paymentTokenAddress: paymentToken.address,
-  });
-  const isReady =
-    price.isSuccess && price.data !== undefined && !price.isFetching;
-
-  useEffect(() => {
-    onReadyChange?.(isReady);
-    return () => onReadyChange?.(false);
-  }, [isReady, onReadyChange]);
 
   const updateYears = (value: number) => {
     const nextYears = Math.min(
-      MAX_REGISTRATION_YEARS,
+      MAX_RENEWAL_YEARS,
       Math.max(1, Math.round(value)),
     );
     setDuration(BigInt(nextYears) * REGISTRATION_SECONDS_PER_YEAR);
   };
 
-  const updateExpirationDate = (value: DateValue | null) => {
-    if (value === null) return;
-
-    const durationInDays = value.compare(today(timeZone));
-    if (durationInDays < MIN_REGISTRATION_DAYS) return;
-
-    setDuration(BigInt(durationInDays) * REGISTRATION_SECONDS_PER_DAY);
+  const updateTargetDate = (value: DateValue | null) => {
+    if (value === null || value.compare(minimumTargetDate) < 0) return;
+    const days = value.compare(currentExpiryDate);
+    if (days < MIN_RENEWAL_DAYS) return;
+    setDuration(BigInt(days) * REGISTRATION_SECONDS_PER_DAY);
   };
 
   const toggleDurationMode = () => {
     if (pickByDate) {
       updateYears(years);
     } else {
-      updateExpirationDate(expirationDate);
+      updateTargetDate(targetDate);
     }
-
     setDurationMode(pickByDate ? "duration" : "date");
   };
 
@@ -117,16 +133,28 @@ export function RegistrationDetails({
       className="border-default mt-4 rounded-2xl border p-4"
       variant="transparent"
     >
+      <div className="mb-3 flex items-center justify-between gap-4">
+        <Typography.Paragraph color="muted" size="xs">
+          Current expiry
+        </Typography.Paragraph>
+        <Typography.Paragraph size="xs" weight="medium">
+          {currentExpiryDate.toDate(timeZone).toLocaleDateString()}
+        </Typography.Paragraph>
+      </div>
       {pickByDate ? (
-        <ExpirationDatePicker
-          value={expirationDate}
-          onChange={updateExpirationDate}
+        <RenewalDatePicker
+          isDisabled={isDisabled}
+          maxValue={maximumTargetDate}
+          minValue={minimumTargetDate}
+          value={targetDate}
+          onChange={updateTargetDate}
         />
       ) : (
         <NumberStepper
-          aria-label="Registration duration in years"
+          aria-label="Renewal duration in years"
           className="w-full"
-          maxValue={MAX_REGISTRATION_YEARS}
+          isDisabled={isDisabled}
+          maxValue={MAX_RENEWAL_YEARS}
           minValue={1}
           value={years}
           onChange={updateYears}
@@ -134,7 +162,7 @@ export function RegistrationDetails({
           <NumberStepper.Group className="border-default bg-background h-9 w-full border p-0.5">
             <Button
               isIconOnly
-              aria-label="Decrease registration duration"
+              aria-label="Decrease renewal duration"
               className="size-8 min-w-8 rounded-full"
               size="sm"
               slot="decrement"
@@ -151,7 +179,7 @@ export function RegistrationDetails({
             </NumberStepper.Value>
             <Button
               isIconOnly
-              aria-label="Increase registration duration"
+              aria-label="Increase renewal duration"
               className="size-8 min-w-8 rounded-full"
               size="sm"
               slot="increment"
@@ -166,11 +194,12 @@ export function RegistrationDetails({
       <div className="mt-2 flex items-center justify-center gap-1">
         <Typography.Paragraph color="muted" size="xs">
           {pickByDate
-            ? getDateDurationLabel(expirationDate, timeZone)
-            : `${years} ${years === 1 ? "year" : "years"} registration.`}
+            ? `New expiry: ${targetDate.toDate(timeZone).toLocaleDateString()}`
+            : `Extend by ${years} ${years === 1 ? "year" : "years"}.`}
         </Typography.Paragraph>
         <Button
           className="h-auto min-w-0 px-2 py-px text-[10px]!"
+          isDisabled={isDisabled}
           size="sm"
           variant="secondary"
           onPress={toggleDurationMode}
@@ -179,45 +208,35 @@ export function RegistrationDetails({
         </Button>
       </div>
 
-      <div className="mt-5" aria-live="polite">
+      <div className="mt-5">
         <div className="flex items-center justify-between gap-4">
           <Typography.Paragraph color="muted" size="sm">
-            Registration price
+            Renewal price
           </Typography.Paragraph>
           <div className="flex items-center gap-2">
-            {price.isFetching ? (
+            {isPriceFetching ? (
               <Skeleton
-                aria-label="Calculating registration price"
+                aria-label="Calculating renewal price"
                 className="h-5 w-14 rounded-md"
               />
-            ) : price.data ? (
+            ) : (
               <span className="text-foreground text-base font-semibold">
-                {formatTokenAmount(price.data.total, price.data.decimals, {
+                {formatTokenAmount(price.total, price.decimals, {
                   maximumFractionDigits: 2,
                   minimumFractionDigits: 2,
                 })}
               </span>
-            ) : (
-              <span className="text-muted text-sm">N/A</span>
             )}
             <PaymentTokenSelect
+              isDisabled={isDisabled}
               tokens={contracts.paymentTokens}
-              value={paymentToken.address}
+              value={token.address}
               onChange={setPaymentTokenAddress}
             />
           </div>
         </div>
-        {price.isError ? (
-          <Typography.Paragraph
-            className="mx-auto mt-2 text-center"
-            color="muted"
-            size="xs"
-          >
-            {formatError(price.error, { name: input })}
-          </Typography.Paragraph>
-        ) : null}
       </div>
-      <AdvancedOptions />
+      <RenewalAdvancedOptions isDisabled={isDisabled} />
     </Surface>
   );
 }

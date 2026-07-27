@@ -9,11 +9,7 @@ import { ListBox } from "@thenamespace/uikit/list-box";
 
 import { findPaymentToken, resolvePaymentToken } from "#/lib/helpers";
 
-interface PaymentTokenIconProps {
-  token: EnsPaymentToken;
-}
-
-function PaymentTokenIcon({ token }: PaymentTokenIconProps) {
+function PaymentTokenIcon({ token }: { token: EnsPaymentToken }) {
   return (
     <Avatar className="size-5">
       <Avatar.Image alt="" src={token.icon} />
@@ -44,7 +40,6 @@ export function PaymentTokenSelect({
       value={selectedToken.address}
       onChange={(nextValue) => {
         const token = findPaymentToken(tokens, nextValue?.toString());
-
         if (token !== undefined) onChange(token.address);
       }}
     >
