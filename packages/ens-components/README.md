@@ -8,7 +8,7 @@ actions for integrating ENS v2 into React applications.
 
 ## Features
 
-- Complete resolver, commit, wait, approve, and register flow
+- Complete resolver, commit, wait, approve, register, and primary-name flow
 - Configured payment-token selection with resumable state
 - Dialog and inline registration presentations
 - TanStack Query hooks for availability, pricing, and payment status
@@ -146,6 +146,8 @@ for customization, lifecycle events, defaults, and flow behavior.
 - [prepareCommitNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-commit-name.md)
 - [prepareRegistrationPaymentApprovalWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-registration-payment-approval.md)
 - [prepareRegisterNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-register-name.md)
+- [prepareSetAddressRecordWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-set-address-record.md)
+- [prepareSetPrimaryNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-set-primary-name.md)
 - [preparePermissionedResolverDeploymentWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-permissioned-resolver-deployment.md)
 - [executeContractWrites](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/execute-contract-writes.md)
 - [supportsAtomicBatchCalls](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/supports-atomic-batch-calls.md)

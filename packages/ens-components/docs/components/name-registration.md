@@ -4,11 +4,14 @@
 second-level `.eth` names:
 
 1. Check availability, select a payment token, and read its price.
-2. Select a custom resolver or prepare a dedicated resolver.
-3. Deploy the resolver and submit a persisted commitment.
-4. Wait for the commitment minimum age.
-5. Approve the ERC-20 payment token when required and register the name.
-6. Display the confirmed registration.
+2. Optionally request that the registered name becomes the wallet's primary
+   name.
+3. Select a custom resolver or prepare a dedicated resolver.
+4. Deploy the resolver and submit a persisted commitment.
+5. Wait for the commitment minimum age.
+6. Approve the ERC-20 payment token when required and register the name.
+7. Set the forward and reverse records when primary-name setup is selected.
+8. Display the confirmed registration.
 
 It requires `WagmiProvider`, `QueryClientProvider`, and
 [`EnsProvider`](../providers/ens-provider.md).
@@ -55,8 +58,10 @@ The name-search screen lists the payment tokens configured for the selected
 network. Changing the token refetches its registration price. The selected
 token is then used for balance, allowance, approval, and registration calls.
 When approval is required, wallets with atomic EIP-5792 support receive the
-approval and registration as one batch. Other wallets receive two ordered
-transactions, with approval confirmed before registration is submitted.
+approval and registration as one batch. When primary-name setup is selected,
+the forward address record and reverse-name update are appended to the same
+batch. Other wallets receive the same writes as ordered transactions, with
+each write confirmed before the next is submitted.
 
 ```tsx
 <NameRegistration defaultPaymentTokenAddress="0x2922bcd677af690fcd1ecc699519e4bfabc73ff8" />
@@ -125,6 +130,7 @@ customizable through `messages`.
     onResolverDeploy: ({ resolverAddress, transactionHash }) => {},
     onApprove: ({ amount, transactionHash }) => {},
     onRegister: ({ name, tokenId, transactionHash }) => {},
+    onSetPrimaryName: ({ name, transactionHash }) => {},
     onError: ({ error, phase, transactionHash }) => {},
   }}
 />
@@ -136,14 +142,15 @@ customizable through `messages`.
 | `onCommit`         | The commitment receipt succeeds and the registration attempt is stored locally.                         |
 | `onApprove`        | A required ERC-20 approval receipt succeeds. It does not run when the existing allowance is sufficient. |
 | `onRegister`       | The registration receipt succeeds and registration details are available.                               |
-| `onError`          | An attempted resolver, commitment, approval, or registration phase cannot complete.                     |
+| `onSetPrimaryName` | Both the forward address record and reverse primary-name update are confirmed.                          |
+| `onError`          | An attempted resolver, commitment, payment, registration, address-record, or primary-name phase fails.  |
 
 Confirmed transaction events contain `chainId`, `network`,
 `transactionHash`, and the Viem `TransactionReceipt`. Operation-specific
 payloads include the related addresses and values.
 
-`onError.phase` is `"resolver"`, `"commitment"`, `"approval"`, or
-`"registration"`.
+`onError.phase` is `"resolver"`, `"commitment"`, `"approval"`,
+`"registration"`, `"address-record"`, or `"primary-name"`.
 `transactionHash` is included when a transaction was submitted.
 
 Callbacks may return a promise, but the flow does not wait for it. Thrown or
@@ -162,16 +169,37 @@ an existing resolver. The component checks that the address contains deployed
 bytecode. The caller is responsible for ensuring that the resolver supports
 the records and permissions required by the application.
 
+## Primary-name behavior
+
+The **Set as primary name** switch is in Advanced options and is off by
+default. When selected, the component appends two writes after registration:
+
+1. `setAddr(node, 0x80000000, addressBytes)` on the registered name's resolver;
+2. `setName(owner, name)` on the ENS v2
+   `DefaultReverseRegistrarAdapter`.
+
+The forward address record is required for ENSIP-19 primary-name verification.
+The built-in dedicated `PermissionedResolver` grants the connected account the
+required permissions. A custom resolver must implement the multicoin
+`setAddr` function and authorize the connected account to update the record.
+
+An atomic wallet either confirms all registration and primary-name writes or
+reverts all of them. With a sequential wallet, registration may confirm before
+a later primary-name write fails. In that case, the component reports the
+registration as successful, displays `Primary name: Not set`, and invokes
+`onError` for the failed phase. It does not submit the registration again.
+
 ## Resuming registration
 
 The component persists the prepared resolver, salt, secret, commitment, and
 submitted transaction identifiers before waiting for confirmation. It also
 persists the selected payment-token address so a resumed registration uses the
-same token. It can resume a pending or confirmed attempt from the same browser
-origin when the name, wallet, duration, referrer, resolver choice, network, and
-contracts still match. Progress is not synchronized across browsers or
-devices. Clearing site storage removes resume data but does not change onchain
-state.
+same token. The primary-name choice is stored with the attempt and restored
+when the flow resumes. It can resume a pending or confirmed attempt from the
+same browser origin when the name, wallet, duration, referrer, resolver choice,
+network, and contracts still match. Progress is not synchronized across
+browsers or devices. Clearing site storage removes resume data but does not
+change onchain state.
 
 ## Current constraints
 
