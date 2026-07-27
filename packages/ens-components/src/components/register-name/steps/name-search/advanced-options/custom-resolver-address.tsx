@@ -1,14 +1,9 @@
 "use client";
 
-import {
-  Description,
-  FieldError,
-  Input,
-  Label,
-  TextField,
-} from "@thenamespace/uikit";
+import { FieldError, Input, Label, TextField } from "@thenamespace/uikit";
 
 import { useNameRegistration } from "#/components/register-name/context";
+import { AdvancedOptionInfo } from "#/components/register-name/steps/name-search/advanced-options/advanced-option-info";
 import { isNonZeroAddress } from "#/lib/helpers";
 
 export function CustomResolverAddress() {
@@ -32,7 +27,12 @@ export function CustomResolverAddress() {
       value={resolverInput}
       onChange={updateAddress}
     >
-      <Label className="text-muted text-xs">Custom resolver</Label>
+      <div className="flex items-center gap-1">
+        <Label className="text-muted text-xs">Custom resolver</Label>
+        <AdvancedOptionInfo label="custom resolver">
+          Leave blank to deploy a dedicated resolver for this name.
+        </AdvancedOptionInfo>
+      </div>
       <Input
         autoComplete="off"
         className="ring-inset"
@@ -40,9 +40,6 @@ export function CustomResolverAddress() {
         spellCheck={false}
         variant="secondary"
       />
-      <Description>
-        Leave blank to deploy a dedicated resolver for this name.
-      </Description>
       <FieldError>Enter a valid non-zero contract address.</FieldError>
     </TextField>
   );

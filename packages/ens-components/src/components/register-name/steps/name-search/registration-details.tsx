@@ -27,7 +27,6 @@ import {
   MIN_REGISTRATION_DAYS,
 } from "#/components/register-name/steps/name-search/expiration-date-picker";
 import { PaymentTokenSelect } from "#/components/register-name/steps/name-search/payment-token-select";
-import { SetPrimaryName } from "#/components/register-name/steps/name-search/set-primary-name";
 import { useNamePrice } from "#/hooks";
 import { formatError, formatTokenAmount } from "#/lib";
 import {
@@ -218,7 +217,6 @@ export function RegistrationDetails({
           </Typography.Paragraph>
         ) : null}
       </div>
-      <SetPrimaryName />
       <AdvancedOptions />
     </Surface>
   );

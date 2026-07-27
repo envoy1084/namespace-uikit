@@ -1,15 +1,10 @@
 "use client";
 
-import {
-  Description,
-  FieldError,
-  Input,
-  Label,
-  TextField,
-} from "@thenamespace/uikit";
+import { FieldError, Input, Label, TextField } from "@thenamespace/uikit";
 import { getAddress, isAddress, pad, zeroHash } from "viem";
 
 import { useNameRegistration } from "#/components/register-name/context";
+import { AdvancedOptionInfo } from "#/components/register-name/steps/name-search/advanced-options/advanced-option-info";
 
 export function ReferrerAddress() {
   const { referrerInput, setReferrer, setReferrerInput } =
@@ -38,7 +33,12 @@ export function ReferrerAddress() {
       value={referrerInput}
       onChange={updateAddress}
     >
-      <Label className="text-muted text-xs">Referrer address</Label>
+      <div className="flex items-center gap-1">
+        <Label className="text-muted text-xs">Referrer address</Label>
+        <AdvancedOptionInfo label="referrer address">
+          Optional address credited for this registration.
+        </AdvancedOptionInfo>
+      </div>
       <Input
         autoComplete="off"
         className="ring-inset"
@@ -46,9 +46,6 @@ export function ReferrerAddress() {
         spellCheck={false}
         variant="secondary"
       />
-      <Description>
-        Optional address credited for this registration.
-      </Description>
       <FieldError>Enter a valid Ethereum address.</FieldError>
     </TextField>
   );
