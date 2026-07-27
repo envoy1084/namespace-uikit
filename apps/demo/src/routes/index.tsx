@@ -4,6 +4,7 @@ import {
   HomeFooter,
   HomeHero,
   RegistrationShowcase,
+  RenewalShowcase,
   ToolkitOverview,
 } from "@/components/home";
 
@@ -15,6 +16,7 @@ function Home() {
       <HomeHero />
       <ToolkitOverview />
       <RegistrationShowcase />
+      <RenewalShowcase />
       <HomeFooter />
     </div>
   );
