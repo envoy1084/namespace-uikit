@@ -63,6 +63,7 @@ export function useCommitmentSubmission({
     registrationAttemptId,
     resolverAddress,
     setRegistrationAttemptId,
+    shouldSetPrimaryName,
   } = useNameRegistration();
   const { get, insert, update } = useRegistrationAttempts();
   const storedAttempt =
@@ -281,6 +282,7 @@ export function useCommitmentSubmission({
         referrer,
         registrarAddress: contracts.ethRegistrar.address,
         resolverAddress,
+        setPrimaryName: shouldSetPrimaryName,
       });
 
       if (prepared.isErr()) {

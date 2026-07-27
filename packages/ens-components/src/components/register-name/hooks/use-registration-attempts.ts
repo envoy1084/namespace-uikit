@@ -12,7 +12,7 @@ import { parseNameInput } from "#/lib/parse-name-input";
 
 /** Versioned storage key for resumable NameRegistration state. */
 export const REGISTRATION_ATTEMPTS_STORAGE_KEY =
-  "@thenamespace/ens-components:registration-attempts:v2";
+  "@thenamespace/ens-components:registration-attempts:v3";
 
 export type StoredRegistrationResolver =
   | {
@@ -74,6 +74,7 @@ export interface StoredRegistrationAttempt {
   registrarAddress: Address;
   resolver: StoredRegistrationResolver;
   secret: Hex;
+  setPrimaryName: boolean;
   submission: RegistrationAttemptSubmission;
   subregistry: Address;
   updatedAt: number;

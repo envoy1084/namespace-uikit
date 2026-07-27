@@ -44,6 +44,7 @@ export interface PrepareRegistrationAttemptProps {
   referrer: Hex;
   registrarAddress: Address;
   resolverAddress: Address | null;
+  setPrimaryName: boolean;
 }
 
 function buildRegistrationAttempt(
@@ -82,6 +83,7 @@ function buildRegistrationAttempt(
     registrarAddress: props.registrarAddress,
     resolver,
     secret,
+    setPrimaryName: props.setPrimaryName,
     submission: { type: "prepared" },
     subregistry: zeroAddress,
   });

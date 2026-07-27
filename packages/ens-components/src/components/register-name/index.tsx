@@ -48,6 +48,7 @@ function NameRegistrationContent() {
     presentation,
     referrer,
     resolverAddress,
+    setShouldSetPrimaryName,
     setRegistrationAttemptId,
     setInput,
     setPaymentTokenAddress,
@@ -55,6 +56,7 @@ function NameRegistrationContent() {
     setReferrerInput,
     setResolverAddress,
     setResolverInput,
+    shouldSetPrimaryName,
     slots,
   } = useNameRegistration();
   const { chain, contracts } = useEnsConfig();
@@ -90,15 +92,29 @@ function NameRegistrationContent() {
     }
   }, [setPaymentTokenAddress, storedAttempt?.id, storedPaymentToken?.address]);
 
+  useEffect(() => {
+    if (storedAttempt !== undefined) {
+      setShouldSetPrimaryName(storedAttempt.attempt.setPrimaryName);
+    }
+  }, [setShouldSetPrimaryName, storedAttempt?.attempt.setPrimaryName]);
+
   const handleNext = () => {
-    if (
-      storedAttempt !== undefined &&
-      !isAddressEqual(
-        storedAttempt.attempt.paymentTokenAddress,
-        paymentTokenAddress,
-      )
-    ) {
-      update(storedAttempt.id, { paymentTokenAddress });
+    if (storedAttempt !== undefined) {
+      const updates = {
+        ...(!isAddressEqual(
+          storedAttempt.attempt.paymentTokenAddress,
+          paymentTokenAddress,
+        )
+          ? { paymentTokenAddress }
+          : {}),
+        ...(storedAttempt.attempt.setPrimaryName !== shouldSetPrimaryName
+          ? { setPrimaryName: shouldSetPrimaryName }
+          : {}),
+      };
+
+      if (Object.keys(updates).length > 0) {
+        update(storedAttempt.id, updates);
+      }
     }
 
     const confirmedAt =
@@ -131,6 +147,7 @@ function NameRegistrationContent() {
     setReferrerInput("");
     setResolverAddress(null);
     setResolverInput("");
+    setShouldSetPrimaryName(false);
     setRegistrationSuccess(undefined);
     setRegistrationStep("commitment");
     setView("name-search");

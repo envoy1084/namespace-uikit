@@ -50,6 +50,7 @@ export interface NameRegistrationContextValue {
   referrerInput: string;
   resolverAddress: Address | null;
   resolverInput: string;
+  shouldSetPrimaryName: boolean;
   setRegistrationAttemptId: Dispatch<SetStateAction<string | null>>;
   setDuration: Dispatch<SetStateAction<bigint>>;
   setDurationMode: Dispatch<SetStateAction<RegistrationDurationMode>>;
@@ -59,6 +60,7 @@ export interface NameRegistrationContextValue {
   setReferrerInput: Dispatch<SetStateAction<string>>;
   setResolverAddress: Dispatch<SetStateAction<Address | null>>;
   setResolverInput: Dispatch<SetStateAction<string>>;
+  setShouldSetPrimaryName: Dispatch<SetStateAction<boolean>>;
   slots: NameRegistrationSlots;
 }
 
@@ -125,6 +127,7 @@ export function NameRegistrationProvider({
   const [resolverInput, setResolverInput] = useState(
     defaultResolverAddress ?? "",
   );
+  const [shouldSetPrimaryName, setShouldSetPrimaryName] = useState(false);
   const trimmedReferrerInput = referrerInput.trim();
   const isReferrerValid =
     trimmedReferrerInput === "" || isAddress(trimmedReferrerInput);
@@ -153,6 +156,7 @@ export function NameRegistrationProvider({
         referrerInput,
         resolverAddress,
         resolverInput,
+        shouldSetPrimaryName,
         setRegistrationAttemptId,
         setDuration,
         setDurationMode,
@@ -162,6 +166,7 @@ export function NameRegistrationProvider({
         setReferrerInput,
         setResolverAddress,
         setResolverInput,
+        setShouldSetPrimaryName,
         slots,
       }}
     >
