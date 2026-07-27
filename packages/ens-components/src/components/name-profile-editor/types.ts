@@ -150,7 +150,14 @@ export interface NormalizedNameProfileRecords {
   readonly text: ReadonlyMap<string, string>;
 }
 
-export type NameProfileEditorView = "editor" | "success";
+/**
+ * Profile update flow:
+ *
+ * - `editor`: add, edit, or remove records.
+ * - `diff`: review the pending changes before submitting them.
+ * - `success`: display the confirmed update.
+ */
+export type NameProfileEditorView = "diff" | "editor" | "success";
 
 /**
  * Internal state model. Confirmed drafts replace the baseline before the
