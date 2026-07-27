@@ -24,6 +24,13 @@ import {
 import { emitNameRegistrationEvent } from "#/components/register-name/emit-event";
 import { useRegistrationAttempts } from "#/components/register-name/hooks/use-registration-attempts";
 import {
+  getPaymentActionStatus,
+  getPaymentTransactionPhase,
+  getRegistrationPaymentButtonLabel,
+  type PaymentActionStatus,
+  type PaymentTransactionPhase,
+} from "#/components/register-name/steps/registration-process/steps/registration-payment/registration-payment-state";
+import {
   submitRegistrationPayment,
   type RegistrationPaymentSubmissionSuccess,
 } from "#/components/register-name/steps/registration-process/steps/registration-payment/registration-payment-submission";
@@ -38,17 +45,6 @@ export interface UseRegistrationPaymentProps {
   onPendingChange?: (isPending: boolean) => void;
   onSuccess: (registration: RegistrationSuccessDetails) => void;
 }
-
-type PaymentActionStatus =
-  | "approving"
-  | "batching"
-  | "confirming-approval"
-  | "confirming-batch"
-  | "confirming-registration"
-  | "idle"
-  | "refreshing"
-  | "registering"
-  | "switching";
 
 function isCommitmentInvalid(error: unknown) {
   return error === "COMMITMENT_EXPIRED" || error === "COMMITMENT_NOT_FOUND";
@@ -93,9 +89,7 @@ export function useRegistrationPayment({
   const [isTransactionConfirmed, setIsTransactionConfirmed] = useState(false);
   const [transactionHash, setTransactionHash] = useState<Hex>();
   const transactionHashRef = useRef<Hex | undefined>(undefined);
-  const transactionPhaseRef = useRef<"approval" | "registration">(
-    "registration",
-  );
+  const transactionPhaseRef = useRef<PaymentTransactionPhase>("registration");
   const [error, setError] = useState<unknown>();
   const [now, setNow] = useState(Date.now());
   const isPending = actionStatus !== "idle";
@@ -109,7 +103,7 @@ export function useRegistrationPayment({
 
   const reportError = (
     nextError: unknown,
-    phase: "approval" | "registration",
+    phase: PaymentTransactionPhase,
     hash?: Hex,
   ) => {
     setError(nextError);
@@ -174,11 +168,10 @@ export function useRegistrationPayment({
       return;
     }
 
-    const isApproval =
-      progress.prepared.kind === "approve-registration-payment";
-    transactionPhaseRef.current = isApproval ? "approval" : "registration";
+    const phase = getPaymentTransactionPhase(progress.prepared);
+    transactionPhaseRef.current = phase;
     if (progress.state === "signing") {
-      setActionStatus(isApproval ? "approving" : "registering");
+      setActionStatus(getPaymentActionStatus(phase, "signing"));
       setTransactionHash(undefined);
       transactionHashRef.current = undefined;
       setIsTransactionConfirmed(false);
@@ -187,9 +180,7 @@ export function useRegistrationPayment({
 
     setTransactionHash(progress.transactionHash);
     transactionHashRef.current = progress.transactionHash;
-    setActionStatus(
-      isApproval ? "confirming-approval" : "confirming-registration",
-    );
+    setActionStatus(getPaymentActionStatus(phase, "confirming"));
     setIsTransactionConfirmed(progress.state === "confirmed");
   };
 
@@ -232,6 +223,35 @@ export function useRegistrationPayment({
       ...(result.tokenId === undefined ? {} : { tokenId: result.tokenId }),
       transactionHash: result.registration.transactionHash,
     });
+    if (
+      result.addressRecord !== undefined &&
+      result.primaryName !== undefined
+    ) {
+      emitNameRegistrationEvent(events.onSetPrimaryName, {
+        account: attempt.account,
+        addressRecordReceipt: result.addressRecord.receipt,
+        addressRecordTransactionHash: result.addressRecord.transactionHash,
+        chainId: chain.id,
+        name: result.details.name,
+        network,
+        owner: attempt.owner,
+        receipt: result.primaryName.receipt,
+        resolverAddress: attempt.resolver.address,
+        reverseRegistrarAddress:
+          contracts.defaultReverseRegistrarAdapter.address,
+        transactionHash: result.primaryName.transactionHash,
+      });
+    }
+    if (
+      result.primaryNameError !== undefined &&
+      result.primaryNameErrorPhase !== undefined
+    ) {
+      reportError(
+        result.primaryNameError,
+        result.primaryNameErrorPhase,
+        transactionHashRef.current,
+      );
+    }
     onSuccess(result.details);
   };
 
@@ -297,6 +317,7 @@ export function useRegistrationPayment({
       payment: refreshedPayment.data,
       paymentToken,
       publicClient,
+      reverseRegistrarAddress: contracts.defaultReverseRegistrarAdapter.address,
       walletClient,
       onProgress: handleProgress,
     });
@@ -324,33 +345,18 @@ export function useRegistrationPayment({
     );
   };
 
-  const buttonLabel =
-    connection.address === undefined
-      ? "Connect wallet to continue"
-      : isWrongNetwork
-        ? `Switch to ${chain.name}`
-        : actionStatus === "approving"
-          ? "Confirm approval in wallet"
-          : actionStatus === "confirming-approval"
-            ? "Confirming approval"
-            : actionStatus === "registering"
-              ? "Confirm registration in wallet"
-              : actionStatus === "confirming-registration"
-                ? "Confirming registration"
-                : actionStatus === "batching"
-                  ? "Confirm approval and registration"
-                  : actionStatus === "confirming-batch"
-                    ? "Confirming approval and registration"
-                    : actionStatus === "refreshing"
-                      ? "Refreshing registration price"
-                      : payment.isError
-                        ? "Try again"
-                        : payment.data !== undefined &&
-                            !payment.data.hasSufficientBalance
-                          ? `Insufficient ${paymentToken.symbol} balance`
-                          : payment.data?.hasSufficientAllowance
-                            ? "Register name"
-                            : `Approve ${paymentToken.symbol} and register`;
+  const buttonLabel = getRegistrationPaymentButtonLabel({
+    actionStatus,
+    chainName: chain.name,
+    hasPaymentData: payment.data !== undefined,
+    hasSufficientAllowance: payment.data?.hasSufficientAllowance ?? false,
+    hasSufficientBalance: payment.data?.hasSufficientBalance ?? false,
+    isPaymentError: payment.isError,
+    isWalletConnected: connection.address !== undefined,
+    isWrongNetwork,
+    paymentTokenSymbol: paymentToken.symbol,
+    setPrimaryName: storedAttempt?.setPrimaryName ?? false,
+  });
 
   return {
     actionStatus,

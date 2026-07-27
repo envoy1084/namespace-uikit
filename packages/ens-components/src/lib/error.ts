@@ -51,6 +51,8 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   INVALID_PAYMENT_TOKEN_ADDRESS: "The payment token address is invalid.",
   INVALID_REGISTRAR_ADDRESS: "The registrar address is invalid.",
   INVALID_REFERRER: "The referrer value is invalid.",
+  INVALID_REVERSE_REGISTRAR_ADDRESS:
+    "The primary-name registrar address is invalid.",
   INVALID_RESOLVER_ADDRESS: "The resolver address is invalid.",
   INVALID_SALT: "The saved resolver salt is invalid.",
   INVALID_SECRET: "The saved commitment secret is invalid.",

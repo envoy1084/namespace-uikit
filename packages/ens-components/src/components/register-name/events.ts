@@ -47,9 +47,21 @@ export interface NameRegistrationRegisterEvent extends NameRegistrationTransacti
   tokenId?: bigint;
 }
 
+export interface NameRegistrationPrimaryNameEvent extends NameRegistrationTransactionEvent {
+  account: Address;
+  addressRecordReceipt: TransactionReceipt;
+  addressRecordTransactionHash: Hex;
+  name: string;
+  owner: Address;
+  resolverAddress: Address;
+  reverseRegistrarAddress: Address;
+}
+
 export type NameRegistrationErrorPhase =
+  | "address-record"
   | "approval"
   | "commitment"
+  | "primary-name"
   | "resolver"
   | "registration";
 
@@ -77,4 +89,6 @@ export interface NameRegistrationEvents {
   onResolverDeploy?: NameRegistrationEventHandler<NameRegistrationResolverDeployEvent>;
   /** Called after a registration transaction is successfully confirmed. */
   onRegister?: NameRegistrationEventHandler<NameRegistrationRegisterEvent>;
+  /** Called after the forward and reverse records for a primary name are confirmed. */
+  onSetPrimaryName?: NameRegistrationEventHandler<NameRegistrationPrimaryNameEvent>;
 }

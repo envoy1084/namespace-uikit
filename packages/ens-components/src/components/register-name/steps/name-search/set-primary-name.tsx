@@ -14,7 +14,7 @@ export function SetPrimaryName() {
       name="set-primary-name"
       onChange={setShouldSetPrimaryName}
     >
-      <div className="border-default flex items-center justify-between gap-4 border-t pt-4">
+      <div className="border-default mt-4 flex items-center justify-between gap-4 border-t pt-4">
         <div className="min-w-0 space-y-1">
           <Label className="text-xs">Set as primary name</Label>
           <Description>

@@ -9,6 +9,7 @@ import type {
   ContractWriteProgress,
   PreparedContractWrite,
   RegistrationPaymentStatus,
+  SubmittedContractTransaction,
 } from "#/actions";
 import type { StoredRegistrationAttempt } from "#/components/register-name/hooks/use-registration-attempts";
 import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-success";
@@ -16,16 +17,15 @@ import type { EnsNetwork, EnsPaymentToken } from "#/data";
 
 import { err, ok, type Result } from "neverthrow";
 
-import {
-  executeContractWrites,
-  prepareRegisterNameWrite,
-  prepareRegistrationPaymentApprovalWrite,
-} from "#/actions";
+import { executeContractWrites } from "#/actions";
 import { readCommitmentStatus } from "#/components/register-name/steps/registration-process/steps/commitment/read-commitment-status";
+import {
+  prepareRegistrationPaymentWrites,
+  type PreparedRegistrationPaymentWrites,
+} from "#/components/register-name/steps/registration-process/steps/registration-payment/registration-payment-writes";
 import {
   getTransactionTimestamp,
   parseRegistrationReceipt,
-  parseRegistrationDuration,
 } from "#/lib/helpers";
 
 export interface ConfirmedRegistrationWrite {
@@ -34,8 +34,12 @@ export interface ConfirmedRegistrationWrite {
 }
 
 export interface RegistrationPaymentSubmissionSuccess {
+  addressRecord?: ConfirmedRegistrationWrite;
   approval?: ConfirmedRegistrationWrite;
   details: RegistrationSuccessDetails;
+  primaryName?: ConfirmedRegistrationWrite;
+  primaryNameError?: unknown;
+  primaryNameErrorPhase?: "address-record" | "primary-name";
   registration: ConfirmedRegistrationWrite;
   registrationAmount: bigint;
   registrationDuration: bigint;
@@ -49,6 +53,7 @@ export interface SubmitRegistrationPaymentProps {
   payment: RegistrationPaymentStatus;
   paymentToken: EnsPaymentToken;
   publicClient: PublicClient;
+  reverseRegistrarAddress: `0x${string}`;
   walletClient: WalletClient;
   onProgress?: (progress: ContractWriteProgress) => Promise<void> | void;
 }
@@ -82,6 +87,95 @@ function findConfirmedWrite(
   });
 }
 
+function getConfirmedWrite(
+  transactions: readonly SubmittedContractTransaction[],
+  kind: string,
+): ConfirmedRegistrationWrite | undefined {
+  const transaction = transactions.find(
+    ({ prepared }) => prepared.kind === kind,
+  );
+  if (transaction?.receipt === undefined) return undefined;
+
+  return {
+    receipt: transaction.receipt,
+    transactionHash: transaction.transactionHash,
+  };
+}
+
+interface BuildRegistrationSuccessProps {
+  payment: RegistrationPaymentStatus;
+  paymentToken: EnsPaymentToken;
+  primaryNameError?: unknown;
+  transactions: readonly SubmittedContractTransaction[];
+  writes: PreparedRegistrationPaymentWrites;
+}
+
+async function buildRegistrationSuccess(
+  publicClient: PublicClient,
+  props: BuildRegistrationSuccessProps,
+): Promise<Result<RegistrationPaymentSubmissionSuccess, unknown>> {
+  const { payment, paymentToken, primaryNameError, transactions, writes } =
+    props;
+  const confirmedRegistration = findConfirmedWrite(
+    transactions,
+    "register-name",
+  );
+  if (confirmedRegistration.isErr()) return err(confirmedRegistration.error);
+
+  const registeredAt = await getTransactionTimestamp(
+    publicClient,
+    confirmedRegistration.value.receipt,
+  );
+  const registrationDetails = parseRegistrationReceipt({
+    fallbackAmount: payment.total,
+    fallbackDuration: writes.registration.request.args[5],
+    fallbackLabel: writes.registration.metadata.label,
+    receipt: confirmedRegistration.value.receipt,
+    registrarAddress: writes.registration.request.address,
+  });
+  const approval = getConfirmedWrite(
+    transactions,
+    "approve-registration-payment",
+  );
+  const addressRecord = getConfirmedWrite(transactions, "set-address-record");
+  const primaryName = getConfirmedWrite(transactions, "set-primary-name");
+  const primaryNameErrorPhase =
+    primaryNameError === undefined
+      ? undefined
+      : addressRecord === undefined
+        ? ("address-record" as const)
+        : ("primary-name" as const);
+
+  return ok({
+    ...(addressRecord === undefined ? {} : { addressRecord }),
+    ...(approval === undefined ? {} : { approval }),
+    details: {
+      amount: registrationDetails.amount,
+      decimals: payment.decimals,
+      duration: registrationDetails.duration,
+      expiresAt: registeredAt + Number(registrationDetails.duration) * 1_000,
+      name: `${registrationDetails.label}.eth`,
+      paymentTokenIcon: paymentToken.icon,
+      paymentTokenSymbol: paymentToken.symbol,
+      primaryNameStatus:
+        writes.primaryName === undefined
+          ? "not-requested"
+          : primaryName === undefined
+            ? "failed"
+            : "set",
+    },
+    ...(primaryName === undefined ? {} : { primaryName }),
+    ...(primaryNameError === undefined ? {} : { primaryNameError }),
+    ...(primaryNameErrorPhase === undefined ? {} : { primaryNameErrorPhase }),
+    registration: confirmedRegistration.value,
+    registrationAmount: registrationDetails.amount,
+    registrationDuration: registrationDetails.duration,
+    ...(registrationDetails.tokenId === undefined
+      ? {}
+      : { tokenId: registrationDetails.tokenId }),
+  });
+}
+
 export async function submitRegistrationPayment(
   props: SubmitRegistrationPaymentProps,
 ): Promise<Result<RegistrationPaymentSubmissionSuccess, unknown>> {
@@ -96,98 +190,58 @@ export async function submitRegistrationPayment(
     return err(getCommitmentStateError(commitment.value.state));
   }
 
-  const duration = parseRegistrationDuration(attempt.duration);
-  if (duration === undefined) return err("INVALID_DURATION");
-
-  const registration = prepareRegisterNameWrite({
-    account: attempt.account,
-    duration,
-    input: attempt.label,
+  const writes = prepareRegistrationPaymentWrites({
+    attempt,
     network,
-    owner: attempt.owner,
-    paymentTokenAddress: paymentToken.address,
-    referrer: attempt.referrer,
-    registrarAddress: attempt.registrarAddress,
-    resolverAddress: attempt.resolver.address,
-    secret: attempt.secret,
-    subregistryAddress: attempt.subregistry,
+    payment,
+    paymentToken,
+    reverseRegistrarAddress: props.reverseRegistrarAddress,
   });
-  if (registration.isErr()) return err(registration.error);
+  if (writes.isErr()) return err(writes.error);
 
-  let calls: readonly [PreparedContractWrite, ...PreparedContractWrite[]] = [
-    registration.value,
-  ];
-  if (!payment.hasSufficientAllowance) {
-    const approval = prepareRegistrationPaymentApprovalWrite({
-      account: attempt.account,
-      amount: payment.total,
-      network,
-      paymentTokenAddress: paymentToken.address,
-      registrarAddress: attempt.registrarAddress,
-    });
-    if (approval.isErr()) return err(approval.error);
-    calls = [approval.value, registration.value];
-  }
-
+  const confirmedTransactions: SubmittedContractTransaction[] = [];
   const execution = await executeContractWrites(
     props.walletClient,
     publicClient,
     {
-      calls,
+      calls: writes.value.calls,
       chain: props.chain,
       confirmation: "confirmed",
-      ...(props.onProgress === undefined
-        ? {}
-        : { onProgress: props.onProgress }),
+      onProgress: async (progress) => {
+        if (progress.strategy !== "atomic" && progress.state === "confirmed") {
+          confirmedTransactions.push({
+            prepared: progress.prepared,
+            receipt: progress.receipt,
+            transactionHash: progress.transactionHash,
+          });
+        }
+        await props.onProgress?.(progress);
+      },
       strategy: "auto",
       timeout: 120_000,
     },
   );
-  if (execution.isErr()) return err(execution.error);
+  if (execution.isErr()) {
+    if (
+      attempt.setPrimaryName &&
+      getConfirmedWrite(confirmedTransactions, "register-name") !== undefined
+    ) {
+      return buildRegistrationSuccess(publicClient, {
+        payment,
+        paymentToken,
+        primaryNameError: execution.error,
+        transactions: confirmedTransactions,
+        writes: writes.value,
+      });
+    }
 
-  const confirmedRegistration = findConfirmedWrite(
-    execution.value.transactions,
-    "register-name",
-  );
-  if (confirmedRegistration.isErr()) return err(confirmedRegistration.error);
-
-  const registeredAt = await getTransactionTimestamp(
-    publicClient,
-    confirmedRegistration.value.receipt,
-  );
-  const registrationDetails = parseRegistrationReceipt({
-    fallbackAmount: payment.total,
-    fallbackDuration: duration,
-    fallbackLabel: registration.value.metadata.label,
-    receipt: confirmedRegistration.value.receipt,
-    registrarAddress: attempt.registrarAddress,
-  });
-  let confirmedApproval: ConfirmedRegistrationWrite | undefined;
-  if (!payment.hasSufficientAllowance) {
-    const approval = findConfirmedWrite(
-      execution.value.transactions,
-      "approve-registration-payment",
-    );
-    if (approval.isErr()) return err(approval.error);
-    confirmedApproval = approval.value;
+    return err(execution.error);
   }
 
-  return ok({
-    ...(confirmedApproval === undefined ? {} : { approval: confirmedApproval }),
-    details: {
-      amount: registrationDetails.amount,
-      decimals: payment.decimals,
-      duration: registrationDetails.duration,
-      expiresAt: registeredAt + Number(registrationDetails.duration) * 1_000,
-      name: `${registrationDetails.label}.eth`,
-      paymentTokenIcon: paymentToken.icon,
-      paymentTokenSymbol: paymentToken.symbol,
-    },
-    registration: confirmedRegistration.value,
-    registrationAmount: registrationDetails.amount,
-    registrationDuration: registrationDetails.duration,
-    ...(registrationDetails.tokenId === undefined
-      ? {}
-      : { tokenId: registrationDetails.tokenId }),
+  return buildRegistrationSuccess(publicClient, {
+    payment,
+    paymentToken,
+    transactions: execution.value.transactions,
+    writes: writes.value,
   });
 }

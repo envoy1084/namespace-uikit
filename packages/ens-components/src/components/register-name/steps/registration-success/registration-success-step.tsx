@@ -18,6 +18,7 @@ export interface RegistrationSuccessDetails {
   name: string;
   paymentTokenIcon: string;
   paymentTokenSymbol: string;
+  primaryNameStatus: "failed" | "not-requested" | "set";
 }
 
 export interface RegistrationSuccessStepProps {
@@ -109,6 +110,26 @@ export function RegistrationSuccessStep({
               {expirationDate}
             </Typography.Paragraph>
           </Surface>
+
+          {registration.primaryNameStatus !== "not-requested" ? (
+            <Surface
+              className="mt-3 flex w-full items-center justify-between gap-4 rounded-2xl p-4"
+              variant="secondary"
+            >
+              <Typography.Paragraph color="muted" size="sm">
+                Primary name
+              </Typography.Paragraph>
+              <Typography.Paragraph
+                size="sm"
+                weight="medium"
+                {...(registration.primaryNameStatus === "failed"
+                  ? { className: "text-danger" }
+                  : {})}
+              >
+                {registration.primaryNameStatus === "set" ? "Set" : "Not set"}
+              </Typography.Paragraph>
+            </Surface>
+          ) : null}
         </div>
 
         <div className="w-full">

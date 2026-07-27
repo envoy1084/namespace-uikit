@@ -4,7 +4,6 @@ import { Disclosure } from "@thenamespace/uikit";
 
 import { CustomResolverAddress } from "#/components/register-name/steps/name-search/advanced-options/custom-resolver-address";
 import { ReferrerAddress } from "#/components/register-name/steps/name-search/advanced-options/referrer-address";
-import { SetPrimaryName } from "#/components/register-name/steps/name-search/advanced-options/set-primary-name";
 
 export function AdvancedOptions() {
   return (
@@ -19,7 +18,6 @@ export function AdvancedOptions() {
         <Disclosure.Body className="space-y-4 px-0 pt-3 pb-0">
           <ReferrerAddress />
           <CustomResolverAddress />
-          <SetPrimaryName />
         </Disclosure.Body>
       </Disclosure.Content>
     </Disclosure>
