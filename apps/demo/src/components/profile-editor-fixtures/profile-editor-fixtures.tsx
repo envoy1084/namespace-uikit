@@ -3,6 +3,7 @@
 import type {
   ProfileFixturePresentation,
   ProfileFixtureState,
+  ProfileFixtureViewport,
 } from "@/components/profile-editor-fixtures/fixtures";
 
 import { useState } from "react";
@@ -22,6 +23,7 @@ const presentations: readonly ProfileFixturePresentation[] = [
   "inline",
   "dialog",
 ];
+const viewports: readonly ProfileFixtureViewport[] = ["desktop", "mobile"];
 
 function FixtureSelector<T extends string>({
   label,
@@ -60,6 +62,7 @@ export function ProfileEditorFixtures() {
   const [state, setState] = useState<ProfileFixtureState>("review");
   const [presentation, setPresentation] =
     useState<ProfileFixturePresentation>("inline");
+  const [viewport, setViewport] = useState<ProfileFixtureViewport>("desktop");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
@@ -95,18 +98,34 @@ export function ProfileEditorFixtures() {
               setIsDialogOpen(nextPresentation === "dialog");
             }}
           />
+          <FixtureSelector
+            label="Viewport"
+            options={viewports}
+            value={viewport}
+            onChange={setViewport}
+          />
           {presentation === "dialog" ? (
             <Button onPress={() => setIsDialogOpen(true)}>Open fixture</Button>
           ) : null}
         </Surface>
 
         <div className="mt-8 flex justify-center">
-          <ProfileEditorStateFixture
-            isDialogOpen={isDialogOpen}
-            presentation={presentation}
-            state={state}
-            onDialogOpenChange={setIsDialogOpen}
-          />
+          {viewport === "mobile" ? (
+            <iframe
+              key={`${state}:${presentation}`}
+              aria-label={`${state} ${presentation} mobile fixture`}
+              className="h-[52.75rem] w-[24.375rem] max-w-full rounded-2xl border-0 bg-white shadow-sm"
+              src={`/profile-editor-fixture-embedded?state=${state}&presentation=${presentation}`}
+              title={`${state} ${presentation} mobile fixture`}
+            />
+          ) : (
+            <ProfileEditorStateFixture
+              isDialogOpen={isDialogOpen}
+              presentation={presentation}
+              state={state}
+              onDialogOpenChange={setIsDialogOpen}
+            />
+          )}
         </div>
       </div>
     </div>

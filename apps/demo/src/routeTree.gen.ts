@@ -9,14 +9,28 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProfileEditorLifecycleFixtureRouteImport } from './routes/profile-editor-lifecycle-fixture'
 import { Route as ProfileEditorFixturesRouteImport } from './routes/profile-editor-fixtures'
+import { Route as ProfileEditorFixtureEmbeddedRouteImport } from './routes/profile-editor-fixture-embedded'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ProfileEditorLifecycleFixtureRoute =
+  ProfileEditorLifecycleFixtureRouteImport.update({
+    id: '/profile-editor-lifecycle-fixture',
+    path: '/profile-editor-lifecycle-fixture',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ProfileEditorFixturesRoute = ProfileEditorFixturesRouteImport.update({
   id: '/profile-editor-fixtures',
   path: '/profile-editor-fixtures',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileEditorFixtureEmbeddedRoute =
+  ProfileEditorFixtureEmbeddedRouteImport.update({
+    id: '/profile-editor-fixture-embedded',
+    path: '/profile-editor-fixture-embedded',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -25,37 +39,72 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/profile-editor-fixture-embedded': typeof ProfileEditorFixtureEmbeddedRoute
   '/profile-editor-fixtures': typeof ProfileEditorFixturesRoute
+  '/profile-editor-lifecycle-fixture': typeof ProfileEditorLifecycleFixtureRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/profile-editor-fixture-embedded': typeof ProfileEditorFixtureEmbeddedRoute
   '/profile-editor-fixtures': typeof ProfileEditorFixturesRoute
+  '/profile-editor-lifecycle-fixture': typeof ProfileEditorLifecycleFixtureRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/profile-editor-fixture-embedded': typeof ProfileEditorFixtureEmbeddedRoute
   '/profile-editor-fixtures': typeof ProfileEditorFixturesRoute
+  '/profile-editor-lifecycle-fixture': typeof ProfileEditorLifecycleFixtureRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/profile-editor-fixtures'
+  fullPaths:
+    | '/'
+    | '/profile-editor-fixture-embedded'
+    | '/profile-editor-fixtures'
+    | '/profile-editor-lifecycle-fixture'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/profile-editor-fixtures'
-  id: '__root__' | '/' | '/profile-editor-fixtures'
+  to:
+    | '/'
+    | '/profile-editor-fixture-embedded'
+    | '/profile-editor-fixtures'
+    | '/profile-editor-lifecycle-fixture'
+  id:
+    | '__root__'
+    | '/'
+    | '/profile-editor-fixture-embedded'
+    | '/profile-editor-fixtures'
+    | '/profile-editor-lifecycle-fixture'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProfileEditorFixtureEmbeddedRoute: typeof ProfileEditorFixtureEmbeddedRoute
   ProfileEditorFixturesRoute: typeof ProfileEditorFixturesRoute
+  ProfileEditorLifecycleFixtureRoute: typeof ProfileEditorLifecycleFixtureRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/profile-editor-lifecycle-fixture': {
+      id: '/profile-editor-lifecycle-fixture'
+      path: '/profile-editor-lifecycle-fixture'
+      fullPath: '/profile-editor-lifecycle-fixture'
+      preLoaderRoute: typeof ProfileEditorLifecycleFixtureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile-editor-fixtures': {
       id: '/profile-editor-fixtures'
       path: '/profile-editor-fixtures'
       fullPath: '/profile-editor-fixtures'
       preLoaderRoute: typeof ProfileEditorFixturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile-editor-fixture-embedded': {
+      id: '/profile-editor-fixture-embedded'
+      path: '/profile-editor-fixture-embedded'
+      fullPath: '/profile-editor-fixture-embedded'
+      preLoaderRoute: typeof ProfileEditorFixtureEmbeddedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,7 +119,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProfileEditorFixtureEmbeddedRoute: ProfileEditorFixtureEmbeddedRoute,
   ProfileEditorFixturesRoute: ProfileEditorFixturesRoute,
+  ProfileEditorLifecycleFixtureRoute: ProfileEditorLifecycleFixtureRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

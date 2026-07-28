@@ -8,6 +8,7 @@ import type { ProfileUpdateSubmissionSuccess } from "#/components/name-profile-e
 
 export type ProfileFixturePresentation = "dialog" | "inline";
 export type ProfileFixtureState = "confirming" | "error" | "review" | "success";
+export type ProfileFixtureViewport = "desktop" | "mobile";
 
 export const fixtureName = "piedpiper.eth";
 export const fixtureTransactionHash =
