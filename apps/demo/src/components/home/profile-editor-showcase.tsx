@@ -1,38 +1,60 @@
-import type { NameProfileFormValues } from "ens-components";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Button,
   Input,
   Label,
+  Spinner,
+  Surface,
   TextField,
   Typography,
 } from "@thenamespace/uikit";
 import { ArrowUpRight01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
-import { NameProfileEditor } from "ens-components";
+import { formatError, NameProfileEditor } from "ens-components";
+import { useNameProfile } from "ens-components/hooks";
 
 import { SectionLabel } from "@/components/home/section-label";
 
-const DEMO_PROFILE: NameProfileFormValues = {
-  abi: [],
-  addresses: [],
-  contenthash: "",
-  data: [],
-  interfaces: [],
-  name: "",
-  pubkey: { x: "", y: "" },
-  text: [],
-};
-
 function formatDemoName(value: string): string {
-  const name = value.trim() || "achilles";
+  const name = value.trim();
+  if (name.length === 0) return "";
   return name.includes(".") ? name : `${name}.eth`;
+}
+
+function useDebouncedValue(value: string, delay: number): string {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setDebouncedValue(value), delay);
+    return () => window.clearTimeout(timeout);
+  }, [delay, value]);
+
+  return debouncedValue;
 }
 
 export function ProfileEditorShowcase() {
   const [nameInput, setNameInput] = useState("achilles");
-  const name = formatDemoName(nameInput);
+  const debouncedNameInput = useDebouncedValue(nameInput, 400);
+  const pendingName = formatDemoName(nameInput);
+  const name = formatDemoName(debouncedNameInput);
+  const isNamePending = pendingName !== name;
+  const profile = useNameProfile({
+    input: name,
+    query: {
+      enabled: name.length > 0,
+      staleTime: 30_000,
+    },
+  });
+  const profileData = isNamePending ? undefined : profile.data;
+  const isProfileLoading = isNamePending || profile.isFetching;
+  const statusMessage =
+    pendingName.length === 0
+      ? "Enter an ENS name to load its profile."
+      : isProfileLoading
+        ? `Loading ${pendingName}…`
+        : profile.isError
+          ? formatError(profile.error, { name: pendingName })
+          : `No profile data was found for ${pendingName}.`;
 
   return (
     <section
@@ -67,30 +89,57 @@ export function ProfileEditorShowcase() {
           />
         </TextField>
 
-        <NameProfileEditor
-          initialRecords={DEMO_PROFILE}
-          name={name}
-          slots={{
-            trigger: (
-              <Button className="mt-4" size="lg">
-                Open dialog demo
-                <HugeiconsIcon
-                  aria-hidden
-                  icon={ArrowUpRight01Icon}
-                  size={18}
-                />
-              </Button>
-            ),
-          }}
-        />
+        {profileData === undefined ? (
+          <Button isDisabled className="mt-4" size="lg">
+            {isProfileLoading
+              ? "Loading profile"
+              : pendingName.length === 0
+                ? "Enter an ENS name"
+                : "Profile unavailable"}
+          </Button>
+        ) : (
+          <NameProfileEditor
+            initialRecords={profileData.records}
+            name={profileData.name}
+            resolverAddress={profileData.resolverAddress}
+            slots={{
+              trigger: (
+                <Button className="mt-4" size="lg">
+                  Open dialog demo
+                  <HugeiconsIcon
+                    aria-hidden
+                    icon={ArrowUpRight01Icon}
+                    size={18}
+                  />
+                </Button>
+              ),
+            }}
+          />
+        )}
       </div>
 
       <div className="mx-auto w-full max-w-md">
-        <NameProfileEditor
-          initialRecords={DEMO_PROFILE}
-          name={name}
-          presentation="inline"
-        />
+        {profileData === undefined ? (
+          <Surface className="flex min-h-[44rem] w-full items-center justify-center rounded-3xl">
+            <div
+              aria-live="polite"
+              className="flex max-w-xs flex-col items-center gap-3 px-6 text-center"
+              role="status"
+            >
+              {isProfileLoading ? <Spinner size="sm" /> : null}
+              <Typography.Paragraph color="muted" size="sm">
+                {statusMessage}
+              </Typography.Paragraph>
+            </div>
+          </Surface>
+        ) : (
+          <NameProfileEditor
+            initialRecords={profileData.records}
+            name={profileData.name}
+            presentation="inline"
+            resolverAddress={profileData.resolverAddress}
+          />
+        )}
       </div>
     </section>
   );
