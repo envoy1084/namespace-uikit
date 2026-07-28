@@ -4,6 +4,7 @@ export * from "#/actions/write/execute-contract-writes";
 export * from "#/actions/write/prepare-write-commit-name";
 export * from "#/actions/write/prepare-write-permissioned-resolver-deployment";
 export * from "#/actions/write/prepare-write-payment-token-approval";
+export * from "#/actions/write/prepare-write-profile-records";
 export * from "#/actions/write/prepare-write-register-name";
 export * from "#/actions/write/prepare-write-renew-name";
 export * from "#/actions/write/prepare-write-set-address-record";
