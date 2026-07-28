@@ -6,11 +6,10 @@ import type {
 } from "#/components/name-profile-editor/types";
 
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
 
 import { Button, Modal, Surface, cn } from "@thenamespace/uikit";
 
-import { ProfileHeader } from "#/components/name-profile-editor/profile-header";
+import { ProfileEditor } from "#/components/name-profile-editor/editor/editor";
 
 export interface NameProfileEditorProps {
   className?: string;
@@ -23,13 +22,6 @@ export interface NameProfileEditorProps {
   upload?: NameProfileEditorUploadHandlers;
 }
 
-function getMediaRecord(
-  records: NameProfileFormValues,
-  key: "avatar" | "header",
-): string {
-  return records.text.find((record) => record.key === key)?.value ?? "";
-}
-
 export function NameProfileEditor({
   className,
   initialRecords,
@@ -38,23 +30,10 @@ export function NameProfileEditor({
   slots,
   upload,
 }: NameProfileEditorProps) {
-  const initialAvatar = getMediaRecord(initialRecords, "avatar");
-  const initialHeader = getMediaRecord(initialRecords, "header");
-  const [avatar, setAvatar] = useState(initialAvatar);
-  const [header, setHeader] = useState(initialHeader);
-
-  useEffect(() => {
-    setAvatar(initialAvatar);
-    setHeader(initialHeader);
-  }, [initialAvatar, initialHeader]);
-
   const content = (
-    <ProfileHeader
-      avatar={avatar}
-      header={header}
+    <ProfileEditor
+      initialRecords={initialRecords}
       {...(upload === undefined ? {} : { upload })}
-      onAvatarChange={setAvatar}
-      onHeaderChange={setHeader}
     />
   );
 

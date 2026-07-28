@@ -143,7 +143,7 @@ function MediaControl(props: MediaControlProps) {
   return <UrlMediaControl {...props} />;
 }
 
-export function ProfileHeader({
+export function EditorHeader({
   avatar,
   header,
   onAvatarChange,
