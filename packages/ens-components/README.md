@@ -180,12 +180,37 @@ reviews changes, and submits one atomic resolver multicall. See
 
 ### Hooks
 
+#### Registration
+
 - [useNameAvailability](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-availability.md)
 - [useNamePrice](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-price.md)
 - [useRegistrationPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-registration-payment-status.md)
+- [useCommitmentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-commitment-status.md)
+- [useCommitName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-commit-name.md)
+- [useRegisterName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-register-name.md)
+
+#### Renewal
+
 - [useNameRenewalPrice](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-renewal-price.md)
 - [useNameRenewalPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-renewal-payment-status.md)
+- [useRenewName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-renew-name.md)
+
+#### Resolver and profile
+
 - [useNameProfilePermissions](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-profile-permissions.md)
+- [useNameResolver](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-resolver.md)
+- [useResolverCapabilities](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-resolver-capabilities.md)
+- [useDeployPermissionedResolver](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-deploy-permissioned-resolver.md)
+- [useUpdateProfileRecords](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-update-profile-records.md)
+- [useSetAddressRecord](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-set-address-record.md)
+- [useSetPrimaryName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-set-primary-name.md)
+
+#### Payments and transactions
+
+- [useApprovePaymentToken](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-approve-payment-token.md)
+- [useWalletCapabilities](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-wallet-capabilities.md)
+- [useExecuteContractWrites](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-execute-contract-writes.md)
+- [useContractWritesStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-contract-writes-status.md)
 
 ### Icons
 
