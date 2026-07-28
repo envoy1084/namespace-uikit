@@ -29,7 +29,6 @@ import { useConnection } from "wagmi";
 import { canEditNameProfileRecord } from "#/actions";
 import { ProfileDiffScreen } from "#/components/name-profile-editor/diff/diff-screen";
 import { EditorHeader } from "#/components/name-profile-editor/editor/header";
-import { getProfileSectionError } from "#/components/name-profile-editor/editor/profile-form-resolver";
 import {
   canEditDefinition,
   canEditEditorRecord,
@@ -176,10 +175,6 @@ export function ProfileEditor({
     }
   }
 
-  const validationError = getProfileSectionError(
-    editor.form.formState.errors,
-    editor.activeSection,
-  );
   const hasPermissionForChanges =
     !hasConnectedAccount ||
     (editor.review !== undefined &&
@@ -306,14 +301,14 @@ export function ProfileEditor({
                   value={editor.activeSection}
                   onChange={editor.setActiveSection}
                 />
-                <div className="max-h-84 min-w-0 flex-1 overflow-y-auto pr-1">
+                <div className="max-h-84 min-w-0 flex-1 overflow-y-auto px-1">
                   <RecordSection
                     disabledDefinitionIds={disabledDefinitionIds}
                     disabledRecordIds={disabledRecordIds}
                     error={
                       editor.activeSection === "general" && media.uploadError
                         ? media.uploadError
-                        : validationError
+                        : undefined
                     }
                     records={editor.records}
                     search={editor.search}

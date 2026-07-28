@@ -5,7 +5,13 @@ import type { NameProfileFormValues } from "#/components/name-profile-editor/typ
 
 import type { ReactNode } from "react";
 
-import { Button, InputGroup, Label, TextField } from "@thenamespace/uikit";
+import {
+  Button,
+  FieldError,
+  InputGroup,
+  Label,
+  TextField,
+} from "@thenamespace/uikit";
 import { Cancel01Icon, Icon } from "@thenamespace/uikit/icons";
 import { Controller, type FieldPath, useFormContext } from "react-hook-form";
 
@@ -84,7 +90,10 @@ function RecordInput({
           <Label className="text-muted truncate text-[11px] font-medium">
             {label}
           </Label>
-          <InputGroup className="w-full min-w-0 ring-inset" variant="secondary">
+          <InputGroup
+            className="w-full min-w-0 outline-offset-[-1px] ring-inset"
+            variant="secondary"
+          >
             {prefix === undefined ? null : (
               <InputGroup.Prefix>{prefix}</InputGroup.Prefix>
             )}
@@ -98,6 +107,9 @@ function RecordInput({
               <InputGroup.Suffix>{suffix}</InputGroup.Suffix>
             )}
           </InputGroup>
+          <FieldError className="px-0 text-left text-xs leading-4">
+            {fieldState.error?.message}
+          </FieldError>
         </TextField>
       )}
     />

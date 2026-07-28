@@ -98,7 +98,7 @@ export function RecordSection({
 
       {error === undefined ? null : (
         <Typography.Paragraph
-          className="text-danger mx-auto mt-3 text-center text-xs"
+          className="text-danger mt-2 text-left text-xs leading-4"
           role="alert"
         >
           {error}
