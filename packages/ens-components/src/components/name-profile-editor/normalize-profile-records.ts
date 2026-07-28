@@ -1,3 +1,4 @@
+import type { NormalizeProfilePublicKeyError } from "#/components/name-profile-editor/normalize-profile-public-key";
 import type {
   NameProfileAbiRecord,
   NameProfileAddressRecord,
@@ -6,6 +7,7 @@ import type {
   NameProfileInterfaceRecord,
   NameProfileTextRecord,
 } from "#/components/name-profile-editor/types";
+import type { ProfileTextRecordValidationError } from "#/components/name-profile-editor/validate-profile-text-record";
 
 import { getCoderByCoinType } from "@ensdomains/address-encoder";
 import {
@@ -15,15 +17,11 @@ import {
   type Codec,
 } from "@ensdomains/content-hash";
 import { err, ok, type Result } from "neverthrow";
-import {
-  getAddress,
-  isAddress,
-  isHex,
-  size,
-  zeroAddress,
-  zeroHash,
-} from "viem";
+import { getAddress, isAddress, isHex, size, zeroAddress } from "viem";
 import { normalize as normalizeName } from "viem/ens";
+
+import { normalizeProfilePublicKey } from "#/components/name-profile-editor/normalize-profile-public-key";
+import { normalizeProfileTextValue } from "#/components/name-profile-editor/validate-profile-text-record";
 
 const MAX_UINT256 = (1n << 256n) - 1n;
 const UNSIGNED_INTEGER_PATTERN = /^\d+$/;
@@ -52,12 +50,20 @@ export type NormalizeProfileRecordsError =
   | "INVALID_CONTENTHASH"
   | "INVALID_DATA_KEY"
   | "INVALID_DATA_VALUE"
+  | "INVALID_EMAIL"
+  | "INVALID_IMAGE_URL"
   | "INVALID_INTERFACE_ID"
   | "INVALID_INTERFACE_IMPLEMENTER"
   | "INVALID_NAME_RECORD"
   | "INVALID_PROFILE_RECORDS"
   | "INVALID_PUBLIC_KEY"
+  | "INVALID_PUBLIC_KEY_X"
+  | "INVALID_PUBLIC_KEY_Y"
   | "INVALID_TEXT_KEY"
+  | "INVALID_TIMEZONE"
+  | "INVALID_URL"
+  | "MISSING_PUBLIC_KEY_X"
+  | "MISSING_PUBLIC_KEY_Y"
   | "UNSUPPORTED_COIN_TYPE";
 
 export type NormalizeProfileRecordsResult = Result<
@@ -293,30 +299,6 @@ function normalizeNameRecord(
   }
 }
 
-function normalizePublicKey(
-  pubkey: NameProfileFormValues["pubkey"],
-): Result<NameProfileFormValues["pubkey"], NormalizeProfileRecordsError> {
-  const inputX = pubkey.x.trim();
-  const inputY = pubkey.y.trim();
-
-  if (inputX.length === 0 && inputY.length === 0) {
-    return ok({ x: "", y: "" });
-  }
-
-  if (
-    !isByteHex(inputX) ||
-    !isByteHex(inputY) ||
-    size(inputX) !== 32 ||
-    size(inputY) !== 32
-  ) {
-    return err("INVALID_PUBLIC_KEY");
-  }
-
-  const x = inputX.toLowerCase();
-  const y = inputY.toLowerCase();
-  return ok(x === zeroHash && y === zeroHash ? { x: "", y: "" } : { x, y });
-}
-
 function normalizeTextRecords(
   records: NameProfileFormValues["text"],
 ): Result<NameProfileTextRecord[], NormalizeProfileRecordsError> {
@@ -329,8 +311,13 @@ function normalizeTextRecords(
     if (seen.has(key)) return err("DUPLICATE_TEXT_KEY");
     seen.add(key);
 
-    if (record.value.length > 0) {
-      normalized.push({ key, value: record.value });
+    const value = normalizeProfileTextValue(key, record.value);
+    if (value.isErr()) {
+      return err(value.error as ProfileTextRecordValidationError);
+    }
+
+    if (value.value.length > 0) {
+      normalized.push({ key, value: value.value });
     }
   }
 
@@ -362,8 +349,10 @@ function normalizeProfileRecordsInternal(
   const name = normalizeNameRecord(records.name);
   if (name.isErr()) return err(name.error);
 
-  const pubkey = normalizePublicKey(records.pubkey);
-  if (pubkey.isErr()) return err(pubkey.error);
+  const pubkey = normalizeProfilePublicKey(records.pubkey);
+  if (pubkey.isErr()) {
+    return err(pubkey.error as NormalizeProfilePublicKeyError);
+  }
 
   const text = normalizeTextRecords(records.text);
   if (text.isErr()) return err(text.error);

@@ -4,6 +4,7 @@ import type { ProfileEditorSection } from "#/components/name-profile-editor/edit
 import type { NormalizeProfileRecordsError } from "#/components/name-profile-editor/normalize-profile-records";
 import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
 
+import { findRecordDefinition } from "#/components/name-profile-editor/editor/record-definitions";
 import { normalizeProfileRecords } from "#/components/name-profile-editor/normalize-profile-records";
 import { emptyNameProfileFormValues } from "#/components/name-profile-editor/types";
 import { formatError } from "#/lib/error";
@@ -36,6 +37,8 @@ const ERROR_LOCATIONS: Readonly<
   INVALID_CONTENTHASH: { target: "contenthash" },
   INVALID_DATA_KEY: { field: "key", target: "data" },
   INVALID_DATA_VALUE: { field: "value", target: "data" },
+  INVALID_EMAIL: { field: "value", target: "text" },
+  INVALID_IMAGE_URL: { field: "value", target: "text" },
   INVALID_INTERFACE_ID: { field: "interfaceId", target: "interfaces" },
   INVALID_INTERFACE_IMPLEMENTER: {
     field: "implementer",
@@ -44,7 +47,13 @@ const ERROR_LOCATIONS: Readonly<
   INVALID_NAME_RECORD: { target: "name" },
   INVALID_PROFILE_RECORDS: { target: "profile" },
   INVALID_PUBLIC_KEY: { field: "x", target: "pubkey" },
+  INVALID_PUBLIC_KEY_X: { field: "x", target: "pubkey" },
+  INVALID_PUBLIC_KEY_Y: { field: "y", target: "pubkey" },
   INVALID_TEXT_KEY: { field: "key", target: "text" },
+  INVALID_TIMEZONE: { field: "value", target: "text" },
+  INVALID_URL: { field: "value", target: "text" },
+  MISSING_PUBLIC_KEY_X: { field: "x", target: "pubkey" },
+  MISSING_PUBLIC_KEY_Y: { field: "y", target: "pubkey" },
   UNSUPPORTED_COIN_TYPE: { field: "coinType", target: "addresses" },
 };
 
@@ -82,29 +91,47 @@ function createErrors(
   error: NormalizeProfileRecordsError,
   values: NameProfileFormValues,
 ): FieldErrors<NameProfileFormValues> {
-  const fieldError = {
-    message: formatError(error),
-    type: error,
-  };
   const { field, target } = ERROR_LOCATIONS[error];
   const errors: FieldErrors<NameProfileFormValues> = {};
+  const createFieldError = (index?: number) => {
+    const coinType =
+      target === "addresses" && index !== undefined
+        ? values.addresses[index]?.coinType
+        : undefined;
+    const network =
+      coinType === undefined
+        ? undefined
+        : (findRecordDefinition("address", coinType)?.label ??
+          `coin type ${coinType}`);
+
+    return {
+      message: formatError(
+        error,
+        network === undefined ? undefined : { network },
+      ),
+      type: error,
+    };
+  };
 
   if (target === "profile") {
-    errors.root = { profile: fieldError };
+    errors.root = { profile: createFieldError() };
   } else if (target === "contenthash" || target === "name") {
-    (errors as Record<string, unknown>)[target] = fieldError;
+    (errors as Record<string, unknown>)[target] = createFieldError();
   } else if (target === "pubkey") {
-    errors.pubkey = { x: fieldError };
+    errors.pubkey = { [field ?? "x"]: createFieldError() };
   } else if (isArrayErrorTarget(target)) {
     const index = findArrayErrorIndex(error, target, values);
     const arrayErrors = Array.from<unknown>({
       length: Math.max(values[target].length, index + 1),
     });
+    const fieldError = createFieldError(index);
     arrayErrors[index] =
       field === undefined ? { root: fieldError } : { [field]: fieldError };
     (errors as Record<string, unknown>)[target] = arrayErrors;
   } else {
-    (errors as Record<string, unknown>)[target] = { root: fieldError };
+    (errors as Record<string, unknown>)[target] = {
+      root: createFieldError(),
+    };
   }
 
   return errors;

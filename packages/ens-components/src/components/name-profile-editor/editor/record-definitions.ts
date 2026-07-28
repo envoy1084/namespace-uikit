@@ -53,7 +53,28 @@ const generalRecords = [
   ),
   defineRecord("general", "text", "url", "Website", "https://piedpiper.com"),
   defineRecord("general", "text", "location", "Location", "Palo Alto, CA"),
+  defineRecord(
+    "general",
+    "text",
+    "timezone",
+    "Timezone",
+    "America/Los_Angeles",
+  ),
   defineRecord("general", "text", "email", "E-mail", "richard@piedpiper.com"),
+  defineRecord(
+    "general",
+    "text",
+    "notice",
+    "Notice",
+    "Official updates from this name",
+  ),
+  defineRecord(
+    "general",
+    "text",
+    "keywords",
+    "Keywords",
+    "technology, software, identity",
+  ),
   defineRecord(
     "general",
     "text",
@@ -317,6 +338,13 @@ const websiteRecords = [
 ] as const;
 
 const advancedRecords = [
+  defineRecord(
+    "advanced",
+    "text",
+    "eth.ens.delegate",
+    "ENS delegate",
+    "delegate.eth",
+  ),
   defineRecord("advanced", "name", "name", "Name", "richard.eth"),
   defineRecord("advanced", "pubkey", "pubkey", "Public key", "0x04…"),
   defineRecord("advanced", "abi", "abi", "ABI", "0x5b7b2274…7d5d", {
