@@ -1,7 +1,7 @@
-import { err, ok, type Result } from "neverthrow";
-import { type Address, type ContractFunctionParameters } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import { type Address, type ContractFunctionParameters, type PublicClient } from "viem";
 
-import type { PreparedContractRead } from "#/actions/read/contract-reads";
+import { executeContractRead, type PreparedContractRead } from "#/actions/read/contract-reads";
 import { verifiableFactoryAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 
@@ -33,6 +33,13 @@ export type PreparedPermissionedResolverVerificationRead = PreparedContractRead<
   }
 >;
 
+export type ReadPermissionedResolverVerificationParameters =
+  PreparePermissionedResolverVerificationReadParameters;
+export type ReadPermissionedResolverVerificationReturnType = boolean;
+export type ReadPermissionedResolverVerificationErrorType =
+  | PreparePermissionedResolverVerificationReadError
+  | "CONTRACT_READ_FAILED";
+
 /** Validates and prepares a VerifiableFactory implementation check. */
 export function preparePermissionedResolverVerificationRead(
   parameters: PreparePermissionedResolverVerificationReadParameters,
@@ -63,4 +70,17 @@ export function preparePermissionedResolverVerificationRead(
       args: [parameters.resolverAddress, parameters.implementationAddress],
     },
   });
+}
+
+/** Reads whether a resolver proxy was deployed from the expected implementation. */
+export function readPermissionedResolverVerification(
+  publicClient: PublicClient,
+  parameters: ReadPermissionedResolverVerificationParameters,
+): ResultAsync<
+  ReadPermissionedResolverVerificationReturnType,
+  ReadPermissionedResolverVerificationErrorType
+> {
+  const prepared = preparePermissionedResolverVerificationRead(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractRead(publicClient, prepared.value);
 }

@@ -1,7 +1,7 @@
-import { err, ok, type Result } from "neverthrow";
-import { type Address, type ContractFunctionParameters } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import { type Address, type ContractFunctionParameters, type PublicClient } from "viem";
 
-import type { PreparedContractRead } from "#/actions/read/contract-reads";
+import { executeContractRead, type PreparedContractRead } from "#/actions/read/contract-reads";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import { parseNameInput, type ParseNameInputError } from "#/lib/parse-name-input";
@@ -36,6 +36,13 @@ export type PreparedNameAvailabilityRead = PreparedContractRead<
   "name-availability",
   NameAvailabilityReadMetadata
 >;
+
+export type ReadNameAvailabilityParameters = PrepareNameAvailabilityReadParameters;
+export type ReadNameAvailabilityReturnType = boolean;
+export type ReadNameAvailabilityErrorType =
+  | PrepareNameAvailabilityReadError
+  | ParseNameInputError
+  | "CONTRACT_READ_FAILED";
 
 /**
  * Validates a label or ENS name and prepares its availability read.
@@ -74,4 +81,14 @@ export function prepareNameAvailabilityRead(
       args: [parsedName.label],
     },
   });
+}
+
+/** Reads whether a normalized second-level `.eth` name can be registered. */
+export function readNameAvailability(
+  publicClient: PublicClient,
+  parameters: ReadNameAvailabilityParameters,
+): ResultAsync<ReadNameAvailabilityReturnType, ReadNameAvailabilityErrorType> {
+  const prepared = prepareNameAvailabilityRead(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractRead(publicClient, prepared.value);
 }

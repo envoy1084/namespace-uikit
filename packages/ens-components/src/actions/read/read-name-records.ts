@@ -1,4 +1,4 @@
-import { err, ok, type Result } from "neverthrow";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
 import {
   getAddress,
   isAddress,
@@ -6,6 +6,7 @@ import {
   type Address,
   type ContractFunctionParameters,
   type Hex,
+  type PublicClient,
 } from "viem";
 import { namehash } from "viem/ens";
 
@@ -14,6 +15,7 @@ import type {
   PreparedContractRead,
   PreparedContractReadPlan,
 } from "#/actions/read/contract-reads";
+import { executeContractReadsIndividually } from "#/actions/read/contract-reads";
 import {
   decodeNameRecord,
   descriptorsForNameRecords,
@@ -88,6 +90,10 @@ export type PreparedNameRecordsRead = PreparedContractReadPlan<
   "name-records"
 >;
 
+export type ReadNameRecordsParameters = PrepareNameRecordsReadParameters;
+export type ReadNameRecordsReturnType = NameRecordsResult;
+export type ReadNameRecordsErrorType = PrepareNameRecordsReadError | "CONTRACT_READ_FAILED";
+
 /** Prepares canonical Universal Resolver reads for selected profile records. */
 export function prepareNameRecordsRead(
   parameters: PrepareNameRecordsReadParameters,
@@ -156,4 +162,14 @@ export function prepareNameRecordsRead(
       });
     },
   });
+}
+
+/** Reads selected ENS records through the Universal Resolver. */
+export function readNameRecords(
+  publicClient: PublicClient,
+  parameters: ReadNameRecordsParameters,
+): ResultAsync<ReadNameRecordsReturnType, ReadNameRecordsErrorType> {
+  const prepared = prepareNameRecordsRead(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractReadsIndividually(publicClient, prepared.value);
 }

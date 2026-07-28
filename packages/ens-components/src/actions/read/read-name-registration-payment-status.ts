@@ -1,12 +1,16 @@
-import { err, ok, type Result } from "neverthrow";
-import { erc20Abi, type Address, type ContractFunctionParameters } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import { erc20Abi, type Address, type ContractFunctionParameters, type PublicClient } from "viem";
 
-import type { PreparedContractRead, PreparedContractReadPlan } from "#/actions/read/contract-reads";
+import {
+  executeContractReads,
+  type PreparedContractRead,
+  type PreparedContractReadPlan,
+} from "#/actions/read/contract-reads";
 import type {
   PreparedNameRegistrationPriceRead,
   PrepareNameRegistrationPriceReadError,
-} from "#/actions/read/prepare-read-name-registration-price";
-import { prepareNameRegistrationPriceRead } from "#/actions/read/prepare-read-name-registration-price";
+} from "#/actions/read/read-name-registration-price";
+import { prepareNameRegistrationPriceRead } from "#/actions/read/read-name-registration-price";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 
@@ -79,6 +83,14 @@ export type PreparedNameRegistrationPaymentStatusRead = PreparedContractReadPlan
   NameRegistrationPaymentStatusReadError,
   "name-registration-payment-status"
 >;
+
+export type ReadNameRegistrationPaymentStatusParameters =
+  PrepareNameRegistrationPaymentStatusReadParameters;
+export type ReadNameRegistrationPaymentStatusReturnType = NameRegistrationPaymentStatus;
+export type ReadNameRegistrationPaymentStatusErrorType =
+  | PrepareNameRegistrationPaymentStatusReadError
+  | NameRegistrationPaymentStatusReadError
+  | ParseNameInputError;
 
 /**
  * Prepares an availability, price, decimals, balance, and allowance multicall.
@@ -157,4 +169,17 @@ export function prepareNameRegistrationPaymentStatusRead(
       });
     },
   });
+}
+
+/** Reads price, balance, and allowance state for a name registration. */
+export function readNameRegistrationPaymentStatus(
+  publicClient: PublicClient,
+  parameters: ReadNameRegistrationPaymentStatusParameters,
+): ResultAsync<
+  ReadNameRegistrationPaymentStatusReturnType,
+  ReadNameRegistrationPaymentStatusErrorType
+> {
+  const prepared = prepareNameRegistrationPaymentStatusRead(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractReads(publicClient, prepared.value);
 }

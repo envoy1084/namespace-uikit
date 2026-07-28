@@ -1,13 +1,17 @@
-import { err, ok, type Result } from "neverthrow";
-import { erc20Abi, type Address, type ContractFunctionParameters } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import { erc20Abi, type Address, type ContractFunctionParameters, type PublicClient } from "viem";
 
-import type { PreparedContractRead, PreparedContractReadPlan } from "#/actions/read/contract-reads";
+import {
+  executeContractReads,
+  type PreparedContractRead,
+  type PreparedContractReadPlan,
+} from "#/actions/read/contract-reads";
 import type {
   NameRenewalPriceReadError,
   PreparedNameRenewalPriceRead,
   PrepareNameRenewalPriceReadError,
-} from "#/actions/read/prepare-read-name-renewal-price";
-import { prepareNameRenewalPriceRead } from "#/actions/read/prepare-read-name-renewal-price";
+} from "#/actions/read/read-name-renewal-price";
+import { prepareNameRenewalPriceRead } from "#/actions/read/read-name-renewal-price";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 
@@ -78,6 +82,13 @@ export type PreparedNameRenewalPaymentStatusRead = PreparedContractReadPlan<
   NameRenewalPaymentStatusReadError,
   "name-renewal-payment-status"
 >;
+
+export type ReadNameRenewalPaymentStatusParameters = PrepareNameRenewalPaymentStatusReadParameters;
+export type ReadNameRenewalPaymentStatusReturnType = NameRenewalPaymentStatus;
+export type ReadNameRenewalPaymentStatusErrorType =
+  | PrepareNameRenewalPaymentStatusReadError
+  | NameRenewalPaymentStatusReadError
+  | ParseNameInputError;
 
 export function prepareNameRenewalPaymentStatusRead(
   parameters: PrepareNameRenewalPaymentStatusReadParameters,
@@ -152,4 +163,14 @@ export function prepareNameRenewalPaymentStatusRead(
       });
     },
   });
+}
+
+/** Reads price, balance, and allowance state for a name renewal. */
+export function readNameRenewalPaymentStatus(
+  publicClient: PublicClient,
+  parameters: ReadNameRenewalPaymentStatusParameters,
+): ResultAsync<ReadNameRenewalPaymentStatusReturnType, ReadNameRenewalPaymentStatusErrorType> {
+  const prepared = prepareNameRenewalPaymentStatusRead(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractReads(publicClient, prepared.value);
 }

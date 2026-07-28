@@ -4,7 +4,7 @@ import { getAddress, isAddress, isHex, type Address, type Hex } from "viem";
 import type {
   NameProfileDiscoveryResult,
   NameProfileSubregistry,
-} from "#/actions/read/prepare-read-name-profile-discovery";
+} from "#/actions/read/read-name-profile-discovery";
 
 interface JsonObject {
   readonly _meta?: unknown;

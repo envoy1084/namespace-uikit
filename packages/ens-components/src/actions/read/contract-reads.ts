@@ -1,6 +1,5 @@
-import type { ContractFunctionParameters, PublicClient } from "viem";
-
 import { ResultAsync, type Result } from "neverthrow";
+import type { ContractFunctionParameters, PublicClient } from "viem";
 
 export interface PreparedContractRead<
   TRequest extends ContractFunctionParameters = ContractFunctionParameters,
@@ -41,15 +40,11 @@ export type ContractReadValue<TPrepared extends PreparedContractRead> =
     ? TResult
     : never;
 
-export type ContractReadRequests<
-  TReads extends readonly PreparedContractRead[],
-> = {
+export type ContractReadRequests<TReads extends readonly PreparedContractRead[]> = {
   readonly [TIndex in keyof TReads]: ContractReadRequest<TReads[TIndex]>;
 };
 
-export type ContractReadResults<
-  TReads extends readonly PreparedContractRead[],
-> = {
+export type ContractReadResults<TReads extends readonly PreparedContractRead[]> = {
   readonly [TIndex in keyof TReads]:
     | {
         readonly result: ContractReadValue<TReads[TIndex]>;
@@ -70,9 +65,7 @@ export interface PreparedContractReadPlan<
 > {
   readonly kind: TKind;
   readonly reads: TReads;
-  readonly select: (
-    results: ContractReadResults<TReads>,
-  ) => Result<TData, TError>;
+  readonly select: (results: ContractReadResults<TReads>) => Result<TData, TError>;
 }
 
 export function executeContractRead<TPrepared extends PreparedContractRead>(
@@ -80,9 +73,9 @@ export function executeContractRead<TPrepared extends PreparedContractRead>(
   prepared: TPrepared,
 ): ResultAsync<ContractReadValue<TPrepared>, "CONTRACT_READ_FAILED"> {
   return ResultAsync.fromPromise(
-    publicClient.readContract(
-      prepared.request as ContractFunctionParameters,
-    ) as Promise<ContractReadValue<TPrepared>>,
+    publicClient.readContract(prepared.request as ContractFunctionParameters) as Promise<
+      ContractReadValue<TPrepared>
+    >,
     () => "CONTRACT_READ_FAILED" as const,
   );
 }

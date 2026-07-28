@@ -1,7 +1,11 @@
-import { err, ok, type Result } from "neverthrow";
-import { erc20Abi, type Address, type ContractFunctionParameters } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import { erc20Abi, type Address, type ContractFunctionParameters, type PublicClient } from "viem";
 
-import type { PreparedContractRead, PreparedContractReadPlan } from "#/actions/read/contract-reads";
+import {
+  executeContractReads,
+  type PreparedContractRead,
+  type PreparedContractReadPlan,
+} from "#/actions/read/contract-reads";
 import { ethRegistrarAbi, ethRegistryAbi } from "#/data/abi";
 import { isNonZeroAddress, isUint64Duration } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -93,6 +97,13 @@ export type PreparedNameRenewalPriceRead = PreparedContractReadPlan<
   "name-renewal-price"
 >;
 
+export type ReadNameRenewalPriceParameters = PrepareNameRenewalPriceReadParameters;
+export type ReadNameRenewalPriceReturnType = NameRenewalPrice;
+export type ReadNameRenewalPriceErrorType =
+  | PrepareNameRenewalPriceReadError
+  | NameRenewalPriceReadError
+  | ParseNameInputError;
+
 export function prepareNameRenewalPriceRead(
   parameters: PrepareNameRenewalPriceReadParameters,
 ): Result<PreparedNameRenewalPriceRead, PrepareNameRenewalPriceReadError | ParseNameInputError> {
@@ -180,4 +191,14 @@ export function prepareNameRenewalPriceRead(
       });
     },
   });
+}
+
+/** Reads the current expiry and renewal price for a second-level `.eth` name. */
+export function readNameRenewalPrice(
+  publicClient: PublicClient,
+  parameters: ReadNameRenewalPriceParameters,
+): ResultAsync<ReadNameRenewalPriceReturnType, ReadNameRenewalPriceErrorType> {
+  const prepared = prepareNameRenewalPriceRead(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractReads(publicClient, prepared.value);
 }

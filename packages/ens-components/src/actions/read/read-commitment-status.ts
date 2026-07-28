@@ -1,7 +1,18 @@
-import { err, ok, type Result } from "neverthrow";
-import { isHex, size, type Address, type ContractFunctionParameters, type Hex } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import {
+  isHex,
+  size,
+  type Address,
+  type ContractFunctionParameters,
+  type Hex,
+  type PublicClient,
+} from "viem";
 
-import type { PreparedContractRead, PreparedContractReadPlan } from "#/actions/read/contract-reads";
+import {
+  executeContractReads,
+  type PreparedContractRead,
+  type PreparedContractReadPlan,
+} from "#/actions/read/contract-reads";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 
@@ -59,6 +70,12 @@ export type PreparedCommitmentStatusRead = PreparedContractReadPlan<
   "CONTRACT_READ_FAILED",
   "commitment-status"
 >;
+
+export type ReadCommitmentStatusParameters = PrepareCommitmentStatusReadParameters;
+export type ReadCommitmentStatusReturnType = CommitmentTiming;
+export type ReadCommitmentStatusErrorType =
+  | PrepareCommitmentStatusReadError
+  | "CONTRACT_READ_FAILED";
 
 /** Validates and prepares the reads required to evaluate a commitment window. */
 export function prepareCommitmentStatusRead(
@@ -118,4 +135,14 @@ export function prepareCommitmentStatusRead(
       });
     },
   });
+}
+
+/** Reads the current validity window for an ENS name commitment. */
+export function readCommitmentStatus(
+  publicClient: PublicClient,
+  parameters: ReadCommitmentStatusParameters,
+): ResultAsync<ReadCommitmentStatusReturnType, ReadCommitmentStatusErrorType> {
+  const prepared = prepareCommitmentStatusRead(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractReads(publicClient, prepared.value);
 }

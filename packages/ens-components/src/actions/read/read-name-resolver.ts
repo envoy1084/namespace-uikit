@@ -1,7 +1,7 @@
-import { err, ok, type Result } from "neverthrow";
-import { type Address, type ContractFunctionParameters, type Hex } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import { type Address, type ContractFunctionParameters, type Hex, type PublicClient } from "viem";
 
-import type { PreparedContractRead } from "#/actions/read/contract-reads";
+import { executeContractRead, type PreparedContractRead } from "#/actions/read/contract-reads";
 import { universalResolverV2Abi } from "#/data/abi";
 import { encodeDnsName, isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -39,6 +39,10 @@ export type PreparedNameResolverRead = PreparedContractRead<
   }
 >;
 
+export type ReadNameResolverParameters = PrepareNameResolverReadParameters;
+export type ReadNameResolverReturnType = NameResolverResult;
+export type ReadNameResolverErrorType = PrepareNameResolverReadError | "CONTRACT_READ_FAILED";
+
 /** Prepares discovery of the resolver currently serving an ENS name. */
 export function prepareNameResolverRead(
   parameters: PrepareNameResolverReadParameters,
@@ -62,4 +66,22 @@ export function prepareNameResolverRead(
       args: [encodeDnsName(parsed.value.normalizedName)],
     },
   });
+}
+
+/** Reads the resolver currently serving an ENS name. */
+export function readNameResolver(
+  publicClient: PublicClient,
+  parameters: ReadNameResolverParameters,
+): ResultAsync<ReadNameResolverReturnType, ReadNameResolverErrorType> {
+  const prepared = prepareNameResolverRead(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+
+  return executeContractRead(publicClient, prepared.value).map(
+    ([resolverAddress, node, offset]) => ({
+      name: prepared.value.metadata.name,
+      node,
+      offset,
+      resolverAddress,
+    }),
+  );
 }

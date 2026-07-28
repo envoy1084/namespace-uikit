@@ -1,4 +1,4 @@
-import { err, ok, type Result } from "neverthrow";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
 import {
   encodeAbiParameters,
   keccak256,
@@ -8,6 +8,7 @@ import {
   type Address,
   type ContractFunctionParameters,
   type Hex,
+  type PublicClient,
 } from "viem";
 import { namehash } from "viem/ens";
 
@@ -16,6 +17,7 @@ import type {
   PreparedContractRead,
   PreparedContractReadPlan,
 } from "#/actions/read/contract-reads";
+import { executeContractReads } from "#/actions/read/contract-reads";
 import type { NameProfileRecordType } from "#/components/name-profile-editor/types";
 import { permissionedResolverAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
@@ -85,6 +87,12 @@ export type PreparedNameProfilePermissionsRead = PreparedContractReadPlan<
   "PROFILE_PERMISSION_READ_FAILED",
   "name-profile-permissions"
 >;
+
+export type ReadNameProfilePermissionsParameters = PrepareNameProfilePermissionsReadParameters;
+export type ReadNameProfilePermissionsReturnType = NameProfilePermissions;
+export type ReadNameProfilePermissionsErrorType =
+  | PrepareNameProfilePermissionsReadError
+  | "CONTRACT_READ_FAILED";
 
 function profileResource(node: Hex, part: Hex): bigint {
   if (node === zeroHash && part === zeroHash) return 0n;
@@ -222,4 +230,14 @@ export function prepareNameProfilePermissionsRead(
       });
     },
   });
+}
+
+/** Reads the connected account's fine-grained permissions for resolver records. */
+export function readNameProfilePermissions(
+  publicClient: PublicClient,
+  parameters: ReadNameProfilePermissionsParameters,
+): ResultAsync<ReadNameProfilePermissionsReturnType, ReadNameProfilePermissionsErrorType> {
+  const prepared = prepareNameProfilePermissionsRead(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractReads(publicClient, prepared.value);
 }

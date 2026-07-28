@@ -1,7 +1,11 @@
-import { err, ok, type Result } from "neverthrow";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
 import type { Address, Hex } from "viem";
 
-import type { PreparedGraphQLRead } from "#/actions/read/graphql-read";
+import {
+  executeGraphQLRead,
+  type ExecuteGraphQLReadOptions,
+  type PreparedGraphQLRead,
+} from "#/actions/read/graphql-read";
 import { parseNameProfileDiscovery } from "#/actions/read/name-profile-discovery-parser";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";
@@ -149,6 +153,14 @@ export type PreparedNameProfileDiscoveryRead = PreparedGraphQLRead<
   "name-profile-discovery"
 >;
 
+export interface ReadNameProfileDiscoveryParameters
+  extends PrepareNameProfileDiscoveryReadParameters, ExecuteGraphQLReadOptions {}
+
+export type ReadNameProfileDiscoveryReturnType = NameProfileDiscoveryResult;
+export type ReadNameProfileDiscoveryErrorType =
+  | PrepareNameProfileDiscoveryReadError
+  | "GRAPHQL_READ_FAILED";
+
 /** Prepares indexed ENS domain metadata and record-key discovery. */
 export function prepareNameProfileDiscoveryRead(
   parameters: PrepareNameProfileDiscoveryReadParameters,
@@ -175,4 +187,14 @@ export function prepareNameProfileDiscoveryRead(
     },
     select: parseNameProfileDiscovery,
   });
+}
+
+/** Reads indexed ENS domain metadata and discovers its configured record keys. */
+export function readNameProfileDiscovery(
+  parameters: ReadNameProfileDiscoveryParameters,
+): ResultAsync<ReadNameProfileDiscoveryReturnType, ReadNameProfileDiscoveryErrorType> {
+  const prepared = prepareNameProfileDiscoveryRead(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  const options = parameters.signal === undefined ? {} : { signal: parameters.signal };
+  return executeGraphQLRead(prepared.value, options);
 }

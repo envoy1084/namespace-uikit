@@ -1,12 +1,16 @@
-import { err, ok, type Result } from "neverthrow";
-import { erc20Abi, type Address, type ContractFunctionParameters } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import { erc20Abi, type Address, type ContractFunctionParameters, type PublicClient } from "viem";
 
-import type { PreparedContractRead, PreparedContractReadPlan } from "#/actions/read/contract-reads";
+import {
+  executeContractReads,
+  type PreparedContractRead,
+  type PreparedContractReadPlan,
+} from "#/actions/read/contract-reads";
 import {
   prepareNameAvailabilityRead,
   type PrepareNameAvailabilityReadError,
   type PreparedNameAvailabilityRead,
-} from "#/actions/read/prepare-read-name-availability";
+} from "#/actions/read/read-name-availability";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress, isUint64Duration } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -80,6 +84,13 @@ export type PreparedNameRegistrationPriceRead = PreparedContractReadPlan<
   "name-registration-price"
 >;
 
+export type ReadNameRegistrationPriceParameters = PrepareNameRegistrationPriceReadParameters;
+export type ReadNameRegistrationPriceReturnType = NameRegistrationPrice;
+export type ReadNameRegistrationPriceErrorType =
+  | PrepareNameRegistrationPriceReadError
+  | NameRegistrationPriceReadError
+  | ParseNameInputError;
+
 /**
  * Validates name-pricing inputs and prepares one multicall read plan.
  */
@@ -150,4 +161,14 @@ export function prepareNameRegistrationPriceRead(
       });
     },
   });
+}
+
+/** Reads the registration price for an available second-level `.eth` name. */
+export function readNameRegistrationPrice(
+  publicClient: PublicClient,
+  parameters: ReadNameRegistrationPriceParameters,
+): ResultAsync<ReadNameRegistrationPriceReturnType, ReadNameRegistrationPriceErrorType> {
+  const prepared = prepareNameRegistrationPriceRead(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractReads(publicClient, prepared.value);
 }

@@ -1,7 +1,7 @@
-import { err, ok, type Result } from "neverthrow";
-import { type Address, type ContractFunctionParameters, type Hex } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import { type Address, type ContractFunctionParameters, type Hex, type PublicClient } from "viem";
 
-import type { PreparedContractRead } from "#/actions/read/contract-reads";
+import { executeContractRead, type PreparedContractRead } from "#/actions/read/contract-reads";
 import { permissionedResolverAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 
@@ -30,6 +30,13 @@ export type PreparedPermissionedResolverSupportRead = PreparedContractRead<
   }
 >;
 
+export type ReadPermissionedResolverSupportParameters =
+  PreparePermissionedResolverSupportReadParameters;
+export type ReadPermissionedResolverSupportReturnType = boolean;
+export type ReadPermissionedResolverSupportErrorType =
+  | PreparePermissionedResolverSupportReadError
+  | "CONTRACT_READ_FAILED";
+
 /** Prepares an ERC-165 check for the ENS v2 PermissionedResolver interface. */
 export function preparePermissionedResolverSupportRead(
   parameters: PreparePermissionedResolverSupportReadParameters,
@@ -50,4 +57,17 @@ export function preparePermissionedResolverSupportRead(
       args: [PERMISSIONED_RESOLVER_INTERFACE_ID],
     },
   });
+}
+
+/** Reads whether a resolver implements the ENS v2 PermissionedResolver interface. */
+export function readPermissionedResolverSupport(
+  publicClient: PublicClient,
+  parameters: ReadPermissionedResolverSupportParameters,
+): ResultAsync<
+  ReadPermissionedResolverSupportReturnType,
+  ReadPermissionedResolverSupportErrorType
+> {
+  const prepared = preparePermissionedResolverSupportRead(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractRead(publicClient, prepared.value);
 }
