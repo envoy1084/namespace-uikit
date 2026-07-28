@@ -5,6 +5,8 @@ import type {
 } from "#/components/name-profile-editor/customization";
 import type { ProfileUpdateSubmissionSuccess } from "#/components/name-profile-editor/submission/profile-update-submission";
 
+import { useEffect, useRef } from "react";
+
 import { Button, Surface, Typography } from "@thenamespace/uikit";
 
 import { NameProfileEditorBody } from "#/components/name-profile-editor/layout";
@@ -30,10 +32,21 @@ export function ProfileUpdateSuccess({
   update: ProfileUpdateSubmissionSuccess;
 }) {
   const changeCount = update.review.changes.length;
+  const screenRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    screenRef.current?.focus();
+  }, []);
 
   return (
     <NameProfileEditorBody className="flex-none" presentation={presentation}>
-      <div className="flex flex-col items-center px-1 py-4 text-center">
+      <div
+        ref={screenRef}
+        aria-label={`${messages.successTitle}: ${name}`}
+        className="flex flex-col items-center px-1 py-4 text-center outline-none"
+        role="status"
+        tabIndex={-1}
+      >
         {slots.successGraphic === undefined ? (
           <img
             alt=""

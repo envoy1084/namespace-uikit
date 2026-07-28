@@ -9,6 +9,7 @@ import { Modal, cn } from "@thenamespace/uikit";
 interface NameProfileEditorLayoutProps {
   children: ReactNode;
   className?: string;
+  id?: string;
   presentation: NameProfileEditorPresentation;
 }
 
@@ -35,18 +36,25 @@ export function NameProfileEditorHeader({
 export function NameProfileEditorHeading({
   children,
   className,
+  id,
   presentation,
 }: NameProfileEditorLayoutProps) {
   if (presentation === "dialog") {
     return (
-      <Modal.Heading {...(className === undefined ? {} : { className })}>
+      <Modal.Heading
+        {...(className === undefined ? {} : { className })}
+        {...(id === undefined ? {} : { id })}
+      >
         {children}
       </Modal.Heading>
     );
   }
 
   return (
-    <h2 className={cn("text-foreground text-base font-medium", className)}>
+    <h2
+      className={cn("text-foreground text-base font-medium", className)}
+      {...(id === undefined ? {} : { id })}
+    >
       {children}
     </h2>
   );

@@ -89,6 +89,7 @@ export function NameProfileEditor({
       {...(resolverAddress === undefined ? {} : { resolverAddress })}
     />
   );
+  const dialogLabel = messages.dialogLabel.replaceAll("{name}", name);
 
   if (presentation === "inline") {
     return (
@@ -115,7 +116,7 @@ export function NameProfileEditor({
         isKeyboardDismissDisabled={isTransactionPending}
       >
         <Modal.Container>
-          <Modal.Dialog aria-label={`Edit ${name} profile`} className="p-0">
+          <Modal.Dialog aria-label={dialogLabel} className="p-0">
             <Modal.CloseTrigger
               className="bg-background text-foreground z-20 size-8 shadow-sm"
               isDisabled={isTransactionPending}

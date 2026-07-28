@@ -1,6 +1,7 @@
 export { diffProfileRecords } from "#/components/name-profile-editor/diff-profile-records";
 export { NameProfileEditor } from "#/components/name-profile-editor/name-profile-editor";
 export { normalizeProfileRecords } from "#/components/name-profile-editor/normalize-profile-records";
+export { DEFAULT_NAME_PROFILE_EDITOR_MESSAGES } from "#/components/name-profile-editor/customization";
 export type { NameProfileEditorProps } from "#/components/name-profile-editor/name-profile-editor";
 export type {
   NameProfileEditorMessages,

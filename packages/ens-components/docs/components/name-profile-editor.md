@@ -198,30 +198,40 @@ An `undefined` slot uses the default. Passing `null` hides the slot content.
 
 ## Messages
 
-| Key                      | Default                                        |
-| ------------------------ | ---------------------------------------------- |
-| `triggerLabel`           | `Edit profile`                                 |
-| `searchPlaceholder`      | `Search records`                               |
-| `noMatchingRecordsLabel` | `No matching records`                          |
-| `nextLabel`              | `Next`                                         |
-| `connectWalletLabel`     | `Connect wallet`                               |
-| `checkingAccessLabel`    | `Checking access`                              |
-| `noPermissionLabel`      | `No update permission`                         |
-| `backLabel`              | `Back to profile editor`                       |
-| `reviewTitle`            | `Review changes`                               |
-| `reviewDescription`      | `Review the records you are about to update.`  |
-| `addedLabel`             | `Added`                                        |
-| `changedLabel`           | `Changed`                                      |
-| `removedLabel`           | `Removed`                                      |
-| `updateLabel`            | `Update`                                       |
-| `switchNetworkLabel`     | `Switch network`                               |
-| `switchingNetworkLabel`  | `Switching network`                            |
-| `preparingUpdateLabel`   | `Preparing update`                             |
-| `confirmInWalletLabel`   | `Confirm in wallet`                            |
-| `successTitle`           | `Profile updated`                              |
-| `successDescription`     | `Your ENS profile records are now up to date.` |
-| `updatedRecordsLabel`    | `Updated records`                              |
-| `doneLabel`              | `Done`                                         |
+| Key                        | Default                                        |
+| -------------------------- | ---------------------------------------------- |
+| `triggerLabel`             | `Edit profile`                                 |
+| `dialogLabel`              | `Edit {name} profile`                          |
+| `profileMediaLabel`        | `Profile media`                                |
+| `addAvatarLabel`           | `Add profile avatar`                           |
+| `editAvatarLabel`          | `Edit profile avatar`                          |
+| `addHeaderLabel`           | `Add profile header`                           |
+| `editHeaderLabel`          | `Edit profile header`                          |
+| `searchLabel`              | `Search profile records`                       |
+| `searchPlaceholder`        | `Search records`                               |
+| `profileSectionsLabel`     | `Profile sections`                             |
+| `noMatchingRecordsLabel`   | `No matching records`                          |
+| `nextLabel`                | `Next`                                         |
+| `connectWalletLabel`       | `Connect wallet`                               |
+| `checkingAccessLabel`      | `Checking access`                              |
+| `noPermissionLabel`        | `No update permission`                         |
+| `backLabel`                | `Back to profile editor`                       |
+| `reviewTitle`              | `Review changes`                               |
+| `reviewDescription`        | `Review the records you are about to update.`  |
+| `addedLabel`               | `Added`                                        |
+| `changedLabel`             | `Changed`                                      |
+| `removedLabel`             | `Removed`                                      |
+| `updateLabel`              | `Update`                                       |
+| `switchNetworkLabel`       | `Switch network`                               |
+| `switchingNetworkLabel`    | `Switching network`                            |
+| `preparingUpdateLabel`     | `Preparing update`                             |
+| `confirmInWalletLabel`     | `Confirm in wallet`                            |
+| `transactionProgressLabel` | `Transaction confirmation in progress`         |
+| `explorerLinkLabel`        | `Check on Etherscan`                           |
+| `successTitle`             | `Profile updated`                              |
+| `successDescription`       | `Your ENS profile records are now up to date.` |
+| `updatedRecordsLabel`      | `Updated records`                              |
+| `doneLabel`                | `Done`                                         |
 
 Only provide the keys you need to replace:
 
@@ -235,6 +245,10 @@ Only provide the keys you need to replace:
   name="example.eth"
 />
 ```
+
+`dialogLabel` replaces every `{name}` token with the current ENS name. Labels
+that are not visible are used as accessible names for the dialog, search,
+media controls, navigation, and transaction progress.
 
 ## Callbacks
 

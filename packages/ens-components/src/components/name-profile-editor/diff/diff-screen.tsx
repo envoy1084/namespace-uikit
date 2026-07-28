@@ -9,7 +9,7 @@ import type {
 } from "#/components/name-profile-editor/customization";
 import type { NameProfileRecordChange } from "#/components/name-profile-editor/types";
 
-import { useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { Accordion, Button, Surface, Typography } from "@thenamespace/uikit";
 import { ArrowLeft01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
@@ -65,6 +65,9 @@ export function ProfileDiffScreen({
   transactionHash?: Hex | undefined;
 }) {
   const { chain } = useEnsConfig();
+  const headingId = useId();
+  const updateStatusId = useId();
+  const screenRef = useRef<HTMLDivElement>(null);
   const sections = createProfileDiffSections(changes);
   const [expandedKeys, setExpandedKeys] = useState(
     () =>
@@ -73,8 +76,17 @@ export function ProfileDiffScreen({
       ),
   );
 
+  useEffect(() => {
+    screenRef.current?.focus();
+  }, []);
+
   return (
-    <div className="relative w-full">
+    <div
+      ref={screenRef}
+      aria-labelledby={headingId}
+      className="relative w-full outline-none"
+      tabIndex={-1}
+    >
       <Button
         isIconOnly
         aria-label={messages.backLabel}
@@ -101,6 +113,7 @@ export function ProfileDiffScreen({
         <div>
           <NameProfileEditorHeading
             className="mx-auto text-center"
+            id={headingId}
             presentation={presentation}
           >
             {messages.reviewTitle}
@@ -146,10 +159,13 @@ export function ProfileDiffScreen({
             className="w-full"
             icon={slots.transactionProgressIcon}
             isConfirmed={isTransactionConfirmed}
+            label={messages.transactionProgressLabel}
+            linkLabel={messages.explorerLinkLabel}
             transactionHash={transactionHash}
           />
         ) : (
           <Button
+            aria-describedby={updateStatusId}
             className="w-full"
             isDisabled={!isWalletConnected || !isUpdateAllowed}
             isPending={isPending}
@@ -159,6 +175,9 @@ export function ProfileDiffScreen({
             {buttonLabel}
           </Button>
         )}
+        <span aria-live="polite" className="sr-only" id={updateStatusId}>
+          {buttonLabel}
+        </span>
 
         {error === undefined ? null : (
           <Typography.Paragraph

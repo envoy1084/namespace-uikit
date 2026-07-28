@@ -32,14 +32,13 @@ function MediaActionIcon({
   );
 }
 
-function mediaLabel(type: "avatar" | "header", hasValue: boolean): string {
-  const label = type === "avatar" ? "profile avatar" : "profile header";
-  return `${hasValue ? "Edit" : "Add"} ${label}`;
-}
-
 export function EditorHeader({
+  addAvatarLabel,
+  addHeaderLabel,
   avatarPlaceholder,
   avatarUrl,
+  editAvatarLabel,
+  editHeaderLabel,
   headerPlaceholder,
   headerUrl,
   isAvatarDisabled = false,
@@ -48,9 +47,14 @@ export function EditorHeader({
   isHeaderUploading = false,
   onAvatarPress,
   onHeaderPress,
+  sectionLabel,
 }: {
+  addAvatarLabel: string;
+  addHeaderLabel: string;
   avatarPlaceholder?: ReactNode;
   avatarUrl?: string | undefined;
+  editAvatarLabel: string;
+  editHeaderLabel: string;
   headerPlaceholder?: ReactNode;
   headerUrl?: string | undefined;
   isAvatarDisabled?: boolean;
@@ -59,12 +63,13 @@ export function EditorHeader({
   isHeaderUploading?: boolean;
   onAvatarPress: () => void;
   onHeaderPress: () => void;
+  sectionLabel: string;
 }) {
   const hasAvatar = avatarUrl !== undefined && avatarUrl.trim().length > 0;
   const hasHeader = headerUrl !== undefined && headerUrl.trim().length > 0;
 
   return (
-    <section aria-label="Profile media" className="relative w-full p-2 pb-6">
+    <section aria-label={sectionLabel} className="relative w-full p-2 pb-6">
       <div className="group/header relative h-36 overflow-hidden rounded-2xl">
         {hasHeader || headerPlaceholder === undefined ? (
           <img
@@ -83,7 +88,7 @@ export function EditorHeader({
         <div className="absolute top-4 left-4 opacity-0 transition-opacity group-focus-within/header:opacity-100 group-hover/header:opacity-100">
           <Button
             isIconOnly
-            aria-label={mediaLabel("header", hasHeader)}
+            aria-label={hasHeader ? editHeaderLabel : addHeaderLabel}
             isDisabled={isHeaderDisabled || isHeaderUploading}
             size="md"
             type="button"
@@ -115,7 +120,7 @@ export function EditorHeader({
         )}
         <Button
           isIconOnly
-          aria-label={mediaLabel("avatar", hasAvatar)}
+          aria-label={hasAvatar ? editAvatarLabel : addAvatarLabel}
           className="relative opacity-0 transition-opacity group-focus-within/avatar:opacity-100 group-hover/avatar:opacity-100"
           isDisabled={isAvatarDisabled || isAvatarUploading}
           size="md"

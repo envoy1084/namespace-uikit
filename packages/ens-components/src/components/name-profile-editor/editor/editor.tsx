@@ -14,7 +14,7 @@ import type {
   NameProfileImageUpload,
 } from "#/components/name-profile-editor/types";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { Button, Form, Surface, Typography } from "@thenamespace/uikit";
 import { FormProvider } from "react-hook-form";
@@ -67,6 +67,7 @@ export function ProfileEditor({
 }) {
   const connection = useConnection();
   const { chain, network } = useEnsConfig();
+  const continueStatusId = useId();
   const [view, setView] = useState<NameProfileEditorView>("editor");
   const [successfulUpdate, setSuccessfulUpdate] =
     useState<Parameters<typeof ProfileUpdateSuccess>[0]["update"]>();
@@ -273,12 +274,17 @@ export function ProfileEditor({
 
         <div className="w-full">
           <EditorHeader
+            addAvatarLabel={messages.addAvatarLabel}
+            addHeaderLabel={messages.addHeaderLabel}
             avatarPlaceholder={slots.avatarPlaceholder}
             avatarUrl={media.avatarUrl}
+            editAvatarLabel={messages.editAvatarLabel}
+            editHeaderLabel={messages.editHeaderLabel}
             headerPlaceholder={slots.headerPlaceholder}
             headerUrl={media.headerUrl}
             isAvatarUploading={media.uploadingRecords.has("avatar")}
             isHeaderUploading={media.uploadingRecords.has("header")}
+            sectionLabel={messages.profileMediaLabel}
             onAvatarPress={() => media.requestMedia("avatar")}
             onHeaderPress={() => media.requestMedia("header")}
           />
@@ -288,12 +294,14 @@ export function ProfileEditor({
           >
             <div className="flex flex-col gap-2">
               <EditorSearch
+                label={messages.searchLabel}
                 placeholder={messages.searchPlaceholder}
                 value={editor.search}
                 onChange={editor.setSearch}
               />
               <div className="flex min-h-84 items-start gap-3 max-[420px]:flex-col">
                 <EditorSidebar
+                  label={messages.profileSectionsLabel}
                   value={editor.activeSection}
                   onChange={editor.setActiveSection}
                 />
@@ -319,9 +327,17 @@ export function ProfileEditor({
             </div>
           </Surface>
           <div className="px-3 pb-3">
-            <Button className="w-full" isDisabled={!canContinue} type="submit">
+            <Button
+              aria-describedby={continueStatusId}
+              className="w-full"
+              isDisabled={!canContinue}
+              type="submit"
+            >
               {continueLabel}
             </Button>
+            <span aria-live="polite" className="sr-only" id={continueStatusId}>
+              {continueLabel}
+            </span>
             {permissions.isError ? (
               <Typography.Paragraph
                 className="text-danger mx-auto mt-2 text-center"
