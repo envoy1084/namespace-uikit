@@ -9,6 +9,7 @@ export type EnsNetwork = "mainnet" | "testnet";
 interface EnsNetworkConfigurationShape {
   readonly chain: Chain;
   readonly contracts: EnsContracts;
+  readonly indexerUrl: string;
   readonly network: EnsNetwork;
 }
 
@@ -16,6 +17,7 @@ export const ensNetworkConfigurations = {
   testnet: {
     chain: sepolia,
     contracts: testnetContracts,
+    indexerUrl: "https://graphql.ens.dev/graphql",
     network: "testnet",
   },
 } as const satisfies Record<

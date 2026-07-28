@@ -6,6 +6,7 @@ export * from "#/hooks/use-deploy-permissioned-resolver";
 export * from "#/hooks/use-execute-contract-writes";
 export * from "#/hooks/use-name-availability";
 export * from "#/hooks/use-name-price";
+export * from "#/hooks/use-name-profile";
 export * from "#/hooks/use-name-profile-permissions";
 export * from "#/hooks/use-name-records";
 export * from "#/hooks/use-name-resolver";
