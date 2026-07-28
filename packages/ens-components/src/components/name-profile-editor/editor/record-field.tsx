@@ -107,9 +107,13 @@ function RecordInput({
               <InputGroup.Suffix>{suffix}</InputGroup.Suffix>
             )}
           </InputGroup>
-          <FieldError className="px-0 text-left text-xs leading-4">
-            {fieldState.error?.message}
-          </FieldError>
+          {fieldState.error?.message === undefined ? null : (
+            <div role="alert">
+              <FieldError className="px-0 text-left text-xs leading-4">
+                {fieldState.error.message}
+              </FieldError>
+            </div>
+          )}
         </TextField>
       )}
     />
