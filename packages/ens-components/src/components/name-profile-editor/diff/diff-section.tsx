@@ -1,5 +1,6 @@
 "use client";
 
+import type { NameProfileEditorMessages } from "#/components/name-profile-editor/customization";
 import type {
   ProfileChangeStatus,
   ProfileDiffItem,
@@ -9,12 +10,6 @@ import type {
 import { Accordion, Surface } from "@thenamespace/uikit";
 
 import { getRecordIcon } from "#/components/name-profile-editor/get-record-icon";
-
-const statusLabels: Readonly<Record<ProfileChangeStatus, string>> = {
-  added: "Added",
-  removed: "Removed",
-  updated: "Changed",
-};
 
 const statusOrder: readonly ProfileChangeStatus[] = [
   "added",
@@ -38,10 +33,18 @@ function DiffRecord({ item }: { item: ProfileDiffItem }) {
 }
 
 export function ProfileDiffSection({
+  messages,
   section,
 }: {
+  messages: NameProfileEditorMessages;
   section: ProfileDiffSectionModel;
 }) {
+  const statusLabels: Readonly<Record<ProfileChangeStatus, string>> = {
+    added: messages.addedLabel,
+    removed: messages.removedLabel,
+    updated: messages.changedLabel,
+  };
+
   return (
     <Accordion.Item
       className="border-default bg-surface overflow-hidden rounded-xl border [&::after]:hidden"

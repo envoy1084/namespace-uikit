@@ -40,3 +40,7 @@ do not change the chain result.
 
 Errors are uppercase codes covering invalid composition, wallet capability
 checks, submission, call-status polling, receipt confirmation, and reverts.
+`TRANSACTION_REJECTED` identifies an explicit wallet rejection.
+`PARTIAL_BATCH_FAILED` means at least one sequential call confirmed before a
+later call failed. Confirmed progress events remain available to the caller.
+Atomic batches cannot report partial completion.

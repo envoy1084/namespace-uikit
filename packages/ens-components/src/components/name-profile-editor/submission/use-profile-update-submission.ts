@@ -3,6 +3,7 @@
 import type { Hex } from "viem";
 
 import type { ContractWriteProgress } from "#/actions";
+import type { NameProfileEditorMessages } from "#/components/name-profile-editor/customization";
 import type { NameProfileEditorEvents } from "#/components/name-profile-editor/events";
 import type { NameProfileEditorReview } from "#/components/name-profile-editor/types";
 
@@ -35,18 +36,18 @@ export type ProfileUpdateActionStatus =
 
 export interface UseProfileUpdateSubmissionProps {
   events: NameProfileEditorEvents;
+  messages: NameProfileEditorMessages;
   name: string;
   onPendingChange?: (isPending: boolean) => void;
   onSuccess: (result: ProfileUpdateSubmissionSuccess) => void;
-  updateLabel: string;
 }
 
 export function useProfileUpdateSubmission({
   events,
+  messages,
   name,
   onPendingChange,
   onSuccess,
-  updateLabel,
 }: UseProfileUpdateSubmissionProps) {
   const connection = useConnection();
   const { chain, contracts, network } = useEnsConfig();
@@ -205,16 +206,16 @@ export function useProfileUpdateSubmission({
 
   const buttonLabel =
     connection.address === undefined
-      ? "Connect wallet to continue"
+      ? messages.connectWalletLabel
       : isWrongNetwork
-        ? `Switch to ${chain.name}`
+        ? messages.switchNetworkLabel
         : actionStatus === "switching"
-          ? `Switching to ${chain.name}`
+          ? messages.switchingNetworkLabel
           : actionStatus === "preparing"
-            ? "Preparing update"
+            ? messages.preparingUpdateLabel
             : actionStatus === "signing"
-              ? "Confirm in wallet"
-              : updateLabel;
+              ? messages.confirmInWalletLabel
+              : messages.updateLabel;
 
   return {
     account: connection.address,

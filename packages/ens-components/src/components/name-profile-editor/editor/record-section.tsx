@@ -33,6 +33,7 @@ function matchesSearch(
 export function RecordSection({
   disabledDefinitionIds,
   disabledRecordIds,
+  emptyLabel,
   error,
   records,
   search,
@@ -42,6 +43,7 @@ export function RecordSection({
 }: {
   disabledDefinitionIds?: ReadonlySet<string>;
   disabledRecordIds?: ReadonlySet<string>;
+  emptyLabel: string;
   error?: string | undefined;
   records: readonly EditorRecord[];
   search: string;
@@ -107,7 +109,7 @@ export function RecordSection({
 
       {!hasResults ? (
         <Typography.Paragraph className="text-muted mt-3 text-center text-xs">
-          No matching records.
+          {emptyLabel}
         </Typography.Paragraph>
       ) : null}
     </section>

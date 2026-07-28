@@ -20,8 +20,8 @@ export interface NameProfileImageUploadContext {
 /**
  * Uploads a selected image and returns the URL stored in the ENS text record.
  *
- * The returned value may use an HTTP, IPFS, data, or another resolver-supported
- * image URI scheme.
+ * The returned value may use HTTP, HTTPS, IPFS, IPNS, data, or an eip155 image
+ * URI.
  */
 export type NameProfileImageUpload = (
   file: File,

@@ -1,13 +1,13 @@
 # NameProfileEditor
 
 `NameProfileEditor` edits records on an ENS v2 `PermissionedResolver`. It
-provides an editor, change review, transaction progress, and confirmation
+provides a record editor, change review, transaction progress, and confirmation
 screen.
 
-The parent application supplies the current normalized records. This keeps
-record fetching and caching outside the component.
+The application supplies the current records. Fetching, caching, and refreshing
+that snapshot remain under application control.
 
-It requires `WagmiProvider`, `QueryClientProvider`, and
+The component requires `WagmiProvider`, `QueryClientProvider`, and
 [`EnsProvider`](../providers/ens-provider.md).
 
 ## Basic usage
@@ -17,56 +17,149 @@ import { NameProfileEditor, type NameProfileFormValues } from "ens-components";
 
 const records: NameProfileFormValues = {
   abi: [],
-  addresses: [{ coinType: "60", value: "0x..." }],
+  addresses: [
+    {
+      coinType: "60",
+      value: "0x0000000000000000000000000000000000000000",
+    },
+  ],
   contenthash: "",
   data: [],
   interfaces: [],
   name: "",
   pubkey: { x: "", y: "" },
-  text: [{ key: "description", value: "Building useful things." }],
+  text: [
+    { key: "description", value: "Building useful things." },
+    { key: "com.example.status", value: "Available" },
+  ],
 };
 
-<NameProfileEditor initialRecords={records} name="example.eth" />;
+export function ProfileEditor() {
+  return (
+    <NameProfileEditor
+      initialRecords={records}
+      name="example.eth"
+      events={{
+        onUpdate: ({ values }) => {
+          // Replace the cached snapshot with the confirmed values.
+        },
+      }}
+    />
+  );
+}
 ```
 
-The default presentation renders an `Edit profile` trigger and opens a dialog.
-Set `presentation="inline"` to render directly in the page.
+## Presentation
+
+The default `dialog` presentation renders a trigger and opens the flow in a
+modal.
+
+```tsx
+<NameProfileEditor
+  initialRecords={records}
+  name="example.eth"
+  presentation="dialog"
+/>
+```
+
+Use `inline` when the editor belongs directly in the page layout.
+
+```tsx
+<NameProfileEditor
+  className="max-w-md"
+  initialRecords={records}
+  name="example.eth"
+  presentation="inline"
+/>
+```
 
 ## Props
 
-| Prop              | Type                                 | Default    | Description                                                       |
-| ----------------- | ------------------------------------ | ---------- | ----------------------------------------------------------------- |
-| `name`            | `string`                             | Required   | ENS name whose resolver records are edited.                       |
-| `initialRecords`  | `NameProfileFormValues`              | Required   | Complete normalized record snapshot used as the diff baseline.    |
-| `resolverAddress` | `Address`                            | Discovered | Optional resolver override.                                       |
-| `presentation`    | `"dialog" \| "inline"`               | `"dialog"` | Selects the outer presentation.                                   |
-| `uploadImage`     | `NameProfileImageUpload`             | None       | Uploads avatar or header files and returns the stored record URI. |
-| `slots`           | `NameProfileEditorSlots`             | `{}`       | Replaces supported visuals and the dialog trigger.                |
-| `messages`        | `Partial<NameProfileEditorMessages>` | Defaults   | Overrides high-level interface copy.                              |
-| `events`          | `NameProfileEditorEvents`            | `{}`       | Receives confirmed updates and errors.                            |
-| `className`       | `string`                             | None       | Class name applied to the inline surface.                         |
+| Prop              | Type                                 | Default    | Description                                                 |
+| ----------------- | ------------------------------------ | ---------- | ----------------------------------------------------------- |
+| `name`            | `string`                             | Required   | ENS name whose resolver records are edited.                 |
+| `initialRecords`  | `NameProfileFormValues`              | Required   | Complete record snapshot used as the diff baseline.         |
+| `resolverAddress` | `Address`                            | Discovered | Optional resolver override.                                 |
+| `presentation`    | `"dialog" \| "inline"`               | `"dialog"` | Selects the outer presentation.                             |
+| `uploadImage`     | `NameProfileImageUpload`             | None       | Uploads an avatar or header and returns the record URI.     |
+| `slots`           | `NameProfileEditorSlots`             | `{}`       | Replaces supported media, graphics, and the dialog trigger. |
+| `messages`        | `Partial<NameProfileEditorMessages>` | Defaults   | Overrides user-facing labels and descriptions.              |
+| `events`          | `NameProfileEditorEvents`            | `{}`       | Receives confirmed updates and errors.                      |
+| `className`       | `string`                             | None       | Class name applied to the inline surface.                   |
 
-When `resolverAddress` is omitted, the component discovers it through the
-configured Universal Resolver v2.
+When `resolverAddress` is omitted, the component discovers the current
+resolver through Universal Resolver v2.
 
-## Records
+## Initial records
 
-The component supports:
+`initialRecords` must be the complete current snapshot. Omit unset keyed
+records from their arrays and use an empty string for unset scalar records.
 
-- Text records, including custom keys
-- ENSIP-9 multicoin addresses
-- Contenthash
-- ABI records
-- Arbitrary keyed data
-- EIP-165 interface implementers
-- Resolver name
-- SECP256k1 public key coordinates
+| Field         | Record shape                               | Value format                                              |
+| ------------- | ------------------------------------------ | --------------------------------------------------------- |
+| `text`        | `{ key: string; value: string }[]`         | Unique non-empty keys. Custom keys are supported.         |
+| `addresses`   | `{ coinType: string; value: string }[]`    | Decimal ENSIP-9 coin type and its human-readable address. |
+| `contenthash` | `string`                                   | Supported content URI, or `""`.                           |
+| `abi`         | `{ contentType: string; value: string }[]` | Power-of-two content type and `0x`-prefixed ABI bytes.    |
+| `data`        | `{ key: string; value: string }[]`         | Unique key and `0x`-prefixed bytes.                       |
+| `interfaces`  | `{ interfaceId; implementer }[]`           | Four-byte EIP-165 ID and an EVM address.                  |
+| `name`        | `string`                                   | Normalized ENS name, or `""`.                             |
+| `pubkey`      | `{ x: string; y: string }`                 | Two 32-byte hex coordinates, or two empty strings.        |
 
-Use `normalizeProfileRecords(records)` before rendering when records come from
-an untrusted or loosely typed source. It returns a `neverthrow` result with a
-canonical `NameProfileFormValues` value.
+Unknown text keys are rendered as custom key-value fields. Coin types not
+listed as presets are rendered as custom address fields when
+`@ensdomains/address-encoder` supports them. Unsupported coin types produce a
+field error instead of being discarded.
 
-## Image uploads and placeholders
+Call `normalizeProfileRecords(records)` when the source is untrusted or loosely
+typed:
+
+```ts
+const normalized = normalizeProfileRecords(records);
+
+if (normalized.isErr()) {
+  console.error(normalized.error);
+} else {
+  const initialRecords = normalized.value;
+}
+```
+
+The normalizer returns a `neverthrow` result. It canonicalizes supported
+addresses and content hashes, normalizes ENS names, removes empty keyed values,
+sorts keyed records, and rejects duplicate keys.
+
+Structured text records receive additional validation:
+
+- `email` must contain a complete email address.
+- `url` must use HTTP or HTTPS.
+- `timezone` must be an IANA timezone.
+- `avatar` and `header` accept HTTP, HTTPS, IPFS, IPNS, data, or `eip155` URIs.
+
+## Permission behavior
+
+The editor remains interactive without a connected wallet and when the
+connected account lacks permissions. This lets users compose changes before
+connecting or switching accounts.
+
+The Next button is the permission boundary:
+
+- `Connect wallet` when no account is connected.
+- `Checking access` while resolver permissions are loading.
+- `No update permission` when any pending change is unauthorized.
+- `Next` when the draft is valid, changed, and authorized.
+
+The component discovers the resolver, verifies `IPermissionedResolver`, and
+reads Enhanced Access Control roles for the exact changed records. It supports
+resolver owners, name-wide delegates, global key or coin-type delegates, and
+name-specific key or coin-type delegates. NFT ownership alone is not treated
+as resolver write permission.
+
+Permissions and the current resolver are checked again before submission. The
+exact `multicallWithNodeCheck` call is simulated from the connected account.
+Account, network, resolver, wallet rejection, and confirmation failures are
+reported through `events.onError`.
+
+## Image uploads and media placeholders
 
 ```tsx
 <NameProfileEditor
@@ -82,68 +175,97 @@ canonical `NameProfileFormValues` value.
 />
 ```
 
-`uploadImage` must return the URI stored in the `avatar` or `header` text
-record. Without it, the media controls are disabled.
+`uploadImage` receives the selected file and the target `avatar` or `header`
+record. It must return the URI stored on the resolver. Without `uploadImage`,
+the media controls add or focus a normal URI text field instead of opening a
+file picker.
 
-## Permission behavior
-
-When a wallet is connected, the component discovers the name's resolver,
-verifies `IPermissionedResolver`, and reads Enhanced Access Control roles for
-every displayed record.
-
-Fixed record controls are disabled when the account lacks permission. The Next
-button remains disabled while permission reads are pending or when a pending
-change is unauthorized. Before submission, the exact
-`multicallWithNodeCheck` transaction is simulated from the connected account.
-
-The checks support:
-
-- Resolver owners with all roles
-- Name-wide record delegates
-- Global record-key or coin-type delegates
-- Name-specific record-key or coin-type delegates
-
-NFT ownership alone is not treated as resolver write permission.
+Placeholder slots only control the empty media preview. They do not create
+records or upload files.
 
 ## Slots
 
 | Slot                      | Description                                        |
 | ------------------------- | -------------------------------------------------- |
 | `trigger`                 | Dialog trigger. Ignored by inline mode.            |
-| `avatarPlaceholder`       | Empty-avatar content.                              |
-| `headerPlaceholder`       | Empty-header content.                              |
+| `avatarPlaceholder`       | Empty-avatar preview content.                      |
+| `headerPlaceholder`       | Empty-header preview content.                      |
 | `reviewGraphic`           | Graphic on the change review screen.               |
 | `successGraphic`          | Graphic after the update confirms.                 |
 | `transactionProgressIcon` | Icon animated while the transaction is confirming. |
 
-An `undefined` slot uses the default. Passing `null` hides optional content.
+An `undefined` slot uses the default. Passing `null` hides the slot content.
 
 ## Messages
 
-| Key                  | Default                                        |
-| -------------------- | ---------------------------------------------- |
-| `triggerLabel`       | `Edit profile`                                 |
-| `searchPlaceholder`  | `Search records`                               |
-| `reviewTitle`        | `Review changes`                               |
-| `reviewDescription`  | `Review the records you are about to update.`  |
-| `updateLabel`        | `Update`                                       |
-| `successTitle`       | `Profile updated`                              |
-| `successDescription` | `Your ENS profile records are now up to date.` |
-| `doneLabel`          | `Done`                                         |
+| Key                      | Default                                        |
+| ------------------------ | ---------------------------------------------- |
+| `triggerLabel`           | `Edit profile`                                 |
+| `searchPlaceholder`      | `Search records`                               |
+| `noMatchingRecordsLabel` | `No matching records`                          |
+| `nextLabel`              | `Next`                                         |
+| `connectWalletLabel`     | `Connect wallet`                               |
+| `checkingAccessLabel`    | `Checking access`                              |
+| `noPermissionLabel`      | `No update permission`                         |
+| `backLabel`              | `Back to profile editor`                       |
+| `reviewTitle`            | `Review changes`                               |
+| `reviewDescription`      | `Review the records you are about to update.`  |
+| `addedLabel`             | `Added`                                        |
+| `changedLabel`           | `Changed`                                      |
+| `removedLabel`           | `Removed`                                      |
+| `updateLabel`            | `Update`                                       |
+| `switchNetworkLabel`     | `Switch network`                               |
+| `switchingNetworkLabel`  | `Switching network`                            |
+| `preparingUpdateLabel`   | `Preparing update`                             |
+| `confirmInWalletLabel`   | `Confirm in wallet`                            |
+| `successTitle`           | `Profile updated`                              |
+| `successDescription`     | `Your ENS profile records are now up to date.` |
+| `updatedRecordsLabel`    | `Updated records`                              |
+| `doneLabel`              | `Done`                                         |
 
-## Lifecycle events
+Only provide the keys you need to replace:
+
+```tsx
+<NameProfileEditor
+  initialRecords={records}
+  messages={{
+    triggerLabel: "Manage profile",
+    updateLabel: "Save records",
+  }}
+  name="example.eth"
+/>
+```
+
+## Callbacks
 
 ```tsx
 <NameProfileEditor
   events={{
-    onUpdate: ({ changes, transactionHash, values }) => {},
-    onError: ({ error, phase, transactionHash }) => {},
+    onUpdate: ({
+      account,
+      changes,
+      receipt,
+      resolverAddress,
+      transactionHash,
+      values,
+    }) => {},
+    onError: ({
+      account,
+      error,
+      phase,
+      resolverAddress,
+      transactionHash,
+    }) => {},
   }}
   initialRecords={records}
   name="example.eth"
 />
 ```
 
-`onUpdate` runs after the resolver transaction confirms. `onError` uses the
-phase `"resolver"`, `"permission"`, or `"update"`. Consumer callback failures
-do not change an already-confirmed flow.
+`onUpdate` runs once after the resolver multicall confirms and includes the
+canonical updated snapshot. Replace or invalidate the application cache from
+this callback.
+
+`onError` uses phase `resolver`, `permission`, or `update`. A transaction hash
+is present when submission reached the network. Consumer callback failures do
+not change an already-confirmed flow.

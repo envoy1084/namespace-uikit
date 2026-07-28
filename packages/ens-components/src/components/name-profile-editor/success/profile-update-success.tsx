@@ -62,7 +62,7 @@ export function ProfileUpdateSuccess({
           variant="secondary"
         >
           <Typography.Paragraph color="muted" size="sm">
-            Updated records
+            {messages.updatedRecordsLabel}
           </Typography.Paragraph>
           <Typography.Paragraph size="sm" weight="medium">
             {changeCount}

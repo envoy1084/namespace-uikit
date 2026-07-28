@@ -77,7 +77,7 @@ export function ProfileDiffScreen({
     <div className="relative w-full">
       <Button
         isIconOnly
-        aria-label="Back to profile editor"
+        aria-label={messages.backLabel}
         className="absolute top-4 left-4 z-10"
         isDisabled={isPending}
         size="sm"
@@ -125,7 +125,11 @@ export function ProfileDiffScreen({
             onExpandedChange={setExpandedKeys}
           >
             {sections.map((section) => (
-              <ProfileDiffSection key={section.id} section={section} />
+              <ProfileDiffSection
+                key={section.id}
+                messages={messages}
+                section={section}
+              />
             ))}
           </Accordion>
         </Surface>

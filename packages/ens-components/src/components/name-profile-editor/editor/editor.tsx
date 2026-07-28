@@ -92,13 +92,13 @@ export function ProfileEditor({
   });
   const submission = useProfileUpdateSubmission({
     events,
+    messages,
     name,
     onSuccess: (result) => {
       onConfirmed(result.review.values);
       setSuccessfulUpdate(result);
       setView("success");
     },
-    updateLabel: messages.updateLabel,
     ...(onPendingChange === undefined ? {} : { onPendingChange }),
   });
 
@@ -296,6 +296,7 @@ export function ProfileEditor({
                 <div className="max-h-84 min-w-0 flex-1 overflow-y-auto px-1 max-[420px]:w-full">
                   <RecordSection
                     disabledDefinitionIds={disabledDefinitionIds}
+                    emptyLabel={messages.noMatchingRecordsLabel}
                     error={
                       editor.activeSection === "general" && media.uploadError
                         ? media.uploadError
