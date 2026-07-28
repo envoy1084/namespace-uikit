@@ -108,3 +108,38 @@ export function executeContractReads<
     () => "CONTRACT_READ_FAILED" as const,
   ).andThen(plan.select);
 }
+
+/**
+ * Executes a prepared read plan as independent RPC reads.
+ *
+ * Prefer this mode for Universal Resolver calls because each call may trigger
+ * its own CCIP Read flow, which cannot reliably pass through Multicall3.
+ */
+export function executeContractReadsIndividually<
+  TReads extends readonly [PreparedContractRead, ...PreparedContractRead[]],
+  TData,
+  TError,
+  TKind extends string,
+>(
+  publicClient: PublicClient,
+  plan: PreparedContractReadPlan<TReads, TData, TError, TKind>,
+): ResultAsync<TData, TError | "CONTRACT_READ_FAILED"> {
+  return ResultAsync.fromPromise(
+    Promise.all(
+      plan.reads.map(async (read) => {
+        try {
+          const result = await publicClient.readContract(
+            read.request as ContractFunctionParameters,
+          );
+          return { result, status: "success" } as const;
+        } catch (error) {
+          return {
+            error: error instanceof Error ? error : new Error("Read failed"),
+            status: "failure",
+          } as const;
+        }
+      }),
+    ) as Promise<ContractReadResults<TReads>>,
+    () => "CONTRACT_READ_FAILED" as const,
+  ).andThen(plan.select);
+}

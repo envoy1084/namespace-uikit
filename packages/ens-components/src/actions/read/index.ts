@@ -3,6 +3,7 @@ export * from "#/actions/read/prepare-read-commitment-status";
 export * from "#/actions/read/prepare-read-name-availability";
 export * from "#/actions/read/prepare-read-name-profile-permissions";
 export * from "#/actions/read/prepare-read-name-price";
+export * from "#/actions/read/prepare-read-name-records";
 export * from "#/actions/read/prepare-read-name-resolver";
 export * from "#/actions/read/prepare-read-name-renewal-payment-status";
 export * from "#/actions/read/prepare-read-name-renewal-price";
