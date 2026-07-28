@@ -339,8 +339,8 @@ export function ProfileEditor({
                 <Typography.Paragraph
                   className={
                     permissions.isError || !hasPermissionForChanges
-                      ? "text-danger mx-auto text-center"
-                      : "mx-auto text-center"
+                      ? "text-danger text-center"
+                      : "text-center"
                   }
                   size="xs"
                   {...(permissions.isError || !hasPermissionForChanges

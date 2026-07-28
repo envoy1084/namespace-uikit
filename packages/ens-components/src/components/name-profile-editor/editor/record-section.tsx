@@ -70,7 +70,7 @@ export function RecordSection({
       </Typography.Heading>
 
       {availableRecords.length > 0 ? (
-        <div className="mt-2 grid grid-cols-4 gap-2">
+        <div className="mt-2 grid grid-cols-3 gap-2 sm:grid-cols-4">
           {availableRecords.map((definition) => (
             <RecordButton
               key={definition.id}
