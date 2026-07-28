@@ -100,13 +100,13 @@ export function useResolverCapabilities<selectData = ResolverCapabilities>(
         throw "INVALID_RESOLVER_ADDRESS" satisfies ResolverCapabilitiesError;
       }
 
-      const bytecode = await publicClient
-        .getCode({ address: resolverAddress })
-        .catch(() => undefined);
-      if (bytecode === undefined) {
+      let bytecode: `0x${string}` | undefined;
+      try {
+        bytecode = await publicClient.getCode({ address: resolverAddress });
+      } catch {
         throw "CONTRACT_READ_FAILED" satisfies ResolverCapabilitiesError;
       }
-      if (bytecode === "0x") {
+      if (bytecode === undefined || bytecode === "0x") {
         return {
           isDeployed: false,
           isPermissionedResolver: false,
