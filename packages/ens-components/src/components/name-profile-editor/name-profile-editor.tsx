@@ -53,24 +53,23 @@ export function NameProfileEditor({
   const [confirmedRecords, setConfirmedRecords] = useState(initialRecords);
   const [isTransactionPending, setIsTransactionPending] = useState(false);
   const [resetVersion, setResetVersion] = useState(0);
-  const shouldResetOnOpenRef = useRef(false);
+  const lifecycleIdentity = `${name}\u0000${resolverAddress ?? ""}\u0000${JSON.stringify(initialRecords)}`;
+  const lastLifecycleIdentityRef = useRef(lifecycleIdentity);
 
   useEffect(() => {
+    if (lastLifecycleIdentityRef.current === lifecycleIdentity) return;
+    lastLifecycleIdentityRef.current = lifecycleIdentity;
     setConfirmedRecords(initialRecords);
     setResetVersion((current) => current + 1);
-  }, [initialRecords]);
+  }, [initialRecords, lifecycleIdentity]);
 
   const handleDone = () => {
-    if (presentation === "dialog") {
-      shouldResetOnOpenRef.current = true;
-      return;
-    }
+    if (presentation === "dialog") return;
     setResetVersion((current) => current + 1);
   };
 
   const handleDialogOpenChange = (isOpen: boolean) => {
-    if (!isOpen || !shouldResetOnOpenRef.current) return;
-    shouldResetOnOpenRef.current = false;
+    if (isOpen) return;
     setResetVersion((current) => current + 1);
   };
 
