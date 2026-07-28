@@ -29,7 +29,8 @@
   "files": [
     "dist",
     "README.md",
-    "docs"
+    "docs",
+    "src"
   ],
   "type": "module",
   "sideEffects": [
@@ -71,6 +72,7 @@
     "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
     "lint": "oxlint . --no-error-on-unmatched-pattern",
     "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern",
+    "prepack": "pnpm run build",
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },
   "dependencies": {

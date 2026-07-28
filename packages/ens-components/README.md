@@ -136,9 +136,12 @@ for duration controls, lifecycle events, slots, and messages.
 Render the permission-aware profile editor:
 
 ```tsx
-import { NameProfileEditor } from "ens-components";
+import { NameProfileEditor, emptyNameProfileFormValues } from "ens-components";
 
-<NameProfileEditor initialRecords={records} name="example.eth" />;
+<NameProfileEditor
+  initialRecords={emptyNameProfileFormValues}
+  name="example.eth"
+/>;
 ```
 
 The application supplies the initial record snapshot. The component discovers
