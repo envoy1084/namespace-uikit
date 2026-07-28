@@ -191,6 +191,7 @@ export function ProfileEditor({
     const resolvedResolverAddress = permissions.data?.resolverAddress;
     const isUpdateAllowed =
       hasConnectedAccount &&
+      !permissions.isFetching &&
       resolvedResolverAddress !== undefined &&
       hasPermissionForChanges;
 
@@ -204,7 +205,7 @@ export function ProfileEditor({
             : undefined)
         }
         isConfirming={submission.isConfirming}
-        isPending={submission.isPending}
+        isPending={submission.isPending || permissions.isFetching}
         isTransactionConfirmed={submission.isTransactionConfirmed}
         isUpdateAllowed={isUpdateAllowed}
         isWalletConnected={submission.isWalletConnected}
@@ -216,12 +217,24 @@ export function ProfileEditor({
         transactionHash={submission.transactionHash}
         onBack={() => setView("editor")}
         onUpdate={() => {
-          if (resolvedResolverAddress !== undefined) {
-            void submission.handleUpdate(
+          void (async () => {
+            const refreshed = await permissions.refetch();
+            const refreshedPermissions = refreshed.data;
+            if (
+              refreshedPermissions === undefined ||
+              !canEditProfileChanges(
+                refreshedPermissions,
+                editor.review?.changes ?? [],
+              )
+            ) {
+              return;
+            }
+
+            await submission.handleUpdate(
               editor.review as NonNullable<typeof editor.review>,
-              resolvedResolverAddress,
+              refreshedPermissions.resolverAddress,
             );
-          }
+          })();
         }}
       />
     );

@@ -128,6 +128,8 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
     "Unable to check this wallet's record permissions.",
   PROFILE_UPDATE_SIMULATION_FAILED:
     "The record update could not be prepared. Check your permissions and try again.",
+  RESOLVER_CHANGED:
+    "The resolver changed while this update was being prepared. Review the records and try again.",
   RESOLVER_NOT_FOUND: "This name does not have a resolver.",
   RESOLVER_DEPLOYMENT_INVALID:
     "The dedicated resolver deployment could not be verified.",
@@ -137,17 +139,22 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
     "Every transaction in a batch must use the same wallet account.",
   MISSING_PUBLIC_KEY_X: "Enter the public key X coordinate.",
   MISSING_PUBLIC_KEY_Y: "Enter the public key Y coordinate.",
+  PARTIAL_BATCH_FAILED:
+    "Some transactions confirmed before a later one failed. Review them before retrying.",
   SINGLE_CALL_REQUIRED:
     "This transaction strategy supports exactly one contract call.",
   UNSUPPORTED_NAME: "Only second-level .eth names are supported.",
   UNSUPPORTED_RESOLVER:
     "This resolver does not support ENS v2 record permissions.",
   TRANSACTION_CONFIRMATION_FAILED: "Unable to confirm the transaction.",
+  TRANSACTION_REJECTED: "The transaction was rejected in the wallet.",
   TRANSACTION_REVERTED: "The transaction was reverted.",
   UNSUPPORTED_COIN_TYPE:
     "Choose a supported coin type or remove this address record.",
   WALLET_ACCOUNT_CHANGED:
-    "The connected account changed. Reopen this registration with the original wallet.",
+    "The connected account changed. Switch back to the original wallet and try again.",
+  WALLET_NETWORK_CHANGED:
+    "The connected network changed. Switch back to the required network and try again.",
   WALLET_NOT_CONNECTED: "Connect your wallet to continue.",
 };
 

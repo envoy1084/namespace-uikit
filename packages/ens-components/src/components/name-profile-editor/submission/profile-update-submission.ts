@@ -1,4 +1,5 @@
 import type {
+  Address,
   Chain,
   Hex,
   PublicClient,
@@ -11,8 +12,18 @@ import type { NameProfileEditorReview } from "#/components/name-profile-editor/t
 import type { EnsNetwork } from "#/data";
 
 import { err, ok, type Result } from "neverthrow";
+import { isAddressEqual } from "viem";
 
-import { executeContractWrites, prepareProfileRecordsWrite } from "#/actions";
+import {
+  executeContractRead,
+  executeContractWrites,
+  prepareNameResolverRead,
+  prepareProfileRecordsWrite,
+} from "#/actions";
+
+export type ProfileUpdateConnectionError =
+  | "WALLET_ACCOUNT_CHANGED"
+  | "WALLET_NETWORK_CHANGED";
 
 export interface ProfileUpdateSubmissionSuccess {
   readonly receipt: TransactionReceipt;
@@ -32,12 +43,20 @@ export interface SubmitProfileUpdateProps {
   readonly publicClient: PublicClient;
   readonly resolverAddress: `0x${string}`;
   readonly review: NameProfileEditorReview;
+  readonly universalResolverAddress: Address;
+  readonly validateConnection?: () => Result<
+    void,
+    ProfileUpdateConnectionError
+  >;
   readonly walletClient: WalletClient;
 }
 
 export async function submitProfileUpdate(
   props: SubmitProfileUpdateProps,
 ): Promise<Result<ProfileUpdateSubmissionSuccess, unknown>> {
+  const initialConnection = props.validateConnection?.();
+  if (initialConnection?.isErr()) return err(initialConnection.error);
+
   const prepared = await prepareProfileRecordsWrite(props.publicClient, {
     account: props.account,
     changes: props.review.changes,
@@ -46,6 +65,28 @@ export async function submitProfileUpdate(
     resolverAddress: props.resolverAddress,
   });
   if (prepared.isErr()) return err(prepared.error);
+
+  const preparedConnection = props.validateConnection?.();
+  if (preparedConnection?.isErr()) return err(preparedConnection.error);
+
+  const resolverRead = prepareNameResolverRead({
+    input: props.input,
+    network: props.network,
+    universalResolverAddress: props.universalResolverAddress,
+  });
+  if (resolverRead.isErr()) return err(resolverRead.error);
+
+  const currentResolver = await executeContractRead(
+    props.publicClient,
+    resolverRead.value,
+  );
+  if (currentResolver.isErr()) return err(currentResolver.error);
+  if (!isAddressEqual(currentResolver.value[0], props.resolverAddress)) {
+    return err("RESOLVER_CHANGED");
+  }
+
+  const submittingConnection = props.validateConnection?.();
+  if (submittingConnection?.isErr()) return err(submittingConnection.error);
 
   const execution = await executeContractWrites(
     props.walletClient,

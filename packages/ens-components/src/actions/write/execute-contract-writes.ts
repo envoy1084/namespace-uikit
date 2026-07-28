@@ -22,6 +22,7 @@ import { waitForContractCalls } from "#/actions/write/contract-write-status";
 import { supportsAtomicBatchCalls } from "#/actions/write/wallet-capabilities";
 import {
   isNonZeroAddress,
+  isWalletUserRejectedError,
   waitForSuccessfulTransactionReceipt,
 } from "#/lib/helpers";
 
@@ -35,8 +36,10 @@ export type ExecuteContractWritesError =
   | "INVALID_CHAIN_ID"
   | "INVALID_CONTRACT_CALL"
   | "MISMATCHED_ACCOUNTS"
+  | "PARTIAL_BATCH_FAILED"
   | "SINGLE_CALL_REQUIRED"
   | "TRANSACTION_CONFIRMATION_FAILED"
+  | "TRANSACTION_REJECTED"
   | "TRANSACTION_REVERTED";
 
 export interface ExecuteContractWritesProps {
@@ -143,8 +146,19 @@ async function executeTransactions(
         chain: props.chain,
         ...prepared.call,
       });
-    } catch {
-      return err("CONTRACT_WRITE_FAILED");
+    } catch (error) {
+      if (isWalletUserRejectedError(error)) {
+        return err(
+          transactions.length > 0
+            ? "PARTIAL_BATCH_FAILED"
+            : "TRANSACTION_REJECTED",
+        );
+      }
+      return err(
+        transactions.length > 0
+          ? "PARTIAL_BATCH_FAILED"
+          : "CONTRACT_WRITE_FAILED",
+      );
     }
 
     await notify(props.onProgress, {
@@ -166,7 +180,11 @@ async function executeTransactions(
       transactionHash,
       ...(props.timeout === undefined ? {} : { timeout: props.timeout }),
     });
-    if (receipt.isErr()) return err(receipt.error);
+    if (receipt.isErr()) {
+      return err(
+        transactions.length > 0 ? "PARTIAL_BATCH_FAILED" : receipt.error,
+      );
+    }
 
     transactions.push({
       prepared,
@@ -212,8 +230,12 @@ async function executeAtomic(
       forceAtomic: true,
     });
     callsId = result.id;
-  } catch {
-    return err("ATOMIC_BATCH_FAILED");
+  } catch (error) {
+    return err(
+      isWalletUserRejectedError(error)
+        ? "TRANSACTION_REJECTED"
+        : "ATOMIC_BATCH_FAILED",
+    );
   }
 
   await notify(props.onProgress, {

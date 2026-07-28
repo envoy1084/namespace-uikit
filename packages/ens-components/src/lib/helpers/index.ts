@@ -8,3 +8,4 @@ export * from "#/lib/helpers/registration-receipt";
 export * from "#/lib/helpers/renewal-receipt";
 export * from "#/lib/helpers/transaction-receipt";
 export * from "#/lib/helpers/validation";
+export * from "#/lib/helpers/wallet-error";

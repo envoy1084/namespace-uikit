@@ -8,6 +8,8 @@ import type { NameProfileEditorReview } from "#/components/name-profile-editor/t
 
 import { useEffect, useRef, useState } from "react";
 
+import { err, ok } from "neverthrow";
+import { isAddressEqual } from "viem";
 import {
   useConnection,
   usePublicClient,
@@ -27,6 +29,7 @@ import { useEnsConfig } from "#/providers";
 export type ProfileUpdateActionStatus =
   | "confirming"
   | "idle"
+  | "preparing"
   | "signing"
   | "switching";
 
@@ -46,7 +49,7 @@ export function useProfileUpdateSubmission({
   updateLabel,
 }: UseProfileUpdateSubmissionProps) {
   const connection = useConnection();
-  const { chain, network } = useEnsConfig();
+  const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
   const { switchChainAsync } = useSwitchChain();
@@ -57,6 +60,14 @@ export function useProfileUpdateSubmission({
   const [transactionHash, setTransactionHash] = useState<Hex>();
   const transactionHashRef = useRef<Hex | undefined>(undefined);
   const resolverAddressRef = useRef<`0x${string}` | undefined>(undefined);
+  const connectionRef = useRef({
+    address: connection.address,
+    chainId: connection.chainId,
+  });
+  connectionRef.current = {
+    address: connection.address,
+    chainId: connection.chainId,
+  };
   const isPending = actionStatus !== "idle";
   const isConfirming = actionStatus === "confirming";
   const isWrongNetwork =
@@ -140,8 +151,24 @@ export function useProfileUpdateSubmission({
       return;
     }
 
+    const submissionAccount = connection.address;
+    const validateConnection = () => {
+      const current = connectionRef.current;
+      if (
+        current.address === undefined ||
+        !isAddressEqual(current.address, submissionAccount)
+      ) {
+        return err("WALLET_ACCOUNT_CHANGED" as const);
+      }
+      if (current.chainId !== chain.id) {
+        return err("WALLET_NETWORK_CHANGED" as const);
+      }
+      return ok(undefined);
+    };
+
+    setActionStatus("preparing");
     const result = await submitProfileUpdate({
-      account: connection.address,
+      account: submissionAccount,
       chain,
       input: name,
       network,
@@ -149,6 +176,8 @@ export function useProfileUpdateSubmission({
       publicClient,
       resolverAddress,
       review,
+      universalResolverAddress: contracts.universalResolverV2.address,
+      validateConnection,
       walletClient,
     });
     if (result.isErr()) {
@@ -159,7 +188,7 @@ export function useProfileUpdateSubmission({
     }
 
     emitNameProfileEditorEvent(events.onUpdate, {
-      account: connection.address,
+      account: submissionAccount,
       chainId: chain.id,
       changes: review.changes,
       name,
@@ -170,6 +199,7 @@ export function useProfileUpdateSubmission({
       values: review.values,
     });
     await delay(TRANSACTION_PROGRESS_COMPLETION_DURATION_MS);
+    setActionStatus("idle");
     onSuccess(result.value);
   };
 
@@ -180,9 +210,11 @@ export function useProfileUpdateSubmission({
         ? `Switch to ${chain.name}`
         : actionStatus === "switching"
           ? `Switching to ${chain.name}`
-          : actionStatus === "signing"
-            ? "Confirm in wallet"
-            : updateLabel;
+          : actionStatus === "preparing"
+            ? "Preparing update"
+            : actionStatus === "signing"
+              ? "Confirm in wallet"
+              : updateLabel;
 
   return {
     account: connection.address,
