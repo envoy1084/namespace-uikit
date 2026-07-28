@@ -46,7 +46,7 @@ export function ProfileEditorShowcase() {
       id="profile-editor-demo"
     >
       <div className="lg:sticky lg:top-28 lg:pt-6">
-        <SectionLabel>In development</SectionLabel>
+        <SectionLabel>Available now</SectionLabel>
         <Typography.Heading
           className="mt-4 text-[clamp(2.4rem,4vw,4.6rem)] leading-[1.06] font-semibold tracking-[-0.04em] text-balance"
           id="profile-editor-title"
@@ -55,8 +55,7 @@ export function ProfileEditorShowcase() {
           Profile records.
         </Typography.Heading>
         <Typography.Paragraph className="mt-6 max-w-lg text-[17px] leading-[1.6] text-[#666]">
-          Compose profile, social, address, and website records before sending
-          an update.
+          Edit profile, social, address, and website records in one update.
         </Typography.Paragraph>
 
         <TextField
