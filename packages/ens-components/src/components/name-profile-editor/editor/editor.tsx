@@ -16,26 +16,16 @@ import type {
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import {
-  Button,
-  Form,
-  Spinner,
-  Surface,
-  Typography,
-} from "@thenamespace/uikit";
+import { Button, Form, Surface, Typography } from "@thenamespace/uikit";
 import { FormProvider } from "react-hook-form";
 import { useConnection } from "wagmi";
 
-import { canEditNameProfileRecord } from "#/actions";
 import { ProfileDiffScreen } from "#/components/name-profile-editor/diff/diff-screen";
 import { EditorHeader } from "#/components/name-profile-editor/editor/header";
 import {
-  canEditDefinition,
-  canEditEditorRecord,
   canEditProfileChanges,
   createEditorPermissionRequests,
 } from "#/components/name-profile-editor/editor/profile-permissions";
-import { recordDefinitions } from "#/components/name-profile-editor/editor/record-definitions";
 import { RecordSection } from "#/components/name-profile-editor/editor/record-section";
 import { EditorSearch } from "#/components/name-profile-editor/editor/search";
 import { EditorSidebar } from "#/components/name-profile-editor/editor/sidebar";
@@ -154,45 +144,35 @@ export function ProfileEditor({
 
   const hasConnectedAccount = connection.address !== undefined;
   const isPermissionReady =
-    !hasConnectedAccount || permissions.data !== undefined;
-  const canEdit = (request: Parameters<typeof canEditNameProfileRecord>[1]) =>
-    !hasConnectedAccount || canEditNameProfileRecord(permissions.data, request);
+    hasConnectedAccount &&
+    !permissions.isPending &&
+    !permissions.isError &&
+    permissions.data !== undefined;
 
   const disabledDefinitionIds = new Set(
     [...media.uploadingRecords].map((record) => `text:${record}`),
   );
-  const disabledRecordIds = new Set<string>();
-  if (hasConnectedAccount) {
-    for (const definition of recordDefinitions) {
-      if (!canEditDefinition(permissions.data, definition)) {
-        disabledDefinitionIds.add(definition.id);
-      }
-    }
-    for (const record of editor.records) {
-      if (!canEditEditorRecord(permissions.data, record, editor.values)) {
-        disabledRecordIds.add(record.id);
-      }
-    }
-  }
 
   const hasPermissionForChanges =
-    !hasConnectedAccount ||
-    (editor.review !== undefined &&
-      canEditProfileChanges(permissions.data, editor.review.changes));
+    hasConnectedAccount &&
+    editor.review !== undefined &&
+    permissions.data !== undefined &&
+    canEditProfileChanges(permissions.data, editor.review.changes);
   const canContinue =
+    hasConnectedAccount &&
     editor.form.formState.isValid &&
     editor.hasChanges &&
     isPermissionReady &&
     hasPermissionForChanges;
-  const permissionMessage = !hasConnectedAccount
-    ? undefined
-    : permissions.isPending
-      ? "Checking record permissions…"
-      : permissions.isError
-        ? formatError(permissions.error, { name })
-        : editor.review !== undefined && !hasPermissionForChanges
-          ? "This wallet does not have permission to update one or more changed records."
-          : undefined;
+  const continueLabel = !hasConnectedAccount
+    ? messages.connectWalletLabel
+    : permissions.isPending ||
+        (!permissions.isError && permissions.data === undefined)
+      ? messages.checkingAccessLabel
+      : permissions.isError ||
+          (editor.review !== undefined && !hasPermissionForChanges)
+        ? messages.noPermissionLabel
+        : messages.nextLabel;
 
   if (view === "success" && successfulUpdate !== undefined) {
     return (
@@ -210,8 +190,9 @@ export function ProfileEditor({
   if (view === "diff" && editor.review !== undefined) {
     const resolvedResolverAddress = permissions.data?.resolverAddress;
     const isUpdateAllowed =
-      !hasConnectedAccount ||
-      (resolvedResolverAddress !== undefined && hasPermissionForChanges);
+      hasConnectedAccount &&
+      resolvedResolverAddress !== undefined &&
+      hasPermissionForChanges;
 
     return (
       <ProfileDiffScreen
@@ -279,9 +260,7 @@ export function ProfileEditor({
             avatarUrl={media.avatarUrl}
             headerPlaceholder={slots.headerPlaceholder}
             headerUrl={media.headerUrl}
-            isAvatarDisabled={!canEdit({ key: "avatar", type: "text" })}
             isAvatarUploading={media.uploadingRecords.has("avatar")}
-            isHeaderDisabled={!canEdit({ key: "header", type: "text" })}
             isHeaderUploading={media.uploadingRecords.has("header")}
             onAvatarPress={() => media.requestMedia("avatar")}
             onHeaderPress={() => media.requestMedia("header")}
@@ -304,7 +283,6 @@ export function ProfileEditor({
                 <div className="max-h-84 min-w-0 flex-1 overflow-y-auto px-1">
                   <RecordSection
                     disabledDefinitionIds={disabledDefinitionIds}
-                    disabledRecordIds={disabledRecordIds}
                     error={
                       editor.activeSection === "general" && media.uploadError
                         ? media.uploadError
@@ -324,28 +302,17 @@ export function ProfileEditor({
           </Surface>
           <div className="px-3 pb-3">
             <Button className="w-full" isDisabled={!canContinue} type="submit">
-              Next
+              {continueLabel}
             </Button>
-            {permissionMessage === undefined ? null : (
-              <div className="mt-2 flex min-h-5 items-center justify-center gap-2">
-                {permissions.isPending ? (
-                  <Spinner className="size-3" size="sm" />
-                ) : null}
-                <Typography.Paragraph
-                  className={
-                    permissions.isError || !hasPermissionForChanges
-                      ? "text-danger text-center"
-                      : "text-center"
-                  }
-                  size="xs"
-                  {...(permissions.isError || !hasPermissionForChanges
-                    ? { role: "alert" }
-                    : { color: "muted" })}
-                >
-                  {permissionMessage}
-                </Typography.Paragraph>
-              </div>
-            )}
+            {permissions.isError ? (
+              <Typography.Paragraph
+                className="text-danger mx-auto mt-2 text-center"
+                role="alert"
+                size="xs"
+              >
+                {formatError(permissions.error, { name })}
+              </Typography.Paragraph>
+            ) : null}
           </div>
         </div>
       </Form>

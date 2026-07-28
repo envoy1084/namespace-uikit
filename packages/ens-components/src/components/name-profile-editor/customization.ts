@@ -18,7 +18,11 @@ export interface NameProfileEditorSlots {
 }
 
 export interface NameProfileEditorMessages {
+  checkingAccessLabel: string;
+  connectWalletLabel: string;
   doneLabel: string;
+  nextLabel: string;
+  noPermissionLabel: string;
   reviewDescription: string;
   reviewTitle: string;
   searchPlaceholder: string;
@@ -30,7 +34,11 @@ export interface NameProfileEditorMessages {
 
 export const DEFAULT_NAME_PROFILE_EDITOR_MESSAGES: Readonly<NameProfileEditorMessages> =
   {
+    checkingAccessLabel: "Checking access",
+    connectWalletLabel: "Connect wallet",
     doneLabel: "Done",
+    nextLabel: "Next",
+    noPermissionLabel: "No update permission",
     reviewDescription: "Review the records you are about to update.",
     reviewTitle: "Review changes",
     searchPlaceholder: "Search records",

@@ -2,10 +2,7 @@ import type {
   NameProfilePermissionRequest,
   NameProfilePermissions,
 } from "#/actions";
-import type {
-  EditorRecord,
-  RecordDefinition,
-} from "#/components/name-profile-editor/editor/types";
+import type { RecordDefinition } from "#/components/name-profile-editor/editor/types";
 import type {
   NameProfileFormValues,
   NameProfileRecordChange,
@@ -28,21 +25,6 @@ function definitionPermission(
   }
 
   return { type: definition.type };
-}
-
-export function editorRecordPermission(
-  record: EditorRecord,
-  values: NameProfileFormValues,
-): NameProfilePermissionRequest {
-  if (record.type === "address" || record.type === "text") {
-    return { key: record.name, type: record.type };
-  }
-  if (record.type === "data" && record.arrayIndex !== undefined) {
-    const key = values.data[record.arrayIndex]?.key.trim();
-    return key ? { key, type: "data" } : { type: "data" };
-  }
-
-  return { type: record.type };
 }
 
 export function profileChangePermission(
@@ -78,27 +60,6 @@ export function createEditorPermissionRequests(
     unique.set(getNameProfilePermissionId(request), request);
   }
   return [...unique.values()];
-}
-
-export function canEditDefinition(
-  permissions: NameProfilePermissions | undefined,
-  definition: RecordDefinition,
-): boolean {
-  return canEditNameProfileRecord(
-    permissions,
-    definitionPermission(definition),
-  );
-}
-
-export function canEditEditorRecord(
-  permissions: NameProfilePermissions | undefined,
-  record: EditorRecord,
-  values: NameProfileFormValues,
-): boolean {
-  return canEditNameProfileRecord(
-    permissions,
-    editorRecordPermission(record, values),
-  );
 }
 
 export function canEditProfileChanges(
