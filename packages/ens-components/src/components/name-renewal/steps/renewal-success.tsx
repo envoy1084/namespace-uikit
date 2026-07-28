@@ -1,9 +1,10 @@
-import { Avatar, Button, Surface, Typography } from "@thenamespace/uikit";
+import { Button, Surface, Typography } from "@thenamespace/uikit";
 
 import { FlowSuccessHeader } from "#/components/flow-success-header";
 import { useNameRenewal } from "#/components/name-renewal/context";
 import { NameRenewalBody } from "#/components/name-renewal/layout";
 import type { NameRenewalSuccessDetails } from "#/components/name-renewal/types";
+import { PaymentTokenIcon } from "#/components/payment-token-icon";
 import { formatTokenAmount } from "#/lib";
 import { formatRegistrationDuration, formatUnixTimestamp } from "#/lib/helpers";
 
@@ -57,13 +58,10 @@ export function NameRenewalSuccess({ onDone, renewal }: NameRenewalSuccessProps)
               Renewal price
             </Typography.Paragraph>
             <div className="flex items-center gap-2">
-              <Avatar className="size-5">
-                <Avatar.Image
-                  alt={`${renewal.paymentTokenSymbol} logo`}
-                  src={renewal.paymentTokenIcon}
-                />
-                <Avatar.Fallback>{renewal.paymentTokenSymbol.slice(0, 1)}</Avatar.Fallback>
-              </Avatar>
+              <PaymentTokenIcon
+                icon={renewal.paymentTokenIcon}
+                symbol={renewal.paymentTokenSymbol}
+              />
               <span className="text-foreground text-sm font-medium">
                 {formatTokenAmount(renewal.amount, renewal.decimals, {
                   maximumFractionDigits: 2,

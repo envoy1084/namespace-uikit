@@ -1,8 +1,10 @@
-import { Avatar, Button, Surface, Typography } from "@thenamespace/uikit";
+import { Button, Surface, Typography } from "@thenamespace/uikit";
 
 import { FlowSuccessHeader } from "#/components/flow-success-header";
 import { useNameRegistration } from "#/components/name-registration/context";
 import { NameRegistrationBody } from "#/components/name-registration/layout";
+import { PaymentTokenIcon } from "#/components/payment-token-icon";
+import type { EnsPaymentToken } from "#/data";
 import { formatTokenAmount } from "#/lib";
 import { formatLocalizedDate, formatRegistrationDuration } from "#/lib/helpers";
 
@@ -12,7 +14,7 @@ export interface RegistrationSuccessDetails {
   duration: bigint;
   expiresAt: number;
   name: string;
-  paymentTokenIcon: string;
+  paymentTokenIcon: EnsPaymentToken["icon"];
   paymentTokenSymbol: string;
   primaryNameStatus: "failed" | "not-requested" | "set";
 }
@@ -50,13 +52,10 @@ export function RegistrationSuccessStep({ onDone, registration }: RegistrationSu
                 Registration price
               </Typography.Paragraph>
               <div className="flex items-center gap-2">
-                <Avatar className="size-5">
-                  <Avatar.Image
-                    alt={`${registration.paymentTokenSymbol} logo`}
-                    src={registration.paymentTokenIcon}
-                  />
-                  <Avatar.Fallback>{registration.paymentTokenSymbol.slice(0, 1)}</Avatar.Fallback>
-                </Avatar>
+                <PaymentTokenIcon
+                  icon={registration.paymentTokenIcon}
+                  symbol={registration.paymentTokenSymbol}
+                />
                 <span className="text-foreground text-sm font-medium">
                   {formatTokenAmount(registration.amount, registration.decimals, {
                     maximumFractionDigits: 2,

@@ -1,10 +1,11 @@
 "use client";
 
-import { Avatar, Button, Skeleton, Surface, Typography } from "@thenamespace/uikit";
+import { Button, Skeleton, Surface, Typography } from "@thenamespace/uikit";
 
 import { useNameRegistration } from "#/components/name-registration/context";
 import { useRegistrationPayment } from "#/components/name-registration/steps/registration-process/steps/registration-payment/use-registration-payment";
 import type { RegistrationSuccessDetails } from "#/components/name-registration/steps/registration-success";
+import { PaymentTokenIcon } from "#/components/payment-token-icon";
 import { TransactionProgress } from "#/components/transaction-progress";
 import { formatError, formatTokenAmount } from "#/lib";
 import { formatRegistrationTimeRemaining } from "#/lib/helpers";
@@ -40,10 +41,7 @@ export function RegistrationPayment({
           Registration price
         </Typography.Paragraph>
         <div className="flex items-center gap-2">
-          <Avatar className="size-5">
-            <Avatar.Image alt={`${paymentToken.symbol} logo`} src={paymentToken.icon} />
-            <Avatar.Fallback>{paymentToken.symbol.slice(0, 1)}</Avatar.Fallback>
-          </Avatar>
+          <PaymentTokenIcon icon={paymentToken.icon} symbol={paymentToken.symbol} />
           {payment.isPending || payment.isFetching ? (
             <Skeleton className="h-5 w-14 rounded-md" />
           ) : payment.data ? (

@@ -1,35 +1,23 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useCallback, type ReactNode, type SyntheticEvent } from "react";
 
 import { Button, Spinner, Surface } from "@thenamespace/uikit";
-import {
-  Add01Icon,
-  HugeiconsIcon,
-  PencilEdit01Icon,
-} from "@thenamespace/uikit/icons";
+import { Add01Icon, HugeiconsIcon, PencilEdit01Icon } from "@thenamespace/uikit/icons";
 
-export const DEFAULT_PROFILE_HEADER_URL =
-  "https://app.namespace.ninja/assets/default-header.webp";
-export const DEFAULT_PROFILE_AVATAR_URL =
-  "https://app.namespace.ninja/assets/default-avatar.webp";
+export const DEFAULT_PROFILE_HEADER_URL = new URL(
+  "../../../assets/default-profile-header.webp",
+  import.meta.url,
+).href;
+export const DEFAULT_PROFILE_AVATAR_URL = new URL(
+  "../../../assets/default-profile-avatar.webp",
+  import.meta.url,
+).href;
 
-function MediaActionIcon({
-  hasValue,
-  isUploading,
-}: {
-  hasValue: boolean;
-  isUploading: boolean;
-}) {
+function MediaActionIcon({ hasValue, isUploading }: { hasValue: boolean; isUploading: boolean }) {
   if (isUploading) return <Spinner className="size-4" size="sm" />;
 
-  return (
-    <HugeiconsIcon
-      icon={hasValue ? PencilEdit01Icon : Add01Icon}
-      size={16}
-      strokeWidth={2}
-    />
-  );
+  return <HugeiconsIcon icon={hasValue ? PencilEdit01Icon : Add01Icon} size={16} strokeWidth={2} />;
 }
 
 export function EditorHeader({
@@ -67,6 +55,12 @@ export function EditorHeader({
 }) {
   const hasAvatar = avatarUrl !== undefined && avatarUrl.trim().length > 0;
   const hasHeader = headerUrl !== undefined && headerUrl.trim().length > 0;
+  const handleAvatarError = useCallback((event: SyntheticEvent<HTMLImageElement>) => {
+    event.currentTarget.src = DEFAULT_PROFILE_AVATAR_URL;
+  }, []);
+  const handleHeaderError = useCallback((event: SyntheticEvent<HTMLImageElement>) => {
+    event.currentTarget.src = DEFAULT_PROFILE_HEADER_URL;
+  }, []);
 
   return (
     <section aria-label={sectionLabel} className="relative w-full p-2 pb-6">
@@ -75,10 +69,8 @@ export function EditorHeader({
           <img
             alt=""
             className="size-full object-cover"
+            onError={handleHeaderError}
             src={hasHeader ? headerUrl : DEFAULT_PROFILE_HEADER_URL}
-            onError={(event) => {
-              event.currentTarget.src = DEFAULT_PROFILE_HEADER_URL;
-            }}
           />
         ) : (
           <div className="size-full [&>img]:size-full [&>img]:object-cover">
@@ -95,10 +87,7 @@ export function EditorHeader({
             variant="secondary"
             onPress={onHeaderPress}
           >
-            <MediaActionIcon
-              hasValue={hasHeader}
-              isUploading={isHeaderUploading}
-            />
+            <MediaActionIcon hasValue={hasHeader} isUploading={isHeaderUploading} />
           </Button>
         </div>
       </div>
@@ -108,10 +97,8 @@ export function EditorHeader({
           <img
             alt=""
             className="absolute inset-0 size-full rounded-2xl object-cover p-1"
+            onError={handleAvatarError}
             src={hasAvatar ? avatarUrl : DEFAULT_PROFILE_AVATAR_URL}
-            onError={(event) => {
-              event.currentTarget.src = DEFAULT_PROFILE_AVATAR_URL;
-            }}
           />
         ) : (
           <div className="absolute inset-0 size-full overflow-hidden rounded-2xl p-1 [&>img]:size-full [&>img]:object-cover">
@@ -128,10 +115,7 @@ export function EditorHeader({
           variant="secondary"
           onPress={onAvatarPress}
         >
-          <MediaActionIcon
-            hasValue={hasAvatar}
-            isUploading={isAvatarUploading}
-          />
+          <MediaActionIcon hasValue={hasAvatar} isUploading={isAvatarUploading} />
         </Button>
       </Surface>
     </section>

@@ -1,11 +1,13 @@
-import type { Address, Hex } from "viem";
+/* oxlint-disable jsx-a11y/prefer-tag-over-role -- Native progress elements cannot contain the custom animated indicator. */
+/* oxlint-disable react-perf/jsx-no-new-object-as-prop -- Motion values depend on live transaction state. */
 
 import type { ReactNode } from "react";
 
 import { ArrowUpRight01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { motion, useReducedMotion } from "motion/react";
+import type { Address, Hex } from "viem";
 
-const Shuriken = new URL("../assets/shuriken.svg", import.meta.url);
+import { ShurikenIcon } from "#/components/icons";
 
 const CHAIN_CONFIRMATION_DURATION_MS: Readonly<Record<number, number>> = {
   1: 16_000,
@@ -78,7 +80,7 @@ export function TransactionProgress({
           <motion.span
             aria-hidden="true"
             animate={{ rotate: shouldReduceMotion ? 0 : 360 }}
-            className="absolute top-1/2 right-1 flex size-6 items-center justify-center [&>img]:size-full [&>svg]:size-full"
+            className="absolute top-1/2 right-1 flex size-6 items-center justify-center [&>svg]:size-full"
             style={{ y: "-50%" }}
             transition={{
               duration: 2,
@@ -86,7 +88,7 @@ export function TransactionProgress({
               repeat: shouldReduceMotion ? 0 : Infinity,
             }}
           >
-            {icon === undefined ? <img alt="" src={Shuriken.href} /> : icon}
+            {icon === undefined ? <ShurikenIcon /> : icon}
           </motion.span>
         </motion.div>
       </div>
@@ -98,11 +100,7 @@ export function TransactionProgress({
           target="_blank"
         >
           {linkLabel}
-          <HugeiconsIcon
-            aria-hidden="true"
-            className="size-3.5"
-            icon={ArrowUpRight01Icon}
-          />
+          <HugeiconsIcon aria-hidden="true" className="size-3.5" icon={ArrowUpRight01Icon} />
           <span className="sr-only">(opens in a new tab)</span>
         </a>
       )}

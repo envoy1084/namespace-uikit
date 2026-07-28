@@ -1,5 +1,6 @@
 import type { Address } from "viem";
 
+import { DaiIcon, UsdcIcon } from "#/components/icons";
 import {
   ethRegistrarAbi,
   ethRegistryAbi,
@@ -9,14 +10,12 @@ import {
   universalResolverV2Abi,
   verifiableFactoryAbi,
 } from "#/data/abi";
-
-const mockDaiIcon = new URL("../assets/dai.svg", import.meta.url).href;
-const mockUsdcIcon = new URL("../assets/usdc.svg", import.meta.url).href;
+import type { EnsIconComponent } from "#/icons/get-record-icon";
 
 export interface EnsPaymentToken {
   readonly address: Address;
   readonly decimals: number;
-  readonly icon: string;
+  readonly icon: EnsIconComponent;
   readonly name: string;
   readonly symbol: string;
 }
@@ -76,14 +75,14 @@ export const testnetContracts = {
     {
       address: "0xba11ebdb3f9a2c5946d8629517f06364e53a2e10",
       decimals: 6,
-      icon: mockUsdcIcon,
+      icon: UsdcIcon,
       name: "Mock USDC",
       symbol: "USDC",
     },
     {
       address: "0x2922bcd677af690fcd1ecc699519e4bfabc73ff8",
       decimals: 18,
-      icon: mockDaiIcon,
+      icon: DaiIcon,
       name: "Mock DAI",
       symbol: "DAI",
     },

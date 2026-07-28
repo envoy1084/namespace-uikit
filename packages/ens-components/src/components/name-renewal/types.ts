@@ -1,3 +1,5 @@
+import type { EnsPaymentToken } from "#/data";
+
 export interface NameRenewalSuccessDetails {
   amount: bigint;
   currentExpiry: bigint;
@@ -5,6 +7,6 @@ export interface NameRenewalSuccessDetails {
   duration: bigint;
   name: string;
   newExpiry: bigint;
-  paymentTokenIcon: string;
+  paymentTokenIcon: EnsPaymentToken["icon"];
   paymentTokenSymbol: string;
 }

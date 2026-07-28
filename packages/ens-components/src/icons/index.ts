@@ -1,4 +1,5 @@
 export * from "#/icons/icon-components";
+export * from "#/components/icons";
 export {
   getAddressIcon,
   getContenthashIcon,
