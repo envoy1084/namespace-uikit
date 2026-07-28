@@ -3,7 +3,7 @@ import type {
   ProfileFixtureState,
 } from "@/components/profile-editor-fixtures/fixtures";
 
-import { Modal, Surface } from "@thenamespace/uikit";
+import { Button, Modal, Surface } from "@thenamespace/uikit";
 
 import { DEFAULT_NAME_PROFILE_EDITOR_MESSAGES } from "#/components/name-profile-editor/customization";
 import { ProfileDiffScreen } from "#/components/name-profile-editor/diff/diff-screen";
@@ -79,6 +79,9 @@ export function ProfileEditorStateFixture({
 
   return (
     <Modal isOpen={isDialogOpen} onOpenChange={onDialogOpenChange}>
+      <Button aria-hidden className="hidden">
+        Open state fixture
+      </Button>
       <Modal.Backdrop>
         <Modal.Container>
           <Modal.Dialog
