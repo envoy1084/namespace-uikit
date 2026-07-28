@@ -6,21 +6,14 @@ import type { Address } from "viem";
 import { usePublicClient } from "wagmi";
 
 import {
-  executeContractReads,
   type NameRenewalPaymentStatus,
-  type NameRenewalPaymentStatusReadError,
-  prepareNameRenewalPaymentStatusRead,
-  type PrepareNameRenewalPaymentStatusReadError,
+  readNameRenewalPaymentStatus,
+  type ReadNameRenewalPaymentStatusErrorType,
 } from "#/actions";
 import { asWagmiChainId } from "#/lib/helpers";
-import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
-type NameRenewalPaymentStatusError =
-  | "CONTRACT_READ_FAILED"
-  | NameRenewalPaymentStatusReadError
-  | ParseNameInputError
-  | PrepareNameRenewalPaymentStatusReadError;
+type NameRenewalPaymentStatusError = ReadNameRenewalPaymentStatusErrorType;
 
 type NameRenewalPaymentStatusQueryKey = readonly [
   "ens",
@@ -88,7 +81,7 @@ export function useNameRenewalPaymentStatus<selectData = NameRenewalPaymentStatu
         return Promise.reject("CONTRACT_READ_FAILED" satisfies NameRenewalPaymentStatusError);
       }
 
-      const prepared = prepareNameRenewalPaymentStatusRead({
+      const result = await readNameRenewalPaymentStatus(publicClient, {
         account,
         duration: parameters.duration,
         ethRegistryAddress,
@@ -96,9 +89,6 @@ export function useNameRenewalPaymentStatus<selectData = NameRenewalPaymentStatu
         paymentTokenAddress,
         registrarAddress,
       });
-      if (prepared.isErr()) throw prepared.error;
-
-      const result = await executeContractReads(publicClient, prepared.value);
       if (result.isErr()) throw result.error;
       return result.value;
     },

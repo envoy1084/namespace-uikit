@@ -1,9 +1,8 @@
-import { err, errAsync, ok, ResultAsync } from "neverthrow";
+import { err, ok, ResultAsync } from "neverthrow";
 import type { Address, Hex, PublicClient } from "viem";
 
 import {
-  executeContractReads,
-  prepareCommitmentStatusRead,
+  readCommitmentStatus as readCommitmentTiming,
   type PrepareCommitmentStatusReadError,
 } from "#/actions";
 
@@ -29,11 +28,8 @@ export function readCommitmentStatus(
   publicClient: PublicClient,
   props: ReadCommitmentStatusParameters,
 ): ResultAsync<CommitmentStatus, ReadCommitmentStatusError> {
-  const prepared = prepareCommitmentStatusRead(props);
-  if (prepared.isErr()) return errAsync(prepared.error);
-
   return ResultAsync.fromPromise(
-    Promise.all([executeContractReads(publicClient, prepared.value), publicClient.getBlock()]),
+    Promise.all([readCommitmentTiming(publicClient, props), publicClient.getBlock()]),
     () => "CONTRACT_READ_FAILED" as const,
   ).andThen(([timing, block]) => {
     if (timing.isErr()) return err(timing.error);

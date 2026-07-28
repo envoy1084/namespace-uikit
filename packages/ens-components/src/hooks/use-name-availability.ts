@@ -6,19 +6,12 @@ import { useDebounceValue } from "usehooks-ts";
 import type { Address } from "viem";
 import { usePublicClient } from "wagmi";
 
-import {
-  executeContractRead,
-  prepareNameAvailabilityRead,
-  type PrepareNameAvailabilityReadError,
-} from "#/actions";
+import { readNameAvailability, type ReadNameAvailabilityErrorType } from "#/actions";
 import { asWagmiChainId } from "#/lib/helpers";
-import { parseNameInput, type ParseNameInputError } from "#/lib/parse-name-input";
+import { parseNameInput } from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
-type NameAvailabilityError =
-  | "CONTRACT_READ_FAILED"
-  | ParseNameInputError
-  | PrepareNameAvailabilityReadError;
+type NameAvailabilityError = ReadNameAvailabilityErrorType;
 type NameAvailabilityQueryKey = readonly ["ens", "name-availability", number, Address, string];
 
 export interface UseNameAvailabilityParameters<selectData = boolean> {
@@ -64,13 +57,10 @@ export function useNameAvailability<selectData = boolean>(
         return Promise.reject("CONTRACT_READ_FAILED" satisfies NameAvailabilityError);
       }
 
-      const prepared = prepareNameAvailabilityRead({
+      const result = await readNameAvailability(publicClient, {
         input: debouncedInput,
         registrarAddress,
       });
-      if (prepared.isErr()) throw prepared.error;
-
-      const result = await executeContractRead(publicClient, prepared.value);
       if (result.isErr()) throw result.error;
       return result.value;
     },

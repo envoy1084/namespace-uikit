@@ -6,19 +6,15 @@ import type { Address } from "viem";
 import { usePublicClient } from "wagmi";
 
 import {
-  executeContractRead,
-  prepareNameResolverRead,
   type NameResolverResult,
-  type PrepareNameResolverReadError,
+  readNameResolver,
+  type ReadNameResolverErrorType,
 } from "#/actions";
-import { parseNameInput, type ParseNameInputError } from "#/lib";
+import { parseNameInput } from "#/lib";
 import { asWagmiChainId } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
-export type NameResolverError =
-  | "CONTRACT_READ_FAILED"
-  | ParseNameInputError
-  | PrepareNameResolverReadError;
+export type NameResolverError = ReadNameResolverErrorType;
 
 export type NameResolverQueryKey = readonly ["ens", "name-resolver", number, Address, string];
 
@@ -57,22 +53,12 @@ export function useNameResolver<selectData = NameResolverResult>(
         return Promise.reject("CONTRACT_READ_FAILED" satisfies NameResolverError);
       }
 
-      const prepared = prepareNameResolverRead({
+      const result = await readNameResolver(publicClient, {
         input: parameters.input,
         universalResolverAddress,
       });
-      if (prepared.isErr()) throw prepared.error;
-
-      const result = await executeContractRead(publicClient, prepared.value);
       if (result.isErr()) throw result.error;
-      const [resolverAddress, node, offset] = result.value;
-
-      return {
-        name: prepared.value.metadata.name,
-        node,
-        offset,
-        resolverAddress,
-      };
+      return result.value;
     },
   });
 }

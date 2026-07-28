@@ -9,14 +9,13 @@ import type {
   NameProfileDiscoveryResult,
   NameRecordSelection,
   NameRecordsResult,
-  PrepareNameProfileDiscoveryReadError,
-  PrepareNameRecordsReadError,
+  ReadNameProfileDiscoveryErrorType,
+  ReadNameRecordsErrorType,
 } from "#/actions";
 import {
-  executeContractReadsIndividually,
-  executeGraphQLRead,
   prepareNameProfileDiscoveryRead,
-  prepareNameRecordsRead,
+  readNameProfileDiscovery,
+  readNameRecords,
 } from "#/actions";
 import type { ParseNameInputError } from "#/lib";
 import { parseNameInput } from "#/lib";
@@ -33,8 +32,8 @@ export type NameProfileError =
   | "CONTRACT_READ_FAILED"
   | "GRAPHQL_READ_FAILED"
   | ParseNameInputError
-  | PrepareNameProfileDiscoveryReadError
-  | PrepareNameRecordsReadError;
+  | ReadNameProfileDiscoveryErrorType
+  | ReadNameRecordsErrorType;
 
 export type NameProfileQueryKey = readonly [
   "ens",
@@ -119,19 +118,18 @@ export function useNameProfile<selectData = NameProfileResult>(
       }
       if (discoveryRead.isErr()) throw discoveryRead.error;
 
-      const discovery = await executeGraphQLRead(discoveryRead.value, {
+      const discovery = await readNameProfileDiscovery({
+        indexerUrl,
+        input: parameters.input,
         signal,
       });
       if (discovery.isErr()) throw discovery.error;
 
-      const recordsRead = prepareNameRecordsRead({
+      const records = await readNameRecords(publicClient, {
         input: parameters.input,
         records: mergeRecords(discovery.value.records, parameters.additionalRecords),
         universalResolverAddress,
       });
-      if (recordsRead.isErr()) throw recordsRead.error;
-
-      const records = await executeContractReadsIndividually(publicClient, recordsRead.value);
       if (records.isErr()) throw records.error;
 
       return {

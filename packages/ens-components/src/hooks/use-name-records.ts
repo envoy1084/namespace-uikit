@@ -10,7 +10,7 @@ import type {
   NameRecordsResult,
   PrepareNameRecordsReadError,
 } from "#/actions";
-import { executeContractReadsIndividually, prepareNameRecordsRead } from "#/actions";
+import { prepareNameRecordsRead, readNameRecords } from "#/actions";
 import type { ParseNameInputError } from "#/lib";
 import { parseNameInput } from "#/lib";
 import { asWagmiChainId } from "#/lib/helpers";
@@ -73,7 +73,11 @@ export function useNameRecords<selectData = NameRecordsResult>(
       }
       if (prepared.isErr()) throw prepared.error;
 
-      const result = await executeContractReadsIndividually(publicClient, prepared.value);
+      const result = await readNameRecords(publicClient, {
+        input: parameters.input,
+        records: parameters.records,
+        universalResolverAddress,
+      });
       if (result.isErr()) throw result.error;
       return result.value;
     },

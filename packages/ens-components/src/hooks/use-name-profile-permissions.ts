@@ -9,17 +9,15 @@ import { usePublicClient } from "wagmi";
 import type {
   NameProfilePermissionRequest,
   NameProfilePermissions,
-  PrepareNameProfilePermissionsReadError,
-  PrepareNameResolverReadError,
-  PreparePermissionedResolverSupportReadError,
+  ReadNameProfilePermissionsErrorType,
+  ReadNameResolverErrorType,
+  ReadPermissionedResolverSupportErrorType,
 } from "#/actions";
 import {
-  executeContractRead,
-  executeContractReads,
   getNameProfilePermissionId,
-  prepareNameProfilePermissionsRead,
-  prepareNameResolverRead,
-  preparePermissionedResolverSupportRead,
+  readNameProfilePermissions,
+  readNameResolver,
+  readPermissionedResolverSupport,
 } from "#/actions";
 import { asWagmiChainId } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -31,9 +29,9 @@ export type NameProfilePermissionsError =
   | "RESOLVER_NOT_FOUND"
   | "UNSUPPORTED_RESOLVER"
   | ParseNameInputError
-  | PrepareNameProfilePermissionsReadError
-  | PrepareNameResolverReadError
-  | PreparePermissionedResolverSupportReadError;
+  | ReadNameProfilePermissionsErrorType
+  | ReadNameResolverErrorType
+  | ReadPermissionedResolverSupportErrorType;
 
 type NameProfilePermissionsQueryKey = readonly [
   "ens",
@@ -102,40 +100,30 @@ export function useNameProfilePermissions<selectData = NameProfilePermissions>(
 
       let resolverAddress = parameters.resolverAddress;
       if (resolverAddress === undefined) {
-        const resolverRead = prepareNameResolverRead({
+        const resolverResult = await readNameResolver(publicClient, {
           input: parameters.input,
           universalResolverAddress: contracts.universalResolverV2.address,
         });
-        if (resolverRead.isErr()) throw resolverRead.error;
-
-        const resolverResult = await executeContractRead(publicClient, resolverRead.value);
         if (resolverResult.isErr()) throw resolverResult.error;
-        resolverAddress = resolverResult.value[0];
+        resolverAddress = resolverResult.value.resolverAddress;
       }
 
       if (resolverAddress === zeroAddress) {
         return Promise.reject("RESOLVER_NOT_FOUND" satisfies NameProfilePermissionsError);
       }
 
-      const supportRead = preparePermissionedResolverSupportRead({
-        resolverAddress,
-      });
-      if (supportRead.isErr()) throw supportRead.error;
-      const support = await executeContractRead(publicClient, supportRead.value);
+      const support = await readPermissionedResolverSupport(publicClient, { resolverAddress });
       if (support.isErr()) throw support.error;
       if (!support.value) {
         return Promise.reject("UNSUPPORTED_RESOLVER" satisfies NameProfilePermissionsError);
       }
 
-      const permissionRead = prepareNameProfilePermissionsRead({
+      const permissions = await readNameProfilePermissions(publicClient, {
         account: parameters.account,
         input: parameters.input,
         requests: parameters.requests,
         resolverAddress,
       });
-      if (permissionRead.isErr()) throw permissionRead.error;
-
-      const permissions = await executeContractReads(publicClient, permissionRead.value);
       if (permissions.isErr()) throw permissions.error;
       return permissions.value;
     },

@@ -7,11 +7,10 @@ import { isAddress, zeroAddress } from "viem";
 import { usePublicClient } from "wagmi";
 
 import {
-  executeContractRead,
-  preparePermissionedResolverSupportRead,
-  preparePermissionedResolverVerificationRead,
-  type PreparePermissionedResolverSupportReadError,
-  type PreparePermissionedResolverVerificationReadError,
+  readPermissionedResolverSupport,
+  readPermissionedResolverVerification,
+  type ReadPermissionedResolverSupportErrorType,
+  type ReadPermissionedResolverVerificationErrorType,
 } from "#/actions";
 import { asWagmiChainId } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
@@ -29,8 +28,8 @@ export interface ResolverCapabilities {
 export type ResolverCapabilitiesError =
   | "CONTRACT_READ_FAILED"
   | "INVALID_RESOLVER_ADDRESS"
-  | PreparePermissionedResolverSupportReadError
-  | PreparePermissionedResolverVerificationReadError;
+  | ReadPermissionedResolverSupportErrorType
+  | ReadPermissionedResolverVerificationErrorType;
 
 export type ResolverCapabilitiesQueryKey = readonly [
   "ens",
@@ -104,20 +103,13 @@ export function useResolverCapabilities<selectData = ResolverCapabilities>(
         };
       }
 
-      const supportRead = preparePermissionedResolverSupportRead({
-        resolverAddress,
-      });
-      if (supportRead.isErr()) throw supportRead.error;
-      const verificationRead = preparePermissionedResolverVerificationRead({
-        factoryAddress,
-        implementationAddress,
-        resolverAddress,
-      });
-      if (verificationRead.isErr()) throw verificationRead.error;
-
       const [support, verification] = await Promise.all([
-        executeContractRead(publicClient, supportRead.value),
-        executeContractRead(publicClient, verificationRead.value),
+        readPermissionedResolverSupport(publicClient, { resolverAddress }),
+        readPermissionedResolverVerification(publicClient, {
+          factoryAddress,
+          implementationAddress,
+          resolverAddress,
+        }),
       ]);
       if (support.isErr() || verification.isErr()) {
         return Promise.reject("CONTRACT_READ_FAILED" satisfies ResolverCapabilitiesError);

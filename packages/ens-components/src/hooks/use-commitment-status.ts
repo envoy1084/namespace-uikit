@@ -6,11 +6,7 @@ import type { Address, Hex } from "viem";
 import { isHex, size } from "viem";
 import { usePublicClient } from "wagmi";
 
-import {
-  executeContractReads,
-  prepareCommitmentStatusRead,
-  type PrepareCommitmentStatusReadError,
-} from "#/actions";
+import { readCommitmentStatus, type ReadCommitmentStatusErrorType } from "#/actions";
 import { asWagmiChainId } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
@@ -25,7 +21,7 @@ export interface CommitmentStatus {
   readonly validUntil: bigint;
 }
 
-export type CommitmentStatusError = "CONTRACT_READ_FAILED" | PrepareCommitmentStatusReadError;
+export type CommitmentStatusError = ReadCommitmentStatusErrorType;
 
 export type CommitmentStatusQueryKey = readonly [
   "ens",
@@ -105,14 +101,8 @@ export function useCommitmentStatus<selectData = CommitmentStatus>(
         return Promise.reject("CONTRACT_READ_FAILED" satisfies CommitmentStatusError);
       }
 
-      const prepared = prepareCommitmentStatusRead({
-        commitment,
-        registrarAddress,
-      });
-      if (prepared.isErr()) throw prepared.error;
-
       const [timing, block] = await Promise.all([
-        executeContractReads(publicClient, prepared.value),
+        readCommitmentStatus(publicClient, { commitment, registrarAddress }),
         publicClient.getBlock().catch(() => undefined),
       ]);
       if (timing.isErr() || block === undefined) {

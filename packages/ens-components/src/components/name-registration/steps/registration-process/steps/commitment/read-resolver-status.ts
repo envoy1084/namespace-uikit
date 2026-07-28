@@ -2,8 +2,7 @@ import { errAsync, okAsync, ResultAsync } from "neverthrow";
 import { type Address, type PublicClient } from "viem";
 
 import {
-  executeContractRead,
-  preparePermissionedResolverVerificationRead,
+  readPermissionedResolverVerification,
   type PreparePermissionedResolverVerificationReadError,
 } from "#/actions";
 import { isNonZeroAddress } from "#/lib/helpers";
@@ -40,13 +39,10 @@ export function readPermissionedResolverStatus(
   publicClient: PublicClient,
   props: ReadPermissionedResolverStatusParameters,
 ): ResultAsync<PermissionedResolverStatus, ReadPermissionedResolverStatusError> {
-  const prepared = preparePermissionedResolverVerificationRead(props);
-  if (prepared.isErr()) return errAsync(prepared.error);
-
   return isResolverDeployed(publicClient, props.resolverAddress).andThen((isDeployed) => {
     if (!isDeployed) return okAsync("NOT_DEPLOYED" as const);
 
-    return executeContractRead(publicClient, prepared.value).map((isVerified) =>
+    return readPermissionedResolverVerification(publicClient, props).map((isVerified) =>
       isVerified ? ("VERIFIED" as const) : ("INVALID" as const),
     );
   });

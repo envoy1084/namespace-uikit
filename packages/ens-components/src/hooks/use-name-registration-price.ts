@@ -7,21 +7,15 @@ import type { Address } from "viem";
 import { usePublicClient } from "wagmi";
 
 import {
-  executeContractReads,
   type NameRegistrationPrice,
-  prepareNameRegistrationPriceRead,
-  type NameRegistrationPriceReadError,
-  type PrepareNameRegistrationPriceReadError,
+  readNameRegistrationPrice,
+  type ReadNameRegistrationPriceErrorType,
 } from "#/actions";
 import { asWagmiChainId } from "#/lib/helpers";
-import { parseNameInput, type ParseNameInputError } from "#/lib/parse-name-input";
+import { parseNameInput } from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
-type NameRegistrationPriceError =
-  | "CONTRACT_READ_FAILED"
-  | NameRegistrationPriceReadError
-  | ParseNameInputError
-  | PrepareNameRegistrationPriceReadError;
+type NameRegistrationPriceError = ReadNameRegistrationPriceErrorType;
 type NameRegistrationPriceQueryKey = readonly [
   "ens",
   "name-registration-price",
@@ -85,15 +79,12 @@ export function useNameRegistrationPrice<selectData = NameRegistrationPrice>(
         return Promise.reject("CONTRACT_READ_FAILED" satisfies NameRegistrationPriceError);
       }
 
-      const prepared = prepareNameRegistrationPriceRead({
+      const result = await readNameRegistrationPrice(publicClient, {
         duration: parameters.duration,
         input: debouncedInput,
         paymentTokenAddress,
         registrarAddress,
       });
-      if (prepared.isErr()) throw prepared.error;
-
-      const result = await executeContractReads(publicClient, prepared.value);
       if (result.isErr()) throw result.error;
       return result.value;
     },
