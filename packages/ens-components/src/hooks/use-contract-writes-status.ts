@@ -1,16 +1,12 @@
 "use client";
 
-import type { Hex, TransactionReceipt } from "viem";
-
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 
+import type { Hex, TransactionReceipt } from "viem";
 import { TransactionReceiptNotFoundError } from "viem";
 import { usePublicClient, useWalletClient } from "wagmi";
 
-import {
-  getContractCallsStatus,
-  type ContractCallsStatusError,
-} from "#/actions";
+import { getContractCallsStatus, type ContractCallsStatusError } from "#/actions";
 import { useEnsConfig } from "#/providers";
 
 export type ContractWritesState = "FAILURE" | "PENDING" | "SUCCESS" | "UNKNOWN";
@@ -45,9 +41,7 @@ export type ContractWritesStatusQueryKey = readonly [
   string,
 ];
 
-export interface UseContractWritesStatusParameters<
-  selectData = ContractWritesStatus,
-> {
+export interface UseContractWritesStatusParameters<selectData = ContractWritesStatus> {
   query?: Omit<
     UseQueryOptions<
       ContractWritesStatus,
@@ -81,26 +75,19 @@ export function useContractWritesStatus<selectData = ContractWritesStatus>(
     selectData,
     ContractWritesStatusQueryKey
   >({
-    refetchInterval: (query) =>
-      query.state.data?.state === "PENDING" ? 1_000 : false,
+    refetchInterval: (query) => (query.state.data?.state === "PENDING" ? 1_000 : false),
     ...parameters.query,
-    queryKey: [
-      "ens",
-      "contract-writes-status",
-      network,
-      chain.id,
-      submissionKey(submission),
-    ],
+    queryKey: ["ens", "contract-writes-status", network, chain.id, submissionKey(submission)],
     enabled:
       (parameters.query?.enabled ?? true) &&
       submission !== null &&
       publicClient !== undefined &&
       (submission.strategy !== "atomic" || walletClient !== undefined),
     queryFn: async () => {
-      if (submission === null) throw "INVALID_SUBMISSION";
+      if (submission === null) return Promise.reject("INVALID_SUBMISSION");
 
       if (submission.strategy === "atomic") {
-        if (walletClient === undefined) throw "INVALID_SUBMISSION";
+        if (walletClient === undefined) return Promise.reject("INVALID_SUBMISSION");
         const status = await getContractCallsStatus(walletClient, {
           callsId: submission.callsId,
         });
@@ -113,7 +100,7 @@ export function useContractWritesStatus<selectData = ContractWritesStatus>(
         };
       }
 
-      if (publicClient === undefined) throw "INVALID_SUBMISSION";
+      if (publicClient === undefined) return Promise.reject("INVALID_SUBMISSION");
       const receiptResults = await Promise.all(
         submission.transactionHashes.map(async (transactionHash) => {
           try {
@@ -124,7 +111,7 @@ export function useContractWritesStatus<selectData = ContractWritesStatus>(
             if (error instanceof TransactionReceiptNotFoundError) {
               return null;
             }
-            throw "CONTRACT_RECEIPT_READ_FAILED";
+            return Promise.reject("CONTRACT_RECEIPT_READ_FAILED");
           }
         }),
       );
@@ -142,9 +129,7 @@ export function useContractWritesStatus<selectData = ContractWritesStatus>(
 
       return {
         receipts,
-        state: receipts.some(({ status }) => status === "reverted")
-          ? "FAILURE"
-          : "SUCCESS",
+        state: receipts.some(({ status }) => status === "reverted") ? "FAILURE" : "SUCCESS",
         strategy: submission.strategy,
         transactionHashes: submission.transactionHashes,
       };

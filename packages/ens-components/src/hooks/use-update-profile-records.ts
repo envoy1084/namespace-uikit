@@ -1,14 +1,13 @@
 "use client";
 
+import type { UseMutationOptions } from "@tanstack/react-query";
+
 import type {
   ExecuteContractWritesResult,
   PrepareProfileRecordsWriteError,
-  PrepareProfileRecordsWriteProps,
+  PrepareProfileRecordsWriteParameters,
   PreparedProfileRecordsWrite,
 } from "#/actions";
-
-import type { UseMutationOptions } from "@tanstack/react-query";
-
 import { prepareProfileRecordsWrite } from "#/actions";
 import {
   usePreparedContractWrite,
@@ -17,14 +16,10 @@ import {
 } from "#/hooks/use-prepared-contract-write";
 import { useEnsConfig } from "#/providers";
 
-export type UpdateProfileRecordsVariables = Omit<
-  PrepareProfileRecordsWriteProps,
-  "network"
-> &
+export type UpdateProfileRecordsVariables = Omit<PrepareProfileRecordsWriteParameters, "network"> &
   PreparedWriteVariables;
 
-export type UpdateProfileRecordsError =
-  PreparedWriteMutationError<PrepareProfileRecordsWriteError>;
+export type UpdateProfileRecordsError = PreparedWriteMutationError<PrepareProfileRecordsWriteError>;
 
 export interface UseUpdateProfileRecordsParameters {
   mutation?: Omit<
@@ -37,9 +32,7 @@ export interface UseUpdateProfileRecordsParameters {
   >;
 }
 
-export function useUpdateProfileRecords(
-  parameters: UseUpdateProfileRecordsParameters = {},
-) {
+export function useUpdateProfileRecords(parameters: UseUpdateProfileRecordsParameters = {}) {
   const { network } = useEnsConfig();
 
   return usePreparedContractWrite<
@@ -47,9 +40,7 @@ export function useUpdateProfileRecords(
     PreparedProfileRecordsWrite,
     PrepareProfileRecordsWriteError
   >({
-    ...(parameters.mutation === undefined
-      ? {}
-      : { mutation: parameters.mutation }),
+    ...(parameters.mutation === undefined ? {} : { mutation: parameters.mutation }),
     mutationKey: ["update-profile-records"],
     prepare: async (variables, publicClient) =>
       await prepareProfileRecordsWrite(publicClient, {

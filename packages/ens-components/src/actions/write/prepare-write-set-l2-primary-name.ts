@@ -1,16 +1,11 @@
+import { err, ok, type Result } from "neverthrow";
+import { encodeFunctionData, type Address, type ContractFunctionParameters } from "viem";
+
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
 import type { EnsNetwork } from "#/data";
-import type { ParseNameInputError } from "#/lib/parse-name-input";
-
-import { err, ok, type Result } from "neverthrow";
-import {
-  encodeFunctionData,
-  type Address,
-  type ContractFunctionParameters,
-} from "viem";
-
 import { l2ReverseRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";
 
 export type PrepareSetL2PrimaryNameWriteError =
@@ -18,7 +13,7 @@ export type PrepareSetL2PrimaryNameWriteError =
   | "INVALID_L2_REVERSE_REGISTRAR_ADDRESS"
   | ParseNameInputError;
 
-export interface PrepareSetL2PrimaryNameWriteProps {
+export interface PrepareSetL2PrimaryNameWriteParameters {
   /** Account whose primary name will be updated. */
   readonly account: Address;
   /** ENS name or `.eth` label to use as the primary name. */
@@ -36,7 +31,7 @@ type SetL2PrimaryNameRequest = ContractFunctionParameters<
   readonly [string]
 >;
 
-export interface PrepareSetL2PrimaryNameWriteMetadata {
+export interface SetL2PrimaryNameWriteMetadata {
   readonly name: string;
   readonly owner: Address;
 }
@@ -44,14 +39,14 @@ export interface PrepareSetL2PrimaryNameWriteMetadata {
 export type PreparedSetL2PrimaryNameWrite = PreparedContractWrite<
   SetL2PrimaryNameRequest,
   "set-l2-primary-name",
-  PrepareSetL2PrimaryNameWriteMetadata
+  SetL2PrimaryNameWriteMetadata
 >;
 
 /** Prepares an ENS v2 reverse-name update for the submitting account. */
 export function prepareSetL2PrimaryNameWrite(
-  props: PrepareSetL2PrimaryNameWriteProps,
+  parameters: PrepareSetL2PrimaryNameWriteParameters,
 ): Result<PreparedSetL2PrimaryNameWrite, PrepareSetL2PrimaryNameWriteError> {
-  const { account, input, l2ReverseRegistrarAddress } = props;
+  const { account, input, l2ReverseRegistrarAddress } = parameters;
 
   if (!isNonZeroAddress(account)) {
     return err("INVALID_ACCOUNT_ADDRESS");

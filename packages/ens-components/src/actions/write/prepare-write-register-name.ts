@@ -1,22 +1,16 @@
+import { err, ok, type Result } from "neverthrow";
+import { encodeFunctionData, type Address, type ContractFunctionParameters, type Hex } from "viem";
+
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
 import type { EnsNetwork } from "#/data";
-import type { ParseNameInputError } from "#/lib/parse-name-input";
-
-import { err, ok, type Result } from "neverthrow";
-import {
-  encodeFunctionData,
-  type Address,
-  type ContractFunctionParameters,
-  type Hex,
-} from "viem";
-
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import {
   makeNameCommitment,
   type MakeNameCommitmentError,
-  type MakeNameCommitmentProps,
+  type MakeNameCommitmentParameters,
 } from "#/lib/make-name-commitment";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 
 export type PrepareRegisterNameWriteError =
   | "INVALID_ACCOUNT_ADDRESS"
@@ -24,7 +18,7 @@ export type PrepareRegisterNameWriteError =
   | "INVALID_REGISTRAR_ADDRESS"
   | MakeNameCommitmentError;
 
-export interface PrepareRegisterNameWriteProps extends MakeNameCommitmentProps {
+export interface PrepareRegisterNameWriteParameters extends MakeNameCommitmentParameters {
   /** Account that pays for and submits the registration. */
   readonly account: Address;
   /** Network associated with the supplied contract addresses. */
@@ -42,23 +36,20 @@ type RegisterNameRequest = ContractFunctionParameters<
   readonly [string, Address, Hex, Address, Address, bigint, Address, Hex]
 >;
 
-export interface PrepareRegisterNameWriteMetadata {
+export interface RegisterNameWriteMetadata {
   readonly label: string;
 }
 
 export type PreparedRegisterNameWrite = PreparedContractWrite<
   RegisterNameRequest,
   "register-name",
-  PrepareRegisterNameWriteMetadata
+  RegisterNameWriteMetadata
 >;
 
 /** Validates and prepares the ENS v2 name registration write. */
 export function prepareRegisterNameWrite(
-  props: PrepareRegisterNameWriteProps,
-): Result<
-  PreparedRegisterNameWrite,
-  PrepareRegisterNameWriteError | ParseNameInputError
-> {
+  parameters: PrepareRegisterNameWriteParameters,
+): Result<PreparedRegisterNameWrite, PrepareRegisterNameWriteError | ParseNameInputError> {
   const {
     account,
     duration,
@@ -69,7 +60,7 @@ export function prepareRegisterNameWrite(
     resolverAddress,
     secret,
     subregistryAddress,
-  } = props;
+  } = parameters;
 
   if (!isNonZeroAddress(account)) {
     return err("INVALID_ACCOUNT_ADDRESS");
@@ -83,7 +74,7 @@ export function prepareRegisterNameWrite(
     return err("INVALID_PAYMENT_TOKEN_ADDRESS");
   }
 
-  const commitment = makeNameCommitment(props);
+  const commitment = makeNameCommitment(parameters);
 
   if (commitment.isErr()) return err(commitment.error);
 

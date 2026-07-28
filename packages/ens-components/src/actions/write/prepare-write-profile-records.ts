@@ -1,13 +1,5 @@
-import type { PreparedContractWrite } from "#/actions/write/contract-writes";
-import type { NameProfileRecordChange } from "#/components/name-profile-editor/types";
-import type { EnsNetwork } from "#/data";
-import type { ParseNameInputError } from "#/lib/parse-name-input";
-
 import { getCoderByCoinType } from "@ensdomains/address-encoder";
-import {
-  encode as encodeContentHash,
-  type Codec,
-} from "@ensdomains/content-hash";
+import { encode as encodeContentHash, type Codec } from "@ensdomains/content-hash";
 import { errAsync, ok, ResultAsync } from "neverthrow";
 import {
   encodeFunctionData,
@@ -21,8 +13,12 @@ import {
 } from "viem";
 import { namehash } from "viem/ens";
 
+import type { PreparedContractWrite } from "#/actions/write/contract-writes";
+import type { NameProfileRecordChange } from "#/components/name-profile-editor/types";
+import type { EnsNetwork } from "#/data";
 import { permissionedResolverAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";
 
 export type PrepareProfileRecordsWriteError =
@@ -33,7 +29,7 @@ export type PrepareProfileRecordsWriteError =
   | "PROFILE_UPDATE_SIMULATION_FAILED"
   | ParseNameInputError;
 
-export interface PrepareProfileRecordsWriteProps {
+export interface PrepareProfileRecordsWriteParameters {
   readonly account: Address;
   readonly changes: readonly NameProfileRecordChange[];
   readonly input: string | null | undefined;
@@ -48,7 +44,7 @@ type ProfileRecordsRequest = ContractFunctionParameters<
   readonly [Hex, readonly Hex[]]
 >;
 
-export interface PreparedProfileRecordsWriteMetadata {
+export interface ProfileRecordsWriteMetadata {
   readonly changes: readonly NameProfileRecordChange[];
   readonly name: string;
   readonly node: Hex;
@@ -58,7 +54,7 @@ export interface PreparedProfileRecordsWriteMetadata {
 export type PreparedProfileRecordsWrite = PreparedContractWrite<
   ProfileRecordsRequest,
   "update-profile-records",
-  PreparedProfileRecordsWriteMetadata
+  ProfileRecordsWriteMetadata
 >;
 
 function contenthashBytes(value: string | null): Hex {
@@ -94,11 +90,7 @@ function encodeProfileChange(node: Hex, change: NameProfileRecordChange): Hex {
     return encodeFunctionData({
       abi: permissionedResolverAbi,
       functionName: "setAddr",
-      args: [
-        node,
-        BigInt(change.coinType),
-        addressBytes(change.coinType, change.value),
-      ],
+      args: [node, BigInt(change.coinType), addressBytes(change.coinType, change.value)],
     });
   }
   if (change.type === "contenthash") {
@@ -119,11 +111,7 @@ function encodeProfileChange(node: Hex, change: NameProfileRecordChange): Hex {
     return encodeFunctionData({
       abi: permissionedResolverAbi,
       functionName: "setInterface",
-      args: [
-        node,
-        change.interfaceId as Hex,
-        (change.value ?? zeroAddress) as Address,
-      ],
+      args: [node, change.interfaceId as Hex, (change.value ?? zeroAddress) as Address],
     });
   }
   if (change.type === "name") {
@@ -137,11 +125,7 @@ function encodeProfileChange(node: Hex, change: NameProfileRecordChange): Hex {
     return encodeFunctionData({
       abi: permissionedResolverAbi,
       functionName: "setPubkey",
-      args: [
-        node,
-        (change.value?.x ?? zeroHash) as Hex,
-        (change.value?.y ?? zeroHash) as Hex,
-      ],
+      args: [node, (change.value?.x ?? zeroHash) as Hex, (change.value?.y ?? zeroHash) as Hex],
     });
   }
 
@@ -158,31 +142,31 @@ function encodeProfileChange(node: Hex, change: NameProfileRecordChange): Hex {
  */
 export function prepareProfileRecordsWrite(
   publicClient: PublicClient,
-  props: PrepareProfileRecordsWriteProps,
+  parameters: PrepareProfileRecordsWriteParameters,
 ): ResultAsync<PreparedProfileRecordsWrite, PrepareProfileRecordsWriteError> {
-  if (!isNonZeroAddress(props.account)) {
+  if (!isNonZeroAddress(parameters.account)) {
     return errAsync("INVALID_ACCOUNT_ADDRESS");
   }
-  if (!isNonZeroAddress(props.resolverAddress)) {
+  if (!isNonZeroAddress(parameters.resolverAddress)) {
     return errAsync("INVALID_RESOLVER_ADDRESS");
   }
-  if (props.changes.length === 0) {
+  if (parameters.changes.length === 0) {
     return errAsync("EMPTY_PROFILE_CHANGES");
   }
 
-  const parsed = parseNameInput(props.input);
+  const parsed = parseNameInput(parameters.input);
   if (parsed.isErr()) return errAsync(parsed.error);
 
   const node = namehash(parsed.value.normalizedName);
   let calls: readonly Hex[];
   try {
-    calls = props.changes.map((change) => encodeProfileChange(node, change));
+    calls = parameters.changes.map((change) => encodeProfileChange(node, change));
   } catch {
     return errAsync("INVALID_PROFILE_RECORDS");
   }
 
   const request = {
-    address: props.resolverAddress,
+    address: parameters.resolverAddress,
     abi: permissionedResolverAbi,
     functionName: "multicallWithNodeCheck",
     args: [node, calls],
@@ -190,24 +174,24 @@ export function prepareProfileRecordsWrite(
 
   return ResultAsync.fromPromise(
     publicClient.simulateContract({
-      account: props.account,
+      account: parameters.account,
       ...request,
     }),
     () => "PROFILE_UPDATE_SIMULATION_FAILED" as const,
   ).andThen(() =>
     ok({
-      account: props.account,
+      account: parameters.account,
       call: {
         data: encodeFunctionData(request),
-        to: props.resolverAddress,
+        to: parameters.resolverAddress,
         value: 0n,
       },
       kind: "update-profile-records" as const,
       metadata: {
-        changes: props.changes,
+        changes: parameters.changes,
         name: parsed.value.normalizedName,
         node,
-        resolverAddress: props.resolverAddress,
+        resolverAddress: parameters.resolverAddress,
       },
       request,
     }),

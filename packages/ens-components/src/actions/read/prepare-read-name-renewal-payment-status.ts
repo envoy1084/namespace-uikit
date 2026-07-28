@@ -1,30 +1,24 @@
-import type {
-  PreparedContractRead,
-  PreparedContractReadPlan,
-} from "#/actions/read/contract-reads";
+import { err, ok, type Result } from "neverthrow";
+import { erc20Abi, type Address, type ContractFunctionParameters } from "viem";
+
+import type { PreparedContractRead, PreparedContractReadPlan } from "#/actions/read/contract-reads";
 import type {
   NameRenewalPriceReadError,
   PreparedNameRenewalPriceRead,
   PrepareNameRenewalPriceReadError,
 } from "#/actions/read/prepare-read-name-renewal-price";
-import type { EnsNetwork } from "#/data";
-import type { ParseNameInputError } from "#/lib/parse-name-input";
-
-import { err, ok, type Result } from "neverthrow";
-import { erc20Abi, type Address, type ContractFunctionParameters } from "viem";
-
 import { prepareNameRenewalPriceRead } from "#/actions/read/prepare-read-name-renewal-price";
+import type { EnsNetwork } from "#/data";
 import { isNonZeroAddress } from "#/lib/helpers";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 
 export type PrepareNameRenewalPaymentStatusReadError =
   | "INVALID_ACCOUNT_ADDRESS"
   | PrepareNameRenewalPriceReadError;
 
-export type NameRenewalPaymentStatusReadError =
-  | "CONTRACT_READ_FAILED"
-  | NameRenewalPriceReadError;
+export type NameRenewalPaymentStatusReadError = "CONTRACT_READ_FAILED" | NameRenewalPriceReadError;
 
-export interface PrepareNameRenewalPaymentStatusReadProps {
+export interface PrepareNameRenewalPaymentStatusReadParameters {
   readonly account: Address;
   readonly duration: bigint;
   readonly ethRegistryAddress: Address;
@@ -88,16 +82,16 @@ export type PreparedNameRenewalPaymentStatusRead = PreparedContractReadPlan<
 >;
 
 export function prepareNameRenewalPaymentStatusRead(
-  props: PrepareNameRenewalPaymentStatusReadProps,
+  parameters: PrepareNameRenewalPaymentStatusReadParameters,
 ): Result<
   PreparedNameRenewalPaymentStatusRead,
   PrepareNameRenewalPaymentStatusReadError | ParseNameInputError
 > {
-  if (!isNonZeroAddress(props.account)) {
+  if (!isNonZeroAddress(parameters.account)) {
     return err("INVALID_ACCOUNT_ADDRESS");
   }
 
-  const price = prepareNameRenewalPriceRead(props);
+  const price = prepareNameRenewalPriceRead(parameters);
   if (price.isErr()) return err(price.error);
 
   const reads = [
@@ -105,28 +99,28 @@ export function prepareNameRenewalPaymentStatusRead(
     {
       kind: "payment-token-balance",
       metadata: {
-        account: props.account,
-        paymentTokenAddress: props.paymentTokenAddress,
+        account: parameters.account,
+        paymentTokenAddress: parameters.paymentTokenAddress,
       },
       request: {
-        address: props.paymentTokenAddress,
+        address: parameters.paymentTokenAddress,
         abi: erc20Abi,
         functionName: "balanceOf",
-        args: [props.account],
+        args: [parameters.account],
       },
     },
     {
       kind: "name-renewal-payment-allowance",
       metadata: {
-        account: props.account,
-        paymentTokenAddress: props.paymentTokenAddress,
-        registrarAddress: props.registrarAddress,
+        account: parameters.account,
+        paymentTokenAddress: parameters.paymentTokenAddress,
+        registrarAddress: parameters.registrarAddress,
       },
       request: {
-        address: props.paymentTokenAddress,
+        address: parameters.paymentTokenAddress,
         abi: erc20Abi,
         functionName: "allowance",
-        args: [props.account, props.registrarAddress],
+        args: [parameters.account, parameters.registrarAddress],
       },
     },
   ] as const satisfies RenewalPaymentStatusReads;
@@ -134,14 +128,7 @@ export function prepareNameRenewalPaymentStatusRead(
   return ok({
     kind: "name-renewal-payment-status",
     reads,
-    select: ([
-      renewable,
-      expiry,
-      priceResult,
-      decimals,
-      balance,
-      allowance,
-    ]) => {
+    select: ([renewable, expiry, priceResult, decimals, balance, allowance]) => {
       if (
         renewable.status === "failure" ||
         expiry.status === "failure" ||
@@ -159,10 +146,10 @@ export function prepareNameRenewalPaymentStatusRead(
         balance: balance.result,
         currentExpiry: expiry.result,
         decimals: decimals.result,
-        duration: props.duration,
+        duration: parameters.duration,
         hasSufficientAllowance: allowance.result >= priceResult.result,
         hasSufficientBalance: balance.result >= priceResult.result,
-        newExpiry: expiry.result + props.duration,
+        newExpiry: expiry.result + parameters.duration,
         total: priceResult.result,
       });
     },

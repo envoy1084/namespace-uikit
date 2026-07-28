@@ -1,26 +1,22 @@
 "use client";
 
+import type { UseMutationOptions } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+
 import type { Result } from "neverthrow";
+import { usePublicClient, useWalletClient } from "wagmi";
 
 import type {
   ExecuteContractWritesResult,
   ExecuteContractWritesError,
   PreparedContractWrite,
 } from "#/actions";
-
-import type { UseMutationOptions } from "@tanstack/react-query";
-import { useMutation } from "@tanstack/react-query";
-
-import { usePublicClient, useWalletClient } from "wagmi";
-
 import { executeContractWrites } from "#/actions";
 import { useEnsConfig } from "#/providers";
 
 export interface PreparedWriteExecutionOptions {
   readonly confirmation?: "confirmed" | "submitted";
-  readonly onProgress?: Parameters<
-    typeof executeContractWrites
-  >[2]["onProgress"];
+  readonly onProgress?: Parameters<typeof executeContractWrites>[2]["onProgress"];
   readonly strategy?: "atomic" | "auto" | "sequential" | "single";
   readonly timeout?: number;
 }
@@ -35,9 +31,7 @@ export type PreparedWriteMutationError<prepareError> =
   | ExecuteContractWritesError
   | prepareError;
 
-type AwaitableResult<value, error> =
-  | PromiseLike<Result<value, error>>
-  | Result<value, error>;
+type AwaitableResult<value, error> = PromiseLike<Result<value, error>> | Result<value, error>;
 
 interface UsePreparedContractWriteParameters<
   variables extends PreparedWriteVariables,
@@ -63,13 +57,7 @@ export function usePreparedContractWrite<
   variables extends PreparedWriteVariables,
   prepared extends PreparedContractWrite,
   prepareError,
->(
-  parameters: UsePreparedContractWriteParameters<
-    variables,
-    prepared,
-    prepareError
-  >,
-) {
+>(parameters: UsePreparedContractWriteParameters<variables, prepared, prepareError>) {
   const { chain, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
@@ -82,8 +70,8 @@ export function usePreparedContractWrite<
     ...parameters.mutation,
     mutationKey: ["ens", ...parameters.mutationKey, network, chain.id],
     mutationFn: async (variables) => {
-      if (publicClient === undefined) throw "PUBLIC_CLIENT_UNAVAILABLE";
-      if (walletClient === undefined) throw "WALLET_CLIENT_UNAVAILABLE";
+      if (publicClient === undefined) return Promise.reject("PUBLIC_CLIENT_UNAVAILABLE");
+      if (walletClient === undefined) return Promise.reject("WALLET_CLIENT_UNAVAILABLE");
 
       const prepared = await parameters.prepare(variables, publicClient);
       if (prepared.isErr()) throw prepared.error;
@@ -92,13 +80,9 @@ export function usePreparedContractWrite<
         calls: [prepared.value],
         chain,
         confirmation: execution?.confirmation ?? "confirmed",
-        ...(execution?.onProgress === undefined
-          ? {}
-          : { onProgress: execution.onProgress }),
+        ...(execution?.onProgress === undefined ? {} : { onProgress: execution.onProgress }),
         strategy: execution?.strategy ?? "single",
-        ...(execution?.timeout === undefined
-          ? {}
-          : { timeout: execution.timeout }),
+        ...(execution?.timeout === undefined ? {} : { timeout: execution.timeout }),
       });
       if (result.isErr()) throw result.error;
       return result.value;

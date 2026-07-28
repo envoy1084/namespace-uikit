@@ -1,26 +1,14 @@
-import type {
-  PreparedContractRead,
-  PreparedContractReadPlan,
-} from "#/actions/read/contract-reads";
-import type { EnsNetwork } from "#/data";
-
 import { err, ok, type Result } from "neverthrow";
-import {
-  isHex,
-  size,
-  type Address,
-  type ContractFunctionParameters,
-  type Hex,
-} from "viem";
+import { isHex, size, type Address, type ContractFunctionParameters, type Hex } from "viem";
 
+import type { PreparedContractRead, PreparedContractReadPlan } from "#/actions/read/contract-reads";
+import type { EnsNetwork } from "#/data";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 
-export type PrepareCommitmentStatusReadError =
-  | "INVALID_COMMITMENT"
-  | "INVALID_REGISTRAR_ADDRESS";
+export type PrepareCommitmentStatusReadError = "INVALID_COMMITMENT" | "INVALID_REGISTRAR_ADDRESS";
 
-export interface PrepareCommitmentStatusReadProps {
+export interface PrepareCommitmentStatusReadParameters {
   readonly commitment: Hex;
   readonly network: EnsNetwork;
   readonly registrarAddress: Address;
@@ -33,9 +21,8 @@ type CommitmentAtRequest = ContractFunctionParameters<
   readonly [Hex]
 >;
 
-type CommitmentAgeRequest<
-  TFunctionName extends "MAX_COMMITMENT_AGE" | "MIN_COMMITMENT_AGE",
-> = ContractFunctionParameters<typeof ethRegistrarAbi, "view", TFunctionName>;
+type CommitmentAgeRequest<TFunctionName extends "MAX_COMMITMENT_AGE" | "MIN_COMMITMENT_AGE"> =
+  ContractFunctionParameters<typeof ethRegistrarAbi, "view", TFunctionName>;
 
 type PreparedCommitmentAtRead = PreparedContractRead<
   CommitmentAtRequest,
@@ -77,12 +64,12 @@ export type PreparedCommitmentStatusRead = PreparedContractReadPlan<
 
 /** Validates and prepares the reads required to evaluate a commitment window. */
 export function prepareCommitmentStatusRead(
-  props: PrepareCommitmentStatusReadProps,
+  parameters: PrepareCommitmentStatusReadParameters,
 ): Result<PreparedCommitmentStatusRead, PrepareCommitmentStatusReadError> {
-  if (!isHex(props.commitment) || size(props.commitment) !== 32) {
+  if (!isHex(parameters.commitment) || size(parameters.commitment) !== 32) {
     return err("INVALID_COMMITMENT");
   }
-  if (!isNonZeroAddress(props.registrarAddress)) {
+  if (!isNonZeroAddress(parameters.registrarAddress)) {
     return err("INVALID_REGISTRAR_ADDRESS");
   }
 
@@ -91,19 +78,19 @@ export function prepareCommitmentStatusRead(
     reads: [
       {
         kind: "commitment-submitted-at",
-        metadata: { commitment: props.commitment },
+        metadata: { commitment: parameters.commitment },
         request: {
-          address: props.registrarAddress,
+          address: parameters.registrarAddress,
           abi: ethRegistrarAbi,
           functionName: "commitmentAt",
-          args: [props.commitment],
+          args: [parameters.commitment],
         },
       },
       {
         kind: "minimum-commitment-age",
         metadata: {},
         request: {
-          address: props.registrarAddress,
+          address: parameters.registrarAddress,
           abi: ethRegistrarAbi,
           functionName: "MIN_COMMITMENT_AGE",
         },
@@ -112,7 +99,7 @@ export function prepareCommitmentStatusRead(
         kind: "maximum-commitment-age",
         metadata: {},
         request: {
-          address: props.registrarAddress,
+          address: parameters.registrarAddress,
           abi: ethRegistrarAbi,
           functionName: "MAX_COMMITMENT_AGE",
         },

@@ -16,7 +16,7 @@ export type SupportsAtomicBatchCallsError =
   | "INVALID_ACCOUNT_ADDRESS"
   | "INVALID_CHAIN_ID";
 
-export interface SupportsAtomicBatchCallsProps {
+export interface SupportsAtomicBatchCallsParameters {
   /** Account whose wallet capabilities should be checked. */
   readonly account: Address;
   /** Chain on which atomic batch support is required. */
@@ -41,10 +41,10 @@ function isUnsupportedCapabilitiesMethod(error: unknown): boolean {
 
 async function requestAtomicBatchSupport(
   walletClient: WalletClient,
-  props: SupportsAtomicBatchCallsProps,
+  parameters: SupportsAtomicBatchCallsParameters,
 ): Promise<boolean> {
   try {
-    const capabilities = await getCapabilities(walletClient, props);
+    const capabilities = await getCapabilities(walletClient, parameters);
     const status = capabilities?.atomic?.status;
 
     return status === "ready" || status === "supported";
@@ -65,9 +65,9 @@ async function requestAtomicBatchSupport(
  */
 export function supportsAtomicBatchCalls(
   walletClient: WalletClient,
-  props: SupportsAtomicBatchCallsProps,
+  parameters: SupportsAtomicBatchCallsParameters,
 ): ResultAsync<boolean, SupportsAtomicBatchCallsError> {
-  const { account, chainId } = props;
+  const { account, chainId } = parameters;
 
   if (!isNonZeroAddress(account)) {
     return errAsync("INVALID_ACCOUNT_ADDRESS");
@@ -78,7 +78,7 @@ export function supportsAtomicBatchCalls(
   }
 
   return ResultAsync.fromPromise(
-    requestAtomicBatchSupport(walletClient, props),
+    requestAtomicBatchSupport(walletClient, parameters),
     () => "CAPABILITIES_REQUEST_FAILED" as const,
   );
 }

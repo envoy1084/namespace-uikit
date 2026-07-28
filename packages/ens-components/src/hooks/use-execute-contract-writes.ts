@@ -1,16 +1,15 @@
 "use client";
 
-import type {
-  ExecuteContractWritesProps,
-  ExecuteContractWritesResult,
-  ExecuteContractWritesError,
-} from "#/actions";
-
 import type { UseMutationOptions } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 
 import { usePublicClient, useWalletClient } from "wagmi";
 
+import type {
+  ExecuteContractWritesParameters,
+  ExecuteContractWritesResult,
+  ExecuteContractWritesError,
+} from "#/actions";
 import { executeContractWrites } from "#/actions";
 import { useEnsConfig } from "#/providers";
 
@@ -19,10 +18,7 @@ export type ExecuteContractWritesMutationError =
   | "WALLET_CLIENT_UNAVAILABLE"
   | ExecuteContractWritesError;
 
-export type ExecuteContractWritesVariables = Omit<
-  ExecuteContractWritesProps,
-  "chain"
->;
+export type ExecuteContractWritesVariables = Omit<ExecuteContractWritesParameters, "chain">;
 
 export type ExecuteContractWritesMutation = (
   variables: ExecuteContractWritesVariables,
@@ -43,9 +39,7 @@ export interface UseExecuteContractWritesParameters {
  * Executes arbitrary prepared ENS writes using the chain configured by
  * `EnsProvider`.
  */
-export function useExecuteContractWrites(
-  parameters: UseExecuteContractWritesParameters = {},
-) {
+export function useExecuteContractWrites(parameters: UseExecuteContractWritesParameters = {}) {
   const { chain, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
@@ -58,8 +52,8 @@ export function useExecuteContractWrites(
     ...parameters.mutation,
     mutationKey: ["ens", "execute-contract-writes", network, chain.id],
     mutationFn: async (variables) => {
-      if (publicClient === undefined) throw "PUBLIC_CLIENT_UNAVAILABLE";
-      if (walletClient === undefined) throw "WALLET_CLIENT_UNAVAILABLE";
+      if (publicClient === undefined) return Promise.reject("PUBLIC_CLIENT_UNAVAILABLE");
+      if (walletClient === undefined) return Promise.reject("WALLET_CLIENT_UNAVAILABLE");
 
       const result = await executeContractWrites(walletClient, publicClient, {
         ...variables,

@@ -1,6 +1,3 @@
-import type { PreparedContractWrite } from "#/actions/write/contract-writes";
-import type { EnsNetwork } from "#/data";
-
 import { errAsync, ok, ResultAsync } from "neverthrow";
 import {
   encodeFunctionData,
@@ -10,6 +7,8 @@ import {
   type PublicClient,
 } from "viem";
 
+import type { PreparedContractWrite } from "#/actions/write/contract-writes";
+import type { EnsNetwork } from "#/data";
 import { permissionedResolverAbi, verifiableFactoryAbi } from "#/data/abi";
 import { isBytes32, isNonZeroAddress } from "#/lib/helpers";
 
@@ -25,7 +24,7 @@ export type PreparePermissionedResolverDeploymentWriteError =
   | "INVALID_RESOLVER_ADDRESS"
   | "INVALID_SALT";
 
-export interface PreparePermissionedResolverDeploymentWriteProps {
+export interface PreparePermissionedResolverDeploymentWriteParameters {
   /** Account that will call the factory. This affects the proxy address. */
   readonly account: Address;
   /** ENS VerifiableFactory address. */
@@ -47,7 +46,7 @@ type PermissionedResolverDeploymentRequest = ContractFunctionParameters<
   readonly [Address, bigint, Hex]
 >;
 
-export interface PreparedPermissionedResolverDeploymentWriteMetadata {
+export interface PermissionedResolverDeploymentWriteMetadata {
   readonly initData: Hex;
   readonly resolverAddress: Address;
   readonly salt: Hex;
@@ -56,7 +55,7 @@ export interface PreparedPermissionedResolverDeploymentWriteMetadata {
 export type PreparedPermissionedResolverDeploymentWrite = PreparedContractWrite<
   PermissionedResolverDeploymentRequest,
   "deploy-permissioned-resolver",
-  PreparedPermissionedResolverDeploymentWriteMetadata
+  PermissionedResolverDeploymentWriteMetadata
 >;
 
 /**
@@ -65,12 +64,12 @@ export type PreparedPermissionedResolverDeploymentWrite = PreparedContractWrite<
  */
 export function preparePermissionedResolverDeploymentWrite(
   publicClient: PublicClient,
-  props: PreparePermissionedResolverDeploymentWriteProps,
+  parameters: PreparePermissionedResolverDeploymentWriteParameters,
 ): ResultAsync<
   PreparedPermissionedResolverDeploymentWrite,
   PreparePermissionedResolverDeploymentWriteError
 > {
-  const { account, factoryAddress, implementationAddress, owner, salt } = props;
+  const { account, factoryAddress, implementationAddress, owner, salt } = parameters;
 
   if (!isNonZeroAddress(account)) {
     return errAsync("INVALID_ACCOUNT_ADDRESS");

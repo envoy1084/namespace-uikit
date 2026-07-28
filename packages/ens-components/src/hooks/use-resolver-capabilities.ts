@@ -1,9 +1,8 @@
 "use client";
 
-import type { Address } from "viem";
-
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 
+import type { Address } from "viem";
 import { isAddress, zeroAddress } from "viem";
 import { usePublicClient } from "wagmi";
 
@@ -16,11 +15,7 @@ import {
 } from "#/actions";
 import { useEnsConfig } from "#/providers";
 
-export type ResolverCapabilityStatus =
-  | "NOT_DEPLOYED"
-  | "UNSUPPORTED"
-  | "UNVERIFIED"
-  | "VERIFIED";
+export type ResolverCapabilityStatus = "NOT_DEPLOYED" | "UNSUPPORTED" | "UNVERIFIED" | "VERIFIED";
 
 export interface ResolverCapabilities {
   readonly isDeployed: boolean;
@@ -45,9 +40,7 @@ export type ResolverCapabilitiesQueryKey = readonly [
   Address,
 ];
 
-export interface UseResolverCapabilitiesParameters<
-  selectData = ResolverCapabilities,
-> {
+export interface UseResolverCapabilitiesParameters<selectData = ResolverCapabilities> {
   factoryAddress?: Address;
   implementationAddress?: Address;
   query?: Omit<
@@ -68,13 +61,10 @@ export function useResolverCapabilities<selectData = ResolverCapabilities>(
   const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const resolverAddress = parameters.resolverAddress ?? zeroAddress;
-  const factoryAddress =
-    parameters.factoryAddress ?? contracts.verifiableFactory.address;
+  const factoryAddress = parameters.factoryAddress ?? contracts.verifiableFactory.address;
   const implementationAddress =
-    parameters.implementationAddress ??
-    contracts.permissionedResolverImplementation.address;
-  const isValidResolver =
-    isAddress(resolverAddress) && resolverAddress !== zeroAddress;
+    parameters.implementationAddress ?? contracts.permissionedResolverImplementation.address;
+  const isValidResolver = isAddress(resolverAddress) && resolverAddress !== zeroAddress;
 
   return useQuery<
     ResolverCapabilities,
@@ -91,20 +81,17 @@ export function useResolverCapabilities<selectData = ResolverCapabilities>(
       factoryAddress,
       implementationAddress,
     ],
-    enabled:
-      (parameters.query?.enabled ?? true) &&
-      publicClient !== undefined &&
-      isValidResolver,
+    enabled: (parameters.query?.enabled ?? true) && publicClient !== undefined && isValidResolver,
     queryFn: async () => {
       if (publicClient === undefined || !isValidResolver) {
-        throw "INVALID_RESOLVER_ADDRESS" satisfies ResolverCapabilitiesError;
+        return Promise.reject("INVALID_RESOLVER_ADDRESS" satisfies ResolverCapabilitiesError);
       }
 
       let bytecode: `0x${string}` | undefined;
       try {
         bytecode = await publicClient.getCode({ address: resolverAddress });
       } catch {
-        throw "CONTRACT_READ_FAILED" satisfies ResolverCapabilitiesError;
+        return Promise.reject("CONTRACT_READ_FAILED" satisfies ResolverCapabilitiesError);
       }
       if (bytecode === undefined || bytecode === "0x") {
         return {
@@ -134,7 +121,7 @@ export function useResolverCapabilities<selectData = ResolverCapabilities>(
         executeContractRead(publicClient, verificationRead.value),
       ]);
       if (support.isErr() || verification.isErr()) {
-        throw "CONTRACT_READ_FAILED" satisfies ResolverCapabilitiesError;
+        return Promise.reject("CONTRACT_READ_FAILED" satisfies ResolverCapabilitiesError);
       }
 
       const status = !support.value

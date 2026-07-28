@@ -1,9 +1,8 @@
 "use client";
 
-import type { Address } from "viem";
-
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 
+import type { Address } from "viem";
 import { usePublicClient } from "wagmi";
 
 import {
@@ -20,25 +19,12 @@ export type NameResolverError =
   | ParseNameInputError
   | PrepareNameResolverReadError;
 
-export type NameResolverQueryKey = readonly [
-  "ens",
-  "name-resolver",
-  string,
-  Address,
-  string,
-];
+export type NameResolverQueryKey = readonly ["ens", "name-resolver", string, Address, string];
 
-export interface UseNameResolverParameters<
-  selectData = NameResolverReadResult,
-> {
+export interface UseNameResolverParameters<selectData = NameResolverReadResult> {
   input: string | null | undefined;
   query?: Omit<
-    UseQueryOptions<
-      NameResolverReadResult,
-      NameResolverError,
-      selectData,
-      NameResolverQueryKey
-    >,
+    UseQueryOptions<NameResolverReadResult, NameResolverError, selectData, NameResolverQueryKey>,
     "queryFn" | "queryKey"
   >;
   universalResolverAddress?: Address;
@@ -50,16 +36,10 @@ export function useNameResolver<selectData = NameResolverReadResult>(
   const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const universalResolverAddress =
-    parameters.universalResolverAddress ??
-    contracts.universalResolverV2.address;
+    parameters.universalResolverAddress ?? contracts.universalResolverV2.address;
   const parsed = parseNameInput(parameters.input);
 
-  return useQuery<
-    NameResolverReadResult,
-    NameResolverError,
-    selectData,
-    NameResolverQueryKey
-  >({
+  return useQuery<NameResolverReadResult, NameResolverError, selectData, NameResolverQueryKey>({
     ...parameters.query,
     queryKey: [
       "ens",
@@ -68,13 +48,10 @@ export function useNameResolver<selectData = NameResolverReadResult>(
       universalResolverAddress,
       parsed.isOk() ? parsed.value.normalizedName : (parameters.input ?? ""),
     ],
-    enabled:
-      (parameters.query?.enabled ?? true) &&
-      publicClient !== undefined &&
-      parsed.isOk(),
+    enabled: (parameters.query?.enabled ?? true) && publicClient !== undefined && parsed.isOk(),
     queryFn: async () => {
       if (publicClient === undefined) {
-        throw "CONTRACT_READ_FAILED" satisfies NameResolverError;
+        return Promise.reject("CONTRACT_READ_FAILED" satisfies NameResolverError);
       }
 
       const prepared = prepareNameResolverRead({

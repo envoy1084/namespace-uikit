@@ -1,12 +1,3 @@
-import type {
-  ContractReadResults,
-  PreparedContractRead,
-  PreparedContractReadPlan,
-} from "#/actions/read/contract-reads";
-import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
-import type { EnsNetwork } from "#/data";
-import type { ParseNameInputError } from "#/lib/parse-name-input";
-
 import { err, ok, type Result } from "neverthrow";
 import {
   getAddress,
@@ -18,6 +9,11 @@ import {
 } from "viem";
 import { namehash } from "viem/ens";
 
+import type {
+  ContractReadResults,
+  PreparedContractRead,
+  PreparedContractReadPlan,
+} from "#/actions/read/contract-reads";
 import {
   decodeNameRecord,
   descriptorsForNameRecords,
@@ -28,8 +24,11 @@ import {
   type NameRecordSelection,
   type NormalizedNameRecordSelection,
 } from "#/actions/read/prepare-read-name-records-codecs";
+import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
+import type { EnsNetwork } from "#/data";
 import { universalResolverV2Abi } from "#/data/abi";
 import { encodeDnsName, isNonZeroAddress } from "#/lib/helpers";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";
 
 export type {
@@ -59,7 +58,7 @@ export type PrepareNameRecordsReadError =
   | "UNSUPPORTED_COIN_TYPE"
   | ParseNameInputError;
 
-export interface PrepareNameRecordsReadProps {
+export interface PrepareNameRecordsReadParameters {
   readonly input: string | null | undefined;
   readonly network: EnsNetwork;
   readonly records: NameRecordSelection;
@@ -82,30 +81,25 @@ type PreparedNameRecordRead = PreparedContractRead<
   }
 >;
 
-type NameRecordReadTuple = readonly [
-  PreparedNameRecordRead,
-  ...PreparedNameRecordRead[],
-];
+type NameRecordReadTuple = readonly [PreparedNameRecordRead, ...PreparedNameRecordRead[]];
 
 export type PreparedNameRecordsRead = PreparedContractReadPlan<
   NameRecordReadTuple,
   NameRecordsResult,
-  | "NAME_RECORD_DECODE_FAILED"
-  | "NAME_RECORD_READ_FAILED"
-  | "RESOLVER_NOT_FOUND",
+  "NAME_RECORD_DECODE_FAILED" | "NAME_RECORD_READ_FAILED" | "RESOLVER_NOT_FOUND",
   "name-records"
 >;
 
 /** Prepares canonical Universal Resolver reads for selected profile records. */
 export function prepareNameRecordsRead(
-  props: PrepareNameRecordsReadProps,
+  parameters: PrepareNameRecordsReadParameters,
 ): Result<PreparedNameRecordsRead, PrepareNameRecordsReadError> {
-  if (!isNonZeroAddress(props.universalResolverAddress)) {
+  if (!isNonZeroAddress(parameters.universalResolverAddress)) {
     return err("INVALID_UNIVERSAL_RESOLVER_ADDRESS");
   }
-  const parsed = parseNameInput(props.input);
+  const parsed = parseNameInput(parameters.input);
   if (parsed.isErr()) return err(parsed.error);
-  const selection = normalizeNameRecordSelection(props.records);
+  const selection = normalizeNameRecordSelection(parameters.records);
   if (selection.isErr()) return err(selection.error);
 
   const name = parsed.value.normalizedName;
@@ -116,7 +110,7 @@ export function prepareNameRecordsRead(
       kind: "name-record",
       metadata: { descriptor },
       request: {
-        address: props.universalResolverAddress,
+        address: parameters.universalResolverAddress,
         abi: universalResolverV2Abi,
         functionName: "resolve",
         args: [dnsName, encodeNameRecordCall(node, descriptor)],

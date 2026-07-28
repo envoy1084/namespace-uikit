@@ -2,14 +2,11 @@ import { err, ok, type Result } from "neverthrow";
 import { keccak256, toBytes, type Hex } from "viem";
 
 import { createRandomBytes32 } from "#/lib/helpers";
-import {
-  parseNameInput,
-  type ParseNameInputError,
-} from "#/lib/parse-name-input";
+import { parseNameInput, type ParseNameInputError } from "#/lib/parse-name-input";
 
 export type CreateResolverSaltError = "UNSUPPORTED_NAME";
 
-export interface CreateResolverSaltProps {
+export interface CreateResolverSaltParameters {
   /** Label or ENS name used to scope the random resolver salt. */
   readonly input: string | null | undefined;
 }
@@ -26,12 +23,9 @@ export interface CreateResolverSaltResult {
  * submitting a resolver deployment.
  */
 export function createResolverSalt(
-  props: CreateResolverSaltProps,
-): Result<
-  CreateResolverSaltResult,
-  CreateResolverSaltError | ParseNameInputError
-> {
-  const parsedInput = parseNameInput(props.input);
+  parameters: CreateResolverSaltParameters,
+): Result<CreateResolverSaltResult, CreateResolverSaltError | ParseNameInputError> {
+  const parsedInput = parseNameInput(parameters.input);
 
   if (parsedInput.isErr()) {
     return err(parsedInput.error);

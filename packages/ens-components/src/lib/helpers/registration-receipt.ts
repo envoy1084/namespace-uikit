@@ -1,13 +1,8 @@
-import {
-  isAddressEqual,
-  parseEventLogs,
-  type Address,
-  type TransactionReceipt,
-} from "viem";
+import { isAddressEqual, parseEventLogs, type Address, type TransactionReceipt } from "viem";
 
 import { ethRegistrarAbi } from "#/data/abi";
 
-export interface ParseRegistrationReceiptProps {
+export interface ParseRegistrationReceiptParameters {
   fallbackAmount: bigint;
   fallbackDuration: bigint;
   fallbackLabel: string;
@@ -28,15 +23,13 @@ export function parseRegistrationReceipt({
   fallbackLabel,
   receipt,
   registrarAddress,
-}: ParseRegistrationReceiptProps): ParsedRegistrationReceipt {
+}: ParseRegistrationReceiptParameters): ParsedRegistrationReceipt {
   const registrationEvent = (() => {
     try {
       return parseEventLogs({
         abi: ethRegistrarAbi,
         eventName: "NameRegistered",
-        logs: receipt.logs.filter((log) =>
-          isAddressEqual(log.address, registrarAddress),
-        ),
+        logs: receipt.logs.filter((log) => isAddressEqual(log.address, registrarAddress)),
         strict: true,
       })[0];
     } catch {
@@ -53,8 +46,6 @@ export function parseRegistrationReceipt({
     amount,
     duration,
     label: registrationEvent?.args.label ?? fallbackLabel,
-    ...(registrationEvent === undefined
-      ? {}
-      : { tokenId: registrationEvent.args.tokenId }),
+    ...(registrationEvent === undefined ? {} : { tokenId: registrationEvent.args.tokenId }),
   };
 }

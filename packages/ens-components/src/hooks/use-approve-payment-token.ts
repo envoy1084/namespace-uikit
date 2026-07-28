@@ -1,14 +1,13 @@
 "use client";
 
+import type { UseMutationOptions } from "@tanstack/react-query";
+
 import type {
   ExecuteContractWritesResult,
   PreparePaymentTokenApprovalWriteError,
-  PreparePaymentTokenApprovalWriteProps,
+  PreparePaymentTokenApprovalWriteParameters,
   PreparedPaymentTokenApprovalWrite,
 } from "#/actions";
-
-import type { UseMutationOptions } from "@tanstack/react-query";
-
 import { preparePaymentTokenApprovalWrite } from "#/actions";
 import {
   usePreparedContractWrite,
@@ -18,7 +17,7 @@ import {
 import { useEnsConfig } from "#/providers";
 
 export type ApprovePaymentTokenVariables = Omit<
-  PreparePaymentTokenApprovalWriteProps,
+  PreparePaymentTokenApprovalWriteParameters,
   "network"
 > &
   PreparedWriteVariables;
@@ -37,9 +36,7 @@ export interface UseApprovePaymentTokenParameters {
   >;
 }
 
-export function useApprovePaymentToken(
-  parameters: UseApprovePaymentTokenParameters = {},
-) {
+export function useApprovePaymentToken(parameters: UseApprovePaymentTokenParameters = {}) {
   const { network } = useEnsConfig();
 
   return usePreparedContractWrite<
@@ -47,9 +44,7 @@ export function useApprovePaymentToken(
     PreparedPaymentTokenApprovalWrite,
     PreparePaymentTokenApprovalWriteError
   >({
-    ...(parameters.mutation === undefined
-      ? {}
-      : { mutation: parameters.mutation }),
+    ...(parameters.mutation === undefined ? {} : { mutation: parameters.mutation }),
     mutationKey: ["approve-payment-token"],
     prepare: async (variables) =>
       preparePaymentTokenApprovalWrite({

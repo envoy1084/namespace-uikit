@@ -35,7 +35,7 @@ import {
   ChainCeloIcon,
   ChainCosmosIcon,
   ChainDogecoinIcon,
-  ChainEnsIcon,
+  EnsAddressIcon,
   ChainEthereumIcon,
   ChainFantomIcon,
   ChainFilecoinIcon,
@@ -81,14 +81,12 @@ import {
   SocialTiktokIcon,
   SocialXIcon,
   SocialYoutubeIcon,
-} from "#/components/icons";
+} from "#/icons/icon-components";
 
 /** SVG component returned by an ENS icon resolver. */
 export type EnsIconComponent = (props: SVGProps<SVGSVGElement>) => ReactElement;
 
-export type RecordIconComponent = EnsIconComponent;
-
-export type AddressIconIdentifier = bigint | number | string;
+export type CoinTypeIdentifier = bigint | number | string;
 
 export type EnsRecordIconType =
   | "abi"
@@ -102,9 +100,7 @@ export type EnsRecordIconType =
 
 function createUIKitIcon(icon: IconProps["icon"]): EnsIconComponent {
   return function UIKitRecordIcon(props) {
-    return (
-      <Icon aria-hidden icon={icon} {...(props as Omit<IconProps, "icon">)} />
-    );
+    return <Icon aria-hidden icon={icon} {...(props as Omit<IconProps, "icon">)} />;
   };
 }
 
@@ -144,7 +140,7 @@ const addressIcons: Readonly<Record<string, EnsIconComponent>> = {
   "3030": ChainHederaIcon,
   "9000": ChainAvalancheIcon,
   "9004": ChainStarknetIcon,
-  "2147483648": ChainEnsIcon,
+  "2147483648": EnsAddressIcon,
   "2147483649": ChainEthereumIcon,
   "2147483658": ChainOptimismIcon,
   "2147483704": ChainBnbIcon,
@@ -182,7 +178,7 @@ const addressIcons: Readonly<Record<string, EnsIconComponent>> = {
   doge: ChainDogecoinIcon,
   dogecoin: ChainDogecoinIcon,
   dot: ChainPolkadotIcon,
-  default: ChainEnsIcon,
+  default: EnsAddressIcon,
   eth: ChainEthereumIcon,
   ethereum: ChainEthereumIcon,
   fantom: ChainFantomIcon,
@@ -307,9 +303,7 @@ const typeIcons: Readonly<Record<EnsRecordIconType, EnsIconComponent>> = {
 
 function normalizeRecordName(name: unknown): string {
   return (
-    typeof name === "string" ||
-    typeof name === "number" ||
-    typeof name === "bigint"
+    typeof name === "string" || typeof name === "number" || typeof name === "bigint"
       ? String(name)
       : ""
   )
@@ -322,16 +316,14 @@ function normalizeRecordName(name: unknown): string {
  * Returns the icon component for a standard ENS coin type or common coin name.
  * Unknown coin types use the ENS address icon.
  */
-export function getAddressIcon(
-  coinType: AddressIconIdentifier,
-): EnsIconComponent {
-  return addressIcons[normalizeRecordName(coinType)] ?? ChainEnsIcon;
+export function getAddressIcon(coinType: CoinTypeIdentifier): EnsIconComponent {
+  return addressIcons[normalizeRecordName(coinType)] ?? EnsAddressIcon;
 }
 
 /**
  * Returns the icon component for a contenthash protocol or encoded URI.
  */
-export function getContentHashIcon(value: string): EnsIconComponent {
+export function getContenthashIcon(value: string): EnsIconComponent {
   const protocol = normalizeRecordName(
     (typeof value === "string" ? value : "").split(":")[0] ?? value,
   );
@@ -359,10 +351,7 @@ export function getTextRecordIcon(key: string): EnsIconComponent {
  * Known text-record keys, contenthash protocols, and coin names receive a
  * branded icon. Unknown records fall back to their resolver record type.
  */
-export function getRecordIcon(
-  name: string,
-  type: EnsRecordIconType,
-): EnsIconComponent {
+export function getRecordIcon(name: string, type: EnsRecordIconType): EnsIconComponent {
   const safeName = typeof name === "string" ? name : "";
   const normalizedName = normalizeRecordName(safeName);
 
@@ -371,7 +360,7 @@ export function getRecordIcon(
   }
 
   if (type === "contenthash") {
-    return getContentHashIcon(safeName);
+    return getContenthashIcon(safeName);
   }
 
   if (type === "text") {

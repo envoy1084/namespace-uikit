@@ -1,12 +1,3 @@
-import type {
-  ContractReadResults,
-  PreparedContractRead,
-  PreparedContractReadPlan,
-} from "#/actions/read/contract-reads";
-import type { NameProfileRecordType } from "#/components/name-profile-editor/types";
-import type { EnsNetwork } from "#/data";
-import type { ParseNameInputError } from "#/lib/parse-name-input";
-
 import { err, ok, type Result } from "neverthrow";
 import {
   encodeAbiParameters,
@@ -20,8 +11,16 @@ import {
 } from "viem";
 import { namehash } from "viem/ens";
 
+import type {
+  ContractReadResults,
+  PreparedContractRead,
+  PreparedContractReadPlan,
+} from "#/actions/read/contract-reads";
+import type { NameProfileRecordType } from "#/components/name-profile-editor/types";
+import type { EnsNetwork } from "#/data";
 import { permissionedResolverAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";
 
 const PROFILE_RECORD_ROLES: Readonly<Record<NameProfileRecordType, bigint>> = {
@@ -56,7 +55,7 @@ export type PrepareNameProfilePermissionsReadError =
   | "PROFILE_PERMISSION_READ_FAILED"
   | ParseNameInputError;
 
-export interface PrepareNameProfilePermissionsReadProps {
+export interface PrepareNameProfilePermissionsReadParameters {
   readonly account: Address;
   readonly input: string | null | undefined;
   readonly network: EnsNetwork;
@@ -80,10 +79,7 @@ type PreparedPermissionRead = PreparedContractRead<
   }
 >;
 
-type PermissionReadTuple = readonly [
-  PreparedPermissionRead,
-  ...PreparedPermissionRead[],
-];
+type PermissionReadTuple = readonly [PreparedPermissionRead, ...PreparedPermissionRead[]];
 
 export type PreparedNameProfilePermissionsRead = PreparedContractReadPlan<
   PermissionReadTuple,
@@ -95,18 +91,11 @@ export type PreparedNameProfilePermissionsRead = PreparedContractReadPlan<
 function profileResource(node: Hex, part: Hex): bigint {
   if (node === zeroHash && part === zeroHash) return 0n;
   return BigInt(
-    keccak256(
-      encodeAbiParameters(
-        [{ type: "bytes32" }, { type: "bytes32" }],
-        [node, part],
-      ),
-    ),
+    keccak256(encodeAbiParameters([{ type: "bytes32" }, { type: "bytes32" }], [node, part])),
   );
 }
 
-function permissionPart(
-  request: NameProfilePermissionRequest,
-): Hex | undefined {
+function permissionPart(request: NameProfilePermissionRequest): Hex | undefined {
   const key = request.key?.trim();
   if (key === undefined || key.length === 0) return undefined;
 
@@ -122,9 +111,7 @@ function permissionPart(
   return undefined;
 }
 
-export function getNameProfilePermissionId(
-  request: NameProfilePermissionRequest,
-): string {
+export function getNameProfilePermissionId(request: NameProfilePermissionRequest): string {
   const key = request.key?.trim();
   return `${request.type}:${key === undefined || key.length === 0 ? "*" : key}`;
 }
@@ -139,36 +126,28 @@ export function canEditNameProfileRecord(
 
 /** Prepares batched EAC reads for broad and fine-grained resolver permissions. */
 export function prepareNameProfilePermissionsRead(
-  props: PrepareNameProfilePermissionsReadProps,
-): Result<
-  PreparedNameProfilePermissionsRead,
-  PrepareNameProfilePermissionsReadError
-> {
-  if (!isNonZeroAddress(props.account)) {
+  parameters: PrepareNameProfilePermissionsReadParameters,
+): Result<PreparedNameProfilePermissionsRead, PrepareNameProfilePermissionsReadError> {
+  if (!isNonZeroAddress(parameters.account)) {
     return err("INVALID_ACCOUNT_ADDRESS");
   }
-  if (!isNonZeroAddress(props.resolverAddress)) {
+  if (!isNonZeroAddress(parameters.resolverAddress)) {
     return err("INVALID_RESOLVER_ADDRESS");
   }
-  if (props.requests.length === 0) {
+  if (parameters.requests.length === 0) {
     return err("EMPTY_PERMISSION_REQUESTS");
   }
 
-  const parsed = parseNameInput(props.input);
+  const parsed = parseNameInput(parameters.input);
   if (parsed.isErr()) return err(parsed.error);
 
   const node = namehash(parsed.value.normalizedName);
   const nameResource = profileResource(node, zeroHash);
   const normalizedRequests: NameProfilePermissionRequest[] = [];
 
-  for (const request of props.requests) {
+  for (const request of parameters.requests) {
     const key = request.key?.trim();
-    if (
-      key !== undefined &&
-      key.length > 0 &&
-      request.type === "address" &&
-      !/^\d+$/.test(key)
-    ) {
+    if (key !== undefined && key.length > 0 && request.type === "address" && !/^\d+$/.test(key)) {
       return err("INVALID_PERMISSION_KEY");
     }
     normalizedRequests.push({
@@ -187,10 +166,10 @@ export function prepareNameProfilePermissionsRead(
         kind: "name-profile-permission",
         metadata: { id },
         request: {
-          address: props.resolverAddress,
+          address: parameters.resolverAddress,
           abi: permissionedResolverAbi,
           functionName: "hasRoles",
-          args: [resource, role, props.account],
+          args: [resource, role, parameters.account],
         },
       });
     }
@@ -205,9 +184,7 @@ export function prepareNameProfilePermissionsRead(
 
     if (
       part !== undefined &&
-      (request.type === "address" ||
-        request.type === "data" ||
-        request.type === "text")
+      (request.type === "address" || request.type === "data" || request.type === "text")
     ) {
       readIds.push(
         addRead(profileResource(node, part), role),
@@ -236,16 +213,14 @@ export function prepareNameProfilePermissionsRead(
 
       const permissions: Record<string, boolean> = {};
       for (const [permissionId, readIds] of requestReadIds) {
-        permissions[permissionId] = readIds.some(
-          (readId) => values.get(readId) === true,
-        );
+        permissions[permissionId] = readIds.some((readId) => values.get(readId) === true);
       }
 
       return ok({
         name: parsed.value.normalizedName,
         node,
         permissions,
-        resolverAddress: props.resolverAddress,
+        resolverAddress: parameters.resolverAddress,
       });
     },
   });

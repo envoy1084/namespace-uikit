@@ -1,6 +1,9 @@
 "use client";
 
+import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
+
 import type { Address } from "viem";
+import { usePublicClient } from "wagmi";
 
 import type {
   NameProfileDiscoveryResult,
@@ -9,18 +12,13 @@ import type {
   PrepareNameProfileDiscoveryReadError,
   PrepareNameRecordsReadError,
 } from "#/actions";
-import type { ParseNameInputError } from "#/lib";
-
-import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
-
-import { usePublicClient } from "wagmi";
-
 import {
   executeContractReadsIndividually,
-  executeGraphqlRead,
+  executeGraphQLRead,
   prepareNameProfileDiscoveryRead,
   prepareNameRecordsRead,
 } from "#/actions";
+import type { ParseNameInputError } from "#/lib";
 import { parseNameInput } from "#/lib";
 import { useEnsConfig } from "#/providers";
 
@@ -57,12 +55,7 @@ export interface UseNameProfileParameters<selectData = NameProfileResult> {
   indexerUrl?: string;
   input: string | null | undefined;
   query?: Omit<
-    UseQueryOptions<
-      NameProfileResult,
-      NameProfileError,
-      selectData,
-      NameProfileQueryKey
-    >,
+    UseQueryOptions<NameProfileResult, NameProfileError, selectData, NameProfileQueryKey>,
     "queryFn" | "queryKey"
   >;
   universalResolverAddress?: Address;
@@ -78,10 +71,7 @@ function mergeRecords(
 ): NameRecordSelection {
   return {
     abi: unique([...discovery.abiContentTypes, ...(additional?.abi ?? [])]),
-    addresses: unique([
-      ...discovery.coinTypes,
-      ...(additional?.addresses ?? []),
-    ]),
+    addresses: unique([...discovery.coinTypes, ...(additional?.addresses ?? [])]),
     contenthash: additional?.contenthash ?? true,
     data: unique(additional?.data ?? []),
     interfaces: unique([
@@ -97,30 +87,19 @@ function mergeRecords(
 export function useNameProfile<selectData = NameProfileResult>(
   parameters: UseNameProfileParameters<selectData>,
 ) {
-  const {
-    chain,
-    contracts,
-    indexerUrl: configuredIndexerUrl,
-    network,
-  } = useEnsConfig();
+  const { chain, contracts, indexerUrl: configuredIndexerUrl, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const parsed = parseNameInput(parameters.input);
   const indexerUrl = parameters.indexerUrl ?? configuredIndexerUrl;
   const universalResolverAddress =
-    parameters.universalResolverAddress ??
-    contracts.universalResolverV2.address;
+    parameters.universalResolverAddress ?? contracts.universalResolverV2.address;
   const discoveryRead = prepareNameProfileDiscoveryRead({
     indexerUrl,
     input: parameters.input,
     network,
   });
 
-  return useQuery<
-    NameProfileResult,
-    NameProfileError,
-    selectData,
-    NameProfileQueryKey
-  >({
+  return useQuery<NameProfileResult, NameProfileError, selectData, NameProfileQueryKey>({
     ...parameters.query,
     queryKey: [
       "ens",
@@ -133,16 +112,14 @@ export function useNameProfile<selectData = NameProfileResult>(
       parameters.additionalRecords,
     ],
     enabled:
-      (parameters.query?.enabled ?? true) &&
-      publicClient !== undefined &&
-      discoveryRead.isOk(),
+      (parameters.query?.enabled ?? true) && publicClient !== undefined && discoveryRead.isOk(),
     queryFn: async ({ signal }) => {
       if (publicClient === undefined) {
-        throw "CONTRACT_READ_FAILED" satisfies NameProfileError;
+        return Promise.reject("CONTRACT_READ_FAILED" satisfies NameProfileError);
       }
       if (discoveryRead.isErr()) throw discoveryRead.error;
 
-      const discovery = await executeGraphqlRead(discoveryRead.value, {
+      const discovery = await executeGraphQLRead(discoveryRead.value, {
         signal,
       });
       if (discovery.isErr()) throw discovery.error;
@@ -150,18 +127,12 @@ export function useNameProfile<selectData = NameProfileResult>(
       const recordsRead = prepareNameRecordsRead({
         input: parameters.input,
         network,
-        records: mergeRecords(
-          discovery.value.records,
-          parameters.additionalRecords,
-        ),
+        records: mergeRecords(discovery.value.records, parameters.additionalRecords),
         universalResolverAddress,
       });
       if (recordsRead.isErr()) throw recordsRead.error;
 
-      const records = await executeContractReadsIndividually(
-        publicClient,
-        recordsRead.value,
-      );
+      const records = await executeContractReadsIndividually(publicClient, recordsRead.value);
       if (records.isErr()) throw records.error;
 
       return {

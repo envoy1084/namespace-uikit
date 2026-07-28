@@ -1,7 +1,3 @@
-import type { PreparedContractWrite } from "#/actions/write/contract-writes";
-import type { EnsNetwork } from "#/data";
-import type { ParseNameInputError } from "#/lib/parse-name-input";
-
 import { err, ok, type Result } from "neverthrow";
 import {
   encodeFunctionData,
@@ -12,8 +8,11 @@ import {
 } from "viem";
 import { namehash } from "viem/ens";
 
+import type { PreparedContractWrite } from "#/actions/write/contract-writes";
+import type { EnsNetwork } from "#/data";
 import { permissionedResolverAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";
 
 /** SLIP-44 coin type for Ethereum. */
@@ -25,7 +24,7 @@ export type PrepareSetAddressRecordWriteError =
   | "INVALID_RESOLVER_ADDRESS"
   | ParseNameInputError;
 
-export interface PrepareSetAddressRecordWriteProps {
+export interface PrepareSetAddressRecordWriteParameters {
   /** Account authorized to update the resolver. */
   readonly account: Address;
   /** ENS name or `.eth` label whose address record will be updated. */
@@ -45,7 +44,7 @@ type SetAddressRecordRequest = ContractFunctionParameters<
   readonly [Hex, bigint, Hex]
 >;
 
-export interface PrepareSetAddressRecordWriteMetadata {
+export interface SetAddressRecordWriteMetadata {
   readonly coinType: bigint;
   readonly name: string;
   readonly node: Hex;
@@ -55,14 +54,14 @@ export interface PrepareSetAddressRecordWriteMetadata {
 export type PreparedSetAddressRecordWrite = PreparedContractWrite<
   SetAddressRecordRequest,
   "set-address-record",
-  PrepareSetAddressRecordWriteMetadata
+  SetAddressRecordWriteMetadata
 >;
 
 /** Prepares the Ethereum forward address record required for L1 reverse verification. */
 export function prepareSetAddressRecordWrite(
-  props: PrepareSetAddressRecordWriteProps,
+  parameters: PrepareSetAddressRecordWriteParameters,
 ): Result<PreparedSetAddressRecordWrite, PrepareSetAddressRecordWriteError> {
-  const { account, input, owner, resolverAddress } = props;
+  const { account, input, owner, resolverAddress } = parameters;
 
   if (!isNonZeroAddress(account)) {
     return err("INVALID_ACCOUNT_ADDRESS");

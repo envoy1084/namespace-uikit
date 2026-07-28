@@ -1,14 +1,13 @@
 "use client";
 
+import type { UseMutationOptions } from "@tanstack/react-query";
+
 import type {
   ExecuteContractWritesResult,
   PreparePermissionedResolverDeploymentWriteError,
-  PreparePermissionedResolverDeploymentWriteProps,
+  PreparePermissionedResolverDeploymentWriteParameters,
   PreparedPermissionedResolverDeploymentWrite,
 } from "#/actions";
-
-import type { UseMutationOptions } from "@tanstack/react-query";
-
 import { preparePermissionedResolverDeploymentWrite } from "#/actions";
 import {
   usePreparedContractWrite,
@@ -18,7 +17,7 @@ import {
 import { useEnsConfig } from "#/providers";
 
 export type DeployPermissionedResolverVariables = Omit<
-  PreparePermissionedResolverDeploymentWriteProps,
+  PreparePermissionedResolverDeploymentWriteParameters,
   "factoryAddress" | "implementationAddress" | "network"
 > &
   PreparedWriteVariables;
@@ -27,8 +26,8 @@ export type DeployPermissionedResolverError =
   PreparedWriteMutationError<PreparePermissionedResolverDeploymentWriteError>;
 
 export interface UseDeployPermissionedResolverParameters {
-  factoryAddress?: PreparePermissionedResolverDeploymentWriteProps["factoryAddress"];
-  implementationAddress?: PreparePermissionedResolverDeploymentWriteProps["implementationAddress"];
+  factoryAddress?: PreparePermissionedResolverDeploymentWriteParameters["factoryAddress"];
+  implementationAddress?: PreparePermissionedResolverDeploymentWriteParameters["implementationAddress"];
   mutation?: Omit<
     UseMutationOptions<
       ExecuteContractWritesResult,
@@ -43,25 +42,17 @@ export function useDeployPermissionedResolver(
   parameters: UseDeployPermissionedResolverParameters = {},
 ) {
   const { contracts, network } = useEnsConfig();
-  const factoryAddress =
-    parameters.factoryAddress ?? contracts.verifiableFactory.address;
+  const factoryAddress = parameters.factoryAddress ?? contracts.verifiableFactory.address;
   const implementationAddress =
-    parameters.implementationAddress ??
-    contracts.permissionedResolverImplementation.address;
+    parameters.implementationAddress ?? contracts.permissionedResolverImplementation.address;
 
   return usePreparedContractWrite<
     DeployPermissionedResolverVariables,
     PreparedPermissionedResolverDeploymentWrite,
     PreparePermissionedResolverDeploymentWriteError
   >({
-    ...(parameters.mutation === undefined
-      ? {}
-      : { mutation: parameters.mutation }),
-    mutationKey: [
-      "deploy-permissioned-resolver",
-      factoryAddress,
-      implementationAddress,
-    ],
+    ...(parameters.mutation === undefined ? {} : { mutation: parameters.mutation }),
+    mutationKey: ["deploy-permissioned-resolver", factoryAddress, implementationAddress],
     prepare: async (variables, publicClient) =>
       await preparePermissionedResolverDeploymentWrite(publicClient, {
         ...variables,

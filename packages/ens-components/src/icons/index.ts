@@ -1,14 +1,13 @@
-export * from "#/components/icons";
+export * from "#/icons/icon-components";
 export {
   getAddressIcon,
-  getContentHashIcon,
+  getContenthashIcon,
   getRecordIcon,
   getSocialIcon,
   getTextRecordIcon,
 } from "#/icons/get-record-icon";
 export type {
-  AddressIconIdentifier,
+  CoinTypeIdentifier,
   EnsIconComponent,
   EnsRecordIconType,
-  RecordIconComponent,
 } from "#/icons/get-record-icon";

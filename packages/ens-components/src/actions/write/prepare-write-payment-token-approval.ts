@@ -1,14 +1,8 @@
+import { err, ok, type Result } from "neverthrow";
+import { encodeFunctionData, erc20Abi, type Address, type ContractFunctionParameters } from "viem";
+
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
 import type { EnsNetwork } from "#/data";
-
-import { err, ok, type Result } from "neverthrow";
-import {
-  encodeFunctionData,
-  erc20Abi,
-  type Address,
-  type ContractFunctionParameters,
-} from "viem";
-
 import { isNonZeroAddress } from "#/lib/helpers";
 
 export type PreparePaymentTokenApprovalWriteError =
@@ -17,7 +11,7 @@ export type PreparePaymentTokenApprovalWriteError =
   | "INVALID_PAYMENT_TOKEN_ADDRESS"
   | "INVALID_SPENDER_ADDRESS";
 
-export interface PreparePaymentTokenApprovalWriteProps {
+export interface PreparePaymentTokenApprovalWriteParameters {
   /** Account that owns the payment tokens. */
   readonly account: Address;
   /** Atomic token amount to approve. */
@@ -37,7 +31,7 @@ type PaymentTokenApprovalRequest = ContractFunctionParameters<
   readonly [Address, bigint]
 >;
 
-export interface PreparePaymentTokenApprovalWriteMetadata {
+export interface PaymentTokenApprovalWriteMetadata {
   readonly amount: bigint;
   readonly paymentTokenAddress: Address;
   readonly spenderAddress: Address;
@@ -46,17 +40,14 @@ export interface PreparePaymentTokenApprovalWriteMetadata {
 export type PreparedPaymentTokenApprovalWrite = PreparedContractWrite<
   PaymentTokenApprovalRequest,
   "approve-payment-token",
-  PreparePaymentTokenApprovalWriteMetadata
+  PaymentTokenApprovalWriteMetadata
 >;
 
 /** Validates and prepares an ERC-20 allowance write. */
 export function preparePaymentTokenApprovalWrite(
-  props: PreparePaymentTokenApprovalWriteProps,
-): Result<
-  PreparedPaymentTokenApprovalWrite,
-  PreparePaymentTokenApprovalWriteError
-> {
-  const { account, amount, paymentTokenAddress, spenderAddress } = props;
+  parameters: PreparePaymentTokenApprovalWriteParameters,
+): Result<PreparedPaymentTokenApprovalWrite, PreparePaymentTokenApprovalWriteError> {
+  const { account, amount, paymentTokenAddress, spenderAddress } = parameters;
   if (!isNonZeroAddress(account)) return err("INVALID_ACCOUNT_ADDRESS");
   if (!isNonZeroAddress(paymentTokenAddress)) {
     return err("INVALID_PAYMENT_TOKEN_ADDRESS");

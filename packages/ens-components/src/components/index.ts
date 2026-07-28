@@ -1,4 +1,4 @@
 export * from "#/components/name-profile-editor";
-export * from "#/components/register-name";
-export * from "#/components/renew-name";
+export * from "#/components/name-registration";
+export * from "#/components/name-renewal";
 export * from "#/components/transaction-progress";

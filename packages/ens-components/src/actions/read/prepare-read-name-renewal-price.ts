@@ -1,15 +1,11 @@
-import type {
-  PreparedContractRead,
-  PreparedContractReadPlan,
-} from "#/actions/read/contract-reads";
-import type { EnsNetwork } from "#/data";
-import type { ParseNameInputError } from "#/lib/parse-name-input";
-
 import { err, ok, type Result } from "neverthrow";
 import { erc20Abi, type Address, type ContractFunctionParameters } from "viem";
 
+import type { PreparedContractRead, PreparedContractReadPlan } from "#/actions/read/contract-reads";
+import type { EnsNetwork } from "#/data";
 import { ethRegistrarAbi, ethRegistryAbi } from "#/data/abi";
 import { isNonZeroAddress, isUint64Duration } from "#/lib/helpers";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";
 
 export type PrepareNameRenewalPriceReadError =
@@ -19,11 +15,9 @@ export type PrepareNameRenewalPriceReadError =
   | "INVALID_REGISTRAR_ADDRESS"
   | "UNSUPPORTED_NAME";
 
-export type NameRenewalPriceReadError =
-  | "CONTRACT_READ_FAILED"
-  | "NAME_NOT_RENEWABLE";
+export type NameRenewalPriceReadError = "CONTRACT_READ_FAILED" | "NAME_NOT_RENEWABLE";
 
-export interface PrepareNameRenewalPriceReadProps {
+export interface PrepareNameRenewalPriceReadParameters {
   /** Number of seconds added to the name's current expiry. */
   readonly duration: bigint;
   /** ENS v2 ETHRegistry address associated with the registrar. */
@@ -72,25 +66,11 @@ type RenewalPriceRequest = ContractFunctionParameters<
   readonly [string, bigint, Address]
 >;
 
-type TokenDecimalsRequest = ContractFunctionParameters<
-  typeof erc20Abi,
-  "view",
-  "decimals"
->;
+type TokenDecimalsRequest = ContractFunctionParameters<typeof erc20Abi, "view", "decimals">;
 
 type RenewalPriceReads = readonly [
-  PreparedContractRead<
-    RenewableRequest,
-    boolean,
-    "name-renewable",
-    { readonly label: string }
-  >,
-  PreparedContractRead<
-    ExpiryRequest,
-    bigint,
-    "name-expiry",
-    { readonly label: string }
-  >,
+  PreparedContractRead<RenewableRequest, boolean, "name-renewable", { readonly label: string }>,
+  PreparedContractRead<ExpiryRequest, bigint, "name-expiry", { readonly label: string }>,
   PreparedContractRead<
     RenewalPriceRequest,
     bigint,
@@ -117,17 +97,9 @@ export type PreparedNameRenewalPriceRead = PreparedContractReadPlan<
 >;
 
 export function prepareNameRenewalPriceRead(
-  props: PrepareNameRenewalPriceReadProps,
-): Result<
-  PreparedNameRenewalPriceRead,
-  PrepareNameRenewalPriceReadError | ParseNameInputError
-> {
-  const {
-    duration,
-    ethRegistryAddress,
-    paymentTokenAddress,
-    registrarAddress,
-  } = props;
+  parameters: PrepareNameRenewalPriceReadParameters,
+): Result<PreparedNameRenewalPriceRead, PrepareNameRenewalPriceReadError | ParseNameInputError> {
+  const { duration, ethRegistryAddress, paymentTokenAddress, registrarAddress } = parameters;
   if (!isUint64Duration(duration)) return err("INVALID_DURATION");
   if (!isNonZeroAddress(ethRegistryAddress)) {
     return err("INVALID_ETH_REGISTRY_ADDRESS");
@@ -139,7 +111,7 @@ export function prepareNameRenewalPriceRead(
     return err("INVALID_REGISTRAR_ADDRESS");
   }
 
-  const parsedInput = parseNameInput(props.input);
+  const parsedInput = parseNameInput(parameters.input);
   if (parsedInput.isErr()) return err(parsedInput.error);
   if (parsedInput.value.nameLevel !== 2 || parsedInput.value.tld !== "eth") {
     return err("UNSUPPORTED_NAME");

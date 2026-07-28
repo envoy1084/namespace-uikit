@@ -1,13 +1,8 @@
-import {
-  isAddressEqual,
-  parseEventLogs,
-  type Address,
-  type TransactionReceipt,
-} from "viem";
+import { isAddressEqual, parseEventLogs, type Address, type TransactionReceipt } from "viem";
 
 import { ethRegistrarAbi } from "#/data/abi";
 
-export interface ParseRenewalReceiptProps {
+export interface ParseRenewalReceiptParameters {
   fallbackAmount: bigint;
   fallbackCurrentExpiry: bigint;
   fallbackDuration: bigint;
@@ -31,15 +26,13 @@ export function parseRenewalReceipt({
   fallbackLabel,
   receipt,
   registrarAddress,
-}: ParseRenewalReceiptProps): ParsedRenewalReceipt {
+}: ParseRenewalReceiptParameters): ParsedRenewalReceipt {
   const renewalEvent = (() => {
     try {
       return parseEventLogs({
         abi: ethRegistrarAbi,
         eventName: "NameRenewed",
-        logs: receipt.logs.filter((log) =>
-          isAddressEqual(log.address, registrarAddress),
-        ),
+        logs: receipt.logs.filter((log) => isAddressEqual(log.address, registrarAddress)),
         strict: true,
       })[0];
     } catch {
@@ -51,10 +44,7 @@ export function parseRenewalReceipt({
     amount: renewalEvent?.args.amount ?? fallbackAmount,
     duration: renewalEvent?.args.duration ?? fallbackDuration,
     label: renewalEvent?.args.label ?? fallbackLabel,
-    newExpiry:
-      renewalEvent?.args.newExpiry ?? fallbackCurrentExpiry + fallbackDuration,
-    ...(renewalEvent === undefined
-      ? {}
-      : { tokenId: renewalEvent.args.tokenId }),
+    newExpiry: renewalEvent?.args.newExpiry ?? fallbackCurrentExpiry + fallbackDuration,
+    ...(renewalEvent === undefined ? {} : { tokenId: renewalEvent.args.tokenId }),
   };
 }

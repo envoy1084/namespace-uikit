@@ -1,22 +1,18 @@
-import type { PreparedContractRead } from "#/actions/read/contract-reads";
-import type { EnsNetwork } from "#/data";
-
 import { err, ok, type Result } from "neverthrow";
 import { type Address, type ContractFunctionParameters } from "viem";
 
+import type { PreparedContractRead } from "#/actions/read/contract-reads";
+import type { EnsNetwork } from "#/data";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
-import {
-  parseNameInput,
-  type ParseNameInputError,
-} from "#/lib/parse-name-input";
+import { parseNameInput, type ParseNameInputError } from "#/lib/parse-name-input";
 
 export type PrepareNameAvailabilityReadError =
   | "LABEL_TOO_SHORT"
   | "UNSUPPORTED_NAME"
   | "INVALID_REGISTRAR_ADDRESS";
 
-export interface PrepareNameAvailabilityReadProps {
+export interface PrepareNameAvailabilityReadParameters {
   /** Label or ENS name to normalize and check. */
   readonly input: string | null | undefined;
   /** Network associated with the supplied registrar address. */
@@ -48,12 +44,9 @@ export type PreparedNameAvailabilityRead = PreparedContractRead<
  * Validates a label or ENS name and prepares its availability read.
  */
 export function prepareNameAvailabilityRead(
-  props: PrepareNameAvailabilityReadProps,
-): Result<
-  PreparedNameAvailabilityRead,
-  PrepareNameAvailabilityReadError | ParseNameInputError
-> {
-  const { input, registrarAddress } = props;
+  parameters: PrepareNameAvailabilityReadParameters,
+): Result<PreparedNameAvailabilityRead, PrepareNameAvailabilityReadError | ParseNameInputError> {
+  const { input, registrarAddress } = parameters;
   const parsedInput = parseNameInput(input);
 
   if (parsedInput.isErr()) return err(parsedInput.error);

@@ -1,22 +1,17 @@
 "use client";
 
+import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
+
 import type { Address } from "viem";
+import { usePublicClient } from "wagmi";
 
 import type {
   NameRecordSelection,
   NameRecordsResult,
   PrepareNameRecordsReadError,
 } from "#/actions";
+import { executeContractReadsIndividually, prepareNameRecordsRead } from "#/actions";
 import type { ParseNameInputError } from "#/lib";
-
-import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
-
-import { usePublicClient } from "wagmi";
-
-import {
-  executeContractReadsIndividually,
-  prepareNameRecordsRead,
-} from "#/actions";
 import { parseNameInput } from "#/lib";
 import { useEnsConfig } from "#/providers";
 
@@ -38,12 +33,7 @@ export type NameRecordsQueryKey = readonly [
 export interface UseNameRecordsParameters<selectData = NameRecordsResult> {
   input: string | null | undefined;
   query?: Omit<
-    UseQueryOptions<
-      NameRecordsResult,
-      NameRecordsError,
-      selectData,
-      NameRecordsQueryKey
-    >,
+    UseQueryOptions<NameRecordsResult, NameRecordsError, selectData, NameRecordsQueryKey>,
     "queryFn" | "queryKey"
   >;
   records: NameRecordSelection;
@@ -56,8 +46,7 @@ export function useNameRecords<selectData = NameRecordsResult>(
   const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const universalResolverAddress =
-    parameters.universalResolverAddress ??
-    contracts.universalResolverV2.address;
+    parameters.universalResolverAddress ?? contracts.universalResolverV2.address;
   const parsed = parseNameInput(parameters.input);
   const prepared = prepareNameRecordsRead({
     input: parameters.input,
@@ -66,12 +55,7 @@ export function useNameRecords<selectData = NameRecordsResult>(
     universalResolverAddress,
   });
 
-  return useQuery<
-    NameRecordsResult,
-    NameRecordsError,
-    selectData,
-    NameRecordsQueryKey
-  >({
+  return useQuery<NameRecordsResult, NameRecordsError, selectData, NameRecordsQueryKey>({
     ...parameters.query,
     queryKey: [
       "ens",
@@ -82,20 +66,14 @@ export function useNameRecords<selectData = NameRecordsResult>(
       universalResolverAddress,
       parameters.records,
     ],
-    enabled:
-      (parameters.query?.enabled ?? true) &&
-      publicClient !== undefined &&
-      prepared.isOk(),
+    enabled: (parameters.query?.enabled ?? true) && publicClient !== undefined && prepared.isOk(),
     queryFn: async () => {
       if (publicClient === undefined) {
-        throw "CONTRACT_READ_FAILED" satisfies NameRecordsError;
+        return Promise.reject("CONTRACT_READ_FAILED" satisfies NameRecordsError);
       }
       if (prepared.isErr()) throw prepared.error;
 
-      const result = await executeContractReadsIndividually(
-        publicClient,
-        prepared.value,
-      );
+      const result = await executeContractReadsIndividually(publicClient, prepared.value);
       if (result.isErr()) throw result.error;
       return result.value;
     },

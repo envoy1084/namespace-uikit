@@ -1,28 +1,21 @@
 "use client";
 
-import type { Hex } from "viem";
-
-import type { ContractWriteProgress } from "#/actions";
-import type { NameProfileEditorMessages } from "#/components/name-profile-editor/customization";
-import type { NameProfileEditorEvents } from "#/components/name-profile-editor/events";
-import type { NameProfileEditorReview } from "#/components/name-profile-editor/types";
-
 import { useEffect, useRef, useState } from "react";
 
 import { err, ok } from "neverthrow";
+import type { Hex } from "viem";
 import { isAddressEqual } from "viem";
-import {
-  useConnection,
-  usePublicClient,
-  useSwitchChain,
-  useWalletClient,
-} from "wagmi";
+import { useConnection, usePublicClient, useSwitchChain, useWalletClient } from "wagmi";
 
+import type { ContractWriteProgress } from "#/actions";
+import type { NameProfileEditorMessages } from "#/components/name-profile-editor/customization";
 import { emitNameProfileEditorEvent } from "#/components/name-profile-editor/emit-event";
+import type { NameProfileEditorEvents } from "#/components/name-profile-editor/events";
 import {
   submitProfileUpdate,
   type ProfileUpdateSubmissionSuccess,
 } from "#/components/name-profile-editor/submission/profile-update-submission";
+import type { NameProfileEditorReview } from "#/components/name-profile-editor/types";
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
 import { useExecuteContractWrites, useNameResolver } from "#/hooks";
 import { delay } from "#/lib/helpers";
@@ -35,7 +28,7 @@ export type ProfileUpdateActionStatus =
   | "signing"
   | "switching";
 
-export interface UseProfileUpdateSubmissionProps {
+export interface UseProfileUpdateSubmissionParameters {
   events: NameProfileEditorEvents;
   messages: NameProfileEditorMessages;
   name: string;
@@ -49,7 +42,7 @@ export function useProfileUpdateSubmission({
   name,
   onPendingChange,
   onSuccess,
-}: UseProfileUpdateSubmissionProps) {
+}: UseProfileUpdateSubmissionParameters) {
   const connection = useConnection();
   const { chain, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
@@ -59,13 +52,11 @@ export function useProfileUpdateSubmission({
     input: name,
     query: {
       enabled: false,
-      retry: (failureCount, error) =>
-        error === "CONTRACT_READ_FAILED" && failureCount < 3,
+      retry: (failureCount, error) => error === "CONTRACT_READ_FAILED" && failureCount < 3,
     },
   });
   const { switchChainAsync } = useSwitchChain();
-  const [actionStatus, setActionStatus] =
-    useState<ProfileUpdateActionStatus>("idle");
+  const [actionStatus, setActionStatus] = useState<ProfileUpdateActionStatus>("idle");
   const [error, setError] = useState<unknown>();
   const [isTransactionConfirmed, setIsTransactionConfirmed] = useState(false);
   const [transactionHash, setTransactionHash] = useState<Hex>();
@@ -81,8 +72,7 @@ export function useProfileUpdateSubmission({
   };
   const isPending = actionStatus !== "idle";
   const isConfirming = actionStatus === "confirming";
-  const isWrongNetwork =
-    connection.chainId !== undefined && connection.chainId !== chain.id;
+  const isWrongNetwork = connection.chainId !== undefined && connection.chainId !== chain.id;
 
   useEffect(() => {
     onPendingChange?.(isPending);
@@ -98,9 +88,7 @@ export function useProfileUpdateSubmission({
   const reportError = (nextError: unknown) => {
     setError(nextError);
     emitNameProfileEditorEvent(events.onError, {
-      ...(connection.address === undefined
-        ? {}
-        : { account: connection.address }),
+      ...(connection.address === undefined ? {} : { account: connection.address }),
       chainId: chain.id,
       error: nextError,
       name,
@@ -132,10 +120,7 @@ export function useProfileUpdateSubmission({
     setIsTransactionConfirmed(progress.state === "confirmed");
   };
 
-  const handleUpdate = async (
-    review: NameProfileEditorReview,
-    resolverAddress: `0x${string}`,
-  ) => {
+  const handleUpdate = async (review: NameProfileEditorReview, resolverAddress: `0x${string}`) => {
     setError(undefined);
     setIsTransactionConfirmed(false);
     setTransactionHash(undefined);
@@ -165,10 +150,7 @@ export function useProfileUpdateSubmission({
     const submissionAccount = connection.address;
     const validateConnection = () => {
       const current = connectionRef.current;
-      if (
-        current.address === undefined ||
-        !isAddressEqual(current.address, submissionAccount)
-      ) {
+      if (current.address === undefined || !isAddressEqual(current.address, submissionAccount)) {
         return err("WALLET_ACCOUNT_CHANGED" as const);
       }
       if (current.chainId !== chain.id) {

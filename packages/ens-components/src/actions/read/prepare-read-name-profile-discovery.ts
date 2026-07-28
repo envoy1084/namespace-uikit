@@ -1,12 +1,10 @@
+import { err, ok, type Result } from "neverthrow";
 import type { Address, Hex } from "viem";
 
-import type { PreparedGraphqlRead } from "#/actions/read/graphql-reads";
+import type { PreparedGraphQLRead } from "#/actions/read/graphql-read";
+import { parseNameProfileDiscovery } from "#/actions/read/prepare-read-name-profile-discovery-parser";
 import type { EnsNetwork } from "#/data";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
-
-import { err, ok, type Result } from "neverthrow";
-
-import { parseNameProfileDiscovery } from "#/actions/read/prepare-read-name-profile-discovery-parser";
 import { parseNameInput } from "#/lib/parse-name-input";
 
 const NAME_PROFILE_DISCOVERY_QUERY = /* GraphQL */ `
@@ -141,13 +139,13 @@ export type PrepareNameProfileDiscoveryReadError =
   | "NAME_NOT_FOUND"
   | ParseNameInputError;
 
-export interface PrepareNameProfileDiscoveryReadProps {
+export interface PrepareNameProfileDiscoveryReadParameters {
   readonly indexerUrl: string;
   readonly input: string | null | undefined;
   readonly network: EnsNetwork;
 }
 
-export type PreparedNameProfileDiscoveryRead = PreparedGraphqlRead<
+export type PreparedNameProfileDiscoveryRead = PreparedGraphQLRead<
   NameProfileDiscoveryResult,
   "INVALID_INDEXER_RESPONSE" | "NAME_NOT_FOUND",
   "name-profile-discovery"
@@ -155,14 +153,11 @@ export type PreparedNameProfileDiscoveryRead = PreparedGraphqlRead<
 
 /** Prepares indexed ENS domain metadata and record-key discovery. */
 export function prepareNameProfileDiscoveryRead(
-  props: PrepareNameProfileDiscoveryReadProps,
-): Result<
-  PreparedNameProfileDiscoveryRead,
-  PrepareNameProfileDiscoveryReadError
-> {
+  parameters: PrepareNameProfileDiscoveryReadParameters,
+): Result<PreparedNameProfileDiscoveryRead, PrepareNameProfileDiscoveryReadError> {
   let url: URL;
   try {
-    url = new URL(props.indexerUrl);
+    url = new URL(parameters.indexerUrl);
   } catch {
     return err("INVALID_INDEXER_URL");
   }
@@ -170,7 +165,7 @@ export function prepareNameProfileDiscoveryRead(
     return err("INVALID_INDEXER_URL");
   }
 
-  const parsed = parseNameInput(props.input);
+  const parsed = parseNameInput(parameters.input);
   if (parsed.isErr()) return err(parsed.error);
 
   return ok({

@@ -1,15 +1,11 @@
 "use client";
 
-import type { Address } from "viem";
-
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 
+import type { Address } from "viem";
 import { useWalletClient } from "wagmi";
 
-import {
-  supportsAtomicBatchCalls,
-  type SupportsAtomicBatchCallsError,
-} from "#/actions";
+import { supportsAtomicBatchCalls, type SupportsAtomicBatchCallsError } from "#/actions";
 import { useEnsConfig } from "#/providers";
 
 export interface WalletCapabilities {
@@ -27,9 +23,7 @@ export type WalletCapabilitiesQueryKey = readonly [
   Address | null,
 ];
 
-export interface UseWalletCapabilitiesParameters<
-  selectData = WalletCapabilities,
-> {
+export interface UseWalletCapabilitiesParameters<selectData = WalletCapabilities> {
   account: Address | null | undefined;
   query?: Omit<
     UseQueryOptions<
@@ -57,13 +51,10 @@ export function useWalletCapabilities<selectData = WalletCapabilities>(
   >({
     ...parameters.query,
     queryKey: ["ens", "wallet-capabilities", network, chain.id, account],
-    enabled:
-      (parameters.query?.enabled ?? true) &&
-      walletClient !== undefined &&
-      account !== null,
+    enabled: (parameters.query?.enabled ?? true) && walletClient !== undefined && account !== null,
     queryFn: async () => {
       if (walletClient === undefined || account === null) {
-        throw "CAPABILITIES_REQUEST_FAILED" satisfies WalletCapabilitiesError;
+        return Promise.reject("CAPABILITIES_REQUEST_FAILED" satisfies WalletCapabilitiesError);
       }
 
       const result = await supportsAtomicBatchCalls(walletClient, {

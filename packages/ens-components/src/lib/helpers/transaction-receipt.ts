@@ -1,24 +1,21 @@
+import { err, ok, ResultAsync } from "neverthrow";
 import type { Hex, PublicClient, TransactionReceipt } from "viem";
 
-import { err, ok, ResultAsync } from "neverthrow";
+export type TransactionReceiptError = "TRANSACTION_CONFIRMATION_FAILED" | "TRANSACTION_REVERTED";
 
-export type TransactionReceiptError =
-  | "TRANSACTION_CONFIRMATION_FAILED"
-  | "TRANSACTION_REVERTED";
-
-export interface WaitForSuccessfulTransactionReceiptProps {
+export interface WaitForSuccessfulTransactionReceiptParameters {
   transactionHash: Hex;
   timeout?: number;
 }
 
 export function waitForSuccessfulTransactionReceipt(
   publicClient: PublicClient,
-  props: WaitForSuccessfulTransactionReceiptProps,
+  parameters: WaitForSuccessfulTransactionReceiptParameters,
 ): ResultAsync<TransactionReceipt, TransactionReceiptError> {
   return ResultAsync.fromPromise(
     publicClient.waitForTransactionReceipt({
-      hash: props.transactionHash,
-      ...(props.timeout === undefined ? {} : { timeout: props.timeout }),
+      hash: parameters.transactionHash,
+      ...(parameters.timeout === undefined ? {} : { timeout: parameters.timeout }),
     }),
     () => "TRANSACTION_CONFIRMATION_FAILED" as const,
   ).andThen((receipt) =>

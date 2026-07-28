@@ -1,10 +1,9 @@
 "use client";
 
-import type { Address } from "viem";
-
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 
 import { useDebounceValue } from "usehooks-ts";
+import type { Address } from "viem";
 import { usePublicClient } from "wagmi";
 
 import {
@@ -14,10 +13,7 @@ import {
   prepareNameRenewalPriceRead,
   type PrepareNameRenewalPriceReadError,
 } from "#/actions";
-import {
-  parseNameInput,
-  type ParseNameInputError,
-} from "#/lib/parse-name-input";
+import { parseNameInput, type ParseNameInputError } from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
 type NameRenewalPriceError =
@@ -43,12 +39,7 @@ export interface UseNameRenewalPriceParameters<selectData = NameRenewalPrice> {
   input: string | null | undefined;
   paymentTokenAddress?: Address;
   query?: Omit<
-    UseQueryOptions<
-      NameRenewalPrice,
-      NameRenewalPriceError,
-      selectData,
-      NameRenewalPriceQueryKey
-    >,
+    UseQueryOptions<NameRenewalPrice, NameRenewalPriceError, selectData, NameRenewalPriceQueryKey>,
     "queryFn" | "queryKey"
   >;
   registrarAddress?: Address;
@@ -63,22 +54,12 @@ export function useNameRenewalPrice<selectData = NameRenewalPrice>(
   const [debouncedInput] = useDebounceValue(input, 300);
   const parsedInput = parseNameInput(debouncedInput);
   const isValidInput =
-    parsedInput.isOk() &&
-    parsedInput.value.nameLevel === 2 &&
-    parsedInput.value.tld === "eth";
-  const registrarAddress =
-    parameters.registrarAddress ?? contracts.ethRegistrar.address;
-  const ethRegistryAddress =
-    parameters.ethRegistryAddress ?? contracts.ethRegistry.address;
-  const paymentTokenAddress =
-    parameters.paymentTokenAddress ?? contracts.paymentTokens[0].address;
+    parsedInput.isOk() && parsedInput.value.nameLevel === 2 && parsedInput.value.tld === "eth";
+  const registrarAddress = parameters.registrarAddress ?? contracts.ethRegistrar.address;
+  const ethRegistryAddress = parameters.ethRegistryAddress ?? contracts.ethRegistry.address;
+  const paymentTokenAddress = parameters.paymentTokenAddress ?? contracts.paymentTokens[0].address;
 
-  return useQuery<
-    NameRenewalPrice,
-    NameRenewalPriceError,
-    selectData,
-    NameRenewalPriceQueryKey
-  >({
+  return useQuery<NameRenewalPrice, NameRenewalPriceError, selectData, NameRenewalPriceQueryKey>({
     ...parameters.query,
     queryKey: [
       "ens",
@@ -90,13 +71,10 @@ export function useNameRenewalPrice<selectData = NameRenewalPrice>(
       parameters.duration.toString(),
       parsedInput.isOk() ? parsedInput.value.normalizedName : debouncedInput,
     ],
-    enabled:
-      (parameters.query?.enabled ?? true) &&
-      publicClient !== undefined &&
-      isValidInput,
+    enabled: (parameters.query?.enabled ?? true) && publicClient !== undefined && isValidInput,
     queryFn: async () => {
       if (publicClient === undefined) {
-        throw "CONTRACT_READ_FAILED" satisfies NameRenewalPriceError;
+        return Promise.reject("CONTRACT_READ_FAILED" satisfies NameRenewalPriceError);
       }
 
       const prepared = prepareNameRenewalPriceRead({

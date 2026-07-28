@@ -1,17 +1,13 @@
+import { err, ok, type Result } from "neverthrow";
 import type { Hex, PublicClient, TransactionReceipt } from "viem";
 
 import type { ContractWriteProgress } from "#/actions";
+import { prepareProfileRecordsWrite } from "#/actions";
 import type { NameProfileEditorReview } from "#/components/name-profile-editor/types";
 import type { EnsNetwork } from "#/data";
 import type { ExecuteContractWritesMutation } from "#/hooks";
 
-import { err, ok, type Result } from "neverthrow";
-
-import { prepareProfileRecordsWrite } from "#/actions";
-
-export type ProfileUpdateConnectionError =
-  | "WALLET_ACCOUNT_CHANGED"
-  | "WALLET_NETWORK_CHANGED";
+export type ProfileUpdateConnectionError = "WALLET_ACCOUNT_CHANGED" | "WALLET_NETWORK_CHANGED";
 
 export interface ProfileUpdateSubmissionSuccess {
   readonly receipt: TransactionReceipt;
@@ -20,25 +16,20 @@ export interface ProfileUpdateSubmissionSuccess {
   readonly transactionHash: Hex;
 }
 
-export interface SubmitProfileUpdateProps {
+export interface SubmitProfileUpdateParameters {
   readonly account: `0x${string}`;
   readonly executeWrites: ExecuteContractWritesMutation;
   readonly input: string;
   readonly network: EnsNetwork;
-  readonly onProgress?: (
-    progress: ContractWriteProgress,
-  ) => Promise<void> | void;
+  readonly onProgress?: (progress: ContractWriteProgress) => Promise<void> | void;
   readonly publicClient: PublicClient;
   readonly resolverAddress: `0x${string}`;
   readonly review: NameProfileEditorReview;
-  readonly validateConnection?: () => Result<
-    void,
-    ProfileUpdateConnectionError
-  >;
+  readonly validateConnection?: () => Result<void, ProfileUpdateConnectionError>;
 }
 
 export async function submitProfileUpdate(
-  props: SubmitProfileUpdateProps,
+  props: SubmitProfileUpdateParameters,
 ): Promise<Result<ProfileUpdateSubmissionSuccess, unknown>> {
   const initialConnection = props.validateConnection?.();
   if (initialConnection?.isErr()) return err(initialConnection.error);
@@ -63,9 +54,7 @@ export async function submitProfileUpdate(
     execution = await props.executeWrites({
       calls: [prepared.value],
       confirmation: "confirmed",
-      ...(props.onProgress === undefined
-        ? {}
-        : { onProgress: props.onProgress }),
+      ...(props.onProgress === undefined ? {} : { onProgress: props.onProgress }),
       strategy: "single",
       timeout: 120_000,
     });

@@ -1,11 +1,8 @@
 "use client";
 
-import type { Address } from "viem";
-
-import type { ParseNameInputError } from "#/lib/parse-name-input";
-
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 
+import type { Address } from "viem";
 import { usePublicClient } from "wagmi";
 
 import {
@@ -15,6 +12,7 @@ import {
   prepareNameRenewalPaymentStatusRead,
   type PrepareNameRenewalPaymentStatusReadError,
 } from "#/actions";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
 type NameRenewalPaymentStatusError =
@@ -35,9 +33,7 @@ type NameRenewalPaymentStatusQueryKey = readonly [
   string,
 ];
 
-export interface UseNameRenewalPaymentStatusParameters<
-  selectData = NameRenewalPaymentStatus,
-> {
+export interface UseNameRenewalPaymentStatusParameters<selectData = NameRenewalPaymentStatus> {
   account: Address | null | undefined;
   duration: bigint;
   ethRegistryAddress?: Address;
@@ -55,18 +51,15 @@ export interface UseNameRenewalPaymentStatusParameters<
   registrarAddress?: Address;
 }
 
-export function useNameRenewalPaymentStatus<
-  selectData = NameRenewalPaymentStatus,
->(parameters: UseNameRenewalPaymentStatusParameters<selectData>) {
+export function useNameRenewalPaymentStatus<selectData = NameRenewalPaymentStatus>(
+  parameters: UseNameRenewalPaymentStatusParameters<selectData>,
+) {
   const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const account = parameters.account ?? null;
-  const registrarAddress =
-    parameters.registrarAddress ?? contracts.ethRegistrar.address;
-  const ethRegistryAddress =
-    parameters.ethRegistryAddress ?? contracts.ethRegistry.address;
-  const paymentTokenAddress =
-    parameters.paymentTokenAddress ?? contracts.paymentTokens[0].address;
+  const registrarAddress = parameters.registrarAddress ?? contracts.ethRegistrar.address;
+  const ethRegistryAddress = parameters.ethRegistryAddress ?? contracts.ethRegistry.address;
+  const paymentTokenAddress = parameters.paymentTokenAddress ?? contracts.paymentTokens[0].address;
 
   return useQuery<
     NameRenewalPaymentStatus,
@@ -86,13 +79,10 @@ export function useNameRenewalPaymentStatus<
       parameters.duration.toString(),
       parameters.input ?? "",
     ],
-    enabled:
-      (parameters.query?.enabled ?? true) &&
-      publicClient !== undefined &&
-      account !== null,
+    enabled: (parameters.query?.enabled ?? true) && publicClient !== undefined && account !== null,
     queryFn: async () => {
       if (publicClient === undefined || account === null) {
-        throw "CONTRACT_READ_FAILED" satisfies NameRenewalPaymentStatusError;
+        return Promise.reject("CONTRACT_READ_FAILED" satisfies NameRenewalPaymentStatusError);
       }
 
       const prepared = prepareNameRenewalPaymentStatusRead({

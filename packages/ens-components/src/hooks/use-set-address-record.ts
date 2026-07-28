@@ -1,14 +1,13 @@
 "use client";
 
+import type { UseMutationOptions } from "@tanstack/react-query";
+
 import type {
   ExecuteContractWritesResult,
   PrepareSetAddressRecordWriteError,
-  PrepareSetAddressRecordWriteProps,
+  PrepareSetAddressRecordWriteParameters,
   PreparedSetAddressRecordWrite,
 } from "#/actions";
-
-import type { UseMutationOptions } from "@tanstack/react-query";
-
 import { prepareSetAddressRecordWrite } from "#/actions";
 import {
   usePreparedContractWrite,
@@ -17,14 +16,10 @@ import {
 } from "#/hooks/use-prepared-contract-write";
 import { useEnsConfig } from "#/providers";
 
-export type SetAddressRecordVariables = Omit<
-  PrepareSetAddressRecordWriteProps,
-  "network"
-> &
+export type SetAddressRecordVariables = Omit<PrepareSetAddressRecordWriteParameters, "network"> &
   PreparedWriteVariables;
 
-export type SetAddressRecordError =
-  PreparedWriteMutationError<PrepareSetAddressRecordWriteError>;
+export type SetAddressRecordError = PreparedWriteMutationError<PrepareSetAddressRecordWriteError>;
 
 export interface UseSetAddressRecordParameters {
   mutation?: Omit<
@@ -37,9 +32,7 @@ export interface UseSetAddressRecordParameters {
   >;
 }
 
-export function useSetAddressRecord(
-  parameters: UseSetAddressRecordParameters = {},
-) {
+export function useSetAddressRecord(parameters: UseSetAddressRecordParameters = {}) {
   const { network } = useEnsConfig();
 
   return usePreparedContractWrite<
@@ -47,9 +40,7 @@ export function useSetAddressRecord(
     PreparedSetAddressRecordWrite,
     PrepareSetAddressRecordWriteError
   >({
-    ...(parameters.mutation === undefined
-      ? {}
-      : { mutation: parameters.mutation }),
+    ...(parameters.mutation === undefined ? {} : { mutation: parameters.mutation }),
     mutationKey: ["set-address-record"],
     prepare: async (variables) =>
       prepareSetAddressRecordWrite({

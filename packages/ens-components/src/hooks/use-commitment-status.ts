@@ -1,9 +1,8 @@
 "use client";
 
-import type { Address, Hex } from "viem";
-
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 
+import type { Address, Hex } from "viem";
 import { isHex, size } from "viem";
 import { usePublicClient } from "wagmi";
 
@@ -25,9 +24,7 @@ export interface CommitmentStatus {
   readonly validUntil: bigint;
 }
 
-export type CommitmentStatusError =
-  | "CONTRACT_READ_FAILED"
-  | PrepareCommitmentStatusReadError;
+export type CommitmentStatusError = "CONTRACT_READ_FAILED" | PrepareCommitmentStatusReadError;
 
 export type CommitmentStatusQueryKey = readonly [
   "ens",
@@ -40,12 +37,7 @@ export type CommitmentStatusQueryKey = readonly [
 export interface UseCommitmentStatusParameters<selectData = CommitmentStatus> {
   commitment: Hex | null | undefined;
   query?: Omit<
-    UseQueryOptions<
-      CommitmentStatus,
-      CommitmentStatusError,
-      selectData,
-      CommitmentStatusQueryKey
-    >,
+    UseQueryOptions<CommitmentStatus, CommitmentStatusError, selectData, CommitmentStatusQueryKey>,
     "queryFn" | "queryKey"
   >;
   registrarAddress?: Address;
@@ -100,32 +92,16 @@ export function useCommitmentStatus<selectData = CommitmentStatus>(
   const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const commitment = parameters.commitment ?? null;
-  const registrarAddress =
-    parameters.registrarAddress ?? contracts.ethRegistrar.address;
-  const isValidCommitment =
-    commitment !== null && isHex(commitment) && size(commitment) === 32;
+  const registrarAddress = parameters.registrarAddress ?? contracts.ethRegistrar.address;
+  const isValidCommitment = commitment !== null && isHex(commitment) && size(commitment) === 32;
 
-  return useQuery<
-    CommitmentStatus,
-    CommitmentStatusError,
-    selectData,
-    CommitmentStatusQueryKey
-  >({
+  return useQuery<CommitmentStatus, CommitmentStatusError, selectData, CommitmentStatusQueryKey>({
     ...parameters.query,
-    queryKey: [
-      "ens",
-      "commitment-status",
-      network,
-      registrarAddress,
-      commitment,
-    ],
-    enabled:
-      (parameters.query?.enabled ?? true) &&
-      publicClient !== undefined &&
-      isValidCommitment,
+    queryKey: ["ens", "commitment-status", network, registrarAddress, commitment],
+    enabled: (parameters.query?.enabled ?? true) && publicClient !== undefined && isValidCommitment,
     queryFn: async () => {
       if (publicClient === undefined || commitment === null) {
-        throw "CONTRACT_READ_FAILED" satisfies CommitmentStatusError;
+        return Promise.reject("CONTRACT_READ_FAILED" satisfies CommitmentStatusError);
       }
 
       const prepared = prepareCommitmentStatusRead({
@@ -140,7 +116,7 @@ export function useCommitmentStatus<selectData = CommitmentStatus>(
         publicClient.getBlock().catch(() => undefined),
       ]);
       if (timing.isErr() || block === undefined) {
-        throw "CONTRACT_READ_FAILED" satisfies CommitmentStatusError;
+        return Promise.reject("CONTRACT_READ_FAILED" satisfies CommitmentStatusError);
       }
 
       return selectCommitmentStatus(block.timestamp, timing.value);

@@ -1,17 +1,11 @@
+import { err, ok, type Result } from "neverthrow";
+import { encodeFunctionData, type Address, type ContractFunctionParameters, type Hex } from "viem";
+
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
 import type { EnsNetwork } from "#/data";
-import type { ParseNameInputError } from "#/lib/parse-name-input";
-
-import { err, ok, type Result } from "neverthrow";
-import {
-  encodeFunctionData,
-  type Address,
-  type ContractFunctionParameters,
-  type Hex,
-} from "viem";
-
 import { ethRegistrarAbi } from "#/data/abi";
 import { isBytes32, isNonZeroAddress, isUint64Duration } from "#/lib/helpers";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";
 
 export type PrepareRenewNameWriteError =
@@ -22,7 +16,7 @@ export type PrepareRenewNameWriteError =
   | "INVALID_REGISTRAR_ADDRESS"
   | "UNSUPPORTED_NAME";
 
-export interface PrepareRenewNameWriteProps {
+export interface PrepareRenewNameWriteParameters {
   /** Account paying for and submitting the renewal. */
   readonly account: Address;
   /** Number of seconds added to the current expiry. */
@@ -46,7 +40,7 @@ type RenewNameRequest = ContractFunctionParameters<
   readonly [string, bigint, Address, Hex]
 >;
 
-export interface PrepareRenewNameWriteMetadata {
+export interface RenewNameWriteMetadata {
   readonly duration: bigint;
   readonly label: string;
   readonly paymentTokenAddress: Address;
@@ -56,17 +50,13 @@ export interface PrepareRenewNameWriteMetadata {
 export type PreparedRenewNameWrite = PreparedContractWrite<
   RenewNameRequest,
   "renew-name",
-  PrepareRenewNameWriteMetadata
+  RenewNameWriteMetadata
 >;
 
 export function prepareRenewNameWrite(
-  props: PrepareRenewNameWriteProps,
-): Result<
-  PreparedRenewNameWrite,
-  PrepareRenewNameWriteError | ParseNameInputError
-> {
-  const { account, duration, paymentTokenAddress, referrer, registrarAddress } =
-    props;
+  parameters: PrepareRenewNameWriteParameters,
+): Result<PreparedRenewNameWrite, PrepareRenewNameWriteError | ParseNameInputError> {
+  const { account, duration, paymentTokenAddress, referrer, registrarAddress } = parameters;
   if (!isNonZeroAddress(account)) return err("INVALID_ACCOUNT_ADDRESS");
   if (!isUint64Duration(duration)) return err("INVALID_DURATION");
   if (!isNonZeroAddress(paymentTokenAddress)) {
@@ -77,7 +67,7 @@ export function prepareRenewNameWrite(
   }
   if (!isBytes32(referrer)) return err("INVALID_REFERRER");
 
-  const parsedInput = parseNameInput(props.input);
+  const parsedInput = parseNameInput(parameters.input);
   if (parsedInput.isErr()) return err(parsedInput.error);
   if (parsedInput.value.nameLevel !== 2 || parsedInput.value.tld !== "eth") {
     return err("UNSUPPORTED_NAME");

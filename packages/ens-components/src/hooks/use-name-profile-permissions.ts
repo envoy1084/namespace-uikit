@@ -1,6 +1,10 @@
 "use client";
 
+import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
+
 import type { Address } from "viem";
+import { isAddress, zeroAddress } from "viem";
+import { usePublicClient } from "wagmi";
 
 import type {
   NameProfilePermissionRequest,
@@ -9,13 +13,6 @@ import type {
   PrepareNameResolverReadError,
   PreparePermissionedResolverSupportReadError,
 } from "#/actions";
-import type { ParseNameInputError } from "#/lib/parse-name-input";
-
-import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
-
-import { isAddress, zeroAddress } from "viem";
-import { usePublicClient } from "wagmi";
-
 import {
   executeContractRead,
   executeContractReads,
@@ -24,6 +21,7 @@ import {
   prepareNameResolverRead,
   preparePermissionedResolverSupportRead,
 } from "#/actions";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
@@ -47,9 +45,7 @@ type NameProfilePermissionsQueryKey = readonly [
   readonly string[],
 ];
 
-export interface UseNameProfilePermissionsParameters<
-  selectData = NameProfilePermissions,
-> {
+export interface UseNameProfilePermissionsParameters<selectData = NameProfilePermissions> {
   account?: Address | undefined;
   input: string | null | undefined;
   query?: Omit<
@@ -74,8 +70,7 @@ export function useNameProfilePermissions<selectData = NameProfilePermissions>(
   const requestIds = parameters.requests.map(getNameProfilePermissionId);
   const isValidResolver =
     parameters.resolverAddress === undefined ||
-    (isAddress(parameters.resolverAddress) &&
-      parameters.resolverAddress !== zeroAddress);
+    (isAddress(parameters.resolverAddress) && parameters.resolverAddress !== zeroAddress);
 
   return useQuery<
     NameProfilePermissions,
@@ -103,7 +98,7 @@ export function useNameProfilePermissions<selectData = NameProfilePermissions>(
       parameters.requests.length > 0,
     queryFn: async () => {
       if (publicClient === undefined || parameters.account === undefined) {
-        throw "CONTRACT_READ_FAILED" satisfies NameProfilePermissionsError;
+        return Promise.reject("CONTRACT_READ_FAILED" satisfies NameProfilePermissionsError);
       }
 
       let resolverAddress = parameters.resolverAddress;
@@ -115,16 +110,13 @@ export function useNameProfilePermissions<selectData = NameProfilePermissions>(
         });
         if (resolverRead.isErr()) throw resolverRead.error;
 
-        const resolverResult = await executeContractRead(
-          publicClient,
-          resolverRead.value,
-        );
+        const resolverResult = await executeContractRead(publicClient, resolverRead.value);
         if (resolverResult.isErr()) throw resolverResult.error;
         resolverAddress = resolverResult.value[0];
       }
 
       if (resolverAddress === zeroAddress) {
-        throw "RESOLVER_NOT_FOUND" satisfies NameProfilePermissionsError;
+        return Promise.reject("RESOLVER_NOT_FOUND" satisfies NameProfilePermissionsError);
       }
 
       const supportRead = preparePermissionedResolverSupportRead({
@@ -132,13 +124,10 @@ export function useNameProfilePermissions<selectData = NameProfilePermissions>(
         resolverAddress,
       });
       if (supportRead.isErr()) throw supportRead.error;
-      const support = await executeContractRead(
-        publicClient,
-        supportRead.value,
-      );
+      const support = await executeContractRead(publicClient, supportRead.value);
       if (support.isErr()) throw support.error;
       if (!support.value) {
-        throw "UNSUPPORTED_RESOLVER" satisfies NameProfilePermissionsError;
+        return Promise.reject("UNSUPPORTED_RESOLVER" satisfies NameProfilePermissionsError);
       }
 
       const permissionRead = prepareNameProfilePermissionsRead({
@@ -150,10 +139,7 @@ export function useNameProfilePermissions<selectData = NameProfilePermissions>(
       });
       if (permissionRead.isErr()) throw permissionRead.error;
 
-      const permissions = await executeContractReads(
-        publicClient,
-        permissionRead.value,
-      );
+      const permissions = await executeContractReads(publicClient, permissionRead.value);
       if (permissions.isErr()) throw permissions.error;
       return permissions.value;
     },

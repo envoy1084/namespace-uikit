@@ -1,19 +1,18 @@
-import type { PreparedContractRead } from "#/actions/read/contract-reads";
-import type { EnsNetwork } from "#/data";
-import type { ParseNameInputError } from "#/lib/parse-name-input";
-
 import { err, ok, type Result } from "neverthrow";
 import { type Address, type ContractFunctionParameters, type Hex } from "viem";
 
+import type { PreparedContractRead } from "#/actions/read/contract-reads";
+import type { EnsNetwork } from "#/data";
 import { universalResolverV2Abi } from "#/data/abi";
 import { encodeDnsName, isNonZeroAddress } from "#/lib/helpers";
+import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";
 
 export type PrepareNameResolverReadError =
   | "INVALID_UNIVERSAL_RESOLVER_ADDRESS"
   | ParseNameInputError;
 
-export interface PrepareNameResolverReadProps {
+export interface PrepareNameResolverReadParameters {
   readonly input: string | null | undefined;
   readonly network: EnsNetwork;
   readonly universalResolverAddress: Address;
@@ -44,13 +43,13 @@ export type PreparedNameResolverRead = PreparedContractRead<
 
 /** Prepares discovery of the resolver currently serving an ENS name. */
 export function prepareNameResolverRead(
-  props: PrepareNameResolverReadProps,
+  parameters: PrepareNameResolverReadParameters,
 ): Result<PreparedNameResolverRead, PrepareNameResolverReadError> {
-  if (!isNonZeroAddress(props.universalResolverAddress)) {
+  if (!isNonZeroAddress(parameters.universalResolverAddress)) {
     return err("INVALID_UNIVERSAL_RESOLVER_ADDRESS");
   }
 
-  const parsed = parseNameInput(props.input);
+  const parsed = parseNameInput(parameters.input);
   if (parsed.isErr()) return err(parsed.error);
 
   return ok({
@@ -59,7 +58,7 @@ export function prepareNameResolverRead(
       name: parsed.value.normalizedName,
     },
     request: {
-      address: props.universalResolverAddress,
+      address: parameters.universalResolverAddress,
       abi: universalResolverV2Abi,
       functionName: "findResolver",
       args: [encodeDnsName(parsed.value.normalizedName)],

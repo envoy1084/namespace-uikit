@@ -1,12 +1,3 @@
-import type {
-  ContractWriteProgress,
-  ContractWriteStrategy,
-  ExecuteContractWritesResult,
-  PreparedContractWrite,
-  ResolvedContractWriteStrategy,
-  SubmittedContractTransaction,
-} from "#/actions/write/contract-writes";
-
 import { err, errAsync, ok, ResultAsync, type Result } from "neverthrow";
 import {
   isAddressEqual,
@@ -19,6 +10,14 @@ import {
 import { sendCalls } from "viem/actions";
 
 import { waitForContractCalls } from "#/actions/write/contract-write-status";
+import type {
+  ContractWriteProgress,
+  ContractWriteStrategy,
+  ExecuteContractWritesResult,
+  PreparedContractWrite,
+  ResolvedContractWriteStrategy,
+  SubmittedContractTransaction,
+} from "#/actions/write/contract-writes";
 import { supportsAtomicBatchCalls } from "#/actions/write/wallet-capabilities";
 import {
   isNonZeroAddress,
@@ -42,7 +41,7 @@ export type ExecuteContractWritesError =
   | "TRANSACTION_REJECTED"
   | "TRANSACTION_REVERTED";
 
-export interface ExecuteContractWritesProps {
+export interface ExecuteContractWritesParameters {
   readonly calls: readonly [PreparedContractWrite, ...PreparedContractWrite[]];
   readonly chain: Chain;
   /**
@@ -50,15 +49,13 @@ export interface ExecuteContractWritesProps {
    * accepts the final transaction or atomic batch.
    */
   readonly confirmation?: "confirmed" | "submitted";
-  readonly onProgress?: (
-    progress: ContractWriteProgress,
-  ) => Promise<void> | void;
+  readonly onProgress?: (progress: ContractWriteProgress) => Promise<void> | void;
   readonly strategy?: ContractWriteStrategy;
   readonly timeout?: number;
 }
 
 async function notify(
-  callback: ExecuteContractWritesProps["onProgress"],
+  callback: ExecuteContractWritesParameters["onProgress"],
   progress: ContractWriteProgress,
 ): Promise<void> {
   try {
@@ -91,16 +88,14 @@ function validateCalls(
     return err("INVALID_CONTRACT_CALL");
   }
 
-  return calls.every((prepared) =>
-    isAddressEqual(prepared.account, first.account),
-  )
+  return calls.every((prepared) => isAddressEqual(prepared.account, first.account))
     ? ok(undefined)
     : err("MISMATCHED_ACCOUNTS");
 }
 
 async function resolveStrategy(
   walletClient: WalletClient,
-  calls: ExecuteContractWritesProps["calls"],
+  calls: ExecuteContractWritesParameters["calls"],
   chain: Chain,
   strategy: ContractWriteStrategy,
 ): Promise<Result<ResolvedContractWriteStrategy, ExecuteContractWritesError>> {
@@ -122,17 +117,17 @@ async function resolveStrategy(
 async function executeTransactions(
   walletClient: WalletClient,
   publicClient: PublicClient,
-  props: ExecuteContractWritesProps,
+  parameters: ExecuteContractWritesParameters,
   strategy: "sequential" | "single",
 ): Promise<Result<ExecuteContractWritesResult, ExecuteContractWritesError>> {
   const transactions: SubmittedContractTransaction[] = [];
-  const confirmation = props.confirmation ?? "confirmed";
+  const confirmation = parameters.confirmation ?? "confirmed";
 
   // Calls in a sequential strategy may depend on state produced by the
   // previous receipt, so parallel submission would change their semantics.
   // oxlint-disable no-await-in-loop
-  for (const [callIndex, prepared] of props.calls.entries()) {
-    await notify(props.onProgress, {
+  for (const [callIndex, prepared] of parameters.calls.entries()) {
+    await notify(parameters.onProgress, {
       callIndex,
       prepared,
       state: "signing",
@@ -143,25 +138,17 @@ async function executeTransactions(
     try {
       transactionHash = await walletClient.sendTransaction({
         account: prepared.account,
-        chain: props.chain,
+        chain: parameters.chain,
         ...prepared.call,
       });
     } catch (error) {
       if (isWalletUserRejectedError(error)) {
-        return err(
-          transactions.length > 0
-            ? "PARTIAL_BATCH_FAILED"
-            : "TRANSACTION_REJECTED",
-        );
+        return err(transactions.length > 0 ? "PARTIAL_BATCH_FAILED" : "TRANSACTION_REJECTED");
       }
-      return err(
-        transactions.length > 0
-          ? "PARTIAL_BATCH_FAILED"
-          : "CONTRACT_WRITE_FAILED",
-      );
+      return err(transactions.length > 0 ? "PARTIAL_BATCH_FAILED" : "CONTRACT_WRITE_FAILED");
     }
 
-    await notify(props.onProgress, {
+    await notify(parameters.onProgress, {
       callIndex,
       prepared,
       state: "submitted",
@@ -169,8 +156,7 @@ async function executeTransactions(
       transactionHash,
     });
 
-    const mustConfirm =
-      confirmation === "confirmed" || callIndex < props.calls.length - 1;
+    const mustConfirm = confirmation === "confirmed" || callIndex < parameters.calls.length - 1;
     if (!mustConfirm) {
       transactions.push({ prepared, transactionHash });
       continue;
@@ -178,12 +164,10 @@ async function executeTransactions(
 
     const receipt = await waitForSuccessfulTransactionReceipt(publicClient, {
       transactionHash,
-      ...(props.timeout === undefined ? {} : { timeout: props.timeout }),
+      ...(parameters.timeout === undefined ? {} : { timeout: parameters.timeout }),
     });
     if (receipt.isErr()) {
-      return err(
-        transactions.length > 0 ? "PARTIAL_BATCH_FAILED" : receipt.error,
-      );
+      return err(transactions.length > 0 ? "PARTIAL_BATCH_FAILED" : receipt.error);
     }
 
     transactions.push({
@@ -191,7 +175,7 @@ async function executeTransactions(
       receipt: receipt.value,
       transactionHash,
     });
-    await notify(props.onProgress, {
+    await notify(parameters.onProgress, {
       callIndex,
       prepared,
       receipt: receipt.value,
@@ -212,11 +196,11 @@ async function executeTransactions(
 async function executeAtomic(
   walletClient: WalletClient,
   publicClient: PublicClient,
-  props: ExecuteContractWritesProps,
+  parameters: ExecuteContractWritesParameters,
 ): Promise<Result<ExecuteContractWritesResult, ExecuteContractWritesError>> {
-  await notify(props.onProgress, {
+  await notify(parameters.onProgress, {
     callIndex: 0,
-    prepared: props.calls[0],
+    prepared: parameters.calls[0],
     state: "signing",
     strategy: "atomic",
   });
@@ -224,28 +208,24 @@ async function executeAtomic(
   let callsId: string;
   try {
     const result = await sendCalls(walletClient, {
-      account: props.calls[0].account,
-      calls: props.calls.map(({ call }) => call),
-      chain: props.chain,
+      account: parameters.calls[0].account,
+      calls: parameters.calls.map(({ call }) => call),
+      chain: parameters.chain,
       forceAtomic: true,
     });
     callsId = result.id;
   } catch (error) {
-    return err(
-      isWalletUserRejectedError(error)
-        ? "TRANSACTION_REJECTED"
-        : "ATOMIC_BATCH_FAILED",
-    );
+    return err(isWalletUserRejectedError(error) ? "TRANSACTION_REJECTED" : "ATOMIC_BATCH_FAILED");
   }
 
-  await notify(props.onProgress, {
+  await notify(parameters.onProgress, {
     callsId,
-    prepared: props.calls,
+    prepared: parameters.calls,
     state: "submitted",
     strategy: "atomic",
   });
 
-  if ((props.confirmation ?? "confirmed") === "submitted") {
+  if ((parameters.confirmation ?? "confirmed") === "submitted") {
     return ok({
       callsId,
       status: "submitted",
@@ -257,7 +237,7 @@ async function executeAtomic(
 
   const status = await waitForContractCalls(walletClient, {
     callsId,
-    ...(props.timeout === undefined ? {} : { timeout: props.timeout }),
+    ...(parameters.timeout === undefined ? {} : { timeout: parameters.timeout }),
   });
   if (status.isErr()) return err(status.error);
   if (status.value.state !== "SUCCESS") return err("ATOMIC_BATCH_FAILED");
@@ -271,7 +251,7 @@ async function executeAtomic(
     transactionHashes.map((transactionHash) =>
       waitForSuccessfulTransactionReceipt(publicClient, {
         transactionHash,
-        ...(props.timeout === undefined ? {} : { timeout: props.timeout }),
+        ...(parameters.timeout === undefined ? {} : { timeout: parameters.timeout }),
       }),
     ),
   );
@@ -286,23 +266,20 @@ async function executeAtomic(
     return err("TRANSACTION_CONFIRMATION_FAILED");
   }
 
-  const transactions = props.calls.map((prepared, callIndex) => {
+  const transactions = parameters.calls.map((prepared, callIndex) => {
     const transactionIndex =
-      transactionHashes.length === 1
-        ? 0
-        : Math.min(callIndex, transactionHashes.length - 1);
+      transactionHashes.length === 1 ? 0 : Math.min(callIndex, transactionHashes.length - 1);
 
     return {
       prepared,
       receipt: confirmedReceipts[transactionIndex] ?? fallbackReceipt,
-      transactionHash:
-        transactionHashes[transactionIndex] ?? fallbackTransactionHash,
+      transactionHash: transactionHashes[transactionIndex] ?? fallbackTransactionHash,
     };
   });
 
-  await notify(props.onProgress, {
+  await notify(parameters.onProgress, {
     callsId,
-    prepared: props.calls,
+    prepared: parameters.calls,
     state: "confirmed",
     strategy: "atomic",
     transactions,
@@ -326,35 +303,28 @@ async function executeAtomic(
 export function executeContractWrites(
   walletClient: WalletClient,
   publicClient: PublicClient,
-  props: ExecuteContractWritesProps,
+  parameters: ExecuteContractWritesParameters,
 ): ResultAsync<ExecuteContractWritesResult, ExecuteContractWritesError> {
-  const validation = validateCalls(props.calls);
+  const validation = validateCalls(parameters.calls);
   if (validation.isErr()) return errAsync(validation.error);
-  if (!Number.isSafeInteger(props.chain.id) || props.chain.id <= 0) {
+  if (!Number.isSafeInteger(parameters.chain.id) || parameters.chain.id <= 0) {
     return errAsync("INVALID_CHAIN_ID");
   }
 
   return ResultAsync.fromSafePromise(
     resolveStrategy(
       walletClient,
-      props.calls,
-      props.chain,
-      props.strategy ?? "auto",
+      parameters.calls,
+      parameters.chain,
+      parameters.strategy ?? "auto",
     ),
   ).andThen((strategy) => {
     if (strategy.isErr()) return errAsync(strategy.error);
 
     return ResultAsync.fromSafePromise(
       strategy.value === "atomic"
-        ? executeAtomic(walletClient, publicClient, props)
-        : executeTransactions(
-            walletClient,
-            publicClient,
-            props,
-            strategy.value,
-          ),
-    ).andThen((result) =>
-      result.isErr() ? err(result.error) : ok(result.value),
-    );
+        ? executeAtomic(walletClient, publicClient, parameters)
+        : executeTransactions(walletClient, publicClient, parameters, strategy.value),
+    ).andThen((result) => (result.isErr() ? err(result.error) : ok(result.value)));
   });
 }

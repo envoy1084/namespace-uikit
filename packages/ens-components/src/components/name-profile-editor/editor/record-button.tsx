@@ -1,11 +1,11 @@
 "use client";
 
-import type { RecordIconComponent } from "#/icons/get-record-icon";
-
 import { Button } from "@thenamespace/uikit";
 
+import type { EnsIconComponent } from "#/icons/get-record-icon";
+
 export interface RecordButtonProps {
-  icon: RecordIconComponent;
+  icon: EnsIconComponent;
   isDisabled?: boolean | undefined;
   name: string;
   onPress: () => void;
@@ -26,10 +26,7 @@ export function RecordButton({
       onPress={onPress}
     >
       <RecordIcon aria-hidden className="size-6 shrink-0" />
-      <span
-        className="w-full truncate text-[10px] leading-none whitespace-nowrap"
-        title={name}
-      >
+      <span className="w-full truncate text-[10px] leading-none whitespace-nowrap" title={name}>
         {name}
       </span>
     </Button>
