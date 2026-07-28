@@ -67,5 +67,5 @@ or otherwise unavailable.
 ## Action
 
 Uses
-[`prepareNameAvailabilityRead`](../actions/read/prepare-read-name-availability)
+[`prepareNameAvailabilityRead`](/docs/actions/read-name-availability)
 and `executeContractRead`.

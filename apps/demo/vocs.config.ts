@@ -22,7 +22,6 @@ export default defineConfig({
     "/docs": [
       {
         text: "Introduction",
-        collapsed: false,
         items: [
           page("Overview", ""),
           page("Installation", "installation"),
@@ -32,7 +31,6 @@ export default defineConfig({
       },
       {
         text: "Guides",
-        collapsed: false,
         items: [
           page("Choosing an API", "guides/choosing-an-api"),
           page("Error Handling", "guides/error-handling"),
@@ -44,7 +42,6 @@ export default defineConfig({
       },
       {
         text: "Configuration",
-        collapsed: false,
         items: [
           page("createEnsConfig", "config/create-ens-config"),
           page("EnsProvider", "config/ens-provider"),
@@ -54,7 +51,6 @@ export default defineConfig({
       },
       {
         text: "Components",
-        collapsed: false,
         link: docs("components"),
         items: [
           page("NameRegistration", "components/name-registration"),
@@ -97,84 +93,39 @@ export default defineConfig({
         collapsed: true,
         link: docs("actions"),
         items: [
-          {
-            text: "Read Actions",
-            collapsed: true,
-            items: [
-              page("Contract Reads", "actions/read/contract-reads"),
-              page("GraphQL Reads", "actions/read/graphql-reads"),
-              page("prepareCommitmentStatusRead", "actions/read/prepare-read-commitment-status"),
-              page("prepareNameAvailabilityRead", "actions/read/prepare-read-name-availability"),
-              page(
-                "prepareNameRegistrationPriceRead",
-                "actions/read/prepare-read-name-registration-price",
-              ),
-              page(
-                "prepareNameProfileDiscoveryRead",
-                "actions/read/prepare-read-name-profile-discovery",
-              ),
-              page(
-                "prepareNameProfilePermissionsRead",
-                "actions/read/prepare-read-name-profile-permissions",
-              ),
-              page("prepareNameRecordsRead", "actions/read/prepare-read-name-records"),
-              page(
-                "prepareNameRenewalPaymentStatusRead",
-                "actions/read/prepare-read-name-renewal-payment-status",
-              ),
-              page("prepareNameRenewalPriceRead", "actions/read/prepare-read-name-renewal-price"),
-              page("prepareNameResolverRead", "actions/read/prepare-read-name-resolver"),
-              page(
-                "preparePermissionedResolverSupportRead",
-                "actions/read/prepare-read-permissioned-resolver-support",
-              ),
-              page(
-                "preparePermissionedResolverVerificationRead",
-                "actions/read/prepare-read-permissioned-resolver-verification",
-              ),
-              page(
-                "prepareNameRegistrationPaymentStatusRead",
-                "actions/read/prepare-read-name-registration-payment-status",
-              ),
-            ],
-          },
-          {
-            text: "Write Actions",
-            collapsed: true,
-            items: [
-              page("Contract Writes", "actions/write/contract-writes"),
-              page("Contract Write Status", "actions/write/contract-write-status"),
-              page("executeContractWrites", "actions/write/execute-contract-writes"),
-              page("prepareCommitNameWrite", "actions/write/prepare-write-commit-name"),
-              page(
-                "preparePaymentTokenApprovalWrite",
-                "actions/write/prepare-write-payment-token-approval",
-              ),
-              page(
-                "preparePermissionedResolverDeploymentWrite",
-                "actions/write/prepare-write-permissioned-resolver-deployment",
-              ),
-              page(
-                "prepareNameProfileRecordsWrite",
-                "actions/write/prepare-write-name-profile-records",
-              ),
-              page("prepareRegisterNameWrite", "actions/write/prepare-write-register-name"),
-              page("prepareRenewNameWrite", "actions/write/prepare-write-renew-name"),
-              page(
-                "prepareSetAddressRecordWrite",
-                "actions/write/prepare-write-set-address-record",
-              ),
-              page(
-                "prepareSetL1PrimaryNameWrite",
-                "actions/write/prepare-write-set-l1-primary-name",
-              ),
-              page(
-                "prepareSetL2PrimaryNameWrite",
-                "actions/write/prepare-write-set-l2-primary-name",
-              ),
-              page("supportsAtomicBatchCalls", "actions/write/supports-atomic-batch-calls"),
-            ],
-          },
+          page("readCommitmentStatus", "actions/read-commitment-status"),
+          page("readNameAvailability", "actions/read-name-availability"),
+          page("readNameProfileDiscovery", "actions/read-name-profile-discovery"),
+          page("readNameProfilePermissions", "actions/read-name-profile-permissions"),
+          page("readNameRecords", "actions/read-name-records"),
+          page(
+            "readNameRegistrationPaymentStatus",
+            "actions/read-name-registration-payment-status",
+          ),
+          page("readNameRegistrationPrice", "actions/read-name-registration-price"),
+          page("readNameRenewalPaymentStatus", "actions/read-name-renewal-payment-status"),
+          page("readNameRenewalPrice", "actions/read-name-renewal-price"),
+          page("readNameResolver", "actions/read-name-resolver"),
+          page("readPermissionedResolverSupport", "actions/read-permissioned-resolver-support"),
+          page(
+            "readPermissionedResolverVerification",
+            "actions/read-permissioned-resolver-verification",
+          ),
+          page("approvePaymentToken", "actions/approve-payment-token"),
+          page("commitName", "actions/commit-name"),
+          page("deployPermissionedResolver", "actions/deploy-permissioned-resolver"),
+          page("registerName", "actions/register-name"),
+          page("renewName", "actions/renew-name"),
+          page("setAddressRecord", "actions/set-address-record"),
+          page("setL1PrimaryName", "actions/set-l1-primary-name"),
+          page("setL2PrimaryName", "actions/set-l2-primary-name"),
+          page("updateNameProfileRecords", "actions/update-name-profile-records"),
+          page("Contract Reads", "actions/contract-reads"),
+          page("GraphQL Reads", "actions/graphql-reads"),
+          page("Contract Writes", "actions/contract-writes"),
+          page("Contract Write Status", "actions/contract-write-status"),
+          page("executeContractWrites", "actions/execute-contract-writes"),
+          page("supportsAtomicBatchCalls", "actions/supports-atomic-batch-calls"),
         ],
       },
       {

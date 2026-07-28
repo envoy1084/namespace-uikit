@@ -97,4 +97,4 @@ constructing the internal permission-map key.
 
 Uses `prepareNameResolverRead`,
 `preparePermissionedResolverSupportRead`, and
-[`prepareNameProfilePermissionsRead`](../actions/read/prepare-read-name-profile-permissions).
+[`prepareNameProfilePermissionsRead`](/docs/actions/read-name-profile-permissions).

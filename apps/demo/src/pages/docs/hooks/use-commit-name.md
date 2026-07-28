@@ -55,5 +55,5 @@ options are passed through `mutation`.
 
 ## Action
 
-Uses [`prepareCommitNameWrite`](../actions/write/prepare-write-commit-name).
+Uses [`prepareCommitNameWrite`](/docs/actions/commit-name).
 See [Transactions](/docs/guides/transactions) for execution strategies.

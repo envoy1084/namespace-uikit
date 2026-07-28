@@ -1,36 +1,54 @@
 ---
 title: Actions
-description: Framework-independent ENS v2 read and write preparation.
+description: Framework-independent ENS v2 reads, writes, and prepared calls.
 ---
 
 # Actions
 
-Actions validate input and produce typed execution plans. They do not access a
-wallet or RPC endpoint unless passed to an executor.
+Actions are framework-independent functions for reading and writing ENS v2
+contracts. Direct actions validate and execute a request. Prepare functions
+validate the same input and return a typed plan for custom execution or batching.
 
 ## Import
 
 ```ts
 import {
-  executeContractRead,
-  executeContractWrites,
   prepareNameAvailabilityRead,
+  readNameAvailability,
+  registerName,
 } from "ens-components/actions";
 ```
 
-## Read actions
+Direct actions return Neverthrow `ResultAsync` values. Prepare functions return
+`Result` values with string-literal error unions and do not execute network
+requests.
 
-Read preparers return a contract or GraphQL request. Execute them with:
+## Available actions
 
-- `executeContractRead`
-- `executeContractReads`
-- `executeContractReadsIndividually`
-- `executeGraphQLRead`
-
-## Write actions
-
-Write preparers return `PreparedContractWrite` values. Execute one or more
-with `executeContractWrites`.
-
-Actions return Neverthrow `Result` values. Preparation errors are string
-literal unions and do not throw.
+- [`readCommitmentStatus`](/docs/actions/read-commitment-status)
+- [`readNameAvailability`](/docs/actions/read-name-availability)
+- [`readNameProfileDiscovery`](/docs/actions/read-name-profile-discovery)
+- [`readNameProfilePermissions`](/docs/actions/read-name-profile-permissions)
+- [`readNameRecords`](/docs/actions/read-name-records)
+- [`readNameRegistrationPaymentStatus`](/docs/actions/read-name-registration-payment-status)
+- [`readNameRegistrationPrice`](/docs/actions/read-name-registration-price)
+- [`readNameRenewalPaymentStatus`](/docs/actions/read-name-renewal-payment-status)
+- [`readNameRenewalPrice`](/docs/actions/read-name-renewal-price)
+- [`readNameResolver`](/docs/actions/read-name-resolver)
+- [`readPermissionedResolverSupport`](/docs/actions/read-permissioned-resolver-support)
+- [`readPermissionedResolverVerification`](/docs/actions/read-permissioned-resolver-verification)
+- [`approvePaymentToken`](/docs/actions/approve-payment-token)
+- [`commitName`](/docs/actions/commit-name)
+- [`deployPermissionedResolver`](/docs/actions/deploy-permissioned-resolver)
+- [`registerName`](/docs/actions/register-name)
+- [`renewName`](/docs/actions/renew-name)
+- [`setAddressRecord`](/docs/actions/set-address-record)
+- [`setL1PrimaryName`](/docs/actions/set-l1-primary-name)
+- [`setL2PrimaryName`](/docs/actions/set-l2-primary-name)
+- [`updateNameProfileRecords`](/docs/actions/update-name-profile-records)
+- [Contract Reads](/docs/actions/contract-reads)
+- [GraphQL Reads](/docs/actions/graphql-reads)
+- [Contract Writes](/docs/actions/contract-writes)
+- [Contract Write Status](/docs/actions/contract-write-status)
+- [`executeContractWrites`](/docs/actions/execute-contract-writes)
+- [`supportsAtomicBatchCalls`](/docs/actions/supports-atomic-batch-calls)

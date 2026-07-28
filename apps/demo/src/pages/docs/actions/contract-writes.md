@@ -22,7 +22,7 @@ interface PreparedContractWrite<TRequest, TKind, TMetadata> {
 ```
 
 Compose prepared writes in dependency order, then pass the non-empty array to
-[`executeContractWrites`](/docs/actions/write/execute-contract-writes).
+[`executeContractWrites`](/docs/actions/execute-contract-writes).
 
 ```ts
 const calls = [approval.value, registration.value] as const;

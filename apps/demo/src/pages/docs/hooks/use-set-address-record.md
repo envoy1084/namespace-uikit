@@ -47,4 +47,4 @@ Use `useUpdateNameProfileRecords` for arbitrary coin types.
 ## Action
 
 Uses
-[`prepareSetAddressRecordWrite`](../actions/write/prepare-write-set-address-record).
+[`prepareSetAddressRecordWrite`](/docs/actions/set-address-record).

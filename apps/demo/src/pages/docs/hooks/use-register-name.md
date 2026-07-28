@@ -55,4 +55,4 @@ interface UseRegisterNameParameters {
 
 ## Action
 
-Uses [`prepareRegisterNameWrite`](../actions/write/prepare-write-register-name).
+Uses [`prepareRegisterNameWrite`](/docs/actions/register-name).

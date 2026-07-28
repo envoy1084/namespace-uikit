@@ -73,5 +73,5 @@ All timestamps and durations use seconds.
 ## Action
 
 Uses
-[`prepareCommitmentStatusRead`](../actions/read/prepare-read-commitment-status)
+[`prepareCommitmentStatusRead`](/docs/actions/read-commitment-status)
 and `executeContractReads`.

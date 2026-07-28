@@ -101,5 +101,5 @@ Resolver address, and non-empty record selection are available.
 
 ## Action
 
-Uses [`prepareNameRecordsRead`](../actions/read/prepare-read-name-records) and
+Uses [`prepareNameRecordsRead`](/docs/actions/read-name-records) and
 `executeContractReadsIndividually`.

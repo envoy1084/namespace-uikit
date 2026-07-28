@@ -96,5 +96,5 @@ atomic units.
 ## Action
 
 Uses
-[`prepareNameRenewalPaymentStatusRead`](../actions/read/prepare-read-name-renewal-payment-status)
+[`prepareNameRenewalPaymentStatusRead`](/docs/actions/read-name-renewal-payment-status)
 and `executeContractReads`.

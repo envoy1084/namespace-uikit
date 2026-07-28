@@ -8,6 +8,9 @@ description: Execute one or more prepared ENS contract writes.
 Executes prepared writes using one transaction, an EIP-5792 atomic batch, or
 an ordered transaction sequence.
 
+Use `executeContractWrite` for one prepared call. Domain actions such as
+`registerName` use this single-write executor internally.
+
 ## Import
 
 ```ts
@@ -40,6 +43,9 @@ interface ExecuteContractWritesParameters {
   timeout?: number;
 }
 ```
+
+`executeContractWrite` accepts one `PreparedContractWrite` plus the same
+parameters without `calls` and `strategy`.
 
 ## Strategies
 

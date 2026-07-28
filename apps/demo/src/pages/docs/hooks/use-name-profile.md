@@ -112,6 +112,6 @@ permission-sensitive transaction.
 ## Actions
 
 Uses
-[`prepareNameProfileDiscoveryRead`](../actions/read/prepare-read-name-profile-discovery),
-[`prepareNameRecordsRead`](../actions/read/prepare-read-name-records), and the
+[`prepareNameProfileDiscoveryRead`](/docs/actions/read-name-profile-discovery),
+[`prepareNameRecordsRead`](/docs/actions/read-name-records), and the
 generic read executors.

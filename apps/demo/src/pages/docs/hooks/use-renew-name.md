@@ -52,4 +52,4 @@ Token approval is a separate write. See
 
 ## Action
 
-Uses [`prepareRenewNameWrite`](../actions/write/prepare-write-renew-name).
+Uses [`prepareRenewNameWrite`](/docs/actions/renew-name).

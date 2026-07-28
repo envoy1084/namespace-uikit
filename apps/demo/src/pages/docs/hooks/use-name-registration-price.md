@@ -94,5 +94,5 @@ All amounts are payment-token atomic units. `total` is `base + premium`.
 ## Action
 
 Uses
-[`prepareNameRegistrationPriceRead`](../actions/read/prepare-read-name-registration-price)
+[`prepareNameRegistrationPriceRead`](/docs/actions/read-name-registration-price)
 and `executeContractReads`.

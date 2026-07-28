@@ -1,6 +1,6 @@
 ---
 title: GraphQL Reads
-description: Execute prepared ENS indexer requests.
+description: Execute prepared GraphQL reads with Neverthrow errors.
 ---
 
 # GraphQL Reads

@@ -100,5 +100,5 @@ network, contract addresses, account, duration, and input.
 ## Action
 
 Uses
-[`prepareNameRegistrationPaymentStatusRead`](../actions/read/prepare-read-name-registration-payment-status)
+[`prepareNameRegistrationPaymentStatusRead`](/docs/actions/read-name-registration-payment-status)
 and `executeContractReads`.

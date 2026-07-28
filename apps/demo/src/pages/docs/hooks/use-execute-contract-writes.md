@@ -56,4 +56,4 @@ behavior.
 
 ## Action
 
-Uses [`executeContractWrites`](../actions/write/contract-writes).
+Uses [`executeContractWrites`](/docs/actions/execute-contract-writes).

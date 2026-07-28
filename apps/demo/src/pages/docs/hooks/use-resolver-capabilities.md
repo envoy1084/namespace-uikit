@@ -55,6 +55,6 @@ interface ResolverCapabilities {
 ## Actions
 
 Uses
-[`preparePermissionedResolverSupportRead`](../actions/read/prepare-read-permissioned-resolver-support)
+[`preparePermissionedResolverSupportRead`](/docs/actions/read-permissioned-resolver-support)
 and
-[`preparePermissionedResolverVerificationRead`](../actions/read/prepare-read-permissioned-resolver-verification).
+[`preparePermissionedResolverVerificationRead`](/docs/actions/read-permissioned-resolver-verification).

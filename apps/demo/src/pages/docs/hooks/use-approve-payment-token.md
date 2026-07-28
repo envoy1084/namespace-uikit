@@ -55,4 +55,4 @@ TanStack mutation callbacks and options are passed through `mutation`.
 ## Action
 
 Uses
-[`preparePaymentTokenApprovalWrite`](../actions/write/prepare-write-payment-token-approval).
+[`preparePaymentTokenApprovalWrite`](/docs/actions/approve-payment-token).

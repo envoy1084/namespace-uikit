@@ -1,6 +1,6 @@
 ---
 title: Contract Reads
-description: Execute prepared ENS contract reads.
+description: Execute prepared contract reads and multicall plans.
 ---
 
 # Contract Reads

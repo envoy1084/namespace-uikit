@@ -51,5 +51,5 @@ interface NameResolverResult {
 
 ## Action
 
-Uses [`prepareNameResolverRead`](../actions/read/prepare-read-name-resolver)
+Uses [`prepareNameResolverRead`](/docs/actions/read-name-resolver)
 and `executeContractRead`.

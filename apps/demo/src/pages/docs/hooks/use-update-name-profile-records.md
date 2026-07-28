@@ -51,4 +51,4 @@ Check authorization with `useNameProfilePermissions` before enabling writes.
 ## Action
 
 Uses
-[`prepareNameProfileRecordsWrite`](../actions/write/prepare-write-name-profile-records).
+[`prepareNameProfileRecordsWrite`](/docs/actions/update-name-profile-records).

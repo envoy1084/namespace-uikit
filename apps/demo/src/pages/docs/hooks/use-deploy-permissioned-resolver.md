@@ -51,4 +51,4 @@ optional `execution`.
 ## Action
 
 Uses
-[`preparePermissionedResolverDeploymentWrite`](../actions/write/prepare-write-permissioned-resolver-deployment).
+[`preparePermissionedResolverDeploymentWrite`](/docs/actions/deploy-permissioned-resolver).

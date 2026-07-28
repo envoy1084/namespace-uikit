@@ -99,5 +99,5 @@ units.
 ## Action
 
 Uses
-[`prepareNameRenewalPriceRead`](../actions/read/prepare-read-name-renewal-price)
+[`prepareNameRenewalPriceRead`](/docs/actions/read-name-renewal-price)
 and `executeContractReads`.
