@@ -1,10 +1,9 @@
-import { defineConfig } from "tsdown";
+import defineReactConfig from "klarity/tsdown/react";
 
-export default defineConfig({
+export default defineReactConfig({
   alias: {
     "#/": "./src/",
   },
-  clean: true,
   copy: [
     {
       from: "src/assets/*",
@@ -34,21 +33,16 @@ export default defineConfig({
     enabled: true,
     sourcemap: true,
   },
+  exports: false,
   entry: {
     actions: "src/actions/index.ts",
     hooks: "src/hooks/index.ts",
     icons: "src/icons/index.ts",
     index: "src/index.ts",
   },
-  failOnWarn: true,
   fixedExtension: true,
-  format: ["esm"],
   hash: false,
   nodeProtocol: true,
-  outDir: "dist",
-  platform: "browser",
-  sourcemap: true,
   target: ["es2022"],
-  treeshake: true,
   unbundle: true,
 });

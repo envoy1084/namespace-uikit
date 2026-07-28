@@ -11,12 +11,14 @@
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },
   "dependencies": {
+    "@astrojs/react": "6.0.1",
+    "@astrojs/sitemap": "3.7.3",
+    "@astrojs/starlight": "0.41.4",
     "@rainbow-me/rainbowkit": "2.2.11",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/react-query": "catalog:",
-    "@tanstack/react-router": "catalog:",
-    "@tanstack/router-plugin": "catalog:",
     "@thenamespace/uikit": "workspace:*",
+    "astro": "7.1.4",
     "ens-components": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
@@ -25,13 +27,11 @@
     "wagmi": "catalog:"
   },
   "devDependencies": {
-    "@tanstack/router-cli": "1.167.18",
+    "@astrojs/check": "0.9.9",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@vitejs/plugin-react": "6.0.3",
-    "typescript": "catalog:",
-    "vite": "8.1.4"
+    "typescript": "catalog:"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

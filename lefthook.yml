@@ -1,18 +1,7 @@
-commit-msg:
-  commands:
-    commitlint:
-      run: pnpm exec commitlint --strict --edit {1}
+extends:
+  - node_modules/klarity/src/lefthook/monorepo.yml
 
-pre-commit:
-  commands:
-    format:
-      glob: "*.{ts,tsx,js,jsx,mjs,cjs,json,jsonc,md,yml,yaml}"
-      exclude:
-        - "pnpm-lock.yaml"
-      run: pnpm exec oxfmt --write --no-error-on-unmatched-pattern {staged_files}
-      stage_fixed: true
-
-    lint:
-      glob: "*.{ts,tsx,js,jsx,mjs,cjs}"
-      run: pnpm exec oxlint --fix --no-error-on-unmatched-pattern {staged_files}
-      stage_fixed: true
+pre-push:
+  jobs:
+    - name: check
+      run: pnpm check

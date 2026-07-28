@@ -1,22 +1,9 @@
+import klarity from "klarity/oxlint/react";
 import { defineConfig } from "oxlint";
 
 export default defineConfig({
-  ignorePatterns: ["**/.next/**", "**/.source/**", "**/next-env.d.ts"],
-  categories: {
-    correctness: "error",
-    perf: "error",
-    suspicious: "error",
-  },
-  plugins: [
-    "eslint",
-    "typescript",
-    "unicorn",
-    "oxc",
-    "import",
-    "jsdoc",
-    "node",
-    "promise",
-  ],
+  extends: [klarity],
+  ignorePatterns: ["**/.astro/**", "**/.next/**", "**/.source/**", "**/next-env.d.ts"],
   overrides: [
     {
       files: ["apps/docs/src/demos/**/*.tsx"],

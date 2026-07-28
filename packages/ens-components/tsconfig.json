@@ -1,43 +1,20 @@
 {
+  "extends": "klarity/tsconfig/library/react",
   "compilerOptions": {
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
     "customConditions": ["@thenamespace/source"],
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
-    "esModuleInterop": true,
-    "exactOptionalPropertyTypes": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "Preserve",
-    "moduleDetection": "force",
-    "moduleResolution": "Bundler",
-    "newLine": "lf",
     "noEmitOnError": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
-    "noUncheckedSideEffectImports": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "outDir": "../../dist/typecheck/packages/uikit",
+    "outDir": "../../dist/typecheck/packages/ens-components",
     "paths": {
       "#/*": ["./src/*"]
     },
-    "resolveJsonModule": true,
     "rootDir": "src",
-    "skipLibCheck": true,
-    "strict": true,
     "stripInternal": true,
-    "target": "ES2022",
-    "tsBuildInfoFile": "../../dist/typecheck/packages/uikit/tsconfig.tsbuildinfo",
-    "types": ["react", "react-dom", "node"],
-    "verbatimModuleSyntax": true
+    "tsBuildInfoFile": "../../dist/typecheck/packages/ens-components/tsconfig.tsbuildinfo",
+    "types": ["react", "react-dom", "node"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

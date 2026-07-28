@@ -1,7 +1,7 @@
 import { readdirSync } from "node:fs";
 import { basename, extname } from "node:path";
 
-import { defineConfig } from "tsdown";
+import defineReactConfig from "klarity/tsdown/react";
 
 const componentEntries = Object.fromEntries(
   readdirSync("src/components", { withFileTypes: true })
@@ -12,16 +12,12 @@ const componentEntries = Object.fromEntries(
         .map((entry) => {
           const name = basename(entry.name, extname(entry.name));
 
-          return [
-            `components/${name}`,
-            `src/components/${group.name}/${entry.name}`,
-          ];
+          return [`components/${name}`, `src/components/${group.name}/${entry.name}`];
         }),
     ),
 );
 
-export default defineConfig({
-  clean: true,
+export default defineReactConfig({
   copy: [
     {
       from: "src/styles/components/action-bar.css",
@@ -328,6 +324,7 @@ export default defineConfig({
     enabled: true,
     sourcemap: true,
   },
+  exports: false,
   entry: {
     ...componentEntries,
     hooks: "src/hooks.ts",
@@ -335,15 +332,9 @@ export default defineConfig({
     index: "src/index.ts",
     utils: "src/utils.ts",
   },
-  failOnWarn: true,
   fixedExtension: true,
-  format: ["esm"],
   hash: false,
   nodeProtocol: true,
-  outDir: "dist",
-  platform: "browser",
-  sourcemap: true,
   target: ["es2022"],
-  treeshake: true,
   unbundle: true,
 });

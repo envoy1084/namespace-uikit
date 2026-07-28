@@ -1,28 +1,18 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "klarity/tsconfig/app/next",
   "compilerOptions": {
-    "allowJs": true,
-    "esModuleInterop": true,
-    "incremental": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
+    "exactOptionalPropertyTypes": false,
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleResolution": "bundler",
     "noEmit": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "noImplicitReturns": false,
+    "noUncheckedIndexedAccess": false,
     "paths": {
       "@/.source": ["./.source/server.ts"],
       "@/.source/*": ["./.source/*"],
       "@/*": ["./src/*"]
     },
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
     "target": "ES2022"
   },
   "include": [
