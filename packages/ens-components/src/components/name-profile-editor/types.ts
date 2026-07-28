@@ -8,6 +8,26 @@ export type NameProfileRecordType =
   | "pubkey"
   | "text";
 
+export type NameProfileImageRecord = "avatar" | "header";
+
+export interface NameProfileImageUploadContext {
+  /** ENS name whose profile image is being updated. */
+  name: string;
+  /** Text-record key that will receive the returned image URL. */
+  record: NameProfileImageRecord;
+}
+
+/**
+ * Uploads a selected image and returns the URL stored in the ENS text record.
+ *
+ * The returned value may use an HTTP, IPFS, data, or another resolver-supported
+ * image URI scheme.
+ */
+export type NameProfileImageUpload = (
+  file: File,
+  context: NameProfileImageUploadContext,
+) => Promise<string> | string;
+
 /** ABI payload stored for one ENSIP-4 content type. */
 export interface NameProfileAbiRecord {
   /** Canonical unsigned decimal integer. */

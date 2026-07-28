@@ -30,6 +30,11 @@ function formatDemoName(value: string): string {
   return name.includes(".") ? name : `${name}.eth`;
 }
 
+async function uploadDemoProfileImage(file: File): Promise<string> {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  return URL.createObjectURL(file);
+}
+
 export function ProfileEditorShowcase() {
   const [nameInput, setNameInput] = useState("achilles");
   const name = formatDemoName(nameInput);
@@ -63,7 +68,7 @@ export function ProfileEditorShowcase() {
           <Label className="text-sm">ENS name</Label>
           <Input
             className="mt-2 ring-inset"
-            placeholder="vitalik"
+            placeholder="richard"
             variant="secondary"
           />
         </TextField>
@@ -71,6 +76,7 @@ export function ProfileEditorShowcase() {
         <NameProfileEditor
           initialRecords={DEMO_PROFILE}
           name={name}
+          uploadImage={uploadDemoProfileImage}
           slots={{
             trigger: (
               <Button className="mt-4" size="lg">

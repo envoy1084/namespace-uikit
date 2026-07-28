@@ -30,30 +30,54 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   CONTRACT_CALLS_STATUS_FAILED: "Unable to confirm the batched transactions.",
   CONTRACT_SIMULATION_FAILED: "The resolver deployment could not be prepared.",
   CONTRACT_WRITE_FAILED: "The transaction could not be submitted.",
+  DUPLICATE_ABI_CONTENT_TYPE: "Each ABI content type can only be added once.",
+  DUPLICATE_ADDRESS_COIN_TYPE: "Each network address can only be added once.",
+  DUPLICATE_DATA_KEY: "Each data key can only be added once.",
+  DUPLICATE_INTERFACE_ID: "Each interface ID can only be added once.",
+  DUPLICATE_TEXT_KEY: "Each text record key can only be added once.",
   EMPTY_INPUT: "Enter an ENS name.",
   EMPTY_CALLS: "There are no transactions to submit.",
   EMPTY_LABEL: "The ENS name contains an empty label.",
+  IMAGE_UPLOAD_FAILED: "The image upload did not return a usable URL.",
   INPUT_TOO_LONG: "The ENS name is too long.",
   INVALID_DURATION: "Select a valid duration.",
   INVALID_ETH_REGISTRY_ADDRESS: "The ENS registry address is invalid.",
   INVALID_OWNER_ADDRESS: "The name owner address is invalid.",
   INVALID_ACCOUNT_ADDRESS: "The connected wallet address is invalid.",
+  INVALID_ABI_CONTENT_TYPE:
+    "Enter an ABI content type that contains one supported format bit.",
+  INVALID_ABI_VALUE: "Enter the encoded ABI as even-length hex bytes.",
+  INVALID_ADDRESS: "Enter a valid address for the selected network.",
   INVALID_APPROVAL_AMOUNT: "The token approval amount is invalid.",
   INVALID_CALLS_ID: "The saved atomic transaction identifier is invalid.",
   INVALID_CHAIN_ID: "The selected network is invalid.",
   INVALID_COMMITMENT: "The saved commitment is invalid.",
+  INVALID_COIN_TYPE: "The address coin type is invalid.",
+  INVALID_CONTENTHASH:
+    "Enter a valid IPFS, IPNS, Arweave, Swarm, Tor, Sia, or TON content hash.",
   INVALID_CONTRACT_CALL: "A prepared contract call is invalid.",
+  INVALID_DATA_KEY: "Enter a key for this data record.",
+  INVALID_DATA_VALUE: "Enter the data value as even-length hex bytes.",
   INVALID_DEPLOYMENT_CALL: "The resolver deployment call is invalid.",
   INVALID_NAME: "Enter a valid ENS name.",
   INVALID_FACTORY_ADDRESS: "The resolver factory address is invalid.",
   INVALID_IMPLEMENTATION_ADDRESS:
     "The resolver implementation address is invalid.",
+  INVALID_IMAGE_FILE: "Select a valid image file.",
+  INVALID_INTERFACE_ID:
+    "Enter the interface ID as four-byte hex, such as 0x01ffc9a7.",
+  INVALID_INTERFACE_IMPLEMENTER:
+    "Enter a valid contract address for this interface.",
   INVALID_L1_REVERSE_REGISTRAR_ADDRESS:
     "The L1 primary-name registrar address is invalid.",
   INVALID_L2_REVERSE_REGISTRAR_ADDRESS:
     "The ENS v2 primary-name registrar address is invalid.",
   INVALID_INIT_DATA: "The resolver initialization data is invalid.",
+  INVALID_NAME_RECORD: "Enter a valid normalized ENS name.",
   INVALID_PAYMENT_TOKEN_ADDRESS: "The payment token address is invalid.",
+  INVALID_PROFILE_RECORDS: "One or more profile records are invalid.",
+  INVALID_PUBLIC_KEY:
+    "Enter both public-key coordinates as 32-byte hex values.",
   INVALID_REGISTRAR_ADDRESS: "The registrar address is invalid.",
   INVALID_SPENDER_ADDRESS: "The token spender address is invalid.",
   INVALID_REFERRER: "The referrer value is invalid.",
@@ -61,6 +85,7 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   INVALID_SALT: "The saved resolver salt is invalid.",
   INVALID_SECRET: "The saved commitment secret is invalid.",
   INVALID_SUBREGISTRY_ADDRESS: "The subregistry address is invalid.",
+  INVALID_TEXT_KEY: "Enter a key for this text record.",
   LABEL_TOO_LONG: "The ENS label is too long.",
   LABEL_TOO_SHORT: (data) => {
     const name = getName(data);
@@ -89,6 +114,7 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   UNSUPPORTED_NAME: "Only second-level .eth names are supported.",
   TRANSACTION_CONFIRMATION_FAILED: "Unable to confirm the transaction.",
   TRANSACTION_REVERTED: "The transaction was reverted.",
+  UNSUPPORTED_COIN_TYPE: "This address network is not supported.",
   WALLET_ACCOUNT_CHANGED:
     "The connected account changed. Reopen this registration with the original wallet.",
   WALLET_NOT_CONNECTED: "Connect your wallet to continue.",
