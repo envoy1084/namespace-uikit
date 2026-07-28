@@ -1,12 +1,23 @@
+---
+title: prepareNameResolverRead
+description: Prepare a Universal Resolver lookup for an ENS name.
+---
+
 # prepareNameResolverRead
 
 Prepares a Universal Resolver v2 `findResolver` read for a normalized ENS name.
-It does not execute the request.
+
+## Import
+
+```ts
+import { prepareNameResolverRead } from "ens-components/actions";
+```
+
+## Usage
 
 ```ts
 const prepared = prepareNameResolverRead({
   input: "example.eth",
-  network: "testnet",
   universalResolverAddress,
 });
 
@@ -16,5 +27,17 @@ if (prepared.isOk()) {
 }
 ```
 
-`universalResolverAddress` should normally come from `EnsProvider`
-configuration. The result also contains the resolver's DNS offset.
+## Parameters
+
+```ts
+interface PrepareNameResolverReadParameters {
+  input: string | null | undefined;
+  universalResolverAddress: Address;
+}
+```
+
+## Return Type
+
+`Result<PreparedNameResolverRead, PrepareNameResolverReadError>`
+
+The executed request returns the resolver address, namehash, and DNS offset.

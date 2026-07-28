@@ -1,12 +1,24 @@
+---
+title: prepareCommitmentStatusRead
+description: Prepare reads for an ENS commitment's valid window.
+---
+
 # prepareCommitmentStatusRead
 
-Prepares one multicall plan for the commitment timestamp and the registrar's
+Prepares a multicall plan for a commitment timestamp and the registrar's
 minimum and maximum commitment ages.
+
+## Import
+
+```ts
+import { prepareCommitmentStatusRead } from "ens-components/actions";
+```
+
+## Usage
 
 ```ts
 const prepared = prepareCommitmentStatusRead({
   commitment,
-  network: "testnet",
   registrarAddress,
 });
 
@@ -14,6 +26,19 @@ if (prepared.isOk()) {
   const timing = await executeContractReads(publicClient, prepared.value);
 }
 ```
+
+## Parameters
+
+```ts
+interface PrepareCommitmentStatusReadParameters {
+  commitment: Hex;
+  registrarAddress: Address;
+}
+```
+
+## Return Type
+
+`Result<PreparedCommitmentStatusRead, PrepareCommitmentStatusReadError>`
 
 The selected `CommitmentTiming` value contains `submittedAt`, `minimumAge`, and
 `maximumAge` as Unix-time seconds. The action does not determine the current

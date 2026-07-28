@@ -1,7 +1,20 @@
+---
+title: prepareNameRegistrationPriceRead
+description: Prepare reads for an ENS v2 registration quote.
+---
+
 # prepareNameRegistrationPriceRead
 
-Prepares one multicall plan for name availability, registration price, and
+Prepares a multicall plan for availability, registration price, and
 payment-token decimals.
+
+## Import
+
+```ts
+import { prepareNameRegistrationPriceRead } from "ens-components/actions";
+```
+
+## Usage
 
 ```ts
 const prepared = prepareNameRegistrationPriceRead({
@@ -16,8 +29,24 @@ if (prepared.isOk()) {
 }
 ```
 
-`NameRegistrationPrice` contains `base`, `premium`, `total`, and `decimals`. Amounts use
-the payment token's atomic units.
+## Parameters
+
+```ts
+interface PrepareNameRegistrationPriceReadParameters {
+  duration: bigint;
+  input: string | null | undefined;
+  paymentTokenAddress: Address;
+  registrarAddress: Address;
+}
+```
+
+## Return Type
+
+`Result<PreparedNameRegistrationPriceRead, PrepareNameRegistrationPriceReadError>`
+
+Execute the returned plan with `executeContractReads`. The selected
+`NameRegistrationPrice` contains `base`, `premium`, `total`, and `decimals`.
+Amounts use payment-token atomic units.
 
 ## Preparation errors
 

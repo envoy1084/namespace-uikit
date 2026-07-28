@@ -11,7 +11,7 @@ metadata without sending a network request.
 ## Import
 
 ```ts
-import { executeGraphqlRead } from "ens-components/actions";
+import { executeGraphQLRead } from "ens-components/actions";
 ```
 
 ## Usage
@@ -23,17 +23,17 @@ const prepared = prepareNameProfileDiscoveryRead({
 });
 
 if (prepared.isOk()) {
-  const result = await executeGraphqlRead(prepared.value);
+  const result = await executeGraphQLRead(prepared.value);
 }
 ```
 
-## executeGraphqlRead
+## executeGraphQLRead
 
 Executes one prepared GraphQL request with `fetch`, checks the HTTP and GraphQL
 responses, then decodes the result.
 
 ```ts
-executeGraphqlRead(prepared, { signal });
+executeGraphQLRead(prepared, { signal });
 ```
 
 The result is `Result<value, "GRAPHQL_READ_FAILED" | decodeError>`.

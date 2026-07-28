@@ -1,11 +1,23 @@
+---
+title: preparePermissionedResolverSupportRead
+description: Prepare an ENS v2 permissioned resolver interface check.
+---
+
 # preparePermissionedResolverSupportRead
 
-Prepares an ERC-165 `supportsInterface` read for ENS v2
+Prepares an ERC-165 `supportsInterface` read for
 `IPermissionedResolver`.
+
+## Import
+
+```ts
+import { preparePermissionedResolverSupportRead } from "ens-components/actions";
+```
+
+## Usage
 
 ```ts
 const prepared = preparePermissionedResolverSupportRead({
-  network: "testnet",
   resolverAddress,
 });
 
@@ -14,5 +26,17 @@ if (prepared.isOk()) {
 }
 ```
 
-The selected result is `true` only when the resolver advertises the required
-permission interface.
+## Parameters
+
+```ts
+interface PreparePermissionedResolverSupportReadParameters {
+  resolverAddress: Address;
+}
+```
+
+## Return Type
+
+`Result<PreparedPermissionedResolverSupportRead, "INVALID_RESOLVER_ADDRESS">`
+
+The executed request returns `true` only when the resolver advertises the
+required interface.

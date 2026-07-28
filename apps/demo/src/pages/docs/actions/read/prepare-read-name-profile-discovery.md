@@ -1,23 +1,48 @@
+---
+title: prepareNameProfileDiscoveryRead
+description: Prepare an ENS indexer request for domain and record discovery.
+---
+
 # prepareNameProfileDiscoveryRead
 
-Prepares a GraphQL request for indexed ENS domain metadata and profile-record
+Prepares a GraphQL request for indexed ENS domain metadata and record-key
 discovery.
 
+## Import
+
 ```ts
-import { executeGraphqlRead, prepareNameProfileDiscoveryRead } from "ens-components/actions";
+import { prepareNameProfileDiscoveryRead } from "ens-components/actions";
+```
+
+## Usage
+
+```ts
+import { executeGraphQLRead } from "ens-components/actions";
 
 const prepared = prepareNameProfileDiscoveryRead({
   indexerUrl: "https://graphql.ens.dev/graphql",
   input: "example.eth",
-  network: "testnet",
 });
 
-if (prepared.isErr()) throw new Error(prepared.error);
+if (prepared.isErr()) throw prepared.error;
 
-const result = await executeGraphqlRead(prepared.value);
+const result = await executeGraphQLRead(prepared.value);
 ```
 
-The result contains:
+## Parameters
+
+```ts
+interface PrepareNameProfileDiscoveryReadParameters {
+  indexerUrl: string;
+  input: string | null | undefined;
+}
+```
+
+## Return Type
+
+`Result<PreparedNameProfileDiscoveryRead, PrepareNameProfileDiscoveryReadError>`
+
+The decoded result contains:
 
 - text-record keys
 - address coin types
@@ -30,8 +55,8 @@ The result contains:
 It intentionally does not request text, address, ABI, or interface values.
 Use `prepareNameRecordsRead` to retrieve values through the Universal Resolver.
 
-`executeGraphqlRead` accepts an optional `AbortSignal`:
+`executeGraphQLRead` accepts an optional `AbortSignal`:
 
 ```ts
-executeGraphqlRead(prepared.value, { signal });
+executeGraphQLRead(prepared.value, { signal });
 ```
