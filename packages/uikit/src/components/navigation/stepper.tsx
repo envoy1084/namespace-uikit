@@ -6,6 +6,7 @@ import {
   cloneElement,
   createContext,
   isValidElement,
+  useCallback,
   useContext,
   useMemo,
   useState,
@@ -39,8 +40,7 @@ const StepContext = createContext<StepperStepContextValue>({
   isLast: false,
   status: "inactive",
 });
-export const useStepperStep = (): StepperStepContextValue =>
-  useContext(StepContext);
+export const useStepperStep = (): StepperStepContextValue => useContext(StepContext);
 
 interface InternalStepProps {
   _index?: number;
@@ -50,17 +50,11 @@ type PartComponent = { part?: "separator" | "step" };
 const isStep = (node: ReactNode): node is ReactElement<StepperStepProps> =>
   isValidElement(node) &&
   (node.type === StepperStep || (node.type as PartComponent).part === "step");
-const isSeparator = (
-  node: ReactNode,
-): node is ReactElement<StepperSeparatorProps> =>
+const isSeparator = (node: ReactNode): node is ReactElement<StepperSeparatorProps> =>
   isValidElement(node) &&
-  (node.type === StepperSeparator ||
-    (node.type as PartComponent).part === "separator");
+  (node.type === StepperSeparator || (node.type as PartComponent).part === "separator");
 
-export interface StepperRootProps extends Omit<
-  ComponentPropsWithRef<"ol">,
-  "children"
-> {
+export interface StepperRootProps extends Omit<ComponentPropsWithRef<"ol">, "children"> {
   children: ReactNode;
   currentStep?: number;
   defaultStep?: number;
@@ -80,10 +74,13 @@ export function StepperRoot({
 }: StepperRootProps): ReactElement {
   const [uncontrolledStep, setUncontrolledStep] = useState(defaultStep);
   const activeStep = currentStep ?? uncontrolledStep;
-  const changeStep = (step: number) => {
-    if (currentStep === undefined) setUncontrolledStep(step);
-    onStepChange?.(step);
-  };
+  const changeStep = useCallback(
+    (step: number) => {
+      if (currentStep === undefined) setUncontrolledStep(step);
+      onStepChange?.(step);
+    },
+    [currentStep, onStepChange],
+  );
   const context = useMemo(
     () => ({
       currentStep: activeStep,
@@ -91,7 +88,7 @@ export function StepperRoot({
       orientation,
       size,
     }),
-    [activeStep, onStepChange, orientation, size],
+    [activeStep, changeStep, onStepChange, orientation, size],
   );
   const nodes = Children.toArray(children);
   const count = nodes.filter(isStep).length;
@@ -110,12 +107,7 @@ export function StepperRoot({
       <ol
         {...props}
         aria-label={props["aria-label"] ?? "Progress"}
-        className={cn(
-          "stepper",
-          `stepper--${orientation}`,
-          `stepper--${size}`,
-          className,
-        )}
+        className={cn("stepper", `stepper--${orientation}`, `stepper--${size}`, className)}
         data-slot="stepper"
       >
         {renderedChildren}
@@ -141,39 +133,27 @@ export function StepperStep({
   const floor = Math.floor(stepper.currentStep);
   const status: StepperStatus =
     floor === index ? "active" : floor > index ? "complete" : "inactive";
-  const context = useMemo(
-    () => ({ index, isLast, status }),
-    [index, isLast, status],
-  );
+  const context = useMemo(() => ({ index, isLast, status }), [index, isLast, status]);
   const contents: ReactNode[] = [];
   let separator: ReactElement<StepperSeparatorProps> | null = null;
   Children.forEach(children, (child) => {
     if (isSeparator(child)) separator = child;
     else contents.push(child);
   });
-  const buttonClass = cn(
-    "stepper__step-button",
-    `stepper__step-button--${stepper.orientation}`,
-  );
+  const buttonClass = cn("stepper__step-button", `stepper__step-button--${stepper.orientation}`);
   const clickable = Boolean(stepper.onStepChange);
   return (
     <StepContext value={context}>
       <li
         {...props}
-        className={cn(
-          "stepper__step",
-          `stepper__step--${stepper.orientation}`,
-          className,
-        )}
+        className={cn("stepper__step", `stepper__step--${stepper.orientation}`, className)}
         data-index={index}
         data-slot="stepper-step"
         data-status={status}
       >
         {clickable ? (
           <Button
-            {...(status === "active"
-              ? { "aria-current": "step" as const }
-              : {})}
+            {...(status === "active" ? { "aria-current": "step" as const } : {})}
             className={buttonClass ?? ""}
             data-clickable="true"
             data-slot="stepper-step-button"
@@ -229,11 +209,7 @@ export function StepperIndicator({
   return (
     <span
       {...props}
-      className={cn(
-        "stepper__indicator",
-        `stepper__indicator--${size}`,
-        className,
-      )}
+      className={cn("stepper__indicator", `stepper__indicator--${size}`, className)}
       data-slot="stepper-indicator"
       data-status={status}
     >
@@ -252,11 +228,7 @@ export function StepperContent({
   return (
     <span
       {...props}
-      className={cn(
-        "stepper__content",
-        `stepper__content--${orientation}`,
-        className,
-      )}
+      className={cn("stepper__content", `stepper__content--${orientation}`, className)}
       data-slot="stepper-content"
     >
       {children}
@@ -264,11 +236,7 @@ export function StepperContent({
   );
 }
 export type StepperTitleProps = ComponentPropsWithRef<"span">;
-export function StepperTitle({
-  children,
-  className,
-  ...props
-}: StepperTitleProps): ReactElement {
+export function StepperTitle({ children, className, ...props }: StepperTitleProps): ReactElement {
   const { size } = useContext(Context);
   return (
     <span
@@ -290,11 +258,7 @@ export function StepperDescription({
   return (
     <span
       {...props}
-      className={cn(
-        "stepper__description",
-        `stepper__description--${size}`,
-        className,
-      )}
+      className={cn("stepper__description", `stepper__description--${size}`, className)}
       data-slot="stepper-description"
     >
       {children}
@@ -302,17 +266,9 @@ export function StepperDescription({
   );
 }
 export type StepperIconProps = ComponentPropsWithRef<"span">;
-export function StepperIcon({
-  children,
-  className,
-  ...props
-}: StepperIconProps): ReactElement {
+export function StepperIcon({ children, className, ...props }: StepperIconProps): ReactElement {
   return (
-    <span
-      {...props}
-      className={cn("stepper__icon", className)}
-      data-slot="stepper-icon"
-    >
+    <span {...props} className={cn("stepper__icon", className)} data-slot="stepper-icon">
       {children}
     </span>
   );
@@ -331,37 +287,24 @@ export function StepperSeparator({
   const { index, isLast } = useContext(StepContext);
   if (isLast && !force) return null;
   const floor = Math.floor(currentStep);
-  const automatic =
-    floor > index ? 1 : floor === index ? currentStep - floor : 0;
+  const automatic = floor > index ? 1 : floor === index ? currentStep - floor : 0;
   const value = Math.min(1, Math.max(0, progress ?? automatic));
   return (
     <div
       {...props}
       aria-hidden="true"
-      className={cn(
-        "stepper__separator",
-        `stepper__separator--${orientation}`,
-        className,
-      )}
+      className={cn("stepper__separator", `stepper__separator--${orientation}`, className)}
       data-slot="stepper-separator"
     >
       <div
-        className={cn(
-          "stepper__separator-track",
-          `stepper__separator-track--${orientation}`,
-        )}
+        className={cn("stepper__separator-track", `stepper__separator-track--${orientation}`)}
         data-complete={value >= 1 || undefined}
         data-slot="stepper-separator-track"
       >
         <div
-          className={cn(
-            "stepper__separator-fill",
-            `stepper__separator-fill--${orientation}`,
-          )}
+          className={cn("stepper__separator-fill", `stepper__separator-fill--${orientation}`)}
           data-slot="stepper-separator-fill"
-          style={
-            { "--stepper-separator-progress": value } as React.CSSProperties
-          }
+          style={{ "--stepper-separator-progress": value } as React.CSSProperties}
         />
       </div>
     </div>

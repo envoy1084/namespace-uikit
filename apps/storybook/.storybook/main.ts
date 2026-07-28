@@ -1,21 +1,14 @@
+import { existsSync, readFileSync as fsReadFileSync } from "node:fs";
+import { dirname, join as pathJoin } from "node:path";
+import { fileURLToPath } from "node:url";
+
 import type { StorybookConfig } from "@storybook/react-vite";
-
-import { existsSync, readFileSync as fsReadFileSync } from "fs";
-import { dirname, join as pathJoin } from "path";
-import { fileURLToPath } from "url";
-
 import { sync as globSync } from "glob";
 
 const filename = fileURLToPath(import.meta.url);
 const storybookConfigDir = dirname(filename);
-const componentStoryGlob = pathJoin(
-  storybookConfigDir,
-  "../src/components/**/*.stories.@(ts|tsx)",
-);
-const sharedAssetsDir = pathJoin(
-  storybookConfigDir,
-  "../../docs/public/assets",
-);
+const componentStoryGlob = pathJoin(storybookConfigDir, "../src/components/**/*.stories.@(ts|tsx)");
+const sharedAssetsDir = pathJoin(storybookConfigDir, "../../docs/public/assets");
 const hasAssetCdn = Boolean(process.env.NEXT_PUBLIC_CDN_URL);
 
 export const getStories = () => {

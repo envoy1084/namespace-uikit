@@ -19,12 +19,10 @@ interface Character {
 export function AsynchronousLoading() {
   const list = useAsyncList<Character>({
     async load({ cursor, filterText, signal }) {
-      if (cursor) {
-        cursor = cursor.replace(/^http:\/\//i, "https://");
-      }
+      const normalizedCursor = cursor?.replace(/^http:\/\//i, "https://");
 
       const res = await fetch(
-        cursor || `https://swapi.py4e.com/api/people/?search=${filterText}`,
+        normalizedCursor || `https://swapi.py4e.com/api/people/?search=${filterText}`,
         {
           signal,
         },
@@ -51,9 +49,7 @@ export function AsynchronousLoading() {
         <ComboBox.Trigger />
       </ComboBox.InputGroup>
       <ComboBox.Popover>
-        <ListBox
-          renderEmptyState={() => <EmptyState>Nothing found.</EmptyState>}
-        >
+        <ListBox renderEmptyState={() => <EmptyState>Nothing found.</EmptyState>}>
           <Collection items={list.items}>
             {(item) => (
               <ListBox.Item id={item.name} textValue={item.name}>

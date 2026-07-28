@@ -52,9 +52,7 @@ const stateClass = (state: ChatToolState) =>
         : state === "requires-action"
           ? "requires-action"
           : "complete";
-export interface ChatToolRootProps extends ComponentPropsWithRef<
-  typeof Disclosure
-> {
+export interface ChatToolRootProps extends ComponentPropsWithRef<typeof Disclosure> {
   active?: boolean;
   approveLabel?: ReactNode;
   argsText?: string;
@@ -89,15 +87,14 @@ export function ChatToolRoot({
   triggerPrefix,
   ...props
 }: ChatToolRootProps): ReactElement {
-  const isActive =
-    active ?? (state === "input-streaming" || state === "input-available");
-  const hasBody = !!(
+  const isActive = active ?? (state === "input-streaming" || state === "input-available");
+  const hasBody = Boolean(
     argsText?.trim() ||
     json(input) ||
     json(output) ||
     errorText ||
     (state === "requires-action" && (onApprove || onReject)) ||
-    toolCallId
+    toolCallId,
   );
   const expandable = isExpandable ?? (children ? true : hasBody);
   return (
@@ -130,14 +127,10 @@ export function ChatToolRoot({
                   <ChatToolApproval>
                     <ChatToolApprovalActions>
                       {onReject ? (
-                        <ChatToolReject onPress={onReject}>
-                          {rejectLabel}
-                        </ChatToolReject>
+                        <ChatToolReject onPress={onReject}>{rejectLabel}</ChatToolReject>
                       ) : null}
                       {onApprove ? (
-                        <ChatToolApprove onPress={onApprove}>
-                          {approveLabel}
-                        </ChatToolApprove>
+                        <ChatToolApprove onPress={onApprove}>{approveLabel}</ChatToolApprove>
                       ) : null}
                     </ChatToolApprovalActions>
                   </ChatToolApproval>
@@ -160,18 +153,14 @@ export function ChatToolTrigger({
   children: ReactNode;
 }): ReactElement {
   const state = useContext(Context);
-  const content = state.active ? (
-    <TextShimmer>{children}</TextShimmer>
-  ) : (
-    children
-  );
+  const content = state.active ? <TextShimmer>{children}</TextShimmer> : children;
   return (
     <Disclosure.Heading>
       <Disclosure.Trigger
         className={cls("chat-tool__trigger", className)}
         data-expandable={state.expandable ? undefined : "false"}
         data-slot="chat-tool-trigger"
-        isDisabled={!!(isDisabled || !state.expandable)}
+        isDisabled={Boolean(isDisabled || !state.expandable)}
         {...props}
       >
         <span className="chat-tool__trigger-label">{content}</span>
@@ -207,12 +196,7 @@ export function ChatToolStatusIcon({
       data-slot="chat-tool-status"
     >
       {children ?? (
-        <HugeiconsIcon
-          aria-hidden
-          className="size-3.5 shrink-0"
-          icon={icon}
-          strokeWidth={2}
-        />
+        <HugeiconsIcon aria-hidden className="size-3.5 shrink-0" icon={icon} strokeWidth={2} />
       )}
     </span>
   );
@@ -252,11 +236,7 @@ export function ChatToolArgs({
 }: ArgsProps): ReactElement | null {
   const value = argsText ?? (input !== undefined ? json(input) : "");
   return children || value ? (
-    <div
-      className={cls("chat-tool__args", className)}
-      data-slot="chat-tool-args"
-      {...props}
-    >
+    <div className={cls("chat-tool__args", className)} data-slot="chat-tool-args" {...props}>
       {label ? <div className="chat-tool__args-label">{label}</div> : null}
       {children ?? (
         <CodeBlock>
@@ -280,11 +260,7 @@ export function ChatToolResult({
   if (state === "output-error") return null;
   const text = value === undefined ? "" : json(value);
   return children || text ? (
-    <div
-      className={cls("chat-tool__result", className)}
-      data-slot="chat-tool-result"
-      {...props}
-    >
+    <div className={cls("chat-tool__result", className)} data-slot="chat-tool-result" {...props}>
       {label ? <div className="chat-tool__result-label">{label}</div> : null}
       {children ?? (
         <CodeBlock>
@@ -306,11 +282,7 @@ export function ChatToolError({
 }: ErrorProps): ReactElement | null {
   const { state } = useContext(Context);
   return state !== "output-error" && !errorText && !children ? null : (
-    <div
-      className={cls("chat-tool__error", className)}
-      data-slot="chat-tool-error"
-      {...props}
-    >
+    <div className={cls("chat-tool__error", className)} data-slot="chat-tool-error" {...props}>
       {label ? <div className="chat-tool__error-label">{label}</div> : null}
       {children ?? errorText}
     </div>
@@ -322,28 +294,19 @@ const div =
     <div {...p} className={cls(base, p.className)} data-slot={slot} />
   );
 type DivPart = (p: ComponentPropsWithRef<"div">) => ReactElement;
-export const ChatToolApproval: DivPart = div(
-  "chat-tool__approval",
-  "chat-tool-approval",
-);
+export const ChatToolApproval: DivPart = div("chat-tool__approval", "chat-tool-approval");
 export const ChatToolApprovalActions: DivPart = div(
   "chat-tool__approval-actions",
   "chat-tool-approval-actions",
 );
-export function ChatToolApprove(
-  p: ComponentPropsWithRef<typeof Button>,
-): ReactElement {
-  return (
-    <Button size="sm" variant="primary" data-slot="chat-tool-approve" {...p} />
-  );
+export function ChatToolApprove(p: ComponentPropsWithRef<typeof Button>): ReactElement {
+  return <Button size="sm" variant="primary" data-slot="chat-tool-approve" {...p} />;
 }
 export function ChatToolReject({
   variant = "secondary",
   ...p
 }: ComponentPropsWithRef<typeof Button>): ReactElement {
-  return (
-    <Button size="sm" variant={variant} data-slot="chat-tool-reject" {...p} />
-  );
+  return <Button size="sm" variant={variant} data-slot="chat-tool-reject" {...p} />;
 }
 export function ChatToolMeta({
   className,
@@ -351,11 +314,7 @@ export function ChatToolMeta({
   ...props
 }: ComponentPropsWithRef<"div"> & { toolCallId: string }): ReactElement {
   return (
-    <div
-      className={cls("chat-tool__meta", className)}
-      data-slot="chat-tool-meta"
-      {...props}
-    >
+    <div className={cls("chat-tool__meta", className)} data-slot="chat-tool-meta" {...props}>
       {toolCallId}
     </div>
   );

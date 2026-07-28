@@ -1,12 +1,5 @@
 "use client";
-import type { PanelImperativeHandle } from "react-resizable-panels";
-
-import type {
-  ComponentPropsWithRef,
-  ReactElement,
-  ReactNode,
-  Ref,
-} from "react";
+import type { ComponentPropsWithRef, ReactElement, ReactNode, Ref } from "react";
 import {
   Children,
   cloneElement,
@@ -23,6 +16,7 @@ import {
 import { Button, cn, Tooltip } from "@heroui/react";
 import { Menu01Icon, PanelRightIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import type { PanelImperativeHandle } from "react-resizable-panels";
 
 import {
   Sidebar,
@@ -41,11 +35,8 @@ export interface AppLayoutContextValue {
   toggleAside: () => void;
 }
 const Context = createContext<AppLayoutContextValue | null>(null);
-export const useAppLayout = (): AppLayoutContextValue | null =>
-  useContext(Context);
-export type AppLayoutResizeBehavior =
-  | "preserve-pixel-size"
-  | "preserve-relative-size";
+export const useAppLayout = (): AppLayoutContextValue | null => useContext(Context);
+export type AppLayoutResizeBehavior = "preserve-pixel-size" | "preserve-relative-size";
 export interface AppLayoutProps extends ComponentPropsWithRef<"div"> {
   aside?: ReactNode;
   asideDefaultSize?: number | string;
@@ -104,10 +95,7 @@ const useMediaQuery = (query: string): boolean => {
   return matches;
 };
 
-const syncPanelState = (
-  panel: PanelImperativeHandle | null,
-  open: boolean,
-): void => {
+const syncPanelState = (panel: PanelImperativeHandle | null, open: boolean): void => {
   if (!panel) return;
 
   try {
@@ -118,8 +106,7 @@ const syncPanelState = (
   } catch (error) {
     if (
       !(
-        error instanceof Error &&
-        error.message.startsWith("Panel constraints not found for Panel ")
+        error instanceof Error && error.message.startsWith("Panel constraints not found for Panel ")
       )
     ) {
       throw error;
@@ -184,10 +171,7 @@ export function AppLayoutRoot({
     },
     [asideOpen, onAsideOpenChange],
   );
-  const toggleAside = useCallback(
-    () => setAsideOpen(!isAsideOpen),
-    [isAsideOpen, setAsideOpen],
-  );
+  const toggleAside = useCallback(() => setAsideOpen(!isAsideOpen), [isAsideOpen, setAsideOpen]);
   useEffect(() => {
     if (!asideToggleShortcut) return;
     const handler = (e: KeyboardEvent) => {
@@ -203,8 +187,7 @@ export function AppLayoutRoot({
   const content: ReactNode[] = [];
   Children.forEach(children, (child) => {
     if (isValidElement(child) && child.type === AppLayoutMobileAside)
-      mobileAside = (child as ReactElement<{ children: ReactNode }>).props
-        .children;
+      mobileAside = (child as ReactElement<{ children: ReactNode }>).props.children;
     else content.push(child);
   });
   const context = useMemo(
@@ -213,9 +196,7 @@ export function AppLayoutRoot({
   );
   const navbarNode = isValidElement(navbar)
     ? cloneElement(navbar, {
-        ...(navigate && !(navbar.props as { navigate?: unknown }).navigate
-          ? { navigate }
-          : {}),
+        ...(navigate && !(navbar.props as { navigate?: unknown }).navigate ? { navigate } : {}),
         "data-in-app-layout": "true",
       } as Record<string, unknown>)
     : navbar;
@@ -233,12 +214,12 @@ export function AppLayoutRoot({
           </div>
         ) : null}
         <main
-          aria-label={
-            scrollMode === "content" ? "Scrollable main content" : undefined
-          }
+          aria-label={scrollMode === "content" ? "Scrollable main content" : undefined}
           className="app-layout__main"
           data-scroll-mode={scrollMode}
           data-slot="app-layout-main"
+          // A content-scrolling main region must be keyboard focusable.
+          // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
           tabIndex={scrollMode === "content" ? 0 : undefined}
         >
           {content}
@@ -263,8 +244,7 @@ export function AppLayoutRoot({
   const isTablet = useMediaQuery("(max-width: 1024px)");
   const isMobile = useMediaQuery("(max-width: 768px)");
   const resizable = (sidebarResizable || asideResizable) && !isMobile;
-  const canResizeSidebar =
-    sidebarResizable && sidebarCollapsible !== "icon" && !isMobile;
+  const canResizeSidebar = sidebarResizable && sidebarCollapsible !== "icon" && !isMobile;
   const canResizeAside = asideResizable && !isTablet;
   const layout = resizable ? (
     <AppLayoutResizable
@@ -315,9 +295,7 @@ export function AppLayoutRoot({
       >
         {layout}
         {aside && asideMobile === "sheet" ? (
-          <AppLayoutMobileAsideDrawer>
-            {mobileAside ?? aside}
-          </AppLayoutMobileAsideDrawer>
+          <AppLayoutMobileAsideDrawer>{mobileAside ?? aside}</AppLayoutMobileAsideDrawer>
         ) : null}
       </Sidebar.Provider>
     </Context>
@@ -438,9 +416,7 @@ function AppLayoutResizable({
     <>
       {sidebar && !sidebarResizable ? sidebar : null}
       <Resizable
-        {...(resizableAutoSaveId === undefined
-          ? {}
-          : { autoSaveId: resizableAutoSaveId })}
+        {...(resizableAutoSaveId === undefined ? {} : { autoSaveId: resizableAutoSaveId })}
         className="app-layout__resizable"
         orientation="horizontal"
       >
@@ -458,29 +434,15 @@ function AppLayoutResizable({
     </>
   );
 }
-function AppLayoutMobileAsideDrawer({
-  children,
-}: {
-  children: ReactNode;
-}): ReactElement | null {
+function AppLayoutMobileAsideDrawer({ children }: { children: ReactNode }): ReactElement | null {
   const app = useAppLayout();
   const isTablet = useMediaQuery("(max-width: 1024px)");
   return app && isTablet ? (
-    <Sheet.Root
-      isOpen={app.isAsideOpen}
-      placement="right"
-      onOpenChange={app.setAsideOpen}
-    >
+    <Sheet.Root isOpen={app.isAsideOpen} placement="right" onOpenChange={app.setAsideOpen}>
       <Sheet.Backdrop variant="blur">
         <Sheet.Content className="app-layout__mobile-aside-sheet">
-          <Sheet.Dialog
-            aria-label="Application aside"
-            className="app-layout__mobile-aside-dialog"
-          >
-            <div
-              className="app-layout__mobile-aside"
-              data-slot="app-layout-mobile-aside"
-            >
+          <Sheet.Dialog aria-label="Application aside" className="app-layout__mobile-aside-dialog">
+            <div className="app-layout__mobile-aside" data-slot="app-layout-mobile-aside">
               {children}
             </div>
           </Sheet.Dialog>
@@ -505,19 +467,13 @@ const withTooltip = (
 ) =>
   content ? (
     <Tooltip
-      {...(props?.closeDelay === undefined
-        ? {}
-        : { closeDelay: props.closeDelay })}
+      {...(props?.closeDelay === undefined ? {} : { closeDelay: props.closeDelay })}
       {...(props?.delay === undefined ? {} : { delay: props.delay })}
-      {...(props?.isDisabled === undefined
-        ? {}
-        : { isDisabled: props.isDisabled })}
+      {...(props?.isDisabled === undefined ? {} : { isDisabled: props.isDisabled })}
     >
       <Tooltip.Trigger>{trigger}</Tooltip.Trigger>
       <Tooltip.Content
-        {...(props?.className === undefined
-          ? {}
-          : { className: props.className })}
+        {...(props?.className === undefined ? {} : { className: props.className })}
         {...(props?.offset === undefined ? {} : { offset: props.offset })}
         placement={props?.placement ?? "bottom"}
       >
@@ -528,9 +484,7 @@ const withTooltip = (
   ) : (
     trigger
   );
-export interface AppLayoutMenuToggleProps extends ComponentPropsWithRef<
-  typeof Button
-> {
+export interface AppLayoutMenuToggleProps extends ComponentPropsWithRef<typeof Button> {
   tooltip?: ReactNode;
   tooltipProps?: AppLayoutTooltipProps;
 }
@@ -548,27 +502,21 @@ export function AppLayoutMenuToggle({
       isIconOnly
       aria-label="Open navigation"
       className={
-        cn(
-          "app-layout__menu-toggle",
-          typeof className === "string" ? className : undefined,
-        ) ?? "app-layout__menu-toggle"
+        cn("app-layout__menu-toggle", typeof className === "string" ? className : undefined) ??
+        "app-layout__menu-toggle"
       }
       data-slot="app-layout-menu-toggle"
       size="sm"
       variant="ghost"
       onPress={() => setMobileOpen(true)}
     >
-      {children ?? (
-        <HugeiconsIcon className="size-4" icon={Menu01Icon} strokeWidth={2} />
-      )}
+      {children ?? <HugeiconsIcon className="size-4" icon={Menu01Icon} strokeWidth={2} />}
     </Button>,
     tooltip,
     tooltipProps,
   );
 }
-export interface AppLayoutAsideTriggerProps extends ComponentPropsWithRef<
-  typeof Button
-> {
+export interface AppLayoutAsideTriggerProps extends ComponentPropsWithRef<typeof Button> {
   closedTooltip?: ReactNode;
   openTooltip?: ReactNode;
   tooltipProps?: AppLayoutTooltipProps;
@@ -590,10 +538,8 @@ export function AppLayoutAsideTrigger({
       aria-expanded={open}
       aria-label="Toggle aside panel"
       className={
-        cn(
-          "app-layout__aside-trigger",
-          typeof className === "string" ? className : undefined,
-        ) ?? "app-layout__aside-trigger"
+        cn("app-layout__aside-trigger", typeof className === "string" ? className : undefined) ??
+        "app-layout__aside-trigger"
       }
       data-slot="app-layout-aside-trigger"
       data-state={open ? "open" : "closed"}
@@ -601,23 +547,13 @@ export function AppLayoutAsideTrigger({
       variant="ghost"
       onPress={() => app?.toggleAside()}
     >
-      {children ?? (
-        <HugeiconsIcon
-          className="size-4"
-          icon={PanelRightIcon}
-          strokeWidth={2}
-        />
-      )}
+      {children ?? <HugeiconsIcon className="size-4" icon={PanelRightIcon} strokeWidth={2} />}
     </Button>,
     open ? openTooltip : closedTooltip,
     tooltipProps,
   );
 }
-export function AppLayoutMobileAside({
-  children,
-}: {
-  children: ReactNode;
-}): null {
+export function AppLayoutMobileAside({ children }: { children: ReactNode }): null {
   void children;
   return null;
 }

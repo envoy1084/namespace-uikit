@@ -26,9 +26,7 @@ import { Tooltip } from "@thenamespace/uikit/tooltip";
 import emojiDataSource from "emojibase-data/en/compact.json";
 
 const emojiData = emojiDataSource.filter(
-  (emoji) =>
-    typeof emoji.label === "string" &&
-    !emoji.label.startsWith("regional indicator"),
+  (emoji) => typeof emoji.label === "string" && !emoji.label.startsWith("regional indicator"),
 );
 
 const groupIds = {
@@ -68,23 +66,20 @@ function PickerContents({ autoFocus = false }: PickerContentsProps) {
   const [tone, setTone] = useState("default");
   const gridRef = useRef<HTMLDivElement>(null);
   const items = useMemo(() => {
-    const skinIndex =
-      EMOJI_SKIN_TONES.findIndex((item) => item.id === tone) - 1;
+    const skinIndex = EMOJI_SKIN_TONES.findIndex((item) => item.id === tone) - 1;
 
     if (skinIndex < 0) return emojiData;
 
     return emojiData.map((emoji) => {
       const skin = emoji.skins?.[skinIndex];
 
-      return skin ? Object.assign({}, emoji, { unicode: skin.unicode }) : emoji;
+      return skin ? { ...emoji, unicode: skin.unicode } : emoji;
     });
   }, [tone]);
   const groupStartIndices = useMemo(() => {
     const indices: Partial<Record<keyof typeof groupIds, number>> = {};
 
-    for (const [id, group] of Object.entries(groupIds) as Array<
-      [keyof typeof groupIds, number]
-    >) {
+    for (const [id, group] of Object.entries(groupIds) as Array<[keyof typeof groupIds, number]>) {
       const index = items.findIndex((emoji) => emoji.group === group);
 
       if (index !== -1) indices[id] = index;
@@ -114,11 +109,7 @@ function PickerContents({ autoFocus = false }: PickerContentsProps) {
 
   return (
     <>
-      <SearchField
-        autoFocus={autoFocus}
-        aria-label="Search emoji"
-        variant="secondary"
-      >
+      <SearchField autoFocus={autoFocus} aria-label="Search emoji" variant="secondary">
         <SearchField.Group>
           <SearchField.SearchIcon />
           <SearchField.Input placeholder="Search emoji..." />
@@ -126,11 +117,7 @@ function PickerContents({ autoFocus = false }: PickerContentsProps) {
             <EmojiPicker.SkinToneTrigger className="mr-1" />
             <EmojiPicker.SkinToneContent>
               {EMOJI_SKIN_TONES.map((item) => (
-                <EmojiPicker.SkinToneOption
-                  aria-label={item.label}
-                  id={item.id}
-                  key={item.id}
-                >
+                <EmojiPicker.SkinToneOption aria-label={item.label} id={item.id} key={item.id}>
                   {item.emoji}
                 </EmojiPicker.SkinToneOption>
               ))}
@@ -143,11 +130,7 @@ function PickerContents({ autoFocus = false }: PickerContentsProps) {
         items={items}
         renderEmptyState={() => (
           <EmptyState className="flex h-full min-h-20 flex-1 flex-col items-center justify-center gap-2">
-            <HugeiconsIcon
-              aria-hidden
-              className="text-muted size-5"
-              icon={SmileIcon}
-            />
+            <HugeiconsIcon aria-hidden className="text-muted size-5" icon={SmileIcon} />
             No emoji found.
           </EmptyState>
         )}
@@ -174,12 +157,7 @@ function PickerContents({ autoFocus = false }: PickerContentsProps) {
                   variant="ghost"
                   onPress={() => scrollToGroup(id)}
                 >
-                  <HugeiconsIcon
-                    aria-hidden
-                    icon={icon}
-                    size={16}
-                    strokeWidth={2}
-                  />
+                  <HugeiconsIcon aria-hidden icon={icon} size={16} strokeWidth={2} />
                 </Button>
                 <Tooltip.Content placement="top">
                   <p>{label}</p>

@@ -1,14 +1,6 @@
 "use client";
 
 import type {
-  Editor,
-  EditorOptions,
-  Extensions,
-  JSONContent,
-} from "@tiptap/core";
-import type { SuggestionProps } from "@tiptap/suggestion";
-
-import type {
   ComponentProps,
   ComponentPropsWithRef,
   CSSProperties,
@@ -25,27 +17,17 @@ import {
   useState,
 } from "react";
 
-import {
-  Button,
-  cn,
-  Input,
-  Popover,
-  Separator,
-  ToggleButton,
-} from "@heroui/react";
+import { Button, cn, Input, Popover, Separator, ToggleButton } from "@heroui/react";
+import type { Editor, EditorOptions, Extensions, JSONContent } from "@tiptap/core";
 import { CharacterCount } from "@tiptap/extension-character-count";
 import { Link } from "@tiptap/extension-link";
 import { Placeholder } from "@tiptap/extension-placeholder";
 import { Underline } from "@tiptap/extension-underline";
 import { PluginKey } from "@tiptap/pm/state";
-import {
-  EditorContent,
-  EditorContext,
-  useEditor,
-  useEditorState,
-} from "@tiptap/react";
+import { EditorContent, EditorContext, useEditor, useEditorState } from "@tiptap/react";
 import { BubbleMenu, FloatingMenu } from "@tiptap/react/menus";
 import { StarterKit } from "@tiptap/starter-kit";
+import type { SuggestionProps } from "@tiptap/suggestion";
 import { Suggestion } from "@tiptap/suggestion";
 
 export type RichTextEditorCommand =
@@ -61,11 +43,7 @@ export type RichTextEditorCommand =
   | "orderedList"
   | "strike"
   | "underline";
-export type RichTextEditorAction =
-  | "clearContent"
-  | "clearFormatting"
-  | "redo"
-  | "undo";
+export type RichTextEditorAction = "clearContent" | "clearFormatting" | "redo" | "undo";
 
 export interface RichTextEditorValueChangeDetails {
   characterCount: number;
@@ -96,8 +74,7 @@ const emptyDocument: JSONContent = {
 };
 function details(editor: Editor): RichTextEditorValueChangeDetails {
   return {
-    characterCount:
-      editor.storage.characterCount?.characters() ?? editor.getText().length,
+    characterCount: editor.storage.characterCount?.characters() ?? editor.getText().length,
     html: editor.getHTML(),
     isEmpty: editor.isEmpty,
     text: editor.getText(),
@@ -117,10 +94,7 @@ export interface RichTextEditorRootProps extends Omit<
   isDisabled?: boolean;
   isReadOnly?: boolean;
   maxLength?: number;
-  onValueChange?: (
-    value: JSONContent,
-    details: RichTextEditorValueChangeDetails,
-  ) => void;
+  onValueChange?: (value: JSONContent, details: RichTextEditorValueChangeDetails) => void;
   placeholder?: string;
   value?: JSONContent;
 }
@@ -181,10 +155,7 @@ function RichTextEditorRoot({
       immediatelyRender: false,
       onUpdate: (event) => {
         callbacks.current.onUpdate?.(event);
-        callbacks.current.onValueChange?.(
-          event.editor.getJSON(),
-          details(event.editor),
-        );
+        callbacks.current.onValueChange?.(event.editor.getJSON(), details(event.editor));
       },
     },
     [editorExtensions],
@@ -206,11 +177,7 @@ function RichTextEditorRoot({
     }),
     [editor, isDisabled, isReadOnly, maxLength],
   );
-  const body = editor ? (
-    <EditorContext value={{ editor }}>{children}</EditorContext>
-  ) : (
-    children
-  );
+  const body = editor ? <EditorContext value={{ editor }}>{children}</EditorContext> : children;
   return (
     <RichTextEditorContext value={context}>
       <div
@@ -233,19 +200,13 @@ function slotDiv(slot: string) {
     ...props
   }: ComponentPropsWithRef<"div">): ReactElement {
     return (
-      <div
-        {...props}
-        className={cn(slot, className)}
-        data-slot={slot.replaceAll("__", "-")}
-      >
+      <div {...props} className={cn(slot, className)} data-slot={slot.replaceAll("__", "-")}>
         {children}
       </div>
     );
   };
 }
-const RichTextEditorShell: ReturnType<typeof slotDiv> = slotDiv(
-  "rich-text-editor__shell",
-);
+const RichTextEditorShell: ReturnType<typeof slotDiv> = slotDiv("rich-text-editor__shell");
 function RichTextEditorToolbarGroup({
   children,
   className,
@@ -262,9 +223,7 @@ function RichTextEditorToolbarGroup({
     </div>
   );
 }
-const RichTextEditorFooter: ReturnType<typeof slotDiv> = slotDiv(
-  "rich-text-editor__footer",
-);
+const RichTextEditorFooter: ReturnType<typeof slotDiv> = slotDiv("rich-text-editor__footer");
 
 export interface RichTextEditorToolbarProps extends ComponentPropsWithRef<"div"> {
   orientation?: "horizontal" | "vertical";
@@ -417,15 +376,11 @@ function RichTextEditorToggleButton({
       canRun: current ? canRun(current, command) : false,
     }),
   });
-  const disabled =
-    rootDisabled || isReadOnly || isDisabled || !editor || !state?.canRun;
+  const disabled = rootDisabled || isReadOnly || isDisabled || !editor || !state?.canRun;
   return (
     <ToggleButton
       {...props}
-      aria-label={
-        ariaLabel ??
-        (typeof tooltip === "string" ? tooltip : commandLabels[command])
-      }
+      aria-label={ariaLabel ?? (typeof tooltip === "string" ? tooltip : commandLabels[command])}
       className={(renderProps) =>
         cn(
           "rich-text-editor__toolbar-button",
@@ -450,9 +405,7 @@ function RichTextEditorToggleButton({
   );
 }
 
-export interface RichTextEditorActionButtonProps extends ComponentProps<
-  typeof Button
-> {
+export interface RichTextEditorActionButtonProps extends ComponentProps<typeof Button> {
   action: RichTextEditorAction;
   tooltip?: ReactNode;
 }
@@ -481,8 +434,7 @@ function RichTextEditorActionButton({
       return !current.isEmpty;
     },
   });
-  const disabled =
-    rootDisabled || isReadOnly || isDisabled || !editor || !canInvoke;
+  const disabled = rootDisabled || isReadOnly || isDisabled || !editor || !canInvoke;
   const invoke = () => {
     if (!editor || disabled) return;
     const chain = editor.chain().focus();
@@ -548,13 +500,13 @@ function RichTextEditorCommandButton({
   const selected = editor
     ? typeof isActive === "function"
       ? isActive(editor)
-      : !!isActive
+      : Boolean(isActive)
     : false;
   const disabled =
     rootDisabled ||
     isReadOnly ||
     !editor ||
-    (typeof isDisabled === "function" ? isDisabled(editor) : !!isDisabled);
+    (typeof isDisabled === "function" ? isDisabled(editor) : Boolean(isDisabled));
   return (
     <Button
       {...props}
@@ -594,10 +546,7 @@ function RichTextEditorContent({
       editor={editor}
     />
   ) : (
-    <div
-      className="rich-text-editor__loading"
-      data-slot="rich-text-editor-loading"
-    />
+    <div className="rich-text-editor__loading" data-slot="rich-text-editor-loading" />
   );
 }
 
@@ -620,10 +569,7 @@ function RichTextEditorBubbleMenu({
           : context.editor.isFocused && !context.editor.state.selection.empty)
       }
     >
-      <div
-        className="rich-text-editor__bubble-menu-toolbar toolbar"
-        role="toolbar"
-      >
+      <div className="rich-text-editor__bubble-menu-toolbar toolbar" role="toolbar">
         {children}
       </div>
     </BubbleMenu>
@@ -637,11 +583,7 @@ function RichTextEditorFloatingMenu({
 }: Omit<ComponentProps<typeof FloatingMenu>, "editor">): ReactElement | null {
   const { editor, isDisabled, isReadOnly } = useRichTextEditor();
   const visibility =
-    isDisabled || isReadOnly
-      ? { shouldShow: () => false }
-      : shouldShow
-        ? { shouldShow }
-        : {};
+    isDisabled || isReadOnly ? { shouldShow: () => false } : shouldShow ? { shouldShow } : {};
   return editor ? (
     <FloatingMenu
       {...props}
@@ -649,10 +591,7 @@ function RichTextEditorFloatingMenu({
       className={cn("rich-text-editor__floating-menu", className)}
       editor={editor}
     >
-      <div
-        className="rich-text-editor__floating-menu-toolbar toolbar"
-        role="toolbar"
-      >
+      <div className="rich-text-editor__floating-menu-toolbar toolbar" role="toolbar">
         {children}
       </div>
     </FloatingMenu>
@@ -665,11 +604,7 @@ export interface RichTextEditorCharacterCountProps extends Omit<
 > {
   children?:
     | ReactNode
-    | ((stats: {
-        characters: number;
-        isEmpty: boolean;
-        words: number;
-      }) => ReactNode);
+    | ((stats: { characters: number; isEmpty: boolean; words: number }) => ReactNode);
   showWords?: boolean;
 }
 function RichTextEditorCharacterCount({
@@ -700,9 +635,7 @@ function RichTextEditorCharacterCount({
     <span
       {...props}
       className={cn("rich-text-editor__character-count", className)}
-      data-over-limit={
-        (maxLength !== undefined && value.characters > maxLength) || undefined
-      }
+      data-over-limit={(maxLength !== undefined && value.characters > maxLength) || undefined}
       data-slot="rich-text-editor-character-count"
     >
       {content}
@@ -721,15 +654,10 @@ const LinkContext = createContext<LinkContextValue | null>(null);
 function useLinkContext(): LinkContextValue {
   const value = useContext(LinkContext);
   if (!value)
-    throw new Error(
-      "RichTextEditor.LinkPopover subcomponents must be used within LinkPopover",
-    );
+    throw new Error("RichTextEditor.LinkPopover subcomponents must be used within LinkPopover");
   return value;
 }
-function LinkPopoverRoot({
-  children,
-  ...props
-}: ComponentProps<typeof Popover>): ReactElement {
+function LinkPopoverRoot({ children, ...props }: ComponentProps<typeof Popover>): ReactElement {
   const { editor, isDisabled, isReadOnly } = useRichTextEditor();
   const [href, setHref] = useState("");
   const disabled = isDisabled || isReadOnly || !editor;
@@ -742,16 +670,13 @@ function LinkPopoverRoot({
         .focus()
         .extendMarkRange("link")
         .setLink({
-          href: /^(https?:\/\/|mailto:|tel:)/.test(value)
-            ? value
-            : `https://${value}`,
+          href: /^(https?:\/\/|mailto:|tel:)/.test(value) ? value : `https://${value}`,
         })
         .run();
     else editor.chain().focus().extendMarkRange("link").unsetLink().run();
   }, [disabled, editor, href]);
   const unset = useCallback(() => {
-    if (editor && !disabled)
-      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+    if (editor && !disabled) editor.chain().focus().extendMarkRange("link").unsetLink().run();
   }, [disabled, editor]);
   return (
     <LinkContext value={{ apply, href, isDisabled: disabled, setHref, unset }}>
@@ -810,9 +735,7 @@ function LinkPopoverContent({
       {...props}
     >
       <Popover.Arrow />
-      <Popover.Dialog className="rich-text-editor__link-popover-content">
-        {children}
-      </Popover.Dialog>
+      <Popover.Dialog className="rich-text-editor__link-popover-content">{children}</Popover.Dialog>
     </Popover.Content>
   );
 }
@@ -823,8 +746,7 @@ function LinkPopoverInput(props: ComponentProps<typeof Input>): ReactElement {
       {...props}
       aria-label={props["aria-label"] ?? "Link URL"}
       className={
-        cn("rich-text-editor__link-input", props.className) ??
-        "rich-text-editor__link-input"
+        cn("rich-text-editor__link-input", props.className) ?? "rich-text-editor__link-input"
       }
       disabled={isDisabled || props.disabled || false}
       placeholder={props.placeholder ?? "https://example.com"}
@@ -849,7 +771,7 @@ function LinkApplyButton({
     <Button
       {...props}
       data-slot="rich-text-editor-link-apply-button"
-      isDisabled={!!(isDisabled || props.isDisabled || !href.trim())}
+      isDisabled={Boolean(isDisabled || props.isDisabled || !href.trim())}
       size={props.size ?? "sm"}
       variant={props.variant ?? "primary"}
       onPress={(event) => {
@@ -870,7 +792,7 @@ function LinkUnsetButton({
     <Button
       {...props}
       data-slot="rich-text-editor-link-unset-button"
-      isDisabled={!!(isDisabled || props.isDisabled)}
+      isDisabled={Boolean(isDisabled || props.isDisabled)}
       size={props.size ?? "sm"}
       variant={props.variant ?? "tertiary"}
       onPress={(event) => {
@@ -891,18 +813,15 @@ type LinkPopoverComponent = typeof LinkPopoverRoot & {
   Trigger: typeof LinkPopoverTrigger;
   UnsetButton: typeof LinkUnsetButton;
 };
-const RichTextEditorLinkPopover: LinkPopoverComponent = Object.assign(
-  LinkPopoverRoot,
-  {
-    Actions: LinkPopoverActions,
-    ApplyButton: LinkApplyButton,
-    Content: LinkPopoverContent,
-    Input: LinkPopoverInput,
-    Root: LinkPopoverRoot,
-    Trigger: LinkPopoverTrigger,
-    UnsetButton: LinkUnsetButton,
-  },
-);
+const RichTextEditorLinkPopover: LinkPopoverComponent = Object.assign(LinkPopoverRoot, {
+  Actions: LinkPopoverActions,
+  ApplyButton: LinkApplyButton,
+  Content: LinkPopoverContent,
+  Input: LinkPopoverInput,
+  Root: LinkPopoverRoot,
+  Trigger: LinkPopoverTrigger,
+  UnsetButton: LinkUnsetButton,
+});
 
 export interface RichTextEditorSuggestionItem {
   command?: (props: {
@@ -926,9 +845,7 @@ export interface RichTextEditorSuggestionMenuProps extends Omit<
   items: (props: {
     editor: Editor;
     query: string;
-  }) =>
-    | RichTextEditorSuggestionItem[]
-    | Promise<RichTextEditorSuggestionItem[]>;
+  }) => RichTextEditorSuggestionItem[] | Promise<RichTextEditorSuggestionItem[]>;
   maxHeight?: number;
   onSelect?: (props: {
     editor: Editor;
@@ -962,15 +879,11 @@ function RichTextEditorSuggestionMenu({
     menuRef.current = value;
     setMenu(value);
   }, []);
-  const updateSelectedIndex = useCallback(
-    (value: number | ((current: number) => number)) => {
-      const next =
-        typeof value === "function" ? value(selectedIndexRef.current) : value;
-      selectedIndexRef.current = next;
-      setSelectedIndex(next);
-    },
-    [],
-  );
+  const updateSelectedIndex = useCallback((value: number | ((current: number) => number)) => {
+    const next = typeof value === "function" ? value(selectedIndexRef.current) : value;
+    selectedIndexRef.current = next;
+    setSelectedIndex(next);
+  }, []);
   const select = useCallback(
     (index: number, current = menuRef.current) => {
       if (!current) return;
@@ -999,16 +912,13 @@ function RichTextEditorSuggestionMenu({
   );
   useEffect(() => {
     if (!editor || isDisabled || isReadOnly) return;
-    const pluginKey = new PluginKey(
-      `rich-text-editor-suggestion-${char.codePointAt(0) ?? 0}`,
-    );
+    const pluginKey = new PluginKey(`rich-text-editor-suggestion-${char.codePointAt(0) ?? 0}`);
     const plugin = Suggestion<RichTextEditorSuggestionItem>({
       char,
       decorationClass: "rich-text-editor__suggestion-decoration",
       editor,
       pluginKey,
-      items: ({ editor: current, query }) =>
-        latest.current.items({ editor: current, query }),
+      items: ({ editor: current, query }) => latest.current.items({ editor: current, query }),
       command: () => undefined,
       render: () => ({
         onStart: (suggestionProps) => {
@@ -1034,9 +944,7 @@ function RichTextEditorSuggestionMenu({
           if (event.key === "ArrowUp" || event.key === "ArrowDown") {
             updateSelectedIndex((value) => {
               const count = menuRef.current?.props.items.length ?? 1;
-              return event.key === "ArrowUp"
-                ? (value + count - 1) % count
-                : (value + 1) % count;
+              return event.key === "ArrowUp" ? (value + count - 1) % count : (value + 1) % count;
             });
             return true;
           }
@@ -1053,15 +961,7 @@ function RichTextEditorSuggestionMenu({
       editor.unregisterPlugin(pluginKey);
       updateMenu(null);
     };
-  }, [
-    char,
-    editor,
-    isDisabled,
-    isReadOnly,
-    select,
-    updateMenu,
-    updateSelectedIndex,
-  ]);
+  }, [char, editor, isDisabled, isReadOnly, select, updateMenu, updateSelectedIndex]);
   if (!menu) return null;
   const rect = menu.clientRect?.();
   const position: CSSProperties = rect
@@ -1135,25 +1035,22 @@ type RichTextEditorComponent = typeof RichTextEditorRoot & {
   ToolbarGroup: typeof RichTextEditorToolbarGroup;
   ToolbarSeparator: typeof RichTextEditorToolbarSeparator;
 };
-export const RichTextEditor: RichTextEditorComponent = Object.assign(
-  RichTextEditorRoot,
-  {
-    ActionButton: RichTextEditorActionButton,
-    BubbleMenu: RichTextEditorBubbleMenu,
-    CharacterCount: RichTextEditorCharacterCount,
-    CommandButton: RichTextEditorCommandButton,
-    Content: RichTextEditorContent,
-    FloatingMenu: RichTextEditorFloatingMenu,
-    Footer: RichTextEditorFooter,
-    LinkPopover: RichTextEditorLinkPopover,
-    Root: RichTextEditorRoot,
-    Shell: RichTextEditorShell,
-    SuggestionMenu: RichTextEditorSuggestionMenu,
-    ToggleButton: RichTextEditorToggleButton,
-    Toolbar: RichTextEditorToolbar,
-    ToolbarGroup: RichTextEditorToolbarGroup,
-    ToolbarSeparator: RichTextEditorToolbarSeparator,
-  },
-);
+export const RichTextEditor: RichTextEditorComponent = Object.assign(RichTextEditorRoot, {
+  ActionButton: RichTextEditorActionButton,
+  BubbleMenu: RichTextEditorBubbleMenu,
+  CharacterCount: RichTextEditorCharacterCount,
+  CommandButton: RichTextEditorCommandButton,
+  Content: RichTextEditorContent,
+  FloatingMenu: RichTextEditorFloatingMenu,
+  Footer: RichTextEditorFooter,
+  LinkPopover: RichTextEditorLinkPopover,
+  Root: RichTextEditorRoot,
+  Shell: RichTextEditorShell,
+  SuggestionMenu: RichTextEditorSuggestionMenu,
+  ToggleButton: RichTextEditorToggleButton,
+  Toolbar: RichTextEditorToolbar,
+  ToolbarGroup: RichTextEditorToolbarGroup,
+  ToolbarSeparator: RichTextEditorToolbarSeparator,
+});
 
 export type { Editor, Extensions, JSONContent };

@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
-import type { Key } from "@/components/utilities/rac";
-
 import React from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { cn } from "tailwind-variants";
+
+import type { Key } from "@/components/utilities/rac";
 
 import { Tabs } from "./index";
 
@@ -81,9 +80,7 @@ const VerticalTemplate = (args: Story["args"]) => {
         </Tabs.ListContainer>
         <Tabs.Panel className="px-4" id="account">
           <h3 className="mb-2 font-semibold">Account Settings</h3>
-          <p className="text-sm text-gray-600">
-            Manage your account information and preferences.
-          </p>
+          <p className="text-sm text-gray-600">Manage your account information and preferences.</p>
         </Tabs.Panel>
         <Tabs.Panel className="px-4" id="security">
           <h3 className="mb-2 font-semibold">Security Settings</h3>
@@ -178,11 +175,7 @@ const ControlledSelectionTemplate = (args: Story["args"]) => {
   return (
     <div className="w-[600px]">
       <p className="my-2">Selected: {selectedKey}</p>
-      <Tabs
-        selectedKey={selectedKey}
-        onSelectionChange={setSelectedKey}
-        {...args}
-      >
+      <Tabs selectedKey={selectedKey} onSelectionChange={setSelectedKey} {...args}>
         <Tabs.ListContainer>
           <Tabs.List aria-label="Tabs with controlled options">
             <Tabs.Tab id="active">
@@ -341,9 +334,7 @@ const SecondaryVerticalTemplate = (args: Story["args"]) => {
         </Tabs.ListContainer>
         <Tabs.Panel className="px-4" id="account">
           <h3 className="mb-2 font-semibold">Account Settings</h3>
-          <p className="text-sm text-gray-600">
-            Manage your account information and preferences.
-          </p>
+          <p className="text-sm text-gray-600">Manage your account information and preferences.</p>
         </Tabs.Panel>
         <Tabs.Panel className="px-4" id="security">
           <h3 className="mb-2 font-semibold">Security Settings</h3>
@@ -402,6 +393,7 @@ const Showcase1Template = (args: Story["args"]) => {
         <div className="relative aspect-[7/5] w-full max-w-[840px] sm:h-[400px] md:h-[500px] lg:h-[600px]">
           {Object.keys(zoomImgMap).map((key) => (
             <img
+              alt=""
               key={key}
               aria-hidden={selectedZoom !== key}
               className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity delay-200 duration-[800ms] ease-in-out data-[selected=true]:opacity-100 data-[selected=true]:delay-0"
@@ -410,11 +402,7 @@ const Showcase1Template = (args: Story["args"]) => {
             />
           ))}
         </div>
-        <Tabs
-          {...args}
-          defaultSelectedKey={DEFAULT_ZOOM}
-          onSelectionChange={setSelectedZoom}
-        >
+        <Tabs {...args} defaultSelectedKey={DEFAULT_ZOOM} onSelectionChange={setSelectedZoom}>
           <Tabs.ListContainer className="scrollbar-hide my-4 w-full max-w-full overflow-x-auto sm:my-6">
             <Tabs.List
               aria-label="Options"
@@ -451,11 +439,7 @@ const Showcase1Template = (args: Story["args"]) => {
           ))}
         </div>
         <footer className="text-muted/30 mt-4 w-full px-4 text-center text-xs sm:text-sm">
-          <a
-            href="https://www.apple.com/iphone-17-pro/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <a href="https://www.apple.com/iphone-17-pro/" rel="noopener noreferrer" target="_blank">
             Showcase based on Apple&apos;s iPhone 17 Pro camera zoom showcase
           </a>
         </footer>

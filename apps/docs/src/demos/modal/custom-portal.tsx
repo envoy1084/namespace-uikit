@@ -6,9 +6,7 @@ import { Button, Modal } from "@thenamespace/uikit";
 
 export function CustomPortal() {
   const portalRef = useRef<HTMLDivElement>(null);
-  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(
-    null,
-  );
+  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
 
   const setPortalRef = useCallback((node: HTMLDivElement | null) => {
     portalRef.current = node;
@@ -19,15 +17,11 @@ export function CustomPortal() {
     <div className="flex flex-col gap-4">
       <div>
         <p className="text-sm">
-          Render modals inside a custom container instead of{" "}
-          <code>document.body</code>
+          Render modals inside a custom container instead of <code>document.body</code>
         </p>
         <p className="text-muted text-sm">
-          Apply{" "}
-          <code className="rounded px-1 py-0.5 text-xs">
-            transform: translateZ(0)
-          </code>{" "}
-          to the container to create a new stacking context.
+          Apply <code className="rounded px-1 py-0.5 text-xs">transform: translateZ(0)</code> to the
+          container to create a new stacking context.
         </p>
       </div>
       <div
@@ -36,13 +30,10 @@ export function CustomPortal() {
         // new stacking context
         style={{ transform: "translate(0)" }}
       >
-        {!!portalContainer && (
+        {portalContainer ? (
           <Modal>
             <Button>Open Modal</Button>
-            <Modal.Backdrop
-              className="h-full"
-              UNSTABLE_portalContainer={portalContainer}
-            >
+            <Modal.Backdrop className="h-full" UNSTABLE_portalContainer={portalContainer}>
               <Modal.Container className="h-full max-h-full">
                 <Modal.Dialog className="h-full max-h-full sm:max-w-md">
                   <Modal.CloseTrigger />
@@ -51,22 +42,19 @@ export function CustomPortal() {
                   </Modal.Header>
                   <Modal.Body>
                     <p className="text-muted text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                      nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                     <p className="text-muted text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                      nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                     <p className="text-muted text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                      nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                   </Modal.Body>
                   <Modal.Footer>
@@ -78,7 +66,7 @@ export function CustomPortal() {
               </Modal.Container>
             </Modal.Backdrop>
           </Modal>
-        )}
+        ) : null}
       </div>
     </div>
   );

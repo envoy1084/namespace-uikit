@@ -1,17 +1,9 @@
+import React, { useMemo, useState } from "react";
+
 import type { Meta, StoryObj } from "@storybook/react";
 
 import type { Key } from "@/components";
-
-import React, { useMemo, useState } from "react";
-
-import {
-  Avatar,
-  Description,
-  EmptyState,
-  ErrorMessage,
-  Label,
-  Tag,
-} from "@/components";
+import { Avatar, Description, EmptyState, ErrorMessage, Label, Tag } from "@/components";
 import { Icon } from "@/icon";
 import { useListData } from "@/index";
 
@@ -140,9 +132,7 @@ export const Disabled: Story = {
 
 export const SelectionModes: Story = {
   render: () => {
-    const [singleSelected, setSingleSelected] = useState<Iterable<Key>>(
-      new Set(["news"]),
-    );
+    const [singleSelected, setSingleSelected] = useState<Iterable<Key>>(new Set(["news"]));
     const [multipleSelected, setMultipleSelected] = useState<Iterable<Key>>(
       new Set(["news", "travel"]),
     );
@@ -185,9 +175,7 @@ export const SelectionModes: Story = {
 
 export const Controlled: Story = {
   render: () => {
-    const [selected, setSelected] = useState<Iterable<Key>>(
-      new Set(["news", "travel"]),
-    );
+    const [selected, setSelected] = useState<Iterable<Key>>(new Set(["news", "travel"]));
 
     return (
       <div className="flex flex-col gap-3">
@@ -204,10 +192,7 @@ export const Controlled: Story = {
             <Tag id="shopping">Shopping</Tag>
           </TagGroup.List>
           <Description>
-            Selected:{" "}
-            {Array.from(selected).length > 0
-              ? Array.from(selected).join(", ")
-              : "None"}
+            Selected: {Array.from(selected).length > 0 ? Array.from(selected).join(", ") : "None"}
           </Description>
         </TagGroup>
       </div>
@@ -219,10 +204,7 @@ export const WithErrorMessage: Story = {
   render: () => {
     const [selected, setSelected] = useState<Iterable<Key>>(new Set());
 
-    const isInvalid = useMemo(
-      () => Array.from(selected).length === 0,
-      [selected],
-    );
+    const isInvalid = useMemo(() => Array.from(selected).length === 0, [selected]);
 
     return (
       <TagGroup
@@ -241,11 +223,9 @@ export const WithErrorMessage: Story = {
         <Description>
           {isInvalid
             ? "Select at least one category"
-            : "Selected: " + Array.from(selected).join(", ")}
+            : `Selected: ${Array.from(selected).join(", ")}`}
         </Description>
-        {!!isInvalid && (
-          <ErrorMessage>Please select at least one category</ErrorMessage>
-        )}
+        {Boolean(isInvalid) && <ErrorMessage>Please select at least one category</ErrorMessage>}
       </TagGroup>
     );
   },
@@ -341,9 +321,7 @@ export const WithRemoveButton: Story = {
             <Label>Default Remove Button</Label>
             <TagGroup.List
               items={tags}
-              renderEmptyState={() => (
-                <EmptyState className="p-1">No categories found</EmptyState>
-              )}
+              renderEmptyState={() => <EmptyState className="p-1">No categories found</EmptyState>}
             >
               {(tag) => (
                 <Tag key={tag.name} id={tag.id} textValue={tag.name}>
@@ -360,16 +338,14 @@ export const WithRemoveButton: Story = {
             <Label>Custom Remove Button (Render Props)</Label>
             <TagGroup.List
               items={frameworks}
-              renderEmptyState={() => (
-                <EmptyState className="p-1">No frameworks found</EmptyState>
-              )}
+              renderEmptyState={() => <EmptyState className="p-1">No frameworks found</EmptyState>}
             >
               {(tag) => (
                 <Tag key={tag.id} id={tag.id} textValue={tag.name}>
                   {(renderProps) => (
                     <>
                       {tag.name}
-                      {!!renderProps.allowsRemoving && (
+                      {Boolean(renderProps.allowsRemoving) && (
                         <Tag.RemoveButton>
                           <Icon icon="hugeicons:circle-xmark-fill" />
                         </Tag.RemoveButton>
@@ -379,9 +355,7 @@ export const WithRemoveButton: Story = {
                 </Tag>
               )}
             </TagGroup.List>
-            <Description>
-              Custom remove button with icon using render props
-            </Description>
+            <Description>Custom remove button with icon using render props</Description>
           </TagGroup>
         </div>
 
@@ -390,9 +364,7 @@ export const WithRemoveButton: Story = {
             <Label>Custom Remove Button (Compound Component)</Label>
             <TagGroup.List
               items={frameworks}
-              renderEmptyState={() => (
-                <EmptyState className="p-1">No frameworks found</EmptyState>
-              )}
+              renderEmptyState={() => <EmptyState className="p-1">No frameworks found</EmptyState>}
             >
               {(tag) => (
                 <Tag key={tag.id} id={tag.id} textValue={tag.name}>
@@ -403,9 +375,7 @@ export const WithRemoveButton: Story = {
                 </Tag>
               )}
             </TagGroup.List>
-            <Description>
-              Custom remove button using compound component pattern
-            </Description>
+            <Description>Custom remove button using compound component pattern</Description>
           </TagGroup>
         </div>
       </div>
@@ -480,9 +450,7 @@ export const WithListData: Story = {
           <Label>Team Members</Label>
           <TagGroup.List
             items={list.items}
-            renderEmptyState={() => (
-              <EmptyState className="p-1">No team members</EmptyState>
-            )}
+            renderEmptyState={() => <EmptyState className="p-1">No team members</EmptyState>}
           >
             {(user) => (
               <Tag key={user.id} id={user.id} textValue={user.name}>
@@ -496,32 +464,31 @@ export const WithListData: Story = {
           </TagGroup.List>
           <Description>Select team members for your project</Description>
         </TagGroup>
-        {list.selectedKeys !== "all" &&
-          Array.from(list.selectedKeys).length > 0 && (
-            <div className="mt-4 flex flex-col gap-2">
-              <p className="text-muted text-sm font-medium">Selected:</p>
-              <div className="flex flex-wrap gap-2">
-                {Array.from(list.selectedKeys).map((key) => {
-                  const user = list.getItem(key);
+        {list.selectedKeys !== "all" && Array.from(list.selectedKeys).length > 0 && (
+          <div className="mt-4 flex flex-col gap-2">
+            <p className="text-muted text-sm font-medium">Selected:</p>
+            <div className="flex flex-wrap gap-2">
+              {Array.from(list.selectedKeys).map((key) => {
+                const user = list.getItem(key);
 
-                  if (!user) return null;
+                if (!user) return null;
 
-                  return (
-                    <div
-                      key={`${user.id}-selected`}
-                      className="bg-surface-tertiary flex items-center gap-2 rounded-lg px-2 py-1"
-                    >
-                      <Avatar className="size-4" size="sm">
-                        <Avatar.Image src={user.avatar} />
-                        <Avatar.Fallback>{user.fallback}</Avatar.Fallback>
-                      </Avatar>
-                      <span className="text-sm">{user.name}</span>
-                    </div>
-                  );
-                })}
-              </div>
+                return (
+                  <div
+                    key={`${user.id}-selected`}
+                    className="bg-surface-tertiary flex items-center gap-2 rounded-lg px-2 py-1"
+                  >
+                    <Avatar className="size-4" size="sm">
+                      <Avatar.Image src={user.avatar} />
+                      <Avatar.Fallback>{user.fallback}</Avatar.Fallback>
+                    </Avatar>
+                    <span className="text-sm">{user.name}</span>
+                  </div>
+                );
+              })}
             </div>
-          )}
+          </div>
+        )}
       </div>
     );
   },

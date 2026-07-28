@@ -1,7 +1,5 @@
 "use client";
 
-import type { CalendarDate } from "@internationalized/date";
-
 import type {
   ComponentPropsWithRef,
   CSSProperties,
@@ -10,22 +8,12 @@ import type {
   ReactElement,
   ReactNode,
 } from "react";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 
 import { Button, cn } from "@heroui/react";
-import {
-  ArrowDown01Icon,
-  ArrowLeft01Icon,
-  ArrowRight01Icon,
-} from "@hugeicons/core-free-icons";
+import { ArrowDown01Icon, ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import type { CalendarDate } from "@internationalized/date";
 import {
   CalendarDateTime,
   getLocalTimeZone,
@@ -56,21 +44,10 @@ export interface AgendaStateOptions {
   endHour?: number;
   events: AgendaEventData[];
   onDateChange?: (date: CalendarDate) => void;
-  onEventCreate?: (event: {
-    end: CalendarDateTime;
-    start: CalendarDateTime;
-  }) => void;
+  onEventCreate?: (event: { end: CalendarDateTime; start: CalendarDateTime }) => void;
   onEventDelete?: (id: string) => void;
-  onEventMove?: (
-    id: string,
-    start: CalendarDateTime,
-    end: CalendarDateTime,
-  ) => void;
-  onEventResize?: (
-    id: string,
-    start: CalendarDateTime,
-    end: CalendarDateTime,
-  ) => void;
+  onEventMove?: (id: string, start: CalendarDateTime, end: CalendarDateTime) => void;
+  onEventResize?: (id: string, start: CalendarDateTime, end: CalendarDateTime) => void;
   onEventSelect?: (id: null | string) => void;
   onViewChange?: (view: AgendaView) => void;
   selectedEventId?: null | string;
@@ -91,9 +68,7 @@ export interface AgendaDropPreview {
   heightPx?: number;
   topPx?: number;
 }
-export type AgendaDragState =
-  | { type: "idle" }
-  | { eventId: string; type: "moving" | "resizing" };
+export type AgendaDragState = { type: "idle" } | { eventId: string; type: "moving" | "resizing" };
 export interface AgendaState {
   allDayCountPerDay: number[];
   allDayLayout: AgendaLayoutItem[];
@@ -110,10 +85,7 @@ export interface AgendaState {
     rowCount: number;
     rowCountPerCol: number[];
   };
-  getPerCellEvents: (
-    date: CalendarDate,
-    week: CalendarDate[],
-  ) => AgendaEventData[];
+  getPerCellEvents: (date: CalendarDate, week: CalendarDate[]) => AgendaEventData[];
   goToNext: () => void;
   goToPrevious: () => void;
   goToToday: () => void;
@@ -139,36 +111,21 @@ export interface AgendaState {
 }
 function eventOnDate(event: AgendaEventData, date: CalendarDate): boolean {
   return (
-    isSameDay(event.start, date) ||
-    (event.start.compare(date) <= 0 && event.end.compare(date) >= 0)
+    isSameDay(event.start, date) || (event.start.compare(date) <= 0 && event.end.compare(date) >= 0)
   );
 }
 
-function dateTimeAt(
-  date: CalendarDate,
-  startHour: number,
-  minutes: number,
-): CalendarDateTime {
+function dateTimeAt(date: CalendarDate, startHour: number, minutes: number): CalendarDateTime {
   const total = startHour * 60 + minutes;
-  return new CalendarDateTime(
-    date.year,
-    date.month,
-    date.day,
-    Math.floor(total / 60),
-    total % 60,
-  );
+  return new CalendarDateTime(date.year, date.month, date.day, Math.floor(total / 60), total % 60);
 }
 
 export function useAgenda(options: AgendaStateOptions): AgendaState {
   const zone = getLocalTimeZone();
   const now = today(zone);
-  const [internalView, setInternalView] = useState<AgendaView>(
-    options.defaultView ?? "week",
-  );
+  const [internalView, setInternalView] = useState<AgendaView>(options.defaultView ?? "week");
   const view = options.view ?? internalView;
-  const [internalDate, setInternalDate] = useState<CalendarDate>(
-    options.defaultDate ?? now,
-  );
+  const [internalDate, setInternalDate] = useState<CalendarDate>(options.defaultDate ?? now);
   const date = options.date ?? internalDate;
   const [internalSelected, setInternalSelected] = useState<null | string>(
     options.defaultSelectedEventId ?? null,
@@ -176,9 +133,7 @@ export function useAgenda(options: AgendaStateOptions): AgendaState {
   const selectedEventId = options.selectedEventId ?? internalSelected;
   const [isAllDayExpanded, setAllDayExpanded] = useState(true);
   const [dragState, setDragState] = useState<AgendaDragState>({ type: "idle" });
-  const [dropPreview, setDropPreview] = useState<AgendaDropPreview | null>(
-    null,
-  );
+  const [dropPreview, setDropPreview] = useState<AgendaDropPreview | null>(null);
   const weekDays = options.weekDays ?? 7;
   const setView = useCallback(
     (value: AgendaView) => {
@@ -207,29 +162,22 @@ export function useAgenda(options: AgendaStateOptions): AgendaState {
       weekDays >= 7
         ? startOfWeek(date, "en-GB")
         : date.subtract({ days: Math.floor(weekDays / 2) });
-    return Array.from({ length: weekDays }, (_, index) =>
-      base.add({ days: index }),
-    );
+    return Array.from({ length: weekDays }, (_, index) => base.add({ days: index }));
   }, [date, view, weekDays]);
   const visibleWeeks = useMemo(() => {
     if (view !== "month") return [];
     const start = startOfWeek(date.set({ day: 1 }), "en-GB");
     return Array.from({ length: 6 }, (_, row) =>
-      Array.from({ length: 7 }, (_value, column) =>
-        start.add({ days: row * 7 + column }),
-      ),
+      Array.from({ length: 7 }, (_value, column) => start.add({ days: row * 7 + column })),
     );
   }, [date, view]);
   const getEventsForDay = useCallback(
     (day: CalendarDate) =>
-      options.events.filter(
-        (event) => !event.isAllDay && eventOnDate(event, day),
-      ),
+      options.events.filter((event) => !event.isAllDay && eventOnDate(event, day)),
     [options.events],
   );
   const getAllEventsForDay = useCallback(
-    (day: CalendarDate) =>
-      options.events.filter((event) => eventOnDate(event, day)),
+    (day: CalendarDate) => options.events.filter((event) => eventOnDate(event, day)),
     [options.events],
   );
   const getEventLayout = useCallback(
@@ -274,10 +222,7 @@ export function useAgenda(options: AgendaStateOptions): AgendaState {
       }
       const rowCountPerCol = week.map((_day, index) =>
         items
-          .filter(
-            (item) =>
-              index >= item.colStart && index < item.colStart + item.colSpan,
-          )
+          .filter((item) => index >= item.colStart && index < item.colStart + item.colSpan)
           .reduce((max, item) => Math.max(max, item.row + 1), 0),
       );
       return { items, rowCount: rowEnds.length, rowCountPerCol };
@@ -294,10 +239,7 @@ export function useAgenda(options: AgendaStateOptions): AgendaState {
   );
   return {
     allDayCountPerDay: visibleDays.map(
-      (day) =>
-        options.events.filter(
-          (event) => event.isAllDay && eventOnDate(event, day),
-        ).length,
+      (day) => options.events.filter((event) => event.isAllDay && eventOnDate(event, day)).length,
     ),
     allDayLayout: layoutForWeek(visibleDays).items,
     date,
@@ -310,9 +252,7 @@ export function useAgenda(options: AgendaStateOptions): AgendaState {
     getEventsForDay,
     getMonthRowLayout: layoutForWeek,
     getPerCellEvents: (day, week) => {
-      const spanning = new Set(
-        layoutForWeek(week).items.map((item) => item.event.id),
-      );
+      const spanning = new Set(layoutForWeek(week).items.map((item) => item.event.id));
       return getAllEventsForDay(day).filter((event) => !spanning.has(event.id));
     },
     goToNext: () =>
@@ -357,17 +297,12 @@ export function useAgenda(options: AgendaStateOptions): AgendaState {
 const AgendaContext = createContext<AgendaState | null>(null);
 function useAgendaContext(): AgendaState {
   const value = useContext(AgendaContext);
-  if (!value)
-    throw new Error("Agenda components must be used within Agenda.Root");
+  if (!value) throw new Error("Agenda components must be used within Agenda.Root");
   return value;
 }
 export interface AgendaRootProps
   extends AgendaState, Omit<ComponentPropsWithRef<"div">, "onSelect"> {}
-function AgendaRoot({
-  children,
-  className,
-  ...state
-}: AgendaRootProps): ReactElement {
+function AgendaRoot({ children, className, ...state }: AgendaRootProps): ReactElement {
   const context = state as AgendaState;
   return (
     <AgendaContext value={context}>
@@ -377,10 +312,7 @@ function AgendaRoot({
         data-view={state.view}
         tabIndex={-1}
         onKeyDown={(event) => {
-          if (
-            (event.key === "Delete" || event.key === "Backspace") &&
-            state.selectedEventId
-          )
+          if ((event.key === "Delete" || event.key === "Backspace") && state.selectedEventId)
             state.onEventDelete?.(state.selectedEventId);
         }}
       >
@@ -397,11 +329,7 @@ function slotDiv(name: string, tag: "div" | "header" = "div") {
   }: ComponentPropsWithRef<"div">): ReactElement {
     const Tag = tag;
     return (
-      <Tag
-        {...props}
-        className={cn(`agenda__${name}`, className)}
-        data-slot={`agenda-${name}`}
-      >
+      <Tag {...props} className={cn(`agenda__${name}`, className)} data-slot={`agenda-${name}`}>
         {children}
       </Tag>
     );
@@ -417,11 +345,7 @@ function AgendaHeading({
 }: ComponentPropsWithRef<"h1">): ReactElement {
   const { heading } = useAgendaContext();
   return (
-    <h1
-      {...props}
-      className={cn("agenda__heading", className)}
-      data-slot="agenda-heading"
-    >
+    <h1 {...props} className={cn("agenda__heading", className)} data-slot="agenda-heading">
       {children ?? heading}
     </h1>
   );
@@ -464,9 +388,7 @@ function AgendaTodayButton({
 }): ReactElement {
   return (
     <Button
-      className={
-        cn("agenda__today-button", className) ?? "agenda__today-button"
-      }
+      className={cn("agenda__today-button", className) ?? "agenda__today-button"}
       size="sm"
       variant="outline"
       onPress={useAgendaContext().goToToday}
@@ -487,9 +409,7 @@ function AgendaViewSelector({
   const { setView, view } = useAgendaContext();
   return (
     <Segment
-      className={
-        cn("agenda__view-selector", className) ?? "agenda__view-selector"
-      }
+      className={cn("agenda__view-selector", className) ?? "agenda__view-selector"}
       selectedKey={view}
       size={size}
       onSelectionChange={(next) => {
@@ -513,18 +433,10 @@ function AgendaDayHeader({ date }: { date: CalendarDate }): ReactElement {
   const isToday = isSameDay(date, today(zone));
   return (
     <div className="agenda__day-header" data-slot="agenda-day-header">
-      <span
-        className="agenda__day-header-name"
-        data-today={isToday || undefined}
-      >
-        {new Intl.DateTimeFormat(undefined, { weekday: "short" }).format(
-          date.toDate(zone),
-        )}
+      <span className="agenda__day-header-name" data-today={isToday || undefined}>
+        {new Intl.DateTimeFormat(undefined, { weekday: "short" }).format(date.toDate(zone))}
       </span>
-      <span
-        className="agenda__day-header-date"
-        data-today={isToday || undefined}
-      >
+      <span className="agenda__day-header-date" data-today={isToday || undefined}>
         {date.day}
       </span>
     </div>
@@ -537,15 +449,8 @@ function AgendaWeekHeader({
 }: ComponentPropsWithRef<"div">): ReactElement {
   const { visibleDays } = useAgendaContext();
   return (
-    <div
-      {...props}
-      className={cn("agenda__week-header", className)}
-      data-slot="agenda-week-header"
-    >
-      {children ??
-        visibleDays.map((date) => (
-          <AgendaDayHeader date={date} key={date.toString()} />
-        ))}
+    <div {...props} className={cn("agenda__week-header", className)} data-slot="agenda-week-header">
+      {children ?? visibleDays.map((date) => <AgendaDayHeader date={date} key={date.toString()} />)}
     </div>
   );
 }
@@ -570,20 +475,14 @@ function AgendaAllDaySection({
         {agenda.visibleDays.map((day) => (
           <div
             className="agenda__all-day-divider"
-            data-weekend={
-              [0, 6].includes(day.toDate(agenda.timeZone).getDay()) || undefined
-            }
+            data-weekend={[0, 6].includes(day.toDate(agenda.timeZone).getDay()) || undefined}
             key={day.toString()}
           />
         ))}
       </div>
       <Button
         isIconOnly
-        aria-label={
-          agenda.isAllDayExpanded
-            ? "Collapse all-day events"
-            : "Expand all-day events"
-        }
+        aria-label={agenda.isAllDayExpanded ? "Collapse all-day events" : "Expand all-day events"}
         className="agenda__all-day-toggle"
         data-expanded={agenda.isAllDayExpanded || undefined}
         size="sm"
@@ -595,10 +494,7 @@ function AgendaAllDaySection({
       {agenda.isAllDayExpanded
         ? children
         : agenda.allDayCountPerDay.map((count, index) => (
-            <span
-              className="agenda__all-day-summary"
-              key={agenda.visibleDays[index]?.toString()}
-            >
+            <span className="agenda__all-day-summary" key={agenda.visibleDays[index]?.toString()}>
               {count ? collapsedLabel(count) : null}
             </span>
           ))}
@@ -638,6 +534,12 @@ function AgendaAllDayEvent({
       data-selected={agenda.selectedEventId === event.id || undefined}
       data-slot="agenda-all-day-event"
       data-status={event.status ?? "confirmed"}
+      onKeyDown={(keyboardEvent) => {
+        if (keyboardEvent.key === "Enter" || keyboardEvent.key === " ") {
+          keyboardEvent.preventDefault();
+          agenda.selectEvent(event.id);
+        }
+      }}
       role="button"
       style={
         {
@@ -667,11 +569,7 @@ function AgendaTimeGrid({
   return (
     <div
       {...props}
-      className={cn(
-        "agenda__time-grid",
-        `agenda__time-grid--${agenda.view}`,
-        className,
-      )}
+      className={cn("agenda__time-grid", `agenda__time-grid--${agenda.view}`, className)}
       data-slot="agenda-time-grid"
     >
       <div className="agenda__time-labels">
@@ -703,19 +601,14 @@ function AgendaDayColumn({
     heightPx: number;
     topPx: number;
   } | null>(null);
-  const slots = Math.ceil(
-    ((agenda.endHour - agenda.startHour) * 60) / agenda.slotDuration,
-  );
+  const slots = Math.ceil(((agenda.endHour - agenda.startHour) * 60) / agenda.slotDuration);
   const pixelsPerMinute = 60 / agenda.slotDuration;
   const minuteAt = useCallback(
     (clientY: number) => {
       const rect = columnRef.current?.getBoundingClientRect();
       if (!rect) return 0;
       const totalMinutes = (agenda.endHour - agenda.startHour) * 60;
-      const ratio = Math.max(
-        0,
-        Math.min(1, (clientY - rect.top) / rect.height),
-      );
+      const ratio = Math.max(0, Math.min(1, (clientY - rect.top) / rect.height));
       return Math.round((ratio * totalMinutes) / 5) * 5;
     },
     [agenda.endHour, agenda.startHour],
@@ -768,9 +661,7 @@ function AgendaDayColumn({
       className={cn("agenda__day-column", className)}
       data-date={date.toString()}
       data-slot="agenda-day-column"
-      data-weekend={
-        [0, 6].includes(date.toDate(agenda.timeZone).getDay()) || undefined
-      }
+      data-weekend={[0, 6].includes(date.toDate(agenda.timeZone).getDay()) || undefined}
       onMouseDown={handleCreate}
     >
       {Array.from({ length: slots }, (_, index) => (
@@ -791,8 +682,7 @@ function AgendaDayColumn({
           }}
         />
       ) : null}
-      {agenda.dropPreview?.dateStr === date.toString() &&
-      agenda.dropPreview.topPx != null ? (
+      {agenda.dropPreview?.dateStr === date.toString() && agenda.dropPreview.topPx != null ? (
         <div
           className="agenda__drop-preview"
           style={{
@@ -824,18 +714,13 @@ function AgendaEvent({
   const [isResizing, setResizing] = useState(false);
   const [resizeDelta, setResizeDelta] = useState(0);
   const top =
-    (((event.start.hour - agenda.startHour) * 60 + event.start.minute) * 60) /
-    agenda.slotDuration;
-  const minutes =
-    (event.end.hour - event.start.hour) * 60 +
-    event.end.minute -
-    event.start.minute;
+    (((event.start.hour - agenda.startHour) * 60 + event.start.minute) * 60) / agenda.slotDuration;
+  const minutes = (event.end.hour - event.start.hour) * 60 + event.end.minute - event.start.minute;
   const height = Math.max(20, (minutes * 60) / agenda.slotDuration);
   const pixelsPerMinute = 60 / agenda.slotDuration;
   const layout = agenda.getEventLayout(event.id);
   const width = 100 / layout.totalColumns;
-  const snapMinutes = (pixels: number) =>
-    Math.round(pixels / pixelsPerMinute / 5) * 5;
+  const snapMinutes = (pixels: number) => Math.round(pixels / pixelsPerMinute / 5) * 5;
   const handleMoveStart = (pointer: ReactPointerEvent<HTMLDivElement>) => {
     if (
       pointer.button !== 0 ||
@@ -859,9 +744,7 @@ function AgendaEvent({
       }
       if (!moved) return;
       setDragOffset({ x, y });
-      const column = eventRef.current?.closest<HTMLElement>(
-        "[data-slot='agenda-day-column']",
-      );
+      const column = eventRef.current?.closest<HTMLElement>("[data-slot='agenda-day-column']");
       const columnWidth = column?.getBoundingClientRect().width ?? 1;
       const dayDelta = Math.round(x / columnWidth);
       const minuteDelta = snapMinutes(y);
@@ -870,8 +753,7 @@ function AgendaEvent({
         ...(event.color ? { color: event.color } : {}),
         dateStr: `${next.year}-${String(next.month).padStart(2, "0")}-${String(next.day).padStart(2, "0")}`,
         heightPx: height,
-        topPx:
-          ((next.hour - agenda.startHour) * 60 + next.minute) * pixelsPerMinute,
+        topPx: ((next.hour - agenda.startHour) * 60 + next.minute) * pixelsPerMinute,
       });
     };
     const up = (upEvent: PointerEvent) => {
@@ -882,9 +764,7 @@ function AgendaEvent({
       agenda.setDropPreview(null);
       if (moved) {
         suppressClick.current = true;
-        const column = eventRef.current?.closest<HTMLElement>(
-          "[data-slot='agenda-day-column']",
-        );
+        const column = eventRef.current?.closest<HTMLElement>("[data-slot='agenda-day-column']");
         const columnWidth = column?.getBoundingClientRect().width ?? 1;
         const dayDelta = Math.round((upEvent.clientX - originX) / columnWidth);
         const minuteDelta = snapMinutes(upEvent.clientY - originY);
@@ -900,15 +780,13 @@ function AgendaEvent({
     document.addEventListener("pointerup", up);
   };
   const handleResizeStart = (pointer: ReactPointerEvent<HTMLDivElement>) => {
-    if (pointer.button !== 0 || !agenda.onEventResize || event.isReadOnly)
-      return;
+    if (pointer.button !== 0 || !agenda.onEventResize || event.isReadOnly) return;
     pointer.stopPropagation();
     pointer.preventDefault();
     const originY = pointer.clientY;
     setResizing(true);
     agenda.setDragState({ eventId: event.id, type: "resizing" });
-    const move = (moveEvent: PointerEvent) =>
-      setResizeDelta(moveEvent.clientY - originY);
+    const move = (moveEvent: PointerEvent) => setResizeDelta(moveEvent.clientY - originY);
     const up = (upEvent: PointerEvent) => {
       document.removeEventListener("pointermove", move);
       document.removeEventListener("pointerup", up);
@@ -918,11 +796,7 @@ function AgendaEvent({
       agenda.setDragState({ type: "idle" });
       if (Math.abs(minuteDelta) >= 5) {
         suppressClick.current = true;
-        agenda.onEventResize?.(
-          event.id,
-          event.start,
-          event.end.add({ minutes: minuteDelta }),
-        );
+        agenda.onEventResize?.(event.id, event.start, event.end.add({ minutes: minuteDelta }));
       }
     };
     document.addEventListener("pointermove", move);
@@ -939,6 +813,13 @@ function AgendaEvent({
       data-selected={agenda.selectedEventId === event.id || undefined}
       data-slot="agenda-event"
       data-status={event.status ?? "confirmed"}
+      onKeyDown={(keyboardEvent) => {
+        if (keyboardEvent.key === "Enter" || keyboardEvent.key === " ") {
+          keyboardEvent.preventDefault();
+          agenda.selectEvent(event.id);
+        }
+      }}
+      role="button"
       style={
         {
           height: Math.max(5 * pixelsPerMinute, height + resizeDelta),
@@ -964,6 +845,7 @@ function AgendaEvent({
         agenda.selectEvent(event.id);
       }}
       onPointerDown={handleMoveStart}
+      tabIndex={0}
     >
       {children ?? (
         <>
@@ -972,10 +854,7 @@ function AgendaEvent({
         </>
       )}
       {agenda.onEventResize && !event.isReadOnly ? (
-        <div
-          className="agenda__resize-handle"
-          onPointerDown={handleResizeStart}
-        />
+        <div className="agenda__resize-handle" onPointerDown={handleResizeStart} />
       ) : null}
     </div>
   );
@@ -1004,27 +883,19 @@ function AgendaEventTime({
 }): ReactElement {
   const value = event;
   return (
-    <span
-      {...props}
-      className={cn("agenda__event-time", className)}
-      data-slot="agenda-event-time"
-    >
+    <span {...props} className={cn("agenda__event-time", className)} data-slot="agenda-event-time">
       {value
         ? `${value.start.hour}:${String(value.start.minute).padStart(2, "0")} – ${value.end.hour}:${String(value.end.minute).padStart(2, "0")}`
         : null}
     </span>
   );
 }
-function AgendaCurrentTimeIndicator(
-  props: ComponentPropsWithRef<"div">,
-): ReactElement | null {
+function AgendaCurrentTimeIndicator(props: ComponentPropsWithRef<"div">): ReactElement | null {
   const agenda = useAgendaContext();
   const now = new Date();
-  if (now.getHours() < agenda.startHour || now.getHours() >= agenda.endHour)
-    return null;
+  if (now.getHours() < agenda.startHour || now.getHours() >= agenda.endHour) return null;
   const top =
-    (((now.getHours() - agenda.startHour) * 60 + now.getMinutes()) * 60) /
-    agenda.slotDuration;
+    (((now.getHours() - agenda.startHour) * 60 + now.getMinutes()) * 60) / agenda.slotDuration;
   return (
     <div {...props} className="agenda__current-time-indicator" style={{ top }}>
       <span className="agenda__current-time-label">
@@ -1040,11 +911,7 @@ function AgendaMonthGrid({
   ...props
 }: ComponentPropsWithRef<"div">): ReactElement {
   return (
-    <div
-      {...props}
-      className={cn("agenda__month-grid", className)}
-      data-slot="agenda-month-grid"
-    >
+    <div {...props} className={cn("agenda__month-grid", className)} data-slot="agenda-month-grid">
       <div className="agenda__month-weekday-header">
         {"SMTWTFS".split("").map((day, index) => (
           <span className="agenda__month-weekday" key={index}>
@@ -1083,10 +950,7 @@ function AgendaMonthSpanningEvent(
   props: ComponentPropsWithRef<"div"> & AgendaLayoutItem,
 ): ReactElement {
   return (
-    <AgendaAllDayEvent
-      {...props}
-      className={cn("agenda__month-spanning-event", props.className)}
-    />
+    <AgendaAllDayEvent {...props} className={cn("agenda__month-spanning-event", props.className)} />
   );
 }
 function AgendaMonthCell({
@@ -1104,9 +968,7 @@ function AgendaMonthCell({
   spanningRowCount?: number;
 }): ReactElement {
   const agenda = useAgendaContext();
-  const events = agenda
-    .getAllEventsForDay(date)
-    .filter((event) => !event.isAllDay);
+  const events = agenda.getAllEventsForDay(date).filter((event) => !event.isAllDay);
   const isOutside = date.month !== agenda.date.month;
   return (
     <div

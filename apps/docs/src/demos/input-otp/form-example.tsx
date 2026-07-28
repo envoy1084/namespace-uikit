@@ -2,15 +2,7 @@
 
 import React from "react";
 
-import {
-  Button,
-  Description,
-  Form,
-  InputOTP,
-  Label,
-  Link,
-  Spinner,
-} from "@thenamespace/uikit";
+import { Button, Description, Form, InputOTP, Label, Link, Spinner } from "@thenamespace/uikit";
 
 export function FormExample() {
   const [value, setValue] = React.useState("");
@@ -45,11 +37,9 @@ export function FormExample() {
     <Form className="flex w-[280px] flex-col gap-4" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-2">
         <Label>Two-factor authentication</Label>
-        <Description>
-          Enter the 6-digit code from your authenticator app
-        </Description>
+        <Description>Enter the 6-digit code from your authenticator app</Description>
         <InputOTP
-          isInvalid={!!error}
+          isInvalid={Boolean(error)}
           maxLength={6}
           value={value}
           onChange={(val) => {
@@ -69,7 +59,7 @@ export function FormExample() {
             <InputOTP.Slot index={5} />
           </InputOTP.Group>
         </InputOTP>
-        <span className="field-error" data-visible={!!error} id="code-error">
+        <span className="field-error" data-visible={Boolean(error)} id="code-error">
           {error}
         </span>
       </div>

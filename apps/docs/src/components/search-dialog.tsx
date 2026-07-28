@@ -1,15 +1,14 @@
 "use client";
 
-import type {
-  SearchItemType,
-  SharedProps,
-} from "fumadocs-ui/components/dialog/search";
+/* oxlint-disable jsx-a11y/no-autofocus -- Opening the search dialog should focus its query input. */
+
+import type { ComponentProps } from "react";
 
 import { useRouter } from "next/navigation";
-import type { ComponentProps } from "react";
 
 import { Button, Kbd } from "@thenamespace/uikit";
 import { useDocsSearch } from "fumadocs-core/search/client";
+import type { SearchItemType, SharedProps } from "fumadocs-ui/components/dialog/search";
 import {
   SearchDialog,
   SearchDialogContent,
@@ -26,18 +25,14 @@ export default function CustomSearchDialog(props: SharedProps) {
   const router = useRouter();
   const { onOpenChange, ...rest } = props;
   const suggestions: SearchItemType[] = [
-    ["Introduction", "/docs/getting-started", <BookOpen className="size-4" />],
+    ["Introduction", "/docs/getting-started", <BookOpen className="size-4" key="introduction" />],
     [
       "Quick Start",
       "/docs/getting-started/quick-start",
-      <Rocket className="size-4" />,
+      <Rocket className="size-4" key="quick-start" />,
     ],
-    ["All Components", "/docs/components", <Blocks className="size-4" />],
-    [
-      "Theming",
-      "/docs/getting-started/theming",
-      <Palette className="size-4" />,
-    ],
+    ["All Components", "/docs/components", <Blocks className="size-4" key="components" />],
+    ["Theming", "/docs/getting-started/theming", <Palette className="size-4" key="theming" />],
   ].map(([title, url, icon]) => ({
     id: `suggestion-${url}`,
     node: (
@@ -70,13 +65,7 @@ export default function CustomSearchDialog(props: SharedProps) {
         </SearchDialogHeader>
         <SearchDialogList
           className="**:aria-selected:bg-default **:aria-selected:text-foreground"
-          items={
-            search.length === 0
-              ? suggestions
-              : query.data === "empty"
-                ? null
-                : query.data
-          }
+          items={search.length === 0 ? suggestions : query.data === "empty" ? null : query.data}
         />
       </SearchDialogContent>
     </SearchDialog>

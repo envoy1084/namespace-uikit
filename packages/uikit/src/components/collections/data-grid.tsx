@@ -1,44 +1,20 @@
 "use client";
 
-import type {
-  DragAndDropHooks,
-  Key,
-  Selection,
-  SortDescriptor,
-} from "react-aria-components";
-
 import type { CSSProperties, ReactElement, ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import {
-  Button,
-  Checkbox,
-  cn,
-  IconChevronRight,
-  IconChevronUp,
-  Table,
-} from "@heroui/react";
+import { Button, Checkbox, cn, IconChevronRight, IconChevronUp, Table } from "@heroui/react";
 import { GripVerticalIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  TableLayout,
-  useDragAndDrop,
-  Virtualizer,
-} from "react-aria-components";
+import type { DragAndDropHooks, Key, Selection, SortDescriptor } from "react-aria-components";
+import { TableLayout, useDragAndDrop, Virtualizer } from "react-aria-components";
 
 export type DataGridAlign = "center" | "end" | "start";
 export type DataGridPinned = "end" | "start";
 export type DataGridVerticalAlign = "bottom" | "middle" | "top";
 export type DataGridVariant = "primary" | "secondary";
-export type DataGridColumnSize =
-  | number
-  | `${number}`
-  | `${number}%`
-  | `${number}fr`;
-export type DataGridStaticColumnSize = Exclude<
-  DataGridColumnSize,
-  `${number}fr`
->;
+export type DataGridColumnSize = number | `${number}` | `${number}%` | `${number}fr`;
+export type DataGridStaticColumnSize = Exclude<DataGridColumnSize, `${number}fr`>;
 
 export interface DataGridColumn<T extends object> {
   accessorKey?: keyof T;
@@ -49,9 +25,7 @@ export interface DataGridColumn<T extends object> {
   cellClassName?: string;
   header:
     | ReactNode
-    | ((props: {
-        sortDirection?: "ascending" | "descending" | undefined;
-      }) => ReactNode);
+    | ((props: { sortDirection?: "ascending" | "descending" | undefined }) => ReactNode);
   headerClassName?: string;
   id: string;
   isHidden?: boolean;
@@ -110,17 +84,12 @@ export interface DataGridProps<T extends object> {
   virtualized?: boolean;
 }
 
-function compare<T extends object>(
-  a: T,
-  b: T,
-  column: DataGridColumn<T>,
-): number {
+function compare<T extends object>(a: T, b: T, column: DataGridColumn<T>): number {
   if (column.sortFn) return column.sortFn(a, b);
   if (!column.accessorKey) return 0;
   const left = a[column.accessorKey];
   const right = b[column.accessorKey];
-  if (typeof left === "number" && typeof right === "number")
-    return left - right;
+  if (typeof left === "number" && typeof right === "number") return left - right;
   return String(left ?? "").localeCompare(String(right ?? ""));
 }
 
@@ -134,21 +103,13 @@ function reorder<T extends object>(
   const moving = data.filter((item) => keys.has(getRowId(item)));
   const remaining = data.filter((item) => !keys.has(getRowId(item)));
   const targetIndex = remaining.findIndex((item) => getRowId(item) === target);
-  remaining.splice(
-    position === "before" ? targetIndex : targetIndex + 1,
-    0,
-    ...moving,
-  );
+  remaining.splice(position === "before" ? targetIndex : targetIndex + 1, 0, ...moving);
   return remaining;
 }
 
 function SelectionCheckbox({ all = false }: { all?: boolean }): ReactElement {
   return (
-    <Checkbox
-      aria-label={all ? "Select all" : "Select row"}
-      slot="selection"
-      variant="secondary"
-    >
+    <Checkbox aria-label={all ? "Select all" : "Select row"} slot="selection" variant="secondary">
       <Checkbox.Content>
         <Checkbox.Control>
           <Checkbox.Indicator />
@@ -210,9 +171,7 @@ function DataGridInner<T extends object>({
     const result = [...data];
     // oxlint-disable-next-line unicorn/no-array-sort -- ES2022 package target does not include toSorted.
     return result.sort(
-      (a, b) =>
-        compare(a, b, column) *
-        (activeSort.direction === "descending" ? -1 : 1),
+      (a, b) => compare(a, b, column) * (activeSort.direction === "descending" ? -1 : 1),
     );
   }, [activeSort, columns, data, sortDescriptor]);
   const handleSort = useCallback(
@@ -227,8 +186,7 @@ function DataGridInner<T extends object>({
     onReorder: (event) => {
       if (
         !onReorder ||
-        (event.target.dropPosition !== "before" &&
-          event.target.dropPosition !== "after")
+        (event.target.dropPosition !== "before" && event.target.dropPosition !== "after")
       )
         return;
       const keys = new Set(event.keys);
@@ -248,8 +206,7 @@ function DataGridInner<T extends object>({
       });
     },
   });
-  const activeDragHooks =
-    dragAndDropHooks ?? (onReorder ? reorderHooks : undefined);
+  const activeDragHooks = dragAndDropHooks ?? (onReorder ? reorderHooks : undefined);
   const columnStateKey = columns
     .map((column) => `${column.id}:${column.isHidden ? "hidden" : "visible"}`)
     .join("|");
@@ -259,19 +216,15 @@ function DataGridInner<T extends object>({
       column.isHidden ? "none" : "table-cell",
     ]),
   ) as CSSProperties;
-  const hasDragHandle = !!activeDragHooks;
+  const hasDragHandle = Boolean(activeDragHooks);
   const hasTree = typeof getChildren === "function";
   const hierarchyColumn =
-    treeColumn ??
-    columns.find((column) => column.isRowHeader)?.id ??
-    columns[0]?.id;
+    treeColumn ?? columns.find((column) => column.isRowHeader)?.id ?? columns[0]?.id;
   const hasPinnedStart = columns.some((column) => column.pinned === "start");
   const hasPinnedEnd = columns.some((column) => column.pinned === "end");
   useEffect(() => {
     const root = rootRef.current;
-    const scroller = root?.querySelector<HTMLElement>(
-      "[data-slot='table-scroll-container']",
-    );
+    const scroller = root?.querySelector<HTMLElement>("[data-slot='table-scroll-container']");
     if (!root || !scroller || (!hasPinnedStart && !hasPinnedEnd)) return;
     const update = () => {
       root.toggleAttribute(
@@ -281,10 +234,7 @@ function DataGridInner<T extends object>({
       root.toggleAttribute(
         "data-pinned-end-detached",
         hasPinnedEnd &&
-          scroller.scrollWidth -
-            scroller.clientWidth -
-            Math.abs(scroller.scrollLeft) >
-            1,
+          scroller.scrollWidth - scroller.clientWidth - Math.abs(scroller.scrollLeft) > 1,
       );
     };
     update();
@@ -332,19 +282,13 @@ function DataGridInner<T extends object>({
               slot="drag"
               variant="ghost"
             >
-              <HugeiconsIcon
-                className="size-4"
-                icon={GripVerticalIcon}
-                strokeWidth={2}
-              />
+              <HugeiconsIcon className="size-4" icon={GripVerticalIcon} strokeWidth={2} />
             </Button>
           </Table.Cell>
         ) : null}
         {showSelectionCheckboxes && selectionMode !== "none" ? (
           <Table.Cell
-            {...(hasPinnedStart
-              ? { "data-pinned": "start", style: { insetInlineStart: 0 } }
-              : {})}
+            {...(hasPinnedStart ? { "data-pinned": "start", style: { insetInlineStart: 0 } } : {})}
             className="data-grid__selection-cell"
           >
             <SelectionCheckbox />
@@ -365,9 +309,7 @@ function DataGridInner<T extends object>({
           const tree = hasTree && column.id === hierarchyColumn;
           return (
             <Table.Cell
-              {...(column.cellClassName
-                ? { className: column.cellClassName }
-                : {})}
+              {...(column.cellClassName ? { className: column.cellClassName } : {})}
               {...(column.align ? { "data-align": column.align } : {})}
               {...(column.pinned ? { "data-pinned": column.pinned } : {})}
               style={{
@@ -391,9 +333,7 @@ function DataGridInner<T extends object>({
                       {hasChildItems ? (
                         <Button
                           isIconOnly
-                          aria-label={
-                            isExpanded ? "Collapse row" : "Expand row"
-                          }
+                          aria-label={isExpanded ? "Collapse row" : "Expand row"}
                           className="data-grid__tree-toggle"
                           isDisabled={isDisabled}
                           size="sm"
@@ -407,10 +347,7 @@ function DataGridInner<T extends object>({
                           />
                         </Button>
                       ) : (
-                        <span
-                          aria-hidden
-                          className="data-grid__tree-toggle-spacer"
-                        />
+                        <span aria-hidden className="data-grid__tree-toggle-spacer" />
                       )}
                       {content}
                     </span>
@@ -436,17 +373,13 @@ function DataGridInner<T extends object>({
       {...(activeDragHooks ? { dragAndDropHooks: activeDragHooks } : {})}
       {...(expandedKeys ? { expandedKeys } : {})}
       {...(selectedKeys ? { selectedKeys } : {})}
-      {...(selectionMode === "none"
-        ? {}
-        : { selectionBehavior, selectionMode })}
+      {...(selectionMode === "none" ? {} : { selectionBehavior, selectionMode })}
       {...(activeSort ? { sortDescriptor: activeSort } : {})}
       {...(hasTree && hierarchyColumn ? { treeColumn: hierarchyColumn } : {})}
       {...(onExpandedChange ? { onExpandedChange } : {})}
       {...(onRowAction ? { onRowAction } : {})}
       {...(onSelectionChange ? { onSelectionChange } : {})}
-      {...(columns.some((column) => column.allowsSorting)
-        ? { onSortChange: handleSort }
-        : {})}
+      {...(columns.some((column) => column.allowsSorting) ? { onSortChange: handleSort } : {})}
       aria-label={ariaLabel}
     >
       <Table.Header dependencies={[columnStateKey]}>
@@ -480,20 +413,12 @@ function DataGridInner<T extends object>({
               {...(column.allowsSorting === undefined
                 ? {}
                 : { allowsSorting: column.allowsSorting })}
-              {...(column.headerClassName
-                ? { className: column.headerClassName }
-                : {})}
+              {...(column.headerClassName ? { className: column.headerClassName } : {})}
               {...(column.align ? { "data-align": column.align } : {})}
               {...(column.pinned ? { "data-pinned": column.pinned } : {})}
-              {...(column.isRowHeader === undefined
-                ? {}
-                : { isRowHeader: column.isRowHeader })}
-              {...(column.maxWidth === undefined
-                ? {}
-                : { maxWidth: column.maxWidth })}
-              {...(column.minWidth === undefined
-                ? {}
-                : { minWidth: column.minWidth })}
+              {...(column.isRowHeader === undefined ? {} : { isRowHeader: column.isRowHeader })}
+              {...(column.maxWidth === undefined ? {} : { maxWidth: column.maxWidth })}
+              {...(column.minWidth === undefined ? {} : { minWidth: column.minWidth })}
               style={{
                 ...pinnedStyle,
                 display: `var(--data-grid-column-${index}-display, table-cell)`,
@@ -536,10 +461,7 @@ function DataGridInner<T extends object>({
         {...(renderEmptyState
           ? {
               renderEmptyState: () => (
-                <div
-                  className="data-grid__empty-state"
-                  data-slot="data-grid-empty-state"
-                >
+                <div className="data-grid__empty-state" data-slot="data-grid-empty-state">
                   {renderEmptyState()}
                 </div>
               ),
@@ -577,9 +499,7 @@ function DataGridInner<T extends object>({
     >
       <Table variant={variant}>
         <Table.ScrollContainer
-          {...(scrollContainerClassName
-            ? { className: scrollContainerClassName }
-            : {})}
+          {...(scrollContainerClassName ? { className: scrollContainerClassName } : {})}
         >
           {resizable}
         </Table.ScrollContainer>
@@ -587,10 +507,7 @@ function DataGridInner<T extends object>({
     </div>
   );
   return virtualized ? (
-    <Virtualizer
-      layout={TableLayout}
-      layoutOptions={{ headingHeight, rowHeight }}
-    >
+    <Virtualizer layout={TableLayout} layoutOptions={{ headingHeight, rowHeight }}>
       {root}
     </Virtualizer>
   ) : (

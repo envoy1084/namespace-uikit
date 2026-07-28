@@ -61,7 +61,7 @@ export function Validation() {
       <Button className="mt-2 w-fit" type="submit">
         Submit
       </Button>
-      {!!message && <p className="text-muted text-sm">{message}</p>}
+      {Boolean(message) && <p className="text-muted text-sm">{message}</p>}
     </Form>
   );
 }

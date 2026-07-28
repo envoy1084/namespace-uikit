@@ -157,9 +157,7 @@ const columns = [
 ];
 
 export function AsyncLoading() {
-  const [items, setItems] = useState<User[]>(() =>
-    allUsers.slice(0, ITEMS_PER_PAGE),
-  );
+  const [items, setItems] = useState<User[]>(() => allUsers.slice(0, ITEMS_PER_PAGE));
   const [isLoading, setIsLoading] = useState(false);
   const isLoadingRef = useRef(false);
   const hasMore = items.length < allUsers.length;
@@ -180,17 +178,10 @@ export function AsyncLoading() {
   return (
     <Table>
       <Table.ScrollContainer className="h-[280px] overflow-y-auto">
-        <Table.Content
-          aria-label="Async loading table"
-          className="min-w-[600px]"
-        >
+        <Table.Content aria-label="Async loading table" className="min-w-[600px]">
           <Table.Header className="bg-surface-secondary sticky top-0 z-10">
             {columns.map((col) => (
-              <Table.Column
-                key={col.id}
-                id={col.id}
-                isRowHeader={col.id === "name"}
-              >
+              <Table.Column key={col.id} id={col.id} isRowHeader={col.id === "name"}>
                 {col.name}
               </Table.Column>
             ))}
@@ -202,11 +193,7 @@ export function AsyncLoading() {
                   <Table.Cell>{user.name}</Table.Cell>
                   <Table.Cell>{user.role}</Table.Cell>
                   <Table.Cell>
-                    <Chip
-                      color={statusColorMap[user.status]}
-                      size="sm"
-                      variant="soft"
-                    >
+                    <Chip color={statusColorMap[user.status]} size="sm" variant="soft">
                       {user.status}
                     </Chip>
                   </Table.Cell>
@@ -214,12 +201,8 @@ export function AsyncLoading() {
                 </Table.Row>
               )}
             </Table.Collection>
-            {!!hasMore && (
-              <Table.LoadMore
-                isLoading={isLoading}
-                scrollOffset={0}
-                onLoadMore={loadMore}
-              >
+            {Boolean(hasMore) && (
+              <Table.LoadMore isLoading={isLoading} scrollOffset={0} onLoadMore={loadMore}>
                 <Table.LoadMoreContent>
                   <Spinner size="md" />
                 </Table.LoadMoreContent>

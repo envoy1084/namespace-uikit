@@ -1,8 +1,7 @@
-// oxlint-disable eslint/no-shadow, jsdoc/check-tag-names, unicorn/consistent-function-scoping
-import type { AnchorProviderProps, TOCItemType } from "fumadocs-core/toc";
-
 import type { ComponentProps, ReactNode } from "react";
 
+// oxlint-disable eslint/no-shadow, jsdoc/check-tag-names, unicorn/consistent-function-scoping
+import type { AnchorProviderProps, TOCItemType } from "fumadocs-core/toc";
 import { TOCProvider, TOCScrollArea } from "fumadocs-ui/components/toc";
 import { buttonVariants } from "fumadocs-ui/components/ui/button";
 import { I18nLabel } from "fumadocs-ui/contexts/i18n";
@@ -78,19 +77,11 @@ type TableOfContentOptions = Pick<AnchorProviderProps, "single"> & {
 type TableOfContentPopoverOptions = Omit<TableOfContentOptions, "single">;
 
 export function DocsPage({
-  breadcrumb: {
-    component: breadcrumb,
-    enabled: breadcrumbEnabled = true,
-    ...breadcrumbProps
-  } = {},
+  breadcrumb: { component: breadcrumb, enabled: breadcrumbEnabled = true, ...breadcrumbProps } = {},
   children,
   footer = {},
   full = false,
-  tableOfContent: {
-    component: tocReplace,
-    enabled: tocEnabled,
-    ...tocOptions
-  } = {},
+  tableOfContent: { component: tocReplace, enabled: tocEnabled, ...tocOptions } = {},
   tableOfContentPopover: {
     component: tocPopover,
     enabled: tocPopoverEnabled,
@@ -99,20 +90,20 @@ export function DocsPage({
   toc = [],
 }: DocsPageProps) {
   // disable TOC on full mode, you can still enable it with `enabled` option.
-  tocEnabled ??=
-    !full &&
-    (toc.length > 0 ||
-      tocOptions.footer !== undefined ||
-      tocOptions.header !== undefined);
+  const isTocEnabled =
+    tocEnabled ??
+    (!full &&
+      (toc.length > 0 || tocOptions.footer !== undefined || tocOptions.header !== undefined));
 
-  tocPopoverEnabled ??=
-    toc.length > 0 ||
-    tocPopoverOptions.header !== undefined ||
-    tocPopoverOptions.footer !== undefined;
+  const isTocPopoverEnabled =
+    tocPopoverEnabled ??
+    (toc.length > 0 ||
+      tocPopoverOptions.header !== undefined ||
+      tocPopoverOptions.footer !== undefined);
 
   let wrapper = (children: ReactNode) => children;
 
-  if (tocEnabled || tocPopoverEnabled) {
+  if (isTocEnabled || isTocPopoverEnabled) {
     wrapper = (children) => (
       <TOCProvider single={tocOptions.single} toc={toc}>
         {children}
@@ -122,7 +113,7 @@ export function DocsPage({
 
   return wrapper(
     <>
-      {!!tocPopoverEnabled &&
+      {Boolean(isTocPopoverEnabled) &&
         (tocPopover ?? (
           <PageTOCPopover>
             <PageTOCPopoverTrigger />
@@ -143,13 +134,11 @@ export function DocsPage({
           full && "*:max-w-[1285px]",
         )}
       >
-        {!!breadcrumbEnabled &&
-          (breadcrumb ?? <PageBreadcrumb {...breadcrumbProps} />)}
+        {Boolean(breadcrumbEnabled) && (breadcrumb ?? <PageBreadcrumb {...breadcrumbProps} />)}
         {children}
-        {footer.enabled !== false &&
-          (footer.component ?? <PageFooter items={footer.items} />)}
+        {footer.enabled !== false && (footer.component ?? <PageFooter items={footer.items} />)}
       </article>
-      {!!tocEnabled &&
+      {Boolean(tocEnabled) &&
         (tocReplace ?? (
           <div
             className="xl:layout:[--fd-toc-width:268px] sticky top-(--fd-docs-row-3) flex h-[calc(var(--fd-docs-height)-var(--fd-docs-row-3))] w-(--fd-toc-width) flex-col pe-4 pt-12 pb-2 [grid-area:toc] max-xl:hidden"
@@ -201,11 +190,7 @@ export function EditOnGitHub(props: ComponentProps<"a">) {
 /**
  * Add typography styles
  */
-export function DocsBody({
-  children,
-  className,
-  ...props
-}: ComponentProps<"div">) {
+export function DocsBody({ children, className, ...props }: ComponentProps<"div">) {
   return (
     <div {...props} className={cn("prose flex-1", className)}>
       {children}
@@ -213,29 +198,18 @@ export function DocsBody({
   );
 }
 
-export function DocsDescription({
-  children,
-  className,
-  ...props
-}: ComponentProps<"p">) {
+export function DocsDescription({ children, className, ...props }: ComponentProps<"p">) {
   // Don't render if no description provided
   if (children === undefined) return null;
 
   return (
-    <p
-      {...props}
-      className={cn("text-fd-muted-foreground mb-8 text-lg", className)}
-    >
+    <p {...props} className={cn("text-fd-muted-foreground mb-8 text-lg", className)}>
       {children}
     </p>
   );
 }
 
-export function DocsTitle({
-  children,
-  className,
-  ...props
-}: ComponentProps<"h1">) {
+export function DocsTitle({ children, className, ...props }: ComponentProps<"h1">) {
   return (
     <h1 {...props} className={cn("text-[1.75em] font-semibold", className)}>
       {children}

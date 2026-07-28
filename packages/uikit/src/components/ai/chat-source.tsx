@@ -1,12 +1,6 @@
 "use client";
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
-import {
-  cloneElement,
-  createContext,
-  isValidElement,
-  useContext,
-  useMemo,
-} from "react";
+import { cloneElement, createContext, isValidElement, useContext, useMemo } from "react";
 
 import { cn, Disclosure } from "@heroui/react";
 import { File01Icon } from "@hugeicons/core-free-icons";
@@ -57,9 +51,7 @@ export function ChatSourceRoot({
 }: ChatSourceRootProps): ReactElement {
   const domain = href ? domainOf(href) : undefined;
   const preview =
-    sourceType === "url" &&
-    !!href &&
-    (enablePreview ?? !!(description || title));
+    sourceType === "url" && Boolean(href) && (enablePreview ?? Boolean(description || title));
   const value = useMemo(
     () => ({
       description,
@@ -75,9 +67,7 @@ export function ChatSourceRoot({
   const content = children ?? (
     <>
       <ChatSourceTrigger />
-      {preview ? (
-        <ChatSourcePreview description={description} title={title} />
-      ) : null}
+      {preview ? <ChatSourcePreview description={description} title={title} /> : null}
     </>
   );
   const root = (
@@ -102,10 +92,7 @@ export function ChatSourceRoot({
     </Context>
   );
 }
-export interface ChatSourceTriggerProps extends Omit<
-  ComponentPropsWithRef<"a">,
-  "children"
-> {
+export interface ChatSourceTriggerProps extends Omit<ComponentPropsWithRef<"a">, "children"> {
   children?: ReactNode;
   label?: ReactNode;
 }
@@ -146,11 +133,7 @@ export function ChatSourceTrigger({
     );
     return (
       <span className={triggerClass} data-slot="chat-source-trigger">
-        {state.enablePreview ? (
-          <HoverCard.Trigger>{anchor}</HoverCard.Trigger>
-        ) : (
-          anchor
-        )}
+        {state.enablePreview ? <HoverCard.Trigger>{anchor}</HoverCard.Trigger> : anchor}
       </span>
     );
   }
@@ -176,16 +159,13 @@ export function ChatSourceIcon({
   const image = faviconUrl ?? state.faviconUrl;
   const label = state.title ?? state.domain ?? state.href ?? "Source";
   if (children && isValidElement(children))
-    return cloneElement(
-      children as ReactElement<{ className?: string; "data-slot"?: string }>,
-      {
-        className: cls(
-          "chat-source__icon",
-          cn(className, (children.props as { className?: string }).className),
-        ),
-        "data-slot": "chat-source-icon",
-      },
-    );
+    return cloneElement(children as ReactElement<{ className?: string; "data-slot"?: string }>, {
+      className: cls(
+        "chat-source__icon",
+        cn(className, (children.props as { className?: string }).className),
+      ),
+      "data-slot": "chat-source-icon",
+    });
   return image ? (
     <img
       alt=""
@@ -205,11 +185,7 @@ export function ChatSourceIcon({
     </span>
   );
 }
-export function ChatSourceDocumentIcon({
-  className,
-}: {
-  className?: string;
-}): ReactElement {
+export function ChatSourceDocumentIcon({ className }: { className?: string }): ReactElement {
   return (
     <span
       aria-hidden
@@ -227,18 +203,12 @@ export function ChatSourceTitle({
 }: ComponentPropsWithRef<"span">): ReactElement {
   const state = useContext(Context);
   return (
-    <span
-      className={cls("chat-source__title", className)}
-      data-slot="chat-source-title"
-      {...props}
-    >
+    <span className={cls("chat-source__title", className)} data-slot="chat-source-title" {...props}>
       {children ?? state.title ?? state.domain}
     </span>
   );
 }
-export interface ChatSourcePreviewProps extends ComponentPropsWithRef<
-  typeof HoverCard.Content
-> {
+export interface ChatSourcePreviewProps extends ComponentPropsWithRef<typeof HoverCard.Content> {
   description?: ReactNode;
   title?: ReactNode;
 }
@@ -268,14 +238,10 @@ export function ChatSourcePreview({
         >
           <div className="chat-source__preview-header">
             <ChatSourceIcon />
-            <span className="text-foreground truncate text-sm">
-              {state.domain}
-            </span>
+            <span className="text-foreground truncate text-sm">{state.domain}</span>
           </div>
           {(title ?? state.title) ? (
-            <div className="chat-source__preview-title">
-              {title ?? state.title}
-            </div>
+            <div className="chat-source__preview-title">{title ?? state.title}</div>
           ) : null}
           {(description ?? state.description) ? (
             <div className="chat-source__preview-description">
@@ -293,11 +259,7 @@ export function ChatSourcesRoot({
   ...props
 }: ComponentPropsWithRef<typeof Disclosure>): ReactElement {
   return (
-    <Disclosure
-      className={cls("chat-sources", className)}
-      data-slot="chat-sources"
-      {...props}
-    >
+    <Disclosure className={cls("chat-sources", className)} data-slot="chat-sources" {...props}>
       {children}
     </Disclosure>
   );

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 import { Spinner } from "@/components/feedback/spinner";
@@ -38,9 +38,7 @@ export const Default: Story = {
     <div className="flex w-[280px] flex-col gap-2">
       <div className="flex flex-col gap-1">
         <Label>Verify account</Label>
-        <p className="text-muted text-sm">
-          We&apos;ve sent a code to a****@gmail.com
-        </p>
+        <p className="text-muted text-sm">We&apos;ve sent a code to a****@gmail.com</p>
       </div>
       <InputOTP {...args} maxLength={6}>
         <InputOTP.Group>
@@ -257,11 +255,7 @@ export const WithValidation: Story = {
               <InputOTP.Slot index={5} />
             </InputOTP.Group>
           </InputOTP>
-          <span
-            className="field-error"
-            data-visible={isInvalid}
-            id="code-error"
-          >
+          <span className="field-error" data-visible={isInvalid} id="code-error">
             Invalid code. Please try again.
           </span>
           <Button isDisabled={value.length !== 6} type="submit">
@@ -378,12 +372,10 @@ export const FormExample: Story = {
       <Form className="flex w-[280px] flex-col gap-4" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
           <Label>Two-factor authentication</Label>
-          <Description>
-            Enter the 6-digit code from your authenticator app
-          </Description>
+          <Description>Enter the 6-digit code from your authenticator app</Description>
           <InputOTP
             {...args}
-            isInvalid={!!error}
+            isInvalid={Boolean(error)}
             maxLength={6}
             value={value}
             onChange={(val) => {
@@ -403,7 +395,7 @@ export const FormExample: Story = {
               <InputOTP.Slot index={5} />
             </InputOTP.Group>
           </InputOTP>
-          <span className="field-error" data-visible={!!error} id="code-error">
+          <span className="field-error" data-visible={Boolean(error)} id="code-error">
             {error}
           </span>
         </div>

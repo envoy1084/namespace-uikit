@@ -1,15 +1,10 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-import type { TimeValue } from "@thenamespace/uikit";
-
 import { useMemo, useState } from "react";
 
-import {
-  getLocalTimeZone,
-  parseDate,
-  parseZonedDateTime,
-} from "@internationalized/date";
+import type { DateValue } from "@internationalized/date";
+import { getLocalTimeZone, parseDate, parseZonedDateTime } from "@internationalized/date";
+import type { TimeValue } from "@thenamespace/uikit";
 import {
   Calendar,
   DateField,
@@ -40,7 +35,7 @@ export function FormatOptions() {
   const [hideTimeZone, setHideTimeZone] = useState(false);
   const [shouldForceLeadingZeros, setShouldForceLeadingZeros] = useState(false);
   const timeGranularity = granularity !== "day" ? granularity : undefined;
-  const showTimeField = !!timeGranularity;
+  const showTimeField = Boolean(timeGranularity);
   const defaultValue = useMemo<DateValue>(() => {
     const localTimeZone = getLocalTimeZone();
 
@@ -90,9 +85,7 @@ export function FormatOptions() {
                   <Calendar.GridHeader>
                     {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
                   </Calendar.GridHeader>
-                  <Calendar.GridBody>
-                    {(date) => <Calendar.Cell date={date} />}
-                  </Calendar.GridBody>
+                  <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
                 </Calendar.Grid>
                 <Calendar.YearPickerGrid>
                   <Calendar.YearPickerGridBody>
@@ -100,7 +93,7 @@ export function FormatOptions() {
                   </Calendar.YearPickerGridBody>
                 </Calendar.YearPickerGrid>
               </Calendar>
-              {!!showTimeField && (
+              {Boolean(showTimeField) && (
                 <div className="flex items-center justify-between">
                   <Label>Time</Label>
                   <TimeField
@@ -142,11 +135,7 @@ export function FormatOptions() {
             <Select.Popover>
               <ListBox>
                 {granularityOptions.map((option) => (
-                  <ListBox.Item
-                    key={option.value}
-                    id={option.value}
-                    textValue={option.label}
-                  >
+                  <ListBox.Item key={option.value} id={option.value} textValue={option.label}>
                     {option.label}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -171,11 +160,7 @@ export function FormatOptions() {
             <Select.Popover>
               <ListBox>
                 {hourCycleOptions.map((option) => (
-                  <ListBox.Item
-                    key={option.value}
-                    id={option.value}
-                    textValue={option.label}
-                  >
+                  <ListBox.Item key={option.value} id={option.value} textValue={option.label}>
                     {option.label}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -195,10 +180,7 @@ export function FormatOptions() {
             Hide timezone
           </Switch.Content>
         </Switch>
-        <Switch
-          isSelected={shouldForceLeadingZeros}
-          onChange={setShouldForceLeadingZeros}
-        >
+        <Switch isSelected={shouldForceLeadingZeros} onChange={setShouldForceLeadingZeros}>
           <Switch.Content>
             <Switch.Control>
               <Switch.Thumb />

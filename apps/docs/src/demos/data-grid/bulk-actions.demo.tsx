@@ -1,9 +1,6 @@
 // @ts-nocheck -- Complex demo data intentionally uses heterogeneous shapes.
 "use client";
 
-// @demo-title Bulk Actions
-import type { Selection } from "react-aria-components";
-
 import { useState } from "react";
 
 import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
@@ -11,16 +8,18 @@ import { ActionBar } from "@thenamespace/uikit/action-bar";
 import { Avatar } from "@thenamespace/uikit/avatar";
 import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
+import type { MoreVerticalIcon } from "@thenamespace/uikit/icons";
 import {
   Archive02Icon,
   Cancel01Icon,
   Delete02Icon,
   Download04Icon,
-  MoreVerticalIcon,
   PencilEdit01Icon,
 } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Separator } from "@thenamespace/uikit/separator";
+// @demo-title Bulk Actions
+import type { Selection } from "react-aria-components";
 
 const formatDate = (value: string) =>
   new Date(value).toLocaleDateString("en-US", {
@@ -43,10 +42,7 @@ type BulkEmployee = {
   status: "Active" | "Inactive" | "Pending";
 };
 
-const statusColor: Record<
-  BulkEmployee["status"],
-  "danger" | "success" | "warning"
-> = {
+const statusColor: Record<BulkEmployee["status"], "danger" | "success" | "warning"> = {
   Active: "success",
   Inactive: "danger",
   Pending: "warning",
@@ -166,9 +162,7 @@ const bulkColumns: DataGridColumn<BulkEmployee>[] = [
     accessorKey: "joinDate",
     allowsSorting: true,
     cell: (employee) => (
-      <span className="text-muted text-sm tabular-nums">
-        {formatDate(employee.joinDate)}
-      </span>
+      <span className="text-muted text-sm tabular-nums">{formatDate(employee.joinDate)}</span>
     ),
     header: "Joined",
     id: "joinDate",
@@ -179,8 +173,7 @@ export const DemoBulkActionsExample = function Demo() {
   const [data, setData] = useState(bulkEmployees);
   const [selected, setSelected] = useState<Selection>(new Set());
   const count = selected === "all" ? data.length : selected.size;
-  const selectedIds =
-    selected === "all" ? new Set(data.map((item) => item.id)) : selected;
+  const selectedIds = selected === "all" ? new Set(data.map((item) => item.id)) : selected;
 
   return (
     <>
@@ -223,9 +216,7 @@ export const DemoBulkActionsExample = function Demo() {
             size="sm"
             variant="ghost"
             onPress={() => {
-              setData((current) =>
-                current.filter((item) => !selectedIds.has(item.id)),
-              );
+              setData((current) => current.filter((item) => !selectedIds.has(item.id)));
               setSelected(new Set());
             }}
           >

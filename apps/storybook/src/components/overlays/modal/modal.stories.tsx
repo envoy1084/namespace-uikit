@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React, { useCallback, useRef, useState } from "react";
+
+import type { Meta } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 import { Input } from "@/components/forms/input";
@@ -40,8 +40,8 @@ export const Default = () => {
             </Modal.Header>
             <Modal.Body>
               <p>
-                A beautiful, fast, and modern React UI library for building
-                accessible and customizable web applications with ease.
+                A beautiful, fast, and modern React UI library for building accessible and
+                customizable web applications with ease.
               </p>
             </Modal.Body>
             <Modal.Footer>
@@ -75,15 +75,13 @@ export const Placements = () => {
                     <Icon className="size-5" icon="hugeicons:rocket" />
                   </Modal.Icon>
                   <Modal.Heading>
-                    Placement:{" "}
-                    {placement.charAt(0).toUpperCase() + placement.slice(1)}
+                    Placement: {placement.charAt(0).toUpperCase() + placement.slice(1)}
                   </Modal.Heading>
                 </Modal.Header>
                 <Modal.Body>
                   <p>
-                    This modal uses the <code>{placement}</code> placement
-                    option. Try different placements to see how the modal
-                    positions itself on the screen.
+                    This modal uses the <code>{placement}</code> placement option. Try different
+                    placements to see how the modal positions itself on the screen.
                   </p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -107,9 +105,7 @@ export const BackdropVariants = () => {
     <div className="flex flex-wrap gap-4">
       {variants.map((variant) => (
         <Modal key={variant}>
-          <Button variant="secondary">
-            {variant.charAt(0).toUpperCase() + variant.slice(1)}
-          </Button>
+          <Button variant="secondary">{variant.charAt(0).toUpperCase() + variant.slice(1)}</Button>
           <Modal.Backdrop variant={variant}>
             <Modal.Container>
               <Modal.Dialog className="sm:max-w-[360px]">
@@ -119,16 +115,14 @@ export const BackdropVariants = () => {
                     <Icon className="size-5" icon="hugeicons:rocket" />
                   </Modal.Icon>
                   <Modal.Heading>
-                    Backdrop:{" "}
-                    {variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    Backdrop: {variant.charAt(0).toUpperCase() + variant.slice(1)}
                   </Modal.Heading>
                 </Modal.Header>
                 <Modal.Body>
                   <p>
-                    This modal uses the <code>{variant}</code> backdrop variant.
-                    Compare the different visual effects: opaque provides full
-                    opacity, blur adds a backdrop filter, and transparent
-                    removes the background.
+                    This modal uses the <code>{variant}</code> backdrop variant. Compare the
+                    different visual effects: opaque provides full opacity, blur adds a backdrop
+                    filter, and transparent removes the background.
                   </p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -152,9 +146,7 @@ export const Sizes = () => {
     <div className="flex flex-wrap gap-4">
       {sizes.map((size) => (
         <Modal key={size}>
-          <Button variant="secondary">
-            {size.charAt(0).toUpperCase() + size.slice(1)}
-          </Button>
+          <Button variant="secondary">{size.charAt(0).toUpperCase() + size.slice(1)}</Button>
           <Modal.Backdrop>
             <Modal.Container size={size}>
               <Modal.Dialog>
@@ -171,26 +163,23 @@ export const Sizes = () => {
                   <p>
                     {size === "cover" ? (
                       <>
-                        This modal uses the <code>cover</code> size variant. It
-                        spans the full screen with margins: 16px on mobile and
-                        40px on desktop. Maintains rounded corners and standard
-                        padding. Perfect for cover-style content that needs
+                        This modal uses the <code>cover</code> size variant. It spans the full
+                        screen with margins: 16px on mobile and 40px on desktop. Maintains rounded
+                        corners and standard padding. Perfect for cover-style content that needs
                         maximum width while preserving modal aesthetics.
                       </>
                     ) : size === "full" ? (
                       <>
-                        This modal uses the <code>full</code> size variant. It
-                        occupies the entire viewport without any margins,
-                        rounded corners, or shadows, creating a true fullscreen
-                        experience. Ideal for immersive content or full-page
+                        This modal uses the <code>full</code> size variant. It occupies the entire
+                        viewport without any margins, rounded corners, or shadows, creating a true
+                        fullscreen experience. Ideal for immersive content or full-page
                         interactions.
                       </>
                     ) : (
                       <>
-                        This modal uses the <code>{size}</code> size variant. On
-                        mobile devices, all sizes adapt to near full-width for
-                        optimal viewing. On desktop, each size provides a
-                        different maximum width to suit various content needs.
+                        This modal uses the <code>{size}</code> size variant. On mobile devices, all
+                        sizes adapt to near full-width for optimal viewing. On desktop, each size
+                        provides a different maximum width to suit various content needs.
                       </>
                     )}
                   </p>
@@ -227,11 +216,10 @@ export const CustomBackdrop = () => (
           </Modal.Header>
           <Modal.Body>
             <p>
-              This backdrop features a sophisticated gradient that transitions
-              from a dark color at the bottom to complete transparency at the
-              top, combined with a smooth blur effect. The gradient
-              automatically adapts its intensity for optimal contrast in both
-              light and dark modes.
+              This backdrop features a sophisticated gradient that transitions from a dark color at
+              the bottom to complete transparency at the top, combined with a smooth blur effect.
+              The gradient automatically adapts its intensity for optimal contrast in both light and
+              dark modes.
             </p>
           </Modal.Body>
           <Modal.Footer className="flex-col-reverse">
@@ -254,9 +242,8 @@ export const DismissBehavior = () => (
     <div className="flex flex-col gap-2">
       <h3 className="text-lg font-semibold">isDismissable</h3>
       <p className="text-muted text-sm">
-        Controls whether the modal can be dismissed by clicking the overlay
-        backdrop. Defaults to <code>true</code>. Set to <code>false</code> to
-        require explicit close action.
+        Controls whether the modal can be dismissed by clicking the overlay backdrop. Defaults to{" "}
+        <code>true</code>. Set to <code>false</code> to require explicit close action.
       </p>
       <Modal>
         <Button variant="secondary">Open Modal</Button>
@@ -275,9 +262,8 @@ export const DismissBehavior = () => (
               </Modal.Header>
               <Modal.Body>
                 <p>
-                  Try clicking outside this modal on the overlay - it won't
-                  close. You must use the close button or press ESC to dismiss
-                  it.
+                  Try clicking outside this modal on the overlay - it won't close. You must use the
+                  close button or press ESC to dismiss it.
                 </p>
               </Modal.Body>
               <Modal.Footer>
@@ -294,9 +280,8 @@ export const DismissBehavior = () => (
     <div className="flex flex-col gap-2">
       <h3 className="text-lg font-semibold">isKeyboardDismissDisabled</h3>
       <p className="text-muted text-sm">
-        Controls whether the ESC key can dismiss the modal. When set to{" "}
-        <code>true</code>, the ESC key will be disabled and users must use
-        explicit close actions.
+        Controls whether the ESC key can dismiss the modal. When set to <code>true</code>, the ESC
+        key will be disabled and users must use explicit close actions.
       </p>
       <Modal>
         <Button variant="secondary">Open Modal</Button>
@@ -309,14 +294,12 @@ export const DismissBehavior = () => (
                   <Icon className="size-5" icon="hugeicons:circle-info" />
                 </Modal.Icon>
                 <Modal.Heading>isKeyboardDismissDisabled = true</Modal.Heading>
-                <p className="text-muted text-sm leading-5">
-                  ESC key is disabled
-                </p>
+                <p className="text-muted text-sm leading-5">ESC key is disabled</p>
               </Modal.Header>
               <Modal.Body>
                 <p>
-                  Press ESC - nothing happens. You must use the close button or
-                  click the overlay backdrop to dismiss this modal.
+                  Press ESC - nothing happens. You must use the close button or click the overlay
+                  backdrop to dismiss this modal.
                 </p>
               </Modal.Body>
               <Modal.Footer>
@@ -337,9 +320,8 @@ export const CloseMethods = () => (
     <div className="flex flex-col gap-2">
       <h3 className="text-lg font-semibold">Using slot="close"</h3>
       <p className="text-muted text-sm">
-        The simplest way to close a modal. Add <code>slot="close"</code> to any
-        Button component within the modal. When clicked, it will automatically
-        close the modal.
+        The simplest way to close a modal. Add <code>slot="close"</code> to any Button component
+        within the modal. When clicked, it will automatically close the modal.
       </p>
       <Modal>
         <Button variant="secondary">Open Modal</Button>
@@ -354,9 +336,8 @@ export const CloseMethods = () => (
               </Modal.Header>
               <Modal.Body>
                 <p>
-                  Click either button below - both have{" "}
-                  <code>slot="close"</code> and will close the modal
-                  automatically.
+                  Click either button below - both have <code>slot="close"</code> and will close the
+                  modal automatically.
                 </p>
               </Modal.Body>
               <Modal.Footer>
@@ -374,9 +355,9 @@ export const CloseMethods = () => (
     <div className="flex flex-col gap-2">
       <h3 className="text-lg font-semibold">Using Dialog render props</h3>
       <p className="text-muted text-sm">
-        Access the <code>close</code> method from the Dialog's render props.
-        This gives you full control over when and how to close the modal,
-        allowing you to add custom logic before closing.
+        Access the <code>close</code> method from the Dialog's render props. This gives you full
+        control over when and how to close the modal, allowing you to add custom logic before
+        closing.
       </p>
       <Modal>
         <Button variant="secondary">Open Modal</Button>
@@ -393,16 +374,12 @@ export const CloseMethods = () => (
                   </Modal.Header>
                   <Modal.Body>
                     <p>
-                      The buttons below use the <code>close</code> method from
-                      render props. You can add validation or other logic before
-                      calling <code>renderProps.close()</code>.
+                      The buttons below use the <code>close</code> method from render props. You can
+                      add validation or other logic before calling <code>renderProps.close()</code>.
                     </p>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button
-                      variant="secondary"
-                      onPress={() => renderProps.close()}
-                    >
+                    <Button variant="secondary" onPress={() => renderProps.close()}>
                       Cancel
                     </Button>
                     <Button onPress={() => renderProps.close()}>Confirm</Button>
@@ -457,17 +434,16 @@ export const ScrollComparison = () => {
                   Scroll: {scroll.charAt(0).toUpperCase() + scroll.slice(1)}
                 </Modal.Heading>
                 <p className="text-muted text-sm leading-5">
-                  Compare scroll behaviors - inside keeps content scrollable
-                  within the modal, outside allows page scrolling
+                  Compare scroll behaviors - inside keeps content scrollable within the modal,
+                  outside allows page scrolling
                 </p>
               </Modal.Header>
               <Modal.Body>
                 {Array.from({ length: 30 }).map((_, i) => (
                   <p key={i} className="mb-3">
-                    Paragraph {i + 1}: Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit. Nullam pulvinar risus non risus hendrerit
-                    venenatis. Pellentesque sit amet hendrerit risus, sed
-                    porttitor quam.
+                    Paragraph {i + 1}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Nullam pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
+                    hendrerit risus, sed porttitor quam.
                   </p>
                 ))}
               </Modal.Body>
@@ -494,13 +470,10 @@ export const Controlled = () => {
   return (
     <div className="flex max-w-md flex-col gap-8">
       <div className="flex flex-col gap-3">
-        <h3 className="text-foreground text-lg font-semibold">
-          With React.useState()
-        </h3>
+        <h3 className="text-foreground text-lg font-semibold">With React.useState()</h3>
         <p className="text-muted text-sm leading-relaxed text-pretty">
-          Control the modal using React's{" "}
-          <code className="text-foreground">useState</code> hook for simple
-          state management. Perfect for basic use cases.
+          Control the modal using React's <code className="text-foreground">useState</code> hook for
+          simple state management. Perfect for basic use cases.
         </p>
         <div className="bg-surface flex flex-col items-start gap-3 rounded-2xl p-4 shadow-sm">
           <div className="flex w-full items-center justify-between">
@@ -512,18 +485,10 @@ export const Controlled = () => {
             </p>
           </div>
           <div className="flex gap-2">
-            <Button
-              size="sm"
-              variant="secondary"
-              onPress={() => setIsOpen(true)}
-            >
+            <Button size="sm" variant="secondary" onPress={() => setIsOpen(true)}>
               Open Modal
             </Button>
-            <Button
-              size="sm"
-              variant="tertiary"
-              onPress={() => setIsOpen(!isOpen)}
-            >
+            <Button size="sm" variant="tertiary" onPress={() => setIsOpen(!isOpen)}>
               Toggle
             </Button>
           </div>
@@ -541,9 +506,9 @@ export const Controlled = () => {
               </Modal.Header>
               <Modal.Body>
                 <p>
-                  This modal is controlled by React's <code>useState</code>{" "}
-                  hook. Pass <code>isOpen</code> and <code>onOpenChange</code>{" "}
-                  props to manage the modal state externally.
+                  This modal is controlled by React's <code>useState</code> hook. Pass{" "}
+                  <code>isOpen</code> and <code>onOpenChange</code> props to manage the modal state
+                  externally.
                 </p>
               </Modal.Body>
               <Modal.Footer>
@@ -558,13 +523,11 @@ export const Controlled = () => {
       </div>
 
       <div className="flex flex-col gap-3">
-        <h3 className="text-foreground text-lg font-semibold">
-          With useOverlayState()
-        </h3>
+        <h3 className="text-foreground text-lg font-semibold">With useOverlayState()</h3>
         <p className="text-muted text-sm leading-relaxed text-pretty">
-          Use the <code className="text-foreground">useOverlayState</code> hook
-          for a cleaner API with convenient methods like <code>open()</code>,{" "}
-          <code>close()</code>, and <code>toggle()</code>.
+          Use the <code className="text-foreground">useOverlayState</code> hook for a cleaner API
+          with convenient methods like <code>open()</code>, <code>close()</code>, and{" "}
+          <code>toggle()</code>.
         </p>
         <div className="bg-surface flex flex-col items-start gap-3 rounded-2xl p-4 shadow-sm">
           <div className="flex w-full items-center justify-between">
@@ -597,10 +560,10 @@ export const Controlled = () => {
               </Modal.Header>
               <Modal.Body>
                 <p>
-                  The <code>useOverlayState</code> hook provides dedicated
-                  methods for common operations. No need to manually create
-                  callbacks—just use <code>state.open()</code>,{" "}
-                  <code>state.close()</code>, or <code>state.toggle()</code>.
+                  The <code>useOverlayState</code> hook provides dedicated methods for common
+                  operations. No need to manually create callbacks—just use{" "}
+                  <code>state.open()</code>, <code>state.close()</code>, or{" "}
+                  <code>state.toggle()</code>.
                 </p>
               </Modal.Body>
               <Modal.Footer>
@@ -630,8 +593,8 @@ export const WithForm = () => (
             </Modal.Icon>
             <Modal.Heading>Contact Us</Modal.Heading>
             <p className="text-muted mt-1.5 text-sm leading-5">
-              Fill out the form below and we'll get back to you. The modal
-              adapts automatically when the keyboard appears on mobile.
+              Fill out the form below and we'll get back to you. The modal adapts automatically when
+              the keyboard appears on mobile.
             </p>
           </Modal.Header>
           <Modal.Body>
@@ -695,9 +658,8 @@ export const CustomTrigger = () => (
           </Modal.Header>
           <Modal.Body>
             <p>
-              Use <code>Modal.Trigger</code> to create custom trigger elements
-              beyond standard buttons. This example shows a card-style trigger
-              with icons and descriptive text.
+              Use <code>Modal.Trigger</code> to create custom trigger elements beyond standard
+              buttons. This example shows a card-style trigger with icons and descriptive text.
             </p>
           </Modal.Body>
           <Modal.Footer>
@@ -803,9 +765,7 @@ export const CustomAnimations = () => {
 
 export const CustomPortal = () => {
   const portalRef = useRef<HTMLDivElement>(null);
-  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(
-    null,
-  );
+  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
 
   const setPortalRef = useCallback((node: HTMLDivElement | null) => {
     portalRef.current = node;
@@ -816,15 +776,11 @@ export const CustomPortal = () => {
     <div className="flex flex-col gap-4">
       <div>
         <p className="text-sm">
-          Render modals inside a custom container instead of{" "}
-          <code>document.body</code>
+          Render modals inside a custom container instead of <code>document.body</code>
         </p>
         <p className="text-muted text-sm">
-          Apply{" "}
-          <code className="rounded px-1 py-0.5 text-xs">
-            transform: translateZ(0)
-          </code>{" "}
-          to the container to create a new stacking context.
+          Apply <code className="rounded px-1 py-0.5 text-xs">transform: translateZ(0)</code> to the
+          container to create a new stacking context.
         </p>
       </div>
       <div
@@ -833,13 +789,10 @@ export const CustomPortal = () => {
         // new stacking context
         style={{ transform: "translate(0)" }}
       >
-        {!!portalContainer && (
+        {Boolean(portalContainer) && (
           <Modal>
             <Button>Open Modal</Button>
-            <Modal.Backdrop
-              className="h-full"
-              UNSTABLE_portalContainer={portalContainer}
-            >
+            <Modal.Backdrop className="h-full" UNSTABLE_portalContainer={portalContainer}>
               <Modal.Container className="h-full max-h-full">
                 <Modal.Dialog className="h-full max-h-full sm:max-w-md">
                   <Modal.CloseTrigger />
@@ -848,22 +801,19 @@ export const CustomPortal = () => {
                   </Modal.Header>
                   <Modal.Body>
                     <p className="text-muted text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                      nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                     <p className="text-muted text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                      nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                     <p className="text-muted text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                      nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                   </Modal.Body>
                   <Modal.Footer>

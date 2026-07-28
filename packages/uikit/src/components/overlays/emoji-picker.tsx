@@ -1,5 +1,9 @@
 "use client";
 
+import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
+
+import { cn, Popover as HeroPopover } from "@heroui/react";
 import type {
   AutocompleteProps,
   GridLayoutOptions,
@@ -8,11 +12,6 @@ import type {
   PopoverProps,
   SelectProps,
 } from "react-aria-components";
-
-import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
-import { createContext, useContext, useMemo, useState } from "react";
-
-import { cn, Popover as HeroPopover } from "@heroui/react";
 import {
   Autocomplete,
   Button,
@@ -53,10 +52,7 @@ export function EmojiPickerRoot<T extends object>({
   );
 }
 export type EmojiPickerTriggerProps = ComponentPropsWithRef<typeof Button>;
-export function EmojiPickerTrigger({
-  className,
-  ...props
-}: EmojiPickerTriggerProps): ReactElement {
+export function EmojiPickerTrigger({ className, ...props }: EmojiPickerTriggerProps): ReactElement {
   return (
     <Button
       className={classes("emoji-picker__trigger", className)}
@@ -66,10 +62,7 @@ export function EmojiPickerTrigger({
   );
 }
 export type EmojiPickerValueProps = ComponentPropsWithRef<typeof SelectValue>;
-export function EmojiPickerValue({
-  className,
-  ...props
-}: EmojiPickerValueProps): ReactElement {
+export function EmojiPickerValue({ className, ...props }: EmojiPickerValueProps): ReactElement {
   return (
     <SelectValue
       className={classes("emoji-picker__value", className)}
@@ -90,10 +83,7 @@ export function EmojiPickerPopover({
   const { size } = useContext(EmojiContext);
   return (
     <Popover
-      className={classes(
-        `emoji-picker__popover emoji-picker__popover--${size}`,
-        className,
-      )}
+      className={classes(`emoji-picker__popover emoji-picker__popover--${size}`, className)}
       data-slot="emoji-picker-popover"
       offset={offset}
       placement={placement}
@@ -116,16 +106,11 @@ export function EmojiPickerContent({
       data-slot="emoji-picker-content"
       {...props}
     >
-      <Autocomplete filter={filter ?? defaultEmojiFilter}>
-        {children}
-      </Autocomplete>
+      <Autocomplete filter={filter ?? defaultEmojiFilter}>{children}</Autocomplete>
     </div>
   );
 }
-export interface EmojiPickerGridProps<T extends object> extends Omit<
-  ListBoxProps<T>,
-  "layout"
-> {
+export interface EmojiPickerGridProps<T extends object> extends Omit<ListBoxProps<T>, "layout"> {
   layoutOptions?: GridLayoutOptions;
 }
 export function EmojiPickerGrid<T extends object>({
@@ -154,10 +139,7 @@ export function EmojiPickerGrid<T extends object>({
         {...(renderEmptyState
           ? {
               renderEmptyState: (values) => (
-                <div
-                  className="emoji-picker__empty"
-                  data-slot="emoji-picker-empty"
-                >
+                <div className="emoji-picker__empty" data-slot="emoji-picker-empty">
                   {renderEmptyState(values)}
                 </div>
               ),
@@ -169,17 +151,11 @@ export function EmojiPickerGrid<T extends object>({
   );
 }
 export type EmojiPickerItemProps = ListBoxItemProps;
-export function EmojiPickerItem({
-  className,
-  ...props
-}: EmojiPickerItemProps): ReactElement {
+export function EmojiPickerItem({ className, ...props }: EmojiPickerItemProps): ReactElement {
   const { size } = useContext(EmojiContext);
   return (
     <ListBoxItem
-      className={classes(
-        `emoji-picker__item emoji-picker__item--${size}`,
-        className,
-      )}
+      className={classes(`emoji-picker__item emoji-picker__item--${size}`, className)}
       data-slot="emoji-picker-item"
       {...props}
     />
@@ -235,13 +211,16 @@ export function EmojiPickerSkinTonePicker({
   const [open, setOpen] = useState(false);
   const [localValue, setLocalValue] = useState(defaultValue);
   const current = value ?? localValue;
-  const setValue = (next: string) => {
-    if (value === undefined) setLocalValue(next);
-    onChange?.(next);
-  };
+  const setValue = useCallback(
+    (next: string) => {
+      if (value === undefined) setLocalValue(next);
+      onChange?.(next);
+    },
+    [onChange, value],
+  );
   const context = useMemo(
     () => ({ close: () => setOpen(false), setValue, value: current }),
-    [current, value, onChange],
+    [current, setValue],
   );
   return (
     <ToneContext value={context}>
@@ -251,10 +230,7 @@ export function EmojiPickerSkinTonePicker({
     </ToneContext>
   );
 }
-export interface EmojiPickerSkinToneTriggerProps extends Omit<
-  EmojiPickerTriggerProps,
-  "children"
-> {
+export interface EmojiPickerSkinToneTriggerProps extends Omit<EmojiPickerTriggerProps, "children"> {
   children?: ReactNode;
   tones?: EmojiSkinToneItem[];
 }
@@ -345,20 +321,17 @@ type EmojiPickerComponent = typeof EmojiPickerRoot & {
   Trigger: typeof EmojiPickerTrigger;
   Value: typeof EmojiPickerValue;
 };
-export const EmojiPicker: EmojiPickerComponent = Object.assign(
-  EmojiPickerRoot,
-  {
-    Content: EmojiPickerContent,
-    Footer: EmojiPickerFooter,
-    Grid: EmojiPickerGrid,
-    Item: EmojiPickerItem,
-    Popover: EmojiPickerPopover,
-    Root: EmojiPickerRoot,
-    SkinToneContent: EmojiPickerSkinToneContent,
-    SkinToneOption: EmojiPickerSkinToneOption,
-    SkinTonePicker: EmojiPickerSkinTonePicker,
-    SkinToneTrigger: EmojiPickerSkinToneTrigger,
-    Trigger: EmojiPickerTrigger,
-    Value: EmojiPickerValue,
-  },
-);
+export const EmojiPicker: EmojiPickerComponent = Object.assign(EmojiPickerRoot, {
+  Content: EmojiPickerContent,
+  Footer: EmojiPickerFooter,
+  Grid: EmojiPickerGrid,
+  Item: EmojiPickerItem,
+  Popover: EmojiPickerPopover,
+  Root: EmojiPickerRoot,
+  SkinToneContent: EmojiPickerSkinToneContent,
+  SkinToneOption: EmojiPickerSkinToneOption,
+  SkinTonePicker: EmojiPickerSkinTonePicker,
+  SkinToneTrigger: EmojiPickerSkinToneTrigger,
+  Trigger: EmojiPickerTrigger,
+  Value: EmojiPickerValue,
+});

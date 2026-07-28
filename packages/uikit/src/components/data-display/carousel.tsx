@@ -1,27 +1,11 @@
 "use client";
 
-import type {
-  EmblaCarouselType,
-  EmblaOptionsType,
-  EmblaPluginType,
-} from "embla-carousel";
-
-import type {
-  ComponentPropsWithRef,
-  CSSProperties,
-  ReactElement,
-  ReactNode,
-} from "react";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import type { ComponentPropsWithRef, CSSProperties, ReactElement, ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { Button, cn } from "@heroui/react";
+import type { EmblaCarouselType, EmblaOptionsType, EmblaPluginType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 
 import { IconChevronLeft, IconChevronRight } from "../../heroui-icons";
@@ -44,8 +28,7 @@ interface ContextValue {
 const Context = createContext<ContextValue | null>(null);
 const useCarousel = () => {
   const value = useContext(Context);
-  if (!value)
-    throw new Error("Carousel components must be used inside Carousel.Root");
+  if (!value) throw new Error("Carousel components must be used inside Carousel.Root");
   return value;
 };
 
@@ -70,9 +53,7 @@ function CarouselRoot({
     [scrollSnapCount, setScrollSnapCount] = useState(0);
   const [canScrollPrev, setCanScrollPrev] = useState(false),
     [canScrollNext, setCanScrollNext] = useState(false);
-  const [viewportWrapper, setViewportWrapper] = useState<HTMLDivElement | null>(
-    null,
-  );
+  const [viewportWrapper, setViewportWrapper] = useState<HTMLDivElement | null>(null);
   const update = useCallback((embla: EmblaCarouselType) => {
     setSelectedIndex(embla.selectedScrollSnap());
     setScrollSnapCount(embla.scrollSnapList().length);
@@ -108,18 +89,19 @@ function CarouselRoot({
         viewportWrapper,
       }}
     >
+      {/* The carousel viewport is intentionally focusable for arrow-key navigation. */}
+      {/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
         {...props}
         aria-roledescription="carousel"
         className={cn("carousel", `carousel--${type}`, className)}
         onKeyDown={(event) => {
           onKeyDown?.(event);
-          if (!event.defaultPrevented && event.key === "ArrowLeft")
-            scrollPrev();
-          if (!event.defaultPrevented && event.key === "ArrowRight")
-            scrollNext();
+          if (!event.defaultPrevented && event.key === "ArrowLeft") scrollPrev();
+          if (!event.defaultPrevented && event.key === "ArrowRight") scrollNext();
         }}
         role="region"
+        // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
         {children}
@@ -138,11 +120,7 @@ function CarouselContent({
       <div className="carousel__viewport" ref={emblaRef}>
         <div
           {...props}
-          className={cn(
-            "carousel__content",
-            `carousel__content--${type}`,
-            className,
-          )}
+          className={cn("carousel__content", `carousel__content--${type}`, className)}
         >
           {children}
         </div>
@@ -150,10 +128,7 @@ function CarouselContent({
     </div>
   );
 }
-function CarouselItem({
-  className,
-  ...props
-}: ComponentPropsWithRef<"div">): ReactElement {
+function CarouselItem({ className, ...props }: ComponentPropsWithRef<"div">): ReactElement {
   const { type } = useCarousel();
   return (
     <div
@@ -171,19 +146,14 @@ interface CarouselControlProps extends Omit<
   children?: ReactNode;
   className?: string;
 }
-function CarouselPrevious({
-  children,
-  className,
-  ...props
-}: CarouselControlProps): ReactElement {
+function CarouselPrevious({ children, className, ...props }: CarouselControlProps): ReactElement {
   const { canScrollPrev, scrollPrev, type, viewportWrapper } = useCarousel();
   const button = (
     <Button
       {...props}
       aria-label={props["aria-label"] ?? "Previous slide"}
       className={
-        cn("carousel__previous", `carousel__previous--${type}`, className) ??
-        "carousel__previous"
+        cn("carousel__previous", `carousel__previous--${type}`, className) ?? "carousel__previous"
       }
       isDisabled={!canScrollPrev}
       isIconOnly
@@ -194,24 +164,15 @@ function CarouselPrevious({
       {children ?? <IconChevronLeft />}
     </Button>
   );
-  return type === "miniatures" || !viewportWrapper
-    ? button
-    : createPortal(button, viewportWrapper);
+  return type === "miniatures" || !viewportWrapper ? button : createPortal(button, viewportWrapper);
 }
-function CarouselNext({
-  children,
-  className,
-  ...props
-}: CarouselControlProps): ReactElement {
+function CarouselNext({ children, className, ...props }: CarouselControlProps): ReactElement {
   const { canScrollNext, scrollNext, type, viewportWrapper } = useCarousel();
   const button = (
     <Button
       {...props}
       aria-label={props["aria-label"] ?? "Next slide"}
-      className={
-        cn("carousel__next", `carousel__next--${type}`, className) ??
-        "carousel__next"
-      }
+      className={cn("carousel__next", `carousel__next--${type}`, className) ?? "carousel__next"}
       isDisabled={!canScrollNext}
       isIconOnly
       onPress={scrollNext}
@@ -221,19 +182,13 @@ function CarouselNext({
       {children ?? <IconChevronRight />}
     </Button>
   );
-  return type === "miniatures" || !viewportWrapper
-    ? button
-    : createPortal(button, viewportWrapper);
+  return type === "miniatures" || !viewportWrapper ? button : createPortal(button, viewportWrapper);
 }
 
 export interface CarouselDotsProps extends ComponentPropsWithRef<"div"> {
   renderDot?: (state: { index: number; isSelected: boolean }) => ReactNode;
 }
-function CarouselDots({
-  className,
-  renderDot,
-  ...props
-}: CarouselDotsProps): ReactElement | null {
+function CarouselDots({ className, renderDot, ...props }: CarouselDotsProps): ReactElement | null {
   const { scrollSnapCount, scrollTo, selectedIndex } = useCarousel();
   if (scrollSnapCount <= 1) return null;
   return (

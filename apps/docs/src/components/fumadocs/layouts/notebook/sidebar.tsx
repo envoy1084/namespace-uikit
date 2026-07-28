@@ -63,13 +63,11 @@ export function SidebarContent({
               : "top-(--fd-docs-row-2) h-[calc(var(--fd-docs-height)-var(--fd-docs-row-2))]",
           )}
         >
-          {!!collapsed && (
-            <div className="absolute inset-y-0 start-0 w-4" {...rest} />
-          )}
+          {Boolean(collapsed) && <div className="absolute inset-y-0 start-0 w-4" {...rest} />}
           <aside
             ref={mergeRefs(ref, refProp, asideRef)}
             data-collapsed={collapsed}
-            data-hovered={!!collapsed && hovered}
+            data-hovered={Boolean(collapsed) && hovered}
             id="nd-sidebar"
             className={cn(
               "absolute inset-y-0 start-0 flex w-full flex-col items-end text-sm duration-250 *:w-(--fd-sidebar-width)",
@@ -81,8 +79,7 @@ export function SidebarContent({
                   : "-translate-x-(--fd-sidebar-width) rtl:translate-x-full",
               ],
               ref.current &&
-                (ref.current.getAttribute("data-collapsed") === "true") !==
-                  collapsed &&
+                (ref.current.getAttribute("data-collapsed") === "true") !== collapsed &&
                 "transition-[width,inset-block,translate,background-color]",
               className,
             )}
@@ -118,12 +115,7 @@ export function SidebarDrawer({
   );
 }
 
-export function SidebarSeparator({
-  children,
-  className,
-  style,
-  ...props
-}: ComponentProps<"p">) {
+export function SidebarSeparator({ children, className, style, ...props }: ComponentProps<"p">) {
   const depth = Base.useFolderDepth();
 
   return (
@@ -150,10 +142,7 @@ export function SidebarItem({
 
   return (
     <Base.SidebarItem
-      className={cn(
-        itemVariants({ highlight: depth >= 1, variant: "link" }),
-        className,
-      )}
+      className={cn(itemVariants({ highlight: depth >= 1, variant: "link" }), className)}
       style={{
         paddingInlineStart: getItemOffset(depth),
         ...style,
@@ -198,11 +187,7 @@ export function SidebarFolderLink({
 
   return (
     <Base.SidebarFolderLink
-      className={cn(
-        itemVariants({ highlight: depth > 1, variant: "link" }),
-        "w-full",
-        className,
-      )}
+      className={cn(itemVariants({ highlight: depth > 1, variant: "link" }), "w-full", className)}
       style={{
         paddingInlineStart: getItemOffset(depth - 1),
         ...style,

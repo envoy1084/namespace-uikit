@@ -1,18 +1,11 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
-import type { Key } from "@/components/utilities/rac";
-
 import React from "react";
 
 import { useAsyncList } from "@react-stately/data";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 import { ListBox } from "@/components/collections/list-box";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/data-display/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/data-display/avatar";
 import { EmptyState } from "@/components/feedback/empty-state";
 import { Spinner } from "@/components/feedback/spinner";
 import { Description } from "@/components/forms/description";
@@ -22,6 +15,7 @@ import { Input } from "@/components/forms/input";
 import { Label } from "@/components/forms/label";
 import { Separator } from "@/components/layout/separator";
 import { Header } from "@/components/typography/header";
+import type { Key } from "@/components/utilities/rac";
 import { Collection, ListBoxLoadMoreItem } from "@/components/utilities/rac";
 import { Icon } from "@/icon";
 
@@ -382,10 +376,7 @@ export const CustomIndicator: Story = {
 export const Required: Story = {
   render: () => {
     return (
-      <Form
-        className="flex w-[256px] flex-col gap-4"
-        onSubmit={handleComboBoxRequiredSubmit}
-      >
+      <Form className="flex w-[256px] flex-col gap-4" onSubmit={handleComboBoxRequiredSubmit}>
         <ComboBox isRequired className="w-full" name="animal">
           <Label>Favorite Animal</Label>
           <ComboBox.InputGroup>
@@ -541,11 +532,7 @@ export const Controlled: Story = {
           <ComboBox.Popover>
             <ListBox>
               {animals.map((animal) => (
-                <ListBox.Item
-                  key={animal.id}
-                  id={animal.id}
-                  textValue={animal.name}
-                >
+                <ListBox.Item key={animal.id} id={animal.id} textValue={animal.name}>
                   {animal.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
@@ -553,9 +540,7 @@ export const Controlled: Story = {
             </ListBox>
           </ComboBox.Popover>
         </ComboBox>
-        <p className="text-muted text-sm">
-          Selected: {selectedAnimal?.name || "None"}
-        </p>
+        <p className="text-muted text-sm">Selected: {selectedAnimal?.name || "None"}</p>
       </div>
     );
   },
@@ -567,11 +552,7 @@ export const ControlledInputValue: Story = {
 
     return (
       <div className="space-y-2">
-        <ComboBox
-          className="w-[256px]"
-          inputValue={inputValue}
-          onInputChange={setInputValue}
-        >
+        <ComboBox className="w-[256px]" inputValue={inputValue} onInputChange={setInputValue}>
           <Label>Search (controlled input)</Label>
           <ComboBox.InputGroup>
             <Input placeholder="Type to search..." />
@@ -606,9 +587,7 @@ export const ControlledInputValue: Story = {
             </ListBox>
           </ComboBox.Popover>
         </ComboBox>
-        <p className="text-muted text-sm">
-          Input value: {inputValue || "(empty)"}
-        </p>
+        <p className="text-muted text-sm">Input value: {inputValue || "(empty)"}</p>
       </div>
     );
   },
@@ -622,12 +601,10 @@ export const AsynchronousLoading: Story = {
   render: () => {
     const list = useAsyncList<Character>({
       async load({ cursor, filterText, signal }) {
-        if (cursor) {
-          cursor = cursor.replace(/^http:\/\//i, "https://");
-        }
+        const normalizedCursor = cursor?.replace(/^http:\/\//i, "https://");
 
         const res = await fetch(
-          cursor || `https://swapi.py4e.com/api/people/?search=${filterText}`,
+          normalizedCursor || `https://swapi.py4e.com/api/people/?search=${filterText}`,
           {
             signal,
           },
@@ -706,11 +683,7 @@ export const CustomFiltering: Story = {
         <ComboBox.Popover>
           <ListBox>
             {animals.map((animal) => (
-              <ListBox.Item
-                key={animal.id}
-                id={animal.id}
-                textValue={animal.name}
-              >
+              <ListBox.Item key={animal.id} id={animal.id} textValue={animal.name}>
                 {animal.name}
                 <ListBox.ItemIndicator />
               </ListBox.Item>
@@ -758,9 +731,7 @@ export const AllowsCustomValue: Story = {
           </ListBox.Item>
         </ListBox>
       </ComboBox.Popover>
-      <Description>
-        You can type any animal name, even if it's not in the list
-      </Description>
+      <Description>You can type any animal name, even if it's not in the list</Description>
     </ComboBox>
   ),
 };
@@ -884,9 +855,7 @@ export const MenuTrigger: Story = {
               </ListBox.Item>
             </ListBox>
           </ComboBox.Popover>
-          <Description>
-            Popover opens when the user edits the input text
-          </Description>
+          <Description>Popover opens when the user edits the input text</Description>
         </ComboBox>
       </div>
 
@@ -927,8 +896,7 @@ export const MenuTrigger: Story = {
             </ListBox>
           </ComboBox.Popover>
           <Description>
-            Popover only opens when the trigger button is pressed or arrow keys
-            are used
+            Popover only opens when the trigger button is pressed or arrow keys are used
           </Description>
         </ComboBox>
       </div>

@@ -1,11 +1,6 @@
 "use client";
 
-import type {
-  ComponentPropsWithRef,
-  KeyboardEvent,
-  ReactElement,
-  ReactNode,
-} from "react";
+import type { ComponentPropsWithRef, KeyboardEvent, ReactElement, ReactNode } from "react";
 import {
   createContext,
   useCallback,
@@ -16,14 +11,7 @@ import {
   useState,
 } from "react";
 
-import {
-  Button,
-  cn,
-  ScrollShadow,
-  Spinner,
-  TextArea,
-  Tooltip,
-} from "@heroui/react";
+import { Button, cn, ScrollShadow, Spinner, TextArea, Tooltip } from "@heroui/react";
 import {
   AlertCircleIcon,
   ArrowUp01Icon,
@@ -59,10 +47,7 @@ interface PromptContextValue {
 const Context = createContext<PromptContextValue | null>(null);
 const usePrompt = (): PromptContextValue => {
   const value = useContext(Context);
-  if (!value)
-    throw new Error(
-      "PromptInput subcomponents must be used within PromptInput",
-    );
+  if (!value) throw new Error("PromptInput subcomponents must be used within PromptInput");
   return value;
 };
 const cls = (base: string, className: unknown): string =>
@@ -172,6 +157,9 @@ export function PromptInputShell({
 }: ComponentPropsWithRef<"div">): ReactElement {
   const state = usePrompt();
   return (
+    // Clicking the non-interactive shell is a pointer convenience that forwards
+    // focus to the keyboard-accessible textarea.
+    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
       className={cls(
         `prompt-input__shell prompt-input__shell--${state.layout} prompt-input__shell--${state.variant}`,
@@ -201,18 +189,12 @@ const divPart = (base: string, slot: string) =>
     usePrompt();
     return <div className={cls(base, className)} data-slot={slot} {...props} />;
   };
-export const PromptInputContent: DivPart = divPart(
-  "prompt-input__content",
-  "prompt-input-content",
-);
+export const PromptInputContent: DivPart = divPart("prompt-input__content", "prompt-input-content");
 export const PromptInputAttachments: DivPart = divPart(
   "prompt-input__attachments",
   "prompt-input-attachments",
 );
-export const PromptInputToolbar: DivPart = divPart(
-  "prompt-input__toolbar",
-  "prompt-input-toolbar",
-);
+export const PromptInputToolbar: DivPart = divPart("prompt-input__toolbar", "prompt-input-toolbar");
 export const PromptInputToolbarStart: DivPart = divPart(
   "prompt-input__toolbar-start",
   "prompt-input-toolbar-start",
@@ -234,9 +216,7 @@ export function PromptInputFooter({
     />
   );
 }
-export interface PromptInputTextAreaProps extends ComponentPropsWithRef<
-  typeof TextArea
-> {
+export interface PromptInputTextAreaProps extends ComponentPropsWithRef<typeof TextArea> {
   disableAutosize?: boolean;
 }
 export function PromptInputTextArea({
@@ -249,20 +229,18 @@ export function PromptInputTextArea({
   const resize = useCallback(
     (element: HTMLTextAreaElement | null) => {
       if (!element || disableAutosize) return;
-      const hasAttachments = !!element
-        .closest('[data-slot="prompt-input-shell"]')
-        ?.querySelector('[data-slot="prompt-input-attachments"] > *');
+      const hasAttachments = Boolean(
+        element
+          .closest('[data-slot="prompt-input-shell"]')
+          ?.querySelector('[data-slot="prompt-input-attachments"] > *'),
+      );
       const shouldExpand =
         hasAttachments ||
         element.value.includes("\n") ||
         element.scrollHeight > element.clientHeight + 8;
-      if (state.layout !== "stacked")
-        state.setExpanded(shouldExpand || !!element.value);
+      if (state.layout !== "stacked") state.setExpanded(shouldExpand || Boolean(element.value));
       element.style.height = "auto";
-      const max =
-        typeof state.maxHeight === "number"
-          ? `${state.maxHeight}px`
-          : state.maxHeight;
+      const max = typeof state.maxHeight === "number" ? `${state.maxHeight}px` : state.maxHeight;
       element.style.height = `min(${element.scrollHeight}px, ${max})`;
     },
     [disableAutosize, state],
@@ -274,8 +252,7 @@ export function PromptInputTextArea({
   const keydown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
-      if (!running(state.status) || state.allowSubmitWhileRunning)
-        state.onSubmit?.();
+      if (!running(state.status) || state.allowSubmitWhileRunning) state.onSubmit?.();
     }
     onKeyDown?.(event);
   };
@@ -286,9 +263,7 @@ export function PromptInputTextArea({
       aria-label={props["aria-label"] ?? "Message input"}
       className={cls("prompt-input__textarea", className)}
       data-slot="prompt-input-textarea"
-      disabled={
-        state.disabled || (state.lockInputOnRun && running(state.status))
-      }
+      disabled={state.disabled || (state.lockInputOnRun && running(state.status))}
       placeholder={props.placeholder ?? "What do you want to know?"}
       rows={1}
       value={state.value}
@@ -307,18 +282,11 @@ const SendIcon = ({ status }: { status: PromptInputStatus }): ReactElement =>
   ) : status === "streaming" ? (
     <HugeiconsIcon aria-hidden icon={StopIcon} size={16} strokeWidth={2} />
   ) : status === "error" ? (
-    <HugeiconsIcon
-      aria-hidden
-      icon={AlertCircleIcon}
-      size={16}
-      strokeWidth={2}
-    />
+    <HugeiconsIcon aria-hidden icon={AlertCircleIcon} size={16} strokeWidth={2} />
   ) : (
     <HugeiconsIcon aria-hidden icon={ArrowUp01Icon} size={16} strokeWidth={2} />
   );
-export interface PromptInputSendProps extends ComponentPropsWithRef<
-  typeof Button
-> {
+export interface PromptInputSendProps extends ComponentPropsWithRef<typeof Button> {
   onStop?: () => void;
   status?: PromptInputStatus;
 }
@@ -338,15 +306,12 @@ export function PromptInputSend({
   const submitWhileRunning =
     state.allowSubmitWhileRunning &&
     isRunning &&
-    (isDisabled === false ||
-      (isDisabled === undefined && !!state.value.trim()));
-  const canStop = isRunning && !!stop && !submitWhileRunning;
+    (isDisabled === false || (isDisabled === undefined && Boolean(state.value.trim())));
+  const canStop = isRunning && Boolean(stop) && !submitWhileRunning;
   const disabled =
     isDisabled ??
     (state.disabled ||
-      (isRunning &&
-        !canStop &&
-        !(state.allowSubmitWhileRunning && state.value.trim())) ||
+      (isRunning && !canStop && !(state.allowSubmitWhileRunning && state.value.trim())) ||
       (!isRunning && !state.value.trim()));
   return (
     <Button
@@ -372,9 +337,7 @@ export function PromptInputSend({
     </Button>
   );
 }
-export interface PromptInputActionProps extends ComponentPropsWithRef<
-  typeof Button
-> {
+export interface PromptInputActionProps extends ComponentPropsWithRef<typeof Button> {
   tooltip?: ReactNode;
 }
 export function PromptInputAction({
@@ -392,11 +355,7 @@ export function PromptInputAction({
       isIconOnly
       className={cls("", className)}
       data-slot="prompt-input-action"
-      isDisabled={
-        state.disabled ||
-        isDisabled ||
-        (state.lockInputOnRun && running(state.status))
-      }
+      isDisabled={state.disabled || isDisabled || (state.lockInputOnRun && running(state.status))}
       size={state.layout === "stacked" ? "md" : "sm"}
       variant={variant}
     >
@@ -448,7 +407,7 @@ export function PromptInputQueueList<T>({
   ...props
 }: PromptInputQueueListProps<T>): ReactElement {
   usePrompt();
-  const enabled = !!values && !!onReorder && values.length > 1;
+  const enabled = values !== undefined && onReorder !== undefined && values.length > 1;
   return (
     <QueueContext value={{ reorderEnabled: enabled }}>
       <ScrollShadow
@@ -479,10 +438,7 @@ interface ItemContextValue {
   dragControls: ReturnType<typeof useDragControls>;
 }
 const ItemContext = createContext<ItemContextValue | null>(null);
-export interface PromptInputQueueItemProps<T> extends Omit<
-  ComponentPropsWithRef<"li">,
-  "value"
-> {
+export interface PromptInputQueueItemProps<T> extends Omit<ComponentPropsWithRef<"li">, "value"> {
   value?: T;
 }
 export function PromptInputQueueItem<T>({
@@ -577,12 +533,7 @@ export function PromptInputQueueItemIcon({
       {...props}
     >
       {children ?? (
-        <HugeiconsIcon
-          aria-hidden
-          icon={CornerDownRightIcon}
-          size={16}
-          strokeWidth={2}
-        />
+        <HugeiconsIcon aria-hidden icon={CornerDownRightIcon} size={16} strokeWidth={2} />
       )}
     </span>
   );
@@ -603,22 +554,16 @@ export function PromptInputQueueItemHandle({
       className={cls("prompt-input__queue-item-handle", className)}
       data-reorder-enabled={reorder.reorderEnabled || undefined}
       data-slot="prompt-input-queue-item-handle"
-      isDisabled={!!(state.disabled || !reorder.reorderEnabled || isDisabled)}
+      isDisabled={Boolean(state.disabled || !reorder.reorderEnabled || isDisabled)}
       size="sm"
       variant="ghost"
       onPointerDown={(event) => {
-        if (!state.disabled && reorder.reorderEnabled)
-          item?.dragControls.start(event);
+        if (!state.disabled && reorder.reorderEnabled) item?.dragControls.start(event);
         onPointerDown?.(event);
       }}
     >
       {children ?? (
-        <HugeiconsIcon
-          aria-hidden
-          icon={DragDropVerticalIcon}
-          size={16}
-          strokeWidth={2}
-        />
+        <HugeiconsIcon aria-hidden icon={DragDropVerticalIcon} size={16} strokeWidth={2} />
       )}
     </Button>
   );
@@ -636,10 +581,7 @@ export function PromptInputQueueItemAttachmentsOverflow({
   usePrompt();
   return hiddenCount <= 0 ? null : (
     <span
-      className={cls(
-        "prompt-input__queue-item-attachments-overflow",
-        className,
-      )}
+      className={cls("prompt-input__queue-item-attachments-overflow", className)}
       data-slot="prompt-input-queue-item-attachments-overflow"
       {...props}
     >
@@ -650,11 +592,7 @@ export function PromptInputQueueItemAttachmentsOverflow({
 type QueueButtonProps = ComponentPropsWithRef<typeof Button>;
 type QueueButton = (props: QueueButtonProps) => ReactElement;
 const queueButton = (slot: string, label: string, fallback: ReactNode) =>
-  function QueueButton({
-    children,
-    isDisabled,
-    ...props
-  }: QueueButtonProps): ReactElement {
+  function QueueButton({ children, isDisabled, ...props }: QueueButtonProps): ReactElement {
     const state = usePrompt();
     return (
       <Button
@@ -662,7 +600,7 @@ const queueButton = (slot: string, label: string, fallback: ReactNode) =>
         isIconOnly
         aria-label={props["aria-label"] ?? label}
         data-slot={slot}
-        isDisabled={!!(state.disabled || isDisabled)}
+        isDisabled={Boolean(state.disabled || isDisabled)}
         size="sm"
         variant="ghost"
       >
@@ -678,12 +616,7 @@ export const PromptInputQueueItemRemove: QueueButton = queueButton(
 export const PromptInputQueueItemMore: QueueButton = queueButton(
   "prompt-input-queue-item-more",
   "More queue actions",
-  <HugeiconsIcon
-    aria-hidden
-    icon={MoreHorizontalIcon}
-    size={16}
-    strokeWidth={2}
-  />,
+  <HugeiconsIcon aria-hidden icon={MoreHorizontalIcon} size={16} strokeWidth={2} />,
 );
 export function PromptInputQueueItemAction({
   children,
@@ -696,7 +629,7 @@ export function PromptInputQueueItemAction({
     <Button
       {...props}
       data-slot="prompt-input-queue-item-action"
-      isDisabled={!!(state.disabled || isDisabled)}
+      isDisabled={Boolean(state.disabled || isDisabled)}
       isIconOnly={isIconOnly}
       size="sm"
       variant="ghost"
@@ -715,18 +648,13 @@ export function PromptInputQueueItemSteer({
     <Button
       {...props}
       data-slot="prompt-input-queue-item-steer"
-      isDisabled={!!(state.disabled || isDisabled)}
+      isDisabled={Boolean(state.disabled || isDisabled)}
       size="sm"
       variant="ghost"
     >
       {children ?? (
         <>
-          <HugeiconsIcon
-            aria-hidden
-            icon={CornerDownRightIcon}
-            size={16}
-            strokeWidth={2}
-          />
+          <HugeiconsIcon aria-hidden icon={CornerDownRightIcon} size={16} strokeWidth={2} />
           Steer
         </>
       )}
@@ -783,20 +711,17 @@ type PromptInputComponent = typeof PromptInputRoot & {
   ToolbarEnd: typeof PromptInputToolbarEnd;
   ToolbarStart: typeof PromptInputToolbarStart;
 };
-export const PromptInput: PromptInputComponent = Object.assign(
-  PromptInputRoot,
-  {
-    Action: PromptInputAction,
-    Attachments: PromptInputAttachments,
-    Content: PromptInputContent,
-    Footer: PromptInputFooter,
-    Queue,
-    Root: PromptInputRoot,
-    Send: PromptInputSend,
-    Shell: PromptInputShell,
-    TextArea: PromptInputTextArea,
-    Toolbar: PromptInputToolbar,
-    ToolbarEnd: PromptInputToolbarEnd,
-    ToolbarStart: PromptInputToolbarStart,
-  },
-);
+export const PromptInput: PromptInputComponent = Object.assign(PromptInputRoot, {
+  Action: PromptInputAction,
+  Attachments: PromptInputAttachments,
+  Content: PromptInputContent,
+  Footer: PromptInputFooter,
+  Queue,
+  Root: PromptInputRoot,
+  Send: PromptInputSend,
+  Shell: PromptInputShell,
+  TextArea: PromptInputTextArea,
+  Toolbar: PromptInputToolbar,
+  ToolbarEnd: PromptInputToolbarEnd,
+  ToolbarStart: PromptInputToolbarStart,
+});

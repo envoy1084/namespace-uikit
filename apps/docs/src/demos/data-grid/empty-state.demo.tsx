@@ -4,11 +4,8 @@
 import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
 import { Button } from "@thenamespace/uikit/button";
 import { EmptyState as EmptyStateComponent } from "@thenamespace/uikit/empty-state";
-import {
-  Add01Icon,
-  FolderOpenIcon,
-  MoreVerticalIcon,
-} from "@thenamespace/uikit/icons";
+import type { MoreVerticalIcon } from "@thenamespace/uikit/icons";
+import { Add01Icon, FolderOpenIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 function StoryIcon({ icon }: { icon: typeof MoreVerticalIcon }) {
@@ -60,12 +57,10 @@ export const DemoEmptyStateExample = () => (
               <EmptyStateComponent.Media className="border" variant="icon">
                 <StoryIcon icon={FolderOpenIcon} />
               </EmptyStateComponent.Media>
-              <EmptyStateComponent.Title>
-                No Projects Yet
-              </EmptyStateComponent.Title>
+              <EmptyStateComponent.Title>No Projects Yet</EmptyStateComponent.Title>
               <EmptyStateComponent.Description>
-                Get started by creating your first project. You can always
-                import existing projects later.
+                Get started by creating your first project. You can always import existing projects
+                later.
               </EmptyStateComponent.Description>
             </EmptyStateComponent.Header>
             <EmptyStateComponent.Content className="flex-row gap-2">

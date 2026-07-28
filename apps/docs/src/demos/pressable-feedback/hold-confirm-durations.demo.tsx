@@ -18,12 +18,12 @@ function HoldButtons({ duration }: { duration?: number }) {
         >
           <Trash />
           {duration
-            ? `${duration === 800 ? "Fast" : "Slow"} (${duration >= 1000 ? duration / 1000 + "s" : duration + "ms"})`
+            ? `${duration === 800 ? "Fast" : "Slow"} (${duration >= 1000 ? `${duration / 1000}s` : `${duration}ms`})`
             : "Hold to Delete"}
         </PressableFeedback.HoldConfirm>
         <Trash />
         {duration
-          ? `${duration === 800 ? "Fast" : "Slow"} (${duration >= 1000 ? duration / 1000 + "s" : duration + "ms"})`
+          ? `${duration === 800 ? "Fast" : "Slow"} (${duration >= 1000 ? `${duration / 1000}s` : `${duration}ms`})`
           : "Hold to Delete"}
       </Button>
     </div>

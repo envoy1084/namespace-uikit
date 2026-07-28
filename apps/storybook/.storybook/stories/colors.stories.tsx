@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta } from "@storybook/react";
 
 const meta: Meta = {
   title: "Color System",
@@ -35,7 +35,7 @@ const ColorItem = ({ cssVariable, name, variable }: ColorItemProps) => {
         <span className="text-foreground text-sm font-medium">{name}</span>
         <code className="text-muted text-xs">{variable}</code>
       </div>
-      {!!computedColor && (
+      {Boolean(computedColor) && (
         <div className="text-right">
           <code className="text-muted font-mono text-xs">{computedColor}</code>
         </div>
@@ -218,9 +218,7 @@ export const AllColors = () => {
   return (
     <div className="mx-auto max-w-4xl p-6">
       <div className="mb-8">
-        <h1 className="text-foreground mb-2 text-3xl font-bold">
-          Color System
-        </h1>
+        <h1 className="text-foreground mb-2 text-3xl font-bold">Color System</h1>
         <p className="text-muted">
           Namespace's color palette with CSS variables and computed values
         </p>
@@ -234,24 +232,15 @@ export const AllColors = () => {
       <ColorSection colors={primitiveColors} title="Primitive Colors" />
 
       <div className="mb-8">
-        <h2 className="text-foreground mb-4 text-2xl font-bold">
-          Calculated Colors
-        </h2>
+        <h2 className="text-foreground mb-4 text-2xl font-bold">Calculated Colors</h2>
         <p className="text-muted mb-6 text-sm">
-          These colors are dynamically calculated using color-mix() from base
-          colors
+          These colors are dynamically calculated using color-mix() from base colors
         </p>
-        <ColorSection
-          colors={calculatedBackgroundColors}
-          title="Background Shades"
-        />
+        <ColorSection colors={calculatedBackgroundColors} title="Background Shades" />
         <ColorSection colors={calculatedHoverColors} title="Hover States" />
         <ColorSection colors={calculatedSoftColors} title="Soft Variants" />
         <ColorSection colors={calculatedSurfaceColors} title="Surface Levels" />
-        <ColorSection
-          colors={calculatedInSurfaceColors}
-          title="On Surface Colors"
-        />
+        <ColorSection colors={calculatedInSurfaceColors} title="On Surface Colors" />
         <ColorSection
           colors={calculatedInSurfaceSecondaryColors}
           title="On Surface Colors - Secondary"
@@ -260,10 +249,7 @@ export const AllColors = () => {
           colors={calculatedInSurfaceTertiaryColors}
           title="On Surface Colors - Tertiary"
         />
-        <ColorSection
-          colors={calculatedSeparatorColors}
-          title="Separator Colors"
-        />
+        <ColorSection colors={calculatedSeparatorColors} title="Separator Colors" />
         <ColorSection colors={calculatedFieldColors} title="Field States" />
       </div>
     </div>

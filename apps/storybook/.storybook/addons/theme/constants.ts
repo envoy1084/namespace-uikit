@@ -27,9 +27,8 @@ export const THEME_OPTIONS: ThemeOption[] = [
   },
 ];
 
-export const isThemeKey = (
-  value: string | undefined | null,
-): value is ThemeKey => !!value && THEME_VALUES.includes(value as ThemeKey);
+export const isThemeKey = (value: string | undefined | null): value is ThemeKey =>
+  Boolean(value) && THEME_VALUES.includes(value as ThemeKey);
 
 export const ensureThemeKey = (value: string | undefined | null): ThemeKey =>
   isThemeKey(value) ? value : DEFAULT_THEME;

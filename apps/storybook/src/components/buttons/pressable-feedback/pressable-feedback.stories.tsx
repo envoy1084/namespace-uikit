@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { ArrowRight01Icon, UserIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
@@ -20,14 +19,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const variants = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "outline",
-  "ghost",
-  "danger",
-] as const;
+const variants = ["primary", "secondary", "tertiary", "outline", "ghost", "danger"] as const;
 const Trash = () => <Icon icon="solar:trash-bin-trash-linear" />;
 const Gear = () => <Icon icon="solar:settings-linear" />;
 
@@ -38,9 +30,7 @@ export const WithRipple: Story = {
         {variants.map((variant) => (
           <Button key={variant} variant={variant}>
             <PressableFeedback.Ripple />
-            {variant === "primary"
-              ? "Primary"
-              : variant[0].toUpperCase() + variant.slice(1)}
+            {variant === "primary" ? "Primary" : variant[0].toUpperCase() + variant.slice(1)}
           </Button>
         ))}
         <Button variant="danger-soft">
@@ -95,9 +85,7 @@ export const WithHighlight: Story = {
         {variants.map((variant) => (
           <Button key={variant} variant={variant}>
             <PressableFeedback.Highlight />
-            {variant === "primary"
-              ? "Primary"
-              : variant[0].toUpperCase() + variant.slice(1)}
+            {variant === "primary" ? "Primary" : variant[0].toUpperCase() + variant.slice(1)}
           </Button>
         ))}
       </div>
@@ -153,9 +141,7 @@ export const PressableCards: Story = {
           src="/assets/docs/neo1.jpeg"
         />
         <Card.Header className="z-10">
-          <Card.Title className="text-xs font-semibold tracking-wide text-black/70">
-            NEO
-          </Card.Title>
+          <Card.Title className="text-xs font-semibold tracking-wide text-black/70">NEO</Card.Title>
           <Card.Description className="text-sm leading-5 font-medium text-black/50">
             Home Robot
           </Card.Description>
@@ -189,10 +175,7 @@ export const PressableCards: Story = {
           authorAvatar: "/assets/avatars/pink.jpg",
         },
       ].map((item) => (
-        <Card
-          className="col-span-6 cursor-pointer gap-2 overflow-hidden"
-          key={item.name}
-        >
+        <Card className="col-span-6 cursor-pointer gap-2 overflow-hidden" key={item.name}>
           <PressableFeedback.Ripple className={item.color} />
           <Card.Header>
             <img
@@ -260,12 +243,12 @@ function HoldButtons({ duration }: { duration?: number }) {
         >
           <Trash />
           {duration
-            ? `${duration === 800 ? "Fast" : "Slow"} (${duration >= 1000 ? duration / 1000 + "s" : duration + "ms"})`
+            ? `${duration === 800 ? "Fast" : "Slow"} (${duration >= 1000 ? `${duration / 1000}s` : `${duration}ms`})`
             : "Hold to Delete"}
         </PressableFeedback.HoldConfirm>
         <Trash />
         {duration
-          ? `${duration === 800 ? "Fast" : "Slow"} (${duration >= 1000 ? duration / 1000 + "s" : duration + "ms"})`
+          ? `${duration === 800 ? "Fast" : "Slow"} (${duration >= 1000 ? `${duration / 1000}s` : `${duration}ms`})`
           : "Hold to Delete"}
       </Button>
     </div>
@@ -275,9 +258,7 @@ function HoldButtons({ duration }: { duration?: number }) {
 export const WithHoldConfirm: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
-      <p className="text-muted text-xs">
-        Press and hold buttons to see the clip-path reveal.
-      </p>
+      <p className="text-muted text-xs">Press and hold buttons to see the clip-path reveal.</p>
       <div className="flex flex-wrap gap-3">
         <Button variant="danger-soft">
           <PressableFeedback.HoldConfirm className="bg-danger text-danger-foreground">
@@ -323,8 +304,7 @@ export const HoldConfirmSweep: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
       <p className="text-muted text-xs">
-        The clip-path reveal can sweep in four directions: right, left, down,
-        up.
+        The clip-path reveal can sweep in four directions: right, left, down, up.
       </p>
       <div className="flex gap-3">
         {(["right", "left", "down", "up"] as const).map((sweep) => (
@@ -372,9 +352,7 @@ export const HoldConfirmCallback: Story = {
 export const WithProgressFeedback: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
-      <p className="text-muted text-xs">
-        Click once — the overlay sweeps in automatically.
-      </p>
+      <p className="text-muted text-xs">Click once — the overlay sweeps in automatically.</p>
       <div className="flex gap-3">
         <Button variant="secondary">
           <PressableFeedback.ProgressFeedback className="bg-accent text-accent-foreground">
@@ -431,8 +409,7 @@ export const ProgressFeedbackSweep: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
       <p className="text-muted text-xs">
-        The clip-path reveal can sweep in four directions: right, left, down,
-        up.
+        The clip-path reveal can sweep in four directions: right, left, down, up.
       </p>
       <div className="flex gap-3">
         {(["right", "left", "down", "up"] as const).map((sweep) => (
@@ -475,8 +452,7 @@ export const ProgressFeedbackNoReset: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
       <p className="text-muted text-xs">
-        With autoReset=false, the overlay stays revealed after progress
-        completes.
+        With autoReset=false, the overlay stays revealed after progress completes.
       </p>
       <div className="flex gap-3">
         <Button variant="danger-soft">
@@ -509,34 +485,30 @@ export const ProgressFeedbackNoReset: Story = {
 export const Comparison: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
-      {["Ripple", "Highlight", "Hold Confirm", "Progress Feedback"].map(
-        (label) => (
-          <div key={label}>
-            <span className="text-muted mb-2 block text-xs font-medium">
-              {label}
-            </span>
-            <div className="flex gap-3">
-              {(["primary", "secondary", "outline"] as const).map((variant) => (
-                <Button key={variant} variant={variant}>
-                  {label === "Ripple" && <PressableFeedback.Ripple />}
-                  {label === "Highlight" && <PressableFeedback.Highlight />}
-                  {label === "Hold Confirm" && (
-                    <PressableFeedback.HoldConfirm className="bg-accent text-accent-foreground">
-                      {variant}
-                    </PressableFeedback.HoldConfirm>
-                  )}
-                  {label === "Progress Feedback" && (
-                    <PressableFeedback.ProgressFeedback className="bg-accent text-accent-foreground">
-                      {variant}
-                    </PressableFeedback.ProgressFeedback>
-                  )}
-                  {variant}
-                </Button>
-              ))}
-            </div>
+      {["Ripple", "Highlight", "Hold Confirm", "Progress Feedback"].map((label) => (
+        <div key={label}>
+          <span className="text-muted mb-2 block text-xs font-medium">{label}</span>
+          <div className="flex gap-3">
+            {(["primary", "secondary", "outline"] as const).map((variant) => (
+              <Button key={variant} variant={variant}>
+                {label === "Ripple" && <PressableFeedback.Ripple />}
+                {label === "Highlight" && <PressableFeedback.Highlight />}
+                {label === "Hold Confirm" && (
+                  <PressableFeedback.HoldConfirm className="bg-accent text-accent-foreground">
+                    {variant}
+                  </PressableFeedback.HoldConfirm>
+                )}
+                {label === "Progress Feedback" && (
+                  <PressableFeedback.ProgressFeedback className="bg-accent text-accent-foreground">
+                    {variant}
+                  </PressableFeedback.ProgressFeedback>
+                )}
+                {variant}
+              </Button>
+            ))}
           </div>
-        ),
-      )}
+        </div>
+      ))}
     </div>
   ),
 };
@@ -615,24 +587,13 @@ function StandaloneRow({ mode }: { mode: "highlight" | "ripple" }) {
         className="border-separator bg-surface relative flex w-full cursor-pointer items-center gap-4 overflow-hidden rounded-2xl border p-4 text-left"
         type="button"
       >
-        {mode === "ripple" ? (
-          <PressableFeedback.Ripple />
-        ) : (
-          <PressableFeedback.Highlight />
-        )}
+        {mode === "ripple" ? <PressableFeedback.Ripple /> : <PressableFeedback.Highlight />}
         <span className="bg-default flex size-10 items-center justify-center rounded-xl">
-          <HugeiconsIcon
-            aria-hidden
-            icon={UserIcon}
-            size={16}
-            strokeWidth={2}
-          />
+          <HugeiconsIcon aria-hidden icon={UserIcon} size={16} strokeWidth={2} />
         </span>
         <span className="flex flex-1 flex-col">
           <strong>Profile</strong>
-          <span className="text-muted text-sm">
-            Update your personal information
-          </span>
+          <span className="text-muted text-sm">Update your personal information</span>
         </span>
         <span>
           <HugeiconsIcon

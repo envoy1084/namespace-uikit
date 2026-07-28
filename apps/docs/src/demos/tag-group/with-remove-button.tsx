@@ -1,16 +1,9 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
-import {
-  Description,
-  EmptyState,
-  Label,
-  Tag,
-  TagGroup,
-} from "@thenamespace/uikit";
+import type { Key } from "@thenamespace/uikit";
+import { Description, EmptyState, Label, Tag, TagGroup } from "@thenamespace/uikit";
 import { CancelCircleIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function TagGroupWithRemoveButton() {
@@ -45,9 +38,7 @@ export function TagGroupWithRemoveButton() {
           <Label>Default Remove Button</Label>
           <TagGroup.List
             items={tags}
-            renderEmptyState={() => (
-              <EmptyState className="p-1">No categories found</EmptyState>
-            )}
+            renderEmptyState={() => <EmptyState className="p-1">No categories found</EmptyState>}
           >
             {(tag) => (
               <Tag key={tag.name} id={tag.id} textValue={tag.name}>
@@ -64,16 +55,14 @@ export function TagGroupWithRemoveButton() {
           <Label>Custom Remove Button</Label>
           <TagGroup.List
             items={frameworks}
-            renderEmptyState={() => (
-              <EmptyState className="p-1">No frameworks found</EmptyState>
-            )}
+            renderEmptyState={() => <EmptyState className="p-1">No frameworks found</EmptyState>}
           >
             {(tag) => (
               <Tag key={tag.id} id={tag.id} textValue={tag.name}>
                 {(renderProps) => (
                   <>
                     {tag.name}
-                    {!!renderProps.allowsRemoving && (
+                    {Boolean(renderProps.allowsRemoving) && (
                       <Tag.RemoveButton>
                         <HugeiconsIcon icon={CancelCircleIcon} />
                       </Tag.RemoveButton>

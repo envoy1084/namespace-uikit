@@ -1,9 +1,6 @@
 // @ts-nocheck -- Complex demo data intentionally uses heterogeneous shapes.
 "use client";
 
-// @demo-title With Charts
-import type { Selection, SortDescriptor } from "react-aria-components";
-
 import { useMemo, useState } from "react";
 
 import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
@@ -11,10 +8,10 @@ import { AreaChart } from "@thenamespace/uikit/area-chart";
 import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
 import { Dropdown } from "@thenamespace/uikit/dropdown";
+import type { MoreVerticalIcon } from "@thenamespace/uikit/icons";
 import {
   Copy01Icon,
   FilterIcon,
-  MoreVerticalIcon,
   LayoutThreeColumnIcon,
   SlidersHorizontalIcon,
 } from "@thenamespace/uikit/icons";
@@ -23,6 +20,8 @@ import { Input } from "@thenamespace/uikit/input";
 import { ProgressCircle } from "@thenamespace/uikit/progress-circle";
 import { SearchField } from "@thenamespace/uikit/search-field";
 import { Tooltip } from "@thenamespace/uikit/tooltip";
+// @demo-title With Charts
+import type { Selection, SortDescriptor } from "react-aria-components";
 
 const formatCurrency = (value: number) =>
   new Intl.NumberFormat("en-US", {
@@ -107,11 +106,7 @@ function ClusterId({ value }: { value: string }) {
           variant="ghost"
           onPress={() => void navigator.clipboard.writeText(value)}
         >
-          <HugeiconsIcon
-            className="text-muted size-4"
-            icon={Copy01Icon}
-            strokeWidth={2}
-          />
+          <HugeiconsIcon className="text-muted size-4" icon={Copy01Icon} strokeWidth={2} />
         </Button>
         <Tooltip.Content>Copy</Tooltip.Content>
       </Tooltip>
@@ -121,23 +116,11 @@ function ClusterId({ value }: { value: string }) {
 
 function Capacity({ value }: { value: number }) {
   const color =
-    value >= 90
-      ? "danger"
-      : value >= 60
-        ? "warning"
-        : value >= 20
-          ? "accent"
-          : "default";
-  const textColor =
-    value >= 90 ? "text-danger" : value >= 60 ? "text-warning" : "";
+    value >= 90 ? "danger" : value >= 60 ? "warning" : value >= 20 ? "accent" : "default";
+  const textColor = value >= 90 ? "text-danger" : value >= 60 ? "text-warning" : "";
   return (
     <div className="flex items-center gap-2">
-      <ProgressCircle
-        aria-label={`${value}% capacity`}
-        color={color}
-        size="sm"
-        value={value}
-      >
+      <ProgressCircle aria-label={`${value}% capacity`} color={color} size="sm" value={value}>
         <ProgressCircle.Track>
           <ProgressCircle.TrackCircle />
           <ProgressCircle.FillCircle />
@@ -162,23 +145,11 @@ function RequestsSparkline({ data }: { data: { value: number }[] }) {
           "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
       }}
     >
-      <AreaChart
-        data={data}
-        height={36}
-        margin={{ bottom: 0, left: 0, right: 0, top: 2 }}
-      >
+      <AreaChart data={data} height={36} margin={{ bottom: 0, left: 0, right: 0, top: 2 }}>
         <defs>
           <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
-            <stop
-              offset="0%"
-              stopColor="var(--color-accent)"
-              stopOpacity={0.2}
-            />
-            <stop
-              offset="100%"
-              stopColor="var(--color-accent)"
-              stopOpacity={0.02}
-            />
+            <stop offset="0%" stopColor="var(--color-accent)" stopOpacity={0.2} />
+            <stop offset="100%" stopColor="var(--color-accent)" stopOpacity={0.02} />
           </linearGradient>
         </defs>
         <AreaChart.Area
@@ -203,9 +174,7 @@ export const DemoWithChartsExample = function Demo() {
     direction: "ascending",
   });
   const [status, setStatus] = useState("all");
-  const [visibleColumns, setVisibleColumns] = useState<Selection>(
-    new Set(serverColumnIds),
-  );
+  const [visibleColumns, setVisibleColumns] = useState<Selection>(new Set(serverColumnIds));
   const filtered = useMemo(() => {
     let result = servers;
     if (query) {
@@ -217,9 +186,7 @@ export const DemoWithChartsExample = function Demo() {
       );
     }
     if (status !== "all")
-      result = result.filter(
-        (server) => server.status.toLowerCase() === status,
-      );
+      result = result.filter((server) => server.status.toLowerCase() === status);
     return result.toSorted((left, right) => {
       const key = sort.column as keyof Server;
       const leftValue = left[key];
@@ -231,10 +198,7 @@ export const DemoWithChartsExample = function Demo() {
       return sort.direction === "descending" ? -comparison : comparison;
     });
   }, [query, sort, status]);
-  const visible =
-    visibleColumns === "all"
-      ? new Set<string>(serverColumnIds)
-      : visibleColumns;
+  const visible = visibleColumns === "all" ? new Set<string>(serverColumnIds) : visibleColumns;
   const allColumns: DataGridColumn<Server>[] = [
     {
       accessorKey: "clusterId",
@@ -255,11 +219,7 @@ export const DemoWithChartsExample = function Demo() {
       accessorKey: "status",
       allowsSorting: true,
       cell: (server) => (
-        <Chip
-          color={server.status === "Active" ? "success" : "default"}
-          size="sm"
-          variant="soft"
-        >
+        <Chip color={server.status === "Active" ? "success" : "default"} size="sm" variant="soft">
           <span aria-hidden className="size-1.5 rounded-full bg-current" />
           <Chip.Label>{server.status}</Chip.Label>
         </Chip>
@@ -285,9 +245,7 @@ export const DemoWithChartsExample = function Demo() {
       align: "end",
       allowsSorting: true,
       cell: (server) => (
-        <span className="font-medium tabular-nums">
-          {formatCurrency(server.cost)}
-        </span>
+        <span className="font-medium tabular-nums">{formatCurrency(server.cost)}</span>
       ),
       header: "Cost",
       id: "cost",
@@ -321,9 +279,7 @@ export const DemoWithChartsExample = function Demo() {
               <Dropdown.Menu
                 selectedKeys={new Set([status])}
                 selectionMode="single"
-                onSelectionChange={(keys) =>
-                  setStatus(String([...keys][0] ?? "all"))
-                }
+                onSelectionChange={(keys) => setStatus(String([...keys][0] ?? "all"))}
               >
                 {[
                   ["all", "All"],
@@ -352,8 +308,7 @@ export const DemoWithChartsExample = function Demo() {
                   setSort((current) => ({
                     column,
                     direction:
-                      current.column === column &&
-                      current.direction === "ascending"
+                      current.column === column && current.direction === "ascending"
                         ? "descending"
                         : "ascending",
                   }));
@@ -362,11 +317,7 @@ export const DemoWithChartsExample = function Demo() {
                 {allColumns
                   .filter((column) => column.allowsSorting)
                   .map((column) => (
-                    <Dropdown.Item
-                      id={column.id}
-                      key={column.id}
-                      textValue={String(column.header)}
-                    >
+                    <Dropdown.Item id={column.id} key={column.id} textValue={String(column.header)}>
                       <span>{column.header}</span>
                       <Dropdown.ItemIndicator />
                     </Dropdown.Item>
@@ -386,11 +337,7 @@ export const DemoWithChartsExample = function Demo() {
                 onSelectionChange={setVisibleColumns}
               >
                 {allColumns.map((column) => (
-                  <Dropdown.Item
-                    id={column.id}
-                    key={column.id}
-                    textValue={String(column.header)}
-                  >
+                  <Dropdown.Item id={column.id} key={column.id} textValue={String(column.header)}>
                     <span>{column.header}</span>
                     <Dropdown.ItemIndicator />
                   </Dropdown.Item>
@@ -398,17 +345,10 @@ export const DemoWithChartsExample = function Demo() {
               </Dropdown.Menu>
             </Dropdown.Popover>
           </Dropdown>
-          <SearchField
-            aria-label="Search servers"
-            value={query}
-            onChange={setQuery}
-          >
+          <SearchField aria-label="Search servers" value={query} onChange={setQuery}>
             <SearchField.Group>
               <SearchField.SearchIcon />
-              <SearchField.Input
-                className="w-[160px]"
-                placeholder="Search..."
-              />
+              <SearchField.Input className="w-[160px]" placeholder="Search..." />
               <SearchField.ClearButton />
             </SearchField.Group>
           </SearchField>

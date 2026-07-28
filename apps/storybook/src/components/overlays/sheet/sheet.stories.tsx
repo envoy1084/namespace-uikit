@@ -1,14 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import type { Key } from "react";
 import { useMemo, useRef, useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@thenamespace/uikit/button";
 import { Description } from "@thenamespace/uikit/description";
-import {
-  EmojiPicker,
-  EMOJI_SKIN_TONES,
-} from "@thenamespace/uikit/emoji-picker";
+import { EmojiPicker, EMOJI_SKIN_TONES } from "@thenamespace/uikit/emoji-picker";
 import { EmojiReactionButton } from "@thenamespace/uikit/emoji-reaction-button";
 import { EmptyState } from "@thenamespace/uikit/empty-state";
 import {
@@ -77,9 +73,8 @@ function BasicDemo() {
             </Sheet.Header>
             <Sheet.Body>
               <p className="text-muted text-sm">
-                This is a bottom sheet built with smooth drag-to-dismiss
-                animations. Try dragging it down to close, or use the close
-                button.
+                This is a bottom sheet built with smooth drag-to-dismiss animations. Try dragging it
+                down to close, or use the close button.
               </p>
             </Sheet.Body>
             <Sheet.Footer>
@@ -113,25 +108,20 @@ function PlacementsDemo() {
           </Sheet.Trigger>
           <Sheet.Backdrop variant="blur">
             <Sheet.Content
-              className={
-                placement === "left" || placement === "right"
-                  ? "w-[400px]"
-                  : undefined
-              }
+              className={placement === "left" || placement === "right" ? "w-[400px]" : undefined}
             >
               <Sheet.Dialog>
                 <Sheet.CloseTrigger />
                 {placement === "bottom" ? <Sheet.Handle /> : null}
                 <Sheet.Header>
                   <Sheet.Heading>
-                    {placement.charAt(0).toUpperCase() + placement.slice(1)}{" "}
-                    Sheet
+                    {placement.charAt(0).toUpperCase() + placement.slice(1)} Sheet
                   </Sheet.Heading>
                 </Sheet.Header>
                 <Sheet.Body>
                   <p className="text-muted text-sm">
-                    This sheet slides in from the <strong>{placement}</strong>{" "}
-                    edge of the screen with a smooth spring-like animation.
+                    This sheet slides in from the <strong>{placement}</strong> edge of the screen
+                    with a smooth spring-like animation.
                   </p>
                 </Sheet.Body>
                 <Sheet.Footer>
@@ -157,9 +147,7 @@ export const Placements: Story = { render: () => <PlacementsDemo /> };
 const snapPoints = ["148px", "355px", 1];
 
 function SnapPointsDemo() {
-  const [activeSnapPoint, setActiveSnapPoint] = useState<
-    number | string | null
-  >(snapPoints[0]!);
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(snapPoints[0]!);
 
   return (
     <Sheet
@@ -177,16 +165,15 @@ function SnapPointsDemo() {
             <Sheet.Header>
               <Sheet.Heading>Snap Points</Sheet.Heading>
               <p className="text-muted text-sm">
-                Current:{" "}
-                {typeof activeSnapPoint === "number" ? "100%" : activeSnapPoint}
+                Current: {typeof activeSnapPoint === "number" ? "100%" : activeSnapPoint}
               </p>
             </Sheet.Header>
             <Sheet.Body>
               <div className="flex flex-col gap-4">
                 <p className="text-muted text-sm">
-                  Snap points let users drag a sheet to predefined positions.
-                  This sheet snaps to 148px, 355px, and full height. The overlay
-                  fades in as you reach the highest point.
+                  Snap points let users drag a sheet to predefined positions. This sheet snaps to
+                  148px, 355px, and full height. The overlay fades in as you reach the highest
+                  point.
                 </p>
                 {Array.from({ length: 6 }).map((_, index) => (
                   <p className="text-muted text-sm" key={index}>
@@ -209,9 +196,9 @@ export const SnapPoints: Story = { render: () => <SnapPointsDemo /> };
 const sequentialPoints = ["148px", "355px", 1];
 
 function SnapPointsSequentialDemo() {
-  const [activeSnapPoint, setActiveSnapPoint] = useState<
-    number | string | null
-  >(sequentialPoints[0]!);
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
+    sequentialPoints[0]!,
+  );
 
   return (
     <Sheet
@@ -230,16 +217,15 @@ function SnapPointsSequentialDemo() {
             <Sheet.Header>
               <Sheet.Heading>Sequential</Sheet.Heading>
               <p className="text-muted text-sm">
-                Current:{" "}
-                {typeof activeSnapPoint === "number" ? "100%" : activeSnapPoint}
+                Current: {typeof activeSnapPoint === "number" ? "100%" : activeSnapPoint}
               </p>
             </Sheet.Header>
             <Sheet.Body>
               <p className="text-muted text-sm">
                 Velocity-based snapping is disabled with{" "}
-                <code className="text-foreground">snapToSequentialPoint</code>.
-                A snap point won&apos;t be skipped even if you flick quickly.
-                Useful when each level is equally important.
+                <code className="text-foreground">snapToSequentialPoint</code>. A snap point
+                won&apos;t be skipped even if you flick quickly. Useful when each level is equally
+                important.
               </p>
             </Sheet.Body>
           </Sheet.Dialog>
@@ -257,9 +243,9 @@ export const SnapPointsSequential: Story = {
 const customFadePoints = ["150px", "300px", "450px", 1];
 
 function SnapPointsCustomFadeDemo() {
-  const [activeSnapPoint, setActiveSnapPoint] = useState<
-    number | string | null
-  >(customFadePoints[0]!);
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
+    customFadePoints[0]!,
+  );
 
   return (
     <Sheet
@@ -278,16 +264,14 @@ function SnapPointsCustomFadeDemo() {
             <Sheet.Header>
               <Sheet.Heading>Custom Fade</Sheet.Heading>
               <p className="text-muted text-sm">
-                Current:{" "}
-                {typeof activeSnapPoint === "number" ? "100%" : activeSnapPoint}
+                Current: {typeof activeSnapPoint === "number" ? "100%" : activeSnapPoint}
               </p>
             </Sheet.Header>
             <Sheet.Body>
               <p className="text-muted text-sm">
-                The <code className="text-foreground">fadeFromIndex</code> prop
-                controls when the overlay starts fading in. Here it&apos;s set
-                to index 1 (300px), so the overlay begins appearing at the
-                second snap point instead of the last.
+                The <code className="text-foreground">fadeFromIndex</code> prop controls when the
+                overlay starts fading in. Here it&apos;s set to index 1 (300px), so the overlay
+                begins appearing at the second snap point instead of the last.
               </p>
             </Sheet.Body>
           </Sheet.Dialog>
@@ -321,14 +305,12 @@ function BackdropVariantsDemo() {
                 <Sheet.CloseTrigger />
                 <Sheet.Header>
                   <Sheet.Heading>
-                    Backdrop:{" "}
-                    {variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    Backdrop: {variant.charAt(0).toUpperCase() + variant.slice(1)}
                   </Sheet.Heading>
                 </Sheet.Header>
                 <Sheet.Body>
                   <p className="text-muted text-sm">
-                    This sheet uses the{" "}
-                    <code className="text-foreground">{variant}</code> backdrop
+                    This sheet uses the <code className="text-foreground">{variant}</code> backdrop
                     variant.
                   </p>
                 </Sheet.Body>
@@ -364,8 +346,8 @@ function NonDismissableDemo() {
             </Sheet.Header>
             <Sheet.Body>
               <p className="text-muted text-sm">
-                This sheet cannot be dismissed by clicking outside or dragging.
-                You must use one of the buttons below.
+                This sheet cannot be dismissed by clicking outside or dragging. You must use one of
+                the buttons below.
               </p>
             </Sheet.Body>
             <Sheet.Footer>
@@ -402,10 +384,9 @@ function ScrollableContentDemo() {
             <Sheet.Body>
               {Array.from({ length: 20 }).map((_, index) => (
                 <p className="text-muted mb-3 text-sm" key={index}>
-                  Paragraph {index + 1}: Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Nullam pulvinar risus non risus hendrerit
-                  venenatis. Pellentesque sit amet hendrerit risus, sed
-                  porttitor quam. Donec nec vestibulum libero.
+                  Paragraph {index + 1}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nullam pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
+                  hendrerit risus, sed porttitor quam. Donec nec vestibulum libero.
                 </p>
               ))}
             </Sheet.Body>
@@ -453,10 +434,7 @@ function WithFormDemo() {
                 </TextField>
                 <TextField className="w-full" name="bio">
                   <Label>Bio</Label>
-                  <Input
-                    placeholder="Tell us about yourself"
-                    variant="secondary"
-                  />
+                  <Input placeholder="Tell us about yourself" variant="secondary" />
                 </TextField>
               </form>
             </Sheet.Body>
@@ -498,18 +476,13 @@ function DetachedDemo() {
               }
             >
               <Sheet.Dialog
-                className={
-                  placement === "left" || placement === "right"
-                    ? "h-full"
-                    : undefined
-                }
+                className={placement === "left" || placement === "right" ? "h-full" : undefined}
               >
                 {placement === "bottom" ? <Sheet.Handle /> : null}
                 <Sheet.Body className="flex flex-col gap-4 py-5">
                   <Sheet.Heading>Detached {placement}</Sheet.Heading>
                   <p className="text-muted text-sm">
-                    The sheet floats away from the viewport edge with rounded
-                    corners on all sides.
+                    The sheet floats away from the viewport edge with rounded corners on all sides.
                   </p>
                 </Sheet.Body>
                 {placement === "top" ? <Sheet.Handle /> : null}
@@ -554,9 +527,8 @@ function ControlledDemo() {
               </Sheet.Header>
               <Sheet.Body>
                 <p className="text-muted text-sm">
-                  This sheet is controlled via <code>isOpen</code> and{" "}
-                  <code>onOpenChange</code> props. The parent manages the state
-                  externally.
+                  This sheet is controlled via <code>isOpen</code> and <code>onOpenChange</code>{" "}
+                  props. The parent manages the state externally.
                 </p>
               </Sheet.Body>
               <Sheet.Footer>
@@ -590,9 +562,8 @@ function HandleOnlyDemo() {
             </Sheet.Header>
             <Sheet.Body>
               <p className="text-muted text-sm">
-                This sheet can only be dragged via the handle at the top.
-                Dragging the body content will not dismiss it — useful when the
-                body has interactive elements.
+                This sheet can only be dragged via the handle at the top. Dragging the body content
+                will not dismiss it — useful when the body has interactive elements.
               </p>
             </Sheet.Body>
             <Sheet.Footer>
@@ -627,8 +598,8 @@ function NestedDemo() {
             </Sheet.Header>
             <Sheet.Body className="flex flex-col justify-between pb-4">
               <p className="text-muted mb-4 text-sm">
-                This is the parent sheet. Open a nested sheet from here — the
-                parent will scale down and the child slides on top.
+                This is the parent sheet. Open a nested sheet from here — the parent will scale down
+                and the child slides on top.
               </p>
               <Sheet.NestedRoot>
                 <Sheet.Trigger>
@@ -646,9 +617,8 @@ function NestedDemo() {
                       </Sheet.Header>
                       <Sheet.Body>
                         <p className="text-muted mb-4 text-sm">
-                          This is a nested sheet that sits on top of the parent.
-                          Drag it down to dismiss and return to the parent
-                          sheet.
+                          This is a nested sheet that sits on top of the parent. Drag it down to
+                          dismiss and return to the parent sheet.
                         </p>
                         <Sheet.NestedRoot>
                           <Sheet.Trigger>
@@ -666,9 +636,8 @@ function NestedDemo() {
                                 </Sheet.Header>
                                 <Sheet.Body>
                                   <p className="text-muted text-sm">
-                                    Three levels deep! Each parent sheet scales
-                                    down as the next one opens, creating a
-                                    stacking effect.
+                                    Three levels deep! Each parent sheet scales down as the next one
+                                    opens, creating a stacking effect.
                                   </p>
                                 </Sheet.Body>
                                 <Sheet.Footer>
@@ -701,9 +670,7 @@ function NestedDemo() {
 export const Nested: Story = { render: () => <NestedDemo /> };
 
 const sheetEmojiData = emojiDataSource.filter(
-  (emoji) =>
-    typeof emoji.label === "string" &&
-    !emoji.label.startsWith("regional indicator"),
+  (emoji) => typeof emoji.label === "string" && !emoji.label.startsWith("regional indicator"),
 );
 const sheetEmojiGroups = {
   activities: 6,
@@ -736,16 +703,11 @@ const sheetEmojiCategories: Array<{
   { icon: Flag01Icon, id: "flags", label: "Flags" },
 ];
 
-function SheetEmojiPicker({
-  onEmojiSelect,
-}: {
-  onEmojiSelect?: (emoji: string) => void;
-}) {
+function SheetEmojiPicker({ onEmojiSelect }: { onEmojiSelect?: (emoji: string) => void }) {
   const [tone, setTone] = useState("default");
   const gridRef = useRef<HTMLDivElement>(null);
   const items = useMemo(() => {
-    const skinIndex =
-      EMOJI_SKIN_TONES.findIndex((item) => item.id === tone) - 1;
+    const skinIndex = EMOJI_SKIN_TONES.findIndex((item) => item.id === tone) - 1;
     const data = sheetEmojiData.slice(0, 200);
 
     if (skinIndex < 0) return data;
@@ -753,7 +715,7 @@ function SheetEmojiPicker({
     return data.map((emoji) => {
       const skin = emoji.skins?.[skinIndex];
 
-      return skin ? Object.assign({}, emoji, { unicode: skin.unicode }) : emoji;
+      return skin ? { ...emoji, unicode: skin.unicode } : emoji;
     });
   }, [tone]);
   const groupStarts = useMemo(() => {
@@ -803,11 +765,7 @@ function SheetEmojiPicker({
               <EmojiPicker.SkinToneTrigger className="mr-1" />
               <EmojiPicker.SkinToneContent>
                 {EMOJI_SKIN_TONES.map((item) => (
-                  <EmojiPicker.SkinToneOption
-                    aria-label={item.label}
-                    id={item.id}
-                    key={item.id}
-                  >
+                  <EmojiPicker.SkinToneOption aria-label={item.label} id={item.id} key={item.id}>
                     {item.emoji}
                   </EmojiPicker.SkinToneOption>
                 ))}
@@ -824,11 +782,7 @@ function SheetEmojiPicker({
           }}
           renderEmptyState={() => (
             <EmptyState className="flex h-full min-h-20 flex-1 flex-col items-center justify-center gap-2">
-              <HugeiconsIcon
-                aria-hidden
-                className="text-muted size-5"
-                icon={SmileIcon}
-              />
+              <HugeiconsIcon aria-hidden className="text-muted size-5" icon={SmileIcon} />
               No emoji found.
             </EmptyState>
           )}
@@ -872,9 +826,9 @@ function SheetEmojiPicker({
 
 function EmojiPickerSheetDemo() {
   const emojiSheetSnapPoints = ["355px", 1];
-  const [activeSnapPoint, setActiveSnapPoint] = useState<
-    number | string | null
-  >(emojiSheetSnapPoints[0]!);
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
+    emojiSheetSnapPoints[0]!,
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [emoji, setEmoji] = useState("😀");
 
@@ -918,31 +872,25 @@ export const EmojiPickerSheet: Story = {
 
 function ActionIcon({ icon }: { icon: IconSvgElement }) {
   return (
-    <HugeiconsIcon
-      aria-hidden
-      className="text-muted size-5 shrink-0"
-      icon={icon}
-      strokeWidth={2}
-    />
+    <HugeiconsIcon aria-hidden className="text-muted size-5 shrink-0" icon={icon} strokeWidth={2} />
   );
 }
 
 function SlackMessageActionsDemo() {
   const sheetSnapPoints = ["355px", 1];
-  const [activeSnapPoint, setActiveSnapPoint] = useState<
-    number | string | null
-  >(sheetSnapPoints[0]!);
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
+    sheetSnapPoints[0]!,
+  );
   const [showMore, setShowMore] = useState(false);
-  const [reactions, setReactions] = useState<
-    Record<string, { count: number; selected: boolean }>
-  >({});
+  const [reactions, setReactions] = useState<Record<string, { count: number; selected: boolean }>>(
+    {},
+  );
   const quickReactions = ["🚀", "🙌", "👍", "🤔", "🙏"];
   const toggleReaction = (emoji: string) => {
     setReactions((current) => {
       const reaction = current[emoji];
 
-      if (!reaction)
-        return { ...current, [emoji]: { count: 1, selected: true } };
+      if (!reaction) return { ...current, [emoji]: { count: 1, selected: true } };
 
       const selected = !reaction.selected;
       const count = selected ? reaction.count + 1 : reaction.count - 1;
@@ -994,22 +942,14 @@ function SlackMessageActionsDemo() {
                       size="lg"
                       onChange={() => toggleReaction(emoji)}
                     >
-                      <EmojiReactionButton.Emoji>
-                        {emoji}
-                      </EmojiReactionButton.Emoji>
+                      <EmojiReactionButton.Emoji>{emoji}</EmojiReactionButton.Emoji>
                       {reaction && reaction.count > 0 ? (
-                        <EmojiReactionButton.Count>
-                          {reaction.count}
-                        </EmojiReactionButton.Count>
+                        <EmojiReactionButton.Count>{reaction.count}</EmojiReactionButton.Count>
                       ) : null}
                     </EmojiReactionButton>
                   );
                 })}
-                <EmojiPicker
-                  aria-label="Add reaction"
-                  size="md"
-                  onSelectionChange={addReaction}
-                >
+                <EmojiPicker aria-label="Add reaction" size="md" onSelectionChange={addReaction}>
                   <EmojiPicker.Trigger
                     aria-label="Add reaction"
                     className="emoji-reaction-button emoji-reaction-button--lg min-h-0 min-w-0"
@@ -1018,11 +958,7 @@ function SlackMessageActionsDemo() {
                   </EmojiPicker.Trigger>
                   <EmojiPicker.Popover>
                     <EmojiPicker.Content>
-                      <SearchField
-                        autoFocus
-                        aria-label="Search emoji"
-                        variant="secondary"
-                      >
+                      <SearchField autoFocus aria-label="Search emoji" variant="secondary">
                         <SearchField.Group>
                           <SearchField.SearchIcon />
                           <SearchField.Input placeholder="Search emoji..." />
@@ -1053,14 +989,8 @@ function SlackMessageActionsDemo() {
                     key={label as string}
                     variant="tertiary"
                   >
-                    <HugeiconsIcon
-                      aria-hidden
-                      icon={icon as IconSvgElement}
-                      size={20}
-                    />
-                    <span className="text-xs font-medium">
-                      {label as string}
-                    </span>
+                    <HugeiconsIcon aria-hidden icon={icon as IconSvgElement} size={20} />
+                    <span className="text-xs font-medium">{label as string}</span>
                   </Button>
                 ))}
               </div>
@@ -1081,10 +1011,7 @@ function SlackMessageActionsDemo() {
                     <ActionIcon icon={Clock01Icon} />
                     <Label>Remind Me</Label>
                   </ListBox.Item>
-                  <ListBox.Item
-                    id="get-reply-notifications"
-                    textValue="Get Reply Notifications"
-                  >
+                  <ListBox.Item id="get-reply-notifications" textValue="Get Reply Notifications">
                     <ActionIcon icon={Notification01Icon} />
                     <Label>Get Reply Notifications</Label>
                   </ListBox.Item>
@@ -1117,10 +1044,7 @@ function SlackMessageActionsDemo() {
                         <ActionIcon icon={Task01Icon} />
                         <Label>Add to List</Label>
                       </ListBox.Item>
-                      <ListBox.Item
-                        id="pin-to-channel"
-                        textValue="Pin to Channel"
-                      >
+                      <ListBox.Item id="pin-to-channel" textValue="Pin to Channel">
                         <ActionIcon icon={PinIcon} />
                         <Label>Pin to Channel</Label>
                       </ListBox.Item>
@@ -1128,28 +1052,18 @@ function SlackMessageActionsDemo() {
                         <ActionIcon icon={TextIcon} />
                         <Label>Select Text</Label>
                       </ListBox.Item>
-                      <ListBox.Item
-                        id="link-existing"
-                        textValue="Link existing..."
-                      >
+                      <ListBox.Item id="link-existing" textValue="Link existing...">
                         <ActionIcon icon={Link01Icon} />
                         <div className="flex flex-col">
                           <Label>Link existing...</Label>
-                          <Description>
-                            Links an existing issue or project in Linear
-                          </Description>
+                          <Description>Links an existing issue or project in Linear</Description>
                         </div>
                       </ListBox.Item>
-                      <ListBox.Item
-                        id="turn-into-poll"
-                        textValue="Turn question into poll"
-                      >
+                      <ListBox.Item id="turn-into-poll" textValue="Turn question into poll">
                         <ActionIcon icon={Task01Icon} />
                         <div className="flex flex-col">
                           <Label>Turn question into poll</Label>
-                          <Description>
-                            Turns a message into a Simple Poll question
-                          </Description>
+                          <Description>Turns a message into a Simple Poll question</Description>
                         </div>
                       </ListBox.Item>
                     </>
@@ -1171,9 +1085,9 @@ export const SlackMessageActions: Story = {
 
 function ProfessionsPickerDemo() {
   const occupationSnapPoints = ["355px", 1];
-  const [activeSnapPoint, setActiveSnapPoint] = useState<
-    number | string | null
-  >(occupationSnapPoints[0]!);
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
+    occupationSnapPoints[0]!,
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<string | null>(null);
@@ -1184,9 +1098,7 @@ function ProfessionsPickerDemo() {
 
     const normalizedQuery = query.toLowerCase();
 
-    return values.filter((occupation) =>
-      occupation.name.toLowerCase().includes(normalizedQuery),
-    );
+    return values.filter((occupation) => occupation.name.toLowerCase().includes(normalizedQuery));
   }, [query]);
 
   return (
@@ -1225,18 +1137,11 @@ function ProfessionsPickerDemo() {
                 </div>
                 {filtered.length === 0 ? (
                   <EmptyState className="flex min-h-32 flex-1 flex-col items-center justify-center gap-2">
-                    <HugeiconsIcon
-                      aria-hidden
-                      className="text-muted size-5"
-                      icon={SmileIcon}
-                    />
+                    <HugeiconsIcon aria-hidden className="text-muted size-5" icon={SmileIcon} />
                     <p className="text-muted text-sm">No occupations found.</p>
                   </EmptyState>
                 ) : (
-                  <Virtualizer
-                    layout={ListLayout}
-                    layoutOptions={{ padding: 12, rowHeight: 36 }}
-                  >
+                  <Virtualizer layout={ListLayout} layoutOptions={{ padding: 12, rowHeight: 36 }}>
                     <ListBox
                       aria-label="Occupations"
                       className="min-h-0 flex-1 overflow-y-auto p-0"
@@ -1252,10 +1157,7 @@ function ProfessionsPickerDemo() {
                       }}
                     >
                       {(occupation) => (
-                        <ListBox.Item
-                          id={occupation.id}
-                          textValue={occupation.name}
-                        >
+                        <ListBox.Item id={occupation.id} textValue={occupation.name}>
                           <Label>{occupation.name}</Label>
                         </ListBox.Item>
                       )}
@@ -1268,8 +1170,7 @@ function ProfessionsPickerDemo() {
         </Sheet.Backdrop>
       </Sheet>
       <p className="text-muted text-sm">
-        Selected:{" "}
-        <span className="text-foreground font-medium">{selected}</span>
+        Selected: <span className="text-foreground font-medium">{selected}</span>
       </p>
     </div>
   );

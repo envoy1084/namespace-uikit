@@ -18,12 +18,9 @@ interface Character {
 export function AsynchronousFiltering() {
   const list = useAsyncList<Character>({
     async load({ filterText, signal }) {
-      const res = await fetch(
-        `https://swapi.py4e.com/api/people/?search=${filterText}`,
-        {
-          signal,
-        },
-      );
+      const res = await fetch(`https://swapi.py4e.com/api/people/?search=${filterText}`, {
+        signal,
+      });
 
       const json = await res.json();
 
@@ -47,16 +44,8 @@ export function AsynchronousFiltering() {
         <Autocomplete.Indicator />
       </Autocomplete.Trigger>
       <Autocomplete.Popover>
-        <Autocomplete.Filter
-          inputValue={list.filterText}
-          onInputChange={list.setFilterText}
-        >
-          <SearchField
-            autoFocus
-            className="sticky top-0 z-10"
-            name="search"
-            variant="secondary"
-          >
+        <Autocomplete.Filter inputValue={list.filterText} onInputChange={list.setFilterText}>
+          <SearchField autoFocus className="sticky top-0 z-10" name="search" variant="secondary">
             <SearchField.Group>
               <SearchField.SearchIcon />
               <SearchField.Input placeholder="Search characters..." />
@@ -68,7 +57,7 @@ export function AsynchronousFiltering() {
               />
               <SearchField.ClearButton
                 className={cn({
-                  "pointer-events-none opacity-0": !!list.isLoading,
+                  "pointer-events-none opacity-0": Boolean(list.isLoading),
                 })}
               />
             </SearchField.Group>

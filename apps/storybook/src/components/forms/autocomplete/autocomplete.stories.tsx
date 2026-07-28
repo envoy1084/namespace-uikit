@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import type { Key } from "@thenamespace/uikit";
-
 import React, { useState } from "react";
 
 import { useAsyncList } from "@react-stately/data";
+import type { Meta, StoryObj } from "@storybook/react";
+import type { Key } from "@thenamespace/uikit";
 import { useFilter } from "react-aria-components/Autocomplete";
 import { ListLayout, Virtualizer } from "react-aria-components/Virtualizer";
 import { cn } from "tailwind-variants";
@@ -12,11 +11,7 @@ import { Button } from "@/components/buttons/button";
 import { ListBox } from "@/components/collections/list-box";
 import { Tag } from "@/components/collections/tag";
 import { TagGroup } from "@/components/collections/tag-group";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/data-display/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/data-display/avatar";
 import { EmptyState } from "@/components/feedback/empty-state";
 import { Spinner } from "@/components/feedback/spinner";
 import { Description } from "@/components/forms/description";
@@ -43,9 +38,7 @@ const meta: Meta<typeof Autocomplete> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const handleAutocompleteRequiredSubmit = (
-  e: React.FormEvent<HTMLFormElement>,
-) => {
+const handleAutocompleteRequiredSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   const formData = new FormData(e.currentTarget);
   const data: Record<string, string> = {};
@@ -94,9 +87,7 @@ export const Default: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               {items.map((item) => (
                 <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                   {item.name}
@@ -148,9 +139,7 @@ export const WithClearButton: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               {items.map((item) => (
                 <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                   {item.name}
@@ -215,17 +204,9 @@ export const WithOnClearCallback: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox
-                renderEmptyState={() => (
-                  <EmptyState>No results found</EmptyState>
-                )}
-              >
+              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                 {items.map((item) => (
-                  <ListBox.Item
-                    key={item.id}
-                    id={item.id}
-                    textValue={item.name}
-                  >
+                  <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                     {item.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -238,16 +219,14 @@ export const WithOnClearCallback: Story = {
           <p className="text-sm font-medium">onClear Callback Info:</p>
           <div className="text-muted space-y-1 text-sm">
             <p>Clear button clicked: {clearCount} time(s)</p>
-            {!!lastClearedAt && <p>Last cleared at: {lastClearedAt}</p>}
-            {!!selectedItem && (
+            {Boolean(lastClearedAt) && <p>Last cleared at: {lastClearedAt}</p>}
+            {Boolean(selectedItem) && (
               <p className="text-success">
                 Currently selected: <strong>{selectedItem.name}</strong>
               </p>
             )}
             {!selectedItem && (
-              <p className="text-muted">
-                No selection (click clear to see the callback)
-              </p>
+              <p className="text-muted">No selection (click clear to see the callback)</p>
             )}
           </div>
         </div>
@@ -307,17 +286,9 @@ export const Variants: Story = {
                       <SearchField.ClearButton />
                     </SearchField.Group>
                   </SearchField>
-                  <ListBox
-                    renderEmptyState={() => (
-                      <EmptyState>No results found</EmptyState>
-                    )}
-                  >
+                  <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                     {items.map((item) => (
-                      <ListBox.Item
-                        key={item.id}
-                        id={item.id}
-                        textValue={item.name}
-                      >
+                      <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                         {item.name}
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
@@ -349,17 +320,9 @@ export const Variants: Story = {
                       <SearchField.ClearButton />
                     </SearchField.Group>
                   </SearchField>
-                  <ListBox
-                    renderEmptyState={() => (
-                      <EmptyState>No results found</EmptyState>
-                    )}
-                  >
+                  <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                     {items.map((item) => (
-                      <ListBox.Item
-                        key={item.id}
-                        id={item.id}
-                        textValue={item.name}
-                      >
+                      <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                         {item.name}
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
@@ -389,17 +352,13 @@ export const Variants: Story = {
                       return defaultChildren;
                     }
 
-                    const selectedItemsKeys = state.selectedItems.map(
-                      (item) => item.key,
-                    );
+                    const selectedItemsKeys = state.selectedItems.map((item) => item.key);
 
                     return (
                       <TagGroup size="sm" onRemove={onRemoveTags1}>
                         <TagGroup.List>
                           {selectedItemsKeys.map((selectedItemKey) => {
-                            const item = items.find(
-                              (s) => s.id === selectedItemKey,
-                            );
+                            const item = items.find((s) => s.id === selectedItemKey);
 
                             if (!item) return null;
 
@@ -426,17 +385,9 @@ export const Variants: Story = {
                       <SearchField.ClearButton />
                     </SearchField.Group>
                   </SearchField>
-                  <ListBox
-                    renderEmptyState={() => (
-                      <EmptyState>No results found</EmptyState>
-                    )}
-                  >
+                  <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                     {items.map((item) => (
-                      <ListBox.Item
-                        key={item.id}
-                        id={item.id}
-                        textValue={item.name}
-                      >
+                      <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                         {item.name}
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
@@ -461,21 +412,13 @@ export const Variants: Story = {
                       return defaultChildren;
                     }
 
-                    const selectedItemsKeys = state.selectedItems.map(
-                      (item) => item.key,
-                    );
+                    const selectedItemsKeys = state.selectedItems.map((item) => item.key);
 
                     return (
-                      <TagGroup
-                        size="sm"
-                        variant="surface"
-                        onRemove={onRemoveTags2}
-                      >
+                      <TagGroup size="sm" variant="surface" onRemove={onRemoveTags2}>
                         <TagGroup.List>
                           {selectedItemsKeys.map((selectedItemKey) => {
-                            const item = items.find(
-                              (s) => s.id === selectedItemKey,
-                            );
+                            const item = items.find((s) => s.id === selectedItemKey);
 
                             if (!item) return null;
 
@@ -502,17 +445,9 @@ export const Variants: Story = {
                       <SearchField.ClearButton />
                     </SearchField.Group>
                   </SearchField>
-                  <ListBox
-                    renderEmptyState={() => (
-                      <EmptyState>No results found</EmptyState>
-                    )}
-                  >
+                  <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                     {items.map((item) => (
-                      <ListBox.Item
-                        key={item.id}
-                        id={item.id}
-                        textValue={item.name}
-                      >
+                      <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                         {item.name}
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
@@ -562,9 +497,7 @@ export const MultipleSelect: Story = {
                 return defaultChildren;
               }
 
-              const selectedItemsKeys = state.selectedItems.map(
-                (item) => item.key,
-              );
+              const selectedItemsKeys = state.selectedItems.map((item) => item.key);
 
               return (
                 <TagGroup size="sm" onRemove={onRemoveTags}>
@@ -597,9 +530,7 @@ export const MultipleSelect: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               {items.map((item) => (
                 <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                   {item.name}
@@ -653,17 +584,9 @@ export const FullWidth: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox
-                renderEmptyState={() => (
-                  <EmptyState>No results found</EmptyState>
-                )}
-              >
+              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                 {items.map((item) => (
-                  <ListBox.Item
-                    key={item.id}
-                    id={item.id}
-                    textValue={item.name}
-                  >
+                  <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                     {item.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -714,9 +637,7 @@ export const WithDescription: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               {items.map((item) => (
                 <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                   {item.name}
@@ -760,9 +681,7 @@ export const WithSections: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               <ListBox.Section>
                 <Header>North America</Header>
                 <ListBox.Item id="usa" textValue="United States">
@@ -859,9 +778,7 @@ export const WithDisabledOptions: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               <ListBox.Item id="dog" textValue="Dog">
                 Dog
                 <ListBox.ItemIndicator />
@@ -933,9 +850,7 @@ export const CustomIndicator: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               {items.map((item) => (
                 <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                   {item.name}
@@ -973,10 +888,7 @@ export const Required: Story = {
     ];
 
     return (
-      <Form
-        className="flex w-[256px] flex-col gap-4"
-        onSubmit={handleAutocompleteRequiredSubmit}
-      >
+      <Form className="flex w-[256px] flex-col gap-4" onSubmit={handleAutocompleteRequiredSubmit}>
         <Autocomplete
           isRequired
           className="w-full"
@@ -999,17 +911,9 @@ export const Required: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox
-                renderEmptyState={() => (
-                  <EmptyState>No results found</EmptyState>
-                )}
-              >
+              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                 {states.map((stateItem) => (
-                  <ListBox.Item
-                    key={stateItem.id}
-                    id={stateItem.id}
-                    textValue={stateItem.name}
-                  >
+                  <ListBox.Item key={stateItem.id} id={stateItem.id} textValue={stateItem.name}>
                     {stateItem.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -1041,17 +945,9 @@ export const Required: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox
-                renderEmptyState={() => (
-                  <EmptyState>No results found</EmptyState>
-                )}
-              >
+              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                 {countries.map((country) => (
-                  <ListBox.Item
-                    key={country.id}
-                    id={country.id}
-                    textValue={country.name}
-                  >
+                  <ListBox.Item key={country.id} id={country.id} textValue={country.name}>
                     {country.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -1107,17 +1003,9 @@ export const Controlled: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox
-                renderEmptyState={() => (
-                  <EmptyState>No results found</EmptyState>
-                )}
-              >
+              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                 {states.map((stateItem) => (
-                  <ListBox.Item
-                    key={stateItem.id}
-                    id={stateItem.id}
-                    textValue={stateItem.name}
-                  >
+                  <ListBox.Item key={stateItem.id} id={stateItem.id} textValue={stateItem.name}>
                     {stateItem.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -1126,9 +1014,7 @@ export const Controlled: Story = {
             </Autocomplete.Filter>
           </Autocomplete.Popover>
         </Autocomplete>
-        <p className="text-muted text-sm">
-          Selected: {selectedState?.name || "None"}
-        </p>
+        <p className="text-muted text-sm">Selected: {selectedState?.name || "None"}</p>
       </div>
     );
   },
@@ -1172,17 +1058,9 @@ export const ControlledOpenState: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox
-                renderEmptyState={() => (
-                  <EmptyState>No results found</EmptyState>
-                )}
-              >
+              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                 {items.map((item) => (
-                  <ListBox.Item
-                    key={item.id}
-                    id={item.id}
-                    textValue={item.name}
-                  >
+                  <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                     {item.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -1191,12 +1069,8 @@ export const ControlledOpenState: Story = {
             </Autocomplete.Filter>
           </Autocomplete.Popover>
         </Autocomplete>
-        <Button onPress={() => setIsOpen(!isOpen)}>
-          {isOpen ? "Close" : "Open"} Autocomplete
-        </Button>
-        <p className="text-muted text-sm">
-          Autocomplete is {isOpen ? "open" : "closed"}
-        </p>
+        <Button onPress={() => setIsOpen(!isOpen)}>{isOpen ? "Close" : "Open"} Autocomplete</Button>
+        <p className="text-muted text-sm">Autocomplete is {isOpen ? "open" : "closed"}</p>
       </div>
     );
   },
@@ -1210,12 +1084,9 @@ export const AsynchronousFiltering: Story = {
   render: () => {
     const list = useAsyncList<Pokemon>({
       async load({ filterText, signal }) {
-        const res = await fetch(
-          `https://swapi.py4e.com/api/people/?search=${filterText}`,
-          {
-            signal,
-          },
-        );
+        const res = await fetch(`https://swapi.py4e.com/api/people/?search=${filterText}`, {
+          signal,
+        });
 
         const json = await res.json();
 
@@ -1239,16 +1110,8 @@ export const AsynchronousFiltering: Story = {
           <Autocomplete.Indicator />
         </Autocomplete.Trigger>
         <Autocomplete.Popover>
-          <Autocomplete.Filter
-            inputValue={list.filterText}
-            onInputChange={list.setFilterText}
-          >
-            <SearchField
-              autoFocus
-              className="sticky top-0 z-10"
-              name="search"
-              variant="secondary"
-            >
+          <Autocomplete.Filter inputValue={list.filterText} onInputChange={list.setFilterText}>
+            <SearchField autoFocus className="sticky top-0 z-10" name="search" variant="secondary">
               <SearchField.Group>
                 <SearchField.SearchIcon />
                 <SearchField.Input placeholder="Search characters..." />
@@ -1260,7 +1123,7 @@ export const AsynchronousFiltering: Story = {
                 />
                 <SearchField.ClearButton
                   className={cn({
-                    "pointer-events-none opacity-0": !!list.isLoading,
+                    "pointer-events-none opacity-0": Boolean(list.isLoading),
                   })}
                 />
               </SearchField.Group>
@@ -1339,8 +1202,7 @@ function generateUsers(n: number): User[] {
 
   for (let i = 0; i < n; i++) {
     const firstName = firstNames[i % firstNames.length]!;
-    const lastName =
-      lastNames[Math.floor(i / firstNames.length) % lastNames.length]!;
+    const lastName = lastNames[Math.floor(i / firstNames.length) % lastNames.length]!;
     const name = `${firstName} ${lastName}`;
 
     users.push({
@@ -1365,8 +1227,7 @@ export const Virtualization: Story = {
       if (!searchQuery) return allUsers;
 
       return allUsers.filter(
-        (user) =>
-          contains(user.name, searchQuery) || contains(user.email, searchQuery),
+        (user) => contains(user.name, searchQuery) || contains(user.email, searchQuery),
       );
     }, [allUsers, contains, searchQuery]);
 
@@ -1386,16 +1247,8 @@ export const Virtualization: Story = {
           <Autocomplete.Indicator />
         </Autocomplete.Trigger>
         <Autocomplete.Popover>
-          <Autocomplete.Filter
-            inputValue={searchQuery}
-            onInputChange={setSearchQuery}
-          >
-            <SearchField
-              autoFocus
-              className="sticky top-0 z-10"
-              name="search"
-              variant="secondary"
-            >
+          <Autocomplete.Filter inputValue={searchQuery} onInputChange={setSearchQuery}>
+            <SearchField autoFocus className="sticky top-0 z-10" name="search" variant="secondary">
               <SearchField.Group>
                 <SearchField.SearchIcon />
                 <SearchField.Input placeholder="Search users..." />
@@ -1405,9 +1258,7 @@ export const Virtualization: Story = {
             <Virtualizer layout={ListLayout} layoutOptions={{ rowHeight: 50 }}>
               <ListBox
                 items={filteredUsers}
-                renderEmptyState={() => (
-                  <EmptyState>No results found</EmptyState>
-                )}
+                renderEmptyState={() => <EmptyState>No results found</EmptyState>}
               >
                 {(user) => (
                   <ListBox.Item id={user.id} textValue={user.name}>
@@ -1473,17 +1324,9 @@ export const Disabled: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox
-                renderEmptyState={() => (
-                  <EmptyState>No results found</EmptyState>
-                )}
-              >
+              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                 {items.map((item) => (
-                  <ListBox.Item
-                    key={item.id}
-                    id={item.id}
-                    textValue={item.name}
-                  >
+                  <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                     {item.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -1514,17 +1357,9 @@ export const Disabled: Story = {
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
-              <ListBox
-                renderEmptyState={() => (
-                  <EmptyState>No results found</EmptyState>
-                )}
-              >
+              <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                 {countries.map((country) => (
-                  <ListBox.Item
-                    key={country.id}
-                    id={country.id}
-                    textValue={country.name}
-                  >
+                  <ListBox.Item key={country.id} id={country.id} textValue={country.name}>
                     {country.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -1603,9 +1438,7 @@ export const UserSelection: Story = {
                 return `${selectedItems.length} users selected`;
               }
 
-              const selectedItem = users.find(
-                (user) => user.id === selectedItems[0].key,
-              );
+              const selectedItem = users.find((user) => user.id === selectedItems[0].key);
 
               if (!selectedItem) {
                 return defaultChildren;
@@ -1634,9 +1467,7 @@ export const UserSelection: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               {users.map((user) => (
                 <ListBox.Item key={user.id} id={user.id} textValue={user.name}>
                   <Avatar size="sm">
@@ -1722,17 +1553,13 @@ export const UserSelectionMultiple: Story = {
                 return defaultChildren;
               }
 
-              const selectedItemsKeys = state.selectedItems.map(
-                (item) => item.key,
-              );
+              const selectedItemsKeys = state.selectedItems.map((item) => item.key);
 
               return (
                 <TagGroup size="sm" onRemove={onRemoveTags}>
                   <TagGroup.List>
                     {selectedItemsKeys.map((selectedItemKey) => {
-                      const selectedItem = users.find(
-                        (user) => user.id === selectedItemKey,
-                      );
+                      const selectedItem = users.find((user) => user.id === selectedItemKey);
 
                       if (!selectedItem) {
                         return null;
@@ -1742,9 +1569,7 @@ export const UserSelectionMultiple: Story = {
                         <Tag key={selectedItem.id} id={selectedItem.id}>
                           <Avatar className="size-4" size="sm">
                             <AvatarImage src={selectedItem.avatarUrl} />
-                            <AvatarFallback>
-                              {selectedItem.fallback}
-                            </AvatarFallback>
+                            <AvatarFallback>{selectedItem.fallback}</AvatarFallback>
                           </Avatar>
                           <span>{selectedItem.name}</span>
                         </Tag>
@@ -1767,9 +1592,7 @@ export const UserSelectionMultiple: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               {users.map((user) => (
                 <ListBox.Item key={user.id} id={user.id} textValue={user.name}>
                   <Avatar size="sm">
@@ -1849,17 +1672,11 @@ export const LocationSearch: Story = {
             </SearchField>
             <ListBox
               renderEmptyState={() => (
-                <EmptyState>
-                  {isLoading ? "Searching..." : "No cities found"}
-                </EmptyState>
+                <EmptyState>{isLoading ? "Searching..." : "No cities found"}</EmptyState>
               )}
             >
               {allCities.map((city) => (
-                <ListBox.Item
-                  key={city.name}
-                  id={city.name}
-                  textValue={city.name}
-                >
+                <ListBox.Item key={city.name} id={city.name} textValue={city.name}>
                   <div className="flex flex-col">
                     <Label>{city.name}</Label>
                     <Description>{city.country}</Description>
@@ -1911,9 +1728,7 @@ export const TagGroupSelection: Story = {
                 return defaultChildren;
               }
 
-              const selectedItemsKeys = state.selectedItems.map(
-                (item) => item.key,
-              );
+              const selectedItemsKeys = state.selectedItems.map((item) => item.key);
 
               return (
                 <TagGroup size="sm" onRemove={onRemoveTags}>
@@ -1946,9 +1761,7 @@ export const TagGroupSelection: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No tags found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No tags found</EmptyState>}>
               {tags.map((tag) => (
                 <ListBox.Item key={tag.id} id={tag.id} textValue={tag.name}>
                   {tag.name}
@@ -2008,17 +1821,13 @@ export const EmailRecipients: Story = {
                 return defaultChildren;
               }
 
-              const selectedItemsKeys = state.selectedItems.map(
-                (item) => item.key,
-              );
+              const selectedItemsKeys = state.selectedItems.map((item) => item.key);
 
               return (
                 <TagGroup size="sm" onRemove={onRemoveTags}>
                   <TagGroup.List>
                     {selectedItemsKeys.map((selectedItemKey) => {
-                      const email = emails.find(
-                        (e) => e.id === selectedItemKey,
-                      );
+                      const email = emails.find((e) => e.id === selectedItemKey);
 
                       if (!email) return null;
 
@@ -2045,17 +1854,9 @@ export const EmailRecipients: Story = {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => (
-                <EmptyState>No recipients found</EmptyState>
-              )}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No recipients found</EmptyState>}>
               {emails.map((email) => (
-                <ListBox.Item
-                  key={email.id}
-                  id={email.id}
-                  textValue={email.email}
-                >
+                <ListBox.Item key={email.id} id={email.id} textValue={email.email}>
                   <div className="flex flex-col">
                     <Label>{email.name}</Label>
                     <Description>{email.email}</Description>

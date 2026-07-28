@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import type { Selection, SortDescriptor } from "react-aria-components/Table";
-
 import React from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { cn } from "@thenamespace/uikit";
+import type { Selection, SortDescriptor } from "react-aria-components/Table";
 import { TableLayout, Virtualizer } from "react-aria-components/Virtualizer";
 
 import { Button } from "@/components/buttons/button";
@@ -84,9 +83,7 @@ function renderExpandableRow(item: ExpandableRow) {
       </Table.Cell>
       <Table.Cell>{item.type}</Table.Cell>
       <Table.Cell>{item.date}</Table.Cell>
-      <Table.Collection items={item.children}>
-        {renderExpandableRow}
-      </Table.Collection>
+      <Table.Collection items={item.children}>{renderExpandableRow}</Table.Collection>
     </Table.Row>
   );
 }
@@ -233,11 +230,7 @@ function usePagination<T>(items: T[], rowsPerPage = ROWS_PER_PAGE) {
   };
 }
 
-function TablePaginationFooter({
-  pagination,
-}: {
-  pagination: ReturnType<typeof usePagination>;
-}) {
+function TablePaginationFooter({ pagination }: { pagination: ReturnType<typeof usePagination> }) {
   const { end, page, setPage, start, total, totalPages } = pagination;
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
@@ -290,11 +283,7 @@ const statusColorMap: Record<string, "success" | "danger" | "warning"> = {
 /**
  * Shared template for Default and SecondaryVariant stories.
  */
-function DefaultTableTemplate({
-  variant = "primary",
-}: {
-  variant?: "primary" | "secondary";
-}) {
+function DefaultTableTemplate({ variant = "primary" }: { variant?: "primary" | "secondary" }) {
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set());
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "name",
@@ -341,12 +330,7 @@ function DefaultTableTemplate({
                   </Checkbox.Content>
                 </Checkbox>
               </Table.Column>
-              <Table.Column
-                allowsSorting
-                isRowHeader
-                className="after:hidden"
-                id="id"
-              >
+              <Table.Column allowsSorting isRowHeader className="after:hidden" id="id">
                 {({ sortDirection }) => (
                   <Table.SortableColumnHeader sortDirection={sortDirection}>
                     Worker ID
@@ -396,10 +380,7 @@ function DefaultTableTemplate({
                     <div className="flex items-center gap-2">
                       #{user.id.toString()}{" "}
                       <Button isIconOnly size="sm" variant="ghost">
-                        <Icon
-                          className="text-muted size-4"
-                          icon="hugeicons:copy"
-                        />
+                        <Icon className="text-muted size-4" icon="hugeicons:copy" />
                       </Button>
                     </div>
                   </Table.Cell>
@@ -422,11 +403,7 @@ function DefaultTableTemplate({
                   </Table.Cell>
                   <Table.Cell className="min-w-52">{user.role}</Table.Cell>
                   <Table.Cell className="min-w-25">
-                    <Chip
-                      color={statusColorMap[user.status]}
-                      size="sm"
-                      variant="soft"
-                    >
+                    <Chip color={statusColorMap[user.status]} size="sm" variant="soft">
                       {user.status}
                     </Chip>
                   </Table.Cell>
@@ -487,11 +464,7 @@ export const EmptyStateDemo: Story = {
           <Table.Content aria-label="Empty state" className="h-full">
             <Table.Header>
               {columns.map((col) => (
-                <Table.Column
-                  key={col.id}
-                  id={col.id}
-                  isRowHeader={col.isRowHeader}
-                >
+                <Table.Column key={col.id} id={col.id} isRowHeader={col.isRowHeader}>
                   {col.name}
                 </Table.Column>
               ))}
@@ -526,24 +499,17 @@ export const DynamicCollection: Story = {
       <Wrapper>
         <Table>
           <Table.ScrollContainer>
-            <Table.Content
-              aria-label="Dynamic collection"
-              className="min-w-[600px]"
-            >
+            <Table.Content aria-label="Dynamic collection" className="min-w-[600px]">
               <Table.Header columns={columns}>
                 {(column) => (
-                  <Table.Column isRowHeader={column.isRowHeader}>
-                    {column.name}
-                  </Table.Column>
+                  <Table.Column isRowHeader={column.isRowHeader}>{column.name}</Table.Column>
                 )}
               </Table.Header>
               <Table.Body items={pagination.paginatedItems}>
                 {(user) => (
                   <Table.Row>
                     <Table.Collection items={columns}>
-                      {(column) => (
-                        <Table.Cell>{user[column.id as keyof User]}</Table.Cell>
-                      )}
+                      {(column) => <Table.Cell>{user[column.id as keyof User]}</Table.Cell>}
                     </Table.Collection>
                   </Table.Row>
                 )}
@@ -590,9 +556,7 @@ const DynamicWithSelectionTemplate = () => {
               </Table.Column>
               <Table.Collection items={columns}>
                 {(column) => (
-                  <Table.Column isRowHeader={column.isRowHeader}>
-                    {column.name}
-                  </Table.Column>
+                  <Table.Column isRowHeader={column.isRowHeader}>{column.name}</Table.Column>
                 )}
               </Table.Collection>
             </Table.Header>
@@ -642,12 +606,7 @@ export const ColumnResizing: Story = {
         <Table.ResizableContainer>
           <Table.Content aria-label="Column resizing" className="min-w-[700px]">
             <Table.Header>
-              <Table.Column
-                isRowHeader
-                defaultWidth="1fr"
-                id="name"
-                minWidth={160}
-              >
+              <Table.Column isRowHeader defaultWidth="1fr" id="name" minWidth={160}>
                 Name
                 <Table.ColumnResizer />
               </Table.Column>
@@ -669,11 +628,7 @@ export const ColumnResizing: Story = {
                   <Table.Cell>{user.name}</Table.Cell>
                   <Table.Cell>{user.role}</Table.Cell>
                   <Table.Cell>
-                    <Chip
-                      color={statusColorMap[user.status]}
-                      size="sm"
-                      variant="soft"
-                    >
+                    <Chip color={statusColorMap[user.status]} size="sm" variant="soft">
                       {user.status}
                     </Chip>
                   </Table.Cell>
@@ -695,9 +650,7 @@ export const ColumnResizing: Story = {
 const ITEMS_PER_PAGE = 6;
 
 function useAsyncUsers() {
-  const [items, setItems] = React.useState<User[]>(() =>
-    users.slice(0, ITEMS_PER_PAGE),
-  );
+  const [items, setItems] = React.useState<User[]>(() => users.slice(0, ITEMS_PER_PAGE));
   const [isLoading, setIsLoading] = React.useState(false);
   const isLoadingRef = React.useRef(false);
   const hasMore = items.length < users.length;
@@ -733,11 +686,7 @@ export const AsyncLoading: Story = {
             <Table.Content aria-label="Async loading" className="min-w-[600px]">
               <Table.Header className="bg-surface-secondary sticky top-0 z-10">
                 {columns.map((col) => (
-                  <Table.Column
-                    key={col.id}
-                    id={col.id}
-                    isRowHeader={col.isRowHeader}
-                  >
+                  <Table.Column key={col.id} id={col.id} isRowHeader={col.isRowHeader}>
                     {col.name}
                   </Table.Column>
                 ))}
@@ -749,11 +698,7 @@ export const AsyncLoading: Story = {
                       <Table.Cell>{user.name}</Table.Cell>
                       <Table.Cell>{user.role}</Table.Cell>
                       <Table.Cell>
-                        <Chip
-                          color={statusColorMap[user.status]}
-                          size="sm"
-                          variant="soft"
-                        >
+                        <Chip color={statusColorMap[user.status]} size="sm" variant="soft">
                           {user.status}
                         </Chip>
                       </Table.Cell>
@@ -761,12 +706,8 @@ export const AsyncLoading: Story = {
                     </Table.Row>
                   )}
                 </Table.Collection>
-                {!!hasMore && (
-                  <Table.LoadMore
-                    isLoading={isLoading}
-                    scrollOffset={0}
-                    onLoadMore={loadMore}
-                  >
+                {Boolean(hasMore) && (
+                  <Table.LoadMore isLoading={isLoading} scrollOffset={0} onLoadMore={loadMore}>
                     <Table.LoadMoreContent>
                       <Spinner size="md" />
                     </Table.LoadMoreContent>
@@ -849,8 +790,7 @@ export const Virtualization: Story = {
 
       for (let i = 0; i < n; i++) {
         const firstName = firstNames[i % firstNames.length];
-        const lastName =
-          lastNames[Math.floor(i / firstNames.length) % lastNames.length];
+        const lastName = lastNames[Math.floor(i / firstNames.length) % lastNames.length];
         const name = `${firstName} ${lastName}`;
 
         generatedUsers.push({
@@ -967,9 +907,7 @@ export const ExpandableRows: Story = {
       },
     ];
 
-    const [expandedKeys, setExpandedKeys] = React.useState<Selection>(
-      () => new Set(["1"]),
-    );
+    const [expandedKeys, setExpandedKeys] = React.useState<Selection>(() => new Set(["1"]));
 
     return (
       <Wrapper>

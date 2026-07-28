@@ -1,16 +1,15 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-import type { TimeValue } from "@thenamespace/uikit";
-
 import { useMemo, useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import {
   DateFormatter,
   getLocalTimeZone,
   parseDate,
   parseZonedDateTime,
 } from "@internationalized/date";
+import type { TimeValue } from "@thenamespace/uikit";
 import {
   DateField,
   DateRangePicker,
@@ -80,7 +79,7 @@ export function FormatOptions() {
   }, [granularity]);
 
   const timeGranularity = granularity !== "day" ? granularity : undefined;
-  const showTimeField = !!timeGranularity;
+  const showTimeField = Boolean(timeGranularity);
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -126,9 +125,7 @@ export function FormatOptions() {
                 </RangeCalendar.Header>
                 <RangeCalendar.Grid>
                   <RangeCalendar.GridHeader>
-                    {(day) => (
-                      <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-                    )}
+                    {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
                   </RangeCalendar.GridHeader>
                   <RangeCalendar.GridBody>
                     {(date) => <RangeCalendar.Cell date={date} />}
@@ -140,7 +137,7 @@ export function FormatOptions() {
                   </RangeCalendar.YearPickerGridBody>
                 </RangeCalendar.YearPickerGrid>
               </RangeCalendar>
-              {!!showTimeField && (
+              {Boolean(showTimeField) && (
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
                     <Label>Start Time</Label>
@@ -227,11 +224,7 @@ export function FormatOptions() {
             <Select.Popover>
               <ListBox>
                 {granularityOptions.map((option) => (
-                  <ListBox.Item
-                    key={option.value}
-                    id={option.value}
-                    textValue={option.label}
-                  >
+                  <ListBox.Item key={option.value} id={option.value} textValue={option.label}>
                     {option.label}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -256,11 +249,7 @@ export function FormatOptions() {
             <Select.Popover>
               <ListBox>
                 {hourCycleOptions.map((option) => (
-                  <ListBox.Item
-                    key={option.value}
-                    id={option.value}
-                    textValue={option.label}
-                  >
+                  <ListBox.Item key={option.value} id={option.value} textValue={option.label}>
                     {option.label}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -280,10 +269,7 @@ export function FormatOptions() {
             Hide timezone
           </Switch.Content>
         </Switch>
-        <Switch
-          isSelected={shouldForceLeadingZeros}
-          onChange={setShouldForceLeadingZeros}
-        >
+        <Switch isSelected={shouldForceLeadingZeros} onChange={setShouldForceLeadingZeros}>
           <Switch.Content>
             <Switch.Control>
               <Switch.Thumb />

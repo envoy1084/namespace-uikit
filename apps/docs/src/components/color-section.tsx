@@ -50,8 +50,7 @@ const copyColorValue = async (
   event: React.MouseEvent<HTMLElement>,
   fallback: string | undefined,
 ) => {
-  const computedValue =
-    getComputedStyle(event.currentTarget).backgroundColor || fallback;
+  const computedValue = getComputedStyle(event.currentTarget).backgroundColor || fallback;
   const value = computedValue ? toOklchCss(computedValue) : fallback || "";
 
   if (!value) return;
@@ -79,9 +78,7 @@ function ColorTooltip({
     <Tooltip delay={0}>
       <Tooltip.Trigger className={className}>{children}</Tooltip.Trigger>
       <Tooltip.Content className="max-w-xs">
-        <pre className="font-mono text-xs leading-relaxed whitespace-pre-wrap">
-          {content}
-        </pre>
+        <pre className="font-mono text-xs leading-relaxed whitespace-pre-wrap">{content}</pre>
       </Tooltip.Content>
     </Tooltip>
   );
@@ -143,16 +140,14 @@ function ColorHeader({
 
   return (
     <ColorTooltip content={tooltip}>
-      <div
+      <button
+        type="button"
         className="flex cursor-pointer items-center justify-between rounded-xl px-4 py-3"
         style={{ backgroundColor: `var(${bgVariable})` }}
         onClick={(event) => copyColorValue(event, bgVariable)}
       >
         <div className="flex flex-col">
-          <span
-            className="text-lg font-medium tracking-tight"
-            style={contrastStyle(bgVariable)}
-          >
+          <span className="text-lg font-medium tracking-tight" style={contrastStyle(bgVariable)}>
             {name}
           </span>
           <span
@@ -165,7 +160,7 @@ function ColorHeader({
         <span className="text-xs font-medium" style={contrastStyle(bgVariable)}>
           {theme}
         </span>
-      </div>
+      </button>
     </ColorTooltip>
   );
 }
@@ -188,7 +183,8 @@ function ColorBlock({
 
   return (
     <ColorTooltip className="block w-full" content={tooltip}>
-      <div
+      <button
+        type="button"
         style={{ backgroundColor: bgValue }}
         className={cn(
           "flex w-full cursor-pointer flex-col justify-center rounded-xl px-4 py-2.5",
@@ -196,10 +192,7 @@ function ColorBlock({
         )}
         onClick={(event) => copyColorValue(event, cssValue || bgVariable)}
       >
-        <span
-          className="text-sm font-medium tracking-tight"
-          style={contrastStyle(bgVariable)}
-        >
+        <span className="text-sm font-medium tracking-tight" style={contrastStyle(bgVariable)}>
           {label}
         </span>
         <span
@@ -208,7 +201,7 @@ function ColorBlock({
         >
           {token}
         </span>
-      </div>
+      </button>
     </ColorTooltip>
   );
 }
@@ -237,19 +230,9 @@ function ThemeColumn({
   soft?: SideBySideProps["soft"];
 }) {
   return (
-    <div
-      className="flex flex-1 flex-col gap-2"
-      data-theme={theme.toLowerCase()}
-    >
-      <ColorHeader
-        bgVariable={baseVariable}
-        name={name}
-        theme={theme}
-        tooltip={baseTooltip}
-      />
-      <div
-        className={cn("flex gap-2", soft ? "flex-col sm:flex-row" : "flex-col")}
-      >
+    <div className="flex flex-1 flex-col gap-2" data-theme={theme.toLowerCase()}>
+      <ColorHeader bgVariable={baseVariable} name={name} theme={theme} tooltip={baseTooltip} />
+      <div className={cn("flex gap-2", soft ? "flex-col sm:flex-row" : "flex-col")}>
         <div
           className="flex flex-1 flex-col gap-1.5 rounded-xl p-3"
           style={{ backgroundColor: `var(${baseVariable})` }}
@@ -272,17 +255,13 @@ function ThemeColumn({
             tooltip={foregroundTooltip}
           />
         </div>
-        {!!soft && (
+        {soft ? (
           <div className="relative flex flex-1 flex-col gap-1.5 overflow-hidden rounded-xl p-3">
-            <div
-              className="absolute inset-0"
-              style={{ backgroundColor: "var(--surface)" }}
-            />
+            <div className="absolute inset-0" style={{ backgroundColor: "var(--surface)" }} />
             <div
               className="absolute inset-0"
               style={{
-                backgroundColor:
-                  soft.baseCssValue || `var(${soft.baseVariable})`,
+                backgroundColor: soft.baseCssValue || `var(${soft.baseVariable})`,
               }}
             />
             <span className="text-foreground relative text-base font-medium tracking-tight">
@@ -290,27 +269,18 @@ function ThemeColumn({
             </span>
             <div className="relative">
               {(() => {
-                const token = getTokenName(
-                  soft.hoverTooltip,
-                  soft.hoverVariable,
-                );
+                const token = getTokenName(soft.hoverTooltip, soft.hoverVariable);
 
                 return (
-                  <ColorTooltip
-                    className="block w-full"
-                    content={soft.hoverTooltip}
-                  >
-                    <div
+                  <ColorTooltip className="block w-full" content={soft.hoverTooltip}>
+                    <button
+                      type="button"
                       className="flex w-full cursor-pointer flex-col justify-center rounded-xl border border-black/12 px-4 py-2.5 dark:border-white/12"
                       style={{
-                        backgroundColor:
-                          soft.hoverCssValue || `var(${soft.hoverVariable})`,
+                        backgroundColor: soft.hoverCssValue || `var(${soft.hoverVariable})`,
                       }}
                       onClick={(event) =>
-                        copyColorValue(
-                          event,
-                          soft.hoverCssValue || soft.hoverVariable,
-                        )
+                        copyColorValue(event, soft.hoverCssValue || soft.hoverVariable)
                       }
                     >
                       <span className="text-foreground text-sm font-medium tracking-tight">
@@ -319,7 +289,7 @@ function ThemeColumn({
                       <span className="text-foreground font-mono text-[10px] leading-tight opacity-60 sm:hidden">
                         {token}
                       </span>
-                    </div>
+                    </button>
                   </ColorTooltip>
                 );
               })()}
@@ -333,7 +303,7 @@ function ThemeColumn({
               />
             </div>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );
@@ -397,11 +367,9 @@ function StackedSwatch({
   const token = getTokenName(tooltip, variable);
 
   return (
-    <ColorTooltip
-      className="min-w-0 basis-full sm:flex-1 sm:basis-0"
-      content={tooltip}
-    >
-      <div
+    <ColorTooltip className="min-w-0 basis-full sm:flex-1 sm:basis-0" content={tooltip}>
+      <button
+        type="button"
         style={{ backgroundColor: bgValue }}
         className={cn(
           "flex min-h-14 w-full cursor-pointer flex-col justify-center rounded-xl px-4 py-2",
@@ -409,10 +377,7 @@ function StackedSwatch({
         )}
         onClick={(event) => copyColorValue(event, cssValue || variable)}
       >
-        <span
-          className="text-sm font-medium tracking-tight"
-          style={contrastStyle(variable)}
-        >
+        <span className="text-sm font-medium tracking-tight" style={contrastStyle(variable)}>
           {label}
         </span>
         <span
@@ -421,7 +386,7 @@ function StackedSwatch({
         >
           {token}
         </span>
-      </div>
+      </button>
     </ColorTooltip>
   );
 }
@@ -541,11 +506,9 @@ function FormFieldThemeBlock({
             />
           </div>
           <div className="flex min-w-0 flex-row gap-2 sm:w-40 sm:flex-col">
-            <ColorTooltip
-              className="min-w-0 flex-1"
-              content={colors.placeholderTooltip}
-            >
-              <div
+            <ColorTooltip className="min-w-0 flex-1" content={colors.placeholderTooltip}>
+              <button
+                type="button"
                 className="border-border flex h-full cursor-pointer items-center rounded-xl border px-4 py-3"
                 style={{ backgroundColor: `var(${colors.placeholder})` }}
                 onClick={(event) => copyColorValue(event, colors.placeholder)}
@@ -556,13 +519,11 @@ function FormFieldThemeBlock({
                 >
                   Placeholder
                 </span>
-              </div>
+              </button>
             </ColorTooltip>
-            <ColorTooltip
-              className="min-w-0 flex-1"
-              content={colors.foregroundTooltip}
-            >
-              <div
+            <ColorTooltip className="min-w-0 flex-1" content={colors.foregroundTooltip}>
+              <button
+                type="button"
                 className="flex h-full cursor-pointer items-center rounded-xl px-4 py-3"
                 style={{ backgroundColor: `var(${colors.foreground})` }}
                 onClick={(event) => copyColorValue(event, colors.foreground)}
@@ -573,7 +534,7 @@ function FormFieldThemeBlock({
                 >
                   Foreground
                 </span>
-              </div>
+              </button>
             </ColorTooltip>
           </div>
         </div>

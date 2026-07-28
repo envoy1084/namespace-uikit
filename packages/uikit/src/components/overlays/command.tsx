@@ -32,9 +32,7 @@ export function CommandRoot({ children }: CommandRootProps): ReactElement {
   return <Context value={{}}>{children}</Context>;
 }
 
-export interface CommandBackdropProps extends ComponentPropsWithRef<
-  typeof ModalOverlay
-> {
+export interface CommandBackdropProps extends ComponentPropsWithRef<typeof ModalOverlay> {
   variant?: CommandBackdropVariant;
 }
 export function CommandBackdrop({
@@ -62,9 +60,7 @@ export function CommandBackdrop({
   );
 }
 
-export interface CommandContainerProps extends ComponentPropsWithRef<
-  typeof Modal
-> {
+export interface CommandContainerProps extends ComponentPropsWithRef<typeof Modal> {
   size?: CommandSize;
 }
 export function CommandContainer({
@@ -78,10 +74,8 @@ export function CommandContainer({
     <Modal
       {...props}
       className={
-        cn(
-          "command__container",
-          typeof className === "string" ? className : undefined,
-        ) ?? "command__container"
+        cn("command__container", typeof className === "string" ? className : undefined) ??
+        "command__container"
       }
       data-slot="command-container"
     >
@@ -94,10 +88,7 @@ export function CommandContainer({
   );
 }
 
-export interface CommandDialogProps extends Omit<
-  ComponentPropsWithRef<typeof Dialog>,
-  "children"
-> {
+export interface CommandDialogProps extends Omit<ComponentPropsWithRef<typeof Dialog>, "children"> {
   children: ReactNode;
   defaultInputValue?: string;
   filter?: (textValue: string, inputValue: string) => boolean;
@@ -140,17 +131,8 @@ export function CommandDialog({
 }
 
 export type CommandHeaderProps = ComponentPropsWithRef<"div">;
-export function CommandHeader({
-  className,
-  ...props
-}: CommandHeaderProps): ReactElement {
-  return (
-    <div
-      {...props}
-      className={cn("command__header", className)}
-      data-slot="command-header"
-    />
-  );
+export function CommandHeader({ className, ...props }: CommandHeaderProps): ReactElement {
+  return <div {...props} className={cn("command__header", className)} data-slot="command-header" />;
 }
 
 export interface CommandInputGroupProps extends Omit<
@@ -170,12 +152,12 @@ export function CommandInputGroup({
     <SearchField
       {...props}
       aria-label={props["aria-label"] ?? "Search commands"}
+      // Opening a command palette intentionally transfers focus to its search field.
+      // oxlint-disable-next-line jsx-a11y/no-autofocus
       autoFocus={autoFocus}
       className={
-        cn(
-          "command__input-group",
-          typeof className === "string" ? className : undefined,
-        ) ?? "command__input-group"
+        cn("command__input-group", typeof className === "string" ? className : undefined) ??
+        "command__input-group"
       }
       data-slot="command-input-group"
     >
@@ -196,9 +178,7 @@ export function CommandInputGroupPrefix({
     />
   );
 }
-export interface CommandInputGroupInputProps extends ComponentPropsWithRef<
-  typeof Input
-> {
+export interface CommandInputGroupInputProps extends ComponentPropsWithRef<typeof Input> {
   placeholder?: string;
 }
 export function CommandInputGroupInput({
@@ -211,10 +191,8 @@ export function CommandInputGroupInput({
     <Input
       {...props}
       className={
-        cn(
-          "command__input-group-input",
-          typeof className === "string" ? className : undefined,
-        ) ?? "command__input-group-input"
+        cn("command__input-group-input", typeof className === "string" ? className : undefined) ??
+        "command__input-group-input"
       }
       data-slot="command-input-group-input"
       placeholder={placeholder}
@@ -245,9 +223,7 @@ export function CommandInputGroupSuffix({
     />
   );
 }
-export type CommandInputGroupClearButtonProps = ComponentPropsWithRef<
-  typeof CloseButton
->;
+export type CommandInputGroupClearButtonProps = ComponentPropsWithRef<typeof CloseButton>;
 export function CommandInputGroupClearButton({
   className,
   ...props
@@ -267,9 +243,7 @@ export function CommandInputGroupClearButton({
   );
 }
 
-export type CommandListProps<T extends object = object> = ComponentPropsWithRef<
-  typeof Menu<T>
->;
+export type CommandListProps<T extends object = object> = ComponentPropsWithRef<typeof Menu<T>>;
 export function CommandList<T extends object = object>({
   className,
   renderEmptyState,
@@ -279,10 +253,8 @@ export function CommandList<T extends object = object>({
     <Menu
       {...props}
       className={
-        cn(
-          "command__list",
-          typeof className === "string" ? className : undefined,
-        ) ?? "command__list"
+        cn("command__list", typeof className === "string" ? className : undefined) ??
+        "command__list"
       }
       data-slot="command-list"
       {...(renderEmptyState
@@ -298,26 +270,21 @@ export function CommandList<T extends object = object>({
   );
 }
 export type CommandItemProps = ComponentPropsWithRef<typeof MenuItem>;
-export function CommandItem({
-  className,
-  ...props
-}: CommandItemProps): ReactElement {
+export function CommandItem({ className, ...props }: CommandItemProps): ReactElement {
   return (
     <MenuItem
       {...props}
       className={
-        cn(
-          "command__item",
-          typeof className === "string" ? className : undefined,
-        ) ?? "command__item"
+        cn("command__item", typeof className === "string" ? className : undefined) ??
+        "command__item"
       }
       data-slot="command-item"
     />
   );
 }
-export interface CommandGroupProps<
-  T extends object = object,
-> extends ComponentPropsWithRef<typeof MenuSection<T>> {
+export interface CommandGroupProps<T extends object = object> extends ComponentPropsWithRef<
+  typeof MenuSection<T>
+> {
   heading?: ReactNode;
 }
 export function CommandGroup<T extends object = object>({
@@ -330,18 +297,13 @@ export function CommandGroup<T extends object = object>({
     <MenuSection
       {...props}
       className={
-        cn(
-          "command__group",
-          typeof className === "string" ? className : undefined,
-        ) ?? "command__group"
+        cn("command__group", typeof className === "string" ? className : undefined) ??
+        "command__group"
       }
       data-slot="command-group"
     >
       {heading ? (
-        <Header
-          className="command__group-heading"
-          data-slot="command-group-heading"
-        >
+        <Header className="command__group-heading" data-slot="command-group-heading">
           {heading}
         </Header>
       ) : null}
@@ -350,35 +312,21 @@ export function CommandGroup<T extends object = object>({
   );
 }
 export type CommandSeparatorProps = ComponentPropsWithRef<typeof Separator>;
-export function CommandSeparator({
-  className,
-  ...props
-}: CommandSeparatorProps): ReactElement {
+export function CommandSeparator({ className, ...props }: CommandSeparatorProps): ReactElement {
   return (
     <Separator
       {...props}
       className={
-        cn(
-          "command__separator",
-          typeof className === "string" ? className : undefined,
-        ) ?? "command__separator"
+        cn("command__separator", typeof className === "string" ? className : undefined) ??
+        "command__separator"
       }
       data-slot="command-separator"
     />
   );
 }
 export type CommandFooterProps = ComponentPropsWithRef<"div">;
-export function CommandFooter({
-  className,
-  ...props
-}: CommandFooterProps): ReactElement {
-  return (
-    <div
-      {...props}
-      className={cn("command__footer", className)}
-      data-slot="command-footer"
-    />
-  );
+export function CommandFooter({ className, ...props }: CommandFooterProps): ReactElement {
+  return <div {...props} className={cn("command__footer", className)} data-slot="command-footer" />;
 }
 
 type CommandInputGroupComponent = typeof CommandInputGroup & {
@@ -387,15 +335,12 @@ type CommandInputGroupComponent = typeof CommandInputGroup & {
   Prefix: typeof CommandInputGroupPrefix;
   Suffix: typeof CommandInputGroupSuffix;
 };
-const CommandInputGroupCompound: CommandInputGroupComponent = Object.assign(
-  CommandInputGroup,
-  {
-    ClearButton: CommandInputGroupClearButton,
-    Input: CommandInputGroupInput,
-    Prefix: CommandInputGroupPrefix,
-    Suffix: CommandInputGroupSuffix,
-  },
-);
+const CommandInputGroupCompound: CommandInputGroupComponent = Object.assign(CommandInputGroup, {
+  ClearButton: CommandInputGroupClearButton,
+  Input: CommandInputGroupInput,
+  Prefix: CommandInputGroupPrefix,
+  Suffix: CommandInputGroupSuffix,
+});
 type CommandComponent = typeof CommandRoot & {
   Backdrop: typeof CommandBackdrop;
   Container: typeof CommandContainer;

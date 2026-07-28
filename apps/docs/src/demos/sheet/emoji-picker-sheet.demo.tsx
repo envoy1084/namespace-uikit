@@ -6,10 +6,7 @@ import { useMemo, useRef, useState } from "react";
 
 import { Sheet } from "@thenamespace/uikit";
 import { Button } from "@thenamespace/uikit/button";
-import {
-  EmojiPicker,
-  EMOJI_SKIN_TONES,
-} from "@thenamespace/uikit/emoji-picker";
+import { EmojiPicker, EMOJI_SKIN_TONES } from "@thenamespace/uikit/emoji-picker";
 import { EmptyState } from "@thenamespace/uikit/empty-state";
 import {
   Basketball01Icon,
@@ -33,9 +30,7 @@ import { Size } from "react-aria-components";
 const snapPoints = ["148px", "355px", 1];
 
 const sheetEmojiData = emojiDataSource.filter(
-  (emoji) =>
-    typeof emoji.label === "string" &&
-    !emoji.label.startsWith("regional indicator"),
+  (emoji) => typeof emoji.label === "string" && !emoji.label.startsWith("regional indicator"),
 );
 
 const sheetEmojiGroups = {
@@ -70,16 +65,11 @@ const sheetEmojiCategories: Array<{
   { icon: Flag01Icon, id: "flags", label: "Flags" },
 ];
 
-function SheetEmojiPicker({
-  onEmojiSelect,
-}: {
-  onEmojiSelect?: (emoji: string) => void;
-}) {
+function SheetEmojiPicker({ onEmojiSelect }: { onEmojiSelect?: (emoji: string) => void }) {
   const [tone, setTone] = useState("default");
   const gridRef = useRef<HTMLDivElement>(null);
   const items = useMemo(() => {
-    const skinIndex =
-      EMOJI_SKIN_TONES.findIndex((item) => item.id === tone) - 1;
+    const skinIndex = EMOJI_SKIN_TONES.findIndex((item) => item.id === tone) - 1;
     const data = sheetEmojiData.slice(0, 200);
 
     if (skinIndex < 0) return data;
@@ -87,7 +77,7 @@ function SheetEmojiPicker({
     return data.map((emoji) => {
       const skin = emoji.skins?.[skinIndex];
 
-      return skin ? Object.assign({}, emoji, { unicode: skin.unicode }) : emoji;
+      return skin ? { ...emoji, unicode: skin.unicode } : emoji;
     });
   }, [tone]);
   const groupStarts = useMemo(() => {
@@ -137,11 +127,7 @@ function SheetEmojiPicker({
               <EmojiPicker.SkinToneTrigger className="mr-1" />
               <EmojiPicker.SkinToneContent>
                 {EMOJI_SKIN_TONES.map((item) => (
-                  <EmojiPicker.SkinToneOption
-                    aria-label={item.label}
-                    id={item.id}
-                    key={item.id}
-                  >
+                  <EmojiPicker.SkinToneOption aria-label={item.label} id={item.id} key={item.id}>
                     {item.emoji}
                   </EmojiPicker.SkinToneOption>
                 ))}
@@ -158,11 +144,7 @@ function SheetEmojiPicker({
           }}
           renderEmptyState={() => (
             <EmptyState className="flex h-full min-h-20 flex-1 flex-col items-center justify-center gap-2">
-              <HugeiconsIcon
-                aria-hidden
-                className="text-muted size-5"
-                icon={SmileIcon}
-              />
+              <HugeiconsIcon aria-hidden className="text-muted size-5" icon={SmileIcon} />
               No emoji found.
             </EmptyState>
           )}
@@ -206,9 +188,9 @@ function SheetEmojiPicker({
 
 function EmojiPickerSheetDemo() {
   const emojiSheetSnapPoints = ["355px", 1];
-  const [activeSnapPoint, setActiveSnapPoint] = useState<
-    number | string | null
-  >(emojiSheetSnapPoints[0]!);
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
+    emojiSheetSnapPoints[0]!,
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [emoji, setEmoji] = useState("😀");
 

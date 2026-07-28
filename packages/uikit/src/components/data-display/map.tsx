@@ -1,12 +1,6 @@
 "use client";
 
-import type {
-  ComponentPropsWithRef,
-  CSSProperties,
-  ReactElement,
-  ReactNode,
-  Ref,
-} from "react";
+import type { ComponentPropsWithRef, CSSProperties, ReactElement, ReactNode, Ref } from "react";
 import {
   createContext,
   useCallback,
@@ -76,11 +70,7 @@ const getDocumentTheme = (): MapTheme =>
     : "light";
 const readCssValue = (element: HTMLElement, property: string): string =>
   window.getComputedStyle(element).getPropertyValue(property).trim();
-const resolveCssColor = (
-  element: HTMLElement,
-  property: string,
-  fallback: string,
-): string => {
+const resolveCssColor = (element: HTMLElement, property: string, fallback: string): string => {
   const value = readCssValue(element, property);
   if (!value) return fallback;
   const context = document.createElement("canvas").getContext("2d");
@@ -92,18 +82,12 @@ const resolveCssColor = (
     ? fallback
     : context.fillStyle;
 };
-const resolveCssNumber = (
-  element: HTMLElement,
-  property: string,
-  fallback: number,
-): number => {
+const resolveCssNumber = (element: HTMLElement, property: string, fallback: number): number => {
   const value = Number.parseFloat(readCssValue(element, property));
   return Number.isFinite(value) ? value : fallback;
 };
 
-const centerTuple = (
-  value: NonNullable<MapOptions["center"]>,
-): [number, number] => {
+const centerTuple = (value: NonNullable<MapOptions["center"]>): [number, number] => {
   if (Array.isArray(value)) return [value[0], value[1]];
   return ["lng" in value ? value.lng : value.lon, value.lat];
 };
@@ -161,10 +145,10 @@ export function MapRoot({
   const [map, setMap] = useState<MapRef | null>(null);
   const [isMapLoaded, setMapLoaded] = useState(false);
   const [isStyleLoaded, setStyleLoaded] = useState(false);
-  const [documentTheme, setDocumentTheme] =
-    useState<MapTheme>(getDocumentTheme);
+  const [documentTheme, setDocumentTheme] = useState<MapTheme>(getDocumentTheme);
   const optionsRef = useRef(props);
   const initialViewportRef = useRef(viewport);
+  const projectionRef = useRef(projection);
   const viewportCallback = useRef(onViewportChange);
   const isApplyingViewport = useRef(false);
   const styleReadyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -218,7 +202,7 @@ export function MapRoot({
       styleReadyTimer.current = setTimeout(() => {
         if (instance.isStyleLoaded()) {
           setStyleLoaded(true);
-          if (projection) instance.setProjection(projection);
+          if (projectionRef.current) instance.setProjection(projectionRef.current);
         }
       }, 0);
     };
@@ -227,8 +211,7 @@ export function MapRoot({
       markStyleReady();
     };
     const onMove = () => {
-      if (!isApplyingViewport.current)
-        viewportCallback.current?.(getViewport(instance));
+      if (!isApplyingViewport.current) viewportCallback.current?.(getViewport(instance));
     };
     instance.on("load", onLoad);
     instance.on("style.load", markStyleReady);
@@ -264,14 +247,11 @@ export function MapRoot({
     previousViewport.current = next;
     if (!map) return;
     const changes: Partial<MapViewport> = {};
-    if (bearing !== undefined && !Object.is(bearing, previous.bearing))
-      changes.bearing = bearing;
+    if (bearing !== undefined && !Object.is(bearing, previous.bearing)) changes.bearing = bearing;
     if (center !== undefined && !centersEqual(center, previous.center))
       changes.center = centerTuple(center);
-    if (pitch !== undefined && !Object.is(pitch, previous.pitch))
-      changes.pitch = pitch;
-    if (zoom !== undefined && !Object.is(zoom, previous.zoom))
-      changes.zoom = zoom;
+    if (pitch !== undefined && !Object.is(pitch, previous.pitch)) changes.pitch = pitch;
+    if (zoom !== undefined && !Object.is(zoom, previous.zoom)) changes.zoom = zoom;
     if (!Object.keys(changes).length) return;
     isApplyingViewport.current = true;
     try {
@@ -302,11 +282,7 @@ export function MapRoot({
       >
         {showLoader ? (
           <div className="map__loader" data-slot="map-loader">
-            <Spinner
-              className="map__loader-spinner"
-              color="current"
-              size="sm"
-            />
+            <Spinner className="map__loader-spinner" color="current" size="sm" />
           </div>
         ) : null}
         {map ? children : null}
@@ -322,8 +298,7 @@ interface MarkerContextValue {
 const MarkerContext = createContext<MarkerContextValue | null>(null);
 const useMarker = () => {
   const context = useContext(MarkerContext);
-  if (!context)
-    throw new Error("Marker components must be used within <Map.Marker>.");
+  if (!context) throw new Error("Marker components must be used within <Map.Marker>.");
   return context;
 };
 export interface MapMarkerProps extends MarkerOptions {
@@ -353,6 +328,8 @@ export function MapMarker({
   const { map } = useMapContext();
   const [marker, setMarker] = useState<maplibregl.Marker | null>(null);
   const optionsRef = useRef(options);
+  const initialDraggableRef = useRef(draggable);
+  const initialPositionRef = useRef<[number, number]>([longitude, latitude]);
   const callbacks = useRef({
     onClick,
     onDrag,
@@ -375,9 +352,9 @@ export function MapMarker({
     element.dataset["slot"] = "map-marker";
     const instance = new maplibregl.Marker({
       ...optionsRef.current,
-      draggable,
+      draggable: initialDraggableRef.current,
       element,
-    }).setLngLat([longitude, latitude]);
+    }).setLngLat(initialPositionRef.current);
     setMarker(instance);
     return () => {
       instance.remove();
@@ -416,10 +393,8 @@ export function MapMarker({
       return { lat: value.lat, lng: value.lng };
     };
     const click = (event: MouseEvent) => callbacks.current.onClick?.(event);
-    const enter = (event: MouseEvent) =>
-      callbacks.current.onMouseEnter?.(event);
-    const leave = (event: MouseEvent) =>
-      callbacks.current.onMouseLeave?.(event);
+    const enter = (event: MouseEvent) => callbacks.current.onMouseEnter?.(event);
+    const leave = (event: MouseEvent) => callbacks.current.onMouseLeave?.(event);
     const start = () => callbacks.current.onDragStart?.(position());
     const drag = () => callbacks.current.onDrag?.(position());
     const end = () => callbacks.current.onDragEnd?.(position());
@@ -438,9 +413,7 @@ export function MapMarker({
       marker.off("dragend", end);
     };
   }, [marker]);
-  return marker ? (
-    <MarkerContext value={{ map, marker }}>{children}</MarkerContext>
-  ) : null;
+  return marker ? <MarkerContext value={{ map, marker }}>{children}</MarkerContext> : null;
 }
 export interface MapMarkerContentProps extends ComponentPropsWithRef<"div"> {}
 export function MapMarkerContent({
@@ -450,11 +423,7 @@ export function MapMarkerContent({
 }: MapMarkerContentProps): ReactElement {
   const { marker } = useMarker();
   return createPortal(
-    <div
-      {...props}
-      className={cn("map__marker-content", className)}
-      data-slot="map-marker-content"
-    >
+    <div {...props} className={cn("map__marker-content", className)} data-slot="map-marker-content">
       {children ?? <MapMarkerDot />}
     </div>,
     marker.getElement(),
@@ -498,11 +467,7 @@ export function MapMarkerLabel({
   return (
     <div
       {...props}
-      className={cn(
-        "map__marker-label",
-        `map__marker-label--${position}`,
-        className,
-      )}
+      className={cn("map__marker-label", `map__marker-label--${position}`, className)}
       data-position={position}
       data-slot="map-marker-label"
     >
@@ -530,11 +495,7 @@ const PopupContent = ({
     data-slot={slot}
   >
     {closeButton ? (
-      <CloseButton
-        aria-label="Close popup"
-        className="map__popup-close-button"
-        onPress={onClose}
-      />
+      <CloseButton aria-label="Close popup" className="map__popup-close-button" onPress={onClose} />
     ) : null}
     {children}
   </div>
@@ -598,10 +559,7 @@ export function MapMarkerPopup({
       )
     : null;
 }
-export interface MapMarkerTooltipProps extends Omit<
-  PopupOptions,
-  "closeButton"
-> {
+export interface MapMarkerTooltipProps extends Omit<PopupOptions, "closeButton"> {
   children: ReactNode;
   className?: string;
 }
@@ -650,10 +608,7 @@ export function MapMarkerTooltip({
   }, [options.maxWidth, options.offset, state]);
   return state
     ? createPortal(
-        <div
-          className={cn("map__tooltip", className)}
-          data-slot="map-marker-tooltip"
-        >
+        <div className={cn("map__tooltip", className)} data-slot="map-marker-tooltip">
           {children}
         </div>,
         state.container,
@@ -683,6 +638,7 @@ export function MapPopup({
     popup: maplibregl.Popup;
   } | null>(null);
   const optionsRef = useRef(options);
+  const initialPositionRef = useRef<[number, number]>([longitude, latitude]);
   const closeRef = useRef(onClose);
   closeRef.current = onClose;
   useEffect(() => {
@@ -693,7 +649,7 @@ export function MapPopup({
       closeButton: false,
     })
       .setMaxWidth("none")
-      .setLngLat([longitude, latitude])
+      .setLngLat(initialPositionRef.current)
       .setDOMContent(container);
     setState({ container, popup });
     return () => {
@@ -737,11 +693,7 @@ export function MapPopup({
     : null;
 }
 
-export type MapControlsPosition =
-  | "bottom-left"
-  | "bottom-right"
-  | "top-left"
-  | "top-right";
+export type MapControlsPosition = "bottom-left" | "bottom-right" | "top-left" | "top-right";
 export interface MapControlsProps extends ComponentPropsWithRef<"div"> {
   position?: MapControlsPosition;
 }
@@ -784,10 +736,9 @@ export function MapControlGroup({
     </ButtonGroup>
   );
 }
-export type MapControlButtonProps = Omit<
-  ComponentPropsWithRef<typeof Button>,
-  "aria-label"
-> & { label: string };
+export type MapControlButtonProps = Omit<ComponentPropsWithRef<typeof Button>, "aria-label"> & {
+  label: string;
+};
 export function MapControlButton({
   children,
   className,
@@ -808,9 +759,7 @@ export function MapControlButton({
     </Button>
   );
 }
-export type MapControlSeparatorProps = ComponentPropsWithRef<
-  typeof ButtonGroup.Separator
->;
+export type MapControlSeparatorProps = ComponentPropsWithRef<typeof ButtonGroup.Separator>;
 export function MapControlSeparator({
   className,
   ...props
@@ -830,31 +779,14 @@ const ControlIcon = ({
 }): ReactElement => {
   if (type === "plus" || type === "minus")
     return (
-      <svg
-        aria-hidden="true"
-        className="map__control-icon"
-        fill="none"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M3 8h10M8 3v10"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeWidth="1.5"
-        />
-        {type === "minus" ? (
-          <path d="M8 2v12" stroke="var(--overlay)" strokeWidth="3" />
-        ) : null}
+      <svg aria-hidden="true" className="map__control-icon" fill="none" viewBox="0 0 16 16">
+        <path d="M3 8h10M8 3v10" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
+        {type === "minus" ? <path d="M8 2v12" stroke="var(--overlay)" strokeWidth="3" /> : null}
       </svg>
     );
   if (type === "locate")
     return (
-      <svg
-        aria-hidden="true"
-        className="map__control-icon"
-        fill="none"
-        viewBox="0 0 16 16"
-      >
+      <svg aria-hidden="true" className="map__control-icon" fill="none" viewBox="0 0 16 16">
         <path
           clipRule="evenodd"
           d="M8.75 1.75a.75.75 0 0 0-1.5 0v.79A5.51 5.51 0 0 0 2.54 7.25h-.79a.75.75 0 0 0 0 1.5h.79a5.51 5.51 0 0 0 4.71 4.71v.79a.75.75 0 0 0 1.5 0v-.79a5.51 5.51 0 0 0 4.71-4.71h.79a.75.75 0 0 0 0-1.5h-.79a5.51 5.51 0 0 0-4.71-4.71zM8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8m0 2.25a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5"
@@ -865,12 +797,7 @@ const ControlIcon = ({
     );
   if (type === "fullscreen")
     return (
-      <svg
-        aria-hidden="true"
-        className="map__control-icon"
-        fill="none"
-        viewBox="0 0 16 16"
-      >
+      <svg aria-hidden="true" className="map__control-icon" fill="none" viewBox="0 0 16 16">
         <path
           d="M2.5 5.5v-3h3m5 0h3v3m0 5v3h-3m-5 0h-3v-3"
           stroke="currentColor"
@@ -881,12 +808,7 @@ const ControlIcon = ({
       </svg>
     );
   return (
-    <svg
-      aria-hidden="true"
-      className="map__compass-icon"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
+    <svg aria-hidden="true" className="map__compass-icon" fill="none" viewBox="0 0 24 24">
       <path d="M12 2 16 12h-4V2Z" data-needle="north-right" />
       <path d="m12 2-4 10h4V2Z" data-needle="north-left" />
       <path d="m12 22 4-10h-4v10Z" data-needle="south-right" />
@@ -894,10 +816,7 @@ const ControlIcon = ({
     </svg>
   );
 };
-export interface MapZoomControlProps extends Omit<
-  MapControlGroupProps,
-  "children"
-> {
+export interface MapZoomControlProps extends Omit<MapControlGroupProps, "children"> {
   duration?: number;
   step?: number;
 }
@@ -927,10 +846,7 @@ export function MapZoomControl({
     </MapControlGroup>
   );
 }
-export interface MapCompassControlProps extends Omit<
-  MapControlGroupProps,
-  "children"
-> {
+export interface MapCompassControlProps extends Omit<MapControlGroupProps, "children"> {
   duration?: number;
 }
 export function MapCompassControl({
@@ -967,10 +883,7 @@ export function MapCompassControl({
     </MapControlGroup>
   );
 }
-export interface MapLocateControlProps extends Omit<
-  MapControlGroupProps,
-  "children"
-> {
+export interface MapLocateControlProps extends Omit<MapControlGroupProps, "children"> {
   duration?: number;
   onLocate?: (coords: { latitude: number; longitude: number }) => void;
   onLocateError?: (error: GeolocationPositionError) => void;
@@ -985,8 +898,7 @@ export function MapLocateControl({
 }: MapLocateControlProps): ReactElement {
   const { map } = useMapContext();
   const [loading, setLoading] = useState(false);
-  const available =
-    typeof navigator !== "undefined" && "geolocation" in navigator;
+  const available = typeof navigator !== "undefined" && "geolocation" in navigator;
   const locate = () => {
     if (!map || !available) return;
     setLoading(true);
@@ -1022,10 +934,7 @@ export function MapLocateControl({
     </MapControlGroup>
   );
 }
-export interface MapFullscreenControlProps extends Omit<
-  MapControlGroupProps,
-  "children"
-> {
+export interface MapFullscreenControlProps extends Omit<MapControlGroupProps, "children"> {
   onFullscreenError?: (error: unknown) => void;
 }
 export function MapFullscreenControl({
@@ -1036,10 +945,9 @@ export function MapFullscreenControl({
   const toggle = () => {
     const element = map?.getContainer();
     if (!element) return;
-    (document.fullscreenElement
-      ? document.exitFullscreen()
-      : element.requestFullscreen()
-    ).catch(onFullscreenError);
+    (document.fullscreenElement ? document.exitFullscreen() : element.requestFullscreen()).catch(
+      onFullscreenError,
+    );
   };
   return (
     <MapControlGroup {...props}>
@@ -1089,17 +997,10 @@ export function MapRoute({
     return {
       color:
         color ??
-        (container
-          ? resolveCssColor(container, "--map-route-color", "#4285F4")
-          : "#4285F4"),
+        (container ? resolveCssColor(container, "--map-route-color", "#4285F4") : "#4285F4"),
       opacity:
-        opacity ??
-        (container
-          ? resolveCssNumber(container, "--map-route-opacity", 0.8)
-          : 0.8),
-      width:
-        width ??
-        (container ? resolveCssNumber(container, "--map-route-width", 3) : 3),
+        opacity ?? (container ? resolveCssNumber(container, "--map-route-opacity", 0.8) : 0.8),
+      width: width ?? (container ? resolveCssNumber(container, "--map-route-width", 3) : 3),
     };
   }, [color, map, opacity, width]);
   useEffect(() => {
@@ -1214,17 +1115,14 @@ const arcCoordinates = (
   if (!distance || !curvature) return [from, to];
   const controlX = (x1 + x2) / 2 + (-dy / distance) * distance * curvature;
   const controlY = (y1 + y2) / 2 + (dx / distance) * distance * curvature;
-  return Array.from(
-    { length: Math.max(2, Math.floor(samples)) + 1 },
-    (_, index) => {
-      const t = index / Math.max(2, Math.floor(samples));
-      const inverse = 1 - t;
-      return [
-        inverse * inverse * x1 + 2 * inverse * t * controlX + t * t * x2,
-        inverse * inverse * y1 + 2 * inverse * t * controlY + t * t * y2,
-      ];
-    },
-  );
+  return Array.from({ length: Math.max(2, Math.floor(samples)) + 1 }, (_, index) => {
+    const t = index / Math.max(2, Math.floor(samples));
+    const inverse = 1 - t;
+    return [
+      inverse * inverse * x1 + 2 * inverse * t * controlX + t * t * x2,
+      inverse * inverse * y1 + 2 * inverse * t * controlY + t * t * y2,
+    ];
+  });
 };
 export function MapArc<T extends MapArcDatum = MapArcDatum>({
   beforeId,
@@ -1277,12 +1175,7 @@ export function MapArc<T extends MapArcDatum = MapArcDatum>({
       (result as Record<string, unknown>)[key] =
         normal === undefined
           ? value
-          : [
-              "case",
-              ["boolean", ["feature-state", "hover"], false],
-              value,
-              normal,
-            ];
+          : ["case", ["boolean", ["feature-state", "hover"], false], value, normal];
     }
     return result;
   }, [hoverPaint, paint]);
@@ -1327,17 +1220,7 @@ export function MapArc<T extends MapArcDatum = MapArcDatum>({
         if (map.getSource(sourceId)) map.removeSource(sourceId);
       } catch {}
     };
-  }, [
-    beforeId,
-    geojson,
-    hitLayerId,
-    isLoaded,
-    layerId,
-    layout,
-    map,
-    resolvedPaint,
-    sourceId,
-  ]);
+  }, [beforeId, geojson, hitLayerId, isLoaded, layerId, layout, map, resolvedPaint, sourceId]);
   useEffect(() => {
     if (!isLoaded || !map || !interactive) return;
     let hoveredId: number | string | null = null;
@@ -1347,10 +1230,7 @@ export function MapArc<T extends MapArcDatum = MapArcDatum>({
       const featureId = event.features?.[0]?.id;
       if (featureId === undefined) return;
       if (hoveredId !== null)
-        map.setFeatureState(
-          { id: hoveredId, source: sourceId },
-          { hover: false },
-        );
+        map.setFeatureState({ id: hoveredId, source: sourceId }, { hover: false });
       hoveredId = featureId;
       map.setFeatureState({ id: featureId, source: sourceId }, { hover: true });
       map.getCanvas().style.cursor = "pointer";
@@ -1365,10 +1245,7 @@ export function MapArc<T extends MapArcDatum = MapArcDatum>({
     };
     const leave = () => {
       if (hoveredId !== null)
-        map.setFeatureState(
-          { id: hoveredId, source: sourceId },
-          { hover: false },
-        );
+        map.setFeatureState({ id: hoveredId, source: sourceId }, { hover: false });
       hoveredId = null;
       map.getCanvas().style.cursor = "";
       callbacks.current.onHover?.(null);
@@ -1403,15 +1280,8 @@ export interface MapClusterLayerProps {
   clusterThresholds?: [number, number];
   data: GeoJSONSourceSpecification["data"];
   id?: string;
-  onClusterClick?: (
-    clusterId: number,
-    coordinates: [number, number],
-    pointCount: number,
-  ) => void;
-  onPointClick?: (
-    feature: maplibregl.MapGeoJSONFeature,
-    coordinates: [number, number],
-  ) => void;
+  onClusterClick?: (clusterId: number, coordinates: [number, number], pointCount: number) => void;
+  onPointClick?: (feature: maplibregl.MapGeoJSONFeature, coordinates: [number, number]) => void;
   pointColor?: string;
   pointPaint?: CircleLayerSpecification["paint"];
 }
@@ -1528,10 +1398,7 @@ export function MapClusterLayer({
       if (!feature || feature.geometry.type !== "Point") return;
       const clusterId = Number(feature.properties?.["cluster_id"]);
       const pointCount = Number(feature.properties?.["point_count"]);
-      const coordinates = feature.geometry.coordinates.slice(0, 2) as [
-        number,
-        number,
-      ];
+      const coordinates = feature.geometry.coordinates.slice(0, 2) as [number, number];
       if (callbacks.current.onClusterClick)
         callbacks.current.onClusterClick(clusterId, coordinates, pointCount);
       else {

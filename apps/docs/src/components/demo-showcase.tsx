@@ -1,20 +1,13 @@
 "use client";
 
-import type { Color } from "react-aria-components";
-
 import type { CSSProperties } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import {
-  ColorSwatchPicker,
-  Spinner,
-  Tabs,
-  Tooltip,
-  buttonVariants,
-} from "@thenamespace/uikit";
+import { ColorSwatchPicker, Spinner, Tabs, Tooltip, buttonVariants } from "@thenamespace/uikit";
 import { PaintBoardIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import LinkRoot from "fumadocs-core/link";
 import { useTheme } from "next-themes";
+import type { Color } from "react-aria-components";
 
 import { ComponentDemoGallery } from "@/components/component-demo-gallery";
 import { cn } from "@/utils/cn";
@@ -103,14 +96,8 @@ export function DemoShowcase({
     const iframe = iframeRef.current;
 
     if (!iframe?.contentWindow) return;
-    iframe.contentWindow.postMessage(
-      { theme: activeTheme, type: "heroui-theme" },
-      "*",
-    );
-    iframe.contentWindow.postMessage(
-      { type: "heroui-accent", vars: iframeThemeVars },
-      "*",
-    );
+    iframe.contentWindow.postMessage({ theme: activeTheme, type: "heroui-theme" }, "*");
+    iframe.contentWindow.postMessage({ type: "heroui-accent", vars: iframeThemeVars }, "*");
     if (font) {
       iframe.contentWindow.postMessage(
         {
@@ -144,12 +131,7 @@ export function DemoShowcase({
   }, [sendMessageToIframe]);
 
   return (
-    <div
-      className={cn(
-        "flex min-h-0 w-full flex-1 flex-col py-6 lg:py-10",
-        className,
-      )}
-    >
+    <div className={cn("flex min-h-0 w-full flex-1 flex-col py-6 lg:py-10", className)}>
       <div
         className={cn(
           "mb-4 w-full flex-col justify-between gap-4 px-2 lg:flex-row lg:items-center",
@@ -198,9 +180,7 @@ export function DemoShowcase({
                   <HugeiconsIcon icon={PaintBoardIcon} className="size-4" />
                 </LinkRoot>
               </Tooltip.Trigger>
-              <Tooltip.Content className="py-0">
-                Open theme builder
-              </Tooltip.Content>
+              <Tooltip.Content className="py-0">Open theme builder</Tooltip.Content>
             </Tooltip>
           </div>
         ) : null}
@@ -209,9 +189,7 @@ export function DemoShowcase({
         data-theme={theme}
         className={cn(
           "flex w-full flex-col font-sans",
-          alwaysShowTabs
-            ? "h-full min-h-0 flex-1"
-            : "h-[42rem] min-h-[32rem] flex-none",
+          alwaysShowTabs ? "h-full min-h-0 flex-1" : "h-[42rem] min-h-[32rem] flex-none",
           theme === "dark" && "dark",
         )}
         style={previewVars}
@@ -230,6 +208,7 @@ export function DemoShowcase({
               <iframe
                 ref={iframeRef}
                 className="border-border/50 absolute inset-0 h-full w-full rounded-2xl border"
+                sandbox="allow-forms allow-modals allow-popups allow-scripts"
                 src={iframeTabs[selectedTab]}
                 title={selectedTab}
                 onLoad={handleIframeLoad}

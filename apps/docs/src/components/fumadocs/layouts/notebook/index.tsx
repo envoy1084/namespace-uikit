@@ -1,27 +1,21 @@
-// oxlint-disable eslint/no-shadow, jsdoc/check-tag-names, unicorn/consistent-function-scoping
-import type * as PageTree from "fumadocs-core/page-tree";
-import type { SidebarPageTreeComponents } from "fumadocs-ui/components/sidebar/page-tree";
-import type { GetSidebarTabsOptions } from "fumadocs-ui/components/sidebar/tabs";
-import type { SidebarTabWithProps } from "fumadocs-ui/components/sidebar/tabs/dropdown";
-import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-
-import type { LinkItemType } from "@/components/fumadocs/ui/link-item";
-
 import type { ComponentProps, FC, HTMLAttributes, ReactNode } from "react";
 import { useMemo } from "react";
 
 import Link from "fumadocs-core/link";
+// oxlint-disable eslint/no-shadow, jsdoc/check-tag-names, unicorn/consistent-function-scoping
+import type * as PageTree from "fumadocs-core/page-tree";
+import type { SidebarPageTreeComponents } from "fumadocs-ui/components/sidebar/page-tree";
+import type { GetSidebarTabsOptions } from "fumadocs-ui/components/sidebar/tabs";
 import { getSidebarTabs } from "fumadocs-ui/components/sidebar/tabs";
+import type { SidebarTabWithProps } from "fumadocs-ui/components/sidebar/tabs/dropdown";
 import { buttonVariants } from "fumadocs-ui/components/ui/button";
 import { TreeContextProvider } from "fumadocs-ui/contexts/tree";
+import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { resolveLinkItems } from "fumadocs-ui/layouts/shared";
 
-import {
-  Languages,
-  Sidebar as SidebarIcon,
-  X,
-} from "@/components/fumadocs/ui/icons";
+import { Languages, Sidebar as SidebarIcon, X } from "@/components/fumadocs/ui/icons";
 import { LanguageToggle } from "@/components/fumadocs/ui/language-toggle";
+import type { LinkItemType } from "@/components/fumadocs/ui/link-item";
 import { LinkItem } from "@/components/fumadocs/ui/link-item";
 import { ThemeToggle } from "@/components/fumadocs/ui/theme-toggle";
 import { SiteNavbar } from "@/components/site-navbar";
@@ -119,26 +113,14 @@ export function DocsLayout(props: DocsLayoutProps) {
   }, [tabOptions, tree]);
 
   function sidebar() {
-    const {
-      banner,
-      collapsible = true,
-      components,
-      footer,
-      ...rest
-    } = sidebarProps;
+    const { banner, collapsible = true, components, footer, ...rest } = sidebarProps;
 
     const iconLinks = links.filter((item) => item.type === "icon");
     const Header =
       typeof banner === "function"
         ? banner
         : ({ className, ...props }: ComponentProps<"div">) => (
-            <div
-              className={cn(
-                "flex flex-col gap-3 p-4 pb-2 empty:hidden",
-                className,
-              )}
-              {...props}
-            >
+            <div className={cn("flex flex-col gap-3 p-4 pb-2 empty:hidden", className)} {...props}>
               {props.children}
               {banner}
             </div>
@@ -188,12 +170,7 @@ export function DocsLayout(props: DocsLayoutProps) {
             {navMode === "auto" && (
               <div className="flex justify-between">
                 {nav.titleSuffix ? (
-                  <div
-                    className={cn(
-                      "flex items-center",
-                      nav.titleSuffixGap ?? "gap-4",
-                    )}
-                  >
+                  <div className={cn("flex items-center", nav.titleSuffixGap ?? "gap-4")}>
                     <Link
                       className="inline-flex items-center gap-2.5 font-medium"
                       href={nav.url ?? "/"}
@@ -210,7 +187,7 @@ export function DocsLayout(props: DocsLayoutProps) {
                     {titleNode}
                   </Link>
                 )}
-                {!!collapsible && (
+                {Boolean(collapsible) && (
                   <SidebarCollapseTrigger
                     className={cn(
                       buttonVariants({
@@ -298,7 +275,7 @@ export function DocsLayout(props: DocsLayoutProps) {
                 {item.icon}
               </LinkItem>
             ))}
-            {!!i18n && (
+            {Boolean(i18n) && (
               <LanguageToggle>
                 <Languages className="text-fd-muted-foreground size-4" />
               </LanguageToggle>
@@ -323,12 +300,7 @@ export function DocsLayout(props: DocsLayoutProps) {
         <Sidebar defaultOpenLevel={defaultOpenLevel} prefetch={prefetch}>
           <LayoutBody {...props.containerProps}>
             {sidebar()}
-            <DocsNavbar
-              {...props}
-              headerTabsProps={headerTabsProps}
-              links={links}
-              tabs={tabs}
-            />
+            <DocsNavbar {...props} headerTabsProps={headerTabsProps} links={links} tabs={tabs} />
             {props.children}
           </LayoutBody>
         </Sidebar>
@@ -370,12 +342,9 @@ function DocsNavbar({
         }
         position="static"
       />
-      {!!showLayoutTabs && (
+      {Boolean(showLayoutTabs) && (
         <LayoutHeaderTabs
-          className={cn(
-            "h-10 overflow-x-auto border-b px-6",
-            headerTabsProps?.className,
-          )}
+          className={cn("h-10 overflow-x-auto border-b px-6", headerTabsProps?.className)}
           data-header-tabs=""
           {...headerTabsProps}
           options={tabs}
