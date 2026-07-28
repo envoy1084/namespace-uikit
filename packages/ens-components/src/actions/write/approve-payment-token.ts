@@ -1,7 +1,22 @@
-import { err, ok, type Result } from "neverthrow";
-import { encodeFunctionData, erc20Abi, type Address, type ContractFunctionParameters } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import {
+  encodeFunctionData,
+  erc20Abi,
+  type Address,
+  type ContractFunctionParameters,
+  type PublicClient,
+  type WalletClient,
+} from "viem";
 
-import type { PreparedContractWrite } from "#/actions/write/contract-writes";
+import type {
+  ExecuteContractWritesResult,
+  PreparedContractWrite,
+} from "#/actions/write/contract-writes";
+import {
+  executeContractWrite,
+  type ExecuteContractWriteParameters,
+  type ExecuteContractWritesError,
+} from "#/actions/write/execute-contract-writes";
 import { isNonZeroAddress } from "#/lib/helpers";
 
 export type PreparePaymentTokenApprovalWriteError =
@@ -40,6 +55,13 @@ export type PreparedPaymentTokenApprovalWrite = PreparedContractWrite<
   PaymentTokenApprovalWriteMetadata
 >;
 
+export type ApprovePaymentTokenParameters = PreparePaymentTokenApprovalWriteParameters &
+  ExecuteContractWriteParameters;
+export type ApprovePaymentTokenReturnType = ExecuteContractWritesResult;
+export type ApprovePaymentTokenErrorType =
+  | PreparePaymentTokenApprovalWriteError
+  | ExecuteContractWritesError;
+
 /** Validates and prepares an ERC-20 allowance write. */
 export function preparePaymentTokenApprovalWrite(
   parameters: PreparePaymentTokenApprovalWriteParameters,
@@ -72,4 +94,15 @@ export function preparePaymentTokenApprovalWrite(
     metadata: { amount, paymentTokenAddress, spenderAddress },
     request,
   });
+}
+
+/** Approves an ERC-20 payment token allowance. */
+export function approvePaymentToken(
+  walletClient: WalletClient,
+  publicClient: PublicClient,
+  parameters: ApprovePaymentTokenParameters,
+): ResultAsync<ApprovePaymentTokenReturnType, ApprovePaymentTokenErrorType> {
+  const prepared = preparePaymentTokenApprovalWrite(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractWrite(walletClient, publicClient, prepared.value, parameters);
 }

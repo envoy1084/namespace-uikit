@@ -1,7 +1,22 @@
-import { err, ok, type Result } from "neverthrow";
-import { encodeFunctionData, type Address, type ContractFunctionParameters, type Hex } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import {
+  encodeFunctionData,
+  type Address,
+  type ContractFunctionParameters,
+  type Hex,
+  type PublicClient,
+  type WalletClient,
+} from "viem";
 
-import type { PreparedContractWrite } from "#/actions/write/contract-writes";
+import type {
+  ExecuteContractWritesResult,
+  PreparedContractWrite,
+} from "#/actions/write/contract-writes";
+import {
+  executeContractWrite,
+  type ExecuteContractWriteParameters,
+  type ExecuteContractWritesError,
+} from "#/actions/write/execute-contract-writes";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isBytes32, isNonZeroAddress, isUint64Duration } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -50,6 +65,13 @@ export type PreparedRenewNameWrite = PreparedContractWrite<
   RenewNameWriteMetadata
 >;
 
+export type RenewNameParameters = PrepareRenewNameWriteParameters & ExecuteContractWriteParameters;
+export type RenewNameReturnType = ExecuteContractWritesResult;
+export type RenewNameErrorType =
+  | PrepareRenewNameWriteError
+  | ParseNameInputError
+  | ExecuteContractWritesError;
+
 export function prepareRenewNameWrite(
   parameters: PrepareRenewNameWriteParameters,
 ): Result<PreparedRenewNameWrite, PrepareRenewNameWriteError | ParseNameInputError> {
@@ -89,4 +111,15 @@ export function prepareRenewNameWrite(
     metadata: { duration, label, paymentTokenAddress, referrer },
     request,
   });
+}
+
+/** Renews a second-level `.eth` name. */
+export function renewName(
+  walletClient: WalletClient,
+  publicClient: PublicClient,
+  parameters: RenewNameParameters,
+): ResultAsync<RenewNameReturnType, RenewNameErrorType> {
+  const prepared = prepareRenewNameWrite(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractWrite(walletClient, publicClient, prepared.value, parameters);
 }

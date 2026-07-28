@@ -1,9 +1,4 @@
-import type {
-  ContractFunctionParameters,
-  Address,
-  Hex,
-  TransactionReceipt,
-} from "viem";
+import type { ContractFunctionParameters, Address, Hex, TransactionReceipt } from "viem";
 
 export interface ContractWriteCall {
   readonly data: Hex;

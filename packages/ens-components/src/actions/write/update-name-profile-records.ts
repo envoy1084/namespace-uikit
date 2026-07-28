@@ -10,10 +10,19 @@ import {
   type ContractFunctionParameters,
   type Hex,
   type PublicClient,
+  type WalletClient,
 } from "viem";
 import { namehash } from "viem/ens";
 
-import type { PreparedContractWrite } from "#/actions/write/contract-writes";
+import type {
+  ExecuteContractWritesResult,
+  PreparedContractWrite,
+} from "#/actions/write/contract-writes";
+import {
+  executeContractWrite,
+  type ExecuteContractWriteParameters,
+  type ExecuteContractWritesError,
+} from "#/actions/write/execute-contract-writes";
 import type { NameProfileRecordChange } from "#/components/name-profile-editor/types";
 import { permissionedResolverAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
@@ -54,6 +63,13 @@ export type PreparedNameProfileRecordsWrite = PreparedContractWrite<
   "update-name-profile-records",
   NameProfileRecordsWriteMetadata
 >;
+
+export type UpdateNameProfileRecordsParameters = PrepareNameProfileRecordsWriteParameters &
+  ExecuteContractWriteParameters;
+export type UpdateNameProfileRecordsReturnType = ExecuteContractWritesResult;
+export type UpdateNameProfileRecordsErrorType =
+  | PrepareNameProfileRecordsWriteError
+  | ExecuteContractWritesError;
 
 function contenthashBytes(value: string | null): Hex {
   if (value === null || value.length === 0) return "0x";
@@ -193,5 +209,16 @@ export function prepareNameProfileRecordsWrite(
       },
       request,
     }),
+  );
+}
+
+/** Updates multiple profile records in one PermissionedResolver transaction. */
+export function updateNameProfileRecords(
+  walletClient: WalletClient,
+  publicClient: PublicClient,
+  parameters: UpdateNameProfileRecordsParameters,
+): ResultAsync<UpdateNameProfileRecordsReturnType, UpdateNameProfileRecordsErrorType> {
+  return prepareNameProfileRecordsWrite(publicClient, parameters).andThen((prepared) =>
+    executeContractWrite(walletClient, publicClient, prepared, parameters),
   );
 }

@@ -1,14 +1,24 @@
-import { err, ok, type Result } from "neverthrow";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
 import {
   encodeFunctionData,
   encodePacked,
   type Address,
   type ContractFunctionParameters,
   type Hex,
+  type PublicClient,
+  type WalletClient,
 } from "viem";
 import { namehash } from "viem/ens";
 
-import type { PreparedContractWrite } from "#/actions/write/contract-writes";
+import type {
+  ExecuteContractWritesResult,
+  PreparedContractWrite,
+} from "#/actions/write/contract-writes";
+import {
+  executeContractWrite,
+  type ExecuteContractWriteParameters,
+  type ExecuteContractWritesError,
+} from "#/actions/write/execute-contract-writes";
 import { permissionedResolverAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -53,6 +63,13 @@ export type PreparedSetAddressRecordWrite = PreparedContractWrite<
   "set-address-record",
   SetAddressRecordWriteMetadata
 >;
+
+export type SetAddressRecordParameters = PrepareSetAddressRecordWriteParameters &
+  ExecuteContractWriteParameters;
+export type SetAddressRecordReturnType = ExecuteContractWritesResult;
+export type SetAddressRecordErrorType =
+  | PrepareSetAddressRecordWriteError
+  | ExecuteContractWritesError;
 
 /** Prepares the Ethereum forward address record required for L1 reverse verification. */
 export function prepareSetAddressRecordWrite(
@@ -101,4 +118,15 @@ export function prepareSetAddressRecordWrite(
     },
     request,
   });
+}
+
+/** Sets the Ethereum address record for an ENS name. */
+export function setAddressRecord(
+  walletClient: WalletClient,
+  publicClient: PublicClient,
+  parameters: SetAddressRecordParameters,
+): ResultAsync<SetAddressRecordReturnType, SetAddressRecordErrorType> {
+  const prepared = prepareSetAddressRecordWrite(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractWrite(walletClient, publicClient, prepared.value, parameters);
 }

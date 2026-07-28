@@ -1,7 +1,22 @@
-import { err, ok, type Result } from "neverthrow";
-import { encodeFunctionData, type Address, type ContractFunctionParameters, type Hex } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import {
+  encodeFunctionData,
+  type Address,
+  type ContractFunctionParameters,
+  type Hex,
+  type PublicClient,
+  type WalletClient,
+} from "viem";
 
-import type { PreparedContractWrite } from "#/actions/write/contract-writes";
+import type {
+  ExecuteContractWritesResult,
+  PreparedContractWrite,
+} from "#/actions/write/contract-writes";
+import {
+  executeContractWrite,
+  type ExecuteContractWriteParameters,
+  type ExecuteContractWritesError,
+} from "#/actions/write/execute-contract-writes";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type {
@@ -39,6 +54,14 @@ export type PreparedCommitNameWrite = PreparedContractWrite<
   CommitNameWriteMetadata
 >;
 
+export type CommitNameParameters = PrepareCommitNameWriteParameters &
+  ExecuteContractWriteParameters;
+export type CommitNameReturnType = ExecuteContractWritesResult;
+export type CommitNameErrorType =
+  | PrepareCommitNameWriteError
+  | ParseNameInputError
+  | ExecuteContractWritesError;
+
 /** Validates and prepares an ENS v2 `.eth` commitment write. */
 export function prepareCommitNameWrite(
   parameters: PrepareCommitNameWriteParameters,
@@ -71,4 +94,15 @@ export function prepareCommitNameWrite(
     metadata: commitment.value,
     request,
   });
+}
+
+/** Commits a name registration and waits for the transaction by default. */
+export function commitName(
+  walletClient: WalletClient,
+  publicClient: PublicClient,
+  parameters: CommitNameParameters,
+): ResultAsync<CommitNameReturnType, CommitNameErrorType> {
+  const prepared = prepareCommitNameWrite(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractWrite(walletClient, publicClient, prepared.value, parameters);
 }

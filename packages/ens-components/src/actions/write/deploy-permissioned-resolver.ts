@@ -5,9 +5,18 @@ import {
   type ContractFunctionParameters,
   type Hex,
   type PublicClient,
+  type WalletClient,
 } from "viem";
 
-import type { PreparedContractWrite } from "#/actions/write/contract-writes";
+import type {
+  ExecuteContractWritesResult,
+  PreparedContractWrite,
+} from "#/actions/write/contract-writes";
+import {
+  executeContractWrite,
+  type ExecuteContractWriteParameters,
+  type ExecuteContractWritesError,
+} from "#/actions/write/execute-contract-writes";
 import { permissionedResolverAbi, verifiableFactoryAbi } from "#/data/abi";
 import { isBytes32, isNonZeroAddress } from "#/lib/helpers";
 
@@ -54,6 +63,13 @@ export type PreparedPermissionedResolverDeploymentWrite = PreparedContractWrite<
   "deploy-permissioned-resolver",
   PermissionedResolverDeploymentWriteMetadata
 >;
+
+export type DeployPermissionedResolverParameters =
+  PreparePermissionedResolverDeploymentWriteParameters & ExecuteContractWriteParameters;
+export type DeployPermissionedResolverReturnType = ExecuteContractWritesResult;
+export type DeployPermissionedResolverErrorType =
+  | PreparePermissionedResolverDeploymentWriteError
+  | ExecuteContractWritesError;
 
 /**
  * Simulates a PermissionedResolver proxy deployment and returns the
@@ -136,4 +152,15 @@ export function preparePermissionedResolverDeploymentWrite(
       request,
     });
   });
+}
+
+/** Deploys a PermissionedResolver proxy and waits for confirmation by default. */
+export function deployPermissionedResolver(
+  walletClient: WalletClient,
+  publicClient: PublicClient,
+  parameters: DeployPermissionedResolverParameters,
+): ResultAsync<DeployPermissionedResolverReturnType, DeployPermissionedResolverErrorType> {
+  return preparePermissionedResolverDeploymentWrite(publicClient, parameters).andThen((prepared) =>
+    executeContractWrite(walletClient, publicClient, prepared, parameters),
+  );
 }

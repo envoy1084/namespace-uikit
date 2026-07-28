@@ -1,7 +1,21 @@
-import { err, ok, type Result } from "neverthrow";
-import { encodeFunctionData, type Address, type ContractFunctionParameters } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import {
+  encodeFunctionData,
+  type Address,
+  type ContractFunctionParameters,
+  type PublicClient,
+  type WalletClient,
+} from "viem";
 
-import type { PreparedContractWrite } from "#/actions/write/contract-writes";
+import type {
+  ExecuteContractWritesResult,
+  PreparedContractWrite,
+} from "#/actions/write/contract-writes";
+import {
+  executeContractWrite,
+  type ExecuteContractWriteParameters,
+  type ExecuteContractWritesError,
+} from "#/actions/write/execute-contract-writes";
 import { l1ReverseRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -39,6 +53,13 @@ export type PreparedSetL1PrimaryNameWrite = PreparedContractWrite<
   SetL1PrimaryNameWriteMetadata
 >;
 
+export type SetL1PrimaryNameParameters = PrepareSetL1PrimaryNameWriteParameters &
+  ExecuteContractWriteParameters;
+export type SetL1PrimaryNameReturnType = ExecuteContractWritesResult;
+export type SetL1PrimaryNameErrorType =
+  | PrepareSetL1PrimaryNameWriteError
+  | ExecuteContractWritesError;
+
 /** Prepares the registry-backed L1 reverse-name update for the submitting account. */
 export function prepareSetL1PrimaryNameWrite(
   parameters: PrepareSetL1PrimaryNameWriteParameters,
@@ -75,4 +96,15 @@ export function prepareSetL1PrimaryNameWrite(
     metadata: { name, owner: account },
     request,
   });
+}
+
+/** Sets an account's L1 reverse name. */
+export function setL1PrimaryName(
+  walletClient: WalletClient,
+  publicClient: PublicClient,
+  parameters: SetL1PrimaryNameParameters,
+): ResultAsync<SetL1PrimaryNameReturnType, SetL1PrimaryNameErrorType> {
+  const prepared = prepareSetL1PrimaryNameWrite(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractWrite(walletClient, publicClient, prepared.value, parameters);
 }

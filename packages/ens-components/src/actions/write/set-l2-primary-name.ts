@@ -1,7 +1,21 @@
-import { err, ok, type Result } from "neverthrow";
-import { encodeFunctionData, type Address, type ContractFunctionParameters } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import {
+  encodeFunctionData,
+  type Address,
+  type ContractFunctionParameters,
+  type PublicClient,
+  type WalletClient,
+} from "viem";
 
-import type { PreparedContractWrite } from "#/actions/write/contract-writes";
+import type {
+  ExecuteContractWritesResult,
+  PreparedContractWrite,
+} from "#/actions/write/contract-writes";
+import {
+  executeContractWrite,
+  type ExecuteContractWriteParameters,
+  type ExecuteContractWritesError,
+} from "#/actions/write/execute-contract-writes";
 import { l2ReverseRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -39,6 +53,13 @@ export type PreparedSetL2PrimaryNameWrite = PreparedContractWrite<
   SetL2PrimaryNameWriteMetadata
 >;
 
+export type SetL2PrimaryNameParameters = PrepareSetL2PrimaryNameWriteParameters &
+  ExecuteContractWriteParameters;
+export type SetL2PrimaryNameReturnType = ExecuteContractWritesResult;
+export type SetL2PrimaryNameErrorType =
+  | PrepareSetL2PrimaryNameWriteError
+  | ExecuteContractWritesError;
+
 /** Prepares an ENS v2 reverse-name update for the submitting account. */
 export function prepareSetL2PrimaryNameWrite(
   parameters: PrepareSetL2PrimaryNameWriteParameters,
@@ -75,4 +96,15 @@ export function prepareSetL2PrimaryNameWrite(
     metadata: { name, owner: account },
     request,
   });
+}
+
+/** Sets an account's ENS v2 reverse name. */
+export function setL2PrimaryName(
+  walletClient: WalletClient,
+  publicClient: PublicClient,
+  parameters: SetL2PrimaryNameParameters,
+): ResultAsync<SetL2PrimaryNameReturnType, SetL2PrimaryNameErrorType> {
+  const prepared = prepareSetL2PrimaryNameWrite(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractWrite(walletClient, publicClient, prepared.value, parameters);
 }

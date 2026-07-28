@@ -1,7 +1,22 @@
-import { err, ok, type Result } from "neverthrow";
-import { encodeFunctionData, type Address, type ContractFunctionParameters, type Hex } from "viem";
+import { err, errAsync, ok, type Result, type ResultAsync } from "neverthrow";
+import {
+  encodeFunctionData,
+  type Address,
+  type ContractFunctionParameters,
+  type Hex,
+  type PublicClient,
+  type WalletClient,
+} from "viem";
 
-import type { PreparedContractWrite } from "#/actions/write/contract-writes";
+import type {
+  ExecuteContractWritesResult,
+  PreparedContractWrite,
+} from "#/actions/write/contract-writes";
+import {
+  executeContractWrite,
+  type ExecuteContractWriteParameters,
+  type ExecuteContractWritesError,
+} from "#/actions/write/execute-contract-writes";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import {
@@ -42,6 +57,14 @@ export type PreparedRegisterNameWrite = PreparedContractWrite<
   "register-name",
   RegisterNameWriteMetadata
 >;
+
+export type RegisterNameParameters = PrepareRegisterNameWriteParameters &
+  ExecuteContractWriteParameters;
+export type RegisterNameReturnType = ExecuteContractWritesResult;
+export type RegisterNameErrorType =
+  | PrepareRegisterNameWriteError
+  | ParseNameInputError
+  | ExecuteContractWritesError;
 
 /** Validates and prepares the ENS v2 name registration write. */
 export function prepareRegisterNameWrite(
@@ -102,4 +125,15 @@ export function prepareRegisterNameWrite(
     metadata: { label: commitment.value.label },
     request,
   });
+}
+
+/** Registers a committed second-level `.eth` name. */
+export function registerName(
+  walletClient: WalletClient,
+  publicClient: PublicClient,
+  parameters: RegisterNameParameters,
+): ResultAsync<RegisterNameReturnType, RegisterNameErrorType> {
+  const prepared = prepareRegisterNameWrite(parameters);
+  if (prepared.isErr()) return errAsync(prepared.error);
+  return executeContractWrite(walletClient, publicClient, prepared.value, parameters);
 }

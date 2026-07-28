@@ -54,6 +54,11 @@ export interface ExecuteContractWritesParameters {
   readonly timeout?: number;
 }
 
+export type ExecuteContractWriteParameters = Omit<
+  ExecuteContractWritesParameters,
+  "calls" | "strategy"
+>;
+
 async function notify(
   callback: ExecuteContractWritesParameters["onProgress"],
   progress: ContractWriteProgress,
@@ -326,5 +331,19 @@ export function executeContractWrites(
         ? executeAtomic(walletClient, publicClient, parameters)
         : executeTransactions(walletClient, publicClient, parameters, strategy.value),
     ).andThen((result) => (result.isErr() ? err(result.error) : ok(result.value)));
+  });
+}
+
+/** Executes one prepared write as a standard wallet transaction. */
+export function executeContractWrite(
+  walletClient: WalletClient,
+  publicClient: PublicClient,
+  prepared: PreparedContractWrite,
+  parameters: ExecuteContractWriteParameters,
+): ResultAsync<ExecuteContractWritesResult, ExecuteContractWritesError> {
+  return executeContractWrites(walletClient, publicClient, {
+    ...parameters,
+    calls: [prepared],
+    strategy: "single",
   });
 }
