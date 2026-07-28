@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "vocs build",
-    "dev": "vocs dev",
+    "dev": "vocs dev --port 3000",
     "preview": "vocs preview",
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },

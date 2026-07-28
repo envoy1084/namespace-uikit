@@ -7,3 +7,8 @@
 html {
   scroll-behavior: smooth;
 }
+
+[data-layout="blank"] [data-v-content] {
+  max-width: none;
+  padding: 0;
+}
