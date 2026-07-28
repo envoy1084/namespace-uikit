@@ -2,9 +2,11 @@ import { InputGroup } from "@thenamespace/uikit";
 import { Icon, Search01Icon } from "@thenamespace/uikit/icons";
 
 export function EditorSearch({
+  placeholder = "Search records",
   value,
   onChange,
 }: {
+  placeholder?: string;
   value: string;
   onChange: (value: string) => void;
 }) {
@@ -20,7 +22,7 @@ export function EditorSearch({
       <InputGroup.Input
         aria-label="Search profile records"
         className="w-full"
-        placeholder="Search records"
+        placeholder={placeholder}
         type="search"
         value={value}
         onChange={(event) => onChange(event.target.value)}

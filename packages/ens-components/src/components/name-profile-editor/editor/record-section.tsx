@@ -31,15 +31,17 @@ function matchesSearch(
 }
 
 export function RecordSection({
+  disabledDefinitionIds,
+  disabledRecordIds,
+  error,
   records,
   search,
   section,
-  disabledDefinitionIds,
-  error,
   onAdd,
   onRemove,
 }: {
   disabledDefinitionIds?: ReadonlySet<string>;
+  disabledRecordIds?: ReadonlySet<string>;
   error?: string | undefined;
   records: readonly EditorRecord[];
   search: string;
@@ -86,6 +88,7 @@ export function RecordSection({
           {sectionRecords.map((record) => (
             <RecordField
               key={record.id}
+              isDisabled={disabledRecordIds?.has(record.id) ?? false}
               record={record}
               onRemove={() => onRemove(record)}
             />

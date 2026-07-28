@@ -1,20 +1,22 @@
 "use client";
 
+import type { NameProfileEditorPresentation } from "#/components/name-profile-editor/customization";
+
 import type { ReactNode } from "react";
 
 import { Modal, cn } from "@thenamespace/uikit";
 
-interface ProfileDiffLayoutProps {
+interface NameProfileEditorLayoutProps {
   children: ReactNode;
   className?: string;
-  presentation: "dialog" | "inline";
+  presentation: NameProfileEditorPresentation;
 }
 
-export function ProfileDiffHeader({
+export function NameProfileEditorHeader({
   children,
   className,
   presentation,
-}: ProfileDiffLayoutProps) {
+}: NameProfileEditorLayoutProps) {
   if (presentation === "dialog") {
     return (
       <Modal.Header {...(className === undefined ? {} : { className })}>
@@ -30,11 +32,11 @@ export function ProfileDiffHeader({
   );
 }
 
-export function ProfileDiffHeading({
+export function NameProfileEditorHeading({
   children,
   className,
   presentation,
-}: ProfileDiffLayoutProps) {
+}: NameProfileEditorLayoutProps) {
   if (presentation === "dialog") {
     return (
       <Modal.Heading {...(className === undefined ? {} : { className })}>
@@ -50,11 +52,11 @@ export function ProfileDiffHeading({
   );
 }
 
-export function ProfileDiffBody({
+export function NameProfileEditorBody({
   children,
   className,
   presentation,
-}: ProfileDiffLayoutProps) {
+}: NameProfileEditorLayoutProps) {
   if (presentation === "dialog") {
     return (
       <Modal.Body {...(className === undefined ? {} : { className })}>
@@ -75,11 +77,11 @@ export function ProfileDiffBody({
   );
 }
 
-export function ProfileDiffFooter({
+export function NameProfileEditorFooter({
   children,
   className,
   presentation,
-}: ProfileDiffLayoutProps) {
+}: NameProfileEditorLayoutProps) {
   if (presentation === "dialog") {
     return (
       <Modal.Footer {...(className === undefined ? {} : { className })}>

@@ -35,6 +35,8 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   DUPLICATE_DATA_KEY: "Each data key can only be added once.",
   DUPLICATE_INTERFACE_ID: "Each interface ID can only be added once.",
   DUPLICATE_TEXT_KEY: "Each text record key can only be added once.",
+  EMPTY_PERMISSION_REQUESTS:
+    "Select at least one record before checking permissions.",
   EMPTY_INPUT: "Enter an ENS name.",
   EMPTY_CALLS: "There are no transactions to submit.",
   EMPTY_LABEL: "The ENS name contains an empty label.",
@@ -75,6 +77,7 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   INVALID_INIT_DATA: "The resolver initialization data is invalid.",
   INVALID_NAME_RECORD: "Enter a valid normalized ENS name.",
   INVALID_PAYMENT_TOKEN_ADDRESS: "The payment token address is invalid.",
+  INVALID_PERMISSION_KEY: "One of the record permission keys is invalid.",
   INVALID_PROFILE_RECORDS: "One or more profile records are invalid.",
   INVALID_PUBLIC_KEY:
     "Enter both public-key coordinates as 32-byte hex values.",
@@ -103,6 +106,11 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
       ? `${name} cannot be renewed right now.`
       : "This name cannot be renewed right now.";
   },
+  PROFILE_PERMISSION_READ_FAILED:
+    "Unable to check this wallet's record permissions.",
+  PROFILE_UPDATE_SIMULATION_FAILED:
+    "The record update could not be prepared. Check your permissions and try again.",
+  RESOLVER_NOT_FOUND: "This name does not have a resolver.",
   RESOLVER_DEPLOYMENT_INVALID:
     "The dedicated resolver deployment could not be verified.",
   RESOLVER_NOT_DEPLOYED:
@@ -112,6 +120,8 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   SINGLE_CALL_REQUIRED:
     "This transaction strategy supports exactly one contract call.",
   UNSUPPORTED_NAME: "Only second-level .eth names are supported.",
+  UNSUPPORTED_RESOLVER:
+    "This resolver does not support ENS v2 record permissions.",
   TRANSACTION_CONFIRMATION_FAILED: "Unable to confirm the transaction.",
   TRANSACTION_REVERTED: "The transaction was reverted.",
   UNSUPPORTED_COIN_TYPE: "This address network is not supported.",

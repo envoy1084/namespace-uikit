@@ -16,9 +16,11 @@ function formPath(value: string): FieldPath<NameProfileFormValues> {
 }
 
 function RemoveButton({
+  isDisabled = false,
   label,
   onRemove,
 }: {
+  isDisabled?: boolean;
   label: string;
   onRemove: () => void;
 }) {
@@ -27,6 +29,7 @@ function RemoveButton({
       isIconOnly
       aria-label={label}
       className="size-6 min-w-6"
+      isDisabled={isDisabled}
       size="sm"
       type="button"
       variant="ghost"
@@ -39,6 +42,7 @@ function RemoveButton({
 
 function RecordInput({
   inputMode,
+  isDisabled = false,
   label,
   name,
   placeholder,
@@ -47,6 +51,7 @@ function RecordInput({
   validationGroup,
 }: {
   inputMode?: "numeric" | "text";
+  isDisabled?: boolean;
   label: string;
   name: FieldPath<NameProfileFormValues>;
   placeholder: string;
@@ -64,6 +69,7 @@ function RecordInput({
         <TextField
           fullWidth
           className="min-w-0 gap-1"
+          isDisabled={isDisabled}
           isInvalid={fieldState.invalid}
           name={field.name}
           value={typeof field.value === "string" ? field.value : ""}
@@ -100,6 +106,7 @@ function RecordInput({
 
 function PairField({
   first,
+  isDisabled = false,
   onRemove,
   removeLabel,
   second,
@@ -111,6 +118,7 @@ function PairField({
     placeholder: string;
     validationGroup?: FieldPath<NameProfileFormValues>;
   };
+  isDisabled?: boolean;
   onRemove: () => void;
   removeLabel: string;
   second: {
@@ -122,19 +130,28 @@ function PairField({
 }) {
   return (
     <div className="grid grid-cols-2 gap-2">
-      <RecordInput {...first} />
+      <RecordInput {...first} isDisabled={isDisabled} />
       <RecordInput
         {...second}
-        suffix={<RemoveButton label={removeLabel} onRemove={onRemove} />}
+        isDisabled={isDisabled}
+        suffix={
+          <RemoveButton
+            isDisabled={isDisabled}
+            label={removeLabel}
+            onRemove={onRemove}
+          />
+        }
       />
     </div>
   );
 }
 
 export function RecordField({
+  isDisabled = false,
   record,
   onRemove,
 }: {
+  isDisabled?: boolean;
   record: EditorRecord;
   onRemove: () => void;
 }) {
@@ -150,6 +167,7 @@ export function RecordField({
           placeholder: "0x79be667e…16f81798",
           validationGroup: "pubkey",
         }}
+        isDisabled={isDisabled}
         removeLabel={removeLabel}
         second={{
           label: "Y coordinate",
@@ -171,6 +189,7 @@ export function RecordField({
           name: formPath(`abi.${index}.contentType`),
           placeholder: "1",
         }}
+        isDisabled={isDisabled}
         removeLabel={removeLabel}
         second={{
           label: "Encoded value",
@@ -190,6 +209,7 @@ export function RecordField({
           name: formPath(`data.${index}.key`),
           placeholder: "com.piedpiper.data",
         }}
+        isDisabled={isDisabled}
         removeLabel={removeLabel}
         second={{
           label: "Encoded value",
@@ -209,6 +229,7 @@ export function RecordField({
           name: formPath(`interfaces.${index}.interfaceId`),
           placeholder: "0x01ffc9a7",
         }}
+        isDisabled={isDisabled}
         removeLabel={removeLabel}
         second={{
           label: "Implementer",
@@ -228,6 +249,7 @@ export function RecordField({
           name: formPath(`text.${index}.key`),
           placeholder: "com.piedpiper",
         }}
+        isDisabled={isDisabled}
         removeLabel="Remove custom record"
         second={{
           label: "Record value",
@@ -257,11 +279,18 @@ export function RecordField({
 
   return (
     <RecordInput
+      isDisabled={isDisabled}
       label={record.label}
       name={name}
       placeholder={record.placeholder}
       prefix={<RecordIcon aria-hidden className="size-5 shrink-0" />}
-      suffix={<RemoveButton label={removeLabel} onRemove={onRemove} />}
+      suffix={
+        <RemoveButton
+          isDisabled={isDisabled}
+          label={removeLabel}
+          onRemove={onRemove}
+        />
+      }
     />
   );
 }
