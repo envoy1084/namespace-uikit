@@ -1,6 +1,6 @@
 "use client";
 
-import type { RecordIconComponent } from "#/components/name-profile-editor/get-record-icon";
+import type { RecordIconComponent } from "#/icons/get-record-icon";
 
 import { Button } from "@thenamespace/uikit";
 

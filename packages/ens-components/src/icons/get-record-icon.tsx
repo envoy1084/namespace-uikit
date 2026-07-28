@@ -1,5 +1,3 @@
-import type { NameProfileRecordType } from "#/components/name-profile-editor/types";
-
 import type { ReactElement, SVGProps } from "react";
 
 import { Icon } from "@thenamespace/uikit/icons";
@@ -85,12 +83,24 @@ import {
   SocialYoutubeIcon,
 } from "#/components/icons";
 
-/** SVG component returned by the record icon resolver. */
-export type RecordIconComponent = (
-  props: SVGProps<SVGSVGElement>,
-) => ReactElement;
+/** SVG component returned by an ENS icon resolver. */
+export type EnsIconComponent = (props: SVGProps<SVGSVGElement>) => ReactElement;
 
-function createUIKitIcon(icon: IconProps["icon"]): RecordIconComponent {
+export type RecordIconComponent = EnsIconComponent;
+
+export type AddressIconIdentifier = bigint | number | string;
+
+export type EnsRecordIconType =
+  | "abi"
+  | "address"
+  | "contenthash"
+  | "data"
+  | "interface"
+  | "name"
+  | "pubkey"
+  | "text";
+
+function createUIKitIcon(icon: IconProps["icon"]): EnsIconComponent {
   return function UIKitRecordIcon(props) {
     return (
       <Icon aria-hidden icon={icon} {...(props as Omit<IconProps, "icon">)} />
@@ -107,7 +117,7 @@ const PublicKeyIcon = createUIKitIcon(Key01Icon);
 const TextRecordIcon = createUIKitIcon(TextIcon);
 const WalletIcon = createUIKitIcon(Wallet01Icon);
 
-const addressIcons: Readonly<Record<string, RecordIconComponent>> = {
+const addressIcons: Readonly<Record<string, EnsIconComponent>> = {
   "0": ChainBitcoinIcon,
   "2": ChainLitecoinIcon,
   "3": ChainDogecoinIcon,
@@ -215,9 +225,7 @@ const addressIcons: Readonly<Record<string, RecordIconComponent>> = {
   zora: ChainZoraIcon,
 };
 
-const textIcons: Readonly<Record<string, RecordIconComponent>> = {
-  avatar: createUIKitIcon(Image02Icon),
-  bio: createUIKitIcon(Note01Icon),
+const socialIcons: Readonly<Record<string, EnsIconComponent>> = {
   bluesky: SocialBlueskyIcon,
   combluesky: SocialBlueskyIcon,
   comdiscord: SocialDiscordIcon,
@@ -232,39 +240,45 @@ const textIcons: Readonly<Record<string, RecordIconComponent>> = {
   comtiktok: SocialTiktokIcon,
   comtwitter: SocialXIcon,
   comyoutube: SocialYoutubeIcon,
-  description: createUIKitIcon(Note01Icon),
   discord: SocialDiscordIcon,
-  display: createUIKitIcon(User02Icon),
-  email: createUIKitIcon(Mail01Icon),
-  ethensdelegate: createUIKitIcon(UserShield01Icon),
   farcaster: SocialFarcasterIcon,
   github: SocialGithubIcon,
-  header: createUIKitIcon(Image02Icon),
   instagram: SocialInstagramIcon,
   lens: SocialLensIcon,
   linkedin: SocialLinkedinIcon,
+  mastodon: SocialMastodonIcon,
+  orgtelegram: SocialTelegramIcon,
+  reddit: SocialRedditIcon,
+  telegram: SocialTelegramIcon,
+  tiktok: SocialTiktokIcon,
+  twitter: SocialXIcon,
+  x: SocialXIcon,
+  xyzfarcaster: SocialFarcasterIcon,
+  youtube: SocialYoutubeIcon,
+};
+
+const textIcons: Readonly<Record<string, EnsIconComponent>> = {
+  ...socialIcons,
+  avatar: createUIKitIcon(Image02Icon),
+  bio: createUIKitIcon(Note01Icon),
+  description: createUIKitIcon(Note01Icon),
+  display: createUIKitIcon(User02Icon),
+  email: createUIKitIcon(Mail01Icon),
+  ethensdelegate: createUIKitIcon(UserShield01Icon),
+  header: createUIKitIcon(Image02Icon),
   location: createUIKitIcon(Location01Icon),
   mail: createUIKitIcon(Mail01Icon),
-  mastodon: SocialMastodonIcon,
   name: createUIKitIcon(User02Icon),
   nickname: createUIKitIcon(User02Icon),
   notice: createUIKitIcon(Notification01Icon),
-  orgtelegram: SocialTelegramIcon,
-  reddit: SocialRedditIcon,
   shortbio: createUIKitIcon(Note01Icon),
-  telegram: SocialTelegramIcon,
-  tiktok: SocialTiktokIcon,
   timezone: createUIKitIcon(TimeZoneIcon),
-  twitter: SocialXIcon,
   url: createUIKitIcon(Globe02Icon),
   website: createUIKitIcon(Globe02Icon),
   keywords: createUIKitIcon(Tag01Icon),
-  x: SocialXIcon,
-  youtube: SocialYoutubeIcon,
-  xyzfarcaster: SocialFarcasterIcon,
 };
 
-const contenthashIcons: Readonly<Record<string, RecordIconComponent>> = {
+const contenthashIcons: Readonly<Record<string, EnsIconComponent>> = {
   adnl: ContenthashTonIcon,
   ar: ContenthashArweaveIcon,
   arweave: ContenthashArweaveIcon,
@@ -280,23 +294,63 @@ const contenthashIcons: Readonly<Record<string, RecordIconComponent>> = {
   tor: ContenthashTorIcon,
 };
 
-const typeIcons: Readonly<Record<NameProfileRecordType, RecordIconComponent>> =
-  {
-    abi: AbiIcon,
-    address: WalletIcon,
-    contenthash: ContenthashIcon,
-    data: DataIcon,
-    interface: InterfaceIcon,
-    name: NameIcon,
-    pubkey: PublicKeyIcon,
-    text: TextRecordIcon,
-  };
+const typeIcons: Readonly<Record<EnsRecordIconType, EnsIconComponent>> = {
+  abi: AbiIcon,
+  address: WalletIcon,
+  contenthash: ContenthashIcon,
+  data: DataIcon,
+  interface: InterfaceIcon,
+  name: NameIcon,
+  pubkey: PublicKeyIcon,
+  text: TextRecordIcon,
+};
 
-function normalizeRecordName(name: string): string {
-  return (typeof name === "string" ? name : "")
+function normalizeRecordName(name: unknown): string {
+  return (
+    typeof name === "string" ||
+    typeof name === "number" ||
+    typeof name === "bigint"
+      ? String(name)
+      : ""
+  )
     .trim()
     .toLowerCase()
     .replaceAll(/[\s._-]/g, "");
+}
+
+/**
+ * Returns the icon component for a standard ENS coin type or common coin name.
+ * Unknown coin types use the ENS address icon.
+ */
+export function getAddressIcon(
+  coinType: AddressIconIdentifier,
+): EnsIconComponent {
+  return addressIcons[normalizeRecordName(coinType)] ?? ChainEnsIcon;
+}
+
+/**
+ * Returns the icon component for a contenthash protocol or encoded URI.
+ */
+export function getContentHashIcon(value: string): EnsIconComponent {
+  const protocol = normalizeRecordName(
+    (typeof value === "string" ? value : "").split(":")[0] ?? value,
+  );
+
+  return contenthashIcons[protocol] ?? ContenthashIcon;
+}
+
+/**
+ * Returns the icon component for a social profile service or ENS text key.
+ */
+export function getSocialIcon(service: string): EnsIconComponent {
+  return socialIcons[normalizeRecordName(service)] ?? TextRecordIcon;
+}
+
+/**
+ * Returns the icon component for a known ENS text-record key.
+ */
+export function getTextRecordIcon(key: string): EnsIconComponent {
+  return textIcons[normalizeRecordName(key)] ?? TextRecordIcon;
 }
 
 /**
@@ -307,22 +361,21 @@ function normalizeRecordName(name: string): string {
  */
 export function getRecordIcon(
   name: string,
-  type: NameProfileRecordType,
-): RecordIconComponent {
+  type: EnsRecordIconType,
+): EnsIconComponent {
   const safeName = typeof name === "string" ? name : "";
   const normalizedName = normalizeRecordName(safeName);
 
   if (type === "address") {
-    return addressIcons[normalizedName] ?? typeIcons.address;
+    return getAddressIcon(safeName);
   }
 
   if (type === "contenthash") {
-    const protocol = normalizeRecordName(safeName.split(":")[0] ?? safeName);
-    return contenthashIcons[protocol] ?? typeIcons.contenthash;
+    return getContentHashIcon(safeName);
   }
 
   if (type === "text") {
-    return textIcons[normalizedName] ?? typeIcons.text;
+    return getTextRecordIcon(normalizedName);
   }
 
   return typeIcons[type];

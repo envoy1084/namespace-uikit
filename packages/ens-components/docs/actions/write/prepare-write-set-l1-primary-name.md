@@ -4,7 +4,7 @@ Prepares a registry-backed `ReverseRegistrar.setName(string)` write for
 Ethereum's `addr.reverse` namespace. It does not submit a transaction.
 
 ```ts
-import { prepareSetL1PrimaryNameWrite } from "ens-components";
+import { prepareSetL1PrimaryNameWrite } from "ens-components/actions";
 
 const prepared = prepareSetL1PrimaryNameWrite({
   account,

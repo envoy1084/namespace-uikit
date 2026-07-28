@@ -5,7 +5,7 @@ permission interface, and reads whether an account can update specific record
 types.
 
 ```tsx
-import { useNameProfilePermissions } from "ens-components";
+import { useNameProfilePermissions } from "ens-components/hooks";
 
 const permissions = useNameProfilePermissions({
   account,

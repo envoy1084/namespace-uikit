@@ -7,7 +7,7 @@ deterministic address and encoded factory call. It does not send a transaction.
 import {
   createResolverSalt,
   preparePermissionedResolverDeploymentWrite,
-} from "ens-components";
+} from "ens-components/actions";
 
 const salt = createResolverSalt({ input: "example.eth" });
 if (salt.isErr()) throw new Error(salt.error);

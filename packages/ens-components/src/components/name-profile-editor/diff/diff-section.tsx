@@ -9,7 +9,7 @@ import type {
 
 import { Accordion, Surface } from "@thenamespace/uikit";
 
-import { getRecordIcon } from "#/components/name-profile-editor/get-record-icon";
+import { getRecordIcon } from "#/icons/get-record-icon";
 
 const statusOrder: readonly ProfileChangeStatus[] = [
   "added",

@@ -4,7 +4,10 @@ Prepares the Ethereum forward address record used to verify an L1 ENS primary
 name. It does not submit a transaction.
 
 ```ts
-import { ETH_COIN_TYPE, prepareSetAddressRecordWrite } from "ens-components";
+import {
+  ETH_COIN_TYPE,
+  prepareSetAddressRecordWrite,
+} from "ens-components/actions";
 
 const prepared = prepareSetAddressRecordWrite({
   account,

@@ -40,6 +40,24 @@ The stylesheet imports the UI Kit stylesheet and includes every utility used by
 ENS Components. No Tailwind installation, configuration, or source scanning is
 required.
 
+## Package exports
+
+Import components, providers, data, and shared helpers from the package root:
+
+```ts
+import { EnsProvider, NameRegistration } from "ens-components";
+```
+
+Use the dedicated entry points for actions, query hooks, and icons:
+
+```ts
+import { prepareNameAvailabilityRead } from "ens-components/actions";
+import { useNameAvailability } from "ens-components/hooks";
+import { getAddressIcon } from "ens-components/icons";
+```
+
+Actions, hooks, and icons are not re-exported from the package root.
+
 ## Providers
 
 Hooks and components require Wagmi, TanStack Query, and `EnsProvider`:
@@ -168,6 +186,10 @@ reviews changes, and submits one atomic resolver multicall. See
 - [useNameRenewalPrice](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-renewal-price.md)
 - [useNameRenewalPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-renewal-payment-status.md)
 - [useNameProfilePermissions](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-profile-permissions.md)
+
+### Icons
+
+- [ENS icons and icon resolvers](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/icons/icons.md)
 
 ### Actions
 

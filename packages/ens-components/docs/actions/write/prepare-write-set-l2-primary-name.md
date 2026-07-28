@@ -4,7 +4,7 @@ Prepares an ENS v2 `L2ReverseRegistrar.setName(string)` write. It does not
 submit a transaction.
 
 ```ts
-import { prepareSetL2PrimaryNameWrite } from "ens-components";
+import { prepareSetL2PrimaryNameWrite } from "ens-components/actions";
 
 const prepared = prepareSetL2PrimaryNameWrite({
   account,

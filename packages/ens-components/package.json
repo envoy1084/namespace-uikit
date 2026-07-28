@@ -49,6 +49,30 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
+    "./actions": {
+      "@thenamespace/source": {
+        "types": "./src/actions/index.ts",
+        "import": "./src/actions/index.ts"
+      },
+      "types": "./dist/actions.d.mts",
+      "import": "./dist/actions.mjs"
+    },
+    "./hooks": {
+      "@thenamespace/source": {
+        "types": "./src/hooks/index.ts",
+        "import": "./src/hooks/index.ts"
+      },
+      "types": "./dist/hooks.d.mts",
+      "import": "./dist/hooks.mjs"
+    },
+    "./icons": {
+      "@thenamespace/source": {
+        "types": "./src/icons/index.ts",
+        "import": "./src/icons/index.ts"
+      },
+      "types": "./dist/icons.d.mts",
+      "import": "./dist/icons.mjs"
+    },
     "./styles": {
       "@thenamespace/source": "./src/styles.css",
       "style": "./dist/styles.css",

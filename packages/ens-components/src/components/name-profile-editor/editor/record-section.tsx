@@ -15,7 +15,7 @@ import {
 import { RecordButton } from "#/components/name-profile-editor/editor/record-button";
 import { sectionLabels } from "#/components/name-profile-editor/editor/record-definitions";
 import { RecordField } from "#/components/name-profile-editor/editor/record-field";
-import { getRecordIcon } from "#/components/name-profile-editor/get-record-icon";
+import { getRecordIcon } from "#/icons/get-record-icon";
 
 function matchesSearch(
   record: Pick<RecordDefinition, "label" | "name">,

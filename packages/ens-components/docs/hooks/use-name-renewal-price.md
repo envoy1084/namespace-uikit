@@ -5,7 +5,7 @@ renewal price, projected expiry, and payment-token decimals through TanStack
 Query. Input is normalized and debounced for 300 milliseconds.
 
 ```tsx
-import { useNameRenewalPrice } from "ens-components";
+import { useNameRenewalPrice } from "ens-components/hooks";
 import { formatUnits } from "viem";
 
 const quote = useNameRenewalPrice({

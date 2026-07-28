@@ -4,7 +4,7 @@ Reads a renewal quote together with an account's payment-token balance and
 allowance.
 
 ```tsx
-import { useNameRenewalPaymentStatus } from "ens-components";
+import { useNameRenewalPaymentStatus } from "ens-components/hooks";
 import { useAccount } from "wagmi";
 
 const { address } = useAccount();

@@ -4,7 +4,7 @@ Reads the current ENS v2 registration price and payment-token decimals through
 TanStack Query. Input is normalized and debounced for 300 milliseconds.
 
 ```tsx
-import { useNamePrice } from "ens-components";
+import { useNamePrice } from "ens-components/hooks";
 import { formatUnits } from "viem";
 
 const price = useNamePrice({

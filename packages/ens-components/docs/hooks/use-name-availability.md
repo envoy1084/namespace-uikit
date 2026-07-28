@@ -4,7 +4,7 @@ Checks whether a second-level `.eth` name is available through TanStack Query.
 Input is normalized and debounced for 300 milliseconds.
 
 ```tsx
-import { useNameAvailability } from "ens-components";
+import { useNameAvailability } from "ens-components/hooks";
 
 const availability = useNameAvailability({
   input: "vitalik",

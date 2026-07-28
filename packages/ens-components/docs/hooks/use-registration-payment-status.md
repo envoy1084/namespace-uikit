@@ -4,7 +4,7 @@ Reads registration price, ERC-20 balance, and registrar allowance in one
 batched query.
 
 ```tsx
-import { useRegistrationPaymentStatus } from "ens-components";
+import { useRegistrationPaymentStatus } from "ens-components/hooks";
 
 const payment = useRegistrationPaymentStatus({
   account: address,

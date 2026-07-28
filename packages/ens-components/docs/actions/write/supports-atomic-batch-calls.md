@@ -4,7 +4,7 @@ Checks whether a connected wallet supports atomic EIP-5792 calls on a
 specific chain.
 
 ```ts
-import { supportsAtomicBatchCalls } from "ens-components";
+import { supportsAtomicBatchCalls } from "ens-components/actions";
 
 const result = await supportsAtomicBatchCalls(walletClient, {
   account,

@@ -10,7 +10,7 @@ Use `executeContractRead` for one prepared read and
 import {
   executeContractRead,
   prepareNameAvailabilityRead,
-} from "ens-components";
+} from "ens-components/actions";
 
 const prepared = prepareNameAvailabilityRead({
   input: "example.eth",

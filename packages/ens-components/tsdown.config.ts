@@ -35,6 +35,9 @@ export default defineConfig({
     sourcemap: true,
   },
   entry: {
+    actions: "src/actions/index.ts",
+    hooks: "src/hooks/index.ts",
+    icons: "src/icons/index.ts",
     index: "src/index.ts",
   },
   failOnWarn: true,

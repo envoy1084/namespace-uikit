@@ -15,7 +15,7 @@ import {
 import { Cancel01Icon, Icon } from "@thenamespace/uikit/icons";
 import { Controller, type FieldPath, useFormContext } from "react-hook-form";
 
-import { getRecordIcon } from "#/components/name-profile-editor/get-record-icon";
+import { getRecordIcon } from "#/icons/get-record-icon";
 
 function formPath(value: string): FieldPath<NameProfileFormValues> {
   return value as FieldPath<NameProfileFormValues>;
