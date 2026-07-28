@@ -1,10 +1,22 @@
+---
+title: TransactionProgress
+description: Display transaction confirmation progress and an explorer link.
+---
+
 # TransactionProgress
 
-`TransactionProgress` displays an animated transaction confirmation estimate
-and an optional block-explorer link. It does not poll for a receipt.
+Displays an animated confirmation estimate and optional block-explorer link.
+It does not poll for a receipt.
+
+## Import
+
+```ts
+import { TransactionProgress } from "ens-components";
+```
+
+## Usage
 
 ```tsx
-import { TransactionProgress } from "ens-components";
 import { sepolia } from "viem/chains";
 
 <TransactionProgress

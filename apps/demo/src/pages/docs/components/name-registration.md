@@ -1,7 +1,11 @@
+---
+title: NameRegistration
+description: A complete ENS v2 .eth registration flow.
+---
+
 # NameRegistration
 
-`NameRegistration` provides the complete ENS v2 registration flow for
-second-level `.eth` names:
+Provides the complete ENS v2 registration flow for second-level `.eth` names:
 
 1. Check availability, select a payment token, and read its price.
 2. Optionally request that the registered name becomes the wallet's primary
@@ -13,21 +17,22 @@ second-level `.eth` names:
 7. Set the forward and reverse records when primary-name setup is selected.
 8. Display the confirmed registration.
 
-It requires `WagmiProvider`, `QueryClientProvider`, and
-[`EnsProvider`](/docs/config/ens-provider).
+## Import
 
-## Basic usage
+```ts
+import { NameRegistration } from "ens-components";
+```
+
+## Usage
 
 ```tsx
-import { NameRegistration } from "ens-components";
-
-<NameRegistration />;
+<NameRegistration />
 ```
 
 The default presentation renders a `Register` trigger and opens the flow in a
 dialog.
 
-## Inline presentation
+### Inline presentation
 
 ```tsx
 <NameRegistration presentation="inline" />
@@ -145,9 +150,9 @@ customizable through `messages`.
 | `onSetPrimaryName` | The forward address, ENS v2 reverse, and L1 reverse writes are all confirmed.                           |
 | `onError`          | An attempted resolver, commitment, payment, registration, address-record, or primary-name phase fails.  |
 
-Confirmed transaction events contain `chainId`, `network`,
-`transactionHash`, and the Viem `TransactionReceipt`. Operation-specific
-payloads include the related addresses and values.
+Confirmed transaction events contain `chainId`, `transactionHash`, and the
+Viem `TransactionReceipt`. Operation-specific payloads include the related
+addresses and values.
 For `onSetPrimaryName`, the base receipt and hash belong to the final L1
 reverse write. The event also includes the address-record receipt and hash,
 the ENS v2 reverse receipt and hash, and both reverse-registrar addresses.
@@ -214,4 +219,4 @@ change onchain state.
 - Only second-level `.eth` names are supported.
 - Labels must contain at least three Unicode code points.
 - Registration uses one of the payment tokens configured by `EnsProvider`.
-- Only the ENS v2 Sepolia testnet configuration is currently available.
+- The built-in named configuration currently supports ENS v2 Sepolia.

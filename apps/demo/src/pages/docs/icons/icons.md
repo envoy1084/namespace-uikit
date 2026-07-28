@@ -1,4 +1,9 @@
-# ENS icons
+---
+title: Icons
+description: ENS record, network, protocol, and social icons.
+---
+
+# Icons
 
 Import icon resolvers and individual SVG components from
 `ens-components/icons`. Icons are not exported from the package root.
@@ -9,10 +14,10 @@ Each resolver returns a React component that accepts standard
 `SVGProps<SVGSVGElement>`:
 
 ```tsx
-import { getAddressIcon, getContentHashIcon, getSocialIcon } from "ens-components/icons";
+import { getAddressIcon, getContenthashIcon, getSocialIcon } from "ens-components/icons";
 
 const EthereumIcon = getAddressIcon(60);
-const IpfsIcon = getContentHashIcon("ipfs://bafy...");
+const IpfsIcon = getContenthashIcon("ipfs://bafy...");
 const GithubIcon = getSocialIcon("com.github");
 
 export function RecordIcons() {
@@ -35,10 +40,10 @@ function getAddressIcon(coinType: bigint | number | string): EnsIconComponent;
 Accepts an ENSIP-9 coin type or a common coin or network alias. Unknown values
 return the ENS address icon.
 
-### `getContentHashIcon`
+### `getContenthashIcon`
 
 ```ts
-function getContentHashIcon(value: string): EnsIconComponent;
+function getContenthashIcon(value: string): EnsIconComponent;
 ```
 
 Accepts a protocol name or a URI. Supported protocols include IPFS, IPNS,

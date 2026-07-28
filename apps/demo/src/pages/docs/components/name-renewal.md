@@ -1,7 +1,11 @@
+---
+title: NameRenewal
+description: A complete ENS v2 .eth renewal flow.
+---
+
 # NameRenewal
 
-`NameRenewal` provides a complete ENS v2 renewal flow for second-level `.eth`
-names:
+Provides a complete ENS v2 renewal flow for second-level `.eth` names:
 
 1. Normalize the entered label and confirm that the name is renewable.
 2. Read its current expiry and renewal price.
@@ -12,21 +16,22 @@ names:
 
 Anyone can pay to renew a name. The connected account does not need to own it.
 
-It requires `WagmiProvider`, `QueryClientProvider`, and
-[`EnsProvider`](/docs/config/ens-provider).
+## Import
 
-## Basic usage
+```ts
+import { NameRenewal } from "ens-components";
+```
+
+## Usage
 
 ```tsx
-import { NameRenewal } from "ens-components";
-
-<NameRenewal defaultLabel="vitalik" />;
+<NameRenewal defaultLabel="example" />
 ```
 
 The default presentation renders a `Renew a name` trigger and opens the flow
 in a dialog. `defaultLabel` accepts a label or a second-level `.eth` name.
 
-## Inline presentation
+### Inline presentation
 
 ```tsx
 <NameRenewal presentation="inline" />
@@ -135,14 +140,14 @@ customizable through `messages`.
 | `onRenew`   | The renewal confirms and the new expiry is available.                                           |
 | `onError`   | An attempted approval or renewal fails. `phase` is `"approval"` or `"renewal"`.                 |
 
-Confirmed transaction events contain `chainId`, `network`,
-`transactionHash`, and the Viem `TransactionReceipt`. Callbacks may return a
-promise, but the flow does not wait for it. Callback failures do not change an
-already-confirmed transaction.
+Confirmed transaction events contain `chainId`, `transactionHash`, and the
+Viem `TransactionReceipt`. Callbacks may return a promise, but the flow does
+not wait for it. Callback failures do not change an already-confirmed
+transaction.
 
 ## Current constraints
 
 - Only second-level `.eth` names are supported.
 - The extension must be at least 28 days.
 - Renewal uses a payment token configured by `EnsProvider`.
-- Only the ENS v2 Sepolia testnet configuration is currently available.
+- The built-in named configuration currently supports ENS v2 Sepolia.

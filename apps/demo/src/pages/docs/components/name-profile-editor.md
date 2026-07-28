@@ -1,20 +1,25 @@
+---
+title: NameProfileEditor
+description: Edit records on an ENS v2 PermissionedResolver.
+---
+
 # NameProfileEditor
 
-`NameProfileEditor` edits records on an ENS v2 `PermissionedResolver`. It
-provides a record editor, change review, transaction progress, and confirmation
-screen.
+Edits records on an ENS v2 PermissionedResolver with validation, permission
+checks, review, submission, and confirmation states.
 
 The application supplies the current records. Fetching, caching, and refreshing
 that snapshot remain under application control.
 
-The component requires `WagmiProvider`, `QueryClientProvider`, and
-[`EnsProvider`](/docs/config/ens-provider).
+## Import
 
-## Basic usage
+```ts
+import { NameProfileEditor, type NameProfileFormValues } from "ens-components";
+```
+
+## Usage
 
 ```tsx
-import { NameProfileEditor, type NameProfileFormValues } from "ens-components";
-
 const records: NameProfileFormValues = {
   abi: [],
   addresses: [
@@ -49,7 +54,7 @@ export function ProfileEditor() {
 }
 ```
 
-## Presentation
+### Presentation
 
 The default `dialog` presentation renders a trigger and opens the flow in a
 modal.
