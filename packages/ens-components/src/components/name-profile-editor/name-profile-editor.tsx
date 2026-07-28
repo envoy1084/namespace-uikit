@@ -1,9 +1,6 @@
 "use client";
 
-import type {
-  NameProfileEditorUploadHandlers,
-  NameProfileFormValues,
-} from "#/components/name-profile-editor/types";
+import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
 
 import type { ReactNode } from "react";
 
@@ -19,23 +16,15 @@ export interface NameProfileEditorProps {
   slots?: {
     trigger?: ReactNode;
   };
-  upload?: NameProfileEditorUploadHandlers;
 }
 
 export function NameProfileEditor({
   className,
-  initialRecords,
   name,
   presentation = "dialog",
   slots,
-  upload,
 }: NameProfileEditorProps) {
-  const content = (
-    <ProfileEditor
-      initialRecords={initialRecords}
-      {...(upload === undefined ? {} : { upload })}
-    />
-  );
+  const content = <ProfileEditor />;
 
   if (presentation === "inline") {
     return (

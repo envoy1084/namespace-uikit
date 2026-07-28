@@ -8,9 +8,6 @@ export type {
 } from "#/components/name-profile-editor/normalize-profile-records";
 export type {
   NameProfileEditorReview,
-  NameProfileEditorUploadHandlers,
-  NameProfileMediaKind,
-  NameProfileMediaUpload,
   NameProfileAbiRecord,
   NameProfileAbiRecordChange,
   NameProfileAddressRecord,

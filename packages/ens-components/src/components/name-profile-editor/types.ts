@@ -51,15 +51,6 @@ export interface NameProfileTextRecord {
   value: string;
 }
 
-export type NameProfileMediaKind = "avatar" | "header";
-
-export type NameProfileMediaUpload = (file: File) => Promise<string> | string;
-
-export interface NameProfileEditorUploadHandlers {
-  avatar?: NameProfileMediaUpload;
-  header?: NameProfileMediaUpload;
-}
-
 /**
  * Input-compatible resolver profile used by React Hook Form and editor state.
  *
