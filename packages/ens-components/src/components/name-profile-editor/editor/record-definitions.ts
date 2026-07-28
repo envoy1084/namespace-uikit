@@ -251,6 +251,10 @@ const addressRecords = [
     "bitcoincash:qp63uahg…spdc2h",
   ),
   defineRecord("addresses", "address", "472", "Arweave", "aDe2hr18…i5J2WA"),
+  defineRecord("addresses", "address", "custom", "Custom", "Address", {
+    isCustom: true,
+    isRepeatable: true,
+  }),
 ] as const;
 
 const websiteRecords = [

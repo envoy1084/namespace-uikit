@@ -64,14 +64,21 @@ export function isCustomTextRecordKey(key: string): boolean {
   return definition === undefined || definition.isCustom === true;
 }
 
+export function isCustomAddressCoinType(coinType: string): boolean {
+  const definition = findRecordDefinition("address", coinType);
+  return definition === undefined || definition.isCustom === true;
+}
+
 export function createEditorRecords({
   activeDefinitionIds,
+  customAddressFieldIds,
   customTextFieldIds,
   fieldIds,
   fieldKeys,
   values,
 }: {
   activeDefinitionIds: ReadonlySet<string>;
+  customAddressFieldIds: ReadonlySet<string>;
   customTextFieldIds: ReadonlySet<string>;
   fieldIds: EditorRecordFieldIds;
   fieldKeys: {
@@ -82,7 +89,7 @@ export function createEditorRecords({
 }): EditorRecord[] {
   const records: EditorRecord[] = [];
   const customText = findRecordDefinition("text", "custom");
-  const fallbackAddress = findRecordDefinition("address", "60");
+  const customAddress = findRecordDefinition("address", "custom");
   const fallbackAbi = findRecordDefinition("abi", "abi");
   const fallbackData = findRecordDefinition("data", "data");
   const fallbackInterface = findRecordDefinition("interface", "interface");
@@ -106,16 +113,22 @@ export function createEditorRecords({
   }
 
   for (const [index, id] of fieldIds.addresses.entries()) {
-    const coinType = fieldKeys.addresses[index] ?? "";
-    const knownDefinition = findRecordDefinition("address", coinType);
-    const definition = knownDefinition ?? fallbackAddress;
+    const stableCoinType = fieldKeys.addresses[index] ?? "";
+    const isCustom = customAddressFieldIds.has(id);
+    const coinType = isCustom
+      ? (values.addresses[index]?.coinType ?? stableCoinType)
+      : stableCoinType;
+    const knownDefinition = isCustom
+      ? undefined
+      : findRecordDefinition("address", coinType);
+    const definition = isCustom ? customAddress : knownDefinition;
     if (!definition) continue;
 
     records.push({
       ...definition,
       arrayIndex: index,
       id,
-      label: knownDefinition ? knownDefinition.label : `Coin ${coinType}`,
+      isCustom,
       name: coinType,
     });
   }

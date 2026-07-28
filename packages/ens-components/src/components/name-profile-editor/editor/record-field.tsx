@@ -273,6 +273,29 @@ export function RecordField({
     );
   }
 
+  if (record.type === "address" && record.isCustom && index !== undefined) {
+    return (
+      <PairField
+        first={{
+          inputMode: "numeric",
+          label: "Coin type",
+          name: formPath(`addresses.${index}.coinType`),
+          placeholder: "60",
+          validationGroup: "addresses",
+        }}
+        isDisabled={isDisabled}
+        removeLabel="Remove custom address"
+        second={{
+          label: "Address",
+          name: formPath(`addresses.${index}.value`),
+          placeholder: "Address for this coin type",
+          validationGroup: "addresses",
+        }}
+        onRemove={onRemove}
+      />
+    );
+  }
+
   let name: FieldPath<NameProfileFormValues>;
 
   if (record.type === "text" && index !== undefined) {

@@ -20,6 +20,7 @@ import { diffProfileRecords } from "#/components/name-profile-editor/diff-profil
 import {
   createEditorRecords,
   createInitialActiveDefinitionIds,
+  isCustomAddressCoinType,
   isCustomTextRecordKey,
   isRecordDefinitionActive,
 } from "#/components/name-profile-editor/editor/editor-records";
@@ -94,6 +95,16 @@ export function useProfileEditorForm(initialRecords: NameProfileFormValues) {
   const [activeDefinitionIds, setActiveDefinitionIds] = useState(() =>
     createInitialActiveDefinitionIds(defaultValues),
   );
+  const [customAddressFieldIds, setCustomAddressFieldIds] = useState<
+    Set<string>
+  >(
+    () =>
+      new Set(
+        addressFields.fields
+          .filter((field) => isCustomAddressCoinType(field.coinType))
+          .map((field) => field.fieldId),
+      ),
+  );
   const [customTextFieldIds, setCustomTextFieldIds] = useState<Set<string>>(
     () =>
       new Set(
@@ -107,8 +118,38 @@ export function useProfileEditorForm(initialRecords: NameProfileFormValues) {
   useEffect(() => {
     form.reset(defaultValues);
     setActiveDefinitionIds(createInitialActiveDefinitionIds(defaultValues));
+    setCustomAddressFieldIds(new Set());
     setCustomTextFieldIds(new Set());
   }, [defaultValues, form]);
+
+  useEffect(() => {
+    setCustomAddressFieldIds((current) => {
+      const currentFieldIds = new Set(
+        addressFields.fields.map((field) => field.fieldId),
+      );
+      const next = new Set(
+        [...current].filter((fieldId) => currentFieldIds.has(fieldId)),
+      );
+
+      for (const field of addressFields.fields) {
+        if (
+          !current.has(field.fieldId) &&
+          isCustomAddressCoinType(field.coinType)
+        ) {
+          next.add(field.fieldId);
+        }
+      }
+
+      if (
+        next.size === current.size &&
+        [...next].every((fieldId) => current.has(fieldId))
+      ) {
+        return current;
+      }
+
+      return next;
+    });
+  }, [addressFields.fields]);
 
   useEffect(() => {
     setCustomTextFieldIds((current) => {
@@ -149,6 +190,7 @@ export function useProfileEditorForm(initialRecords: NameProfileFormValues) {
   };
   const records = createEditorRecords({
     activeDefinitionIds,
+    customAddressFieldIds,
     customTextFieldIds,
     fieldIds,
     fieldKeys: {
@@ -192,7 +234,10 @@ export function useProfileEditorForm(initialRecords: NameProfileFormValues) {
         value: "",
       });
     } else if (definition.type === "address") {
-      addressFields.append({ coinType: definition.name, value: "" });
+      addressFields.append({
+        coinType: definition.isCustom ? "" : definition.name,
+        value: "",
+      });
     } else if (definition.type === "abi") {
       abiFields.append({ contentType: "", value: "" });
     } else if (definition.type === "data") {
@@ -206,25 +251,33 @@ export function useProfileEditorForm(initialRecords: NameProfileFormValues) {
 
   function removeRecord(record: EditorRecord) {
     const index = record.arrayIndex;
+    const revalidate = (name: keyof NameProfileFormValues) => {
+      queueMicrotask(() => void form.trigger(name));
+    };
 
     if (record.type === "text" && index !== undefined) {
       textFields.remove(index);
+      revalidate("text");
       return;
     }
     if (record.type === "address" && index !== undefined) {
       addressFields.remove(index);
+      revalidate("addresses");
       return;
     }
     if (record.type === "abi" && index !== undefined) {
       abiFields.remove(index);
+      revalidate("abi");
       return;
     }
     if (record.type === "data" && index !== undefined) {
       dataFields.remove(index);
+      revalidate("data");
       return;
     }
     if (record.type === "interface" && index !== undefined) {
       interfaceFields.remove(index);
+      revalidate("interfaces");
       return;
     }
 
