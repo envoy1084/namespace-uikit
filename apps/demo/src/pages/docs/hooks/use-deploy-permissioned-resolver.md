@@ -1,10 +1,21 @@
+---
+title: useDeployPermissionedResolver
+description: Deploy a verified ENS v2 PermissionedResolver proxy.
+---
+
 # useDeployPermissionedResolver
 
 Simulates and deploys a verified ENS v2 PermissionedResolver proxy.
 
-```tsx
-import { useDeployPermissionedResolver } from "ens-components/hooks";
+## Import
 
+```ts
+import { useDeployPermissionedResolver } from "ens-components/hooks";
+```
+
+## Usage
+
+```tsx
 const deployment = useDeployPermissionedResolver();
 deployment.mutate({
   account,
@@ -13,7 +24,31 @@ deployment.mutate({
 });
 ```
 
-The factory and resolver implementation default to `EnsProvider`. Preparation
-simulates the factory call and validates the predicted resolver address before
-wallet submission. See
-the [Transactions guide](/docs/guides/transactions).
+Preparation simulates the factory call and validates the predicted resolver
+address before wallet submission.
+
+## Parameters
+
+```ts
+interface UseDeployPermissionedResolverParameters {
+  factoryAddress?: Address;
+  implementationAddress?: Address;
+  mutation?: UseMutationOptions;
+}
+```
+
+Contract addresses default to the provider configuration.
+
+## Mutation Variables
+
+`DeployPermissionedResolverVariables` includes `account`, `owner`, `salt`, and
+optional `execution`.
+
+## Return Type
+
+`UseMutationResult<ExecuteContractWritesResult, DeployPermissionedResolverError, DeployPermissionedResolverVariables>`
+
+## Action
+
+Uses
+[`preparePermissionedResolverDeploymentWrite`](../actions/write/prepare-write-permissioned-resolver-deployment).

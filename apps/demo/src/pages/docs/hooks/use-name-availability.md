@@ -1,21 +1,30 @@
+---
+title: useNameAvailability
+description: Check whether a second-level .eth name is available.
+---
+
 # useNameAvailability
 
-Checks whether a second-level `.eth` name is available through TanStack Query.
-Input is normalized and debounced for 300 milliseconds.
+Checks whether a second-level `.eth` name is available. Input is normalized
+and debounced for 300 milliseconds.
+
+## Import
+
+```ts
+import { useNameAvailability } from "ens-components/hooks";
+```
+
+## Usage
 
 ```tsx
-import { useNameAvailability } from "ens-components/hooks";
-
 const availability = useNameAvailability({
-  input: "vitalik",
+  input: "example",
 });
 
-if (availability.isFetching) return <span>Checking…</span>;
+if (availability.isFetching) return <span>Checking...</span>;
 if (availability.isError) return <span>{availability.error}</span>;
 if (availability.data) return <span>Available</span>;
 ```
-
-The hook requires `WagmiProvider`, `QueryClientProvider`, and `EnsProvider`.
 
 ## Parameters
 
@@ -27,24 +36,36 @@ interface UseNameAvailabilityParameters<selectData = boolean> {
 }
 ```
 
-| Parameter          | Default            | Description                                                        |
-| ------------------ | ------------------ | ------------------------------------------------------------------ |
-| `input`            | Required           | Label or ENS name. A single label is interpreted as `<label>.eth`. |
-| `registrarAddress` | Provider registrar | Overrides the ENS v2 registrar address.                            |
-| `query`            | `undefined`        | TanStack Query options except `queryFn` and `queryKey`.            |
+### input
+
+`string | null | undefined`
+
+A label or ENS name. A single label is interpreted as `<label>.eth`.
+
+### registrarAddress
+
+`Address | undefined`
+
+ENS v2 registrar address. Defaults to `contracts.ethRegistrar.address` from
+`EnsProvider`.
+
+### query
+
+TanStack Query options, excluding `queryFn` and `queryKey`. See
+[Queries](/docs/guides/queries).
 
 The query is disabled while input is changing, when no public client is
 available, or when the normalized input is not a second-level `.eth` name.
-Invalid input therefore does not produce an error in the query result. Use
-`parseNameInput` when validation feedback is required before querying.
 
-## Return value
+## Return Type
 
-Returns the standard TanStack Query result with:
+`UseQueryResult<boolean, NameAvailabilityError>`
 
-- `data: boolean | undefined`
-- `error`: preparation, parsing, or `CONTRACT_READ_FAILED`
+`data` is `true` when the name is available and `false` when it is registered
+or otherwise unavailable.
 
-The generated query key includes the network, registrar address, and normalized
-name. All normal TanStack options such as `enabled`, `retry`, `select`,
-`staleTime`, and `refetchInterval` remain available through `query`.
+## Action
+
+Uses
+[`prepareNameAvailabilityRead`](../actions/read/prepare-read-name-availability)
+and `executeContractRead`.

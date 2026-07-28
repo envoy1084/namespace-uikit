@@ -1,11 +1,23 @@
+---
+title: useExecuteContractWrites
+description: Execute one or more prepared contract writes.
+---
+
 # useExecuteContractWrites
 
-Executes any non-empty collection of prepared ENS writes as a single
-transaction, atomic EIP-5792 batch, or confirmed sequential series.
+Executes prepared writes as one transaction, an EIP-5792 atomic batch, or an
+ordered sequential series.
+
+## Import
+
+```ts
+import { useExecuteContractWrites } from "ens-components/hooks";
+```
+
+## Usage
 
 ```tsx
 import { prepareRenewNameWrite } from "ens-components/actions";
-import { useExecuteContractWrites } from "ens-components/hooks";
 
 const execution = useExecuteContractWrites();
 
@@ -17,12 +29,31 @@ await execution.mutateAsync({
 ```
 
 The hook derives the chain and Viem clients from Wagmi and `EnsProvider`.
-Variables are `ExecuteContractWritesProps` without `chain`.
 
-`strategy` supports `auto`, `atomic`, `sequential`, and `single`. With `auto`,
-the executor selects atomic batching when the wallet supports it and otherwise
-uses ordered sequential transactions.
+## Parameters
 
-The return value is a standard TanStack Mutation result. Successful data
-contains the resolved strategy, submitted transactions, receipts when
-confirmed, and an atomic `callsId` where applicable.
+```ts
+interface UseExecuteContractWritesParameters {
+  mutation?: UseMutationOptions;
+}
+```
+
+## Mutation Variables
+
+`ExecuteContractWritesVariables` accepts `calls`, `confirmation`,
+`onProgress`, `strategy`, and `timeout`. It omits `chain`, which comes from
+`EnsProvider`.
+
+## Return Type
+
+`UseMutationResult<ExecuteContractWritesResult, ExecuteContractWritesMutationError, ExecuteContractWritesVariables>`
+
+Successful data contains the selected strategy, transaction hashes, confirmed
+receipts when requested, and an atomic `callsId` where applicable.
+
+See [Transactions](/docs/guides/transactions) for strategy and confirmation
+behavior.
+
+## Action
+
+Uses [`executeContractWrites`](../actions/write/contract-writes).

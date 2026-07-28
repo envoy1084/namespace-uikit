@@ -1,10 +1,22 @@
+---
+title: useNameRegistrationPrice
+description: Read an ENS v2 registration quote.
+---
+
 # useNameRegistrationPrice
 
-Reads the current ENS v2 registration price and payment-token decimals through
-TanStack Query. Input is normalized and debounced for 300 milliseconds.
+Reads an ENS v2 registration quote and payment-token decimals. Input is
+normalized and debounced for 300 milliseconds.
+
+## Import
+
+```ts
+import { useNameRegistrationPrice } from "ens-components/hooks";
+```
+
+## Usage
 
 ```tsx
-import { useNameRegistrationPrice } from "ens-components/hooks";
 import { formatUnits } from "viem";
 
 const price = useNameRegistrationPrice({
@@ -32,18 +44,41 @@ interface UseNameRegistrationPriceParameters<selectData = NameRegistrationPrice>
 }
 ```
 
-| Parameter             | Default              | Description                                             |
-| --------------------- | -------------------- | ------------------------------------------------------- |
-| `duration`            | Required             | Registration duration in seconds.                       |
-| `input`               | Required             | Label or second-level `.eth` name.                      |
-| `paymentTokenAddress` | First provider token | ERC-20 token used for the quote.                        |
-| `registrarAddress`    | Provider registrar   | ENS v2 registrar to query.                              |
-| `query`               | `undefined`          | TanStack Query options except `queryFn` and `queryKey`. |
+### duration
+
+`bigint`
+
+Registration duration in seconds.
+
+### input
+
+`string | null | undefined`
+
+A label or second-level `.eth` name.
+
+### paymentTokenAddress
+
+`Address | undefined`
+
+ERC-20 payment token. Defaults to the first configured payment token.
+
+### registrarAddress
+
+`Address | undefined`
+
+ENS v2 registrar. Defaults to the provider configuration.
+
+### query
+
+TanStack Query options, excluding `queryFn` and `queryKey`. See
+[Queries](/docs/guides/queries).
 
 The query is disabled when the normalized input is not a second-level `.eth`
 name or no public client is available.
 
-## Result data
+## Return Type
+
+`UseQueryResult<NameRegistrationPrice, NameRegistrationPriceError>`
 
 ```ts
 interface NameRegistrationPrice {
@@ -56,9 +91,8 @@ interface NameRegistrationPrice {
 
 All amounts are payment-token atomic units. `total` is `base + premium`.
 
-The generated query key includes the network, registrar, payment token,
-duration, and normalized name.
+## Action
 
-See
-[`prepareNameRegistrationPriceRead`](../actions/read/prepare-read-name-registration-price) for
-validation and error codes.
+Uses
+[`prepareNameRegistrationPriceRead`](../actions/read/prepare-read-name-registration-price)
+and `executeContractReads`.

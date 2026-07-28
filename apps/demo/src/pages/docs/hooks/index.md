@@ -5,7 +5,7 @@ description: React query and mutation hooks for ENS v2.
 
 # Hooks
 
-Hooks combine typed ENS actions with Wagmi clients and TanStack Query.
+Hooks connect ENS actions to Wagmi clients and TanStack Query.
 
 ## Import
 
@@ -42,4 +42,5 @@ import { useNameProfile } from "ens-components/hooks";
 - `useExecuteContractWrites`
 
 Read hooks accept TanStack Query options under `query`. Write hooks accept
-mutation options under `mutation`.
+mutation options under `mutation`. Read [Queries](/docs/guides/queries) and
+[Transactions](/docs/guides/transactions) for shared behavior.

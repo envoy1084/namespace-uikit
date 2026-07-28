@@ -1,12 +1,22 @@
+---
+title: useNameRecords
+description: Read a selected set of ENS records through the Universal Resolver.
+---
+
 # useNameRecords
 
-Reads an explicit set of ENS records through the configured Universal
-Resolver. It supports wildcard resolution and CCIP Read because every resolver
-request is executed independently instead of through Multicall3.
+Reads an explicit set of ENS records through the Universal Resolver. Resolver
+requests execute independently to preserve wildcard resolution and CCIP Read.
+
+## Import
+
+```ts
+import { useNameRecords } from "ens-components/hooks";
+```
+
+## Usage
 
 ```tsx
-import { useNameRecords } from "ens-components/hooks";
-
 const profile = useNameRecords({
   input: "example.eth",
   records: {
@@ -31,7 +41,15 @@ interface UseNameRecordsParameters<selectData = NameRecordsResult> {
 }
 ```
 
-`records` accepts:
+### input
+
+`string | null | undefined`
+
+ENS name to resolve.
+
+### records
+
+`NameRecordSelection`
 
 ```ts
 interface NameRecordSelection {
@@ -50,7 +68,19 @@ ABI content types and address coin types use unsigned decimal strings. Data and
 text arrays contain record keys. Interface identifiers are four-byte hex
 values.
 
-## Result
+### universalResolverAddress
+
+`Address | undefined`
+
+Defaults to the provider configuration.
+
+### query
+
+TanStack Query options, excluding `queryFn` and `queryKey`.
+
+## Return Type
+
+`UseQueryResult<NameRecordsResult, NameRecordsError>`
 
 ```ts
 interface NameRecordsResult {
@@ -68,3 +98,8 @@ Unrequested categories remain empty and can be distinguished through
 
 The query is disabled until a public client, valid name, valid Universal
 Resolver address, and non-empty record selection are available.
+
+## Action
+
+Uses [`prepareNameRecordsRead`](../actions/read/prepare-read-name-records) and
+`executeContractReadsIndividually`.

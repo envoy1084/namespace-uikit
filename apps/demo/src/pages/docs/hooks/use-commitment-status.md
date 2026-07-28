@@ -1,11 +1,21 @@
+---
+title: useCommitmentStatus
+description: Read the state and valid window of an ENS commitment.
+---
+
 # useCommitmentStatus
 
-Reads the registrar commitment timestamp and valid commitment window through
-TanStack Query.
+Reads a commitment's registrar timestamp and valid reveal window.
+
+## Import
+
+```ts
+import { useCommitmentStatus } from "ens-components/hooks";
+```
+
+## Usage
 
 ```tsx
-import { useCommitmentStatus } from "ens-components/hooks";
-
 const status = useCommitmentStatus({ commitment });
 
 if (status.data?.state === "READY") {
@@ -26,11 +36,42 @@ interface UseCommitmentStatusParameters<selectData = CommitmentStatus> {
 }
 ```
 
-`registrarAddress` defaults to `EnsProvider`. The query is disabled until a
-bytes32 commitment and public client are available.
+### commitment
 
-## Result
+`Hex | null | undefined`
 
-`state` is `NOT_FOUND`, `WAITING`, `READY`, or `EXPIRED`. The result also
-contains `submittedAt`, `validFrom`, `validUntil`, `currentTime`, and
-`remainingSeconds` as Unix-second `bigint` values.
+The bytes32 commitment hash. The query is disabled until this is a valid
+32-byte hex value and a public client is available.
+
+### registrarAddress
+
+`Address | undefined`
+
+Defaults to the configured ENS v2 registrar.
+
+### query
+
+TanStack Query options, excluding `queryFn` and `queryKey`.
+
+## Return Type
+
+`UseQueryResult<CommitmentStatus, CommitmentStatusError>`
+
+```ts
+interface CommitmentStatus {
+  currentTime: bigint;
+  remainingSeconds: bigint;
+  state: "EXPIRED" | "NOT_FOUND" | "READY" | "WAITING";
+  submittedAt: bigint;
+  validFrom: bigint;
+  validUntil: bigint;
+}
+```
+
+All timestamps and durations use seconds.
+
+## Action
+
+Uses
+[`prepareCommitmentStatusRead`](../actions/read/prepare-read-commitment-status)
+and `executeContractReads`.

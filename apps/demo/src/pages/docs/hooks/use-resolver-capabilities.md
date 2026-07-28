@@ -1,17 +1,46 @@
+---
+title: useResolverCapabilities
+description: Inspect an ENS v2 resolver deployment and interface support.
+---
+
 # useResolverCapabilities
 
-Checks whether a resolver is deployed, implements the ENS v2 permissioned
+Checks whether a resolver is deployed, supports the ENS v2 permissioned
 resolver interface, and is a verified proxy deployment.
 
-```tsx
-import { useResolverCapabilities } from "ens-components/hooks";
+## Import
 
+```ts
+import { useResolverCapabilities } from "ens-components/hooks";
+```
+
+## Usage
+
+```tsx
 const capabilities = useResolverCapabilities({ resolverAddress });
 ```
 
-Factory and implementation addresses default to `EnsProvider`.
+## Parameters
 
-## Result
+```ts
+interface UseResolverCapabilitiesParameters<selectData = ResolverCapabilities> {
+  factoryAddress?: Address;
+  implementationAddress?: Address;
+  resolverAddress: Address | null | undefined;
+  query?: Omit<
+    UseQueryOptions<ResolverCapabilities, ResolverCapabilitiesError, selectData>,
+    "queryFn" | "queryKey"
+  >;
+}
+```
+
+Factory and implementation addresses default to the provider configuration.
+The query is disabled until a non-zero resolver address and public client are
+available.
+
+## Return Type
+
+`UseQueryResult<ResolverCapabilities, ResolverCapabilitiesError>`
 
 ```ts
 interface ResolverCapabilities {
@@ -23,5 +52,9 @@ interface ResolverCapabilities {
 }
 ```
 
-Pass TanStack options through `query`. The query is disabled when the resolver
-address or public client is unavailable.
+## Actions
+
+Uses
+[`preparePermissionedResolverSupportRead`](../actions/read/prepare-read-permissioned-resolver-support)
+and
+[`preparePermissionedResolverVerificationRead`](../actions/read/prepare-read-permissioned-resolver-verification).

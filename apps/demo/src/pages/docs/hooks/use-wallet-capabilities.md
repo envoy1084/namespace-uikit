@@ -1,17 +1,43 @@
+---
+title: useWalletCapabilities
+description: Check whether a connected wallet supports atomic batch calls.
+---
+
 # useWalletCapabilities
 
-Reads wallet capabilities required by ENS transaction composition.
+Checks whether a connected wallet supports EIP-5792 atomic batch calls on the
+configured chain.
+
+## Import
+
+```ts
+import { useWalletCapabilities } from "ens-components/hooks";
+```
+
+## Usage
 
 ```tsx
-import { useWalletCapabilities } from "ens-components/hooks";
-
 const capabilities = useWalletCapabilities({ account });
 const canBatch = capabilities.data?.atomicBatchCalls;
 ```
 
-The hook checks EIP-5792 atomic batch support for the `EnsProvider` chain.
-Wallets that do not implement `wallet_getCapabilities` resolve successfully
-with `atomicBatchCalls: false`.
+## Parameters
+
+```ts
+interface UseWalletCapabilitiesParameters<selectData = WalletCapabilities> {
+  account: Address | null | undefined;
+  query?: Omit<
+    UseQueryOptions<WalletCapabilities, WalletCapabilitiesError, selectData>,
+    "queryFn" | "queryKey"
+  >;
+}
+```
+
+The query is disabled until the account and wallet client are available.
+
+## Return Type
+
+`UseQueryResult<WalletCapabilities, WalletCapabilitiesError>`
 
 ```ts
 interface WalletCapabilities {
@@ -20,4 +46,9 @@ interface WalletCapabilities {
 }
 ```
 
-The query is disabled until both `account` and a wallet client are available.
+Wallets that do not implement `wallet_getCapabilities` resolve with
+`atomicBatchCalls: false`.
+
+## Action
+
+Uses `supportsAtomicBatchCalls`.

@@ -1,11 +1,22 @@
+---
+title: useNameRegistrationPaymentStatus
+description: Read a registration quote, token balance, and registrar allowance.
+---
+
 # useNameRegistrationPaymentStatus
 
-Reads registration price, ERC-20 balance, and registrar allowance in one
+Reads the registration quote, ERC-20 balance, and registrar allowance in one
 batched query.
 
-```tsx
-import { useNameRegistrationPaymentStatus } from "ens-components/hooks";
+## Import
 
+```ts
+import { useNameRegistrationPaymentStatus } from "ens-components/hooks";
+```
+
+## Usage
+
+```tsx
 const payment = useNameRegistrationPaymentStatus({
   account: address,
   duration: 31_557_600n,
@@ -31,13 +42,44 @@ interface UseNameRegistrationPaymentStatusParameters<selectData = NameRegistrati
 }
 ```
 
-The query is disabled when `account` is `null` or `undefined`, when no public
-client is available, or when `query.enabled` is `false`.
+### account
 
-The registrar defaults to the contract selected by `EnsProvider`. The payment
-token defaults to the first token in the provider configuration.
+`Address | null | undefined`
 
-## Result data
+Account whose token balance and allowance are read. The query is disabled when
+the account or public client is unavailable.
+
+### duration
+
+`bigint`
+
+Registration duration in seconds.
+
+### input
+
+`string | null | undefined`
+
+Label or second-level `.eth` name.
+
+### paymentTokenAddress
+
+`Address | undefined`
+
+Defaults to the first configured payment token.
+
+### registrarAddress
+
+`Address | undefined`
+
+Defaults to the configured ENS v2 registrar.
+
+### query
+
+TanStack Query options, excluding `queryFn` and `queryKey`.
+
+## Return Type
+
+`UseQueryResult<NameRegistrationPaymentStatus, NameRegistrationPaymentStatusError>`
 
 ```ts
 interface NameRegistrationPaymentStatus {
@@ -55,6 +97,8 @@ interface NameRegistrationPaymentStatus {
 Amounts are payment-token atomic units. The generated query key includes the
 network, contract addresses, account, duration, and input.
 
-See
+## Action
+
+Uses
 [`prepareNameRegistrationPaymentStatusRead`](../actions/read/prepare-read-name-registration-payment-status)
-for reads and error codes.
+and `executeContractReads`.

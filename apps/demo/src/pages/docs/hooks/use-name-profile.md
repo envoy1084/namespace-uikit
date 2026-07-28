@@ -1,38 +1,29 @@
+---
+title: useNameProfile
+description: Read ENS profile records, resolver data, and indexed domain metadata.
+---
+
 # useNameProfile
 
-Returns an ENS profile with indexed domain metadata and canonical resolver
-record values.
+Returns ENS profile records, resolver data, and indexed domain metadata.
 
 The hook uses the configured ENS GraphQL indexer only to discover text keys,
 coin types, ABI content types, interface identifiers, and domain metadata. All
 record values are read through the Universal Resolver.
 
-```tsx
+## Import
+
+```ts
 import { useNameProfile } from "ens-components/hooks";
-
-const profile = useNameProfile({
-  input: "example.eth",
-});
 ```
 
-## Additional records
-
-Arbitrary data keys cannot currently be discovered by the indexer. Supply
-known keys or other records that should always be read:
+## Usage
 
 ```tsx
 const profile = useNameProfile({
   input: "example.eth",
-  additionalRecords: {
-    data: ["agent-context"],
-    text: ["com.example.custom"],
-  },
 });
 ```
-
-Additional arrays are merged with discovery. `contenthash`, `name`, and
-`pubkey` default to `true` because they do not need key discovery. Set a scalar
-to `false` to skip it.
 
 ## Parameters
 
@@ -49,10 +40,52 @@ interface UseNameProfileParameters<selectData = NameProfileResult> {
 }
 ```
 
-`indexerUrl` and `universalResolverAddress` override the selected network
-configuration for this query.
+### additionalRecords
 
-## Result
+`NameRecordSelection | undefined`
+
+Records to merge with indexer discovery. Use this for arbitrary data keys and
+other records that should always be read.
+
+```tsx
+const profile = useNameProfile({
+  input: "example.eth",
+  additionalRecords: {
+    data: ["agent-context"],
+    text: ["com.example.custom"],
+  },
+});
+```
+
+Additional arrays are merged with discovery. `contenthash`, `name`, and
+`pubkey` default to `true` because they do not need key discovery. Set a scalar
+to `false` to skip it.
+
+### indexerUrl
+
+`string | undefined`
+
+Defaults to `indexerUrl` from `EnsProvider`.
+
+### input
+
+`string | null | undefined`
+
+ENS name to read.
+
+### universalResolverAddress
+
+`Address | undefined`
+
+Defaults to the provider configuration.
+
+### query
+
+TanStack Query options, excluding `queryFn` and `queryKey`.
+
+## Return Type
+
+`UseQueryResult<NameProfileResult, NameProfileError>`
 
 ```ts
 interface NameProfileResult extends NameRecordsResult {
@@ -75,3 +108,10 @@ results. `domain` is the indexed snapshot and contains:
 `indexer.blockNumber` identifies the indexed snapshot. Ownership and
 authorization should be checked directly onchain before submitting a
 permission-sensitive transaction.
+
+## Actions
+
+Uses
+[`prepareNameProfileDiscoveryRead`](../actions/read/prepare-read-name-profile-discovery),
+[`prepareNameRecordsRead`](../actions/read/prepare-read-name-records), and the
+generic read executors.

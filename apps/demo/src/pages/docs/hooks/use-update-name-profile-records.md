@@ -1,11 +1,22 @@
+---
+title: useUpdateNameProfileRecords
+description: Update ENS profile records through a PermissionedResolver multicall.
+---
+
 # useUpdateNameProfileRecords
 
-Simulates and submits a PermissionedResolver multicall containing profile
+Simulates and submits one PermissionedResolver multicall containing profile
 record changes.
 
-```tsx
-import { useUpdateNameProfileRecords } from "ens-components/hooks";
+## Import
 
+```ts
+import { useUpdateNameProfileRecords } from "ens-components/hooks";
+```
+
+## Usage
+
+```tsx
 const update = useUpdateNameProfileRecords();
 update.mutate({
   account,
@@ -17,5 +28,27 @@ update.mutate({
 
 `changes` accepts the same `NameProfileRecordChange[]` produced by
 `diffProfileRecords`. Empty or invalid change sets fail during preparation.
-Call `useNameProfilePermissions` before enabling an update interface. See
-the [Transactions guide](/docs/guides/transactions).
+
+## Parameters
+
+```ts
+interface UseUpdateNameProfileRecordsParameters {
+  mutation?: UseMutationOptions;
+}
+```
+
+## Mutation Variables
+
+`UpdateNameProfileRecordsVariables` includes `account`, `changes`, `input`,
+`resolverAddress`, and optional `execution`.
+
+## Return Type
+
+`UseMutationResult<ExecuteContractWritesResult, UpdateNameProfileRecordsError, UpdateNameProfileRecordsVariables>`
+
+Check authorization with `useNameProfilePermissions` before enabling writes.
+
+## Action
+
+Uses
+[`prepareNameProfileRecordsWrite`](../actions/write/prepare-write-name-profile-records).

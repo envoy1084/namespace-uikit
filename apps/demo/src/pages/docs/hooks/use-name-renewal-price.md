@@ -1,11 +1,22 @@
+---
+title: useNameRenewalPrice
+description: Read an ENS v2 renewal quote and projected expiry.
+---
+
 # useNameRenewalPrice
 
-Reads whether a second-level `.eth` name is renewable, its current expiry,
-renewal price, projected expiry, and payment-token decimals through TanStack
-Query. Input is normalized and debounced for 300 milliseconds.
+Reads a renewal quote, current expiry, and projected expiry for a second-level
+`.eth` name. Input is normalized and debounced for 300 milliseconds.
+
+## Import
+
+```ts
+import { useNameRenewalPrice } from "ens-components/hooks";
+```
+
+## Usage
 
 ```tsx
-import { useNameRenewalPrice } from "ens-components/hooks";
 import { formatUnits } from "viem";
 
 const quote = useNameRenewalPrice({
@@ -34,11 +45,43 @@ interface UseNameRenewalPriceParameters<selectData = NameRenewalPrice> {
 }
 ```
 
-Contract and payment-token addresses default to `EnsProvider`. `duration` is
-the number of seconds added to the current expiry. The query is disabled when
-the input is not a second-level `.eth` name or no public client is available.
+### duration
 
-## Result data
+`bigint`
+
+Number of seconds added to the current expiry.
+
+### input
+
+`string | null | undefined`
+
+Label or second-level `.eth` name. The query is disabled for invalid names.
+
+### ethRegistryAddress
+
+`Address | undefined`
+
+Defaults to the configured ENS registry.
+
+### paymentTokenAddress
+
+`Address | undefined`
+
+Defaults to the first configured payment token.
+
+### registrarAddress
+
+`Address | undefined`
+
+Defaults to the configured ENS v2 registrar.
+
+### query
+
+TanStack Query options, excluding `queryFn` and `queryKey`.
+
+## Return Type
+
+`UseQueryResult<NameRenewalPrice, NameRenewalPriceError>`
 
 ```ts
 interface NameRenewalPrice {
@@ -53,6 +96,8 @@ interface NameRenewalPrice {
 Timestamps are Unix seconds. `total` is expressed in payment-token atomic
 units.
 
-See
+## Action
+
+Uses
 [`prepareNameRenewalPriceRead`](../actions/read/prepare-read-name-renewal-price)
-for validation and error codes.
+and `executeContractReads`.

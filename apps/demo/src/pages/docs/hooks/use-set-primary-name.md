@@ -1,11 +1,21 @@
+---
+title: useSetPrimaryName
+description: Set and verify an account's ENS primary name.
+---
+
 # useSetPrimaryName
 
-Sets and verifies an account's ENS primary name using the required address,
-L2 reverse, and L1 reverse writes.
+Sets an account's forward address record, L2 reverse name, and L1 reverse name.
+
+## Import
+
+```ts
+import { useSetPrimaryName } from "ens-components/hooks";
+```
+
+## Usage
 
 ```tsx
-import { useSetPrimaryName } from "ens-components/hooks";
-
 const primaryName = useSetPrimaryName();
 primaryName.mutate({
   account,
@@ -15,8 +25,40 @@ primaryName.mutate({
 });
 ```
 
-`owner` defaults to `account`. L1 and L2 reverse registrar addresses default to
-`EnsProvider`. With `strategy: "auto"`, supported wallets submit all three
-writes atomically and other wallets submit them in dependency order.
+## Parameters
 
-See the [Transactions guide](/docs/guides/transactions).
+```ts
+interface UseSetPrimaryNameParameters {
+  l1ReverseRegistrarAddress?: Address;
+  l2ReverseRegistrarAddress?: Address;
+  mutation?: UseMutationOptions;
+}
+```
+
+Reverse registrar addresses default to the provider configuration.
+
+## Mutation Variables
+
+```ts
+interface SetPrimaryNameVariables {
+  account: Address;
+  input: string | null | undefined;
+  owner?: Address;
+  resolverAddress: Address;
+  execution?: PreparedWriteExecutionOptions;
+}
+```
+
+`owner` defaults to `account`.
+
+## Return Type
+
+`UseMutationResult<ExecuteContractWritesResult, SetPrimaryNameError, SetPrimaryNameVariables>`
+
+With `strategy: "auto"`, supported wallets submit all three writes atomically;
+other wallets submit them in dependency order.
+
+## Actions
+
+Uses `prepareSetAddressRecordWrite`, `prepareSetL2PrimaryNameWrite`,
+`prepareSetL1PrimaryNameWrite`, and `useExecuteContractWrites`.
