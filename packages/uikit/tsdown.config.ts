@@ -335,6 +335,7 @@ export default defineReactConfig({
   fixedExtension: true,
   hash: false,
   nodeProtocol: true,
+  shims: false,
   target: ["es2022"],
   unbundle: true,
 });
