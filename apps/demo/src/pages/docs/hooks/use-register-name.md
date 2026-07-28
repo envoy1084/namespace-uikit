@@ -21,4 +21,4 @@ registration.mutate({
 
 The registrar defaults to `EnsProvider`. Commitment-sensitive values must
 exactly match those passed to `useCommitName`. See
-[ENS write mutation options](./write-mutation-options).
+the [Transactions guide](/docs/guides/transactions).

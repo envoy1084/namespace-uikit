@@ -1,59 +1,60 @@
 ---
 title: Introduction
-description: Install ENS Components and start integrating ENS v2 into a React application.
+description: Components, hooks, and typed actions for integrating ENS v2 into React applications.
 ---
 
 import { Card, Cards } from "vocs";
 
 # ENS Components
 
-ENS Components is a growing collection of React components, TanStack Query
-hooks, and typed contract actions for integrating ENS v2 into applications.
+ENS Components provides React components, TanStack Query hooks, and typed
+contract actions for ENS v2.
 
-## Install
+Use the components for complete user flows. Use hooks for application-specific
+interfaces. Use actions when the caller should own query and transaction
+orchestration.
 
-```bash
-npm install ens-components @tanstack/react-query@5.101.2 viem wagmi
-```
+## Features
 
-Import the package stylesheet once at the application root:
-
-```css
-@import "ens-components/styles.css";
-```
-
-The application must provide Wagmi, TanStack Query, and `EnsProvider`. Start
-with the provider guide, then choose a component or use the lower-level hooks
-and actions to build a custom flow.
+- Register and renew second-level `.eth` names.
+- Read and update resolver records.
+- Discover resolver capabilities and record permissions.
+- Compose registration, approval, resolver, and primary-name transactions.
+- Execute writes as single transactions, atomic EIP-5792 batches, or ordered
+  sequences.
+- Configure contracts and payment tokens for an ENS deployment.
 
 <Cards>
   <Card
-    title="Configure the provider"
-    description="Select the ENS v2 network and make its contracts available."
-    icon="settings"
-    to="/docs/providers/ens-provider"
+    title="Installation"
+    description="Install the package and its peer dependencies."
+    icon="download"
+    to="/docs/installation"
   />
   <Card
-    title="Register a name"
-    description="Add the complete ENS v2 registration flow."
-    icon="badge-plus"
-    to="/docs/components/name-registration"
+    title="Getting Started"
+    description="Configure providers and render your first ENS component."
+    icon="play"
+    to="/docs/getting-started"
   />
   <Card
-    title="Use query hooks"
-    description="Read availability, pricing, profiles, resolvers, and permissions."
-    icon="braces"
-    to="/docs/hooks/use-name-availability"
-  />
-  <Card
-    title="Prepare contract calls"
-    description="Compose typed ENS reads and writes without using the components."
+    title="Components"
+    description="Add complete registration, renewal, and profile flows."
     icon="blocks"
-    to="/docs/actions/read/contract-reads"
+    to="/docs/components"
+  />
+  <Card
+    title="Hooks"
+    description="Build custom interfaces on top of typed ENS queries and mutations."
+    icon="braces"
+    to="/docs/hooks"
   />
 </Cards>
 
-## Current network
+## Network support
 
-ENS v2 support currently targets the Sepolia testnet deployment. The
-`"mainnet"` network value is reserved but is not implemented yet.
+The built-in `testnet` configuration targets the ENS v2 Sepolia deployment.
+Mainnet is reserved until an ENS v2 mainnet deployment is available.
+
+Use a [custom configuration](/docs/guides/custom-configuration) for another
+compatible deployment.

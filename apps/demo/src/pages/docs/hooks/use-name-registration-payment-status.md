@@ -1,12 +1,12 @@
-# useRegistrationPaymentStatus
+# useNameRegistrationPaymentStatus
 
 Reads registration price, ERC-20 balance, and registrar allowance in one
 batched query.
 
 ```tsx
-import { useRegistrationPaymentStatus } from "ens-components/hooks";
+import { useNameRegistrationPaymentStatus } from "ens-components/hooks";
 
-const payment = useRegistrationPaymentStatus({
+const payment = useNameRegistrationPaymentStatus({
   account: address,
   duration: 31_557_600n,
   input: "example",
@@ -18,14 +18,14 @@ const canRegister = payment.data?.hasSufficientBalance && payment.data.hasSuffic
 ## Parameters
 
 ```ts
-interface UseRegistrationPaymentStatusParameters<selectData = RegistrationPaymentStatus> {
+interface UseNameRegistrationPaymentStatusParameters<selectData = NameRegistrationPaymentStatus> {
   account: Address | null | undefined;
   duration: bigint;
   input: string | null | undefined;
   paymentTokenAddress?: Address;
   registrarAddress?: Address;
   query?: Omit<
-    UseQueryOptions<RegistrationPaymentStatus, RegistrationPaymentStatusError, selectData>,
+    UseQueryOptions<NameRegistrationPaymentStatus, NameRegistrationPaymentStatusError, selectData>,
     "queryFn" | "queryKey"
   >;
 }
@@ -40,7 +40,7 @@ token defaults to the first token in the provider configuration.
 ## Result data
 
 ```ts
-interface RegistrationPaymentStatus {
+interface NameRegistrationPaymentStatus {
   readonly allowance: bigint;
   readonly balance: bigint;
   readonly base: bigint;
@@ -56,5 +56,5 @@ Amounts are payment-token atomic units. The generated query key includes the
 network, contract addresses, account, duration, and input.
 
 See
-[`prepareRegistrationPaymentStatusRead`](../actions/read/prepare-read-registration-payment-status)
+[`prepareNameRegistrationPaymentStatusRead`](../actions/read/prepare-read-name-registration-payment-status)
 for reads and error codes.

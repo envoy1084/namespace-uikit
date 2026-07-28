@@ -1,14 +1,13 @@
-# prepareRegistrationPaymentStatusRead
+# prepareNameRegistrationPaymentStatusRead
 
 Prepares one multicall plan for registration availability, price, token
 decimals, wallet balance, and registrar allowance.
 
 ```ts
-const prepared = prepareRegistrationPaymentStatusRead({
+const prepared = prepareNameRegistrationPaymentStatusRead({
   account,
   duration,
   input: "example.eth",
-  network: "testnet",
   paymentTokenAddress,
   registrarAddress,
 });

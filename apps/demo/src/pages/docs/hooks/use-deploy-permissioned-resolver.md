@@ -16,4 +16,4 @@ deployment.mutate({
 The factory and resolver implementation default to `EnsProvider`. Preparation
 simulates the factory call and validates the predicted resolver address before
 wallet submission. See
-[ENS write mutation options](./write-mutation-options).
+the [Transactions guide](/docs/guides/transactions).

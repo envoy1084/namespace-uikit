@@ -1,15 +1,14 @@
-# prepareProfileRecordsWrite
+# prepareNameProfileRecordsWrite
 
 Encodes profile record changes into one atomic ENS v2
 `multicallWithNodeCheck` transaction and simulates it from the supplied
 account.
 
 ```ts
-const prepared = await prepareProfileRecordsWrite(publicClient, {
+const prepared = await prepareNameProfileRecordsWrite(publicClient, {
   account,
   changes,
   input: "example.eth",
-  network: "testnet",
   resolverAddress,
 });
 

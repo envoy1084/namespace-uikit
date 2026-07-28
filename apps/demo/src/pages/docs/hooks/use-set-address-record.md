@@ -16,4 +16,4 @@ addressRecord.mutate({
 
 This hook writes ENSIP-9 coin type `60`. Use `useUpdateProfileRecords` for
 arbitrary coin types. See
-[ENS write mutation options](./write-mutation-options).
+the [Transactions guide](/docs/guides/transactions).

@@ -1,13 +1,13 @@
-# useNamePrice
+# useNameRegistrationPrice
 
 Reads the current ENS v2 registration price and payment-token decimals through
 TanStack Query. Input is normalized and debounced for 300 milliseconds.
 
 ```tsx
-import { useNamePrice } from "ens-components/hooks";
+import { useNameRegistrationPrice } from "ens-components/hooks";
 import { formatUnits } from "viem";
 
-const price = useNamePrice({
+const price = useNameRegistrationPrice({
   duration: 31_557_600n,
   input: "example",
 });
@@ -20,12 +20,15 @@ if (price.data) {
 ## Parameters
 
 ```ts
-interface UseNamePriceParameters<selectData = NamePrice> {
+interface UseNameRegistrationPriceParameters<selectData = NameRegistrationPrice> {
   duration: bigint;
   input: string | null | undefined;
   paymentTokenAddress?: Address;
   registrarAddress?: Address;
-  query?: Omit<UseQueryOptions<NamePrice, NamePriceError, selectData>, "queryFn" | "queryKey">;
+  query?: Omit<
+    UseQueryOptions<NameRegistrationPrice, NameRegistrationPriceError, selectData>,
+    "queryFn" | "queryKey"
+  >;
 }
 ```
 
@@ -43,7 +46,7 @@ name or no public client is available.
 ## Result data
 
 ```ts
-interface NamePrice {
+interface NameRegistrationPrice {
   readonly base: bigint;
   readonly decimals: number;
   readonly premium: bigint;
@@ -57,5 +60,5 @@ The generated query key includes the network, registrar, payment token,
 duration, and normalized name.
 
 See
-[`prepareNamePriceRead`](../actions/read/prepare-read-name-price) for
+[`prepareNameRegistrationPriceRead`](../actions/read/prepare-read-name-registration-price) for
 validation and error codes.

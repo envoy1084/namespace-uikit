@@ -20,4 +20,4 @@ commit.mutate({
 
 The registrar defaults to `EnsProvider` and can be overridden when creating the
 hook. The commitment inputs must be identical to the later registration
-inputs. See [ENS write mutation options](./write-mutation-options).
+inputs. See the [Transactions guide](/docs/guides/transactions).

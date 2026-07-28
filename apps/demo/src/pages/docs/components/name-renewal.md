@@ -13,7 +13,7 @@ names:
 Anyone can pay to renew a name. The connected account does not need to own it.
 
 It requires `WagmiProvider`, `QueryClientProvider`, and
-[`EnsProvider`](../providers/ens-provider).
+[`EnsProvider`](/docs/config/ens-provider).
 
 ## Basic usage
 

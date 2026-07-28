@@ -19,4 +19,4 @@ primaryName.mutate({
 `EnsProvider`. With `strategy: "auto"`, supported wallets submit all three
 writes atomically and other wallets submit them in dependency order.
 
-See [ENS write mutation options](./write-mutation-options).
+See the [Transactions guide](/docs/guides/transactions).

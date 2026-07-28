@@ -8,7 +8,7 @@ The application supplies the current records. Fetching, caching, and refreshing
 that snapshot remain under application control.
 
 The component requires `WagmiProvider`, `QueryClientProvider`, and
-[`EnsProvider`](../providers/ens-provider).
+[`EnsProvider`](/docs/config/ens-provider).
 
 ## Basic usage
 

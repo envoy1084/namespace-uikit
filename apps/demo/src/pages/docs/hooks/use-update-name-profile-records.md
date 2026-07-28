@@ -1,12 +1,12 @@
-# useUpdateProfileRecords
+# useUpdateNameProfileRecords
 
 Simulates and submits a PermissionedResolver multicall containing profile
 record changes.
 
 ```tsx
-import { useUpdateProfileRecords } from "ens-components/hooks";
+import { useUpdateNameProfileRecords } from "ens-components/hooks";
 
-const update = useUpdateProfileRecords();
+const update = useUpdateNameProfileRecords();
 update.mutate({
   account,
   changes,
@@ -18,4 +18,4 @@ update.mutate({
 `changes` accepts the same `NameProfileRecordChange[]` produced by
 `diffProfileRecords`. Empty or invalid change sets fail during preparation.
 Call `useNameProfilePermissions` before enabling an update interface. See
-[ENS write mutation options](./write-mutation-options).
+the [Transactions guide](/docs/guides/transactions).

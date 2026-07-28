@@ -14,7 +14,7 @@ second-level `.eth` names:
 8. Display the confirmed registration.
 
 It requires `WagmiProvider`, `QueryClientProvider`, and
-[`EnsProvider`](../providers/ens-provider).
+[`EnsProvider`](/docs/config/ens-provider).
 
 ## Basic usage
 

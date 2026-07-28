@@ -15,4 +15,4 @@ approval.mutate({
 ```
 
 `amount` is expressed in token atomic units. See
-[ENS write mutation options](./write-mutation-options).
+the [Transactions guide](/docs/guides/transactions).

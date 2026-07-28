@@ -18,4 +18,4 @@ renewal.mutate({
 `duration` is the number of seconds added to the current expiry. The registrar
 defaults to `EnsProvider`. Token approval is a separate write and can be
 composed atomically with this write through `useExecuteContractWrites`. See
-[ENS write mutation options](./write-mutation-options).
+the [Transactions guide](/docs/guides/transactions).
