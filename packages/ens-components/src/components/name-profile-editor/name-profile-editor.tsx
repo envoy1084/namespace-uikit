@@ -8,7 +8,7 @@ import type {
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 
-import { Button, Modal, cn } from "@thenamespace/uikit";
+import { Button, Modal, Surface, cn } from "@thenamespace/uikit";
 
 import { ProfileHeader } from "#/components/name-profile-editor/profile-header";
 
@@ -51,7 +51,6 @@ export function NameProfileEditor({
   const content = (
     <ProfileHeader
       avatar={avatar}
-      className={cn("w-full max-w-md", className) ?? ""}
       header={header}
       {...(upload === undefined ? {} : { upload })}
       onAvatarChange={setAvatar}
@@ -59,18 +58,28 @@ export function NameProfileEditor({
     />
   );
 
-  if (presentation === "inline") return content;
+  if (presentation === "inline") {
+    return (
+      <Surface
+        className={
+          cn(
+            "relative flex w-full max-w-md flex-col rounded-3xl p-6",
+            className,
+          ) ?? ""
+        }
+      >
+        {content}
+      </Surface>
+    );
+  }
 
   return (
     <Modal>
       {slots?.trigger ?? <Button>Edit profile</Button>}
       <Modal.Backdrop>
         <Modal.Container>
-          <Modal.Dialog
-            aria-label={`Edit ${name} profile`}
-            className="w-full max-w-md bg-transparent p-0 shadow-none"
-          >
-            <Modal.CloseTrigger className="top-4 right-auto left-4 z-50" />
+          <Modal.Dialog aria-label={`Edit ${name} profile`}>
+            <Modal.CloseTrigger />
             {content}
           </Modal.Dialog>
         </Modal.Container>

@@ -9,31 +9,32 @@ import type {
 import { useState } from "react";
 
 import {
+  Button,
   DropZone,
   FieldError,
   Input,
   Label,
   Popover,
   Spinner,
+  Surface,
   TextField,
   Typography,
-  cn,
 } from "@thenamespace/uikit";
 import { Add01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 interface MediaControlProps {
-  className: string;
   kind: NameProfileMediaKind;
   onChange: (value: string) => void;
   upload?: NameProfileMediaUpload;
   value: string;
+  variant: "primary" | "secondary";
 }
 
 function UploadMediaControl({
-  className,
   kind,
   onChange,
   upload,
+  variant,
 }: MediaControlProps & { upload: NameProfileMediaUpload }) {
   const [error, setError] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -64,9 +65,9 @@ function UploadMediaControl({
         <DropZone.Trigger
           isIconOnly
           aria-label={`Choose profile ${kind}`}
-          className={className}
           isDisabled={isUploading}
-          variant="secondary"
+          size="lg"
+          variant={variant}
         >
           {isUploading ? (
             <Spinner size="sm" />
@@ -89,10 +90,10 @@ function UploadMediaControl({
 }
 
 function UrlMediaControl({
-  className,
   kind,
   onChange,
   value,
+  variant,
 }: MediaControlProps) {
   const isInvalid =
     value.length > 0 &&
@@ -100,12 +101,14 @@ function UrlMediaControl({
 
   return (
     <Popover>
-      <Popover.Trigger
+      <Button
+        isIconOnly
         aria-label={`Set profile ${kind} URL`}
-        className={className}
+        size="lg"
+        variant={variant}
       >
         <HugeiconsIcon icon={Add01Icon} size={28} strokeWidth={1.6} />
-      </Popover.Trigger>
+      </Button>
       <Popover.Content placement="bottom">
         <Popover.Arrow />
         <Popover.Dialog className="w-72 p-3">
@@ -142,28 +145,23 @@ function MediaControl(props: MediaControlProps) {
 
 export function ProfileHeader({
   avatar,
-  className,
   header,
   onAvatarChange,
   onHeaderChange,
   upload,
 }: {
   avatar: string;
-  className?: string;
   header: string;
   onAvatarChange: (value: string) => void;
   onHeaderChange: (value: string) => void;
   upload?: NameProfileEditorUploadHandlers;
 }) {
   return (
-    <section
-      aria-label="Profile media"
-      className={cn(
-        "bg-default relative w-full overflow-visible rounded-3xl pb-12",
-        className,
-      )}
-    >
-      <div className="relative h-36 overflow-hidden rounded-t-3xl bg-gradient-to-b from-[#858585] via-[#d4d4d4] to-[#f2f2f2]">
+    <section aria-label="Profile media" className="relative w-full pb-12">
+      <Surface
+        className="relative h-36 overflow-hidden rounded-2xl p-0"
+        variant="secondary"
+      >
         {header.length > 0 && (
           <img
             alt=""
@@ -174,33 +172,33 @@ export function ProfileHeader({
 
         <div className="absolute top-4 right-4">
           <MediaControl
-            className="flex size-12 items-center justify-center rounded-2xl border border-white/20 bg-[#8d8d8d]/85 text-white shadow-[0_3px_0_rgba(0,0,0,0.14)] backdrop-blur-sm outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
             kind="header"
             value={header}
+            variant="primary"
             {...(upload?.header === undefined ? {} : { upload: upload.header })}
             onChange={onHeaderChange}
           />
         </div>
-      </div>
+      </Surface>
 
-      <div className="absolute top-13 left-1/2 size-28 -translate-x-1/2 rounded-[1.6rem] border-[6px] border-white/70 bg-white p-4 shadow-[0_16px_28px_rgba(0,0,0,0.12)]">
+      <Surface className="absolute top-13 left-1/2 flex size-28 -translate-x-1/2 items-center justify-center rounded-2xl p-4">
         {avatar.length > 0 && (
           <img
             alt=""
-            className="absolute inset-1 size-[calc(100%_-_0.5rem)] rounded-[1.25rem] object-cover"
+            className="absolute inset-2 size-[calc(100%_-_1rem)] rounded-xl object-cover"
             src={avatar}
           />
         )}
-        <div className="relative flex size-full items-center justify-center rounded-full bg-[#f2f2f2]">
+        <div className="relative">
           <MediaControl
-            className="flex size-14 items-center justify-center rounded-full text-[#858585] outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
             kind="avatar"
             value={avatar}
+            variant="secondary"
             {...(upload?.avatar === undefined ? {} : { upload: upload.avatar })}
             onChange={onAvatarChange}
           />
         </div>
-      </div>
+      </Surface>
     </section>
   );
 }
