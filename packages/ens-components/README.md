@@ -13,7 +13,7 @@ actions for integrating ENS v2 into React applications.
 - Permission-aware ENS profile record editor
 - Configured payment-token selection with resumable state
 - Dialog and inline registration presentations
-- TanStack Query hooks for availability, pricing, and payment status
+- TanStack Query hooks for availability, pricing, profiles, and payment status
 - Framework-independent actions returning `neverthrow` results
 - Resumable registration flow
 
@@ -197,6 +197,8 @@ reviews changes, and submits one atomic resolver multicall. See
 
 #### Resolver and profile
 
+- [useNameProfile](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-profile.md)
+- [useNameRecords](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-records.md)
 - [useNameProfilePermissions](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-profile-permissions.md)
 - [useNameResolver](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-resolver.md)
 - [useResolverCapabilities](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-resolver-capabilities.md)
@@ -229,6 +231,8 @@ reviews changes, and submits one atomic resolver multicall. See
 - [prepareCommitmentStatusRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-commitment-status.md)
 - [preparePermissionedResolverVerificationRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-permissioned-resolver-verification.md)
 - [prepareNameResolverRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-resolver.md)
+- [prepareNameRecordsRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-records.md)
+- [prepareNameProfileDiscoveryRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-profile-discovery.md)
 - [preparePermissionedResolverSupportRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-permissioned-resolver-support.md)
 - [prepareNameProfilePermissionsRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-profile-permissions.md)
 

@@ -37,11 +37,13 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   DUPLICATE_TEXT_KEY: "Each text record key can only be added once.",
   EMPTY_PERMISSION_REQUESTS:
     "Select at least one record before checking permissions.",
+  EMPTY_RECORD_SELECTION: "Select at least one ENS record to read.",
   EMPTY_PROFILE_CHANGES: "There are no profile changes to update.",
   EMPTY_INPUT: "Enter an ENS name.",
   EMPTY_CALLS: "There are no transactions to submit.",
   EMPTY_LABEL: "The ENS name contains an empty label.",
   IMAGE_UPLOAD_FAILED: "The image upload did not return a usable URL.",
+  GRAPHQL_READ_FAILED: "Unable to reach the ENS indexer. Please try again.",
   INPUT_TOO_LONG: "The ENS name is too long.",
   INVALID_DURATION: "Select a valid duration.",
   INVALID_ETH_REGISTRY_ADDRESS: "The ENS registry address is invalid.",
@@ -72,6 +74,8 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   INVALID_FACTORY_ADDRESS: "The resolver factory address is invalid.",
   INVALID_IMPLEMENTATION_ADDRESS:
     "The resolver implementation address is invalid.",
+  INVALID_INDEXER_RESPONSE: "The ENS indexer returned an invalid response.",
+  INVALID_INDEXER_URL: "The ENS indexer URL is invalid.",
   INVALID_IMAGE_FILE: "Select a valid image file.",
   INVALID_IMAGE_URL:
     "Enter an HTTP, HTTPS, IPFS, IPNS, data, or eip155 image URI.",
@@ -118,6 +122,14 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
     const name = getName(data);
     return name ? `${name} is not available.` : "This name is not available.";
   },
+  NAME_NOT_FOUND: (data) => {
+    const name = getName(data);
+    return name
+      ? `${name} was not found by the ENS indexer.`
+      : "This name was not found by the ENS indexer.";
+  },
+  NAME_RECORD_DECODE_FAILED: "One or more ENS records could not be decoded.",
+  NAME_RECORD_READ_FAILED: "One or more ENS records could not be resolved.",
   NAME_NOT_RENEWABLE: (data) => {
     const name = getName(data);
     return name
