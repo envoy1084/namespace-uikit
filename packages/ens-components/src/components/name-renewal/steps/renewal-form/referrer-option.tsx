@@ -4,9 +4,10 @@ import { useCallback } from "react";
 
 import { Disclosure, FieldError, Input, Label, TextField, Tooltip } from "@thenamespace/uikit";
 import { HugeiconsIcon, InformationCircleIcon } from "@thenamespace/uikit/icons";
-import { getAddress, isAddress, pad, zeroHash } from "viem";
+import { isAddress, zeroHash } from "viem";
 
 import { useNameRenewal } from "#/components/name-renewal/context";
+import { encodeReferrerAddressInput } from "#/lib/helpers";
 
 export function RenewalAdvancedOptions({ isDisabled = false }: { isDisabled?: boolean }) {
   const { referrerInput, setReferrer, setReferrerInput } = useNameRenewal();
@@ -16,14 +17,7 @@ export function RenewalAdvancedOptions({ isDisabled = false }: { isDisabled?: bo
   const updateAddress = useCallback(
     (nextValue: string) => {
       setReferrerInput(nextValue);
-      const address = nextValue.trim();
-      if (address === "") {
-        setReferrer(zeroHash);
-      } else if (isAddress(address)) {
-        setReferrer(pad(getAddress(address), { size: 32 }));
-      } else {
-        setReferrer(zeroHash);
-      }
+      setReferrer(encodeReferrerAddressInput(nextValue) ?? zeroHash);
     },
     [setReferrer, setReferrerInput],
   );

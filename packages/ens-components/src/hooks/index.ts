@@ -18,7 +18,7 @@ export * from "#/hooks/use-renew-name";
 export * from "#/hooks/use-resolver-capabilities";
 export * from "#/hooks/use-set-address-record";
 export * from "#/hooks/use-set-primary-name";
-export * from "#/hooks/use-update-profile-records";
+export * from "#/hooks/use-update-name-profile-records";
 export * from "#/hooks/use-wallet-capabilities";
 export type {
   PreparedWriteExecutionOptions,

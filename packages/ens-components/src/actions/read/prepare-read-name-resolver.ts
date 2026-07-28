@@ -25,7 +25,7 @@ type NameResolverRequest = ContractFunctionParameters<
   readonly [Hex]
 >;
 
-export interface NameResolverReadResult {
+export interface NameResolverResult {
   readonly name: string;
   readonly node: Hex;
   readonly offset: bigint;

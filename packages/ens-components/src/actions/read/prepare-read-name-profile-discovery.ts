@@ -2,7 +2,7 @@ import { err, ok, type Result } from "neverthrow";
 import type { Address, Hex } from "viem";
 
 import type { PreparedGraphQLRead } from "#/actions/read/graphql-read";
-import { parseNameProfileDiscovery } from "#/actions/read/prepare-read-name-profile-discovery-parser";
+import { parseNameProfileDiscovery } from "#/actions/read/name-profile-discovery-parser";
 import type { EnsNetwork } from "#/data";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";

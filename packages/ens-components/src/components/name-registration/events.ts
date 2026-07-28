@@ -1,5 +1,6 @@
 import type { Address, Hex, TransactionReceipt } from "viem";
 
+import type { ComponentEventHandler } from "#/components/emit-event";
 import type { EnsNetwork } from "#/data";
 
 export interface NameRegistrationTransactionEvent {
@@ -78,7 +79,7 @@ export interface NameRegistrationErrorEvent {
   transactionHash?: Hex;
 }
 
-export type NameRegistrationEventHandler<TEvent> = (event: TEvent) => Promise<void> | void;
+export type NameRegistrationEventHandler<TEvent> = ComponentEventHandler<TEvent>;
 
 export interface NameRegistrationEvents {
   /** Called after an approval transaction is successfully confirmed. */

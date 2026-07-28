@@ -21,7 +21,7 @@ import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";
 
-export type PrepareProfileRecordsWriteError =
+export type PrepareNameProfileRecordsWriteError =
   | "EMPTY_PROFILE_CHANGES"
   | "INVALID_ACCOUNT_ADDRESS"
   | "INVALID_PROFILE_RECORDS"
@@ -29,7 +29,7 @@ export type PrepareProfileRecordsWriteError =
   | "PROFILE_UPDATE_SIMULATION_FAILED"
   | ParseNameInputError;
 
-export interface PrepareProfileRecordsWriteParameters {
+export interface PrepareNameProfileRecordsWriteParameters {
   readonly account: Address;
   readonly changes: readonly NameProfileRecordChange[];
   readonly input: string | null | undefined;
@@ -44,17 +44,17 @@ type ProfileRecordsRequest = ContractFunctionParameters<
   readonly [Hex, readonly Hex[]]
 >;
 
-export interface ProfileRecordsWriteMetadata {
+export interface NameProfileRecordsWriteMetadata {
   readonly changes: readonly NameProfileRecordChange[];
   readonly name: string;
   readonly node: Hex;
   readonly resolverAddress: Address;
 }
 
-export type PreparedProfileRecordsWrite = PreparedContractWrite<
+export type PreparedNameProfileRecordsWrite = PreparedContractWrite<
   ProfileRecordsRequest,
-  "update-profile-records",
-  ProfileRecordsWriteMetadata
+  "update-name-profile-records",
+  NameProfileRecordsWriteMetadata
 >;
 
 function contenthashBytes(value: string | null): Hex {
@@ -140,10 +140,10 @@ function encodeProfileChange(node: Hex, change: NameProfileRecordChange): Hex {
  * Encodes all profile changes into one atomic PermissionedResolver multicall
  * and simulates the exact transaction from the connected account.
  */
-export function prepareProfileRecordsWrite(
+export function prepareNameProfileRecordsWrite(
   publicClient: PublicClient,
-  parameters: PrepareProfileRecordsWriteParameters,
-): ResultAsync<PreparedProfileRecordsWrite, PrepareProfileRecordsWriteError> {
+  parameters: PrepareNameProfileRecordsWriteParameters,
+): ResultAsync<PreparedNameProfileRecordsWrite, PrepareNameProfileRecordsWriteError> {
   if (!isNonZeroAddress(parameters.account)) {
     return errAsync("INVALID_ACCOUNT_ADDRESS");
   }
@@ -186,7 +186,7 @@ export function prepareProfileRecordsWrite(
         to: parameters.resolverAddress,
         value: 0n,
       },
-      kind: "update-profile-records" as const,
+      kind: "update-name-profile-records" as const,
       metadata: {
         changes: parameters.changes,
         name: parsed.value.normalizedName,

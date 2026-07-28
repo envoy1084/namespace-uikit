@@ -1,53 +1,32 @@
 "use client";
 
-import type { ReactNode } from "react";
-
-import { Modal } from "@thenamespace/uikit";
-import { cn } from "@thenamespace/uikit/utils";
-
+import {
+  FlowBody,
+  FlowFooter,
+  FlowHeader,
+  FlowHeading,
+  type FlowLayoutProps,
+} from "#/components/flow-layout";
 import { useNameRenewal } from "#/components/name-renewal/context";
 
-interface NameRenewalLayoutProps {
-  children: ReactNode;
-  className?: string;
+type NameRenewalLayoutProps = Omit<FlowLayoutProps, "presentation">;
+
+export function NameRenewalHeader(props: NameRenewalLayoutProps) {
+  const { presentation } = useNameRenewal();
+  return <FlowHeader {...props} presentation={presentation} />;
 }
 
-export function NameRenewalHeader({ children, className }: NameRenewalLayoutProps) {
+export function NameRenewalHeading(props: NameRenewalLayoutProps) {
   const { presentation } = useNameRenewal();
-  return presentation === "dialog" ? (
-    <Modal.Header {...(className === undefined ? {} : { className })}>{children}</Modal.Header>
-  ) : (
-    <header className={cn("flex flex-col gap-3", className)}>{children}</header>
-  );
+  return <FlowHeading {...props} presentation={presentation} />;
 }
 
-export function NameRenewalHeading({ children, className }: NameRenewalLayoutProps) {
+export function NameRenewalBody(props: NameRenewalLayoutProps) {
   const { presentation } = useNameRenewal();
-  return presentation === "dialog" ? (
-    <Modal.Heading {...(className === undefined ? {} : { className })}>{children}</Modal.Heading>
-  ) : (
-    <h2 className={cn("text-foreground text-base font-medium", className)}>{children}</h2>
-  );
+  return <FlowBody {...props} presentation={presentation} />;
 }
 
-export function NameRenewalBody({ children, className }: NameRenewalLayoutProps) {
+export function NameRenewalFooter(props: NameRenewalLayoutProps) {
   const { presentation } = useNameRenewal();
-  return presentation === "dialog" ? (
-    <Modal.Body {...(className === undefined ? {} : { className })}>{children}</Modal.Body>
-  ) : (
-    <div className={cn("text-muted min-h-0 flex-1 text-sm leading-[1.43]", className)}>
-      {children}
-    </div>
-  );
-}
-
-export function NameRenewalFooter({ children, className }: NameRenewalLayoutProps) {
-  const { presentation } = useNameRenewal();
-  return presentation === "dialog" ? (
-    <Modal.Footer {...(className === undefined ? {} : { className })}>{children}</Modal.Footer>
-  ) : (
-    <footer className={cn("flex flex-row items-center justify-end gap-2", className)}>
-      {children}
-    </footer>
-  );
+  return <FlowFooter {...props} presentation={presentation} />;
 }

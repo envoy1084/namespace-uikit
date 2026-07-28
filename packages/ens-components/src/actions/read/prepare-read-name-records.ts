@@ -17,13 +17,13 @@ import type {
 import {
   decodeNameRecord,
   descriptorsForNameRecords,
-  emptyNameProfileRecords,
+  createEmptyNameProfileRecords,
   encodeNameRecordCall,
   normalizeNameRecordSelection,
   type NameRecordDescriptor,
   type NameRecordSelection,
   type NormalizedNameRecordSelection,
-} from "#/actions/read/prepare-read-name-records-codecs";
+} from "#/actions/read/name-record-codecs";
 import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
 import type { EnsNetwork } from "#/data";
 import { universalResolverV2Abi } from "#/data/abi";
@@ -34,7 +34,7 @@ import { parseNameInput } from "#/lib/parse-name-input";
 export type {
   NameRecordSelection,
   NormalizedNameRecordSelection,
-} from "#/actions/read/prepare-read-name-records-codecs";
+} from "#/actions/read/name-record-codecs";
 
 export interface NameRecordsResult {
   readonly name: string;
@@ -122,7 +122,7 @@ export function prepareNameRecordsRead(
     kind: "name-records",
     reads,
     select: (results: ContractReadResults<NameRecordReadTuple>) => {
-      const records = emptyNameProfileRecords();
+      const records = createEmptyNameProfileRecords();
       let resolverAddress: Address | undefined;
 
       try {

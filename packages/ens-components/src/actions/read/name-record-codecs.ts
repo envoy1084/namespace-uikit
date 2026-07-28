@@ -1,13 +1,5 @@
-import type {
-  NameProfileFormValues,
-  NameProfilePublicKeyRecord,
-} from "#/components/name-profile-editor/types";
-
 import { getCoderByCoinType } from "@ensdomains/address-encoder";
-import {
-  decode as decodeContentHash,
-  getCodec,
-} from "@ensdomains/content-hash";
+import { decode as decodeContentHash, getCodec } from "@ensdomains/content-hash";
 import { err, ok, type Result } from "neverthrow";
 import {
   decodeAbiParameters,
@@ -21,6 +13,10 @@ import {
   type Hex,
 } from "viem";
 
+import type {
+  NameProfileFormValues,
+  NameProfilePublicKeyRecord,
+} from "#/components/name-profile-editor/types";
 import { permissionedResolverAbi } from "#/data/abi";
 
 const MAX_UINT256 = (1n << 256n) - 1n;
@@ -69,9 +65,7 @@ export type NameRecordDescriptor =
 
 function uniqueSorted(values: readonly string[]): string[] {
   return [...new Set(values)].reduce<string[]>((sorted, value) => {
-    const index = sorted.findIndex(
-      (existing) => value.localeCompare(existing) < 0,
-    );
+    const index = sorted.findIndex((existing) => value.localeCompare(existing) < 0);
     if (index === -1) return sorted.concat(value);
     return sorted.slice(0, index).concat(value, sorted.slice(index));
   }, []);
@@ -162,27 +156,18 @@ export function descriptorsForNameRecords(
   selection: NormalizedNameRecordSelection,
 ): NameRecordDescriptor[] {
   return [
-    ...selection.abi.map(
-      (contentType) => ({ contentType, type: "abi" }) as const,
-    ),
-    ...selection.addresses.map(
-      (coinType) => ({ coinType, type: "address" }) as const,
-    ),
+    ...selection.abi.map((contentType) => ({ contentType, type: "abi" }) as const),
+    ...selection.addresses.map((coinType) => ({ coinType, type: "address" }) as const),
     ...(selection.contenthash ? ([{ type: "contenthash" }] as const) : []),
     ...selection.data.map((key) => ({ key, type: "data" }) as const),
-    ...selection.interfaces.map(
-      (interfaceId) => ({ interfaceId, type: "interface" }) as const,
-    ),
+    ...selection.interfaces.map((interfaceId) => ({ interfaceId, type: "interface" }) as const),
     ...(selection.name ? ([{ type: "name" }] as const) : []),
     ...(selection.pubkey ? ([{ type: "pubkey" }] as const) : []),
     ...selection.text.map((key) => ({ key, type: "text" }) as const),
   ];
 }
 
-export function encodeNameRecordCall(
-  node: Hex,
-  descriptor: NameRecordDescriptor,
-): Hex {
+export function encodeNameRecordCall(node: Hex, descriptor: NameRecordDescriptor): Hex {
   if (descriptor.type === "abi") {
     return encodeFunctionData({
       abi: permissionedResolverAbi,
@@ -239,7 +224,7 @@ export function encodeNameRecordCall(
   });
 }
 
-export function emptyNameProfileRecords(): NameProfileFormValues {
+export function createEmptyNameProfileRecords(): NameProfileFormValues {
   return {
     abi: [],
     addresses: [],
@@ -314,10 +299,7 @@ export function decodeNameRecord(
     return;
   }
   if (descriptor.type === "pubkey") {
-    const [x, y] = decodeAbiParameters(
-      [{ type: "bytes32" }, { type: "bytes32" }],
-      value,
-    );
+    const [x, y] = decodeAbiParameters([{ type: "bytes32" }, { type: "bytes32" }], value);
     records.pubkey =
       x === zeroHash && y === zeroHash
         ? { x: "", y: "" }

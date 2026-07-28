@@ -1,25 +1,27 @@
 "use client";
 
-import type { Address } from "viem";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
 
+import { Button, Form, Surface, Typography } from "@thenamespace/uikit";
+import { FormProvider } from "react-hook-form";
+import type { Address } from "viem";
+import { useConnection } from "wagmi";
+
+import { emitComponentEvent } from "#/components/emit-event";
 import type {
   NameProfileEditorMessages,
   NameProfileEditorPresentation,
   NameProfileEditorSlots,
 } from "#/components/name-profile-editor/customization";
-import type { NameProfileEditorEvents } from "#/components/name-profile-editor/events";
-import type {
-  NameProfileEditorView,
-  NameProfileFormValues,
-  NameProfileImageUpload,
-} from "#/components/name-profile-editor/types";
-
-import { useEffect, useId, useMemo, useRef, useState } from "react";
-
-import { Button, Form, Surface, Typography } from "@thenamespace/uikit";
-import { FormProvider } from "react-hook-form";
-import { useConnection } from "wagmi";
-
 import { ProfileDiffScreen } from "#/components/name-profile-editor/diff/diff-screen";
 import { EditorHeader } from "#/components/name-profile-editor/editor/header";
 import {
@@ -29,11 +31,18 @@ import {
 import { RecordSection } from "#/components/name-profile-editor/editor/record-section";
 import { EditorSearch } from "#/components/name-profile-editor/editor/search";
 import { EditorSidebar } from "#/components/name-profile-editor/editor/sidebar";
+import type { RecordDefinition } from "#/components/name-profile-editor/editor/types";
 import { useProfileEditorForm } from "#/components/name-profile-editor/editor/use-profile-editor-form";
 import { useProfileMedia } from "#/components/name-profile-editor/editor/use-profile-media";
-import { emitNameProfileEditorEvent } from "#/components/name-profile-editor/emit-event";
+import type { NameProfileEditorEvents } from "#/components/name-profile-editor/events";
+import type { ProfileUpdateSubmissionSuccess } from "#/components/name-profile-editor/submission/profile-update-submission";
 import { useProfileUpdateSubmission } from "#/components/name-profile-editor/submission/use-profile-update-submission";
 import { ProfileUpdateSuccess } from "#/components/name-profile-editor/success/profile-update-success";
+import type {
+  NameProfileEditorView,
+  NameProfileFormValues,
+  NameProfileImageUpload,
+} from "#/components/name-profile-editor/types";
 import { useNameProfilePermissions } from "#/hooks";
 import { formatError } from "#/lib";
 import { useEnsConfig } from "#/providers";
@@ -91,15 +100,19 @@ export function ProfileEditor({
     requests: permissionRequests,
     resolverAddress,
   });
-  const submission = useProfileUpdateSubmission({
-    events,
-    messages,
-    name,
-    onSuccess: (result) => {
+  const handleUpdateSuccess = useCallback(
+    (result: ProfileUpdateSubmissionSuccess) => {
       onConfirmed(result.review.values);
       setSuccessfulUpdate(result);
       setView("success");
     },
+    [onConfirmed],
+  );
+  const submission = useProfileUpdateSubmission({
+    events,
+    messages,
+    name,
+    onSuccess: handleUpdateSuccess,
     ...(onPendingChange === undefined ? {} : { onPendingChange }),
   });
 
@@ -109,10 +122,7 @@ export function ProfileEditor({
   }, [resetVersion]);
 
   useEffect(() => {
-    if (
-      !permissions.isError ||
-      permissions.error === lastPermissionErrorRef.current
-    ) {
+    if (!permissions.isError || permissions.error === lastPermissionErrorRef.current) {
       return;
     }
 
@@ -121,10 +131,8 @@ export function ProfileEditor({
       permissions.error === "RESOLVER_NOT_FOUND" ||
       permissions.error === "UNSUPPORTED_RESOLVER" ||
       permissions.error === "INVALID_RESOLVER_ADDRESS";
-    emitNameProfileEditorEvent(events.onError, {
-      ...(connection.address === undefined
-        ? {}
-        : { account: connection.address }),
+    emitComponentEvent(events.onError, {
+      ...(connection.address === undefined ? {} : { account: connection.address }),
       chainId: chain.id,
       error: permissions.error,
       name,
@@ -167,13 +175,63 @@ export function ProfileEditor({
     hasPermissionForChanges;
   const continueLabel = !hasConnectedAccount
     ? messages.connectWalletLabel
-    : permissions.isPending ||
-        (!permissions.isError && permissions.data === undefined)
+    : permissions.isPending || (!permissions.isError && permissions.data === undefined)
       ? messages.checkingAccessLabel
-      : permissions.isError ||
-          (editor.review !== undefined && !hasPermissionForChanges)
+      : permissions.isError || (editor.review !== undefined && !hasPermissionForChanges)
         ? messages.noPermissionLabel
         : messages.nextLabel;
+  const handleBack = useCallback(() => setView("editor"), []);
+  const handleUpdate = useCallback(() => {
+    void (async () => {
+      const refreshed = await permissions.refetch();
+      const refreshedPermissions = refreshed.data;
+      if (
+        refreshedPermissions === undefined ||
+        !canEditProfileChanges(refreshedPermissions, editor.review?.changes ?? [])
+      ) {
+        return;
+      }
+
+      await submission.handleUpdate(
+        editor.review as NonNullable<typeof editor.review>,
+        refreshedPermissions.resolverAddress,
+      );
+    })();
+  }, [editor.review, permissions, submission]);
+  const handleSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      if (!canContinue) {
+        event.preventDefault();
+        return;
+      }
+      void editor.form.handleSubmit(() => setView("diff"))(event);
+    },
+    [canContinue, editor.form],
+  );
+  const handleAvatarChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      void media.uploadMedia("avatar", event);
+    },
+    [media],
+  );
+  const handleHeaderChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      void media.uploadMedia("header", event);
+    },
+    [media],
+  );
+  const handleAvatarPress = useCallback(() => {
+    media.requestMedia("avatar");
+  }, [media]);
+  const handleHeaderPress = useCallback(() => {
+    media.requestMedia("header");
+  }, [media]);
+  const handleAddRecord = useCallback(
+    (definition: RecordDefinition) => {
+      editor.addRecord(definition, media.requestMedia);
+    },
+    [editor, media.requestMedia],
+  );
 
   if (view === "success" && successfulUpdate !== undefined) {
     return (
@@ -201,9 +259,7 @@ export function ProfileEditor({
         changes={editor.review.changes}
         error={
           submission.error ??
-          (hasConnectedAccount && permissions.isError
-            ? permissions.error
-            : undefined)
+          (hasConnectedAccount && permissions.isError ? permissions.error : undefined)
         }
         isConfirming={submission.isConfirming}
         isPending={submission.isPending || permissions.isFetching}
@@ -216,43 +272,15 @@ export function ProfileEditor({
         presentation={presentation}
         slots={slots}
         transactionHash={submission.transactionHash}
-        onBack={() => setView("editor")}
-        onUpdate={() => {
-          void (async () => {
-            const refreshed = await permissions.refetch();
-            const refreshedPermissions = refreshed.data;
-            if (
-              refreshedPermissions === undefined ||
-              !canEditProfileChanges(
-                refreshedPermissions,
-                editor.review?.changes ?? [],
-              )
-            ) {
-              return;
-            }
-
-            await submission.handleUpdate(
-              editor.review as NonNullable<typeof editor.review>,
-              refreshedPermissions.resolverAddress,
-            );
-          })();
-        }}
+        onBack={handleBack}
+        onUpdate={handleUpdate}
       />
     );
   }
 
   return (
     <FormProvider {...editor.form}>
-      <Form
-        className="w-full"
-        onSubmit={(event) => {
-          if (!canContinue) {
-            event.preventDefault();
-            return;
-          }
-          void editor.form.handleSubmit(() => setView("diff"))(event);
-        }}
-      >
+      <Form className="w-full" onSubmit={handleSubmit}>
         <input
           ref={media.avatarInput}
           accept="image/*"
@@ -260,7 +288,7 @@ export function ProfileEditor({
           className="hidden"
           tabIndex={-1}
           type="file"
-          onChange={(event) => void media.uploadMedia("avatar", event)}
+          onChange={handleAvatarChange}
         />
         <input
           ref={media.headerInput}
@@ -269,7 +297,7 @@ export function ProfileEditor({
           className="hidden"
           tabIndex={-1}
           type="file"
-          onChange={(event) => void media.uploadMedia("header", event)}
+          onChange={handleHeaderChange}
         />
 
         <div className="w-full">
@@ -285,8 +313,8 @@ export function ProfileEditor({
             isAvatarUploading={media.uploadingRecords.has("avatar")}
             isHeaderUploading={media.uploadingRecords.has("header")}
             sectionLabel={messages.profileMediaLabel}
-            onAvatarPress={() => media.requestMedia("avatar")}
-            onHeaderPress={() => media.requestMedia("header")}
+            onAvatarPress={handleAvatarPress}
+            onHeaderPress={handleHeaderPress}
           />
           <Surface
             className="border-default m-3 min-h-84 rounded-2xl border p-3 shadow-xs"
@@ -317,9 +345,7 @@ export function ProfileEditor({
                     records={editor.records}
                     search={editor.search}
                     section={editor.activeSection}
-                    onAdd={(definition) =>
-                      editor.addRecord(definition, media.requestMedia)
-                    }
+                    onAdd={handleAddRecord}
                     onRemove={editor.removeRecord}
                   />
                 </div>

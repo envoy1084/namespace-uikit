@@ -1,7 +1,7 @@
 import type { DateValue } from "@internationalized/date";
 import { getLocalTimeZone, today } from "@internationalized/date";
-import { Calendar, DateField, DatePicker } from "@thenamespace/uikit";
 
+import { FlowDatePicker } from "#/components/flow-date-picker";
 import { MIN_REGISTRATION_DURATION, REGISTRATION_SECONDS_PER_DAY } from "#/lib/helpers";
 
 export const MAX_REGISTRATION_YEARS = 10;
@@ -40,45 +40,13 @@ export function ExpirationDatePicker({ value, onChange }: ExpirationDatePickerPr
   const timeZone = getLocalTimeZone();
 
   return (
-    <DatePicker
-      aria-label="Registration expiration date"
-      className="w-full"
+    <FlowDatePicker
+      ariaLabel="Registration expiration date"
       maxValue={today(timeZone).add({ years: MAX_REGISTRATION_YEARS })}
       minValue={today(timeZone).add({ days: MIN_REGISTRATION_DAYS })}
+      triggerAriaLabel="Choose expiration date"
       value={value}
       onChange={onChange}
-    >
-      <DateField.Group fullWidth variant="secondary">
-        <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
-        <DateField.Suffix>
-          <DatePicker.Trigger aria-label="Choose expiration date">
-            <DatePicker.TriggerIndicator />
-          </DatePicker.Trigger>
-        </DateField.Suffix>
-      </DateField.Group>
-      <DatePicker.Popover className="w-auto min-w-0 p-3" placement="bottom end">
-        <Calendar aria-label="Registration expiration date">
-          <Calendar.Header>
-            <Calendar.YearPickerTrigger>
-              <Calendar.YearPickerTriggerHeading />
-              <Calendar.YearPickerTriggerIndicator />
-            </Calendar.YearPickerTrigger>
-            <Calendar.NavButton slot="previous" />
-            <Calendar.NavButton slot="next" />
-          </Calendar.Header>
-          <Calendar.Grid>
-            <Calendar.GridHeader>
-              {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
-            </Calendar.GridHeader>
-            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
-          </Calendar.Grid>
-          <Calendar.YearPickerGrid>
-            <Calendar.YearPickerGridBody>
-              {({ year }) => <Calendar.YearPickerCell year={year} />}
-            </Calendar.YearPickerGridBody>
-          </Calendar.YearPickerGrid>
-        </Calendar>
-      </DatePicker.Popover>
-    </DatePicker>
+    />
   );
 }

@@ -6,8 +6,8 @@ import type { Hex } from "viem";
 import { useConnection, usePublicClient, useSwitchChain, useWalletClient } from "wagmi";
 
 import type { ContractWriteProgress, NameRenewalPaymentStatus } from "#/actions";
+import { emitComponentEvent } from "#/components/emit-event";
 import { useNameRenewal } from "#/components/name-renewal/context";
-import { emitNameRenewalEvent } from "#/components/name-renewal/emit-event";
 import type { NameRenewalErrorPhase } from "#/components/name-renewal/events";
 import { submitNameRenewal } from "#/components/name-renewal/steps/renewal-form/renewal-submission";
 import type { NameRenewalSuccessDetails } from "#/components/name-renewal/types";
@@ -83,7 +83,7 @@ export function useRenewalSubmission({
 
   const reportError = (nextError: unknown, phase: NameRenewalErrorPhase, hash?: Hex) => {
     setError(nextError);
-    emitNameRenewalEvent(events.onError, {
+    emitComponentEvent(events.onError, {
       chainId: chain.id,
       error: nextError,
       input,
@@ -103,7 +103,7 @@ export function useRenewalSubmission({
       return;
     }
     approvalEventEmittedRef.current = true;
-    emitNameRenewalEvent(events.onApprove, {
+    emitComponentEvent(events.onApprove, {
       account,
       amount: paymentData.total,
       chainId: chain.id,
@@ -215,7 +215,7 @@ export function useRenewalSubmission({
     if (result.value.approval !== undefined) {
       emitApproval(result.value.approval.receipt, result.value.approval.transactionHash);
     }
-    emitNameRenewalEvent(events.onRenew, {
+    emitComponentEvent(events.onRenew, {
       account: submittingAccount,
       amount: result.value.details.amount,
       chainId: chain.id,

@@ -8,8 +8,8 @@ import { isAddressEqual } from "viem";
 import { useConnection, usePublicClient, useSwitchChain, useWalletClient } from "wagmi";
 
 import type { ContractWriteProgress } from "#/actions";
+import { emitComponentEvent } from "#/components/emit-event";
 import type { NameProfileEditorMessages } from "#/components/name-profile-editor/customization";
-import { emitNameProfileEditorEvent } from "#/components/name-profile-editor/emit-event";
 import type { NameProfileEditorEvents } from "#/components/name-profile-editor/events";
 import {
   submitProfileUpdate,
@@ -87,7 +87,7 @@ export function useProfileUpdateSubmission({
 
   const reportError = (nextError: unknown) => {
     setError(nextError);
-    emitNameProfileEditorEvent(events.onError, {
+    emitComponentEvent(events.onError, {
       ...(connection.address === undefined ? {} : { account: connection.address }),
       chainId: chain.id,
       error: nextError,
@@ -190,7 +190,7 @@ export function useProfileUpdateSubmission({
       return;
     }
 
-    emitNameProfileEditorEvent(events.onUpdate, {
+    emitComponentEvent(events.onUpdate, {
       account: submissionAccount,
       chainId: chain.id,
       changes: review.changes,

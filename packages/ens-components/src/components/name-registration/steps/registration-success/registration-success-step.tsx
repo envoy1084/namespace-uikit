@@ -1,14 +1,10 @@
 import { Avatar, Button, Surface, Typography } from "@thenamespace/uikit";
 
+import { FlowSuccessHeader } from "#/components/flow-success-header";
 import { useNameRegistration } from "#/components/name-registration/context";
 import { NameRegistrationBody } from "#/components/name-registration/layout";
 import { formatTokenAmount } from "#/lib";
-import { formatRegistrationDuration } from "#/lib/helpers";
-
-const RegistrationSuccessGraphic = new URL(
-  "../../../../assets/register-ens-success.svg",
-  import.meta.url,
-);
+import { formatLocalizedDate, formatRegistrationDuration } from "#/lib/helpers";
 
 export interface RegistrationSuccessDetails {
   amount: bigint;
@@ -28,31 +24,16 @@ export interface RegistrationSuccessStepProps {
 
 export function RegistrationSuccessStep({ onDone, registration }: RegistrationSuccessStepProps) {
   const { messages, presentation, slots } = useNameRegistration();
-  const expirationDate = new Intl.DateTimeFormat(undefined, {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(registration.expiresAt));
+  const expirationDate = formatLocalizedDate(registration.expiresAt);
 
   return (
     <NameRegistrationBody className="flex-none">
       <div className="flex flex-col items-center px-1 py-4 text-center">
-        {slots.successGraphic === undefined ? (
-          <img alt="" className="h-auto w-full max-w-48" src={RegistrationSuccessGraphic.href} />
-        ) : (
-          slots.successGraphic
-        )}
-        <div>
-          <Typography.Paragraph className="mt-5" color="muted" size="sm">
-            {messages.successTitle}
-          </Typography.Paragraph>
-          <Typography.Heading
-            className="mt-1 max-w-full text-center text-2xl font-semibold break-all"
-            level={3}
-          >
-            {registration.name}
-          </Typography.Heading>
-        </div>
+        <FlowSuccessHeader
+          graphic={slots.successGraphic}
+          name={registration.name}
+          title={messages.successTitle}
+        />
 
         <div className="w-full">
           <Surface className="mt-6 w-full rounded-2xl p-4" variant="secondary">

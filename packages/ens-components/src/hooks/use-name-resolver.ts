@@ -8,7 +8,7 @@ import { usePublicClient } from "wagmi";
 import {
   executeContractRead,
   prepareNameResolverRead,
-  type NameResolverReadResult,
+  type NameResolverResult,
   type PrepareNameResolverReadError,
 } from "#/actions";
 import { parseNameInput, type ParseNameInputError } from "#/lib";
@@ -21,16 +21,16 @@ export type NameResolverError =
 
 export type NameResolverQueryKey = readonly ["ens", "name-resolver", string, Address, string];
 
-export interface UseNameResolverParameters<selectData = NameResolverReadResult> {
+export interface UseNameResolverParameters<selectData = NameResolverResult> {
   input: string | null | undefined;
   query?: Omit<
-    UseQueryOptions<NameResolverReadResult, NameResolverError, selectData, NameResolverQueryKey>,
+    UseQueryOptions<NameResolverResult, NameResolverError, selectData, NameResolverQueryKey>,
     "queryFn" | "queryKey"
   >;
   universalResolverAddress?: Address;
 }
 
-export function useNameResolver<selectData = NameResolverReadResult>(
+export function useNameResolver<selectData = NameResolverResult>(
   parameters: UseNameResolverParameters<selectData>,
 ) {
   const { chain, contracts, network } = useEnsConfig();
@@ -39,7 +39,7 @@ export function useNameResolver<selectData = NameResolverReadResult>(
     parameters.universalResolverAddress ?? contracts.universalResolverV2.address;
   const parsed = parseNameInput(parameters.input);
 
-  return useQuery<NameResolverReadResult, NameResolverError, selectData, NameResolverQueryKey>({
+  return useQuery<NameResolverResult, NameResolverError, selectData, NameResolverQueryKey>({
     ...parameters.query,
     queryKey: [
       "ens",

@@ -19,6 +19,7 @@ import { PaymentTokenSelect } from "#/components/payment-token-select";
 import { useNameRegistrationPrice } from "#/hooks";
 import { formatError, formatTokenAmount } from "#/lib";
 import {
+  getRegistrationYearCount,
   REGISTRATION_SECONDS_PER_DAY,
   REGISTRATION_SECONDS_PER_YEAR,
   resolvePaymentToken,
@@ -28,11 +29,6 @@ import { useEnsConfig } from "#/providers";
 interface RegistrationDetailsProps {
   input: string;
   onReadyChange?: (isReady: boolean) => void;
-}
-
-function getYears(duration: bigint) {
-  const years = Math.round(Number(duration) / Number(REGISTRATION_SECONDS_PER_YEAR));
-  return Math.min(MAX_REGISTRATION_YEARS, Math.max(1, years));
 }
 
 export function RegistrationDetails({ input, onReadyChange }: RegistrationDetailsProps) {
@@ -47,7 +43,7 @@ export function RegistrationDetails({ input, onReadyChange }: RegistrationDetail
   const { contracts } = useEnsConfig();
   const paymentToken = resolvePaymentToken(contracts.paymentTokens, paymentTokenAddress);
   const timeZone = getLocalTimeZone();
-  const years = getYears(duration);
+  const years = getRegistrationYearCount(duration, MAX_REGISTRATION_YEARS);
   const selectedDurationDays = Number(duration / REGISTRATION_SECONDS_PER_DAY);
   const expirationDate = today(timeZone).add({
     days: Math.max(MIN_REGISTRATION_DAYS, selectedDurationDays),

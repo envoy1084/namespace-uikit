@@ -6,11 +6,11 @@ import { isAddressEqual, type Hex } from "viem";
 import { useConnection, usePublicClient, useSwitchChain, useWalletClient } from "wagmi";
 
 import type { ContractWriteProgress, NameRegistrationPaymentStatus } from "#/actions";
+import { emitComponentEvent } from "#/components/emit-event";
 import {
   COMMITMENT_VALID_DURATION_MS,
   useNameRegistration,
 } from "#/components/name-registration/context";
-import { emitNameRegistrationEvent } from "#/components/name-registration/emit-event";
 import type { StoredRegistrationAttempt } from "#/components/name-registration/hooks/use-registration-attempts";
 import { useRegistrationAttempts } from "#/components/name-registration/hooks/use-registration-attempts";
 import {
@@ -101,7 +101,7 @@ export function useRegistrationPayment({
 
   const reportError = (nextError: unknown, phase: PaymentTransactionPhase, hash?: Hex) => {
     setError(nextError);
-    emitNameRegistrationEvent(events.onError, {
+    emitComponentEvent(events.onError, {
       chainId: chain.id,
       error: nextError,
       input: storedAttempt?.label ?? "",
@@ -177,7 +177,7 @@ export function useRegistrationPayment({
     result: RegistrationPaymentSubmissionSuccess,
   ) => {
     if (result.approval !== undefined) {
-      emitNameRegistrationEvent(events.onApprove, {
+      emitComponentEvent(events.onApprove, {
         account: attempt.account,
         amount: paymentData.total,
         chainId: chain.id,
@@ -192,7 +192,7 @@ export function useRegistrationPayment({
     await delay(TRANSACTION_PROGRESS_COMPLETION_DURATION_MS);
     deleteAttempt(attemptId);
     setRegistrationAttemptId(null);
-    emitNameRegistrationEvent(events.onRegister, {
+    emitComponentEvent(events.onRegister, {
       account: attempt.account,
       amount: result.registrationAmount,
       chainId: chain.id,
@@ -214,7 +214,7 @@ export function useRegistrationPayment({
       result.l1PrimaryName !== undefined &&
       result.l2PrimaryName !== undefined
     ) {
-      emitNameRegistrationEvent(events.onSetPrimaryName, {
+      emitComponentEvent(events.onSetPrimaryName, {
         account: attempt.account,
         addressRecordReceipt: result.addressRecord.receipt,
         addressRecordTransactionHash: result.addressRecord.transactionHash,

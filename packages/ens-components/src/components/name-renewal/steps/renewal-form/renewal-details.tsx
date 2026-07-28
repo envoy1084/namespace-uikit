@@ -14,6 +14,8 @@ import { RenewalDatePicker } from "#/components/name-renewal/steps/renewal-form/
 import { PaymentTokenSelect } from "#/components/payment-token-select";
 import { formatTokenAmount } from "#/lib";
 import {
+  formatLocalizedDate,
+  getRegistrationYearCount,
   MIN_REGISTRATION_DURATION,
   REGISTRATION_SECONDS_PER_DAY,
   REGISTRATION_SECONDS_PER_YEAR,
@@ -28,23 +30,12 @@ function timestampToCalendarDate(timestamp: bigint) {
   return new CalendarDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
 }
 
-function getYears(duration: bigint) {
-  return Math.min(
-    MAX_NAME_RENEWAL_YEARS,
-    Math.max(1, Math.round(Number(duration) / Number(REGISTRATION_SECONDS_PER_YEAR))),
-  );
-}
-
 function maxDate(left: DateValue, right: DateValue) {
   return left.compare(right) >= 0 ? left : right;
 }
 
 function formatDate(value: DateValue, timeZone: string) {
-  return new Intl.DateTimeFormat(undefined, {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(value.toDate(timeZone));
+  return formatLocalizedDate(value.toDate(timeZone));
 }
 
 export interface RenewalDetailsProps {
@@ -73,7 +64,7 @@ export function RenewalDetails({
     () => timestampToCalendarDate(price.currentExpiry),
     [price.currentExpiry],
   );
-  const years = getYears(duration);
+  const years = getRegistrationYearCount(duration, MAX_NAME_RENEWAL_YEARS);
   const durationDays = Math.max(MIN_RENEWAL_DAYS, Number(duration / REGISTRATION_SECONDS_PER_DAY));
   const targetDate = currentExpiryDate.add({ days: durationDays });
   const minimumTargetDate = maxDate(currentExpiryDate, today(timeZone)).add({

@@ -3,9 +3,7 @@ export const REGISTRATION_SECONDS_PER_YEAR = 31_557_600n;
 export const MIN_REGISTRATION_DURATION = 28n * REGISTRATION_SECONDS_PER_DAY;
 export const DEFAULT_REGISTRATION_DURATION = REGISTRATION_SECONDS_PER_YEAR;
 
-export function parseRegistrationDuration(
-  value: string | undefined,
-): bigint | undefined {
+export function parseRegistrationDuration(value: string | undefined): bigint | undefined {
   if (value === undefined) return undefined;
 
   try {
@@ -13,6 +11,11 @@ export function parseRegistrationDuration(
   } catch {
     return undefined;
   }
+}
+
+export function getRegistrationYearCount(duration: bigint, maximumYears: number): number {
+  const years = Math.round(Number(duration) / Number(REGISTRATION_SECONDS_PER_YEAR));
+  return Math.min(maximumYears, Math.max(1, years));
 }
 
 export function formatRegistrationDuration(duration: bigint): string {

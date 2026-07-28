@@ -1,111 +1,30 @@
 "use client";
 
+import {
+  FlowBody,
+  FlowFooter,
+  FlowHeader,
+  FlowHeading,
+  type FlowLayoutProps,
+} from "#/components/flow-layout";
 import type { NameProfileEditorPresentation } from "#/components/name-profile-editor/customization";
 
-import type { ReactNode } from "react";
-
-import { Modal, cn } from "@thenamespace/uikit";
-
-interface NameProfileEditorLayoutProps {
-  children: ReactNode;
-  className?: string;
-  id?: string;
+type NameProfileEditorLayoutProps = Omit<FlowLayoutProps, "inlineClassName" | "presentation"> & {
   presentation: NameProfileEditorPresentation;
+};
+
+export function NameProfileEditorHeader(props: NameProfileEditorLayoutProps) {
+  return <FlowHeader {...props} inlineClassName="px-6 pt-6" />;
 }
 
-export function NameProfileEditorHeader({
-  children,
-  className,
-  presentation,
-}: NameProfileEditorLayoutProps) {
-  if (presentation === "dialog") {
-    return (
-      <Modal.Header {...(className === undefined ? {} : { className })}>
-        {children}
-      </Modal.Header>
-    );
-  }
-
-  return (
-    <header className={cn("flex flex-col gap-3 px-6 pt-6", className)}>
-      {children}
-    </header>
-  );
+export function NameProfileEditorHeading(props: NameProfileEditorLayoutProps) {
+  return <FlowHeading {...props} />;
 }
 
-export function NameProfileEditorHeading({
-  children,
-  className,
-  id,
-  presentation,
-}: NameProfileEditorLayoutProps) {
-  if (presentation === "dialog") {
-    return (
-      <Modal.Heading
-        {...(className === undefined ? {} : { className })}
-        {...(id === undefined ? {} : { id })}
-      >
-        {children}
-      </Modal.Heading>
-    );
-  }
-
-  return (
-    <h2
-      className={cn("text-foreground text-base font-medium", className)}
-      {...(id === undefined ? {} : { id })}
-    >
-      {children}
-    </h2>
-  );
+export function NameProfileEditorBody(props: NameProfileEditorLayoutProps) {
+  return <FlowBody {...props} inlineClassName="px-6" />;
 }
 
-export function NameProfileEditorBody({
-  children,
-  className,
-  presentation,
-}: NameProfileEditorLayoutProps) {
-  if (presentation === "dialog") {
-    return (
-      <Modal.Body {...(className === undefined ? {} : { className })}>
-        {children}
-      </Modal.Body>
-    );
-  }
-
-  return (
-    <div
-      className={cn(
-        "text-muted min-h-0 flex-1 px-6 text-sm leading-[1.43]",
-        className,
-      )}
-    >
-      {children}
-    </div>
-  );
-}
-
-export function NameProfileEditorFooter({
-  children,
-  className,
-  presentation,
-}: NameProfileEditorLayoutProps) {
-  if (presentation === "dialog") {
-    return (
-      <Modal.Footer {...(className === undefined ? {} : { className })}>
-        {children}
-      </Modal.Footer>
-    );
-  }
-
-  return (
-    <footer
-      className={cn(
-        "flex flex-row items-center justify-end gap-2 px-6 pb-6",
-        className,
-      )}
-    >
-      {children}
-    </footer>
-  );
+export function NameProfileEditorFooter(props: NameProfileEditorLayoutProps) {
+  return <FlowFooter {...props} inlineClassName="px-6 pb-6" />;
 }

@@ -1,23 +1,11 @@
 import { Avatar, Button, Surface, Typography } from "@thenamespace/uikit";
 
+import { FlowSuccessHeader } from "#/components/flow-success-header";
 import { useNameRenewal } from "#/components/name-renewal/context";
 import { NameRenewalBody } from "#/components/name-renewal/layout";
 import type { NameRenewalSuccessDetails } from "#/components/name-renewal/types";
 import { formatTokenAmount } from "#/lib";
-import { formatRegistrationDuration } from "#/lib/helpers";
-
-const DefaultRenewalSuccessGraphic = new URL(
-  "../../../assets/register-ens-success.svg",
-  import.meta.url,
-);
-
-function formatExpiry(timestamp: bigint) {
-  return new Intl.DateTimeFormat(undefined, {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(Number(timestamp) * 1_000));
-}
+import { formatRegistrationDuration, formatUnixTimestamp } from "#/lib/helpers";
 
 export interface NameRenewalSuccessProps {
   onDone: () => void;
@@ -30,21 +18,11 @@ export function NameRenewalSuccess({ onDone, renewal }: NameRenewalSuccessProps)
   return (
     <NameRenewalBody className="flex-none">
       <div className="flex flex-col items-center px-1 py-4 text-center">
-        {slots.successGraphic === undefined ? (
-          <img alt="" className="h-auto w-full max-w-48" src={DefaultRenewalSuccessGraphic.href} />
-        ) : (
-          slots.successGraphic
-        )}
-
-        <Typography.Paragraph className="mt-5" color="muted" size="sm">
-          {messages.successTitle}
-        </Typography.Paragraph>
-        <Typography.Heading
-          className="mt-1 max-w-full text-center text-2xl font-semibold break-all"
-          level={3}
-        >
-          {renewal.name}
-        </Typography.Heading>
+        <FlowSuccessHeader
+          graphic={slots.successGraphic}
+          name={renewal.name}
+          title={messages.successTitle}
+        />
 
         <div className="mt-6 w-full space-y-3">
           <Surface className="w-full rounded-2xl p-4" variant="secondary">
@@ -62,11 +40,11 @@ export function NameRenewalSuccess({ onDone, renewal }: NameRenewalSuccessProps)
                   New expiry
                 </Typography.Paragraph>
                 <Typography.Paragraph size="sm" weight="medium">
-                  {formatExpiry(renewal.newExpiry)}
+                  {formatUnixTimestamp(renewal.newExpiry)}
                 </Typography.Paragraph>
               </div>
               <Typography.Paragraph className="mt-1 text-right" color="muted" size="xs">
-                Previously {formatExpiry(renewal.currentExpiry)}
+                Previously {formatUnixTimestamp(renewal.currentExpiry)}
               </Typography.Paragraph>
             </div>
           </Surface>

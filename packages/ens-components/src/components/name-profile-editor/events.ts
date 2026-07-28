@@ -1,5 +1,6 @@
 import type { Address, Hex, TransactionReceipt } from "viem";
 
+import type { ComponentEventHandler } from "#/components/emit-event";
 import type {
   NameProfileFormValues,
   NameProfileRecordChange,
@@ -31,9 +32,7 @@ export interface NameProfileEditorErrorEvent {
   transactionHash?: Hex;
 }
 
-export type NameProfileEditorEventHandler<TEvent> = (
-  event: TEvent,
-) => Promise<void> | void;
+export type NameProfileEditorEventHandler<TEvent> = ComponentEventHandler<TEvent>;
 
 export interface NameProfileEditorEvents {
   /** Called when resolver discovery, permission checks, or submission fail. */

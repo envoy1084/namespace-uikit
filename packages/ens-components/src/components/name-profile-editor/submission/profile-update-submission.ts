@@ -2,7 +2,7 @@ import { err, ok, type Result } from "neverthrow";
 import type { Hex, PublicClient, TransactionReceipt } from "viem";
 
 import type { ContractWriteProgress } from "#/actions";
-import { prepareProfileRecordsWrite } from "#/actions";
+import { prepareNameProfileRecordsWrite } from "#/actions";
 import type { NameProfileEditorReview } from "#/components/name-profile-editor/types";
 import type { EnsNetwork } from "#/data";
 import type { ExecuteContractWritesMutation } from "#/hooks";
@@ -34,7 +34,7 @@ export async function submitProfileUpdate(
   const initialConnection = props.validateConnection?.();
   if (initialConnection?.isErr()) return err(initialConnection.error);
 
-  const prepared = await prepareProfileRecordsWrite(props.publicClient, {
+  const prepared = await prepareNameProfileRecordsWrite(props.publicClient, {
     account: props.account,
     changes: props.review.changes,
     input: props.input,

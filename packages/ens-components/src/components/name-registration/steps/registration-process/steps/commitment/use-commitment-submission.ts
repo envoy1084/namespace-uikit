@@ -5,8 +5,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { isAddressEqual, type Hex } from "viem";
 import { useConnection, usePublicClient, useSwitchChain, useWalletClient } from "wagmi";
 
+import { emitComponentEvent } from "#/components/emit-event";
 import { useNameRegistration } from "#/components/name-registration/context";
-import { emitNameRegistrationEvent } from "#/components/name-registration/emit-event";
 import {
   useRegistrationAttempts,
   type StoredRegistrationAttempt,
@@ -79,7 +79,7 @@ export function useCommitmentSubmission({
   const reportError = useCallback(
     (nextError: unknown, errorPhase: CommitmentTransactionPhase, hash?: Hex) => {
       setLocalError(nextError);
-      emitNameRegistrationEvent(events.onError, {
+      emitComponentEvent(events.onError, {
         chainId: chain.id,
         error: nextError,
         input,
@@ -172,7 +172,7 @@ export function useCommitmentSubmission({
         result.resolverReceipt !== undefined &&
         result.resolverTransactionHash !== undefined
       ) {
-        emitNameRegistrationEvent(events.onResolverDeploy, {
+        emitComponentEvent(events.onResolverDeploy, {
           chainId: chain.id,
           factoryAddress: attempt.resolver.factoryAddress,
           implementationAddress: attempt.resolver.implementationAddress,
@@ -189,7 +189,7 @@ export function useCommitmentSubmission({
         result.commitmentReceipt !== undefined &&
         result.transactionHash !== undefined
       ) {
-        emitNameRegistrationEvent(events.onCommit, {
+        emitComponentEvent(events.onCommit, {
           chainId: chain.id,
           commitment: attempt.commitment,
           registrationAttemptId: attempt.id,

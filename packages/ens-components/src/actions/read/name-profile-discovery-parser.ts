@@ -1,10 +1,10 @@
+import { err, ok, type Result } from "neverthrow";
+import { getAddress, isAddress, isHex, type Address, type Hex } from "viem";
+
 import type {
   NameProfileDiscoveryResult,
   NameProfileSubregistry,
 } from "#/actions/read/prepare-read-name-profile-discovery";
-
-import { err, ok, type Result } from "neverthrow";
-import { getAddress, isAddress, isHex, type Address, type Hex } from "viem";
 
 interface JsonObject {
   readonly _meta?: unknown;
@@ -53,9 +53,7 @@ interface JsonObject {
 }
 
 function object(value: unknown): JsonObject | undefined {
-  return typeof value === "object" && value !== null
-    ? (value as JsonObject)
-    : undefined;
+  return typeof value === "object" && value !== null ? (value as JsonObject) : undefined;
 }
 
 function nullableNumber(value: unknown): number | null | undefined {
@@ -77,15 +75,12 @@ function accountAddress(value: unknown): Address | null | undefined {
 }
 
 function stringArray(value: unknown): string[] | undefined {
-  return Array.isArray(value) &&
-    value.every((entry) => typeof entry === "string")
+  return Array.isArray(value) && value.every((entry) => typeof entry === "string")
     ? value
     : undefined;
 }
 
-function parseSubregistry(
-  value: unknown,
-): NameProfileSubregistry | null | undefined {
+function parseSubregistry(value: unknown): NameProfileSubregistry | null | undefined {
   if (value === null) return null;
   const data = object(value);
   if (data === undefined) return undefined;
@@ -110,10 +105,7 @@ function parseSubregistry(
 
 export function parseNameProfileDiscovery(
   input: unknown,
-): Result<
-  NameProfileDiscoveryResult,
-  "INVALID_INDEXER_RESPONSE" | "NAME_NOT_FOUND"
-> {
+): Result<NameProfileDiscoveryResult, "INVALID_INDEXER_RESPONSE" | "NAME_NOT_FOUND"> {
   const data = object(input);
   if (data === undefined) return err("INVALID_INDEXER_RESPONSE");
   if (data.domain === null) return err("NAME_NOT_FOUND");
@@ -139,14 +131,12 @@ export function parseNameProfileDiscovery(
         ? getAddress(resolver.address)
         : undefined;
   const textKeys = resolver === undefined ? [] : stringArray(resolver.texts);
-  const coinTypes =
-    resolver === undefined ? [] : stringArray(resolver.coinTypes);
+  const coinTypes = resolver === undefined ? [] : stringArray(resolver.coinTypes);
   const abiValues = resolver === undefined ? [] : resolver.abis;
   const abiContentTypes =
     Array.isArray(abiValues) &&
     abiValues.every(
-      (entry) =>
-        typeof entry === "number" && Number.isSafeInteger(entry) && entry > 0,
+      (entry) => typeof entry === "number" && Number.isSafeInteger(entry) && entry > 0,
     )
       ? abiValues.map(String)
       : undefined;
@@ -155,9 +145,7 @@ export function parseNameProfileDiscovery(
     Array.isArray(interfaces) &&
     interfaces.every((entry) => {
       const interfaceId = object(entry)?.interfaceId;
-      return (
-        typeof interfaceId === "string" && isHex(interfaceId, { strict: true })
-      );
+      return typeof interfaceId === "string" && isHex(interfaceId, { strict: true });
     })
       ? interfaces.map((entry) => object(entry)?.interfaceId as Hex)
       : undefined;
@@ -205,9 +193,7 @@ export function parseNameProfileDiscovery(
     abiContentTypes === undefined ||
     interfaceIds === undefined ||
     Object.values(nullableValues).some((value) => value === undefined) ||
-    requiredNumbers.some(
-      (value) => typeof value !== "number" || !Number.isSafeInteger(value),
-    ) ||
+    requiredNumbers.some((value) => typeof value !== "number" || !Number.isSafeInteger(value)) ||
     requiredBooleans.some((value) => typeof value !== "boolean") ||
     typeof domain.id !== "string" ||
     typeof domain.name !== "string" ||

@@ -21,8 +21,8 @@ import type {
 import { DEFAULT_NAME_REGISTRATION_MESSAGES } from "#/components/name-registration/customization";
 import type { NameRegistrationEvents } from "#/components/name-registration/events";
 import {
-  decodeReferrerAddress,
   DEFAULT_REGISTRATION_DURATION,
+  formatReferrerAddressInput,
   isNonZeroAddress,
   MIN_REGISTRATION_DURATION,
   resolvePaymentToken,
@@ -81,11 +81,6 @@ const NameRegistrationContext = createContext<NameRegistrationContextValue | nul
 const EMPTY_NAME_REGISTRATION_EVENTS: NameRegistrationEvents = Object.freeze({});
 const EMPTY_NAME_REGISTRATION_SLOTS: NameRegistrationSlots = Object.freeze({});
 
-function getReferrerInput(referrer: Hex): string {
-  if (referrer === zeroHash) return "";
-  return decodeReferrerAddress(referrer) ?? "";
-}
-
 export function NameRegistrationProvider({
   children,
   defaultDuration = DEFAULT_REGISTRATION_DURATION,
@@ -114,7 +109,9 @@ export function NameRegistrationProvider({
     initialPaymentToken.address,
   );
   const [referrer, setReferrer] = useState(defaultReferrer);
-  const [referrerInput, setReferrerInput] = useState(() => getReferrerInput(defaultReferrer));
+  const [referrerInput, setReferrerInput] = useState(() =>
+    formatReferrerAddressInput(defaultReferrer),
+  );
   const [resolverAddress, setResolverAddress] = useState<Address | null>(
     defaultResolverAddress ?? null,
   );

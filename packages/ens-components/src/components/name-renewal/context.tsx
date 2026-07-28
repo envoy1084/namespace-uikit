@@ -14,8 +14,8 @@ import type {
 import { DEFAULT_NAME_RENEWAL_MESSAGES } from "#/components/name-renewal/customization";
 import type { NameRenewalEvents } from "#/components/name-renewal/events";
 import {
-  decodeReferrerAddress,
   DEFAULT_REGISTRATION_DURATION,
+  formatReferrerAddressInput,
   MIN_REGISTRATION_DURATION,
   REGISTRATION_SECONDS_PER_YEAR,
   resolvePaymentToken,
@@ -64,11 +64,6 @@ const NameRenewalContext = createContext<NameRenewalContextValue | null>(null);
 const EMPTY_NAME_RENEWAL_EVENTS: NameRenewalEvents = Object.freeze({});
 const EMPTY_NAME_RENEWAL_SLOTS: NameRenewalSlots = Object.freeze({});
 
-function getReferrerInput(referrer: Hex): string {
-  if (referrer === zeroHash) return "";
-  return decodeReferrerAddress(referrer) ?? "";
-}
-
 export function NameRenewalProvider({
   children,
   defaultDuration = DEFAULT_REGISTRATION_DURATION,
@@ -99,7 +94,9 @@ export function NameRenewalProvider({
     initialPaymentToken.address,
   );
   const [referrer, setReferrer] = useState(defaultReferrer);
-  const [referrerInput, setReferrerInput] = useState(() => getReferrerInput(defaultReferrer));
+  const [referrerInput, setReferrerInput] = useState(() =>
+    formatReferrerAddressInput(defaultReferrer),
+  );
   const trimmedReferrerInput = referrerInput.trim();
   const isReferrerValid = trimmedReferrerInput === "" || isAddress(trimmedReferrerInput);
   const resolvedMessages = useMemo(
@@ -115,7 +112,7 @@ export function NameRenewalProvider({
     setInput(defaultLabel);
     setPaymentTokenAddress(initialPaymentToken.address);
     setReferrer(defaultReferrer);
-    setReferrerInput(getReferrerInput(defaultReferrer));
+    setReferrerInput(formatReferrerAddressInput(defaultReferrer));
   }, [
     defaultDurationMode,
     defaultLabel,

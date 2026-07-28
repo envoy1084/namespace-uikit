@@ -1,4 +1,5 @@
 export * from "#/lib/helpers/bytes";
+export * from "#/lib/helpers/date";
 export * from "#/lib/helpers/delay";
 export * from "#/lib/helpers/encode-dns-name";
 export * from "#/lib/helpers/payment-token";

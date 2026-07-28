@@ -1,67 +1,32 @@
 "use client";
 
-import type { ReactNode } from "react";
-
-import { Modal } from "@thenamespace/uikit";
-import { cn } from "@thenamespace/uikit/utils";
-
+import {
+  FlowBody,
+  FlowFooter,
+  FlowHeader,
+  FlowHeading,
+  type FlowLayoutProps,
+} from "#/components/flow-layout";
 import { useNameRegistration } from "#/components/name-registration/context";
 
-interface NameRegistrationLayoutProps {
-  children: ReactNode;
-  className?: string;
+type NameRegistrationLayoutProps = Omit<FlowLayoutProps, "presentation">;
+
+export function NameRegistrationHeader(props: NameRegistrationLayoutProps) {
+  const { presentation } = useNameRegistration();
+  return <FlowHeader {...props} presentation={presentation} />;
 }
 
-export function NameRegistrationHeader({ children, className }: NameRegistrationLayoutProps) {
+export function NameRegistrationHeading(props: NameRegistrationLayoutProps) {
   const { presentation } = useNameRegistration();
-
-  if (presentation === "dialog") {
-    return (
-      <Modal.Header {...(className === undefined ? {} : { className })}>{children}</Modal.Header>
-    );
-  }
-
-  return <header className={cn("flex flex-col gap-3", className)}>{children}</header>;
+  return <FlowHeading {...props} presentation={presentation} />;
 }
 
-export function NameRegistrationHeading({ children, className }: NameRegistrationLayoutProps) {
+export function NameRegistrationBody(props: NameRegistrationLayoutProps) {
   const { presentation } = useNameRegistration();
-
-  if (presentation === "dialog") {
-    return (
-      <Modal.Heading {...(className === undefined ? {} : { className })}>{children}</Modal.Heading>
-    );
-  }
-
-  return <h2 className={cn("text-foreground text-base font-medium", className)}>{children}</h2>;
+  return <FlowBody {...props} presentation={presentation} />;
 }
 
-export function NameRegistrationBody({ children, className }: NameRegistrationLayoutProps) {
+export function NameRegistrationFooter(props: NameRegistrationLayoutProps) {
   const { presentation } = useNameRegistration();
-
-  if (presentation === "dialog") {
-    return <Modal.Body {...(className === undefined ? {} : { className })}>{children}</Modal.Body>;
-  }
-
-  return (
-    <div className={cn("text-muted min-h-0 flex-1 text-sm leading-[1.43]", className)}>
-      {children}
-    </div>
-  );
-}
-
-export function NameRegistrationFooter({ children, className }: NameRegistrationLayoutProps) {
-  const { presentation } = useNameRegistration();
-
-  if (presentation === "dialog") {
-    return (
-      <Modal.Footer {...(className === undefined ? {} : { className })}>{children}</Modal.Footer>
-    );
-  }
-
-  return (
-    <footer className={cn("flex flex-row items-center justify-end gap-2", className)}>
-      {children}
-    </footer>
-  );
+  return <FlowFooter {...props} presentation={presentation} />;
 }

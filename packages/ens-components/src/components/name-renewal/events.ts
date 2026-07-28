@@ -1,5 +1,6 @@
 import type { Address, Hex, TransactionReceipt } from "viem";
 
+import type { ComponentEventHandler } from "#/components/emit-event";
 import type { EnsNetwork } from "#/data";
 
 export interface NameRenewalTransactionEvent {
@@ -41,7 +42,7 @@ export interface NameRenewalErrorEvent {
   transactionHash?: Hex;
 }
 
-export type NameRenewalEventHandler<TEvent> = (event: TEvent) => Promise<void> | void;
+export type NameRenewalEventHandler<TEvent> = ComponentEventHandler<TEvent>;
 
 export interface NameRenewalEvents {
   /** Called after a required ERC-20 approval is successfully confirmed. */

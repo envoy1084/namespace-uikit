@@ -3,10 +3,11 @@
 import { useCallback } from "react";
 
 import { FieldError, Input, Label, TextField } from "@thenamespace/uikit";
-import { getAddress, isAddress, pad, zeroHash } from "viem";
+import { isAddress, zeroHash } from "viem";
 
 import { useNameRegistration } from "#/components/name-registration/context";
 import { AdvancedOptionInfo } from "#/components/name-registration/steps/name-search/advanced-options/advanced-option-info";
+import { encodeReferrerAddressInput } from "#/lib/helpers";
 
 export function ReferrerAddress() {
   const { referrerInput, setReferrer, setReferrerInput } = useNameRegistration();
@@ -17,14 +18,7 @@ export function ReferrerAddress() {
     (nextValue: string) => {
       setReferrerInput(nextValue);
 
-      const address = nextValue.trim();
-      if (address === "") {
-        setReferrer(zeroHash);
-      } else if (isAddress(address)) {
-        setReferrer(pad(getAddress(address), { size: 32 }));
-      } else {
-        setReferrer(zeroHash);
-      }
+      setReferrer(encodeReferrerAddressInput(nextValue) ?? zeroHash);
     },
     [setReferrer, setReferrerInput],
   );
