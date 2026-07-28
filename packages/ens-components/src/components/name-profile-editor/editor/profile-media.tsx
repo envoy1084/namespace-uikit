@@ -6,34 +6,29 @@ import type {
   NameProfileMediaUpload,
 } from "#/components/name-profile-editor/editor/types";
 
-import type { ReactNode } from "react";
 import { useState } from "react";
 
 import {
-  Avatar,
   DropZone,
   FieldError,
   Input,
   Label,
+  Popover,
   Spinner,
   TextField,
   Typography,
 } from "@thenamespace/uikit";
-import {
-  Add01Icon,
-  HugeiconsIcon,
-  Image01Icon,
-} from "@thenamespace/uikit/icons";
+import { Add01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
-function MediaPicker({
-  accept = "image/*",
-  children,
+function UploadControl({
+  className,
+  iconSize,
   kind,
   onChange,
   upload,
 }: {
-  accept?: string;
-  children: ReactNode;
+  className: string;
+  iconSize: number;
   kind: NameProfileMediaKind;
   onChange: (value: string) => void;
   upload: NameProfileMediaUpload;
@@ -62,45 +57,44 @@ function MediaPicker({
   };
 
   return (
-    <DropZone className="contents">
-      <DropZone.Area
-        aria-label={`Upload profile ${kind}`}
-        className="group relative size-full overflow-hidden rounded-[inherit] border-0 bg-transparent p-0 outline-none ring-inset focus-visible:ring-2"
-      >
-        {children}
+    <div>
+      <DropZone>
         <DropZone.Trigger
           isIconOnly
           aria-label={`Choose profile ${kind}`}
-          className="absolute top-3 right-3 size-9 min-w-9 rounded-xl shadow-sm"
+          className={className}
           isDisabled={isUploading}
-          size="sm"
           variant="secondary"
         >
           {isUploading ? (
-            <Spinner className="size-4" size="sm" />
+            <Spinner className="size-5" size="sm" />
           ) : (
-            <HugeiconsIcon icon={Add01Icon} size={18} />
+            <HugeiconsIcon icon={Add01Icon} size={iconSize} strokeWidth={1.5} />
           )}
         </DropZone.Trigger>
-      </DropZone.Area>
-      <DropZone.Input accept={accept} onSelect={selectFile} />
+        <DropZone.Input accept="image/*" onSelect={selectFile} />
+      </DropZone>
       {error.length > 0 && (
         <Typography.Paragraph
-          className="text-danger mt-2 text-center"
+          className="text-danger absolute top-full right-0 mt-1 w-56 text-right"
           size="xs"
         >
           {error}
         </Typography.Paragraph>
       )}
-    </DropZone>
+    </div>
   );
 }
 
-function MediaUrlField({
+function UrlControl({
+  className,
+  iconSize,
   kind,
   onChange,
   value,
 }: {
+  className: string;
+  iconSize: number;
   kind: NameProfileMediaKind;
   onChange: (value: string) => void;
   value: string;
@@ -110,147 +104,132 @@ function MediaUrlField({
     !/^(?:https?:\/\/|ipfs:\/\/|eip155:)/i.test(value.trim());
 
   return (
-    <TextField
-      fullWidth
-      isInvalid={isInvalid}
+    <Popover>
+      <Popover.Trigger
+        aria-label={`Set profile ${kind} URL`}
+        className={className}
+      >
+        <HugeiconsIcon icon={Add01Icon} size={iconSize} strokeWidth={1.5} />
+      </Popover.Trigger>
+      <Popover.Content placement="bottom">
+        <Popover.Arrow />
+        <Popover.Dialog className="w-72 p-3">
+          <TextField
+            fullWidth
+            isInvalid={isInvalid}
+            value={value}
+            onChange={onChange}
+          >
+            <Label className="text-sm font-medium">
+              {kind === "avatar" ? "Avatar" : "Header"} URL
+            </Label>
+            <Input
+              className="mt-2 ring-inset"
+              placeholder="https://… or ipfs://…"
+              spellCheck={false}
+              variant="secondary"
+            />
+            <FieldError>Enter a valid media URL.</FieldError>
+          </TextField>
+        </Popover.Dialog>
+      </Popover.Content>
+    </Popover>
+  );
+}
+
+function MediaControl({
+  className,
+  iconSize,
+  kind,
+  onChange,
+  upload,
+  value,
+}: {
+  className: string;
+  iconSize: number;
+  kind: NameProfileMediaKind;
+  onChange: (value: string) => void;
+  upload?: NameProfileMediaUpload;
+  value: string;
+}) {
+  if (upload) {
+    return (
+      <UploadControl
+        className={className}
+        iconSize={iconSize}
+        kind={kind}
+        upload={upload}
+        onChange={onChange}
+      />
+    );
+  }
+
+  return (
+    <UrlControl
+      className={className}
+      iconSize={iconSize}
+      kind={kind}
       value={value}
       onChange={onChange}
-    >
-      <Label className="text-muted text-xs">
-        {kind === "avatar" ? "Avatar" : "Header"} URL
-      </Label>
-      <Input
-        className="ring-inset"
-        placeholder={
-          kind === "avatar" ? "https://… or ipfs://…" : "https://… or ipfs://…"
-        }
-        spellCheck={false}
-        variant="secondary"
-      />
-      <FieldError>Enter a valid media URL.</FieldError>
-    </TextField>
-  );
-}
-
-function HeaderPreview({ value }: { value: string }) {
-  return (
-    <div className="relative h-36 overflow-hidden rounded-[inherit] bg-gradient-to-br from-[#161616] via-[#4a4a4a] to-[#d4d4d4] sm:h-44">
-      {value.length > 0 && (
-        <img
-          alt=""
-          className="absolute inset-0 size-full object-cover"
-          src={value}
-        />
-      )}
-      {value.length === 0 && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <HugeiconsIcon
-            className="text-white/60"
-            icon={Image01Icon}
-            size={24}
-          />
-        </div>
-      )}
-    </div>
-  );
-}
-
-function AvatarPreview({ name, value }: { name: string; value: string }) {
-  return (
-    <Avatar className="size-24 border-[6px] border-white bg-[#f1f1f1] shadow-xl sm:size-28">
-      {value.length > 0 && <Avatar.Image alt="" src={value} />}
-      <Avatar.Fallback className="text-muted text-xl font-medium">
-        {name.slice(0, 2).toUpperCase()}
-      </Avatar.Fallback>
-    </Avatar>
+    />
   );
 }
 
 export function ProfileMedia({
   avatar,
   header,
-  name,
   onAvatarChange,
   onHeaderChange,
   upload,
 }: {
   avatar: string;
   header: string;
-  name: string;
   onAvatarChange: (value: string) => void;
   onHeaderChange: (value: string) => void;
   upload?: NameProfileEditorUploadHandlers;
 }) {
   return (
-    <section aria-label="Profile media">
-      <div className="relative rounded-t-3xl">
-        {upload?.header === undefined ? (
-          <HeaderPreview value={header} />
-        ) : (
-          <MediaPicker
-            kind="header"
-            upload={upload.header}
-            onChange={onHeaderChange}
-          >
-            <HeaderPreview value={header} />
-          </MediaPicker>
-        )}
+    <section
+      aria-label="Profile media"
+      className="relative h-36 overflow-visible rounded-t-[2rem] bg-gradient-to-b from-[#858585] via-[#d6d6d6] to-[#f1f1f1] @min-[800px]:h-72"
+    >
+      {header.length > 0 && (
+        <img
+          alt=""
+          className="absolute inset-0 size-full rounded-t-[2rem] object-cover"
+          src={header}
+        />
+      )}
 
-        <div className="absolute -bottom-12 left-5 rounded-full sm:left-8">
-          {upload?.avatar === undefined ? (
-            <AvatarPreview name={name} value={avatar} />
-          ) : (
-            <MediaPicker
-              kind="avatar"
-              upload={upload.avatar}
-              onChange={onAvatarChange}
-            >
-              <AvatarPreview name={name} value={avatar} />
-            </MediaPicker>
-          )}
-        </div>
+      <div className="absolute top-4 right-4 @min-[800px]:top-7 @min-[800px]:right-7">
+        <MediaControl
+          className="size-12 min-w-12 rounded-2xl border border-white/20 bg-[#929292]/80 text-white shadow-[0_3px_0_rgba(0,0,0,0.16)] backdrop-blur-sm @min-[800px]:size-20 @min-[800px]:min-w-20 @min-[800px]:rounded-3xl"
+          iconSize={30}
+          kind="header"
+          value={header}
+          {...(upload?.header === undefined ? {} : { upload: upload.header })}
+          onChange={onHeaderChange}
+        />
       </div>
 
-      <div className="min-h-20 px-5 pt-14 pb-3 sm:px-8">
-        <Typography.Heading
-          className="text-xl font-semibold break-all sm:text-2xl"
-          level={2}
-        >
-          {name}
-        </Typography.Heading>
-        {upload === undefined && (
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <MediaUrlField
-              kind="avatar"
-              value={avatar}
-              onChange={onAvatarChange}
-            />
-            <MediaUrlField
-              kind="header"
-              value={header}
-              onChange={onHeaderChange}
-            />
-          </div>
+      <div className="absolute top-13 left-1/2 z-10 size-28 -translate-x-1/2 rounded-[1.5rem] border-[6px] border-white/70 bg-white p-5 shadow-[0_18px_28px_rgba(0,0,0,0.12)] @min-[800px]:top-24 @min-[800px]:size-60 @min-[800px]:rounded-[3rem] @min-[800px]:border-[10px] @min-[800px]:p-12">
+        {avatar.length > 0 && (
+          <img
+            alt=""
+            className="absolute inset-0 size-full rounded-[2.4rem] object-cover"
+            src={avatar}
+          />
         )}
-        {upload !== undefined &&
-          (upload.avatar === undefined || upload.header === undefined) && (
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              {upload.avatar === undefined && (
-                <MediaUrlField
-                  kind="avatar"
-                  value={avatar}
-                  onChange={onAvatarChange}
-                />
-              )}
-              {upload.header === undefined && (
-                <MediaUrlField
-                  kind="header"
-                  value={header}
-                  onChange={onHeaderChange}
-                />
-              )}
-            </div>
-          )}
+        <div className="relative flex size-full items-center justify-center rounded-full bg-[#f2f2f2]">
+          <MediaControl
+            className="size-14 min-w-14 rounded-full bg-transparent text-[#858585] @min-[800px]:size-28 @min-[800px]:min-w-28"
+            iconSize={30}
+            kind="avatar"
+            value={avatar}
+            {...(upload?.avatar === undefined ? {} : { upload: upload.avatar })}
+            onChange={onAvatarChange}
+          />
+        </div>
       </div>
     </section>
   );

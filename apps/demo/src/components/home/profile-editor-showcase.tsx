@@ -2,75 +2,96 @@ import type { NameProfileFormValues } from "ens-components";
 
 import { useState } from "react";
 
-import { Typography } from "@thenamespace/uikit";
+import {
+  Button,
+  Input,
+  Label,
+  TextField,
+  Typography,
+} from "@thenamespace/uikit";
+import { ArrowUpRight01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { NameProfileEditor } from "ens-components";
 
 import { SectionLabel } from "@/components/home/section-label";
 
 const DEMO_PROFILE: NameProfileFormValues = {
   abi: [],
-  addresses: [
-    {
-      coinType: "60",
-      value: "0x00A2895816e64F152FF81c8A931DC1bd9F5c3ce3",
-    },
-  ],
+  addresses: [],
   contenthash: "",
   data: [],
   interfaces: [],
   name: "",
   pubkey: { x: "", y: "" },
-  text: [
-    { key: "name", value: "Achilles" },
-    {
-      key: "description",
-      value: "Building useful identity tools for the open web.",
-    },
-    { key: "com.github", value: "thenamespace" },
-  ],
+  text: [],
 };
 
+function formatDemoName(value: string): string {
+  const name = value.trim() || "achilles";
+  return name.includes(".") ? name : `${name}.eth`;
+}
+
 export function ProfileEditorShowcase() {
-  const [changeCount, setChangeCount] = useState(0);
+  const [nameInput, setNameInput] = useState("achilles");
+  const name = formatDemoName(nameInput);
 
   return (
     <section
       aria-labelledby="profile-editor-title"
-      className="border-t border-[#dedede] bg-[#f4f4f4]"
+      className="mx-auto grid max-w-7xl scroll-mt-24 items-start gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[minmax(16.25rem,0.68fr)_minmax(38rem,1fr)] lg:gap-16 lg:px-12 lg:py-30"
+      id="profile-editor-demo"
     >
-      <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-12 lg:py-30">
-        <div className="mb-12 max-w-2xl">
-          <SectionLabel>In development</SectionLabel>
-          <Typography.Heading
-            className="mt-4 text-[clamp(2.4rem,4vw,4.6rem)] leading-[1.06] font-semibold tracking-[-0.04em] text-balance"
-            id="profile-editor-title"
-            level={2}
-          >
-            Profile records.
-          </Typography.Heading>
-          <Typography.Paragraph className="mt-6 max-w-lg text-[17px] leading-[1.6] text-[#666]">
-            A focused editor for profile, social, address, website, and advanced
-            resolver records.
-          </Typography.Paragraph>
-        </div>
+      <div className="lg:sticky lg:top-28 lg:pt-6">
+        <SectionLabel>In development</SectionLabel>
+        <Typography.Heading
+          className="mt-4 text-[clamp(2.4rem,4vw,4.6rem)] leading-[1.06] font-semibold tracking-[-0.04em] text-balance"
+          id="profile-editor-title"
+          level={2}
+        >
+          Profile records.
+        </Typography.Heading>
+        <Typography.Paragraph className="mt-6 max-w-lg text-[17px] leading-[1.6] text-[#666]">
+          Compose profile, social, address, and website records before sending
+          an update.
+        </Typography.Paragraph>
 
-        <div className="mx-auto max-w-3xl">
-          <NameProfileEditor
-            initialRecords={DEMO_PROFILE}
-            name="achilles.eth"
-            onReview={({ changes }) => setChangeCount(changes.length)}
+        <TextField
+          fullWidth
+          className="mt-7"
+          value={nameInput}
+          onChange={setNameInput}
+        >
+          <Label className="text-sm">ENS name</Label>
+          <Input
+            className="mt-2 ring-inset"
+            placeholder="vitalik"
+            variant="secondary"
           />
-          {changeCount > 0 && (
-            <Typography.Paragraph
-              className="mt-3 text-center"
-              color="muted"
-              size="sm"
-            >
-              {changeCount} {changeCount === 1 ? "change" : "changes"} ready for
-              review.
-            </Typography.Paragraph>
-          )}
-        </div>
+        </TextField>
+
+        <NameProfileEditor
+          initialRecords={DEMO_PROFILE}
+          name={name}
+          slots={{
+            trigger: (
+              <Button className="mt-4" size="lg">
+                Open dialog demo
+                <HugeiconsIcon
+                  aria-hidden
+                  icon={ArrowUpRight01Icon}
+                  size={18}
+                />
+              </Button>
+            ),
+          }}
+        />
+      </div>
+
+      <div className="mx-auto w-full max-w-md">
+        <NameProfileEditor
+          initialRecords={DEMO_PROFILE}
+          name={name}
+          presentation="inline"
+        />
       </div>
     </section>
   );

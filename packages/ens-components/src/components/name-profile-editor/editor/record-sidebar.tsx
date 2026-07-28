@@ -8,17 +8,15 @@ import { nameProfileEditorCategories } from "#/components/name-profile-editor/ed
 
 export function RecordSidebar({
   activeCategory,
-  counts,
   onChange,
 }: {
   activeCategory: NameProfileEditorCategory;
-  counts: Readonly<Record<NameProfileEditorCategory, number>>;
   onChange: (category: NameProfileEditorCategory) => void;
 }) {
   return (
     <nav
       aria-label="Profile record categories"
-      className="flex gap-1 overflow-x-auto pb-1 md:w-36 md:shrink-0 md:flex-col md:overflow-visible md:pb-0"
+      className="flex gap-1 overflow-x-auto pb-1 @min-[400px]:w-24 @min-[400px]:shrink-0 @min-[400px]:flex-col @min-[400px]:overflow-visible @min-[400px]:pb-0 @min-[580px]:w-32 @min-[800px]:w-52"
     >
       {nameProfileEditorCategories.map((category) => {
         const isActive = category.id === activeCategory;
@@ -27,7 +25,7 @@ export function RecordSidebar({
             key={category.id}
             className={
               cn(
-                "h-10 min-w-fit justify-between rounded-xl px-3 text-sm",
+                "h-12 min-w-fit justify-start rounded-xl px-3 text-base font-normal @min-[800px]:h-16 @min-[800px]:px-4 @min-[800px]:text-xl",
                 isActive && "bg-default text-foreground",
               ) ?? ""
             }
@@ -36,18 +34,6 @@ export function RecordSidebar({
             onPress={() => onChange(category.id)}
           >
             {category.label}
-            {counts[category.id] > 0 && (
-              <span
-                className={cn(
-                  "ml-2 min-w-5 rounded-full px-1.5 text-center text-[11px]",
-                  isActive
-                    ? "bg-background text-foreground"
-                    : "bg-default text-muted",
-                )}
-              >
-                {counts[category.id]}
-              </span>
-            )}
           </Button>
         );
       })}

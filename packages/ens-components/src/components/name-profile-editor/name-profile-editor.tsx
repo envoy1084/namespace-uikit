@@ -6,9 +6,10 @@ import type {
 } from "#/components/name-profile-editor/editor/types";
 import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
 
+import type { ReactNode } from "react";
 import { useEffect, useMemo } from "react";
 
-import { Form, cn } from "@thenamespace/uikit";
+import { Button, Form, Modal, cn } from "@thenamespace/uikit";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { diffProfileRecords } from "#/components/name-profile-editor/diff-profile-records";
@@ -49,6 +50,12 @@ export interface NameProfileEditorProps {
   name: string;
   /** Called with canonical records and their semantic changes. */
   onReview?: (review: NameProfileEditorReview) => void;
+  /** Renders as a trigger-controlled dialog or directly in the page. */
+  presentation?: "dialog" | "inline";
+  /** Optional replacements for component-owned UI. */
+  slots?: {
+    trigger?: ReactNode;
+  };
   /** Optional media upload handlers. URL inputs are used when omitted. */
   upload?: NameProfileEditorUploadHandlers;
 }
@@ -58,6 +65,8 @@ export function NameProfileEditor({
   initialRecords,
   name,
   onReview,
+  presentation = "dialog",
+  slots,
   upload,
 }: NameProfileEditorProps) {
   const initialRecordsSnapshot = JSON.stringify(initialRecords);
@@ -108,10 +117,10 @@ export function NameProfileEditor({
     onReview?.({ changes, values: normalized.value });
   };
 
-  return (
+  const editor = (
     <FormProvider {...form}>
       <Form
-        className={cn("w-full max-w-3xl", className) ?? ""}
+        className={cn("w-full max-w-md", className) ?? ""}
         validationBehavior="aria"
         onSubmit={(event) => {
           void form.handleSubmit(review)(event);
@@ -119,10 +128,28 @@ export function NameProfileEditor({
       >
         <NameProfileEditorForm
           key={initialRecordsSnapshot}
-          name={name}
           {...(upload === undefined ? {} : { upload })}
         />
       </Form>
     </FormProvider>
+  );
+
+  if (presentation === "inline") return editor;
+
+  return (
+    <Modal>
+      {slots?.trigger ?? <Button>Edit profile</Button>}
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog
+            aria-label={`Edit ${name} profile`}
+            className="w-full max-w-md bg-transparent p-0 shadow-none"
+          >
+            <Modal.CloseTrigger className="top-4 right-auto left-4 z-50" />
+            {editor}
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
+    </Modal>
   );
 }

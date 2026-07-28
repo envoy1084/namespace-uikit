@@ -8,9 +8,8 @@ import type { NameProfileFormValues } from "#/components/name-profile-editor/typ
 import {
   Button,
   FieldError,
-  Input,
+  InputGroup,
   Label,
-  Surface,
   TextField,
   Typography,
 } from "@thenamespace/uikit";
@@ -35,11 +34,13 @@ export interface ActiveProfileRecord {
 }
 
 function ProfileInput({
+  icon,
   label,
   name,
   placeholder,
   validate,
 }: {
+  icon?: string;
   label: string;
   name: FieldPath<NameProfileFormValues>;
   placeholder: string;
@@ -66,14 +67,23 @@ function ProfileInput({
           onBlur={field.onBlur}
           onChange={field.onChange}
         >
-          <Label className="text-muted text-xs">{label}</Label>
-          <Input
-            className="ring-inset"
-            placeholder={placeholder}
-            spellCheck={false}
+          <Label className="sr-only">{label}</Label>
+          <InputGroup
+            className="border-default bg-background h-14 w-full rounded-xl border px-3 ring-inset @min-[800px]:h-20 @min-[800px]:rounded-2xl @min-[800px]:px-4"
             variant="secondary"
-          />
-          <FieldError>{fieldState.error?.message}</FieldError>
+          >
+            {icon && (
+              <InputGroup.Prefix className="mr-2">
+                <RecordIcon icon={icon} />
+              </InputGroup.Prefix>
+            )}
+            <InputGroup.Input
+              className="w-full text-base @min-[800px]:text-xl"
+              placeholder={placeholder}
+              spellCheck={false}
+            />
+          </InputGroup>
+          <FieldError className="mt-1">{fieldState.error?.message}</FieldError>
         </TextField>
       )}
     />
@@ -85,21 +95,26 @@ function RecordInputs({ record }: { record: ActiveProfileRecord }) {
 
   if (definition.kind === "text" && index !== undefined) {
     const isCustom = definition.id === "custom-text";
-    return (
-      <div className={isCustom ? "grid gap-3 sm:grid-cols-2" : undefined}>
-        {isCustom && (
-          <ProfileInput
-            label="Record key"
-            name={`text.${index}.key`}
-            placeholder="com.example"
-          />
-        )}
+    return isCustom ? (
+      <div className="grid gap-3 sm:grid-cols-2">
         <ProfileInput
-          label={isCustom ? "Record value" : definition.label}
+          label="Record key"
+          name={`text.${index}.key`}
+          placeholder="Record key"
+        />
+        <ProfileInput
+          label="Record value"
           name={`text.${index}.value`}
-          placeholder={definition.placeholder}
+          placeholder="Record value"
         />
       </div>
+    ) : (
+      <ProfileInput
+        icon={definition.icon}
+        label={definition.label}
+        name={`text.${index}.value`}
+        placeholder={definition.placeholder}
+      />
     );
   }
 
@@ -107,6 +122,7 @@ function RecordInputs({ record }: { record: ActiveProfileRecord }) {
     const coinType = definition.coinType ?? "";
     return (
       <ProfileInput
+        icon={definition.icon}
         label={`${definition.label} address`}
         name={`addresses.${index}.value`}
         placeholder={definition.placeholder}
@@ -118,7 +134,8 @@ function RecordInputs({ record }: { record: ActiveProfileRecord }) {
   if (definition.kind === "contenthash") {
     return (
       <ProfileInput
-        label="Content hash URI"
+        icon={definition.icon}
+        label={definition.label}
         name="contenthash"
         placeholder={definition.placeholder}
         validate={validateContenthash}
@@ -129,6 +146,7 @@ function RecordInputs({ record }: { record: ActiveProfileRecord }) {
   if (definition.kind === "name") {
     return (
       <ProfileInput
+        icon={definition.icon}
         label="Name"
         name="name"
         placeholder={definition.placeholder}
@@ -143,13 +161,13 @@ function RecordInputs({ record }: { record: ActiveProfileRecord }) {
         <ProfileInput
           label="X coordinate"
           name="pubkey.x"
-          placeholder="0x…"
+          placeholder="X coordinate"
           validate={validateBytes32}
         />
         <ProfileInput
           label="Y coordinate"
           name="pubkey.y"
-          placeholder="0x…"
+          placeholder="Y coordinate"
           validate={validateBytes32}
         />
       </div>
@@ -162,7 +180,7 @@ function RecordInputs({ record }: { record: ActiveProfileRecord }) {
         <ProfileInput
           label="Data key"
           name={`data.${index}.key`}
-          placeholder="Key"
+          placeholder="Data key"
         />
         <ProfileInput
           label="Bytes"
@@ -180,7 +198,7 @@ function RecordInputs({ record }: { record: ActiveProfileRecord }) {
         <ProfileInput
           label="Content type"
           name={`abi.${index}.contentType`}
-          placeholder="1"
+          placeholder="Content type"
           validate={validateUnsignedInteger}
         />
         <ProfileInput
@@ -225,29 +243,25 @@ export function RecordField({
   record: ActiveProfileRecord;
 }) {
   return (
-    <Surface className="border-default rounded-2xl border p-3 sm:p-4">
-      <div className="mb-3 flex items-start gap-3">
-        <RecordIcon icon={record.definition.icon} />
+    <div className="col-span-full">
+      <Typography.Paragraph className="mb-1" color="muted" size="sm">
+        {record.definition.label}
+      </Typography.Paragraph>
+      <div className="flex items-center gap-2.5">
         <div className="min-w-0 flex-1">
-          <Typography.Paragraph size="sm" weight="medium">
-            {record.definition.label}
-          </Typography.Paragraph>
-          <Typography.Paragraph color="muted" size="xs">
-            {record.definition.description}
-          </Typography.Paragraph>
+          <RecordInputs record={record} />
         </div>
         <Button
           isIconOnly
           aria-label={`Remove ${record.definition.label}`}
-          className="size-8 min-w-8 rounded-full"
+          className="size-10 min-w-10 rounded-full text-[#10232e]"
           size="sm"
           variant="ghost"
           onPress={() => onRemove(record)}
         >
-          <HugeiconsIcon icon={Cancel01Icon} size={15} />
+          <HugeiconsIcon icon={Cancel01Icon} size={28} strokeWidth={1.8} />
         </Button>
       </div>
-      <RecordInputs record={record} />
-    </Surface>
+    </div>
   );
 }

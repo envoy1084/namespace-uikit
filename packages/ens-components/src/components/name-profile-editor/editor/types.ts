@@ -5,7 +5,6 @@ import type {
 
 export type NameProfileEditorCategory =
   | "addresses"
-  | "advanced"
   | "general"
   | "social"
   | "website";
@@ -23,7 +22,10 @@ export type NameProfileEditorRecordKind =
 export interface NameProfileEditorRecordDefinition {
   category: NameProfileEditorCategory;
   coinType?: string;
+  contenthashCodec?: string;
   description: string;
+  /** Only appears when already selected or matched by search. */
+  hidden?: boolean;
   icon: string;
   id: string;
   key?: string;

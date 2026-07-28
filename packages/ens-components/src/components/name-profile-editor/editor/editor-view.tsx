@@ -8,32 +8,23 @@ import type {
 } from "#/components/name-profile-editor/editor/types";
 import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import { Button, SearchField, Surface, Typography } from "@thenamespace/uikit";
 import { ArrowRight01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
-import { nameProfileEditorCatalog } from "#/components/name-profile-editor/editor/catalog";
+import {
+  nameProfileEditorCatalog,
+  nameProfileEditorCategories,
+} from "#/components/name-profile-editor/editor/catalog";
 import { ProfileMedia } from "#/components/name-profile-editor/editor/profile-media";
-import { RecordField } from "#/components/name-profile-editor/editor/record-field";
-import { RecordLibrary } from "#/components/name-profile-editor/editor/record-library";
+import { RecordSection } from "#/components/name-profile-editor/editor/record-section";
 import { RecordSidebar } from "#/components/name-profile-editor/editor/record-sidebar";
 
 const mediaKeys = new Set(["avatar", "header"]);
 
-function recordMatchesQuery(
-  record: NameProfileEditorRecordDefinition,
-  query: string,
-): boolean {
-  const search = query.trim().toLowerCase();
-  if (search.length === 0) return true;
-  return [record.label, record.description, record.key, record.coinType].some(
-    (value) => value?.toLowerCase().includes(search),
-  );
-}
-
-function getDefinition(
+function findDefinition(
   kind: "address" | "text",
   key: string,
 ): NameProfileEditorRecordDefinition | undefined {
@@ -44,27 +35,48 @@ function getDefinition(
   );
 }
 
+function getContenthashDefinition(
+  value: string,
+  selectedId: string | null,
+): NameProfileEditorRecordDefinition | undefined {
+  const codec = value.match(/^([a-z0-9]+):\/\//i)?.[1]?.toLowerCase();
+  const id = codec ? `contenthash:${codec}` : selectedId;
+  return nameProfileEditorCatalog.find((record) => record.id === id);
+}
+
 export function NameProfileEditorForm({
-  name,
   upload,
 }: {
-  name: string;
   upload?: NameProfileEditorUploadHandlers;
 }) {
   const { control, formState, getValues, setValue } =
     useFormContext<NameProfileFormValues>();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const sectionRefs = useRef<
+    Record<NameProfileEditorCategory, HTMLElement | null>
+  >({
+    addresses: null,
+    general: null,
+    social: null,
+    website: null,
+  });
   const [activeCategory, setActiveCategory] =
     useState<NameProfileEditorCategory>("general");
   const [enabledScalars, setEnabledScalars] = useState(
     () =>
       new Set(
         [
-          getValues("contenthash").length > 0 ? "contenthash" : "",
           getValues("name").length > 0 ? "name" : "",
           getValues("pubkey.x").length > 0 ? "pubkey" : "",
         ].filter(Boolean),
       ),
   );
+  const [selectedContenthashId, setSelectedContenthashId] = useState<
+    string | null
+  >(() => {
+    const codec = getValues("contenthash").match(/^([a-z0-9]+):\/\//i)?.[1];
+    return codec ? `contenthash:${codec.toLowerCase()}` : null;
+  });
   const [query, setQuery] = useState("");
 
   const abiArray = useFieldArray({ control, name: "abi" });
@@ -80,19 +92,19 @@ export function NameProfileEditorForm({
     values.text?.forEach((value, index) => {
       const key = value.key ?? "";
       if (mediaKeys.has(key)) return;
-      const known = getDefinition("text", key);
+      const known = findDefinition("text", key);
       const definition =
         known ??
         ({
-          category: "advanced",
+          category: "general",
           description: key
             ? `Custom text record: ${key}`
             : "Arbitrary ENS text record.",
-          icon: "text",
+          icon: "question",
           id: "custom-text",
           key,
           kind: "text",
-          label: key || "Custom text",
+          label: key || "Custom",
           placeholder: "Record value",
         } satisfies NameProfileEditorRecordDefinition);
       records.push({
@@ -104,13 +116,13 @@ export function NameProfileEditorForm({
 
     values.addresses?.forEach((value, index) => {
       const coinType = value.coinType ?? "";
-      const known = getDefinition("address", coinType);
       const definition =
-        known ??
+        findDefinition("address", coinType) ??
         ({
           category: "addresses",
           coinType,
           description: `Address record for coin type ${coinType}.`,
+          hidden: true,
           icon: "eth",
           id: `address:${coinType}`,
           kind: "address",
@@ -124,23 +136,21 @@ export function NameProfileEditorForm({
       });
     });
 
-    if (enabledScalars.has("contenthash")) {
-      const definition = nameProfileEditorCatalog.find(
-        (record) => record.id === "contenthash",
+    const contenthash = values.contenthash ?? "";
+    if (contenthash.length > 0 || selectedContenthashId !== null) {
+      const definition = getContenthashDefinition(
+        contenthash,
+        selectedContenthashId,
       );
       if (definition) records.push({ definition, id: "contenthash" });
     }
-    if (enabledScalars.has("name")) {
+
+    for (const id of ["name", "pubkey"]) {
+      if (!enabledScalars.has(id)) continue;
       const definition = nameProfileEditorCatalog.find(
-        (record) => record.id === "name",
+        (record) => record.id === id,
       );
-      if (definition) records.push({ definition, id: "name" });
-    }
-    if (enabledScalars.has("pubkey")) {
-      const definition = nameProfileEditorCatalog.find(
-        (record) => record.id === "pubkey",
-      );
-      if (definition) records.push({ definition, id: "pubkey" });
+      if (definition) records.push({ definition, id });
     }
 
     values.data?.forEach((_, index) => {
@@ -176,7 +186,6 @@ export function NameProfileEditorForm({
           index,
         });
     });
-
     return records;
   }, [
     abiArray.fields,
@@ -184,41 +193,21 @@ export function NameProfileEditorForm({
     dataArray.fields,
     enabledScalars,
     interfaceArray.fields,
+    selectedContenthashId,
     textArray.fields,
     values,
   ]);
-
-  const counts = useMemo(() => {
-    const next: Record<NameProfileEditorCategory, number> = {
-      addresses: 0,
-      advanced: 0,
-      general: 0,
-      social: 0,
-      website: 0,
-    };
-    for (const record of activeRecords) next[record.definition.category] += 1;
-    return next;
-  }, [activeRecords]);
-
-  const visibleRecords = activeRecords.filter(
-    (record) =>
-      record.definition.category === activeCategory &&
-      recordMatchesQuery(record.definition, query),
-  );
-  const availableRecords = nameProfileEditorCatalog.filter((record) => {
-    if (record.category !== activeCategory) return false;
-    if (!recordMatchesQuery(record, query)) return false;
-    if (["abi", "custom-text", "data", "interface"].includes(record.id)) {
-      return true;
-    }
-    return !activeRecords.some((active) => active.definition.id === record.id);
-  });
 
   const addRecord = (record: NameProfileEditorRecordDefinition) => {
     if (record.kind === "text") {
       textArray.append({ key: record.key ?? "", value: "" });
     } else if (record.kind === "address") {
       addressArray.append({ coinType: record.coinType ?? "", value: "" });
+    } else if (record.kind === "contenthash") {
+      setSelectedContenthashId(record.id);
+      setValue("contenthash", `${record.contenthashCodec ?? "ipfs"}://`, {
+        shouldDirty: true,
+      });
     } else if (record.kind === "data") {
       dataArray.append({ key: "", value: "0x" });
     } else if (record.kind === "abi") {
@@ -242,11 +231,12 @@ export function NameProfileEditorForm({
       abiArray.remove(index);
     } else if (record.definition.kind === "interface" && index !== undefined) {
       interfaceArray.remove(index);
+    } else if (record.definition.kind === "contenthash") {
+      setValue("contenthash", "", { shouldDirty: true });
+      setSelectedContenthashId(null);
     } else {
       if (record.definition.kind === "pubkey") {
         setValue("pubkey", { x: "", y: "" }, { shouldDirty: true });
-      } else if (record.definition.kind === "contenthash") {
-        setValue("contenthash", "", { shouldDirty: true });
       } else if (record.definition.kind === "name") {
         setValue("name", "", { shouldDirty: true });
       }
@@ -272,83 +262,130 @@ export function NameProfileEditorForm({
     }
   };
 
+  const selectCategory = (category: NameProfileEditorCategory) => {
+    setActiveCategory(category);
+    const container = scrollRef.current;
+    const section = sectionRefs.current[category];
+    if (container && section) {
+      container.scrollTo({
+        behavior: "smooth",
+        top: section.offsetTop - container.offsetTop,
+      });
+    }
+  };
+
   const avatar =
     values.text?.find((record) => record.key === "avatar")?.value ?? "";
   const header =
     values.text?.find((record) => record.key === "header")?.value ?? "";
+  const queryValue = query.trim().toLowerCase();
+  const visibleSections = nameProfileEditorCategories.filter((category) =>
+    nameProfileEditorCatalog.some(
+      (record) =>
+        record.category === category.id &&
+        (queryValue.length === 0 ||
+          [record.label, record.description, record.key].some((value) =>
+            value?.toLowerCase().includes(queryValue),
+          )),
+    ),
+  );
 
   return (
-    <Surface className="border-default overflow-hidden rounded-3xl border">
+    <Surface className="bg-default @container w-full overflow-hidden rounded-[2rem] p-0">
       <ProfileMedia
         avatar={avatar}
         header={header}
-        name={name}
         {...(upload === undefined ? {} : { upload })}
         onAvatarChange={(value) => updateMedia("avatar", value)}
         onHeaderChange={(value) => updateMedia("header", value)}
       />
 
-      <div className="border-default bg-background m-3 rounded-2xl border p-3 sm:m-5 sm:p-5">
+      <div className="bg-background mx-3 mt-8 mb-3 h-[29rem] rounded-[1.8rem] p-4 @min-[800px]:mx-6 @min-[800px]:mt-20 @min-[800px]:mb-6 @min-[800px]:h-[800px] @min-[800px]:p-7">
         <SearchField
           fullWidth
           aria-label="Search profile records"
           value={query}
           onChange={setQuery}
         >
-          <SearchField.Group className="w-full">
-            <SearchField.SearchIcon />
-            <SearchField.Input placeholder="Search records" />
+          <SearchField.Group className="border-default bg-background h-14 w-full rounded-xl border px-4 @min-[800px]:h-20 @min-[800px]:rounded-2xl @min-[800px]:px-5">
+            <SearchField.SearchIcon className="text-muted size-6 @min-[800px]:size-8" />
+            <SearchField.Input
+              className="text-base @min-[800px]:text-xl"
+              placeholder="Search"
+            />
             <SearchField.ClearButton />
           </SearchField.Group>
         </SearchField>
 
-        <div className="mt-5 flex flex-col gap-5 md:flex-row">
+        <div className="mt-5 flex h-[21.5rem] flex-col gap-4 @min-[400px]:flex-row @min-[800px]:mt-6 @min-[800px]:h-[650px]">
           <RecordSidebar
             activeCategory={activeCategory}
-            counts={counts}
-            onChange={setActiveCategory}
+            onChange={selectCategory}
           />
-          <div className="min-w-0 flex-1 space-y-5">
-            {visibleRecords.length > 0 && (
-              <section aria-label="Selected records" className="space-y-3">
-                {visibleRecords.map((record) => (
-                  <RecordField
-                    key={record.id}
-                    record={record}
-                    onRemove={removeRecord}
-                  />
-                ))}
-              </section>
-            )}
-            <RecordLibrary records={availableRecords} onAdd={addRecord} />
-            {visibleRecords.length === 0 && availableRecords.length === 0 && (
+          <div
+            ref={scrollRef}
+            className="min-h-0 min-w-0 flex-1 [scrollbar-width:thin] [scrollbar-color:#111827_transparent] space-y-7 overflow-y-scroll pr-3"
+            onScroll={(event) => {
+              const top = event.currentTarget.scrollTop + 24;
+              for (const category of nameProfileEditorCategories) {
+                const section = sectionRefs.current[category.id];
+                if (
+                  section &&
+                  section.offsetTop - event.currentTarget.offsetTop <= top
+                ) {
+                  setActiveCategory(category.id);
+                }
+              }
+            }}
+          >
+            {visibleSections.map((category) => (
+              <RecordSection
+                key={category.id}
+                activeRecords={activeRecords}
+                category={category.id}
+                definitions={nameProfileEditorCatalog.filter(
+                  (record) => record.category === category.id,
+                )}
+                label={category.label}
+                query={query}
+                sectionRef={(element) => {
+                  sectionRefs.current[category.id] = element;
+                }}
+                onAdd={addRecord}
+                onRemove={removeRecord}
+              />
+            ))}
+
+            {visibleSections.length === 0 && (
               <Typography.Paragraph
-                className="py-12 text-center"
+                className="py-20 text-center"
                 color="muted"
                 size="sm"
               >
                 No records match your search.
               </Typography.Paragraph>
             )}
+
+            <div className="pt-4">
+              {formState.errors.root?.message && (
+                <Typography.Paragraph
+                  className="text-danger mx-auto mb-3 text-center"
+                  size="xs"
+                >
+                  {formState.errors.root.message}
+                </Typography.Paragraph>
+              )}
+              <Button
+                className="w-full"
+                isDisabled={!formState.isDirty || !formState.isValid}
+                type="submit"
+              >
+                Review changes
+                <HugeiconsIcon icon={ArrowRight01Icon} size={17} />
+              </Button>
+            </div>
           </div>
         </div>
-
-        {formState.errors.root?.message && (
-          <Typography.Paragraph
-            className="text-danger mx-auto mt-4 text-center"
-            size="xs"
-          >
-            {formState.errors.root.message}
-          </Typography.Paragraph>
-        )}
-        <Button
-          className="mt-6 w-full"
-          isDisabled={!formState.isDirty || !formState.isValid}
-          type="submit"
-        >
-          Review changes
-          <HugeiconsIcon icon={ArrowRight01Icon} size={17} />
-        </Button>
       </div>
     </Surface>
   );
