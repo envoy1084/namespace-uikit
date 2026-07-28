@@ -21,7 +21,7 @@ import { reconcileRegistrationAttempt } from "#/components/name-registration/ste
 import { prepareRegistrationAttempt } from "#/components/name-registration/steps/registration-process/steps/commitment/registration-attempt";
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
 import { useExecuteContractWrites } from "#/hooks";
-import { delay, parseRegistrationDuration } from "#/lib/helpers";
+import { asWagmiChainId, delay, parseRegistrationDuration } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export type CommitmentSubmissionStatus =
@@ -46,9 +46,10 @@ export function useCommitmentSubmission({
   onPendingChange,
 }: UseCommitmentSubmissionParameters) {
   const connection = useConnection();
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
-  const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const wagmiChainId = asWagmiChainId(chain.id);
+  const publicClient = usePublicClient({ chainId: wagmiChainId });
+  const { data: walletClient } = useWalletClient({ chainId: wagmiChainId });
   const contractWrites = useExecuteContractWrites();
   const { switchChainAsync } = useSwitchChain();
   const {
@@ -83,12 +84,11 @@ export function useCommitmentSubmission({
         chainId: chain.id,
         error: nextError,
         input,
-        network,
         phase: errorPhase,
         ...(hash === undefined ? {} : { transactionHash: hash }),
       });
     },
-    [chain.id, events.onError, input, network],
+    [chain.id, events.onError, input],
   );
 
   useEffect(() => {
@@ -122,7 +122,6 @@ export function useCommitmentSubmission({
       setStatus("reconciling");
       const result = await reconcileRegistrationAttempt({
         attempt,
-        network,
         publicClient,
         ...(walletClient === undefined ? {} : { walletClient }),
         onUpdate: (updates) => update(attempt.id, updates),
@@ -143,7 +142,7 @@ export function useCommitmentSubmission({
       setStatus("idle");
       return result;
     },
-    [network, onConfirmed, publicClient, reportError, update, walletClient],
+    [onConfirmed, publicClient, reportError, update, walletClient],
   );
 
   useEffect(() => {
@@ -176,7 +175,6 @@ export function useCommitmentSubmission({
           chainId: chain.id,
           factoryAddress: attempt.resolver.factoryAddress,
           implementationAddress: attempt.resolver.implementationAddress,
-          network,
           owner: attempt.owner,
           receipt: result.resolverReceipt,
           resolverAddress: attempt.resolver.address,
@@ -195,7 +193,6 @@ export function useCommitmentSubmission({
           registrationAttemptId: attempt.id,
           duration: attemptDuration,
           name: attempt.normalizedName,
-          network,
           owner: attempt.owner,
           receipt: result.commitmentReceipt,
           referrer: attempt.referrer,
@@ -206,7 +203,7 @@ export function useCommitmentSubmission({
 
       onConfirmed();
     },
-    [chain.id, events.onCommit, events.onResolverDeploy, network, onConfirmed],
+    [chain.id, events.onCommit, events.onResolverDeploy, onConfirmed],
   );
 
   const submit = async () => {
@@ -225,7 +222,7 @@ export function useCommitmentSubmission({
       setStatus("switching");
 
       try {
-        await switchChainAsync({ chainId: chain.id });
+        await switchChainAsync({ chainId: wagmiChainId });
       } catch {
         reportError("CHAIN_SWITCH_FAILED", "commitment");
       } finally {
@@ -257,7 +254,6 @@ export function useCommitmentSubmission({
         factoryAddress: contracts.verifiableFactory.address,
         implementationAddress: contracts.permissionedResolverImplementation.address,
         input,
-        network,
         owner: connection.address,
         paymentTokenAddress,
         referrer,
@@ -300,7 +296,6 @@ export function useCommitmentSubmission({
     const result = await submitRegistrationAttempt({
       attempt,
       executeWrites: contractWrites.mutateAsync,
-      network,
       publicClient,
       onProgress: handleProgress,
       onSubmissionChange: (submission) => update(attempt.id, { submission }),

@@ -15,7 +15,7 @@ import {
   type PreparedSetL2PrimaryNameWrite,
 } from "#/actions";
 import type { StoredRegistrationAttempt } from "#/components/name-registration/hooks/use-registration-attempts";
-import type { EnsNetwork, EnsPaymentToken } from "#/data";
+import type { EnsPaymentToken } from "#/data";
 import { parseRegistrationDuration } from "#/lib/helpers";
 
 export interface PreparedRegistrationPaymentWrites {
@@ -29,7 +29,6 @@ export interface PreparedRegistrationPaymentWrites {
 
 export interface PrepareRegistrationPaymentWritesProps {
   attempt: StoredRegistrationAttempt;
-  network: EnsNetwork;
   payment: NameRegistrationPaymentStatus;
   paymentToken: EnsPaymentToken;
   l1ReverseRegistrarAddress: Address;
@@ -39,14 +38,8 @@ export interface PrepareRegistrationPaymentWritesProps {
 export function prepareRegistrationPaymentWrites(
   props: PrepareRegistrationPaymentWritesProps,
 ): Result<PreparedRegistrationPaymentWrites, unknown> {
-  const {
-    attempt,
-    l1ReverseRegistrarAddress,
-    l2ReverseRegistrarAddress,
-    network,
-    payment,
-    paymentToken,
-  } = props;
+  const { attempt, l1ReverseRegistrarAddress, l2ReverseRegistrarAddress, payment, paymentToken } =
+    props;
   const duration = parseRegistrationDuration(attempt.duration);
   if (duration === undefined) return err("INVALID_DURATION");
 
@@ -54,7 +47,6 @@ export function prepareRegistrationPaymentWrites(
     account: attempt.account,
     duration,
     input: attempt.label,
-    network,
     owner: attempt.owner,
     paymentTokenAddress: paymentToken.address,
     referrer: attempt.referrer,
@@ -70,7 +62,6 @@ export function prepareRegistrationPaymentWrites(
     const preparedApproval = preparePaymentTokenApprovalWrite({
       account: attempt.account,
       amount: payment.total,
-      network,
       paymentTokenAddress: paymentToken.address,
       spenderAddress: attempt.registrarAddress,
     });
@@ -85,7 +76,6 @@ export function prepareRegistrationPaymentWrites(
     const preparedAddressRecord = prepareSetAddressRecordWrite({
       account: attempt.account,
       input: attempt.normalizedName,
-      network,
       owner: attempt.account,
       resolverAddress: attempt.resolver.address,
     });
@@ -95,7 +85,6 @@ export function prepareRegistrationPaymentWrites(
       account: attempt.account,
       input: attempt.normalizedName,
       l2ReverseRegistrarAddress,
-      network,
     });
     if (preparedL2PrimaryName.isErr()) return err(preparedL2PrimaryName.error);
 
@@ -103,7 +92,6 @@ export function prepareRegistrationPaymentWrites(
       account: attempt.account,
       input: attempt.normalizedName,
       l1ReverseRegistrarAddress,
-      network,
     });
     if (preparedL1PrimaryName.isErr()) return err(preparedL1PrimaryName.error);
 

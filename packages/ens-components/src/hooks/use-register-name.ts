@@ -17,10 +17,7 @@ import {
 import type { ParseNameInputError } from "#/lib";
 import { useEnsConfig } from "#/providers";
 
-export type RegisterNameVariables = Omit<
-  PrepareRegisterNameWriteParameters,
-  "network" | "registrarAddress"
-> &
+export type RegisterNameVariables = Omit<PrepareRegisterNameWriteParameters, "registrarAddress"> &
   PreparedWriteVariables;
 
 export type RegisterNameError = PreparedWriteMutationError<
@@ -36,7 +33,7 @@ export interface UseRegisterNameParameters {
 }
 
 export function useRegisterName(parameters: UseRegisterNameParameters = {}) {
-  const { contracts, network } = useEnsConfig();
+  const { contracts } = useEnsConfig();
   const registrarAddress = parameters.registrarAddress ?? contracts.ethRegistrar.address;
 
   return usePreparedContractWrite<
@@ -49,7 +46,6 @@ export function useRegisterName(parameters: UseRegisterNameParameters = {}) {
     prepare: async (variables) =>
       prepareRegisterNameWrite({
         ...variables,
-        network,
         registrarAddress,
       }),
   });

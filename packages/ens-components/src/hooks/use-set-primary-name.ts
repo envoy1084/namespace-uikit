@@ -1,5 +1,8 @@
 "use client";
 
+import type { UseMutationOptions } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+
 import type { Address } from "viem";
 
 import type {
@@ -8,15 +11,6 @@ import type {
   PrepareSetL1PrimaryNameWriteError,
   PrepareSetL2PrimaryNameWriteError,
 } from "#/actions";
-import type {
-  PreparedWriteExecutionOptions,
-  PreparedWriteVariables,
-} from "#/hooks/use-prepared-contract-write";
-import type { ParseNameInputError } from "#/lib";
-
-import type { UseMutationOptions } from "@tanstack/react-query";
-import { useMutation } from "@tanstack/react-query";
-
 import {
   prepareSetAddressRecordWrite,
   prepareSetL1PrimaryNameWrite,
@@ -26,6 +20,11 @@ import {
   useExecuteContractWrites,
   type ExecuteContractWritesMutationError,
 } from "#/hooks/use-execute-contract-writes";
+import type {
+  PreparedWriteExecutionOptions,
+  PreparedWriteVariables,
+} from "#/hooks/use-prepared-contract-write";
+import type { ParseNameInputError } from "#/lib";
 import { useEnsConfig } from "#/providers";
 
 export interface SetPrimaryNameVariables extends PreparedWriteVariables {
@@ -46,37 +45,24 @@ export interface UseSetPrimaryNameParameters {
   l1ReverseRegistrarAddress?: Address;
   l2ReverseRegistrarAddress?: Address;
   mutation?: Omit<
-    UseMutationOptions<
-      ExecuteContractWritesResult,
-      SetPrimaryNameError,
-      SetPrimaryNameVariables
-    >,
+    UseMutationOptions<ExecuteContractWritesResult, SetPrimaryNameError, SetPrimaryNameVariables>,
     "mutationFn" | "mutationKey"
   >;
 }
 
-export function useSetPrimaryName(
-  parameters: UseSetPrimaryNameParameters = {},
-) {
-  const { chain, contracts, network } = useEnsConfig();
+export function useSetPrimaryName(parameters: UseSetPrimaryNameParameters = {}) {
+  const { chain, contracts } = useEnsConfig();
   const l1ReverseRegistrarAddress =
-    parameters.l1ReverseRegistrarAddress ??
-    contracts.l1ReverseRegistrar.address;
+    parameters.l1ReverseRegistrarAddress ?? contracts.l1ReverseRegistrar.address;
   const l2ReverseRegistrarAddress =
-    parameters.l2ReverseRegistrarAddress ??
-    contracts.l2ReverseRegistrar.address;
+    parameters.l2ReverseRegistrarAddress ?? contracts.l2ReverseRegistrar.address;
   const execution = useExecuteContractWrites();
 
-  return useMutation<
-    ExecuteContractWritesResult,
-    SetPrimaryNameError,
-    SetPrimaryNameVariables
-  >({
+  return useMutation<ExecuteContractWritesResult, SetPrimaryNameError, SetPrimaryNameVariables>({
     ...parameters.mutation,
     mutationKey: [
       "ens",
       "set-primary-name",
-      network,
       chain.id,
       l1ReverseRegistrarAddress,
       l2ReverseRegistrarAddress,
@@ -85,7 +71,6 @@ export function useSetPrimaryName(
       const shared = {
         account: variables.account,
         input: variables.input,
-        network,
       };
       const addressRecord = prepareSetAddressRecordWrite({
         ...shared,

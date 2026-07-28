@@ -2,7 +2,6 @@ import { err, ok, type Result } from "neverthrow";
 import { encodeFunctionData, type Address, type ContractFunctionParameters, type Hex } from "viem";
 
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
-import type { EnsNetwork } from "#/data";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import {
@@ -21,11 +20,9 @@ export type PrepareRegisterNameWriteError =
 export interface PrepareRegisterNameWriteParameters extends MakeNameCommitmentParameters {
   /** Account that pays for and submits the registration. */
   readonly account: Address;
-  /** Network associated with the supplied contract addresses. */
-  readonly network: EnsNetwork;
   /** ERC-20 token used to pay for registration. */
   readonly paymentTokenAddress: Address;
-  /** ENSv2 ETHRegistrar address on the supplied network. */
+  /** ENS v2 ETHRegistrar address. */
   readonly registrarAddress: Address;
 }
 

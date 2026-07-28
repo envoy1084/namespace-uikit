@@ -7,7 +7,6 @@ import type {
   PrepareNameRegistrationPriceReadError,
 } from "#/actions/read/prepare-read-name-registration-price";
 import { prepareNameRegistrationPriceRead } from "#/actions/read/prepare-read-name-registration-price";
-import type { EnsNetwork } from "#/data";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 
@@ -21,7 +20,6 @@ export interface PrepareNameRegistrationPaymentStatusReadParameters {
   readonly account: Address;
   readonly duration: bigint;
   readonly input: string | null | undefined;
-  readonly network: EnsNetwork;
   readonly paymentTokenAddress: Address;
   readonly registrarAddress: Address;
 }

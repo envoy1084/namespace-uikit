@@ -1,11 +1,9 @@
 import type { Address, Hex, TransactionReceipt } from "viem";
 
 import type { ComponentEventHandler } from "#/components/emit-event";
-import type { EnsNetwork } from "#/data";
 
 export interface NameRenewalTransactionEvent {
   chainId: number;
-  network: EnsNetwork;
   receipt: TransactionReceipt;
   transactionHash: Hex;
 }
@@ -37,7 +35,6 @@ export interface NameRenewalErrorEvent {
   chainId: number;
   error: unknown;
   input: string;
-  network: EnsNetwork;
   phase: NameRenewalErrorPhase;
   transactionHash?: Hex;
 }

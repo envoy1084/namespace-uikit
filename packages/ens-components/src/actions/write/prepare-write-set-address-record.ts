@@ -9,7 +9,6 @@ import {
 import { namehash } from "viem/ens";
 
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
-import type { EnsNetwork } from "#/data";
 import { permissionedResolverAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -29,8 +28,6 @@ export interface PrepareSetAddressRecordWriteParameters {
   readonly account: Address;
   /** ENS name or `.eth` label whose address record will be updated. */
   readonly input: string | null | undefined;
-  /** Network associated with the resolver. */
-  readonly network: EnsNetwork;
   /** Address that the ENS name should resolve to. */
   readonly owner: Address;
   /** Resolver assigned to the registered name. */

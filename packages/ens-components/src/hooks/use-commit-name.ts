@@ -17,10 +17,7 @@ import {
 import type { ParseNameInputError } from "#/lib";
 import { useEnsConfig } from "#/providers";
 
-export type CommitNameVariables = Omit<
-  PrepareCommitNameWriteParameters,
-  "network" | "registrarAddress"
-> &
+export type CommitNameVariables = Omit<PrepareCommitNameWriteParameters, "registrarAddress"> &
   PreparedWriteVariables;
 
 export type CommitNameError = PreparedWriteMutationError<
@@ -36,7 +33,7 @@ export interface UseCommitNameParameters {
 }
 
 export function useCommitName(parameters: UseCommitNameParameters = {}) {
-  const { contracts, network } = useEnsConfig();
+  const { contracts } = useEnsConfig();
   const registrarAddress = parameters.registrarAddress ?? contracts.ethRegistrar.address;
 
   return usePreparedContractWrite<
@@ -49,7 +46,6 @@ export function useCommitName(parameters: UseCommitNameParameters = {}) {
     prepare: async (variables) =>
       prepareCommitNameWrite({
         ...variables,
-        network,
         registrarAddress,
       }),
   });

@@ -13,6 +13,7 @@ import type {
 import { executeContractReadsIndividually, prepareNameRecordsRead } from "#/actions";
 import type { ParseNameInputError } from "#/lib";
 import { parseNameInput } from "#/lib";
+import { asWagmiChainId } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export type NameRecordsError =
@@ -23,7 +24,6 @@ export type NameRecordsError =
 export type NameRecordsQueryKey = readonly [
   "ens",
   "name-records",
-  string,
   number,
   string,
   Address,
@@ -43,14 +43,15 @@ export interface UseNameRecordsParameters<selectData = NameRecordsResult> {
 export function useNameRecords<selectData = NameRecordsResult>(
   parameters: UseNameRecordsParameters<selectData>,
 ) {
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const publicClient = usePublicClient({
+    chainId: asWagmiChainId(chain.id),
+  });
   const universalResolverAddress =
     parameters.universalResolverAddress ?? contracts.universalResolverV2.address;
   const parsed = parseNameInput(parameters.input);
   const prepared = prepareNameRecordsRead({
     input: parameters.input,
-    network,
     records: parameters.records,
     universalResolverAddress,
   });
@@ -60,7 +61,6 @@ export function useNameRecords<selectData = NameRecordsResult>(
     queryKey: [
       "ens",
       "name-records",
-      network,
       chain.id,
       parsed.isOk() ? parsed.value.normalizedName : (parameters.input ?? ""),
       universalResolverAddress,

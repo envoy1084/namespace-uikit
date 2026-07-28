@@ -13,6 +13,7 @@ import {
   type PreparePermissionedResolverSupportReadError,
   type PreparePermissionedResolverVerificationReadError,
 } from "#/actions";
+import { asWagmiChainId } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export type ResolverCapabilityStatus = "NOT_DEPLOYED" | "UNSUPPORTED" | "UNVERIFIED" | "VERIFIED";
@@ -34,7 +35,7 @@ export type ResolverCapabilitiesError =
 export type ResolverCapabilitiesQueryKey = readonly [
   "ens",
   "resolver-capabilities",
-  string,
+  number,
   Address,
   Address,
   Address,
@@ -58,8 +59,8 @@ export interface UseResolverCapabilitiesParameters<selectData = ResolverCapabili
 export function useResolverCapabilities<selectData = ResolverCapabilities>(
   parameters: UseResolverCapabilitiesParameters<selectData>,
 ) {
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const publicClient = usePublicClient({ chainId: asWagmiChainId(chain.id) });
   const resolverAddress = parameters.resolverAddress ?? zeroAddress;
   const factoryAddress = parameters.factoryAddress ?? contracts.verifiableFactory.address;
   const implementationAddress =
@@ -76,7 +77,7 @@ export function useResolverCapabilities<selectData = ResolverCapabilities>(
     queryKey: [
       "ens",
       "resolver-capabilities",
-      network,
+      chain.id,
       resolverAddress,
       factoryAddress,
       implementationAddress,
@@ -104,14 +105,12 @@ export function useResolverCapabilities<selectData = ResolverCapabilities>(
       }
 
       const supportRead = preparePermissionedResolverSupportRead({
-        network,
         resolverAddress,
       });
       if (supportRead.isErr()) throw supportRead.error;
       const verificationRead = preparePermissionedResolverVerificationRead({
         factoryAddress,
         implementationAddress,
-        network,
         resolverAddress,
       });
       if (verificationRead.isErr()) throw verificationRead.error;

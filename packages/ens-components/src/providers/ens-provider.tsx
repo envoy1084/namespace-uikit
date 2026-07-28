@@ -2,34 +2,20 @@
 
 import { createContext, useContext, type ReactNode } from "react";
 
-import {
-  getEnsNetworkConfiguration,
-  type EnsNetwork,
-  type EnsNetworkConfiguration,
-} from "#/data";
-
-export interface EnsConfig {
-  network: EnsNetwork;
-}
+import type { EnsConfig } from "#/data";
 
 export interface EnsProviderProps {
   children: ReactNode;
   config: Readonly<EnsConfig>;
 }
 
-const EnsConfigContext = createContext<EnsNetworkConfiguration | null>(null);
+const EnsConfigContext = createContext<EnsConfig | null>(null);
 
 export function EnsProvider({ children, config }: EnsProviderProps) {
-  const value = getEnsNetworkConfiguration(config.network);
-
-  return (
-    <EnsConfigContext.Provider value={value}>
-      {children}
-    </EnsConfigContext.Provider>
-  );
+  return <EnsConfigContext.Provider value={config}>{children}</EnsConfigContext.Provider>;
 }
 
-export function useEnsConfig(): EnsNetworkConfiguration {
+export function useEnsConfig(): EnsConfig {
   const value = useContext(EnsConfigContext);
 
   if (value === null) {

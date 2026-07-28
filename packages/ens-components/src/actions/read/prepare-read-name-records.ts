@@ -25,7 +25,6 @@ import {
   type NormalizedNameRecordSelection,
 } from "#/actions/read/name-record-codecs";
 import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
-import type { EnsNetwork } from "#/data";
 import { universalResolverV2Abi } from "#/data/abi";
 import { encodeDnsName, isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -60,7 +59,6 @@ export type PrepareNameRecordsReadError =
 
 export interface PrepareNameRecordsReadParameters {
   readonly input: string | null | undefined;
-  readonly network: EnsNetwork;
   readonly records: NameRecordSelection;
   readonly universalResolverAddress: Address;
 }

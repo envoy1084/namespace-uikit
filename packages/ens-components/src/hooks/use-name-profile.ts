@@ -20,6 +20,7 @@ import {
 } from "#/actions";
 import type { ParseNameInputError } from "#/lib";
 import { parseNameInput } from "#/lib";
+import { asWagmiChainId } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export interface NameProfileResult extends NameRecordsResult {
@@ -38,7 +39,6 @@ export type NameProfileError =
 export type NameProfileQueryKey = readonly [
   "ens",
   "name-profile",
-  string,
   number,
   string,
   string,
@@ -87,8 +87,10 @@ function mergeRecords(
 export function useNameProfile<selectData = NameProfileResult>(
   parameters: UseNameProfileParameters<selectData>,
 ) {
-  const { chain, contracts, indexerUrl: configuredIndexerUrl, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
+  const { chain, contracts, indexerUrl: configuredIndexerUrl } = useEnsConfig();
+  const publicClient = usePublicClient({
+    chainId: asWagmiChainId(chain.id),
+  });
   const parsed = parseNameInput(parameters.input);
   const indexerUrl = parameters.indexerUrl ?? configuredIndexerUrl;
   const universalResolverAddress =
@@ -96,7 +98,6 @@ export function useNameProfile<selectData = NameProfileResult>(
   const discoveryRead = prepareNameProfileDiscoveryRead({
     indexerUrl,
     input: parameters.input,
-    network,
   });
 
   return useQuery<NameProfileResult, NameProfileError, selectData, NameProfileQueryKey>({
@@ -104,7 +105,6 @@ export function useNameProfile<selectData = NameProfileResult>(
     queryKey: [
       "ens",
       "name-profile",
-      network,
       chain.id,
       parsed.isOk() ? parsed.value.normalizedName : (parameters.input ?? ""),
       indexerUrl,
@@ -126,7 +126,6 @@ export function useNameProfile<selectData = NameProfileResult>(
 
       const recordsRead = prepareNameRecordsRead({
         input: parameters.input,
-        network,
         records: mergeRecords(discovery.value.records, parameters.additionalRecords),
         universalResolverAddress,
       });

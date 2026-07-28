@@ -75,7 +75,7 @@ export function ProfileEditor({
   uploadImage?: NameProfileImageUpload | undefined;
 }) {
   const connection = useConnection();
-  const { chain, network } = useEnsConfig();
+  const { chain } = useEnsConfig();
   const continueStatusId = useId();
   const [view, setView] = useState<NameProfileEditorView>("editor");
   const [successfulUpdate, setSuccessfulUpdate] =
@@ -136,7 +136,6 @@ export function ProfileEditor({
       chainId: chain.id,
       error: permissions.error,
       name,
-      network,
       phase: isResolverError ? "resolver" : "permission",
       ...(resolverAddress === undefined ? {} : { resolverAddress }),
     });
@@ -145,7 +144,6 @@ export function ProfileEditor({
     connection.address,
     events.onError,
     name,
-    network,
     permissions.error,
     permissions.isError,
     resolverAddress,

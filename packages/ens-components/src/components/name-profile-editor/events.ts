@@ -5,14 +5,12 @@ import type {
   NameProfileFormValues,
   NameProfileRecordChange,
 } from "#/components/name-profile-editor/types";
-import type { EnsNetwork } from "#/data";
 
 export interface NameProfileUpdateEvent {
   account: Address;
   chainId: number;
   changes: readonly NameProfileRecordChange[];
   name: string;
-  network: EnsNetwork;
   receipt: TransactionReceipt;
   resolverAddress: Address;
   transactionHash: Hex;
@@ -26,7 +24,6 @@ export interface NameProfileEditorErrorEvent {
   chainId: number;
   error: unknown;
   name: string;
-  network: EnsNetwork;
   phase: NameProfileEditorErrorPhase;
   resolverAddress?: Address;
   transactionHash?: Hex;

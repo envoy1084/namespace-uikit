@@ -17,7 +17,6 @@ import type {
   PreparedContractReadPlan,
 } from "#/actions/read/contract-reads";
 import type { NameProfileRecordType } from "#/components/name-profile-editor/types";
-import type { EnsNetwork } from "#/data";
 import { permissionedResolverAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -58,7 +57,6 @@ export type PrepareNameProfilePermissionsReadError =
 export interface PrepareNameProfilePermissionsReadParameters {
   readonly account: Address;
   readonly input: string | null | undefined;
-  readonly network: EnsNetwork;
   readonly requests: readonly NameProfilePermissionRequest[];
   readonly resolverAddress: Address;
 }

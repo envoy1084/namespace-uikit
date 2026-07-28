@@ -6,7 +6,6 @@ import {
   preparePermissionedResolverVerificationRead,
   type PreparePermissionedResolverVerificationReadError,
 } from "#/actions";
-import type { EnsNetwork } from "#/data";
 import { isNonZeroAddress } from "#/lib/helpers";
 
 export type PermissionedResolverStatus = "INVALID" | "NOT_DEPLOYED" | "VERIFIED";
@@ -14,7 +13,6 @@ export type PermissionedResolverStatus = "INVALID" | "NOT_DEPLOYED" | "VERIFIED"
 export interface ReadPermissionedResolverStatusParameters {
   readonly factoryAddress: Address;
   readonly implementationAddress: Address;
-  readonly network: EnsNetwork;
   readonly resolverAddress: Address;
 }
 

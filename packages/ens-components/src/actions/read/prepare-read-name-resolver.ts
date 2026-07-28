@@ -2,7 +2,6 @@ import { err, ok, type Result } from "neverthrow";
 import { type Address, type ContractFunctionParameters, type Hex } from "viem";
 
 import type { PreparedContractRead } from "#/actions/read/contract-reads";
-import type { EnsNetwork } from "#/data";
 import { universalResolverV2Abi } from "#/data/abi";
 import { encodeDnsName, isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -14,7 +13,6 @@ export type PrepareNameResolverReadError =
 
 export interface PrepareNameResolverReadParameters {
   readonly input: string | null | undefined;
-  readonly network: EnsNetwork;
   readonly universalResolverAddress: Address;
 }
 

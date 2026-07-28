@@ -2,7 +2,6 @@ import { err, ok, type Result } from "neverthrow";
 import { type Address, type ContractFunctionParameters } from "viem";
 
 import type { PreparedContractRead } from "#/actions/read/contract-reads";
-import type { EnsNetwork } from "#/data";
 import { verifiableFactoryAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 
@@ -14,7 +13,6 @@ export type PreparePermissionedResolverVerificationReadError =
 export interface PreparePermissionedResolverVerificationReadParameters {
   readonly factoryAddress: Address;
   readonly implementationAddress: Address;
-  readonly network: EnsNetwork;
   readonly resolverAddress: Address;
 }
 

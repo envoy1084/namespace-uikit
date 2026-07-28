@@ -2,7 +2,6 @@ import { err, ok, type Result } from "neverthrow";
 import { isHex, size, type Address, type ContractFunctionParameters, type Hex } from "viem";
 
 import type { PreparedContractRead, PreparedContractReadPlan } from "#/actions/read/contract-reads";
-import type { EnsNetwork } from "#/data";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 
@@ -10,7 +9,6 @@ export type PrepareCommitmentStatusReadError = "INVALID_COMMITMENT" | "INVALID_R
 
 export interface PrepareCommitmentStatusReadParameters {
   readonly commitment: Hex;
-  readonly network: EnsNetwork;
   readonly registrarAddress: Address;
 }
 

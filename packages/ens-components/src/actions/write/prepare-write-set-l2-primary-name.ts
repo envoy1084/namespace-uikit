@@ -2,7 +2,6 @@ import { err, ok, type Result } from "neverthrow";
 import { encodeFunctionData, type Address, type ContractFunctionParameters } from "viem";
 
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
-import type { EnsNetwork } from "#/data";
 import { l2ReverseRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -18,8 +17,6 @@ export interface PrepareSetL2PrimaryNameWriteParameters {
   readonly account: Address;
   /** ENS name or `.eth` label to use as the primary name. */
   readonly input: string | null | undefined;
-  /** Network associated with the reverse registrar. */
-  readonly network: EnsNetwork;
   /** ENS L2ReverseRegistrar address. */
   readonly l2ReverseRegistrarAddress: Address;
 }

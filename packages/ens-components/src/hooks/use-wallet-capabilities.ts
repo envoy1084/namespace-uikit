@@ -6,6 +6,7 @@ import type { Address } from "viem";
 import { useWalletClient } from "wagmi";
 
 import { supportsAtomicBatchCalls, type SupportsAtomicBatchCallsError } from "#/actions";
+import { asWagmiChainId } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export interface WalletCapabilities {
@@ -18,7 +19,6 @@ export type WalletCapabilitiesError = SupportsAtomicBatchCallsError;
 export type WalletCapabilitiesQueryKey = readonly [
   "ens",
   "wallet-capabilities",
-  string,
   number,
   Address | null,
 ];
@@ -39,9 +39,9 @@ export interface UseWalletCapabilitiesParameters<selectData = WalletCapabilities
 export function useWalletCapabilities<selectData = WalletCapabilities>(
   parameters: UseWalletCapabilitiesParameters<selectData>,
 ) {
-  const { chain, network } = useEnsConfig();
+  const { chain } = useEnsConfig();
   const account = parameters.account ?? null;
-  const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const { data: walletClient } = useWalletClient({ chainId: asWagmiChainId(chain.id) });
 
   return useQuery<
     WalletCapabilities,
@@ -50,7 +50,7 @@ export function useWalletCapabilities<selectData = WalletCapabilities>(
     WalletCapabilitiesQueryKey
   >({
     ...parameters.query,
-    queryKey: ["ens", "wallet-capabilities", network, chain.id, account],
+    queryKey: ["ens", "wallet-capabilities", chain.id, account],
     enabled: (parameters.query?.enabled ?? true) && walletClient !== undefined && account !== null,
     queryFn: async () => {
       if (walletClient === undefined || account === null) {

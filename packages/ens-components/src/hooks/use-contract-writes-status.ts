@@ -7,6 +7,7 @@ import { TransactionReceiptNotFoundError } from "viem";
 import { usePublicClient, useWalletClient } from "wagmi";
 
 import { getContractCallsStatus, type ContractCallsStatusError } from "#/actions";
+import { asWagmiChainId } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export type ContractWritesState = "FAILURE" | "PENDING" | "SUCCESS" | "UNKNOWN";
@@ -36,7 +37,6 @@ export type ContractWritesStatusError =
 export type ContractWritesStatusQueryKey = readonly [
   "ens",
   "contract-writes-status",
-  string,
   number,
   string,
 ];
@@ -64,9 +64,10 @@ function submissionKey(submission: ContractWritesSubmission | null): string {
 export function useContractWritesStatus<selectData = ContractWritesStatus>(
   parameters: UseContractWritesStatusParameters<selectData>,
 ) {
-  const { chain, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
-  const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const { chain } = useEnsConfig();
+  const wagmiChainId = asWagmiChainId(chain.id);
+  const publicClient = usePublicClient({ chainId: wagmiChainId });
+  const { data: walletClient } = useWalletClient({ chainId: wagmiChainId });
   const submission = parameters.submission ?? null;
 
   return useQuery<
@@ -77,7 +78,7 @@ export function useContractWritesStatus<selectData = ContractWritesStatus>(
   >({
     refetchInterval: (query) => (query.state.data?.state === "PENDING" ? 1_000 : false),
     ...parameters.query,
-    queryKey: ["ens", "contract-writes-status", network, chain.id, submissionKey(submission)],
+    queryKey: ["ens", "contract-writes-status", chain.id, submissionKey(submission)],
     enabled:
       (parameters.query?.enabled ?? true) &&
       submission !== null &&

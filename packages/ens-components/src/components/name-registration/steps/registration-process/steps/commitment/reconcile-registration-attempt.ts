@@ -13,7 +13,6 @@ import {
 } from "#/components/name-registration/steps/registration-process/steps/commitment/read-commitment-status";
 import { readPermissionedResolverStatus } from "#/components/name-registration/steps/registration-process/steps/commitment/read-resolver-status";
 import { renewRegistrationAttempt } from "#/components/name-registration/steps/registration-process/steps/commitment/registration-attempt";
-import type { EnsNetwork } from "#/data";
 import { waitForSuccessfulTransactionReceipt } from "#/lib/helpers";
 
 export type RegistrationAttemptReconciliation =
@@ -31,7 +30,6 @@ export type RegistrationAttemptReconciliation =
 
 export interface ReconcileRegistrationAttemptParameters {
   attempt: StoredRegistrationAttempt;
-  network: EnsNetwork;
   publicClient: PublicClient;
   walletClient?: WalletClient;
   onUpdate: (updates: RegistrationAttemptUpdate) => void;
@@ -75,7 +73,6 @@ async function readCommitment(
 ): Promise<Result<CommitmentStatus, unknown>> {
   const status = await readCommitmentStatus(props.publicClient, {
     commitment: props.attempt.commitment,
-    network: props.network,
     registrarAddress: props.attempt.registrarAddress,
   });
 
@@ -103,7 +100,6 @@ async function reconcileResolver(
   const status = await readPermissionedResolverStatus(props.publicClient, {
     factoryAddress: attempt.resolver.factoryAddress,
     implementationAddress: attempt.resolver.implementationAddress,
-    network: props.network,
     resolverAddress: attempt.resolver.address,
   });
   if (status.isErr()) return err(status.error);

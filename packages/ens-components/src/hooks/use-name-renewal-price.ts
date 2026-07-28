@@ -13,6 +13,7 @@ import {
   prepareNameRenewalPriceRead,
   type PrepareNameRenewalPriceReadError,
 } from "#/actions";
+import { asWagmiChainId } from "#/lib/helpers";
 import { parseNameInput, type ParseNameInputError } from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
@@ -25,7 +26,7 @@ type NameRenewalPriceError =
 type NameRenewalPriceQueryKey = readonly [
   "ens",
   "name-renewal-price",
-  string,
+  number,
   Address,
   Address,
   Address,
@@ -49,8 +50,10 @@ export function useNameRenewalPrice<selectData = NameRenewalPrice>(
   parameters: UseNameRenewalPriceParameters<selectData>,
 ) {
   const input = parameters.input ?? "";
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const publicClient = usePublicClient({
+    chainId: asWagmiChainId(chain.id),
+  });
   const [debouncedInput] = useDebounceValue(input, 300);
   const parsedInput = parseNameInput(debouncedInput);
   const isValidInput =
@@ -64,7 +67,7 @@ export function useNameRenewalPrice<selectData = NameRenewalPrice>(
     queryKey: [
       "ens",
       "name-renewal-price",
-      network,
+      chain.id,
       registrarAddress,
       ethRegistryAddress,
       paymentTokenAddress,
@@ -81,7 +84,6 @@ export function useNameRenewalPrice<selectData = NameRenewalPrice>(
         duration: parameters.duration,
         ethRegistryAddress,
         input: debouncedInput,
-        network,
         paymentTokenAddress,
         registrarAddress,
       });

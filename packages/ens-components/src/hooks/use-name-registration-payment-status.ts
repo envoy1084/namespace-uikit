@@ -12,6 +12,7 @@ import {
   type NameRegistrationPaymentStatus,
   type NameRegistrationPaymentStatusReadError,
 } from "#/actions";
+import { asWagmiChainId } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
@@ -23,7 +24,7 @@ type NameRegistrationPaymentStatusError =
 type NameRegistrationPaymentStatusQueryKey = readonly [
   "ens",
   "name-registration-payment-status",
-  string,
+  number,
   Address,
   Address,
   Address | null,
@@ -53,8 +54,10 @@ export interface UseNameRegistrationPaymentStatusParameters<
 export function useNameRegistrationPaymentStatus<selectData = NameRegistrationPaymentStatus>(
   parameters: UseNameRegistrationPaymentStatusParameters<selectData>,
 ) {
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const publicClient = usePublicClient({
+    chainId: asWagmiChainId(chain.id),
+  });
   const account = parameters.account ?? null;
   const registrarAddress = parameters.registrarAddress ?? contracts.ethRegistrar.address;
   const paymentTokenAddress = parameters.paymentTokenAddress ?? contracts.paymentTokens[0].address;
@@ -69,7 +72,7 @@ export function useNameRegistrationPaymentStatus<selectData = NameRegistrationPa
     queryKey: [
       "ens",
       "name-registration-payment-status",
-      network,
+      chain.id,
       registrarAddress,
       paymentTokenAddress,
       account,
@@ -86,7 +89,6 @@ export function useNameRegistrationPaymentStatus<selectData = NameRegistrationPa
         account,
         duration: parameters.duration,
         input: parameters.input,
-        network,
         paymentTokenAddress,
         registrarAddress,
       });

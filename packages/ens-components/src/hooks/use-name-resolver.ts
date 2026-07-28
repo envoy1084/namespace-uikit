@@ -12,6 +12,7 @@ import {
   type PrepareNameResolverReadError,
 } from "#/actions";
 import { parseNameInput, type ParseNameInputError } from "#/lib";
+import { asWagmiChainId } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export type NameResolverError =
@@ -19,7 +20,7 @@ export type NameResolverError =
   | ParseNameInputError
   | PrepareNameResolverReadError;
 
-export type NameResolverQueryKey = readonly ["ens", "name-resolver", string, Address, string];
+export type NameResolverQueryKey = readonly ["ens", "name-resolver", number, Address, string];
 
 export interface UseNameResolverParameters<selectData = NameResolverResult> {
   input: string | null | undefined;
@@ -33,8 +34,10 @@ export interface UseNameResolverParameters<selectData = NameResolverResult> {
 export function useNameResolver<selectData = NameResolverResult>(
   parameters: UseNameResolverParameters<selectData>,
 ) {
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const publicClient = usePublicClient({
+    chainId: asWagmiChainId(chain.id),
+  });
   const universalResolverAddress =
     parameters.universalResolverAddress ?? contracts.universalResolverV2.address;
   const parsed = parseNameInput(parameters.input);
@@ -44,7 +47,7 @@ export function useNameResolver<selectData = NameResolverResult>(
     queryKey: [
       "ens",
       "name-resolver",
-      network,
+      chain.id,
       universalResolverAddress,
       parsed.isOk() ? parsed.value.normalizedName : (parameters.input ?? ""),
     ],
@@ -56,7 +59,6 @@ export function useNameResolver<selectData = NameResolverResult>(
 
       const prepared = prepareNameResolverRead({
         input: parameters.input,
-        network,
         universalResolverAddress,
       });
       if (prepared.isErr()) throw prepared.error;

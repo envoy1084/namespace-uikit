@@ -11,6 +11,7 @@ import {
   prepareCommitmentStatusRead,
   type PrepareCommitmentStatusReadError,
 } from "#/actions";
+import { asWagmiChainId } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export type CommitmentState = "EXPIRED" | "NOT_FOUND" | "READY" | "WAITING";
@@ -29,7 +30,7 @@ export type CommitmentStatusError = "CONTRACT_READ_FAILED" | PrepareCommitmentSt
 export type CommitmentStatusQueryKey = readonly [
   "ens",
   "commitment-status",
-  string,
+  number,
   Address,
   Hex | null,
 ];
@@ -89,15 +90,15 @@ function selectCommitmentStatus(
 export function useCommitmentStatus<selectData = CommitmentStatus>(
   parameters: UseCommitmentStatusParameters<selectData>,
 ) {
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const publicClient = usePublicClient({ chainId: asWagmiChainId(chain.id) });
   const commitment = parameters.commitment ?? null;
   const registrarAddress = parameters.registrarAddress ?? contracts.ethRegistrar.address;
   const isValidCommitment = commitment !== null && isHex(commitment) && size(commitment) === 32;
 
   return useQuery<CommitmentStatus, CommitmentStatusError, selectData, CommitmentStatusQueryKey>({
     ...parameters.query,
-    queryKey: ["ens", "commitment-status", network, registrarAddress, commitment],
+    queryKey: ["ens", "commitment-status", chain.id, registrarAddress, commitment],
     enabled: (parameters.query?.enabled ?? true) && publicClient !== undefined && isValidCommitment,
     queryFn: async () => {
       if (publicClient === undefined || commitment === null) {
@@ -106,7 +107,6 @@ export function useCommitmentStatus<selectData = CommitmentStatus>(
 
       const prepared = prepareCommitmentStatusRead({
         commitment,
-        network,
         registrarAddress,
       });
       if (prepared.isErr()) throw prepared.error;

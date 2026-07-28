@@ -2,7 +2,6 @@ import { err, ok, type Result } from "neverthrow";
 import { erc20Abi, type Address, type ContractFunctionParameters } from "viem";
 
 import type { PreparedContractRead, PreparedContractReadPlan } from "#/actions/read/contract-reads";
-import type { EnsNetwork } from "#/data";
 import { ethRegistrarAbi, ethRegistryAbi } from "#/data/abi";
 import { isNonZeroAddress, isUint64Duration } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -24,11 +23,9 @@ export interface PrepareNameRenewalPriceReadParameters {
   readonly ethRegistryAddress: Address;
   /** Label or second-level `.eth` name to normalize and quote. */
   readonly input: string | null | undefined;
-  /** Network associated with the supplied contract addresses. */
-  readonly network: EnsNetwork;
   /** ERC-20 token used to pay for renewal. */
   readonly paymentTokenAddress: Address;
-  /** ENS v2 ETHRegistrar address on the supplied network. */
+  /** ENS v2 ETHRegistrar address. */
   readonly registrarAddress: Address;
 }
 

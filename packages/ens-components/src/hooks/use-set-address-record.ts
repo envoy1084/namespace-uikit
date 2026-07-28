@@ -14,9 +14,8 @@ import {
   type PreparedWriteMutationError,
   type PreparedWriteVariables,
 } from "#/hooks/use-prepared-contract-write";
-import { useEnsConfig } from "#/providers";
 
-export type SetAddressRecordVariables = Omit<PrepareSetAddressRecordWriteParameters, "network"> &
+export type SetAddressRecordVariables = PrepareSetAddressRecordWriteParameters &
   PreparedWriteVariables;
 
 export type SetAddressRecordError = PreparedWriteMutationError<PrepareSetAddressRecordWriteError>;
@@ -33,8 +32,6 @@ export interface UseSetAddressRecordParameters {
 }
 
 export function useSetAddressRecord(parameters: UseSetAddressRecordParameters = {}) {
-  const { network } = useEnsConfig();
-
   return usePreparedContractWrite<
     SetAddressRecordVariables,
     PreparedSetAddressRecordWrite,
@@ -42,10 +39,6 @@ export function useSetAddressRecord(parameters: UseSetAddressRecordParameters = 
   >({
     ...(parameters.mutation === undefined ? {} : { mutation: parameters.mutation }),
     mutationKey: ["set-address-record"],
-    prepare: async (variables) =>
-      prepareSetAddressRecordWrite({
-        ...variables,
-        network,
-      }),
+    prepare: async (variables) => prepareSetAddressRecordWrite(variables),
   });
 }

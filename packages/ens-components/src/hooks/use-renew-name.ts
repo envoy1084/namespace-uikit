@@ -17,10 +17,7 @@ import {
 import type { ParseNameInputError } from "#/lib";
 import { useEnsConfig } from "#/providers";
 
-export type RenewNameVariables = Omit<
-  PrepareRenewNameWriteParameters,
-  "network" | "registrarAddress"
-> &
+export type RenewNameVariables = Omit<PrepareRenewNameWriteParameters, "registrarAddress"> &
   PreparedWriteVariables;
 
 export type RenewNameError = PreparedWriteMutationError<
@@ -36,7 +33,7 @@ export interface UseRenewNameParameters {
 }
 
 export function useRenewName(parameters: UseRenewNameParameters = {}) {
-  const { contracts, network } = useEnsConfig();
+  const { contracts } = useEnsConfig();
   const registrarAddress = parameters.registrarAddress ?? contracts.ethRegistrar.address;
 
   return usePreparedContractWrite<
@@ -49,7 +46,6 @@ export function useRenewName(parameters: UseRenewNameParameters = {}) {
     prepare: async (variables) =>
       prepareRenewNameWrite({
         ...variables,
-        network,
         registrarAddress,
       }),
   });

@@ -14,12 +14,8 @@ import {
   type PreparedWriteMutationError,
   type PreparedWriteVariables,
 } from "#/hooks/use-prepared-contract-write";
-import { useEnsConfig } from "#/providers";
 
-export type ApprovePaymentTokenVariables = Omit<
-  PreparePaymentTokenApprovalWriteParameters,
-  "network"
-> &
+export type ApprovePaymentTokenVariables = PreparePaymentTokenApprovalWriteParameters &
   PreparedWriteVariables;
 
 export type ApprovePaymentTokenError =
@@ -37,8 +33,6 @@ export interface UseApprovePaymentTokenParameters {
 }
 
 export function useApprovePaymentToken(parameters: UseApprovePaymentTokenParameters = {}) {
-  const { network } = useEnsConfig();
-
   return usePreparedContractWrite<
     ApprovePaymentTokenVariables,
     PreparedPaymentTokenApprovalWrite,
@@ -46,10 +40,6 @@ export function useApprovePaymentToken(parameters: UseApprovePaymentTokenParamet
   >({
     ...(parameters.mutation === undefined ? {} : { mutation: parameters.mutation }),
     mutationKey: ["approve-payment-token"],
-    prepare: async (variables) =>
-      preparePaymentTokenApprovalWrite({
-        ...variables,
-        network,
-      }),
+    prepare: async (variables) => preparePaymentTokenApprovalWrite(variables),
   });
 }

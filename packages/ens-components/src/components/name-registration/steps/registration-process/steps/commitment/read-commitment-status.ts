@@ -6,7 +6,6 @@ import {
   prepareCommitmentStatusRead,
   type PrepareCommitmentStatusReadError,
 } from "#/actions";
-import type { EnsNetwork } from "#/data";
 
 export type CommitmentState = "EXPIRED" | "NOT_FOUND" | "READY" | "WAITING";
 
@@ -21,7 +20,6 @@ export interface CommitmentStatus {
 
 export interface ReadCommitmentStatusParameters {
   readonly commitment: Hex;
-  readonly network: EnsNetwork;
   readonly registrarAddress: Address;
 }
 

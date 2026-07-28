@@ -11,6 +11,7 @@ import {
   prepareNameAvailabilityRead,
   type PrepareNameAvailabilityReadError,
 } from "#/actions";
+import { asWagmiChainId } from "#/lib/helpers";
 import { parseNameInput, type ParseNameInputError } from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
@@ -18,7 +19,7 @@ type NameAvailabilityError =
   | "CONTRACT_READ_FAILED"
   | ParseNameInputError
   | PrepareNameAvailabilityReadError;
-type NameAvailabilityQueryKey = readonly ["ens", "name-availability", string, Address, string];
+type NameAvailabilityQueryKey = readonly ["ens", "name-availability", number, Address, string];
 
 export interface UseNameAvailabilityParameters<selectData = boolean> {
   input: string | null | undefined;
@@ -33,8 +34,10 @@ export function useNameAvailability<selectData = boolean>(
   parameters: UseNameAvailabilityParameters<selectData>,
 ) {
   const input = parameters.input ?? "";
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const publicClient = usePublicClient({
+    chainId: asWagmiChainId(chain.id),
+  });
   const [debouncedInput] = useDebounceValue(input, 300);
   const isDebounced = input === debouncedInput;
   const parsedInput = parseNameInput(debouncedInput);
@@ -47,7 +50,7 @@ export function useNameAvailability<selectData = boolean>(
     queryKey: [
       "ens",
       "name-availability",
-      network,
+      chain.id,
       registrarAddress,
       isDebounced && parsedInput.isOk() ? parsedInput.value.normalizedName : input,
     ],
@@ -63,7 +66,6 @@ export function useNameAvailability<selectData = boolean>(
 
       const prepared = prepareNameAvailabilityRead({
         input: debouncedInput,
-        network,
         registrarAddress,
       });
       if (prepared.isErr()) throw prepared.error;

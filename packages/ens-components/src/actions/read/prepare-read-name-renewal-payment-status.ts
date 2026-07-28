@@ -8,7 +8,6 @@ import type {
   PrepareNameRenewalPriceReadError,
 } from "#/actions/read/prepare-read-name-renewal-price";
 import { prepareNameRenewalPriceRead } from "#/actions/read/prepare-read-name-renewal-price";
-import type { EnsNetwork } from "#/data";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 
@@ -23,7 +22,6 @@ export interface PrepareNameRenewalPaymentStatusReadParameters {
   readonly duration: bigint;
   readonly ethRegistryAddress: Address;
   readonly input: string | null | undefined;
-  readonly network: EnsNetwork;
   readonly paymentTokenAddress: Address;
   readonly registrarAddress: Address;
 }

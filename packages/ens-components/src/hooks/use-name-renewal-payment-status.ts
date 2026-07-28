@@ -12,6 +12,7 @@ import {
   prepareNameRenewalPaymentStatusRead,
   type PrepareNameRenewalPaymentStatusReadError,
 } from "#/actions";
+import { asWagmiChainId } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
@@ -24,7 +25,7 @@ type NameRenewalPaymentStatusError =
 type NameRenewalPaymentStatusQueryKey = readonly [
   "ens",
   "name-renewal-payment-status",
-  string,
+  number,
   Address,
   Address,
   Address,
@@ -54,8 +55,10 @@ export interface UseNameRenewalPaymentStatusParameters<selectData = NameRenewalP
 export function useNameRenewalPaymentStatus<selectData = NameRenewalPaymentStatus>(
   parameters: UseNameRenewalPaymentStatusParameters<selectData>,
 ) {
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const publicClient = usePublicClient({
+    chainId: asWagmiChainId(chain.id),
+  });
   const account = parameters.account ?? null;
   const registrarAddress = parameters.registrarAddress ?? contracts.ethRegistrar.address;
   const ethRegistryAddress = parameters.ethRegistryAddress ?? contracts.ethRegistry.address;
@@ -71,7 +74,7 @@ export function useNameRenewalPaymentStatus<selectData = NameRenewalPaymentStatu
     queryKey: [
       "ens",
       "name-renewal-payment-status",
-      network,
+      chain.id,
       registrarAddress,
       ethRegistryAddress,
       paymentTokenAddress,
@@ -90,7 +93,6 @@ export function useNameRenewalPaymentStatus<selectData = NameRenewalPaymentStatu
         duration: parameters.duration,
         ethRegistryAddress,
         input: parameters.input,
-        network,
         paymentTokenAddress,
         registrarAddress,
       });

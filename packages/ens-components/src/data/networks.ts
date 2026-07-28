@@ -1,41 +1,32 @@
 import type { Chain } from "viem";
-
 import { sepolia } from "viem/chains";
 
 import { testnetContracts, type EnsContracts } from "#/data/addresses";
 
-export type EnsNetwork = "mainnet" | "testnet";
+export type EnsConfigPreset = "mainnet" | "testnet";
 
-interface EnsNetworkConfigurationShape {
+export interface EnsConfig {
   readonly chain: Chain;
   readonly contracts: EnsContracts;
   readonly indexerUrl: string;
-  readonly network: EnsNetwork;
 }
 
-export const ensNetworkConfigurations = {
+export const ensConfigPresets = {
   testnet: {
     chain: sepolia,
     contracts: testnetContracts,
     indexerUrl: "https://graphql.ens.dev/graphql",
-    network: "testnet",
   },
-} as const satisfies Record<
-  Exclude<EnsNetwork, "mainnet">,
-  EnsNetworkConfigurationShape
->;
+} as const satisfies Record<Exclude<EnsConfigPreset, "mainnet">, EnsConfig>;
 
-export type EnsNetworkConfiguration =
-  (typeof ensNetworkConfigurations)[keyof typeof ensNetworkConfigurations];
+export function createEnsConfig(preset: EnsConfigPreset): EnsConfig;
+export function createEnsConfig(config: EnsConfig): EnsConfig;
+export function createEnsConfig(input: EnsConfigPreset | EnsConfig): EnsConfig {
+  if (typeof input !== "string") return input;
 
-export function getEnsNetworkConfiguration(
-  network: EnsNetwork,
-): EnsNetworkConfiguration {
-  if (network === "mainnet") {
-    throw new Error(
-      "ENS v2 mainnet is not supported yet. Use the testnet network.",
-    );
+  if (input === "mainnet") {
+    throw new Error("ENS v2 mainnet is not supported yet. Use the testnet preset.");
   }
 
-  return ensNetworkConfigurations.testnet;
+  return ensConfigPresets.testnet;
 }

@@ -14,12 +14,8 @@ import {
   type PreparedWriteMutationError,
   type PreparedWriteVariables,
 } from "#/hooks/use-prepared-contract-write";
-import { useEnsConfig } from "#/providers";
 
-export type UpdateNameProfileRecordsVariables = Omit<
-  PrepareNameProfileRecordsWriteParameters,
-  "network"
-> &
+export type UpdateNameProfileRecordsVariables = PrepareNameProfileRecordsWriteParameters &
   PreparedWriteVariables;
 
 export type UpdateNameProfileRecordsError =
@@ -39,8 +35,6 @@ export interface UseUpdateNameProfileRecordsParameters {
 export function useUpdateNameProfileRecords(
   parameters: UseUpdateNameProfileRecordsParameters = {},
 ) {
-  const { network } = useEnsConfig();
-
   return usePreparedContractWrite<
     UpdateNameProfileRecordsVariables,
     PreparedNameProfileRecordsWrite,
@@ -49,9 +43,6 @@ export function useUpdateNameProfileRecords(
     ...(parameters.mutation === undefined ? {} : { mutation: parameters.mutation }),
     mutationKey: ["update-name-profile-records"],
     prepare: async (variables, publicClient) =>
-      await prepareNameProfileRecordsWrite(publicClient, {
-        ...variables,
-        network,
-      }),
+      await prepareNameProfileRecordsWrite(publicClient, variables),
   });
 }

@@ -11,6 +11,7 @@ import type {
   ExecuteContractWritesError,
 } from "#/actions";
 import { executeContractWrites } from "#/actions";
+import { asWagmiChainId } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export type ExecuteContractWritesMutationError =
@@ -40,9 +41,10 @@ export interface UseExecuteContractWritesParameters {
  * `EnsProvider`.
  */
 export function useExecuteContractWrites(parameters: UseExecuteContractWritesParameters = {}) {
-  const { chain, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
-  const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const { chain } = useEnsConfig();
+  const wagmiChainId = asWagmiChainId(chain.id);
+  const publicClient = usePublicClient({ chainId: wagmiChainId });
+  const { data: walletClient } = useWalletClient({ chainId: wagmiChainId });
 
   return useMutation<
     ExecuteContractWritesResult,
@@ -50,7 +52,7 @@ export function useExecuteContractWrites(parameters: UseExecuteContractWritesPar
     ExecuteContractWritesVariables
   >({
     ...parameters.mutation,
-    mutationKey: ["ens", "execute-contract-writes", network, chain.id],
+    mutationKey: ["ens", "execute-contract-writes", chain.id],
     mutationFn: async (variables) => {
       if (publicClient === undefined) return Promise.reject("PUBLIC_CLIENT_UNAVAILABLE");
       if (walletClient === undefined) return Promise.reject("WALLET_CLIENT_UNAVAILABLE");

@@ -21,6 +21,7 @@ import {
   prepareNameResolverRead,
   preparePermissionedResolverSupportRead,
 } from "#/actions";
+import { asWagmiChainId } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
 import { parseNameInput } from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
@@ -37,7 +38,6 @@ export type NameProfilePermissionsError =
 type NameProfilePermissionsQueryKey = readonly [
   "ens",
   "name-profile-permissions",
-  string,
   number,
   string,
   Address | undefined,
@@ -64,8 +64,8 @@ export interface UseNameProfilePermissionsParameters<selectData = NameProfilePer
 export function useNameProfilePermissions<selectData = NameProfilePermissions>(
   parameters: UseNameProfilePermissionsParameters<selectData>,
 ) {
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const publicClient = usePublicClient({ chainId: asWagmiChainId(chain.id) });
   const parsed = parseNameInput(parameters.input);
   const requestIds = parameters.requests.map(getNameProfilePermissionId);
   const isValidResolver =
@@ -82,7 +82,6 @@ export function useNameProfilePermissions<selectData = NameProfilePermissions>(
     queryKey: [
       "ens",
       "name-profile-permissions",
-      network,
       chain.id,
       parsed.isOk() ? parsed.value.normalizedName : (parameters.input ?? ""),
       parameters.account,
@@ -105,7 +104,6 @@ export function useNameProfilePermissions<selectData = NameProfilePermissions>(
       if (resolverAddress === undefined) {
         const resolverRead = prepareNameResolverRead({
           input: parameters.input,
-          network,
           universalResolverAddress: contracts.universalResolverV2.address,
         });
         if (resolverRead.isErr()) throw resolverRead.error;
@@ -120,7 +118,6 @@ export function useNameProfilePermissions<selectData = NameProfilePermissions>(
       }
 
       const supportRead = preparePermissionedResolverSupportRead({
-        network,
         resolverAddress,
       });
       if (supportRead.isErr()) throw supportRead.error;
@@ -133,7 +130,6 @@ export function useNameProfilePermissions<selectData = NameProfilePermissions>(
       const permissionRead = prepareNameProfilePermissionsRead({
         account: parameters.account,
         input: parameters.input,
-        network,
         requests: parameters.requests,
         resolverAddress,
       });

@@ -2,7 +2,6 @@ import { err, ok, type Result } from "neverthrow";
 import { type Address, type ContractFunctionParameters } from "viem";
 
 import type { PreparedContractRead } from "#/actions/read/contract-reads";
-import type { EnsNetwork } from "#/data";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import { parseNameInput, type ParseNameInputError } from "#/lib/parse-name-input";
@@ -15,9 +14,7 @@ export type PrepareNameAvailabilityReadError =
 export interface PrepareNameAvailabilityReadParameters {
   /** Label or ENS name to normalize and check. */
   readonly input: string | null | undefined;
-  /** Network associated with the supplied registrar address. */
-  readonly network: EnsNetwork;
-  /** ENSv2 ETHRegistrar address on the supplied network. */
+  /** ENS v2 ETHRegistrar address. */
   readonly registrarAddress: Address;
 }
 

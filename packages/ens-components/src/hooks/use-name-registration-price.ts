@@ -13,6 +13,7 @@ import {
   type NameRegistrationPriceReadError,
   type PrepareNameRegistrationPriceReadError,
 } from "#/actions";
+import { asWagmiChainId } from "#/lib/helpers";
 import { parseNameInput, type ParseNameInputError } from "#/lib/parse-name-input";
 import { useEnsConfig } from "#/providers";
 
@@ -24,7 +25,7 @@ type NameRegistrationPriceError =
 type NameRegistrationPriceQueryKey = readonly [
   "ens",
   "name-registration-price",
-  string,
+  number,
   Address,
   Address,
   string,
@@ -51,8 +52,10 @@ export function useNameRegistrationPrice<selectData = NameRegistrationPrice>(
   parameters: UseNameRegistrationPriceParameters<selectData>,
 ) {
   const input = parameters.input ?? "";
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const publicClient = usePublicClient({
+    chainId: asWagmiChainId(chain.id),
+  });
   const [debouncedInput] = useDebounceValue(input, 300);
   const parsedInput = parseNameInput(debouncedInput);
   const isValidInput =
@@ -70,7 +73,7 @@ export function useNameRegistrationPrice<selectData = NameRegistrationPrice>(
     queryKey: [
       "ens",
       "name-registration-price",
-      network,
+      chain.id,
       registrarAddress,
       paymentTokenAddress,
       parameters.duration.toString(),
@@ -85,7 +88,6 @@ export function useNameRegistrationPrice<selectData = NameRegistrationPrice>(
       const prepared = prepareNameRegistrationPriceRead({
         duration: parameters.duration,
         input: debouncedInput,
-        network,
         paymentTokenAddress,
         registrarAddress,
       });

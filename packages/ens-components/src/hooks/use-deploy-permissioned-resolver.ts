@@ -18,7 +18,7 @@ import { useEnsConfig } from "#/providers";
 
 export type DeployPermissionedResolverVariables = Omit<
   PreparePermissionedResolverDeploymentWriteParameters,
-  "factoryAddress" | "implementationAddress" | "network"
+  "factoryAddress" | "implementationAddress"
 > &
   PreparedWriteVariables;
 
@@ -41,7 +41,7 @@ export interface UseDeployPermissionedResolverParameters {
 export function useDeployPermissionedResolver(
   parameters: UseDeployPermissionedResolverParameters = {},
 ) {
-  const { contracts, network } = useEnsConfig();
+  const { contracts } = useEnsConfig();
   const factoryAddress = parameters.factoryAddress ?? contracts.verifiableFactory.address;
   const implementationAddress =
     parameters.implementationAddress ?? contracts.permissionedResolverImplementation.address;
@@ -58,7 +58,6 @@ export function useDeployPermissionedResolver(
         ...variables,
         factoryAddress,
         implementationAddress,
-        network,
       }),
   });
 }

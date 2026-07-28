@@ -12,6 +12,7 @@ import type {
   PreparedContractWrite,
 } from "#/actions";
 import { executeContractWrites } from "#/actions";
+import { asWagmiChainId } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export interface PreparedWriteExecutionOptions {
@@ -58,9 +59,10 @@ export function usePreparedContractWrite<
   prepared extends PreparedContractWrite,
   prepareError,
 >(parameters: UsePreparedContractWriteParameters<variables, prepared, prepareError>) {
-  const { chain, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
-  const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const { chain } = useEnsConfig();
+  const wagmiChainId = asWagmiChainId(chain.id);
+  const publicClient = usePublicClient({ chainId: wagmiChainId });
+  const { data: walletClient } = useWalletClient({ chainId: wagmiChainId });
 
   return useMutation<
     ExecuteContractWritesResult,
@@ -68,7 +70,7 @@ export function usePreparedContractWrite<
     variables
   >({
     ...parameters.mutation,
-    mutationKey: ["ens", ...parameters.mutationKey, network, chain.id],
+    mutationKey: ["ens", ...parameters.mutationKey, chain.id],
     mutationFn: async (variables) => {
       if (publicClient === undefined) return Promise.reject("PUBLIC_CLIENT_UNAVAILABLE");
       if (walletClient === undefined) return Promise.reject("WALLET_CLIENT_UNAVAILABLE");

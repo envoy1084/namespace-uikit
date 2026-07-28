@@ -32,7 +32,7 @@ import {
   useExecuteContractWrites,
   useNameRegistrationPaymentStatus,
 } from "#/hooks";
-import { delay, parseRegistrationDuration } from "#/lib/helpers";
+import { asWagmiChainId, delay, parseRegistrationDuration } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export interface UseRegistrationPaymentProps {
@@ -51,9 +51,10 @@ export function useRegistrationPayment({
   onSuccess,
 }: UseRegistrationPaymentProps) {
   const connection = useConnection();
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
-  const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const wagmiChainId = asWagmiChainId(chain.id);
+  const publicClient = usePublicClient({ chainId: wagmiChainId });
+  const { data: walletClient } = useWalletClient({ chainId: wagmiChainId });
   const contractWrites = useExecuteContractWrites();
   const { switchChainAsync } = useSwitchChain();
   const { events, registrationAttemptId, setRegistrationAttemptId } = useNameRegistration();
@@ -105,7 +106,6 @@ export function useRegistrationPayment({
       chainId: chain.id,
       error: nextError,
       input: storedAttempt?.label ?? "",
-      network,
       phase,
       ...(hash === undefined ? {} : { transactionHash: hash }),
     });
@@ -181,7 +181,6 @@ export function useRegistrationPayment({
         account: attempt.account,
         amount: paymentData.total,
         chainId: chain.id,
-        network,
         paymentTokenAddress: paymentToken.address,
         receipt: result.approval.receipt,
         registrarAddress: attempt.registrarAddress,
@@ -200,7 +199,6 @@ export function useRegistrationPayment({
       duration: result.registrationDuration,
       expiresAt: result.details.expiresAt,
       name: result.details.name,
-      network,
       owner: attempt.owner,
       paymentTokenAddress: paymentToken.address,
       receipt: result.registration.receipt,
@@ -224,7 +222,6 @@ export function useRegistrationPayment({
         l2ReverseRegistrarAddress: contracts.l2ReverseRegistrar.address,
         l2ReverseTransactionHash: result.l2PrimaryName.transactionHash,
         name: result.details.name,
-        network,
         owner: attempt.owner,
         receipt: result.l1PrimaryName.receipt,
         resolverAddress: attempt.resolver.address,
@@ -255,7 +252,7 @@ export function useRegistrationPayment({
     if (isWrongNetwork) {
       setActionStatus("switching");
       try {
-        await switchChainAsync({ chainId: chain.id });
+        await switchChainAsync({ chainId: wagmiChainId });
       } catch {
         reportError("CHAIN_SWITCH_FAILED", "registration");
       } finally {
@@ -305,7 +302,6 @@ export function useRegistrationPayment({
       attempt: storedAttempt,
       commitment: refreshedCommitment.data,
       executeWrites: contractWrites.mutateAsync,
-      network,
       payment: refreshedPayment.data,
       paymentToken,
       publicClient,

@@ -13,7 +13,7 @@ import {
   type PreparedRegistrationPaymentWrites,
 } from "#/components/name-registration/steps/registration-process/steps/registration-payment/registration-payment-writes";
 import type { RegistrationSuccessDetails } from "#/components/name-registration/steps/registration-success";
-import type { EnsNetwork, EnsPaymentToken } from "#/data";
+import type { EnsPaymentToken } from "#/data";
 import type { CommitmentStatus, ExecuteContractWritesMutation } from "#/hooks";
 import { getTransactionTimestamp, parseRegistrationReceipt } from "#/lib/helpers";
 
@@ -40,7 +40,6 @@ export interface SubmitRegistrationPaymentParameters {
   attempt: StoredRegistrationAttempt;
   commitment: CommitmentStatus;
   executeWrites: ExecuteContractWritesMutation;
-  network: EnsNetwork;
   payment: NameRegistrationPaymentStatus;
   paymentToken: EnsPaymentToken;
   publicClient: PublicClient;
@@ -163,7 +162,7 @@ async function buildRegistrationSuccess(
 export async function submitRegistrationPayment(
   props: SubmitRegistrationPaymentParameters,
 ): Promise<Result<RegistrationPaymentSubmissionSuccess, unknown>> {
-  const { attempt, network, payment, paymentToken, publicClient } = props;
+  const { attempt, payment, paymentToken, publicClient } = props;
   if (props.commitment.state !== "READY") {
     return err(getCommitmentStateError(props.commitment.state));
   }
@@ -172,7 +171,6 @@ export async function submitRegistrationPayment(
     attempt,
     l1ReverseRegistrarAddress: props.l1ReverseRegistrarAddress,
     l2ReverseRegistrarAddress: props.l2ReverseRegistrarAddress,
-    network,
     payment,
     paymentToken,
   });

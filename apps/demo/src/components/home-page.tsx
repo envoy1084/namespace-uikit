@@ -5,7 +5,7 @@ import { useLayoutEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { EnsProvider } from "ens-components";
+import { createEnsConfig, EnsProvider } from "ens-components";
 import { WagmiProvider } from "wagmi";
 
 import { wagmiConfig } from "../lib/wagmi";
@@ -19,7 +19,7 @@ import {
 } from "./home";
 import { AppNavbar } from "./navbar";
 
-const ensConfig = { network: "testnet" } as const;
+const ensConfig = createEnsConfig("testnet");
 const lightColorScheme = { colorScheme: "light" } as const;
 
 export function HomePage() {

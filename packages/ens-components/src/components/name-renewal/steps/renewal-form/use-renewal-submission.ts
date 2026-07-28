@@ -13,7 +13,7 @@ import { submitNameRenewal } from "#/components/name-renewal/steps/renewal-form/
 import type { NameRenewalSuccessDetails } from "#/components/name-renewal/types";
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
 import { useExecuteContractWrites, useNameRenewalPaymentStatus } from "#/hooks";
-import { delay, resolvePaymentToken } from "#/lib/helpers";
+import { asWagmiChainId, delay, resolvePaymentToken } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export type RenewalActionStatus =
@@ -37,9 +37,10 @@ export function useRenewalSubmission({
   onSuccess,
 }: UseRenewalSubmissionParameters) {
   const connection = useConnection();
-  const { chain, contracts, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
-  const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const { chain, contracts } = useEnsConfig();
+  const wagmiChainId = asWagmiChainId(chain.id);
+  const publicClient = usePublicClient({ chainId: wagmiChainId });
+  const { data: walletClient } = useWalletClient({ chainId: wagmiChainId });
   const contractWrites = useExecuteContractWrites();
   const { switchChainAsync } = useSwitchChain();
   const { duration, events, input, messages, paymentTokenAddress, referrer } = useNameRenewal();
@@ -87,7 +88,6 @@ export function useRenewalSubmission({
       chainId: chain.id,
       error: nextError,
       input,
-      network,
       phase,
       ...(hash === undefined ? {} : { transactionHash: hash }),
     });
@@ -107,7 +107,6 @@ export function useRenewalSubmission({
       account,
       amount: paymentData.total,
       chainId: chain.id,
-      network,
       paymentTokenAddress: paymentToken.address,
       receipt,
       registrarAddress: contracts.ethRegistrar.address,
@@ -167,7 +166,7 @@ export function useRenewalSubmission({
     if (isWrongNetwork) {
       setActionStatus("switching");
       try {
-        await switchChainAsync({ chainId: chain.id });
+        await switchChainAsync({ chainId: wagmiChainId });
       } catch {
         reportError("CHAIN_SWITCH_FAILED", "renewal");
       } finally {
@@ -198,7 +197,6 @@ export function useRenewalSubmission({
       account: submittingAccount,
       executeWrites: contractWrites.mutateAsync,
       input,
-      network,
       onProgress: handleProgress,
       payment: refreshedPayment.data,
       paymentToken,
@@ -223,7 +221,6 @@ export function useRenewalSubmission({
       decimals: result.value.details.decimals,
       duration: result.value.details.duration,
       name: result.value.details.name,
-      network,
       newExpiry: result.value.details.newExpiry,
       paymentTokenAddress: paymentToken.address,
       receipt: result.value.renewal.receipt,

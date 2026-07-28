@@ -4,7 +4,6 @@ import type { Hex, PublicClient, TransactionReceipt } from "viem";
 import type { ContractWriteProgress } from "#/actions";
 import { prepareNameProfileRecordsWrite } from "#/actions";
 import type { NameProfileEditorReview } from "#/components/name-profile-editor/types";
-import type { EnsNetwork } from "#/data";
 import type { ExecuteContractWritesMutation } from "#/hooks";
 
 export type ProfileUpdateConnectionError = "WALLET_ACCOUNT_CHANGED" | "WALLET_NETWORK_CHANGED";
@@ -20,7 +19,6 @@ export interface SubmitProfileUpdateParameters {
   readonly account: `0x${string}`;
   readonly executeWrites: ExecuteContractWritesMutation;
   readonly input: string;
-  readonly network: EnsNetwork;
   readonly onProgress?: (progress: ContractWriteProgress) => Promise<void> | void;
   readonly publicClient: PublicClient;
   readonly resolverAddress: `0x${string}`;
@@ -38,7 +36,6 @@ export async function submitProfileUpdate(
     account: props.account,
     changes: props.review.changes,
     input: props.input,
-    network: props.network,
     resolverAddress: props.resolverAddress,
   });
   if (prepared.isErr()) return err(prepared.error);

@@ -2,7 +2,6 @@ import { err, ok, type Result } from "neverthrow";
 import { encodeFunctionData, type Address, type ContractFunctionParameters, type Hex } from "viem";
 
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
-import type { EnsNetwork } from "#/data";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isBytes32, isNonZeroAddress, isUint64Duration } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -23,13 +22,11 @@ export interface PrepareRenewNameWriteParameters {
   readonly duration: bigint;
   /** Label or second-level `.eth` name to normalize and renew. */
   readonly input: string | null | undefined;
-  /** Network associated with the supplied contract addresses. */
-  readonly network: EnsNetwork;
   /** ERC-20 token used to pay for renewal. */
   readonly paymentTokenAddress: Address;
   /** Optional bytes32 referral identifier. */
   readonly referrer: Hex;
-  /** ENS v2 ETHRegistrar address on the supplied network. */
+  /** ENS v2 ETHRegistrar address. */
   readonly registrarAddress: Address;
 }
 

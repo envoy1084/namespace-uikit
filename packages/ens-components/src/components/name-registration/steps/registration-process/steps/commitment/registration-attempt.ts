@@ -14,7 +14,6 @@ import type {
 } from "#/components/name-registration/hooks/use-registration-attempts";
 import type { IsResolverDeployedError } from "#/components/name-registration/steps/registration-process/steps/commitment/read-resolver-status";
 import { isResolverDeployed } from "#/components/name-registration/steps/registration-process/steps/commitment/read-resolver-status";
-import type { EnsNetwork } from "#/data";
 import { createResolverSalt, makeNameCommitment, parseNameInput } from "#/lib";
 import type { CreateResolverSaltError } from "#/lib/create-resolver-salt";
 import { createRandomBytes32, parseRegistrationDuration } from "#/lib/helpers";
@@ -37,7 +36,6 @@ export interface PrepareRegistrationAttemptParameters {
   factoryAddress: Address;
   implementationAddress: Address;
   input: string | null | undefined;
-  network: EnsNetwork;
   owner: Address;
   paymentTokenAddress: Address;
   referrer: Hex;
@@ -115,7 +113,6 @@ export function prepareRegistrationAttempt(
     account: props.account,
     factoryAddress: props.factoryAddress,
     implementationAddress: props.implementationAddress,
-    network: props.network,
     owner: props.owner,
     salt: salt.value.salt,
   }).andThen((prepared) =>
@@ -167,7 +164,6 @@ export function renewRegistrationAttempt(
 
 export function getAttemptCommitNameProps(
   attempt: StoredRegistrationAttempt,
-  network: EnsNetwork,
 ): PrepareCommitNameWriteParameters | undefined {
   const duration = parseRegistrationDuration(attempt.duration);
   if (duration === undefined) return undefined;
@@ -176,7 +172,6 @@ export function getAttemptCommitNameProps(
     account: attempt.account,
     duration,
     input: attempt.normalizedName,
-    network,
     owner: attempt.owner,
     referrer: attempt.referrer,
     registrarAddress: attempt.registrarAddress,

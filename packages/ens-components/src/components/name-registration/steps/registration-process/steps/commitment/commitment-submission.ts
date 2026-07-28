@@ -15,7 +15,6 @@ import type {
 } from "#/components/name-registration/hooks/use-registration-attempts";
 import { readPermissionedResolverStatus } from "#/components/name-registration/steps/registration-process/steps/commitment/read-resolver-status";
 import { getAttemptCommitNameProps } from "#/components/name-registration/steps/registration-process/steps/commitment/registration-attempt";
-import type { EnsNetwork } from "#/data";
 import type { ExecuteContractWritesMutation } from "#/hooks";
 
 export type CommitmentTransactionPhase = "commitment" | "resolver";
@@ -38,7 +37,6 @@ export interface CommitmentSubmissionSuccess {
 export interface SubmitRegistrationAttemptParameters {
   attempt: StoredRegistrationAttempt;
   executeWrites: ExecuteContractWritesMutation;
-  network: EnsNetwork;
   publicClient: PublicClient;
   onProgress: (progress: CommitmentTransactionProgress) => Promise<void> | void;
   onSubmissionChange: (submission: RegistrationAttemptSubmission) => void;
@@ -167,7 +165,7 @@ function buildSuccess(result: ExecuteContractWritesResult): CommitmentSubmission
 async function prepareCommitment(
   props: SubmitRegistrationAttemptParameters,
 ): Promise<Result<PreparedCommitNameWrite, unknown>> {
-  const commitProps = getAttemptCommitNameProps(props.attempt, props.network);
+  const commitProps = getAttemptCommitNameProps(props.attempt);
   if (commitProps === undefined) return err("INVALID_DURATION");
   return prepareCommitNameWrite(commitProps);
 }
@@ -182,7 +180,6 @@ async function prepareResolver(
     account: props.attempt.account,
     factoryAddress: resolver.factoryAddress,
     implementationAddress: resolver.implementationAddress,
-    network: props.network,
     owner: props.attempt.owner,
     salt: resolver.salt,
   });
@@ -206,7 +203,6 @@ export async function submitRegistrationAttempt(
     const status = await readPermissionedResolverStatus(props.publicClient, {
       factoryAddress: resolver.factoryAddress,
       implementationAddress: resolver.implementationAddress,
-      network: props.network,
       resolverAddress: resolver.address,
     });
     if (status.isErr()) return err(status.error);

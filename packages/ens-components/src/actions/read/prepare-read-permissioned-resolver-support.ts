@@ -2,7 +2,6 @@ import { err, ok, type Result } from "neverthrow";
 import { type Address, type ContractFunctionParameters, type Hex } from "viem";
 
 import type { PreparedContractRead } from "#/actions/read/contract-reads";
-import type { EnsNetwork } from "#/data";
 import { permissionedResolverAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 
@@ -12,7 +11,6 @@ export const PERMISSIONED_RESOLVER_INTERFACE_ID = "0x2c7442c9" as const satisfie
 export type PreparePermissionedResolverSupportReadError = "INVALID_RESOLVER_ADDRESS";
 
 export interface PreparePermissionedResolverSupportReadParameters {
-  readonly network: EnsNetwork;
   readonly resolverAddress: Address;
 }
 

@@ -7,7 +7,6 @@ import {
   type PrepareNameAvailabilityReadError,
   type PreparedNameAvailabilityRead,
 } from "#/actions/read/prepare-read-name-availability";
-import type { EnsNetwork } from "#/data";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress, isUint64Duration } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -24,11 +23,9 @@ export interface PrepareNameRegistrationPriceReadParameters {
   readonly duration: bigint;
   /** Label or ENS name to normalize and price. */
   readonly input: string | null | undefined;
-  /** Network associated with the supplied contract addresses. */
-  readonly network: EnsNetwork;
   /** ERC-20 token used to pay for registration. */
   readonly paymentTokenAddress: Address;
-  /** ENSv2 ETHRegistrar address on the supplied network. */
+  /** ENS v2 ETHRegistrar address. */
   readonly registrarAddress: Address;
 }
 
@@ -103,7 +100,6 @@ export function prepareNameRegistrationPriceRead(
 
   const availability = prepareNameAvailabilityRead({
     input: parameters.input,
-    network: parameters.network,
     registrarAddress,
   });
   if (availability.isErr()) return err(availability.error);

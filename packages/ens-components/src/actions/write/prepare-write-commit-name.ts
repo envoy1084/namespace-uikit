@@ -2,7 +2,6 @@ import { err, ok, type Result } from "neverthrow";
 import { encodeFunctionData, type Address, type ContractFunctionParameters, type Hex } from "viem";
 
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
-import type { EnsNetwork } from "#/data";
 import { ethRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type {
@@ -19,7 +18,6 @@ export type PrepareCommitNameWriteError =
 
 export interface PrepareCommitNameWriteParameters extends MakeNameCommitmentParameters {
   readonly account: Address;
-  readonly network: EnsNetwork;
   readonly registrarAddress: Address;
 }
 

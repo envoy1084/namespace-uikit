@@ -8,7 +8,6 @@ import {
 } from "viem";
 
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
-import type { EnsNetwork } from "#/data";
 import { permissionedResolverAbi, verifiableFactoryAbi } from "#/data/abi";
 import { isBytes32, isNonZeroAddress } from "#/lib/helpers";
 
@@ -31,8 +30,6 @@ export interface PreparePermissionedResolverDeploymentWriteParameters {
   readonly factoryAddress: Address;
   /** Deployed PermissionedResolver implementation address. */
   readonly implementationAddress: Address;
-  /** Network associated with the supplied addresses. */
-  readonly network: EnsNetwork;
   /** Account receiving every resolver permission. */
   readonly owner: Address;
   /** Random bytes32 salt returned by `createResolverSalt`. */

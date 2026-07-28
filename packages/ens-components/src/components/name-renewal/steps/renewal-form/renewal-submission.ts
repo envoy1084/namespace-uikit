@@ -8,7 +8,7 @@ import type {
 } from "#/actions";
 import { preparePaymentTokenApprovalWrite, prepareRenewNameWrite } from "#/actions";
 import type { NameRenewalSuccessDetails } from "#/components/name-renewal/types";
-import type { EnsNetwork, EnsPaymentToken } from "#/data";
+import type { EnsPaymentToken } from "#/data";
 import type { ExecuteContractWritesMutation } from "#/hooks";
 import { parseRenewalReceipt } from "#/lib/helpers";
 import { parseNameInput } from "#/lib/parse-name-input";
@@ -29,7 +29,6 @@ export interface SubmitNameRenewalParameters {
   account: `0x${string}`;
   executeWrites: ExecuteContractWritesMutation;
   input: string;
-  network: EnsNetwork;
   onProgress?: (progress: ContractWriteProgress) => Promise<void> | void;
   payment: NameRenewalPaymentStatus;
   paymentToken: EnsPaymentToken;
@@ -63,7 +62,6 @@ export async function submitNameRenewal(
     account: props.account,
     duration: props.payment.duration,
     input: props.input,
-    network: props.network,
     paymentTokenAddress: props.paymentToken.address,
     referrer: props.referrer,
     registrarAddress: props.registrarAddress,
@@ -75,7 +73,6 @@ export async function submitNameRenewal(
     const approval = preparePaymentTokenApprovalWrite({
       account: props.account,
       amount: props.payment.total,
-      network: props.network,
       paymentTokenAddress: props.paymentToken.address,
       spenderAddress: props.registrarAddress,
     });

@@ -2,7 +2,6 @@ import { err, ok, type Result } from "neverthrow";
 import { encodeFunctionData, type Address, type ContractFunctionParameters } from "viem";
 
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
-import type { EnsNetwork } from "#/data";
 import { l1ReverseRegistrarAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -20,8 +19,6 @@ export interface PrepareSetL1PrimaryNameWriteParameters {
   readonly input: string | null | undefined;
   /** ENS L1 ReverseRegistrar address. */
   readonly l1ReverseRegistrarAddress: Address;
-  /** Network associated with the reverse registrar. */
-  readonly network: EnsNetwork;
 }
 
 type SetL1PrimaryNameRequest = ContractFunctionParameters<

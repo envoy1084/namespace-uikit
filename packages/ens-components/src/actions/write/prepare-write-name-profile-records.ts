@@ -15,7 +15,6 @@ import { namehash } from "viem/ens";
 
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
 import type { NameProfileRecordChange } from "#/components/name-profile-editor/types";
-import type { EnsNetwork } from "#/data";
 import { permissionedResolverAbi } from "#/data/abi";
 import { isNonZeroAddress } from "#/lib/helpers";
 import type { ParseNameInputError } from "#/lib/parse-name-input";
@@ -33,7 +32,6 @@ export interface PrepareNameProfileRecordsWriteParameters {
   readonly account: Address;
   readonly changes: readonly NameProfileRecordChange[];
   readonly input: string | null | undefined;
-  readonly network: EnsNetwork;
   readonly resolverAddress: Address;
 }
 

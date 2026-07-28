@@ -2,7 +2,6 @@ import { err, ok, type Result } from "neverthrow";
 import { encodeFunctionData, erc20Abi, type Address, type ContractFunctionParameters } from "viem";
 
 import type { PreparedContractWrite } from "#/actions/write/contract-writes";
-import type { EnsNetwork } from "#/data";
 import { isNonZeroAddress } from "#/lib/helpers";
 
 export type PreparePaymentTokenApprovalWriteError =
@@ -16,8 +15,6 @@ export interface PreparePaymentTokenApprovalWriteParameters {
   readonly account: Address;
   /** Atomic token amount to approve. */
   readonly amount: bigint;
-  /** Network associated with the supplied contract addresses. */
-  readonly network: EnsNetwork;
   /** ERC-20 token that grants the allowance. */
   readonly paymentTokenAddress: Address;
   /** Contract authorized to spend the payment tokens. */

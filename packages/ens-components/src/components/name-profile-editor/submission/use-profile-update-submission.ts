@@ -18,7 +18,7 @@ import {
 import type { NameProfileEditorReview } from "#/components/name-profile-editor/types";
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
 import { useExecuteContractWrites, useNameResolver } from "#/hooks";
-import { delay } from "#/lib/helpers";
+import { asWagmiChainId, delay } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
 export type ProfileUpdateActionStatus =
@@ -44,9 +44,10 @@ export function useProfileUpdateSubmission({
   onSuccess,
 }: UseProfileUpdateSubmissionParameters) {
   const connection = useConnection();
-  const { chain, network } = useEnsConfig();
-  const publicClient = usePublicClient({ chainId: chain.id });
-  const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const { chain } = useEnsConfig();
+  const wagmiChainId = asWagmiChainId(chain.id);
+  const publicClient = usePublicClient({ chainId: wagmiChainId });
+  const { data: walletClient } = useWalletClient({ chainId: wagmiChainId });
   const contractWrites = useExecuteContractWrites();
   const currentResolver = useNameResolver({
     input: name,
@@ -92,7 +93,6 @@ export function useProfileUpdateSubmission({
       chainId: chain.id,
       error: nextError,
       name,
-      network,
       phase: "update",
       ...(resolverAddressRef.current === undefined
         ? {}
@@ -134,7 +134,7 @@ export function useProfileUpdateSubmission({
     if (isWrongNetwork) {
       setActionStatus("switching");
       try {
-        await switchChainAsync({ chainId: chain.id });
+        await switchChainAsync({ chainId: wagmiChainId });
       } catch {
         reportError("CHAIN_SWITCH_FAILED");
       } finally {
@@ -176,7 +176,6 @@ export function useProfileUpdateSubmission({
       account: submissionAccount,
       executeWrites: contractWrites.mutateAsync,
       input: name,
-      network,
       onProgress: handleProgress,
       publicClient,
       resolverAddress,
@@ -195,7 +194,6 @@ export function useProfileUpdateSubmission({
       chainId: chain.id,
       changes: review.changes,
       name,
-      network,
       receipt: result.value.receipt,
       resolverAddress,
       transactionHash: result.value.transactionHash,
