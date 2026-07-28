@@ -37,6 +37,7 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   DUPLICATE_TEXT_KEY: "Each text record key can only be added once.",
   EMPTY_PERMISSION_REQUESTS:
     "Select at least one record before checking permissions.",
+  EMPTY_PROFILE_CHANGES: "There are no profile changes to update.",
   EMPTY_INPUT: "Enter an ENS name.",
   EMPTY_CALLS: "There are no transactions to submit.",
   EMPTY_LABEL: "The ENS name contains an empty label.",
@@ -89,6 +90,8 @@ const ERROR_MESSAGES: Readonly<Record<string, ErrorMessage>> = {
   INVALID_SECRET: "The saved commitment secret is invalid.",
   INVALID_SUBREGISTRY_ADDRESS: "The subregistry address is invalid.",
   INVALID_TEXT_KEY: "Enter a key for this text record.",
+  INVALID_UNIVERSAL_RESOLVER_ADDRESS:
+    "The Universal Resolver address is invalid.",
   LABEL_TOO_LONG: "The ENS label is too long.",
   LABEL_TOO_SHORT: (data) => {
     const name = getName(data);
