@@ -1,25 +1,13 @@
-import type {
-  Address,
-  Chain,
-  Hex,
-  PublicClient,
-  TransactionReceipt,
-  WalletClient,
-} from "viem";
+import type { Hex, PublicClient, TransactionReceipt } from "viem";
 
 import type { ContractWriteProgress } from "#/actions";
 import type { NameProfileEditorReview } from "#/components/name-profile-editor/types";
 import type { EnsNetwork } from "#/data";
+import type { ExecuteContractWritesMutation } from "#/hooks";
 
 import { err, ok, type Result } from "neverthrow";
-import { isAddressEqual } from "viem";
 
-import {
-  executeContractRead,
-  executeContractWrites,
-  prepareNameResolverRead,
-  prepareProfileRecordsWrite,
-} from "#/actions";
+import { prepareProfileRecordsWrite } from "#/actions";
 
 export type ProfileUpdateConnectionError =
   | "WALLET_ACCOUNT_CHANGED"
@@ -34,7 +22,7 @@ export interface ProfileUpdateSubmissionSuccess {
 
 export interface SubmitProfileUpdateProps {
   readonly account: `0x${string}`;
-  readonly chain: Chain;
+  readonly executeWrites: ExecuteContractWritesMutation;
   readonly input: string;
   readonly network: EnsNetwork;
   readonly onProgress?: (
@@ -43,12 +31,10 @@ export interface SubmitProfileUpdateProps {
   readonly publicClient: PublicClient;
   readonly resolverAddress: `0x${string}`;
   readonly review: NameProfileEditorReview;
-  readonly universalResolverAddress: Address;
   readonly validateConnection?: () => Result<
     void,
     ProfileUpdateConnectionError
   >;
-  readonly walletClient: WalletClient;
 }
 
 export async function submitProfileUpdate(
@@ -69,42 +55,25 @@ export async function submitProfileUpdate(
   const preparedConnection = props.validateConnection?.();
   if (preparedConnection?.isErr()) return err(preparedConnection.error);
 
-  const resolverRead = prepareNameResolverRead({
-    input: props.input,
-    network: props.network,
-    universalResolverAddress: props.universalResolverAddress,
-  });
-  if (resolverRead.isErr()) return err(resolverRead.error);
-
-  const currentResolver = await executeContractRead(
-    props.publicClient,
-    resolverRead.value,
-  );
-  if (currentResolver.isErr()) return err(currentResolver.error);
-  if (!isAddressEqual(currentResolver.value[0], props.resolverAddress)) {
-    return err("RESOLVER_CHANGED");
-  }
-
   const submittingConnection = props.validateConnection?.();
   if (submittingConnection?.isErr()) return err(submittingConnection.error);
 
-  const execution = await executeContractWrites(
-    props.walletClient,
-    props.publicClient,
-    {
+  let execution;
+  try {
+    execution = await props.executeWrites({
       calls: [prepared.value],
-      chain: props.chain,
       confirmation: "confirmed",
       ...(props.onProgress === undefined
         ? {}
         : { onProgress: props.onProgress }),
       strategy: "single",
       timeout: 120_000,
-    },
-  );
-  if (execution.isErr()) return err(execution.error);
+    });
+  } catch (error) {
+    return err(error);
+  }
 
-  const transaction = execution.value.transactions[0];
+  const transaction = execution.transactions[0];
   if (transaction?.receipt === undefined) {
     return err("TRANSACTION_CONFIRMATION_FAILED");
   }

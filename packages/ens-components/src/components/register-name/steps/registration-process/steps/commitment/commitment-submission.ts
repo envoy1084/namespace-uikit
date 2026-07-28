@@ -10,19 +10,17 @@ import type {
   StoredRegistrationAttempt,
 } from "#/components/register-name/hooks/use-registration-attempts";
 import type { EnsNetwork } from "#/data";
+import type { ExecuteContractWritesMutation } from "#/hooks";
 
 import { err, ok, type Result } from "neverthrow";
 import {
   isAddressEqual,
-  type Chain,
   type Hex,
   type PublicClient,
   type TransactionReceipt,
-  type WalletClient,
 } from "viem";
 
 import {
-  executeContractWrites,
   prepareCommitNameWrite,
   preparePermissionedResolverDeploymentWrite,
 } from "#/actions";
@@ -48,10 +46,9 @@ export interface CommitmentSubmissionSuccess {
 
 export interface SubmitRegistrationAttemptProps {
   attempt: StoredRegistrationAttempt;
-  chain: Chain;
+  executeWrites: ExecuteContractWritesMutation;
   network: EnsNetwork;
   publicClient: PublicClient;
-  walletClient: WalletClient;
   onProgress: (progress: CommitmentTransactionProgress) => Promise<void> | void;
   onSubmissionChange: (submission: RegistrationAttemptSubmission) => void;
 }
@@ -262,27 +259,21 @@ export async function submitRegistrationAttempt(
     }
   }
 
-  const result = await executeContractWrites(
-    props.walletClient,
-    props.publicClient,
-    {
+  let result: ExecuteContractWritesResult;
+  try {
+    result = await props.executeWrites({
       calls,
-      chain: props.chain,
       confirmation: "confirmed",
       onProgress: createProgressHandler(props),
       strategy: "auto",
       timeout: 120_000,
-    },
-  );
-  if (result.isErr()) {
-    if (
-      result.error === "ATOMIC_BATCH_FAILED" ||
-      result.error === "TRANSACTION_REVERTED"
-    ) {
+    });
+  } catch (error) {
+    if (error === "ATOMIC_BATCH_FAILED" || error === "TRANSACTION_REVERTED") {
       props.onSubmissionChange({ type: "prepared" });
     }
-    return err(result.error);
+    return err(error);
   }
 
-  return ok(buildSuccess(result.value));
+  return ok(buildSuccess(result));
 }

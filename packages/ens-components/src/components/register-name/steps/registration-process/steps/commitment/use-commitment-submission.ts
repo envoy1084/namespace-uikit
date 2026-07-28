@@ -25,6 +25,7 @@ import {
 import { reconcileRegistrationAttempt } from "#/components/register-name/steps/registration-process/steps/commitment/reconcile-registration-attempt";
 import { prepareRegistrationAttempt } from "#/components/register-name/steps/registration-process/steps/commitment/registration-attempt";
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
+import { useExecuteContractWrites } from "#/hooks";
 import { delay, parseRegistrationDuration } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
@@ -53,6 +54,7 @@ export function useCommitmentSubmission({
   const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const contractWrites = useExecuteContractWrites();
   const { switchChainAsync } = useSwitchChain();
   const {
     duration,
@@ -318,10 +320,9 @@ export function useCommitmentSubmission({
 
     const result = await submitRegistrationAttempt({
       attempt,
-      chain,
+      executeWrites: contractWrites.mutateAsync,
       network,
       publicClient,
-      walletClient,
       onProgress: handleProgress,
       onSubmissionChange: (submission) => update(attempt.id, { submission }),
     });

@@ -22,7 +22,7 @@ import { useNameRenewal } from "#/components/renew-name/context";
 import { emitNameRenewalEvent } from "#/components/renew-name/emit-event";
 import { submitNameRenewal } from "#/components/renew-name/steps/renewal-form/renewal-submission";
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
-import { useNameRenewalPaymentStatus } from "#/hooks";
+import { useExecuteContractWrites, useNameRenewalPaymentStatus } from "#/hooks";
 import { delay, resolvePaymentToken } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
@@ -50,6 +50,7 @@ export function useRenewalSubmission({
   const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const contractWrites = useExecuteContractWrites();
   const { switchChainAsync } = useSwitchChain();
   const { duration, events, input, messages, paymentTokenAddress, referrer } =
     useNameRenewal();
@@ -225,16 +226,14 @@ export function useRenewalSubmission({
 
     const result = await submitNameRenewal({
       account: submittingAccount,
-      chain,
+      executeWrites: contractWrites.mutateAsync,
       input,
       network,
       onProgress: handleProgress,
       payment: refreshedPayment.data,
       paymentToken,
-      publicClient,
       referrer,
       registrarAddress: contracts.ethRegistrar.address,
-      walletClient,
     });
     if (result.isErr()) {
       reportError(result.error, phaseRef.current, transactionHashRef.current);

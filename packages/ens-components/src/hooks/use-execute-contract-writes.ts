@@ -24,6 +24,10 @@ export type ExecuteContractWritesVariables = Omit<
   "chain"
 >;
 
+export type ExecuteContractWritesMutation = (
+  variables: ExecuteContractWritesVariables,
+) => Promise<ExecuteContractWritesResult>;
+
 export interface UseExecuteContractWritesParameters {
   mutation?: Omit<
     UseMutationOptions<

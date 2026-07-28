@@ -1,9 +1,4 @@
-import type {
-  Chain,
-  PublicClient,
-  TransactionReceipt,
-  WalletClient,
-} from "viem";
+import type { PublicClient, TransactionReceipt } from "viem";
 
 import type {
   ContractWriteProgress,
@@ -14,11 +9,10 @@ import type {
 import type { StoredRegistrationAttempt } from "#/components/register-name/hooks/use-registration-attempts";
 import type { RegistrationSuccessDetails } from "#/components/register-name/steps/registration-success";
 import type { EnsNetwork, EnsPaymentToken } from "#/data";
+import type { CommitmentStatus, ExecuteContractWritesMutation } from "#/hooks";
 
 import { err, ok, type Result } from "neverthrow";
 
-import { executeContractWrites } from "#/actions";
-import { readCommitmentStatus } from "#/components/register-name/steps/registration-process/steps/commitment/read-commitment-status";
 import {
   prepareRegistrationPaymentWrites,
   type PreparedRegistrationPaymentWrites,
@@ -52,14 +46,14 @@ export interface RegistrationPaymentSubmissionSuccess {
 
 export interface SubmitRegistrationPaymentProps {
   attempt: StoredRegistrationAttempt;
-  chain: Chain;
+  commitment: CommitmentStatus;
+  executeWrites: ExecuteContractWritesMutation;
   network: EnsNetwork;
   payment: RegistrationPaymentStatus;
   paymentToken: EnsPaymentToken;
   publicClient: PublicClient;
   l1ReverseRegistrarAddress: `0x${string}`;
   l2ReverseRegistrarAddress: `0x${string}`;
-  walletClient: WalletClient;
   onProgress?: (progress: ContractWriteProgress) => Promise<void> | void;
 }
 
@@ -188,14 +182,8 @@ export async function submitRegistrationPayment(
   props: SubmitRegistrationPaymentProps,
 ): Promise<Result<RegistrationPaymentSubmissionSuccess, unknown>> {
   const { attempt, network, payment, paymentToken, publicClient } = props;
-  const commitment = await readCommitmentStatus(publicClient, {
-    commitment: attempt.commitment,
-    network,
-    registrarAddress: attempt.registrarAddress,
-  });
-  if (commitment.isErr()) return err(commitment.error);
-  if (commitment.value.state !== "READY") {
-    return err(getCommitmentStateError(commitment.value.state));
+  if (props.commitment.state !== "READY") {
+    return err(getCommitmentStateError(props.commitment.state));
   }
 
   const writes = prepareRegistrationPaymentWrites({
@@ -209,12 +197,10 @@ export async function submitRegistrationPayment(
   if (writes.isErr()) return err(writes.error);
 
   const confirmedTransactions: SubmittedContractTransaction[] = [];
-  const execution = await executeContractWrites(
-    props.walletClient,
-    publicClient,
-    {
+  let execution;
+  try {
+    execution = await props.executeWrites({
       calls: writes.value.calls,
-      chain: props.chain,
       confirmation: "confirmed",
       onProgress: async (progress) => {
         if (progress.strategy !== "atomic" && progress.state === "confirmed") {
@@ -228,9 +214,8 @@ export async function submitRegistrationPayment(
       },
       strategy: "auto",
       timeout: 120_000,
-    },
-  );
-  if (execution.isErr()) {
+    });
+  } catch (error) {
     if (
       attempt.setPrimaryName &&
       getConfirmedWrite(confirmedTransactions, "register-name") !== undefined
@@ -238,19 +223,19 @@ export async function submitRegistrationPayment(
       return buildRegistrationSuccess(publicClient, {
         payment,
         paymentToken,
-        primaryNameError: execution.error,
+        primaryNameError: error,
         transactions: confirmedTransactions,
         writes: writes.value,
       });
     }
 
-    return err(execution.error);
+    return err(error);
   }
 
   return buildRegistrationSuccess(publicClient, {
     payment,
     paymentToken,
-    transactions: execution.value.transactions,
+    transactions: execution.transactions,
     writes: writes.value,
   });
 }

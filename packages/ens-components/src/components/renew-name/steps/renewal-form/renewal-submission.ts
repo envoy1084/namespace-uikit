@@ -1,10 +1,4 @@
-import type {
-  Chain,
-  Hex,
-  PublicClient,
-  TransactionReceipt,
-  WalletClient,
-} from "viem";
+import type { Hex, TransactionReceipt } from "viem";
 
 import type {
   ContractWriteProgress,
@@ -13,11 +7,11 @@ import type {
 } from "#/actions";
 import type { NameRenewalSuccessDetails } from "#/components/renew-name/types";
 import type { EnsNetwork, EnsPaymentToken } from "#/data";
+import type { ExecuteContractWritesMutation } from "#/hooks";
 
 import { err, ok, type Result } from "neverthrow";
 
 import {
-  executeContractWrites,
   preparePaymentTokenApprovalWrite,
   prepareRenewNameWrite,
 } from "#/actions";
@@ -38,16 +32,14 @@ export interface NameRenewalSubmissionSuccess {
 
 export interface SubmitNameRenewalProps {
   account: `0x${string}`;
-  chain: Chain;
+  executeWrites: ExecuteContractWritesMutation;
   input: string;
   network: EnsNetwork;
   onProgress?: (progress: ContractWriteProgress) => Promise<void> | void;
   payment: NameRenewalPaymentStatus;
   paymentToken: EnsPaymentToken;
-  publicClient: PublicClient;
   referrer: Hex;
   registrarAddress: `0x${string}`;
-  walletClient: WalletClient;
 }
 
 function getConfirmedWrite(
@@ -99,24 +91,23 @@ export async function submitNameRenewal(
   }
   calls.push(renewal.value);
 
-  const execution = await executeContractWrites(
-    props.walletClient,
-    props.publicClient,
-    {
+  let execution;
+  try {
+    execution = await props.executeWrites({
       calls: calls as [PreparedContractWrite, ...PreparedContractWrite[]],
-      chain: props.chain,
       confirmation: "confirmed",
       ...(props.onProgress === undefined
         ? {}
         : { onProgress: props.onProgress }),
       strategy: "auto",
       timeout: 120_000,
-    },
-  );
-  if (execution.isErr()) return err(execution.error);
+    });
+  } catch (error) {
+    return err(error);
+  }
 
   const confirmedRenewal = getConfirmedWrite(
-    execution.value.transactions,
+    execution.transactions,
     "renew-name",
   );
   if (confirmedRenewal === undefined) {
@@ -132,7 +123,7 @@ export async function submitNameRenewal(
     registrarAddress: props.registrarAddress,
   });
   const approval = getConfirmedWrite(
-    execution.value.transactions,
+    execution.transactions,
     "approve-payment-token",
   );
 

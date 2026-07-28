@@ -24,6 +24,7 @@ import {
   type ProfileUpdateSubmissionSuccess,
 } from "#/components/name-profile-editor/submission/profile-update-submission";
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
+import { useExecuteContractWrites, useNameResolver } from "#/hooks";
 import { delay } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
@@ -50,9 +51,18 @@ export function useProfileUpdateSubmission({
   onSuccess,
 }: UseProfileUpdateSubmissionProps) {
   const connection = useConnection();
-  const { chain, contracts, network } = useEnsConfig();
+  const { chain, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const contractWrites = useExecuteContractWrites();
+  const currentResolver = useNameResolver({
+    input: name,
+    query: {
+      enabled: false,
+      retry: (failureCount, error) =>
+        error === "CONTRACT_READ_FAILED" && failureCount < 3,
+    },
+  });
   const { switchChainAsync } = useSwitchChain();
   const [actionStatus, setActionStatus] =
     useState<ProfileUpdateActionStatus>("idle");
@@ -168,18 +178,28 @@ export function useProfileUpdateSubmission({
     };
 
     setActionStatus("preparing");
+    const resolverResult = await currentResolver.refetch();
+    if (resolverResult.isError || resolverResult.data === undefined) {
+      reportError(resolverResult.error ?? "CONTRACT_READ_FAILED");
+      setActionStatus("idle");
+      return;
+    }
+    if (!isAddressEqual(resolverResult.data.resolverAddress, resolverAddress)) {
+      reportError("RESOLVER_CHANGED");
+      setActionStatus("idle");
+      return;
+    }
+
     const result = await submitProfileUpdate({
       account: submissionAccount,
-      chain,
+      executeWrites: contractWrites.mutateAsync,
       input: name,
       network,
       onProgress: handleProgress,
       publicClient,
       resolverAddress,
       review,
-      universalResolverAddress: contracts.universalResolverV2.address,
       validateConnection,
-      walletClient,
     });
     if (result.isErr()) {
       reportError(result.error);

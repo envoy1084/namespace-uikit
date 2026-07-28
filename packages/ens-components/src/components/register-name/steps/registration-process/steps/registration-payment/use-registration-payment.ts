@@ -36,7 +36,11 @@ import {
 } from "#/components/register-name/steps/registration-process/steps/registration-payment/registration-payment-submission";
 import { useRegistrationPaymentToken } from "#/components/register-name/steps/registration-process/steps/registration-payment/use-registration-payment-token";
 import { TRANSACTION_PROGRESS_COMPLETION_DURATION_MS } from "#/components/transaction-progress";
-import { useRegistrationPaymentStatus } from "#/hooks";
+import {
+  useCommitmentStatus,
+  useExecuteContractWrites,
+  useRegistrationPaymentStatus,
+} from "#/hooks";
 import { delay, parseRegistrationDuration } from "#/lib/helpers";
 import { useEnsConfig } from "#/providers";
 
@@ -59,6 +63,7 @@ export function useRegistrationPayment({
   const { chain, contracts, network } = useEnsConfig();
   const publicClient = usePublicClient({ chainId: chain.id });
   const { data: walletClient } = useWalletClient({ chainId: chain.id });
+  const contractWrites = useExecuteContractWrites();
   const { switchChainAsync } = useSwitchChain();
   const { events, registrationAttemptId, setRegistrationAttemptId } =
     useNameRegistration();
@@ -81,6 +86,17 @@ export function useRegistrationPayment({
       : { registrarAddress: storedAttempt.registrarAddress }),
     query: {
       enabled: storedAttempt !== undefined && duration > 0n,
+      retry: (failureCount, error) =>
+        error === "CONTRACT_READ_FAILED" && failureCount < 3,
+    },
+  });
+  const commitment = useCommitmentStatus({
+    commitment: storedAttempt?.commitment,
+    ...(storedAttempt === undefined
+      ? {}
+      : { registrarAddress: storedAttempt.registrarAddress }),
+    query: {
+      enabled: false,
       retry: (failureCount, error) =>
         error === "CONTRACT_READ_FAILED" && failureCount < 3,
     },
@@ -296,10 +312,21 @@ export function useRegistrationPayment({
     }
 
     setActionStatus("refreshing");
-    const refreshedPayment = await payment.refetch();
+    const [refreshedPayment, refreshedCommitment] = await Promise.all([
+      payment.refetch(),
+      commitment.refetch(),
+    ]);
     if (refreshedPayment.isError || refreshedPayment.data === undefined) {
       reportError(
         refreshedPayment.error ?? "CONTRACT_READ_FAILED",
+        "registration",
+      );
+      setActionStatus("idle");
+      return;
+    }
+    if (refreshedCommitment.isError || refreshedCommitment.data === undefined) {
+      reportError(
+        refreshedCommitment.error ?? "CONTRACT_READ_FAILED",
         "registration",
       );
       setActionStatus("idle");
@@ -315,14 +342,14 @@ export function useRegistrationPayment({
 
     const result = await submitRegistrationPayment({
       attempt: storedAttempt,
-      chain,
+      commitment: refreshedCommitment.data,
+      executeWrites: contractWrites.mutateAsync,
       network,
       payment: refreshedPayment.data,
       paymentToken,
       publicClient,
       l1ReverseRegistrarAddress: contracts.l1ReverseRegistrar.address,
       l2ReverseRegistrarAddress: contracts.l2ReverseRegistrar.address,
-      walletClient,
       onProgress: handleProgress,
     });
     if (result.isErr()) {
