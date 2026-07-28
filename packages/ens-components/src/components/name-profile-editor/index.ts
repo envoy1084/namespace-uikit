@@ -11,8 +11,6 @@ export type {
   NameProfileEditorUploadHandlers,
   NameProfileMediaKind,
   NameProfileMediaUpload,
-} from "#/components/name-profile-editor/editor/types";
-export type {
   NameProfileAbiRecord,
   NameProfileAbiRecordChange,
   NameProfileAddressRecord,
