@@ -18,10 +18,7 @@ export function HomeFooter() {
         />
         <span>ENS Components</span>
       </a>
-      <Typography.Paragraph
-        className="text-left text-[#666] lg:text-center"
-        size="xs"
-      >
+      <Typography.Paragraph className="text-left text-[#666] lg:text-center" size="xs">
         Built by Namespace Ninjas 🥷
       </Typography.Paragraph>
       <Link

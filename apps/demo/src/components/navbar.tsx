@@ -1,7 +1,7 @@
 import { Navbar } from "@thenamespace/uikit";
 
-import { ConnectButton } from "@/components/connect-button";
-import { NamespaceLogo } from "@/components/icons/namespace";
+import { ConnectButton } from "./connect-button";
+import { NamespaceLogo } from "./icons/namespace";
 
 export function AppNavbar() {
   return (

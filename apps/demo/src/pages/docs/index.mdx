@@ -1,0 +1,59 @@
+---
+title: Introduction
+description: Install ENS Components and start integrating ENS v2 into a React application.
+---
+
+import { Card, Cards } from "vocs";
+
+# ENS Components
+
+ENS Components is a growing collection of React components, TanStack Query
+hooks, and typed contract actions for integrating ENS v2 into applications.
+
+## Install
+
+```bash
+npm install ens-components @tanstack/react-query@5.101.2 viem wagmi
+```
+
+Import the package stylesheet once at the application root:
+
+```css
+@import "ens-components/styles.css";
+```
+
+The application must provide Wagmi, TanStack Query, and `EnsProvider`. Start
+with the provider guide, then choose a component or use the lower-level hooks
+and actions to build a custom flow.
+
+<Cards>
+  <Card
+    title="Configure the provider"
+    description="Select the ENS v2 network and make its contracts available."
+    icon="settings"
+    to="/docs/providers/ens-provider"
+  />
+  <Card
+    title="Register a name"
+    description="Add the complete ENS v2 registration flow."
+    icon="badge-plus"
+    to="/docs/components/name-registration"
+  />
+  <Card
+    title="Use query hooks"
+    description="Read availability, pricing, profiles, resolvers, and permissions."
+    icon="braces"
+    to="/docs/hooks/use-name-availability"
+  />
+  <Card
+    title="Prepare contract calls"
+    description="Compose typed ENS reads and writes without using the components."
+    icon="blocks"
+    to="/docs/actions/read/contract-reads"
+  />
+</Cards>
+
+## Current network
+
+ENS v2 support currently targets the Sepolia testnet deployment. The
+`"mainnet"` network value is reserved but is not implemented yet.

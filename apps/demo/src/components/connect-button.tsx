@@ -10,8 +10,7 @@ import {
 } from "@thenamespace/uikit/icons";
 import { useDisconnect } from "wagmi";
 
-import { truncateAddress } from "@/lib/helpers";
-
+import { truncateAddress } from "../lib/helpers";
 import { WalletAvatar } from "./wallet-avatar";
 
 interface AccountDropdownProps {
@@ -68,10 +67,7 @@ function AccountDropdown({ address, onDisconnect }: AccountDropdownProps) {
             textValue="Disconnect"
             variant="danger"
           >
-            <HugeiconsIcon
-              className="text-danger size-4 shrink-0"
-              icon={LogoutSquare01Icon}
-            />
+            <HugeiconsIcon className="text-danger size-4 shrink-0" icon={LogoutSquare01Icon} />
             <Label>Disconnect</Label>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -85,14 +81,7 @@ export function ConnectButton() {
 
   return (
     <RainbowKitConnectButton.Custom>
-      {({
-        account,
-        authenticationStatus,
-        chain,
-        mounted,
-        openChainModal,
-        openConnectModal,
-      }) => {
+      {({ account, authenticationStatus, chain, mounted, openChainModal, openConnectModal }) => {
         const ready = mounted && authenticationStatus !== "loading";
         const connected =
           ready &&
@@ -103,9 +92,7 @@ export function ConnectButton() {
         return (
           <div
             aria-hidden={!ready}
-            className={
-              ready ? undefined : "pointer-events-none opacity-0 select-none"
-            }
+            className={ready ? undefined : "pointer-events-none opacity-0 select-none"}
           >
             {!connected ? (
               <Button onPress={openConnectModal}>Connect wallet</Button>
@@ -114,10 +101,7 @@ export function ConnectButton() {
                 Wrong network
               </Button>
             ) : (
-              <AccountDropdown
-                address={account.address}
-                onDisconnect={disconnect}
-              />
+              <AccountDropdown address={account.address} onDisconnect={disconnect} />
             )}
           </div>
         );

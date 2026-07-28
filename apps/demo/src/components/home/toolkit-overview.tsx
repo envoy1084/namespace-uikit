@@ -1,12 +1,11 @@
 import { Surface, Typography } from "@thenamespace/uikit";
 
-import { SectionLabel } from "@/components/home/section-label";
+import { SectionLabel } from "./section-label";
 
 const toolkitLayers = [
   {
     label: "Components",
-    description:
-      "Complete ENS flows with the difficult states already handled.",
+    description: "Complete ENS flows with the difficult states already handled.",
   },
   {
     label: "Hooks",
@@ -20,10 +19,7 @@ const toolkitLayers = [
 
 export function ToolkitOverview() {
   return (
-    <section
-      aria-labelledby="toolkit-title"
-      className="bg-[#1f1f1f] text-white"
-    >
+    <section aria-labelledby="toolkit-title" className="bg-[#1f1f1f] text-white">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[minmax(15rem,0.7fr)_minmax(0,1.3fr)] lg:gap-[4.5rem] lg:px-12 lg:py-28">
         <div>
           <div className="flex items-center gap-2.5">

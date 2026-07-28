@@ -128,7 +128,7 @@ Use the inline presentation when the flow should remain in the page layout:
 ```
 
 See
-[NameRegistration](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-registration.md)
+[NameRegistration](https://ens-components.vercel.app/docs/components/name-registration)
 for customization, lifecycle events, defaults, and flow behavior.
 
 ## Name renewal
@@ -144,7 +144,7 @@ export function RenewName() {
 ```
 
 Use `presentation="inline"` to place the flow directly in a page. See
-[NameRenewal](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-renewal.md)
+[NameRenewal](https://ens-components.vercel.app/docs/components/name-renewal)
 for duration controls, lifecycle events, slots, and messages.
 
 ## Profile records
@@ -154,99 +154,96 @@ Render the permission-aware profile editor:
 ```tsx
 import { NameProfileEditor, emptyNameProfileFormValues } from "ens-components";
 
-<NameProfileEditor
-  initialRecords={emptyNameProfileFormValues}
-  name="example.eth"
-/>;
+<NameProfileEditor initialRecords={emptyNameProfileFormValues} name="example.eth" />;
 ```
 
 The application supplies the initial record snapshot. The component discovers
 the resolver, checks the connected account's ENS v2 record permissions,
 reviews changes, and submits one atomic resolver multicall. See
-[NameProfileEditor](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-profile-editor.md).
+[NameProfileEditor](https://ens-components.vercel.app/docs/components/name-profile-editor).
 
 ## Documentation
 
 ### Components
 
-- [NameRegistration](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-registration.md)
-- [NameRenewal](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-renewal.md)
-- [NameProfileEditor](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-profile-editor.md)
-- [TransactionProgress](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/transaction-progress.md)
+- [NameRegistration](https://ens-components.vercel.app/docs/components/name-registration)
+- [NameRenewal](https://ens-components.vercel.app/docs/components/name-renewal)
+- [NameProfileEditor](https://ens-components.vercel.app/docs/components/name-profile-editor)
+- [TransactionProgress](https://ens-components.vercel.app/docs/components/transaction-progress)
 
 ### Providers
 
-- [EnsProvider](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/providers/ens-provider.md)
+- [EnsProvider](https://ens-components.vercel.app/docs/providers/ens-provider)
 
 ### Hooks
 
 #### Registration
 
-- [useNameAvailability](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-availability.md)
-- [useNamePrice](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-price.md)
-- [useRegistrationPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-registration-payment-status.md)
-- [useCommitmentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-commitment-status.md)
-- [useCommitName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-commit-name.md)
-- [useRegisterName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-register-name.md)
+- [useNameAvailability](https://ens-components.vercel.app/docs/hooks/use-name-availability)
+- [useNamePrice](https://ens-components.vercel.app/docs/hooks/use-name-price)
+- [useRegistrationPaymentStatus](https://ens-components.vercel.app/docs/hooks/use-registration-payment-status)
+- [useCommitmentStatus](https://ens-components.vercel.app/docs/hooks/use-commitment-status)
+- [useCommitName](https://ens-components.vercel.app/docs/hooks/use-commit-name)
+- [useRegisterName](https://ens-components.vercel.app/docs/hooks/use-register-name)
 
 #### Renewal
 
-- [useNameRenewalPrice](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-renewal-price.md)
-- [useNameRenewalPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-renewal-payment-status.md)
-- [useRenewName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-renew-name.md)
+- [useNameRenewalPrice](https://ens-components.vercel.app/docs/hooks/use-name-renewal-price)
+- [useNameRenewalPaymentStatus](https://ens-components.vercel.app/docs/hooks/use-name-renewal-payment-status)
+- [useRenewName](https://ens-components.vercel.app/docs/hooks/use-renew-name)
 
 #### Resolver and profile
 
-- [useNameProfile](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-profile.md)
-- [useNameRecords](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-records.md)
-- [useNameProfilePermissions](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-profile-permissions.md)
-- [useNameResolver](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-resolver.md)
-- [useResolverCapabilities](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-resolver-capabilities.md)
-- [useDeployPermissionedResolver](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-deploy-permissioned-resolver.md)
-- [useUpdateProfileRecords](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-update-profile-records.md)
-- [useSetAddressRecord](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-set-address-record.md)
-- [useSetPrimaryName](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-set-primary-name.md)
+- [useNameProfile](https://ens-components.vercel.app/docs/hooks/use-name-profile)
+- [useNameRecords](https://ens-components.vercel.app/docs/hooks/use-name-records)
+- [useNameProfilePermissions](https://ens-components.vercel.app/docs/hooks/use-name-profile-permissions)
+- [useNameResolver](https://ens-components.vercel.app/docs/hooks/use-name-resolver)
+- [useResolverCapabilities](https://ens-components.vercel.app/docs/hooks/use-resolver-capabilities)
+- [useDeployPermissionedResolver](https://ens-components.vercel.app/docs/hooks/use-deploy-permissioned-resolver)
+- [useUpdateProfileRecords](https://ens-components.vercel.app/docs/hooks/use-update-profile-records)
+- [useSetAddressRecord](https://ens-components.vercel.app/docs/hooks/use-set-address-record)
+- [useSetPrimaryName](https://ens-components.vercel.app/docs/hooks/use-set-primary-name)
 
 #### Payments and transactions
 
-- [useApprovePaymentToken](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-approve-payment-token.md)
-- [useWalletCapabilities](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-wallet-capabilities.md)
-- [useExecuteContractWrites](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-execute-contract-writes.md)
-- [useContractWritesStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-contract-writes-status.md)
+- [useApprovePaymentToken](https://ens-components.vercel.app/docs/hooks/use-approve-payment-token)
+- [useWalletCapabilities](https://ens-components.vercel.app/docs/hooks/use-wallet-capabilities)
+- [useExecuteContractWrites](https://ens-components.vercel.app/docs/hooks/use-execute-contract-writes)
+- [useContractWritesStatus](https://ens-components.vercel.app/docs/hooks/use-contract-writes-status)
 
 ### Icons
 
-- [ENS icons and icon resolvers](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/icons/icons.md)
+- [ENS icons and icon resolvers](https://ens-components.vercel.app/docs/icons/icons)
 
 ### Actions
 
 #### Reads
 
-- [Prepared reads and executors](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/contract-reads.md)
-- [prepareNameAvailabilityRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-availability.md)
-- [prepareNamePriceRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-price.md)
-- [prepareRegistrationPaymentStatusRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-registration-payment-status.md)
-- [prepareNameRenewalPriceRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-renewal-price.md)
-- [prepareNameRenewalPaymentStatusRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-renewal-payment-status.md)
-- [prepareCommitmentStatusRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-commitment-status.md)
-- [preparePermissionedResolverVerificationRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-permissioned-resolver-verification.md)
-- [prepareNameResolverRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-resolver.md)
-- [prepareNameRecordsRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-records.md)
-- [prepareNameProfileDiscoveryRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-profile-discovery.md)
-- [preparePermissionedResolverSupportRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-permissioned-resolver-support.md)
-- [prepareNameProfilePermissionsRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-profile-permissions.md)
+- [Prepared reads and executors](https://ens-components.vercel.app/docs/actions/read/contract-reads)
+- [prepareNameAvailabilityRead](https://ens-components.vercel.app/docs/actions/read/prepare-read-name-availability)
+- [prepareNamePriceRead](https://ens-components.vercel.app/docs/actions/read/prepare-read-name-price)
+- [prepareRegistrationPaymentStatusRead](https://ens-components.vercel.app/docs/actions/read/prepare-read-registration-payment-status)
+- [prepareNameRenewalPriceRead](https://ens-components.vercel.app/docs/actions/read/prepare-read-name-renewal-price)
+- [prepareNameRenewalPaymentStatusRead](https://ens-components.vercel.app/docs/actions/read/prepare-read-name-renewal-payment-status)
+- [prepareCommitmentStatusRead](https://ens-components.vercel.app/docs/actions/read/prepare-read-commitment-status)
+- [preparePermissionedResolverVerificationRead](https://ens-components.vercel.app/docs/actions/read/prepare-read-permissioned-resolver-verification)
+- [prepareNameResolverRead](https://ens-components.vercel.app/docs/actions/read/prepare-read-name-resolver)
+- [prepareNameRecordsRead](https://ens-components.vercel.app/docs/actions/read/prepare-read-name-records)
+- [prepareNameProfileDiscoveryRead](https://ens-components.vercel.app/docs/actions/read/prepare-read-name-profile-discovery)
+- [preparePermissionedResolverSupportRead](https://ens-components.vercel.app/docs/actions/read/prepare-read-permissioned-resolver-support)
+- [prepareNameProfilePermissionsRead](https://ens-components.vercel.app/docs/actions/read/prepare-read-name-profile-permissions)
 
 #### Writes
 
-- [prepareCommitNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-commit-name.md)
-- [preparePaymentTokenApprovalWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-payment-token-approval.md)
-- [prepareRegisterNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-register-name.md)
-- [prepareRenewNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-renew-name.md)
-- [prepareSetAddressRecordWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-set-address-record.md)
-- [prepareSetL2PrimaryNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-set-l2-primary-name.md)
-- [prepareSetL1PrimaryNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-set-l1-primary-name.md)
-- [preparePermissionedResolverDeploymentWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-permissioned-resolver-deployment.md)
-- [prepareProfileRecordsWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-profile-records.md)
-- [executeContractWrites](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/execute-contract-writes.md)
-- [supportsAtomicBatchCalls](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/supports-atomic-batch-calls.md)
-- [getContractCallsStatus and waitForContractCalls](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/contract-write-status.md)
+- [prepareCommitNameWrite](https://ens-components.vercel.app/docs/actions/write/prepare-write-commit-name)
+- [preparePaymentTokenApprovalWrite](https://ens-components.vercel.app/docs/actions/write/prepare-write-payment-token-approval)
+- [prepareRegisterNameWrite](https://ens-components.vercel.app/docs/actions/write/prepare-write-register-name)
+- [prepareRenewNameWrite](https://ens-components.vercel.app/docs/actions/write/prepare-write-renew-name)
+- [prepareSetAddressRecordWrite](https://ens-components.vercel.app/docs/actions/write/prepare-write-set-address-record)
+- [prepareSetL2PrimaryNameWrite](https://ens-components.vercel.app/docs/actions/write/prepare-write-set-l2-primary-name)
+- [prepareSetL1PrimaryNameWrite](https://ens-components.vercel.app/docs/actions/write/prepare-write-set-l1-primary-name)
+- [preparePermissionedResolverDeploymentWrite](https://ens-components.vercel.app/docs/actions/write/prepare-write-permissioned-resolver-deployment)
+- [prepareProfileRecordsWrite](https://ens-components.vercel.app/docs/actions/write/prepare-write-profile-records)
+- [executeContractWrites](https://ens-components.vercel.app/docs/actions/write/execute-contract-writes)
+- [supportsAtomicBatchCalls](https://ens-components.vercel.app/docs/actions/write/supports-atomic-batch-calls)
+- [getContractCallsStatus and waitForContractCalls](https://ens-components.vercel.app/docs/actions/write/contract-write-status)

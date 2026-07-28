@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
 
-import {
-  Button,
-  Input,
-  Label,
-  Spinner,
-  Surface,
-  TextField,
-  Typography,
-} from "@thenamespace/uikit";
+import { Button, Input, Label, Spinner, Surface, TextField, Typography } from "@thenamespace/uikit";
 import { ArrowUpRight01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { formatError, NameProfileEditor } from "ens-components";
 import { useNameProfile } from "ens-components/hooks";
 
-import { SectionLabel } from "@/components/home/section-label";
+import { RegistrationHeaderGraphic, RegistrationSuccessGraphic } from "../component-graphics";
+import { SectionLabel } from "./section-label";
+
+const profileGraphics = {
+  reviewGraphic: <RegistrationHeaderGraphic />,
+  successGraphic: <RegistrationSuccessGraphic />,
+};
+const profileDialogSlots = {
+  ...profileGraphics,
+  trigger: (
+    <Button className="mt-4" size="lg">
+      Open dialog demo
+      <HugeiconsIcon aria-hidden icon={ArrowUpRight01Icon} size={18} />
+    </Button>
+  ),
+};
 
 function formatDemoName(value: string): string {
   const name = value.trim();
@@ -75,18 +82,9 @@ export function ProfileEditorShowcase() {
           Edit profile, social, address, and website records in one update.
         </Typography.Paragraph>
 
-        <TextField
-          fullWidth
-          className="mt-7"
-          value={nameInput}
-          onChange={setNameInput}
-        >
+        <TextField fullWidth className="mt-7" value={nameInput} onChange={setNameInput}>
           <Label className="text-sm">ENS name</Label>
-          <Input
-            className="mt-2 ring-inset"
-            placeholder="richard"
-            variant="secondary"
-          />
+          <Input className="mt-2 ring-inset" placeholder="richard" variant="secondary" />
         </TextField>
 
         {profileData === undefined ? (
@@ -102,18 +100,7 @@ export function ProfileEditorShowcase() {
             initialRecords={profileData.records}
             name={profileData.name}
             resolverAddress={profileData.resolverAddress}
-            slots={{
-              trigger: (
-                <Button className="mt-4" size="lg">
-                  Open dialog demo
-                  <HugeiconsIcon
-                    aria-hidden
-                    icon={ArrowUpRight01Icon}
-                    size={18}
-                  />
-                </Button>
-              ),
-            }}
+            slots={profileDialogSlots}
           />
         )}
       </div>
@@ -121,16 +108,15 @@ export function ProfileEditorShowcase() {
       <div className="mx-auto w-full max-w-md">
         {profileData === undefined ? (
           <Surface className="flex min-h-[44rem] w-full items-center justify-center rounded-3xl">
-            <div
+            <output
               aria-live="polite"
               className="flex max-w-xs flex-col items-center gap-3 px-6 text-center"
-              role="status"
             >
               {isProfileLoading ? <Spinner size="sm" /> : null}
               <Typography.Paragraph color="muted" size="sm">
                 {statusMessage}
               </Typography.Paragraph>
-            </div>
+            </output>
           </Surface>
         ) : (
           <NameProfileEditor
@@ -138,6 +124,7 @@ export function ProfileEditorShowcase() {
             name={profileData.name}
             presentation="inline"
             resolverAddress={profileData.resolverAddress}
+            slots={profileGraphics}
           />
         )}
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -8,6 +8,7 @@ import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { EnsProvider } from "ens-components";
 import { WagmiProvider } from "wagmi";
 
+import { wagmiConfig } from "../lib/wagmi";
 import {
   HomeFooter,
   HomeHero,
@@ -15,9 +16,8 @@ import {
   RegistrationShowcase,
   RenewalShowcase,
   ToolkitOverview,
-} from "@/components/home";
-import { AppNavbar } from "@/components/navbar";
-import { wagmiConfig } from "@/lib/wagmi";
+} from "./home";
+import { AppNavbar } from "./navbar";
 
 const ensConfig = { network: "testnet" } as const;
 const lightColorScheme = { colorScheme: "light" } as const;
@@ -25,14 +25,36 @@ const lightColorScheme = { colorScheme: "light" } as const;
 export function HomePage() {
   const [queryClient] = useState(() => new QueryClient());
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const root = document.documentElement;
     const previousColorScheme = root.style.colorScheme;
+    const previousTheme = root.getAttribute("data-vocs-theme");
 
-    root.style.colorScheme = "light";
+    const applyLightScheme = () => {
+      if (root.style.colorScheme !== "light") {
+        root.style.colorScheme = "light";
+      }
+      if (root.getAttribute("data-vocs-theme") !== "light") {
+        root.setAttribute("data-vocs-theme", "light");
+      }
+    };
+
+    applyLightScheme();
+
+    const observer = new MutationObserver(applyLightScheme);
+    observer.observe(root, {
+      attributeFilter: ["data-vocs-theme", "style"],
+      attributes: true,
+    });
 
     return () => {
+      observer.disconnect();
       root.style.colorScheme = previousColorScheme;
+      if (previousTheme === null) {
+        root.removeAttribute("data-vocs-theme");
+      } else {
+        root.setAttribute("data-vocs-theme", previousTheme);
+      }
     };
   }, []);
 

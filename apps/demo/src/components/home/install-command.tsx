@@ -1,13 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Button, ButtonGroup } from "@thenamespace/uikit";
-import {
-  Copy01Icon,
-  HugeiconsIcon,
-  Tick02Icon,
-} from "@thenamespace/uikit/icons";
+import { Copy01Icon, HugeiconsIcon, Tick02Icon } from "@thenamespace/uikit/icons";
 
 const installCommand = "npm install ens-components";
 
@@ -22,7 +18,7 @@ export function InstallCommand() {
     [],
   );
 
-  const handleCopy = async () => {
+  const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(installCommand);
       setIsCopied(true);
@@ -31,19 +27,11 @@ export function InstallCommand() {
     } catch {
       setIsCopied(false);
     }
-  };
+  }, []);
 
   return (
-    <ButtonGroup
-      className="mt-8 w-full max-w-[20rem]"
-      fullWidth
-      size="lg"
-      variant="secondary"
-    >
-      <Button
-        aria-label={`Copy ${installCommand}`}
-        onPress={() => void handleCopy()}
-      >
+    <ButtonGroup className="mt-8 w-full max-w-[20rem]" fullWidth size="lg" variant="secondary">
+      <Button aria-label={`Copy ${installCommand}`} onPress={handleCopy}>
         <span className="w-full truncate text-start font-mono text-sm sm:text-[15px]">
           {installCommand}
         </span>
@@ -51,14 +39,10 @@ export function InstallCommand() {
       <Button
         aria-label={`${isCopied ? "Copied" : "Copy"} ${installCommand}`}
         isIconOnly
-        onPress={() => void handleCopy()}
+        onPress={handleCopy}
       >
         <ButtonGroup.Separator />
-        <HugeiconsIcon
-          aria-hidden
-          icon={isCopied ? Tick02Icon : Copy01Icon}
-          size={16}
-        />
+        <HugeiconsIcon aria-hidden icon={isCopied ? Tick02Icon : Copy01Icon} size={16} />
       </Button>
     </ButtonGroup>
   );

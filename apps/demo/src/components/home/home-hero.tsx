@@ -1,6 +1,6 @@
 import { Typography } from "@thenamespace/uikit";
 
-import { InstallCommand } from "@/components/home/install-command";
+import { InstallCommand } from "./install-command";
 
 export function HomeHero() {
   return (
