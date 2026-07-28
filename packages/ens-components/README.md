@@ -10,6 +10,7 @@ actions for integrating ENS v2 into React applications.
 
 - Complete resolver, commit, wait, approve, register, and primary-name flow
 - Complete ERC-20 name renewal flow
+- Permission-aware ENS profile record editor
 - Configured payment-token selection with resumable state
 - Dialog and inline registration presentations
 - TanStack Query hooks for availability, pricing, and payment status
@@ -130,12 +131,28 @@ Use `presentation="inline"` to place the flow directly in a page. See
 [NameRenewal](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-renewal.md)
 for duration controls, lifecycle events, slots, and messages.
 
+## Profile records
+
+Render the permission-aware profile editor:
+
+```tsx
+import { NameProfileEditor } from "ens-components";
+
+<NameProfileEditor initialRecords={records} name="example.eth" />;
+```
+
+The application supplies the initial record snapshot. The component discovers
+the resolver, checks the connected account's ENS v2 record permissions,
+reviews changes, and submits one atomic resolver multicall. See
+[NameProfileEditor](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-profile-editor.md).
+
 ## Documentation
 
 ### Components
 
 - [NameRegistration](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-registration.md)
 - [NameRenewal](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-renewal.md)
+- [NameProfileEditor](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/name-profile-editor.md)
 - [TransactionProgress](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/components/transaction-progress.md)
 
 ### Providers
@@ -149,6 +166,7 @@ for duration controls, lifecycle events, slots, and messages.
 - [useRegistrationPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-registration-payment-status.md)
 - [useNameRenewalPrice](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-renewal-price.md)
 - [useNameRenewalPaymentStatus](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-renewal-payment-status.md)
+- [useNameProfilePermissions](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/hooks/use-name-profile-permissions.md)
 
 ### Actions
 
@@ -162,6 +180,9 @@ for duration controls, lifecycle events, slots, and messages.
 - [prepareNameRenewalPaymentStatusRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-renewal-payment-status.md)
 - [prepareCommitmentStatusRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-commitment-status.md)
 - [preparePermissionedResolverVerificationRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-permissioned-resolver-verification.md)
+- [prepareNameResolverRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-resolver.md)
+- [preparePermissionedResolverSupportRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-permissioned-resolver-support.md)
+- [prepareNameProfilePermissionsRead](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/read/prepare-read-name-profile-permissions.md)
 
 #### Writes
 
@@ -173,6 +194,7 @@ for duration controls, lifecycle events, slots, and messages.
 - [prepareSetL2PrimaryNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-set-l2-primary-name.md)
 - [prepareSetL1PrimaryNameWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-set-l1-primary-name.md)
 - [preparePermissionedResolverDeploymentWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-permissioned-resolver-deployment.md)
+- [prepareProfileRecordsWrite](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/prepare-write-profile-records.md)
 - [executeContractWrites](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/execute-contract-writes.md)
 - [supportsAtomicBatchCalls](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/supports-atomic-batch-calls.md)
 - [getContractCallsStatus and waitForContractCalls](https://github.com/thenamespace/uikit/blob/main/packages/ens-components/docs/actions/write/contract-write-status.md)
