@@ -245,6 +245,10 @@ export function ProfileEditor({
       <Form
         className="w-full"
         onSubmit={(event) => {
+          if (!canContinue) {
+            event.preventDefault();
+            return;
+          }
           void editor.form.handleSubmit(() => setView("diff"))(event);
         }}
       >
