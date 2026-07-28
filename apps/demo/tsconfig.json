@@ -1,5 +1,5 @@
 {
-  "extends": "klarity/tsconfig/app/astro",
+  "extends": "klarity/tsconfig/app/vite",
   "compilerOptions": {
     "customConditions": ["@thenamespace/source"],
     "jsx": "react-jsx",
@@ -7,6 +7,6 @@
       "#/*": ["../../packages/ens-components/src/*"],
       "@/*": ["./src/*"]
     },
-    "types": ["astro/client", "node"]
+    "types": ["node", "vite/client"]
   }
 }

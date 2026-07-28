@@ -5,10 +5,7 @@ import { NamespaceLogo } from "@/components/icons/namespace";
 
 export function AppNavbar() {
   return (
-    <Navbar
-      className="border-foreground/12 border-b bg-[#f4f4f4]"
-      maxWidth="xl"
-    >
+    <Navbar className="border-foreground/12 border-b bg-[#f4f4f4]" maxWidth="xl">
       <Navbar.Header className="px-4 sm:px-6">
         <Navbar.Brand>
           <a
@@ -25,9 +22,7 @@ export function AppNavbar() {
         <Navbar.Spacer />
         <Navbar.Content className="mr-2 hidden lg:flex">
           <Navbar.Item href="#playground">Components</Navbar.Item>
-          <Navbar.Item href="https://github.com/thenamespace/uikit/tree/main/packages/ens-components">
-            Docs
-          </Navbar.Item>
+          <Navbar.Item href="/docs">Docs</Navbar.Item>
         </Navbar.Content>
         <ConnectButton />
       </Navbar.Header>

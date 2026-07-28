@@ -7,9 +7,11 @@ packages:
   - "packages/*"
 allowBuilds:
   "@parcel/watcher": false
+  es5-ext: false
   esbuild: true
   lefthook: true
   sharp: true
+  vue-demi: false
 catalog:
   "@heroui/react": "3.2.1"
   "@heroui/styles": "3.2.1"
