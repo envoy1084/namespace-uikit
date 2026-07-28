@@ -53,7 +53,10 @@ function removeFromSet<T>(values: ReadonlySet<T>, value: T): Set<T> {
   return next;
 }
 
-export function useProfileEditorForm(initialRecords: NameProfileFormValues) {
+export function useProfileEditorForm(
+  initialRecords: NameProfileFormValues,
+  resetVersion = 0,
+) {
   const defaultValues = useMemo(
     () => normalizedInitialRecords(initialRecords),
     [initialRecords],
@@ -117,10 +120,12 @@ export function useProfileEditorForm(initialRecords: NameProfileFormValues) {
 
   useEffect(() => {
     form.reset(defaultValues);
+    setActiveSection("general");
     setActiveDefinitionIds(createInitialActiveDefinitionIds(defaultValues));
     setCustomAddressFieldIds(new Set());
     setCustomTextFieldIds(new Set());
-  }, [defaultValues, form]);
+    setSearch("");
+  }, [defaultValues, form, resetVersion]);
 
   useEffect(() => {
     setCustomAddressFieldIds((current) => {

@@ -175,9 +175,11 @@ export function ProfileDiffScreen({
             {buttonLabel}
           </Button>
         )}
-        <span aria-live="polite" className="sr-only" id={updateStatusId}>
-          {buttonLabel}
-        </span>
+        {isConfirming ? null : (
+          <span aria-live="polite" className="sr-only" id={updateStatusId}>
+            {buttonLabel}
+          </span>
+        )}
 
         {error === undefined ? null : (
           <Typography.Paragraph

@@ -72,7 +72,7 @@ export function ProfileEditor({
   const [successfulUpdate, setSuccessfulUpdate] =
     useState<Parameters<typeof ProfileUpdateSuccess>[0]["update"]>();
   const lastPermissionErrorRef = useRef<unknown>(undefined);
-  const editor = useProfileEditorForm(initialRecords);
+  const editor = useProfileEditorForm(initialRecords, resetVersion);
   const media = useProfileMedia({
     appendText: editor.appendText,
     form: editor.form,
