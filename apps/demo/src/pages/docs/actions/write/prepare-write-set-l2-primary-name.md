@@ -1,34 +1,44 @@
+---
+title: prepareSetL2PrimaryNameWrite
+description: Prepare an ENS v2 reverse-name update.
+---
+
 # prepareSetL2PrimaryNameWrite
 
-Prepares an ENS v2 `L2ReverseRegistrar.setName(string)` write. It does not
-submit a transaction.
+Prepares `L2ReverseRegistrar.setName(string)`.
+
+## Import
 
 ```ts
 import { prepareSetL2PrimaryNameWrite } from "ens-components/actions";
+```
 
+## Usage
+
+```ts
 const prepared = prepareSetL2PrimaryNameWrite({
   account,
   input: "example.eth",
   l2ReverseRegistrarAddress,
-  network: "testnet",
 });
 ```
 
-## Props
+## Parameters
 
-| Prop                        | Type                     | Description                                    |
-| --------------------------- | ------------------------ | ---------------------------------------------- |
-| `account`                   | `Address`                | Wallet account whose primary name is updated.  |
-| `input`                     | `string`                 | ENS name or `.eth` label to set as primary.    |
-| `l2ReverseRegistrarAddress` | `Address`                | Deployed ENS v2 reverse registrar address.     |
-| `network`                   | `"mainnet" \| "testnet"` | Network associated with the reverse registrar. |
+```ts
+interface PrepareSetL2PrimaryNameWriteParameters {
+  account: Address;
+  input: string | null | undefined;
+  l2ReverseRegistrarAddress: Address;
+}
+```
 
 `setName(string)` derives the address being named from `msg.sender`. The stable
 write kind is `set-l2-primary-name`.
 
-When setting an Ethereum primary name, compose this write after
-`prepareSetAddressRecordWrite` and before
-`prepareSetL1PrimaryNameWrite`.
+## Return Type
+
+`Result<PreparedSetL2PrimaryNameWrite, PrepareSetL2PrimaryNameWriteError>`
 
 ## Errors
 

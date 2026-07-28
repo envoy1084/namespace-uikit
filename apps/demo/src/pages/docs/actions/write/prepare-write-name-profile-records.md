@@ -1,8 +1,20 @@
+---
+title: prepareNameProfileRecordsWrite
+description: Prepare and simulate an ENS profile record multicall.
+---
+
 # prepareNameProfileRecordsWrite
 
-Encodes profile record changes into one atomic ENS v2
-`multicallWithNodeCheck` transaction and simulates it from the supplied
-account.
+Encodes profile changes into one `multicallWithNodeCheck` request and simulates
+it from the supplied account.
+
+## Import
+
+```ts
+import { prepareNameProfileRecordsWrite } from "ens-components/actions";
+```
+
+## Usage
 
 ```ts
 const prepared = await prepareNameProfileRecordsWrite(publicClient, {
@@ -22,12 +34,27 @@ if (prepared.isOk()) {
 }
 ```
 
+## Parameters
+
+```ts
+interface PrepareNameProfileRecordsWriteParameters {
+  account: Address;
+  changes: readonly NameProfileRecordChange[];
+  input: string | null | undefined;
+  resolverAddress: Address;
+}
+```
+
 `changes` accepts every `NameProfileRecordChange` variant: text, address,
 contenthash, ABI, data, interface, name, and public key. A `null` value removes
 the corresponding record.
 
 Simulation verifies the exact encoded calls, account permissions, resolver,
 and node before a wallet prompt is opened.
+
+## Return Type
+
+`ResultAsync<PreparedNameProfileRecordsWrite, PrepareNameProfileRecordsWriteError>`
 
 ## Errors
 

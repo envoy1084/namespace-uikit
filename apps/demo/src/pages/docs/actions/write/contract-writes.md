@@ -5,29 +5,28 @@ description: Typed contract-write plans used by ENS Components executors.
 
 # Contract Writes
 
-`PreparedContractWrite` contains a Viem contract request and operation
-metadata.
+`PreparedContractWrite` is an immutable, validated execution plan.
 
 ```ts
-interface PreparedContractWrite<abi, functionName, metadata> {
-  readonly request: {
-    readonly abi: abi;
-    readonly account: Address;
-    readonly address: Address;
-    readonly args: readonly unknown[];
-    readonly functionName: functionName;
-    readonly value?: bigint;
+interface PreparedContractWrite<TRequest, TKind, TMetadata> {
+  account: Address;
+  call: {
+    data: Hex;
+    to: Address;
+    value: bigint;
   };
-  readonly meta: metadata;
+  kind: TKind;
+  metadata: TMetadata;
+  request: TRequest;
 }
 ```
 
-Prepared writes are immutable execution plans. Compose them in the required
-order, then pass the array to
+Compose prepared writes in dependency order, then pass the non-empty array to
 [`executeContractWrites`](/docs/actions/write/execute-contract-writes).
 
 ```ts
 const calls = [approval.value, registration.value] as const;
 ```
 
-All calls in one execution must use the same account and chain.
+All calls in one execution must use the same account. The executor receives
+the chain separately.

@@ -1,22 +1,51 @@
+---
+title: prepareRenewNameWrite
+description: Prepare an ENS v2 .eth renewal.
+---
+
 # prepareRenewNameWrite
 
-Prepares an ENS v2 `ETHRegistrar.renew` call for a second-level `.eth` name.
+Prepares `ETHRegistrar.renew` for a second-level `.eth` name.
+
+## Import
+
+```ts
+import { prepareRenewNameWrite } from "ens-components/actions";
+```
+
+## Usage
 
 ```ts
 const renewal = prepareRenewNameWrite({
   account,
   duration: 31_557_600n,
   input: "example.eth",
-  network: "testnet",
   paymentTokenAddress,
   referrer: zeroHash,
   registrarAddress,
 });
 ```
 
+## Parameters
+
+```ts
+interface PrepareRenewNameWriteParameters {
+  account: Address;
+  duration: bigint;
+  input: string | null | undefined;
+  paymentTokenAddress: Address;
+  referrer: Hex;
+  registrarAddress: Address;
+}
+```
+
 The account pays for the renewal but does not need to own the name. `duration`
 is added to the current onchain expiry. Execute the prepared write with
 `executeContractWrites`.
+
+## Return Type
+
+`Result<PreparedRenewNameWrite, PrepareRenewNameWriteError | ParseNameInputError>`
 
 ## Errors
 

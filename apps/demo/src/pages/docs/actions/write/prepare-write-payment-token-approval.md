@@ -1,19 +1,45 @@
+---
+title: preparePaymentTokenApprovalWrite
+description: Prepare an ERC-20 payment-token approval.
+---
+
 # preparePaymentTokenApprovalWrite
 
-Prepares an ERC-20 approval for any payment-token spender.
+Validates and prepares an ERC-20 allowance write.
+
+## Import
+
+```ts
+import { preparePaymentTokenApprovalWrite } from "ens-components/actions";
+```
+
+## Usage
 
 ```ts
 const approval = preparePaymentTokenApprovalWrite({
   account,
   amount,
-  network: "testnet",
   paymentTokenAddress,
   spenderAddress: registrarAddress,
 });
 ```
 
-The prepared call approves exactly `amount`. Execute it with
-`executeContractWrites`.
+## Parameters
+
+```ts
+interface PreparePaymentTokenApprovalWriteParameters {
+  account: Address;
+  amount: bigint;
+  paymentTokenAddress: Address;
+  spenderAddress: Address;
+}
+```
+
+`amount` uses token atomic units.
+
+## Return Type
+
+`Result<PreparedPaymentTokenApprovalWrite, PreparePaymentTokenApprovalWriteError>`
 
 ## Errors
 

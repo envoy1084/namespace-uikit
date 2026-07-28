@@ -1,14 +1,26 @@
+---
+title: prepareRegisterNameWrite
+description: Prepare an ENS v2 name registration.
+---
+
 # prepareRegisterNameWrite
 
-Validates the reveal parameters and prepares the registrar `register` write.
-The inputs must match the original commitment exactly.
+Validates reveal parameters and prepares `ETHRegistrar.register`. The
+commitment-bound inputs must exactly match the original commitment.
+
+## Import
+
+```ts
+import { prepareRegisterNameWrite } from "ens-components/actions";
+```
+
+## Usage
 
 ```ts
 const registration = prepareRegisterNameWrite({
   account,
   duration,
   input: "example.eth",
-  network: "testnet",
   owner: account,
   paymentTokenAddress,
   referrer,
@@ -26,6 +38,20 @@ if (registration.isOk()) {
   });
 }
 ```
+
+## Parameters
+
+```ts
+interface PrepareRegisterNameWriteParameters extends MakeNameCommitmentParameters {
+  account: Address;
+  paymentTokenAddress: Address;
+  registrarAddress: Address;
+}
+```
+
+## Return Type
+
+`Result<PreparedRegisterNameWrite, PrepareRegisterNameWriteError | ParseNameInputError>`
 
 The prepared metadata contains the normalized label. Errors are uppercase
 validation codes from `makeNameCommitment` plus account, registrar, and

@@ -1,7 +1,20 @@
+---
+title: executeContractWrites
+description: Execute one or more prepared ENS contract writes.
+---
+
 # executeContractWrites
 
-Executes one or more prepared writes using a single transaction, an atomic
-EIP-5792 batch, or an ordered transaction sequence.
+Executes prepared writes using one transaction, an EIP-5792 atomic batch, or
+an ordered transaction sequence.
+
+## Import
+
+```ts
+import { executeContractWrites } from "ens-components/actions";
+```
+
+## Usage
 
 ```ts
 const result = await executeContractWrites(walletClient, publicClient, {
@@ -13,6 +26,19 @@ const result = await executeContractWrites(walletClient, publicClient, {
     // Persist submitted transaction hashes or callsId here.
   },
 });
+```
+
+## Parameters
+
+```ts
+interface ExecuteContractWritesParameters {
+  calls: readonly [PreparedContractWrite, ...PreparedContractWrite[]];
+  chain: Chain;
+  confirmation?: "confirmed" | "submitted";
+  onProgress?: (progress: ContractWriteProgress) => Promise<void> | void;
+  strategy?: "atomic" | "auto" | "sequential" | "single";
+  timeout?: number;
+}
 ```
 
 ## Strategies
@@ -35,6 +61,13 @@ prepared transactions and receipts. Atomic results additionally contain a
 
 `onProgress` reports signing, submitted, and confirmed states. Observer errors
 do not change the chain result.
+
+## Return Type
+
+`ResultAsync<ExecuteContractWritesResult, ExecuteContractWritesError>`
+
+The result is discriminated by `strategy` and contains submitted transactions.
+Atomic results also contain `callsId` and wallet-reported transaction hashes.
 
 ## Errors
 

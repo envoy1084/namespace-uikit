@@ -25,7 +25,7 @@ Read preparers return a contract or GraphQL request. Execute them with:
 - `executeContractRead`
 - `executeContractReads`
 - `executeContractReadsIndividually`
-- `executeGraphqlRead`
+- `executeGraphQLRead`
 
 ## Write actions
 

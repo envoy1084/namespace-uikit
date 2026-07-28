@@ -1,62 +1,55 @@
+---
+title: preparePermissionedResolverDeploymentWrite
+description: Prepare and simulate a PermissionedResolver proxy deployment.
+---
+
 # preparePermissionedResolverDeploymentWrite
 
-Simulates a `PermissionedResolver` proxy deployment and returns its
-deterministic address and encoded factory call. It does not send a transaction.
+Simulates a PermissionedResolver proxy deployment and returns its deterministic
+address and encoded factory call.
+
+## Import
 
 ```ts
-import {
-  createResolverSalt,
-  preparePermissionedResolverDeploymentWrite,
-} from "ens-components/actions";
+import { preparePermissionedResolverDeploymentWrite } from "ens-components/actions";
+import { createResolverSalt } from "ens-components";
+```
 
+## Usage
+
+```ts
 const salt = createResolverSalt({ input: "example.eth" });
-if (salt.isErr()) throw new Error(salt.error);
+if (salt.isErr()) throw salt.error;
 
 const result = await preparePermissionedResolverDeploymentWrite(publicClient, {
   account,
   factoryAddress,
   implementationAddress,
-  network: "testnet",
   owner: account,
   salt: salt.value.salt,
 });
 ```
 
-## Signature
+## Parameters
 
 ```ts
-function preparePermissionedResolverDeploymentWrite(
-  publicClient: PublicClient,
-  props: PreparePermissionedResolverDeploymentWriteProps,
-): ResultAsync<
-  PreparedPermissionedResolverDeploymentWrite,
-  PreparePermissionedResolverDeploymentWriteError
->;
+interface PreparePermissionedResolverDeploymentWriteParameters {
+  account: Address;
+  factoryAddress: Address;
+  implementationAddress: Address;
+  owner: Address;
+  salt: Hex;
+}
 ```
 
-## Props
+`account` affects the deterministic proxy address. `owner` receives all
+resolver roles.
 
-| Prop                    | Type                     | Description                                                       |
-| ----------------------- | ------------------------ | ----------------------------------------------------------------- |
-| `account`               | `Address`                | Account that will call the factory. It affects the proxy address. |
-| `factoryAddress`        | `Address`                | ENS v2 `VerifiableFactory`.                                       |
-| `implementationAddress` | `Address`                | `PermissionedResolver` implementation.                            |
-| `network`               | `"mainnet" \| "testnet"` | Network associated with the addresses.                            |
-| `owner`                 | `Address`                | Account receiving all resolver roles.                             |
-| `salt`                  | `Hex`                    | Random `bytes32` deployment salt.                                 |
+## Return Type
 
-## Result
+`ResultAsync<PreparedPermissionedResolverDeploymentWrite, PreparePermissionedResolverDeploymentWriteError>`
 
-The prepared write contains:
-
-- `call`, the encoded factory call used by `executeContractWrites`;
-- `request`, the ABI-inferred `deployProxy` request;
-- `metadata.resolverAddress`, the simulated proxy address;
-- `metadata.initData` and `metadata.salt`;
-- `account` and the stable kind `deploy-permissioned-resolver`.
-
-Compose it with `prepareCommitNameWrite` and use `strategy: "auto"` to select an
-atomic wallet batch when supported, otherwise an ordered sequence.
+`metadata` contains `resolverAddress`, `initData`, and `salt`.
 
 ## Errors
 
