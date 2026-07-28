@@ -10,7 +10,6 @@
     "ethereum-name-service",
     "hooks",
     "react",
-    "tailwindcss",
     "typescript",
     "viem",
     "wagmi",
@@ -66,7 +65,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsdown --config tsdown.config.ts",
+    "build": "tsdown --config tsdown.config.ts && pnpm run build:styles",
+    "build:styles": "tailwindcss -i src/utilities.css -o dist/utilities.css --minify",
     "dev": "tsdown --config tsdown.config.ts --watch",
     "format": "oxfmt . --write --no-error-on-unmatched-pattern",
     "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
@@ -84,16 +84,17 @@
     "motion": "12.42.2",
     "neverthrow": "8.2.0",
     "react-hook-form": "7.83.0",
+    "tailwindcss": "catalog:",
     "usehooks-ts": "3.1.1"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "catalog:",
     "@tanstack/react-query": "5.101.2",
     "@types/node": "26.0.1",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "tailwindcss": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:"
   },
@@ -101,7 +102,6 @@
     "@tanstack/react-query": "5.101.2",
     "react": ">=19.2.7 <20",
     "react-dom": ">=19.2.7 <20",
-    "tailwindcss": ">=4.3.2 <5",
     "viem": ">=2.55.0 <3",
     "wagmi": ">=3.7.1 <4"
   }

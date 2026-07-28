@@ -25,22 +25,20 @@ Install the package and its Web3 peers:
 npm install ens-components @tanstack/react-query@5.101.2 viem wagmi
 ```
 
-The package requires React and React DOM 19.2.7 or later, Tailwind CSS 4.3.2
-or later, Viem 2, and Wagmi 3.
+The package requires React and React DOM 19.2.7 or later, Viem 2, and Wagmi 3.
+Tailwind CSS is not required in the consuming application.
 
 ## Styles
 
-Import the package stylesheet after Tailwind CSS. Add the package distribution
-to Tailwind's source scan so component utility classes are generated:
+Import the precompiled package stylesheet once at the application root:
 
 ```css
-@import "tailwindcss";
 @import "ens-components/styles.css";
-
-@source "../node_modules/ens-components/dist";
 ```
 
-Adjust the `@source` path relative to your application stylesheet when needed.
+The stylesheet imports the UI Kit stylesheet and includes every utility used by
+ENS Components. No Tailwind installation, configuration, or source scanning is
+required.
 
 ## Providers
 
