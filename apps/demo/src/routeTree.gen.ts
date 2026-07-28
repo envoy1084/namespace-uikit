@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProfileEditorFixturesRouteImport } from './routes/profile-editor-fixtures'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ProfileEditorFixturesRoute = ProfileEditorFixturesRouteImport.update({
+  id: '/profile-editor-fixtures',
+  path: '/profile-editor-fixtures',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +25,39 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/profile-editor-fixtures': typeof ProfileEditorFixturesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/profile-editor-fixtures': typeof ProfileEditorFixturesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/profile-editor-fixtures': typeof ProfileEditorFixturesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/profile-editor-fixtures'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/profile-editor-fixtures'
+  id: '__root__' | '/' | '/profile-editor-fixtures'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProfileEditorFixturesRoute: typeof ProfileEditorFixturesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/profile-editor-fixtures': {
+      id: '/profile-editor-fixtures'
+      path: '/profile-editor-fixtures'
+      fullPath: '/profile-editor-fixtures'
+      preLoaderRoute: typeof ProfileEditorFixturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +70,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProfileEditorFixturesRoute: ProfileEditorFixturesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
