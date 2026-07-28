@@ -26,7 +26,10 @@ export function RecordButton({
       onPress={onPress}
     >
       <RecordIcon aria-hidden className="size-6 shrink-0" />
-      <span className="w-full truncate text-[10px] leading-none whitespace-nowrap">
+      <span
+        className="w-full truncate text-[10px] leading-none whitespace-nowrap"
+        title={name}
+      >
         {name}
       </span>
     </Button>

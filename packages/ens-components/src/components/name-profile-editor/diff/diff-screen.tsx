@@ -92,7 +92,7 @@ export function ProfileDiffScreen({
         {slots.reviewGraphic === undefined ? (
           <img
             alt=""
-            className="mx-auto w-full max-w-64"
+            className="mx-auto w-full max-w-56 min-[420px]:max-w-64"
             src={ReviewGraphic.href}
           />
         ) : (
@@ -112,10 +112,13 @@ export function ProfileDiffScreen({
       </NameProfileEditorHeader>
 
       <NameProfileEditorBody
-        className="mt-2 flex-none"
+        className="mt-2 flex-none px-3 min-[420px]:px-6"
         presentation={presentation}
       >
-        <Surface className="mt-2 rounded-2xl p-3" variant="secondary">
+        <Surface
+          className="mt-2 rounded-2xl p-2 min-[420px]:p-3"
+          variant="secondary"
+        >
           <Accordion
             className="flex flex-col gap-2"
             expandedKeys={expandedKeys}
@@ -129,7 +132,7 @@ export function ProfileDiffScreen({
       </NameProfileEditorBody>
 
       <NameProfileEditorFooter
-        className="mt-5 flex-col"
+        className="mt-5 flex-col px-3 min-[420px]:px-6"
         presentation={presentation}
       >
         {isConfirming ? (

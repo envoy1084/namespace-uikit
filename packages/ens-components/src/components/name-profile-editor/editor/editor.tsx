@@ -275,12 +275,12 @@ export function ProfileEditor({
                 value={editor.search}
                 onChange={editor.setSearch}
               />
-              <div className="flex min-h-84 items-start gap-3">
+              <div className="flex min-h-84 items-start gap-3 max-[420px]:flex-col">
                 <EditorSidebar
                   value={editor.activeSection}
                   onChange={editor.setActiveSection}
                 />
-                <div className="max-h-84 min-w-0 flex-1 overflow-y-auto px-1">
+                <div className="max-h-84 min-w-0 flex-1 overflow-y-auto px-1 max-[420px]:w-full">
                   <RecordSection
                     disabledDefinitionIds={disabledDefinitionIds}
                     error={

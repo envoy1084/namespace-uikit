@@ -27,7 +27,8 @@ function DiffRecord({ item }: { item: ProfileDiffItem }) {
 
   return (
     <Surface
-      className="flex max-w-full items-center gap-2 rounded-xl px-3 py-2"
+      className="flex max-w-full min-w-0 items-center gap-2 rounded-xl px-3 py-2"
+      title={item.label}
       variant="secondary"
     >
       <RecordIcon aria-hidden className="size-4 shrink-0" />
@@ -47,16 +48,18 @@ export function ProfileDiffSection({
       id={section.id}
     >
       <Accordion.Heading>
-        <Accordion.Trigger className="gap-2 px-4 py-3">
-          <span className="text-sm font-medium">{section.label}</span>
-          <span className="bg-secondary text-muted flex size-6 items-center justify-center rounded-lg text-xs font-medium">
+        <Accordion.Trigger className="min-w-0 gap-2 px-3 py-3 min-[420px]:px-4">
+          <span className="min-w-0 truncate text-sm font-medium">
+            {section.label}
+          </span>
+          <span className="bg-secondary text-muted flex size-6 shrink-0 items-center justify-center rounded-lg text-xs font-medium">
             {section.items.length}
           </span>
           <Accordion.Indicator className="text-muted size-4" />
         </Accordion.Trigger>
       </Accordion.Heading>
       <Accordion.Panel>
-        <Accordion.Body className="border-default space-y-4 border-t px-4 py-4">
+        <Accordion.Body className="border-default space-y-4 border-t px-3 py-4 min-[420px]:px-4">
           {statusOrder.map((status) => {
             const items = section.items.filter(
               (item) => item.status === status,
