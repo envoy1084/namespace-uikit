@@ -16,7 +16,7 @@ export default defineConfig({
   },
   iconUrl: "/namespace.svg",
   logoUrl: {
-    dark: "/ens-components-logo-dark.png",
+    dark: "/ens-components-logo-dark-outlined.svg",
     light: "/ens-components-logo-light.svg",
   },
   sidebar: {
