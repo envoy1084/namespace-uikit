@@ -46,7 +46,7 @@ catalog.
 | [File Tree](https://heroui.pro/docs/react/components/file-tree)                         | [source](packages/uikit/src/components/collections/file-tree.tsx)         | [docs](apps/docs/content/docs/components/file-tree.mdx)             | [11/11](https://storybook.heroui.pro/?path=/docs/components-filetree--docs) · [local](apps/storybook/src/components/collections/file-tree/file-tree.stories.tsx)                              |      🛠 Fixed | Reconciled all fixtures and rebuilt PR review controls/tree. Final drag/drop matrix remains.         |
 | [Floating TOC](https://heroui.pro/docs/react/components/floating-toc)                   | [source](packages/uikit/src/components/navigation/floating-toc.tsx)       | [docs](apps/docs/content/docs/components/floating-toc.mdx)          | [10/10](https://storybook.heroui.pro/?path=/docs/components-floatingtoc--docs) · [local](apps/storybook/src/components/navigation/floating-toc/floating-toc.stories.tsx)                      | ⬜ Inventory | Hover/press modes and virtualization.                                                                |
 | [Hover Card](https://heroui.pro/docs/react/components/hover-card)                       | [source](packages/uikit/src/components/overlays/hover-card.tsx)           | [docs](apps/docs/content/docs/components/hover-card.mdx)            | [6/6](https://storybook.heroui.pro/?path=/docs/components-hovercard--docs) · [local](apps/storybook/src/components/overlays/hover-card/hover-card.stories.tsx)                                | ⬜ Inventory | Hover delays, placement and controlled state.                                                        |
-| [Kanban](https://heroui.pro/docs/react/components/kanban)                               | [source](packages/uikit/src/components/collections/kanban.tsx)            | [docs](apps/docs/content/docs/components/kanban.mdx)                | [4/4](https://storybook.heroui.pro/?path=/docs/components-kanban--docs) · [local](apps/storybook/src/components/collections/kanban/kanban.stories.tsx)                                        | ⬜ Inventory | Drag/drop and keyboard operation.                                                                    |
+| [Kanban](https://heroui.pro/docs/react/components/kanban)                               | [source](packages/uikit/src/components/collections/kanban.tsx)            | [docs](apps/docs/content/docs/components/kanban.mdx)                | [4/4](https://storybook.heroui.pro/?path=/docs/components-kanban--docs) · [local](apps/storybook/src/components/collections/kanban/kanban.stories.tsx)                                        |      🛠 Fixed | Restored documented placeholder-hook API. Final pointer/touch drag matrix remains.                   |
 | [Item Card](https://heroui.pro/docs/react/components/item-card)                         | [source](packages/uikit/src/components/data-display/item-card.tsx)        | [docs](apps/docs/content/docs/components/item-card.mdx)             | [12/12](https://storybook.heroui.pro/?path=/docs/components-itemcard--docs) · [local](apps/storybook/src/components/data-display/item-card/item-card.stories.tsx)                             | ⬜ Inventory |                                                                                                      |
 | [Item Card Group](https://heroui.pro/docs/react/components/item-card-group)             | [source](packages/uikit/src/components/data-display/item-card-group.tsx)  | [docs](apps/docs/content/docs/components/item-card-group.mdx)       | [12/12](https://storybook.heroui.pro/?path=/docs/components-itemcardgroup--docs) · [local](apps/storybook/src/components/data-display/item-card-group/item-card-group.stories.tsx)            | ⬜ Inventory |                                                                                                      |
 | [KPI](https://heroui.pro/docs/react/components/kpi)                                     | [source](packages/uikit/src/components/data-display/kpi.tsx)              | [docs](apps/docs/content/docs/components/kpi.mdx)                   | [7/7](https://storybook.heroui.pro/?path=/docs/components-kpi-key-performance-indicator--docs) · [local](apps/storybook/src/components/data-display/kpi/kpi.stories.tsx)                      | ⬜ Inventory |                                                                                                      |
@@ -130,6 +130,21 @@ catalog.
   behavior follows the documented API rather than copying that upstream reduced-motion defect.
 - Final verification still required: pointer and keyboard drag/drop across nesting levels, dark
   mode, and narrow/touch captures.
+
+### Kanban evidence
+
+- The live Pro docs hierarchy, CSS hooks, API tables, and all four Storybook entries match the local
+  inventory.
+- Browser snapshots match upstream exactly for Default, Notion Board, Project Board, and all three
+  Sizes examples.
+- Paired browser interactions match for add-task modal open/focus/submission and column action-menu
+  bulk moves.
+- Fixed a public API mismatch: docs and upstream name the measuring helper
+  `useKanbanCardPlaceholder`, while the package only exported `useKanbanDropIndicator`. The
+  canonical hook and option/return types are now exported; the old names remain as deprecated
+  compatibility aliases.
+- Final verification still required: pointer/touch drag and drop within and across columns, drop
+  placeholder height during motion, narrow horizontal scrolling, and dark/reduced-motion captures.
 
 ## HeroUI OSS/core audit
 

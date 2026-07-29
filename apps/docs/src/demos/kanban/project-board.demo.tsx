@@ -221,7 +221,7 @@ function ProjectColumn({
                       className="flex-1"
                       color="accent"
                       size="sm"
-                      value={(task.subtasksCompleted! / task.subtasksTotal) * 100}
+                      value={((task.subtasksCompleted ?? 0) / task.subtasksTotal) * 100}
                     >
                       <ProgressBar.Track>
                         <ProgressBar.Fill />

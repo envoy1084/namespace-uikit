@@ -398,15 +398,15 @@ export function useKanbanColumn<T extends object>(
   return { dragAndDropHooks, items };
 }
 
-export interface UseKanbanDropIndicatorOptions {
+export interface UseKanbanCardPlaceholderOptions {
   renderIndicator: (target: ItemDropTarget) => ReactNode;
 }
-export interface UseKanbanDropIndicatorReturn {
+export interface UseKanbanCardPlaceholderReturn {
   renderDropIndicator: (target: ItemDropTarget) => ReactNode;
 }
-export function useKanbanDropIndicator({
+export function useKanbanCardPlaceholder({
   renderIndicator,
-}: UseKanbanDropIndicatorOptions): UseKanbanDropIndicatorReturn {
+}: UseKanbanCardPlaceholderOptions): UseKanbanCardPlaceholderReturn {
   useEffect(() => {
     const updateHeight = () => {
       const dragging = document.querySelector<HTMLElement>("[data-dragging]");
@@ -434,6 +434,13 @@ export function useKanbanDropIndicator({
     ),
   };
 }
+
+/** @deprecated Use `useKanbanCardPlaceholder` to match the public Pro API. */
+export const useKanbanDropIndicator: typeof useKanbanCardPlaceholder = useKanbanCardPlaceholder;
+/** @deprecated Use `UseKanbanCardPlaceholderOptions`. */
+export type UseKanbanDropIndicatorOptions = UseKanbanCardPlaceholderOptions;
+/** @deprecated Use `UseKanbanCardPlaceholderReturn`. */
+export type UseKanbanDropIndicatorReturn = UseKanbanCardPlaceholderReturn;
 
 type KanbanComponent = typeof KanbanRoot & {
   Card: typeof KanbanCard;

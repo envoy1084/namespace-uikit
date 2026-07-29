@@ -5,7 +5,7 @@ import {
   Kanban,
   useKanban,
   useKanbanColumn,
-  useKanbanDropIndicator,
+  useKanbanCardPlaceholder,
   type UseKanbanReturn,
 } from "@thenamespace/uikit";
 import { Avatar } from "@thenamespace/uikit/avatar";
@@ -358,7 +358,7 @@ function NotionColumn({
   column: NotionStatus;
   kanban: UseKanbanReturn<NotionTask>;
 }) {
-  const { renderDropIndicator } = useKanbanDropIndicator({
+  const { renderDropIndicator } = useKanbanCardPlaceholder({
     renderIndicator: (target) => <Kanban.DropIndicator target={target} />,
   });
   const { dragAndDropHooks, items } = useKanbanColumn(kanban, column, {

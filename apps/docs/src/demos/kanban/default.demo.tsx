@@ -2,13 +2,13 @@
 
 // @demo-title Default
 import type { FormEvent, ReactNode } from "react";
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useContext, useMemo, useRef, useState } from "react";
 
 import {
   Kanban,
   useKanban,
   useKanbanColumn,
-  useKanbanDropIndicator,
+  useKanbanCardPlaceholder,
   type UseKanbanReturn,
 } from "@thenamespace/uikit";
 import { Avatar } from "@thenamespace/uikit/avatar";
@@ -192,6 +192,7 @@ function AddTaskProvider({
   const [isOpen, setOpen] = useState(false);
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const addTaskContextValue = useMemo(() => ({ open: () => setOpen(true) }), []);
   const submit = (event: FormEvent) => {
     event.preventDefault();
     const title = titleRef.current?.value.trim();
@@ -206,7 +207,7 @@ function AddTaskProvider({
     setOpen(false);
   };
   return (
-    <AddTaskContext value={{ open: () => setOpen(true) }}>
+    <AddTaskContext value={addTaskContextValue}>
       {children}
       <Modal>
         <Modal.Backdrop isOpen={isOpen} onOpenChange={setOpen}>
@@ -380,7 +381,7 @@ function TicketColumn({
   kanban: UseKanbanReturn<Ticket>;
 }) {
   const { open } = useContext(AddTaskContext);
-  const { renderDropIndicator } = useKanbanDropIndicator({
+  const { renderDropIndicator } = useKanbanCardPlaceholder({
     renderIndicator: (target) => <Kanban.DropIndicator target={target} />,
   });
   const { dragAndDropHooks, items } = useKanbanColumn(kanban, column, {
