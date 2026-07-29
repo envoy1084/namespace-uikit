@@ -26,7 +26,7 @@ type Employee = {
 
 const employees: Employee[] = [
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=20",
+    avatar: "/assets/generated/avatar-20.jpg",
     department: "Product",
     email: "elena.rodriguez@company.com",
     id: 1,
@@ -35,7 +35,7 @@ const employees: Employee[] = [
     status: "Active",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=21",
+    avatar: "/assets/generated/avatar-21.jpg",
     department: "Design",
     email: "marcus.chen@company.com",
     id: 2,
@@ -44,7 +44,7 @@ const employees: Employee[] = [
     status: "Pending",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=22",
+    avatar: "/assets/generated/avatar-22.jpg",
     department: "Product",
     email: "priya.patel@company.com",
     id: 3,
@@ -53,7 +53,7 @@ const employees: Employee[] = [
     status: "Active",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=23",
+    avatar: "/assets/generated/avatar-23.jpg",
     department: "Support",
     email: "james.o.brien@company.com",
     id: 4,
@@ -62,7 +62,7 @@ const employees: Employee[] = [
     status: "Active",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=24",
+    avatar: "/assets/generated/avatar-24.jpg",
     department: "Support",
     email: "yuki.tanaka@company.com",
     id: 5,
@@ -71,7 +71,7 @@ const employees: Employee[] = [
     status: "Inactive",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=25",
+    avatar: "/assets/generated/avatar-25.jpg",
     department: "Sales",
     email: "amara.okafor@company.com",
     id: 6,
@@ -80,7 +80,7 @@ const employees: Employee[] = [
     status: "Pending",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=26",
+    avatar: "/assets/generated/avatar-26.jpg",
     department: "Engineering",
     email: "luca.bianchi@company.com",
     id: 7,
@@ -89,7 +89,7 @@ const employees: Employee[] = [
     status: "Active",
   },
   {
-    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=27",
+    avatar: "/assets/generated/avatar-27.jpg",
     department: "Design",
     email: "sofia.andersson@company.com",
     id: 8,

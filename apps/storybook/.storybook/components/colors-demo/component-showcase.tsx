@@ -165,7 +165,7 @@ export function ComponentShowcase() {
                     alt="Cherries"
                     className="pointer-events-none absolute inset-0 h-full w-full scale-125 object-cover select-none"
                     loading="lazy"
-                    src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/cherries.jpeg"
+                    src="/assets/docs/cherries.jpeg"
                   />
                 </div>
                 <div className="flex flex-1 flex-col gap-3">
@@ -222,10 +222,7 @@ export function ComponentShowcase() {
                     <Card className="col-span-12 gap-2 sm:col-span-6">
                       <Card.Header>
                         <Avatar className="size-[56px] rounded-xl">
-                          <Avatar.Image
-                            alt="Demo 1"
-                            src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo1.jpg"
-                          />
+                          <Avatar.Image alt="Demo 1" src="/assets/docs/demo1.jpg" />
                           <Avatar.Fallback>JK</Avatar.Fallback>
                         </Avatar>
                       </Card.Header>
@@ -235,10 +232,7 @@ export function ComponentShowcase() {
                       </Card.Content>
                       <Card.Footer className="flex items-center gap-2">
                         <Avatar className="size-4">
-                          <Avatar.Image
-                            alt="John"
-                            src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg"
-                          />
+                          <Avatar.Image alt="John" src="/assets/avatars/red.jpg" />
                           <Avatar.Fallback>JK</Avatar.Fallback>
                         </Avatar>
                         <p className="text-muted text-xs">By John</p>
@@ -248,10 +242,7 @@ export function ComponentShowcase() {
                     <Card className="col-span-12 gap-2 sm:col-span-6">
                       <Card.Header>
                         <Avatar className="size-[56px] rounded-xl">
-                          <Avatar.Image
-                            alt="Demo 2"
-                            src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo2.jpg"
-                          />
+                          <Avatar.Image alt="Demo 2" src="/assets/docs/demo2.jpg" />
                           <Avatar.Fallback>AB</Avatar.Fallback>
                         </Avatar>
                       </Card.Header>
@@ -261,10 +252,7 @@ export function ComponentShowcase() {
                       </Card.Content>
                       <Card.Footer className="flex items-center gap-2">
                         <Avatar className="size-4">
-                          <Avatar.Image
-                            alt="John"
-                            src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg"
-                          />
+                          <Avatar.Image alt="John" src="/assets/avatars/blue.jpg" />
                           <Avatar.Fallback>M</Avatar.Fallback>
                         </Avatar>
                         <p className="text-muted text-xs">By Martha</p>
@@ -284,7 +272,7 @@ export function ComponentShowcase() {
                       alt="Avocado"
                       className="aspect-square h-16 w-16 shrink-0 rounded-xl object-cover select-none sm:h-20 sm:w-20"
                       loading="lazy"
-                      src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/avocado.jpeg"
+                      src="/assets/docs/avocado.jpeg"
                     />
                     <div className="flex flex-1 flex-col justify-center gap-1">
                       <Card.Title className="text-sm">Avocado Hackathon</Card.Title>
@@ -297,7 +285,7 @@ export function ComponentShowcase() {
                       alt="Sound Electro event"
                       className="aspect-square h-16 w-16 shrink-0 rounded-xl object-cover select-none sm:h-20 sm:w-20"
                       loading="lazy"
-                      src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/oranges.jpeg"
+                      src="/assets/docs/oranges.jpeg"
                     />
                     <div className="flex flex-1 flex-col justify-center gap-1">
                       <Card.Title className="text-sm">Sound Electro | Beyond art</Card.Title>
@@ -404,10 +392,7 @@ export function ComponentShowcase() {
                 <Avatar.Fallback>DG</Avatar.Fallback>
               </Avatar>
               <Avatar>
-                <Avatar.Image
-                  alt="User"
-                  src="https://img.heroui.chat/image/avatar?w=400&h=400&u=3"
-                />
+                <Avatar.Image alt="User" src="/assets/generated/avatar-3.jpg" />
                 <Avatar.Fallback>US</Avatar.Fallback>
               </Avatar>
             </div>
@@ -727,10 +712,7 @@ export function ComponentShowcase() {
               <Popover.Trigger aria-label="User info" className="flex items-center">
                 <div className="flex cursor-pointer items-center gap-2">
                   <Avatar className="size-5" size="sm">
-                    <Avatar.Image
-                      alt="Zoe"
-                      src="https://img.heroui.chat/image/avatar?w=400&h=400&u=5"
-                    />
+                    <Avatar.Image alt="Zoe" src="/assets/generated/avatar-5.jpg" />
                     <Avatar.Fallback>Z</Avatar.Fallback>
                   </Avatar>
                   <span className="text-sm font-medium">Zoe</span>
@@ -741,10 +723,7 @@ export function ComponentShowcase() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Avatar size="md">
-                        <Avatar.Image
-                          alt="Zoe"
-                          src="https://img.heroui.chat/image/avatar?w=400&h=400&u=5"
-                        />
+                        <Avatar.Image alt="Zoe" src="/assets/generated/avatar-5.jpg" />
                         <Avatar.Fallback>Z</Avatar.Fallback>
                       </Avatar>
                       <div className="flex flex-col">

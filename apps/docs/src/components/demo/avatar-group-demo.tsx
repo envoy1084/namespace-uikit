@@ -2,31 +2,31 @@ import { Avatar } from "@thenamespace/uikit";
 
 const avatars = [
   {
-    image: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+    image: "/assets/avatars/blue.jpg",
     name: "Blue",
   },
   {
-    image: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg",
+    image: "/assets/avatars/green.jpg",
     name: "Green",
   },
   {
-    image: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg",
+    image: "/assets/avatars/purple.jpg",
     name: "Purple",
   },
   {
-    image: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg",
+    image: "/assets/avatars/orange.jpg",
     name: "Orange",
   },
   {
-    image: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg",
+    image: "/assets/avatars/red.jpg",
     name: "red",
   },
   {
-    image: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg",
+    image: "/assets/avatars/blue.jpg",
     name: "Blue",
   },
   {
-    image: "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/black.jpg",
+    image: "/assets/avatars/black.jpg",
     name: "Black",
   },
 ];
@@ -35,8 +35,8 @@ export function AvatarGroupDemo() {
   return (
     <div className="flex w-full justify-center">
       <div className="flex -space-x-2">
-        {avatars.slice(0, 5).map((item, index) => (
-          <Avatar key={`${item.name}-${index}`} className="ring-background ring-2">
+        {avatars.slice(0, 5).map((item) => (
+          <Avatar key={item.image} className="ring-background ring-2">
             <Avatar.Image alt={item.name} src={item.image} />
             <Avatar.Fallback>
               {item.name

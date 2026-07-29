@@ -8,16 +8,6 @@ const config: NextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "heroui-assets.nyc3.cdn.digitaloceanspaces.com",
-        pathname: "/**",
-        protocol: "https",
-      },
-      {
-        hostname: "img.heroui.chat",
-        pathname: "/**",
-        protocol: "https",
-      },
-      {
         hostname: "avatars.githubusercontent.com",
         pathname: "/**",
         protocol: "https",

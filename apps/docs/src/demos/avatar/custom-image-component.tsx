@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { Avatar } from "@thenamespace/uikit";
 
-const SRC = "https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg";
+const SRC = "/assets/avatars/blue.jpg";
 
 export function CustomImageComponent() {
   return (

@@ -25,10 +25,7 @@ export function SubtleCardsDemo() {
       <Card className={card()}>
         <Card.Header>
           <Avatar className={avatar()}>
-            <Avatar.Image
-              alt={t.indieTitle}
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo1.jpg"
-            />
+            <Avatar.Image alt={t.indieTitle} src="/assets/docs/demo1.jpg" />
             <Avatar.Fallback>JK</Avatar.Fallback>
           </Avatar>
         </Card.Header>
@@ -38,10 +35,7 @@ export function SubtleCardsDemo() {
         </Card.Content>
         <Card.Footer className={footer()}>
           <Avatar className={footerAvatar()}>
-            <Avatar.Image
-              alt="John"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg"
-            />
+            <Avatar.Image alt="John" src="/assets/avatars/red.jpg" />
             <Avatar.Fallback>JK</Avatar.Fallback>
           </Avatar>
           <p className="text-muted text-xs">{t.indieBy}</p>
@@ -50,10 +44,7 @@ export function SubtleCardsDemo() {
       <Card className={card()}>
         <Card.Header>
           <Avatar className={avatar()}>
-            <Avatar.Image
-              alt={t.aiTitle}
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo2.jpg"
-            />
+            <Avatar.Image alt={t.aiTitle} src="/assets/docs/demo2.jpg" />
             <Avatar.Fallback>J</Avatar.Fallback>
           </Avatar>
         </Card.Header>
@@ -63,10 +54,7 @@ export function SubtleCardsDemo() {
         </Card.Content>
         <Card.Footer className={footer()}>
           <Avatar className={footerAvatar()}>
-            <Avatar.Image
-              alt="Martha"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg"
-            />
+            <Avatar.Image alt="Martha" src="/assets/avatars/blue.jpg" />
             <Avatar.Fallback>M</Avatar.Fallback>
           </Avatar>
           <p className="text-muted text-xs">{t.aiBy}</p>
