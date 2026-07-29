@@ -133,7 +133,11 @@ function UploadDemo({
       <DropZone.Area>
         <DropZone.Icon />
         <DropZone.Label>{label}</DropZone.Label>
-        <DropZone.Description>Supports JPEG, PNG, PDF, and MP4 up to 50 MB.</DropZone.Description>
+        <DropZone.Description>
+          {multiple
+            ? "All formats welcome, 50 MB max per file."
+            : "Supports JPEG, PNG, PDF, and MP4 up to 50 MB."}
+        </DropZone.Description>
         <DropZone.Trigger>{multiple ? "Choose Files" : "Select File"}</DropZone.Trigger>
       </DropZone.Area>
       <DropZone.Input accept={accept} multiple={multiple} onSelect={add} />

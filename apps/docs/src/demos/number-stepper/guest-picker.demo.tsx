@@ -30,7 +30,6 @@ const guestTypes = [
 
 export const DemoGuestPickerExample = () => (
   <div className="w-80 space-y-5">
-    <p className="text-muted text-sm">Guest picker using the default NumberStepper look.</p>
     {guestTypes.map(({ description, label }) => (
       <div className="flex items-center justify-between gap-8" key={label}>
         <div>

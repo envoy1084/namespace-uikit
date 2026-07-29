@@ -62,20 +62,24 @@ function PlanContent({ plan }: { plan: (typeof plans)[number] }) {
 
 function PlanGroup({
   defaultValue = "pro",
+  description = true,
   indicator = true,
+  variant = "secondary",
 }: {
   defaultValue?: string;
+  description?: boolean;
   indicator?: boolean;
+  variant?: "primary" | "secondary";
 }) {
   return (
     <RadioButtonGroup
       className="w-[min(360px,calc(100vw-2rem))]"
       defaultValue={defaultValue}
       name="plan"
-      variant="secondary"
+      variant={variant}
     >
       <Label>Select a plan</Label>
-      <Description>Choose the plan that suits your needs</Description>
+      {description ? <Description>Choose the plan that suits your needs</Description> : null}
       {plans.map((plan) => (
         <RadioButtonGroup.Item key={plan.value} value={plan.value}>
           {indicator ? <RadioButtonGroup.Indicator /> : null}
@@ -109,10 +113,16 @@ const delivery = [
   },
 ];
 
-function DeliveryGroup({ name = "delivery" }: { name?: string }) {
+function DeliveryGroup({
+  className = "w-full max-w-2xl grid-cols-1 sm:grid-cols-3",
+  name = "delivery",
+}: {
+  className?: string;
+  name?: string;
+}) {
   return (
     <RadioButtonGroup
-      className="w-full max-w-2xl grid-cols-1 sm:grid-cols-3"
+      className={className}
       defaultValue="express"
       layout="grid"
       name={name}
@@ -143,7 +153,7 @@ function DeliveryGroup({ name = "delivery" }: { name?: string }) {
 export const GridLayout: Story = { render: () => <DeliveryGroup /> };
 
 export const NoIndicator: Story = {
-  render: () => <PlanGroup indicator={false} />,
+  render: () => <PlanGroup description={false} indicator={false} variant="primary" />,
 };
 
 export const CustomIndicator: Story = {
@@ -238,7 +248,7 @@ export const IconCards: Story = {
               </div>
             </div>
             <NumberValue
-              className="mt-2 text-2xl font-bold"
+              className="text-2xl font-bold"
               currency="USD"
               maximumFractionDigits={0}
               style="currency"
@@ -262,10 +272,16 @@ const payment = [
   ["paypal", "PayPal", "Pay with PayPal", "logos:paypal"],
 ] as const;
 
-function PaymentGroup({ align = "center" }: { align?: "center" | "start" }) {
+function PaymentGroup({
+  align = "center",
+  className = "w-full max-w-2xl grid-cols-1 sm:grid-cols-2",
+}: {
+  align?: "center" | "start";
+  className?: string;
+}) {
   return (
     <RadioButtonGroup
-      className="w-full max-w-2xl grid-cols-1 sm:grid-cols-2"
+      className={className}
       defaultValue="visa"
       layout="grid"
       name="payment"
@@ -318,10 +334,10 @@ export const DeliveryAndPayment: Story = {
   render: () => (
     <div className="flex w-full max-w-lg flex-col items-center gap-10">
       <section className="flex w-full flex-col gap-4">
-        <DeliveryGroup name="delivery-full" />
+        <DeliveryGroup className="grid-cols-1 sm:grid-cols-3" name="delivery-full" />
       </section>
       <section className="flex w-full flex-col gap-4">
-        <PaymentGroup align="start" />
+        <PaymentGroup align="start" className="grid-cols-1 sm:grid-cols-2" />
       </section>
     </div>
   ),
@@ -379,7 +395,11 @@ export const RenderPropChildren: Story = {
                   maximumFractionDigits={0}
                   style="currency"
                   value={plan.price}
-                />
+                >
+                  <NumberValue.Suffix>
+                    <span className="text-muted text-xs font-normal">/mo</span>
+                  </NumberValue.Suffix>
+                </NumberValue>
               </RadioButtonGroup.ItemContent>
             </>
           )}

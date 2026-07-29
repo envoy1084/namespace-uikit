@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
-import { CheckmarkCircle02Icon, Loading03Icon } from "@thenamespace/uikit/icons";
+import { CancelCircleIcon, CheckmarkCircle02Icon, Loading03Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
@@ -39,6 +39,7 @@ const colorFor = (format: string) =>
     PDF: "red",
     PNG: "green",
     JPG: "blue",
+    DOCX: "blue",
     SVG: "green",
     MP4: "purple",
     ZIP: "orange",
@@ -48,10 +49,14 @@ function FileList({
   files,
   onRemove,
   onRetry,
+  showProgress = true,
+  statusFormat = "percent",
 }: {
   files: Upload[];
   onRemove: (id: string) => void;
   onRetry?: (id: string) => void;
+  showProgress?: boolean;
+  statusFormat?: "label" | "percent";
 }) {
   return (
     <DropZone.FileList>
@@ -65,31 +70,55 @@ function FileList({
             />
             <DropZone.FileInfo>
               <DropZone.FileName>{file.name}</DropZone.FileName>
-              {file.status === "failed" ? (
-                <DropZone.FileMeta>{formatSize(file.size)}</DropZone.FileMeta>
-              ) : (
-                <DropZone.FileMeta>
-                  {formatSize(file.size)} |{" "}
-                  <HugeiconsIcon
-                    aria-hidden
-                    className={
-                      file.status === "complete"
-                        ? "text-success inline size-3 align-[-1px]"
-                        : "inline size-3 animate-spin align-[-1px]"
-                    }
-                    icon={file.status === "complete" ? CheckmarkCircle02Icon : Loading03Icon}
-                    size={12}
-                  />{" "}
-                  {file.status === "uploading" ? file.progress : 100}%
-                </DropZone.FileMeta>
-              )}
-              {file.status !== "failed" ? (
+              <DropZone.FileMeta>
+                {formatSize(file.size)}
+                {statusFormat === "label" ? (
+                  file.status === "uploading" ? (
+                    " | Uploading..."
+                  ) : (
+                    <div className="flex items-center gap-1">
+                      {" | "}
+                      <HugeiconsIcon
+                        aria-hidden
+                        className={
+                          file.status === "complete"
+                            ? "text-success inline size-3"
+                            : "text-danger inline size-3"
+                        }
+                        icon={file.status === "complete" ? CheckmarkCircle02Icon : CancelCircleIcon}
+                        size={12}
+                      />
+                      {file.status === "complete" ? (
+                        " Complete"
+                      ) : (
+                        <span className="text-danger">Failed</span>
+                      )}
+                    </div>
+                  )
+                ) : file.status === "failed" ? null : (
+                  <>
+                    {" | "}
+                    <HugeiconsIcon
+                      aria-hidden
+                      className={
+                        file.status === "complete"
+                          ? "text-success inline size-3 align-[-1px]"
+                          : "inline size-3 animate-spin align-[-1px]"
+                      }
+                      icon={file.status === "complete" ? CheckmarkCircle02Icon : Loading03Icon}
+                      size={12}
+                    />{" "}
+                    {file.status === "uploading" ? file.progress : 100}%
+                  </>
+                )}
+              </DropZone.FileMeta>
+              {showProgress && file.status !== "failed" ? (
                 <DropZone.FileProgress value={file.progress}>
                   <DropZone.FileProgressTrack>
                     <DropZone.FileProgressFill />
                   </DropZone.FileProgressTrack>
                 </DropZone.FileProgress>
-              ) : (
+              ) : file.status === "failed" && statusFormat === "percent" ? (
                 <>
                   <DropZone.FileMeta>Something went wrong, please retry</DropZone.FileMeta>
                   <Button
@@ -101,7 +130,16 @@ function FileList({
                     Try again
                   </Button>
                 </>
-              )}
+              ) : file.status === "failed" ? (
+                <Button
+                  className="mt-2 -ml-1"
+                  size="sm"
+                  variant="danger-soft"
+                  onPress={() => onRetry?.(file.id)}
+                >
+                  Try again
+                </Button>
+              ) : null}
             </DropZone.FileInfo>
             <DropZone.FileRemoveTrigger
               aria-label={`Remove ${file.name}`}
@@ -140,7 +178,11 @@ function UploadDemo({
       <DropZone.Area>
         <DropZone.Icon />
         <DropZone.Label>{label}</DropZone.Label>
-        <DropZone.Description>Supports JPEG, PNG, PDF, and MP4 up to 50 MB.</DropZone.Description>
+        <DropZone.Description>
+          {multiple
+            ? "All formats welcome, 50 MB max per file."
+            : "Supports JPEG, PNG, PDF, and MP4 up to 50 MB."}
+        </DropZone.Description>
         <DropZone.Trigger>{multiple ? "Choose Files" : "Select File"}</DropZone.Trigger>
       </DropZone.Area>
       <DropZone.Input accept={accept} multiple={multiple} onSelect={add} />
@@ -186,10 +228,49 @@ const initialFiles: Upload[] = [
     status: "failed",
   },
 ];
+const projectFiles: Upload[] = [
+  {
+    id: "annual-report",
+    name: "Annual report 2025.pdf",
+    progress: 100,
+    size: 2.2 * 1024 * 1024,
+    status: "complete",
+  },
+  {
+    id: "hero-banner",
+    name: "Hero banner.png",
+    progress: 42,
+    size: 480 * 1024,
+    status: "uploading",
+  },
+  {
+    id: "onboarding-flow",
+    name: "Onboarding flow.mp4",
+    progress: 0,
+    size: 8 * 1024 * 1024,
+    status: "failed",
+  },
+];
 
 export const WithFileList: Story = {
   render: function Demo() {
-    const [files, setFiles] = useState(initialFiles);
+    const [files, setFiles] = useState(projectFiles);
+    useEffect(() => {
+      const timer = window.setInterval(() => {
+        setFiles((current) =>
+          current.map((file) => {
+            if (file.status !== "uploading") return file;
+            const progress = Math.min(file.progress + 5, 100);
+            return {
+              ...file,
+              progress,
+              status: progress === 100 ? "complete" : "uploading",
+            };
+          }),
+        );
+      }, 200);
+      return () => window.clearInterval(timer);
+    }, []);
     return (
       <DropZone className="w-[480px]">
         <DropZone.Area>
@@ -203,6 +284,7 @@ export const WithFileList: Story = {
         <DropZone.Input multiple />
         <FileList
           files={files}
+          statusFormat="label"
           onRemove={(id) => setFiles((all) => all.filter((file) => file.id !== id))}
           onRetry={(id) =>
             setFiles((all) =>
@@ -296,6 +378,7 @@ export const CompactFileList: Story = {
       <DropZone className="w-[480px]">
         <FileList
           files={files}
+          showProgress={false}
           onRemove={(id) => setFiles((all) => all.filter((file) => file.id !== id))}
         />
       </DropZone>
@@ -319,30 +402,57 @@ export const CustomIcon: Story = {
   ),
 };
 
-function CustomButtons() {
+function CustomButtons({ kind }: { kind: "browse" | "spreadsheet" | "upload" }) {
   const { openFilePicker } = useDropZone();
-  return (
-    <>
-      <Button className="mt-2" onPress={openFilePicker}>
-        Upload Files
-      </Button>
+  if (kind === "browse") {
+    return (
       <Link className="mt-1 cursor-pointer text-sm" onPress={openFilePicker}>
         Browse from your device
       </Link>
-    </>
+    );
+  }
+  return (
+    <Button
+      className="mt-2"
+      size={kind === "spreadsheet" ? "sm" : "md"}
+      variant={kind === "spreadsheet" ? "secondary" : "primary"}
+      onPress={openFilePicker}
+    >
+      {kind === "spreadsheet" ? "Choose Spreadsheet" : "Upload Files"}
+    </Button>
   );
 }
 
 export const CustomTriggers: Story = {
   render: () => (
-    <DropZone className="w-[480px]">
-      <DropZone.Area>
-        <DropZone.Icon />
-        <DropZone.Label>Drag files here to get started</DropZone.Label>
-        <DropZone.Description>PDF, DOCX, or TXT up to 25 MB.</DropZone.Description>
-        <CustomButtons />
-      </DropZone.Area>
-      <DropZone.Input multiple />
-    </DropZone>
+    <div className="flex w-[480px] flex-col gap-8">
+      <DropZone>
+        <DropZone.Area>
+          <DropZone.Icon />
+          <DropZone.Label>Drag files here to get started</DropZone.Label>
+          <DropZone.Description>PDF, DOCX, or TXT up to 25 MB.</DropZone.Description>
+          <CustomButtons kind="upload" />
+        </DropZone.Area>
+        <DropZone.Input multiple />
+      </DropZone>
+      <DropZone>
+        <DropZone.Area>
+          <DropZone.Icon />
+          <DropZone.Label>Attach supporting documents</DropZone.Label>
+          <DropZone.Description>Any format, 10 MB limit.</DropZone.Description>
+          <CustomButtons kind="browse" />
+        </DropZone.Area>
+        <DropZone.Input multiple />
+      </DropZone>
+      <DropZone>
+        <DropZone.Area>
+          <DropZone.Icon />
+          <DropZone.Label>Import spreadsheet data</DropZone.Label>
+          <DropZone.Description>CSV or XLSX files only.</DropZone.Description>
+          <CustomButtons kind="spreadsheet" />
+        </DropZone.Area>
+        <DropZone.Input accept=".csv,.xls,.xlsx" />
+      </DropZone>
+    </div>
   ),
 };

@@ -46,7 +46,11 @@ export const DemoRenderPropChildrenExample = () => (
                 maximumFractionDigits={0}
                 style="currency"
                 value={plan.price}
-              />
+              >
+                <NumberValue.Suffix>
+                  <span className="text-muted text-xs font-normal">/mo</span>
+                </NumberValue.Suffix>
+              </NumberValue>
             </RadioButtonGroup.ItemContent>
           </>
         )}

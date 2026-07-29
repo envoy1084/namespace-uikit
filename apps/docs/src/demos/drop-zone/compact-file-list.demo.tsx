@@ -30,6 +30,7 @@ const colorFor = (format: string) =>
     PDF: "red",
     PNG: "green",
     JPG: "blue",
+    DOCX: "blue",
     SVG: "green",
     MP4: "purple",
     ZIP: "orange",
@@ -74,13 +75,7 @@ function FileList({
                   {file.status === "uploading" ? file.progress : 100}%
                 </DropZone.FileMeta>
               )}
-              {file.status !== "failed" ? (
-                <DropZone.FileProgress value={file.progress}>
-                  <DropZone.FileProgressTrack>
-                    <DropZone.FileProgressFill />
-                  </DropZone.FileProgressTrack>
-                </DropZone.FileProgress>
-              ) : (
+              {file.status === "failed" ? (
                 <>
                   <DropZone.FileMeta>Something went wrong, please retry</DropZone.FileMeta>
                   <Button
@@ -92,7 +87,7 @@ function FileList({
                     Try again
                   </Button>
                 </>
-              )}
+              ) : null}
             </DropZone.FileInfo>
             <DropZone.FileRemoveTrigger
               aria-label={`Remove ${file.name}`}

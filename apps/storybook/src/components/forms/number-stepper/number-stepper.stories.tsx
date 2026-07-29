@@ -1,7 +1,7 @@
 import React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
-import { ZoomInAreaIcon, ZoomOutAreaIcon } from "@thenamespace/uikit/icons";
+import { IconMinus, IconPlus, ZoomInAreaIcon, ZoomOutAreaIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
@@ -149,7 +149,10 @@ export const CustomValue: Story = {
         <NumberStepper.DecrementButton aria-label="Decrease Quantity" />
         <NumberStepper.Value>
           {({ value }) => (
-            <span className="number-stepper__value number-stepper__value--md px-2">
+            <span
+              className="number-stepper__value number-stepper__value--md"
+              data-slot="number-stepper-value"
+            >
               {value} {value === 1 ? "item" : "items"}
             </span>
           )}
@@ -180,46 +183,43 @@ const buttonVariants = ["primary", "secondary", "tertiary", "outline"] as const;
 
 export const WithCustomButtons: Story = {
   render: () => (
-    <div className="flex max-w-xl flex-col items-center gap-5">
-      <p className="text-muted text-sm">
-        Using Namespace Button (isIconOnly) as custom increment/decrement buttons.
-      </p>
-      <div className="grid grid-cols-4 gap-5">
-        {[false, true].flatMap((withoutBackground) =>
-          buttonVariants.map((variant) => {
-            const suffix = withoutBackground ? " no bg" : "";
+    <div className="grid grid-cols-4 gap-5">
+      {[false, true].flatMap((withoutBackground) =>
+        buttonVariants.map((variant) => {
+          const suffix = withoutBackground ? " no bg" : "";
 
-            return (
-              <div className="flex flex-col items-center gap-2" key={`${variant}-${suffix}`}>
-                <span className="text-muted text-xs">{variant}</span>
-                <NumberStepper aria-label={`Quantity ${variant}${suffix}`} defaultValue={1}>
-                  <NumberStepper.Group className={withoutBackground ? "bg-transparent" : undefined}>
-                    <Button
-                      aria-label={`Decrease Quantity ${variant}${suffix}`}
-                      className="rounded-full"
-                      isIconOnly
-                      slot="decrement"
-                      variant={variant}
-                    >
-                      −
-                    </Button>
-                    <NumberStepper.Value />
-                    <Button
-                      aria-label={`Increase Quantity ${variant}${suffix}`}
-                      className="rounded-full"
-                      isIconOnly
-                      slot="increment"
-                      variant={variant}
-                    >
-                      +
-                    </Button>
-                  </NumberStepper.Group>
-                </NumberStepper>
-              </div>
-            );
-          }),
-        )}
-      </div>
+          return (
+            <div className="flex flex-col items-center gap-2" key={`${variant}-${suffix}`}>
+              <span className="text-muted text-xs">{variant}</span>
+              <NumberStepper aria-label={`Quantity ${variant}${suffix}`} defaultValue={1}>
+                <NumberStepper.Group
+                  className={`gap-3 ${withoutBackground ? "bg-transparent" : ""}`}
+                >
+                  <Button
+                    isIconOnly
+                    aria-label={`Decrease Quantity ${variant}${suffix}`}
+                    size="sm"
+                    slot="decrement"
+                    variant={variant}
+                  >
+                    <IconMinus />
+                  </Button>
+                  <NumberStepper.Value />
+                  <Button
+                    isIconOnly
+                    aria-label={`Increase Quantity ${variant}${suffix}`}
+                    size="sm"
+                    slot="increment"
+                    variant={variant}
+                  >
+                    <IconPlus />
+                  </Button>
+                </NumberStepper.Group>
+              </NumberStepper>
+            </div>
+          );
+        }),
+      )}
     </div>
   ),
 };
@@ -234,7 +234,6 @@ const guestTypes = [
 export const GuestPicker: Story = {
   render: () => (
     <div className="w-80 space-y-5">
-      <p className="text-muted text-sm">Guest picker using the default NumberStepper look.</p>
       {guestTypes.map(({ description, label }) => (
         <div className="flex items-center justify-between gap-8" key={label}>
           <div>
@@ -255,61 +254,57 @@ export const GuestPicker: Story = {
 
 export const ReversedLayout: Story = {
   render: () => (
-    <div className="flex flex-col items-center gap-3">
-      <p className="text-muted text-sm">Reversed order — plus on the left, minus on the right.</p>
-      <NumberStepper aria-label="Quantity" defaultValue={1}>
-        <NumberStepper.Group>
-          <NumberStepper.IncrementButton aria-label="Increase Quantity" />
-          <NumberStepper.Value />
-          <NumberStepper.DecrementButton aria-label="Decrease Quantity" />
-        </NumberStepper.Group>
-      </NumberStepper>
-    </div>
+    <NumberStepper aria-label="Quantity" defaultValue={1}>
+      <NumberStepper.Group>
+        <NumberStepper.IncrementButton aria-label="Increase Quantity" />
+        <NumberStepper.Value />
+        <NumberStepper.DecrementButton aria-label="Decrease Quantity" />
+      </NumberStepper.Group>
+    </NumberStepper>
   ),
 };
 
 export const WithLabel: Story = {
   render: () => (
-    <div className="flex flex-col items-center gap-3">
-      <p className="text-muted text-sm">With Label and Description using OSS form primitives.</p>
-      <NumberStepper defaultValue={1} maxValue={10} minValue={1}>
-        <Label>Guests</Label>
-        <StepperContent decrementLabel="Decrease Guests" incrementLabel="Increase Guests" />
-        <Description>Maximum 10 guests per reservation</Description>
-      </NumberStepper>
-    </div>
+    <NumberStepper
+      className="flex-col items-start gap-1.5"
+      defaultValue={1}
+      maxValue={10}
+      minValue={1}
+    >
+      <Label>Guests</Label>
+      <StepperContent decrementLabel="Decrease Guests" incrementLabel="Increase Guests" />
+      <Description>Maximum 10 guests per reservation</Description>
+    </NumberStepper>
   ),
 };
 
 export const WithFormatOptions: Story = {
   render: () => (
-    <div className="flex flex-col items-center gap-5">
-      <p className="text-muted text-sm">Currency and percentage formatting via formatOptions.</p>
-      <div className="flex gap-8">
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-muted text-sm">Currency (USD)</span>
-          <NumberStepper
-            aria-label="Price"
-            defaultValue={10}
-            formatOptions={{ currency: "USD", style: "currency" }}
-            minValue={0}
-          >
-            <StepperContent decrementLabel="Decrease Price" incrementLabel="Increase Price" />
-          </NumberStepper>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-muted text-sm">Percentage</span>
-          <NumberStepper
-            aria-label="Opacity"
-            defaultValue={0.5}
-            formatOptions={{ style: "percent" }}
-            maxValue={1}
-            minValue={0}
-            step={0.1}
-          >
-            <StepperContent decrementLabel="Decrease Opacity" incrementLabel="Increase Opacity" />
-          </NumberStepper>
-        </div>
+    <div className="flex gap-8">
+      <div className="flex flex-col items-center gap-2">
+        <span className="text-muted text-sm">Currency (USD)</span>
+        <NumberStepper
+          aria-label="Price"
+          defaultValue={10}
+          formatOptions={{ currency: "USD", style: "currency" }}
+          minValue={0}
+        >
+          <StepperContent decrementLabel="Decrease Price" incrementLabel="Increase Price" />
+        </NumberStepper>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <span className="text-muted text-sm">Percentage</span>
+        <NumberStepper
+          aria-label="Opacity"
+          defaultValue={0.5}
+          formatOptions={{ style: "percent" }}
+          maxValue={1}
+          minValue={0}
+          step={0.1}
+        >
+          <StepperContent decrementLabel="Decrease Opacity" incrementLabel="Increase Opacity" />
+        </NumberStepper>
       </div>
     </div>
   ),

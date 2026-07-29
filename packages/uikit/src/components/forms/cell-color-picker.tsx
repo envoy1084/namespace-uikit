@@ -4,7 +4,11 @@ import type { ComponentProps, ComponentPropsWithRef, ReactElement, ReactNode } f
 import { createContext, useContext } from "react";
 
 import { ColorPicker, ColorSwatch, cn } from "@heroui/react";
-import { ColorPickerStateContext } from "react-aria-components";
+import {
+  Button as ButtonPrimitive,
+  ColorPickerStateContext,
+  composeRenderProps,
+} from "react-aria-components";
 
 export type CellColorPickerVariant = "default" | "secondary";
 
@@ -32,7 +36,7 @@ function CellColorPickerRoot({
 
 const CellColorPickerVariantContext = createContext<CellColorPickerVariant>("default");
 
-export type CellColorPickerTriggerProps = ComponentPropsWithRef<typeof ColorPicker.Trigger>;
+export type CellColorPickerTriggerProps = ComponentPropsWithRef<typeof ButtonPrimitive>;
 
 function CellColorPickerTrigger({
   children,
@@ -41,19 +45,21 @@ function CellColorPickerTrigger({
 }: CellColorPickerTriggerProps): ReactElement {
   const variant = useContext(CellColorPickerVariantContext);
   return (
-    <ColorPicker.Trigger
+    <ButtonPrimitive
       {...props}
-      className={(renderProps) =>
-        cn(
-          "cell-color-picker__trigger",
-          `cell-color-picker__trigger--${variant}`,
-          typeof className === "function" ? className(renderProps) : className,
-        ) ?? "cell-color-picker__trigger"
-      }
+      className={composeRenderProps(
+        className,
+        (resolvedClassName) =>
+          cn(
+            "cell-color-picker__trigger",
+            `cell-color-picker__trigger--${variant}`,
+            resolvedClassName,
+          ) ?? "cell-color-picker__trigger",
+      )}
       data-slot="cell-color-picker-trigger"
     >
       {children}
-    </ColorPicker.Trigger>
+    </ButtonPrimitive>
   );
 }
 

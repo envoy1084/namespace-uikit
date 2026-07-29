@@ -1,11 +1,11 @@
 "use client";
 
 // @demo-title With File List
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { DropZone } from "@thenamespace/uikit";
 import { Button } from "@thenamespace/uikit/button";
-import { CheckmarkCircle02Icon, Loading03Icon } from "@thenamespace/uikit/icons";
+import { CancelCircleIcon, CheckmarkCircle02Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Icon } from "@/demos/icon";
@@ -58,24 +58,31 @@ function FileList({
             />
             <DropZone.FileInfo>
               <DropZone.FileName>{file.name}</DropZone.FileName>
-              {file.status === "failed" ? (
-                <DropZone.FileMeta>{formatSize(file.size)}</DropZone.FileMeta>
-              ) : (
-                <DropZone.FileMeta>
-                  {formatSize(file.size)} |{" "}
-                  <HugeiconsIcon
-                    aria-hidden
-                    className={
-                      file.status === "complete"
-                        ? "text-success inline size-3 align-[-1px]"
-                        : "inline size-3 animate-spin align-[-1px]"
-                    }
-                    icon={file.status === "complete" ? CheckmarkCircle02Icon : Loading03Icon}
-                    size={12}
-                  />{" "}
-                  {file.status === "uploading" ? file.progress : 100}%
-                </DropZone.FileMeta>
-              )}
+              <DropZone.FileMeta>
+                {formatSize(file.size)}
+                {file.status === "uploading" ? (
+                  " | Uploading..."
+                ) : (
+                  <div className="flex items-center gap-1">
+                    {" | "}
+                    <HugeiconsIcon
+                      aria-hidden
+                      className={
+                        file.status === "complete"
+                          ? "text-success inline size-3"
+                          : "text-danger inline size-3"
+                      }
+                      icon={file.status === "complete" ? CheckmarkCircle02Icon : CancelCircleIcon}
+                      size={12}
+                    />
+                    {file.status === "complete" ? (
+                      " Complete"
+                    ) : (
+                      <span className="text-danger">Failed</span>
+                    )}
+                  </div>
+                )}
+              </DropZone.FileMeta>
               {file.status !== "failed" ? (
                 <DropZone.FileProgress value={file.progress}>
                   <DropZone.FileProgressTrack>
@@ -83,17 +90,14 @@ function FileList({
                   </DropZone.FileProgressTrack>
                 </DropZone.FileProgress>
               ) : (
-                <>
-                  <DropZone.FileMeta>Something went wrong, please retry</DropZone.FileMeta>
-                  <Button
-                    className="mt-2 -ml-1"
-                    size="sm"
-                    variant="danger-soft"
-                    onPress={() => onRetry?.(file.id)}
-                  >
-                    Try again
-                  </Button>
-                </>
+                <Button
+                  className="mt-2 -ml-1"
+                  size="sm"
+                  variant="danger-soft"
+                  onPress={() => onRetry?.(file.id)}
+                >
+                  Try again
+                </Button>
               )}
             </DropZone.FileInfo>
             <DropZone.FileRemoveTrigger
@@ -109,30 +113,46 @@ function FileList({
 
 const initialFiles: Upload[] = [
   {
-    id: "1",
-    name: "Logo dark.svg",
+    id: "annual-report",
+    name: "Annual report 2025.pdf",
     progress: 100,
-    size: 24576,
+    size: 2.2 * 1024 * 1024,
     status: "complete",
   },
   {
-    id: "2",
-    name: "Meeting notes.docx",
-    progress: 68,
-    size: 358400,
+    id: "hero-banner",
+    name: "Hero banner.png",
+    progress: 42,
+    size: 480 * 1024,
     status: "uploading",
   },
   {
-    id: "3",
-    name: "Demo recording.mp4",
-    progress: 18,
-    size: 5242880,
+    id: "onboarding-flow",
+    name: "Onboarding flow.mp4",
+    progress: 0,
+    size: 8 * 1024 * 1024,
     status: "failed",
   },
 ];
 
 export const DemoWithFileListExample = function Demo() {
   const [files, setFiles] = useState(initialFiles);
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setFiles((current) =>
+        current.map((file) => {
+          if (file.status !== "uploading") return file;
+          const progress = Math.min(file.progress + 5, 100);
+          return {
+            ...file,
+            progress,
+            status: progress === 100 ? "complete" : "uploading",
+          };
+        }),
+      );
+    }, 200);
+    return () => window.clearInterval(timer);
+  }, []);
   return (
     <DropZone className="w-[480px]">
       <DropZone.Area>

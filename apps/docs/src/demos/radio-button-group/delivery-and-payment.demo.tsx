@@ -29,10 +29,16 @@ const delivery = [
   },
 ];
 
-function DeliveryGroup({ name = "delivery" }: { name?: string }) {
+function DeliveryGroup({
+  className = "w-full max-w-2xl grid-cols-1 sm:grid-cols-3",
+  name = "delivery",
+}: {
+  className?: string;
+  name?: string;
+}) {
   return (
     <RadioButtonGroup
-      className="w-full max-w-2xl grid-cols-1 sm:grid-cols-3"
+      className={className}
       defaultValue="express"
       layout="grid"
       name={name}
@@ -66,10 +72,16 @@ const payment = [
   ["paypal", "PayPal", "Pay with PayPal", "logos:paypal"],
 ] as const;
 
-function PaymentGroup({ align = "center" }: { align?: "center" | "start" }) {
+function PaymentGroup({
+  align = "center",
+  className = "w-full max-w-2xl grid-cols-1 sm:grid-cols-2",
+}: {
+  align?: "center" | "start";
+  className?: string;
+}) {
   return (
     <RadioButtonGroup
-      className="w-full max-w-2xl grid-cols-1 sm:grid-cols-2"
+      className={className}
       defaultValue="visa"
       layout="grid"
       name="payment"
@@ -98,10 +110,10 @@ function PaymentGroup({ align = "center" }: { align?: "center" | "start" }) {
 export const DemoDeliveryAndPaymentExample = () => (
   <div className="flex w-full max-w-lg flex-col items-center gap-10">
     <section className="flex w-full flex-col gap-4">
-      <DeliveryGroup name="delivery-full" />
+      <DeliveryGroup className="grid-cols-1 sm:grid-cols-3" name="delivery-full" />
     </section>
     <section className="flex w-full flex-col gap-4">
-      <PaymentGroup align="start" />
+      <PaymentGroup align="start" className="grid-cols-1 sm:grid-cols-2" />
     </section>
   </div>
 );

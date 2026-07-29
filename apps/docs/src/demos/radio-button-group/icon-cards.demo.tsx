@@ -62,7 +62,7 @@ export const DemoIconCardsExample = () => (
             </div>
           </div>
           <NumberValue
-            className="mt-2 text-2xl font-bold"
+            className="text-2xl font-bold"
             currency="USD"
             maximumFractionDigits={0}
             style="currency"

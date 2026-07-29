@@ -1,6 +1,8 @@
 "use client";
 
 // @demo-title Subscription Plans
+import type { CSSProperties } from "react";
+
 import { CheckboxButtonGroup } from "@thenamespace/uikit";
 import { Button } from "@thenamespace/uikit/button";
 import { Description } from "@thenamespace/uikit/description";
@@ -30,9 +32,19 @@ export const DemoSubscriptionPlansExample = () => (
         Pick a plan. <Link href="#">Try a month on us!</Link>
       </p>
     </div>
-    <CheckboxButtonGroup className="w-full" defaultValue={["silver"]} name="subscription-plan">
+    <CheckboxButtonGroup
+      className="w-full"
+      defaultValue={["silver"]}
+      name="subscription-plan"
+      style={{ "--accent": "#89c75a" } as CSSProperties}
+    >
       {plans.map(([value, title, daily, monthly, description]) => (
-        <CheckboxButtonGroup.Item key={value} value={value}>
+        <CheckboxButtonGroup.Item
+          className="data-[selected=true]:border-[--sub-green] data-[selected=true]:bg-[--sub-green]/10"
+          key={value}
+          style={{ "--sub-green": "#89c75a" } as CSSProperties}
+          value={value}
+        >
           {({ isSelected }) => (
             <>
               <CheckboxButtonGroup.Indicator>
@@ -43,7 +55,12 @@ export const DemoSubscriptionPlansExample = () => (
                 <Description>{description}</Description>
                 <p className="mt-3 text-sm">
                   <span className={isSelected ? "text-success" : ""}>
-                    <NumberValue currency="USD" style="currency" value={daily}>
+                    <NumberValue
+                      className="font-semibold"
+                      currency="USD"
+                      style="currency"
+                      value={daily}
+                    >
                       <NumberValue.Suffix>/day</NumberValue.Suffix>
                     </NumberValue>
                   </span>{" "}
@@ -68,7 +85,12 @@ export const DemoSubscriptionPlansExample = () => (
       <p className="text-muted px-2 text-center text-xs">
         *APY is variable and subject to change at our discretion, without prior notice.
       </p>
-      <Button fullWidth className="rounded-full" size="lg">
+      <Button
+        fullWidth
+        className="rounded-full text-white"
+        size="lg"
+        style={{ background: "#89c75a" }}
+      >
         Try a month on us
       </Button>
       <Link href="#">Compare plans</Link>

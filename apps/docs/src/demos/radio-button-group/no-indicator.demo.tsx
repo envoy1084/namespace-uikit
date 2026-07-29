@@ -56,10 +56,9 @@ function PlanGroup({
       className="w-[min(360px,calc(100vw-2rem))]"
       defaultValue={defaultValue}
       name="plan"
-      variant="secondary"
+      variant="primary"
     >
       <Label>Select a plan</Label>
-      <Description>Choose the plan that suits your needs</Description>
       {plans.map((plan) => (
         <RadioButtonGroup.Item key={plan.value} value={plan.value}>
           {indicator ? <RadioButtonGroup.Indicator /> : null}

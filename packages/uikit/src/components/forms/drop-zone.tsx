@@ -1,18 +1,18 @@
 "use client";
 
-import type {
-  ComponentProps,
-  ComponentPropsWithRef,
-  CSSProperties,
-  ReactElement,
-  ReactNode,
-} from "react";
+import type { ComponentProps, ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 import { createContext, useCallback, useContext, useMemo, useRef } from "react";
 
-import { Button, cn } from "@heroui/react";
+import { cn, ProgressBar } from "@heroui/react";
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { DropZone as DropZonePrimitive } from "react-aria-components";
+import { AnimatePresence, motion } from "motion/react";
+import {
+  Button as ButtonPrimitive,
+  composeRenderProps,
+  DropZone as DropZonePrimitive,
+  Text as TextPrimitive,
+} from "react-aria-components";
 
 interface DropZoneContextValue {
   inputRef: React.RefObject<HTMLInputElement | null>;
@@ -84,18 +84,18 @@ function DropZoneIcon({ children, className, ...props }: DropZoneIconProps): Rea
   );
 }
 
-export type DropZoneLabelProps = ComponentPropsWithRef<"span">;
+export type DropZoneLabelProps = ComponentPropsWithRef<typeof TextPrimitive>;
 
 function DropZoneLabel({ children, className, ...props }: DropZoneLabelProps): ReactElement {
   return (
-    <span
+    <TextPrimitive
       {...props}
       className={cn("drop-zone__label", className)}
       data-slot="drop-zone-label"
       slot="label"
     >
       {children}
-    </span>
+    </TextPrimitive>
   );
 }
 
@@ -143,7 +143,7 @@ function DropZoneInput({ className, onSelect, ...props }: DropZoneInputProps): R
   );
 }
 
-export type DropZoneTriggerProps = ComponentProps<typeof Button>;
+export type DropZoneTriggerProps = ComponentProps<typeof ButtonPrimitive>;
 
 function DropZoneTrigger({
   children = "Select files",
@@ -152,14 +152,12 @@ function DropZoneTrigger({
 }: DropZoneTriggerProps): ReactElement {
   const { openFilePicker } = useContext(DropZoneContext);
   return (
-    <Button
+    <ButtonPrimitive
       {...props}
-      className={(renderProps) =>
-        cn(
-          "drop-zone__trigger",
-          typeof className === "function" ? className(renderProps) : className,
-        ) ?? "drop-zone__trigger"
-      }
+      className={composeRenderProps(
+        className,
+        (resolvedClassName) => cn("drop-zone__trigger", resolvedClassName) ?? "drop-zone__trigger",
+      )}
       data-slot="drop-zone-trigger"
       onPress={(event) => {
         openFilePicker();
@@ -167,7 +165,7 @@ function DropZoneTrigger({
       }}
     >
       {children}
-    </Button>
+    </ButtonPrimitive>
   );
 }
 
@@ -179,12 +177,12 @@ function DropZoneFileList({ children, className, ...props }: DropZoneFileListPro
       className={cn("drop-zone__file-list", className)}
       data-slot="drop-zone-file-list"
     >
-      {children}
+      <AnimatePresence initial={false}>{children}</AnimatePresence>
     </div>
   );
 }
 
-export interface DropZoneFileItemProps extends ComponentPropsWithRef<"div"> {
+export interface DropZoneFileItemProps extends ComponentProps<typeof motion.div> {
   status?: "complete" | "failed" | "uploading";
 }
 function DropZoneFileItem({
@@ -194,14 +192,19 @@ function DropZoneFileItem({
   ...props
 }: DropZoneFileItemProps): ReactElement {
   return (
-    <div
+    <motion.div
       {...props}
+      animate={{ opacity: 1, y: 0 }}
       className={cn("drop-zone__file-item", className)}
       data-slot="drop-zone-file-item"
       data-status={status}
+      exit={{ opacity: 0, y: -8 }}
+      initial={{ opacity: 0, y: -8 }}
+      layout
+      transition={{ duration: 0.2 }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
 
@@ -235,7 +238,11 @@ function DropZoneFileFormatIcon({
       <path d="M19 1v7a4 4 0 0 0 4 4h8" stroke="var(--color-border)" strokeWidth="1.5" />
       {format ? (
         <foreignObject height="40" width="32">
-          <div className="drop-zone__file-format-icon-badge" data-color={color}>
+          <div
+            className="drop-zone__file-format-icon-badge"
+            data-color={color}
+            data-slot="drop-zone-file-format-icon-badge"
+          >
             {format}
           </div>
         </foreignObject>
@@ -290,89 +297,55 @@ function DropZoneFileMeta({
   );
 }
 
-export interface DropZoneFileProgressProps extends Omit<ComponentPropsWithRef<"div">, "children"> {
-  children: ReactNode;
-  maxValue?: number;
-  minValue?: number;
-  size?: "lg" | "md" | "sm";
-  value?: number;
-}
+export type DropZoneFileProgressProps = ComponentProps<typeof ProgressBar>;
 function DropZoneFileProgress({
   children,
   className,
-  maxValue = 100,
-  minValue = 0,
   size = "sm",
-  style,
-  value = 0,
   ...props
 }: DropZoneFileProgressProps): ReactElement {
-  const progress = Math.max(
-    0,
-    Math.min(100, ((value - minValue) / (maxValue - minValue || 1)) * 100),
-  );
   return (
-    <div
+    <ProgressBar
       {...props}
-      className={cn("drop-zone__file-progress", `progress-bar--${size}`, className)}
+      aria-label={props["aria-label"] ?? "Upload progress"}
+      className={composeRenderProps(
+        className,
+        (resolvedClassName) => cn("drop-zone__file-progress", resolvedClassName) ?? "",
+      )}
+      color="accent"
       data-slot="drop-zone-file-progress"
-      style={
-        {
-          ...style,
-          "--drop-zone-file-progress-value": `${progress}%`,
-        } as CSSProperties
-      }
+      size={size}
     >
       {children}
-    </div>
+    </ProgressBar>
   );
 }
-function DropZoneFileProgressTrack({
-  className,
-  ...props
-}: ComponentPropsWithRef<"div">): ReactElement {
-  return (
-    <div
-      {...props}
-      className={cn("progress-bar__track", className)}
-      data-slot="drop-zone-file-progress-track"
-    />
-  );
+function DropZoneFileProgressTrack(props: ComponentProps<typeof ProgressBar.Track>): ReactElement {
+  return <ProgressBar.Track {...props} data-slot="drop-zone-file-progress-track" />;
 }
-function DropZoneFileProgressFill({
-  className,
-  style,
-  ...props
-}: ComponentPropsWithRef<"div">): ReactElement {
-  return (
-    <div
-      {...props}
-      className={cn("progress-bar__fill", className)}
-      data-slot="drop-zone-file-progress-fill"
-      style={{ width: "var(--drop-zone-file-progress-value)", ...style }}
-    />
-  );
+function DropZoneFileProgressFill(props: ComponentProps<typeof ProgressBar.Fill>): ReactElement {
+  return <ProgressBar.Fill {...props} data-slot="drop-zone-file-progress-fill" />;
 }
 
-export type DropZoneFileRemoveTriggerProps = ComponentProps<typeof Button>;
+export type DropZoneFileRemoveTriggerProps = ComponentProps<typeof ButtonPrimitive>;
 function DropZoneFileRemoveTrigger({
   children,
   className,
   ...props
 }: DropZoneFileRemoveTriggerProps): ReactElement {
   return (
-    <Button
+    <ButtonPrimitive
       {...props}
-      className={(state) =>
-        cn(
+      className={composeRenderProps(
+        className,
+        (resolvedClassName) =>
+          cn("drop-zone__file-remove-trigger", resolvedClassName) ??
           "drop-zone__file-remove-trigger",
-          typeof className === "function" ? className(state) : className,
-        ) ?? "drop-zone__file-remove-trigger"
-      }
+      )}
       data-slot="drop-zone-file-remove-trigger"
     >
       {children ?? <HugeiconsIcon aria-hidden icon={Cancel01Icon} size={16} />}
-    </Button>
+    </ButtonPrimitive>
   );
 }
 function DropZoneFileRetryTrigger({
@@ -381,18 +354,17 @@ function DropZoneFileRetryTrigger({
   ...props
 }: DropZoneFileRemoveTriggerProps): ReactElement {
   return (
-    <Button
+    <ButtonPrimitive
       {...props}
-      className={(state) =>
-        cn(
-          "drop-zone__file-retry-trigger",
-          typeof className === "function" ? className(state) : className,
-        ) ?? "drop-zone__file-retry-trigger"
-      }
+      className={composeRenderProps(
+        className,
+        (resolvedClassName) =>
+          cn("drop-zone__file-retry-trigger", resolvedClassName) ?? "drop-zone__file-retry-trigger",
+      )}
       data-slot="drop-zone-file-retry-trigger"
     >
       {children}
-    </Button>
+    </ButtonPrimitive>
   );
 }
 

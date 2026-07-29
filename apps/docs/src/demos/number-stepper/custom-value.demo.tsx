@@ -9,7 +9,10 @@ export const DemoCustomValueExample = () => (
       <NumberStepper.DecrementButton aria-label="Decrease Quantity" />
       <NumberStepper.Value>
         {({ value }) => (
-          <span className="number-stepper__value number-stepper__value--md px-2">
+          <span
+            className="number-stepper__value number-stepper__value--md"
+            data-slot="number-stepper-value"
+          >
             {value} {value === 1 ? "item" : "items"}
           </span>
         )}

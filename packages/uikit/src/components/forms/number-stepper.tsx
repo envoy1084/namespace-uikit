@@ -53,8 +53,7 @@ function NumberStepperRoot({
         {...props}
         className={composeRenderProps(
           className,
-          (resolvedClassName) =>
-            cn("number-stepper", `number-stepper--${size}`, resolvedClassName) ?? "",
+          (resolvedClassName) => cn("number-stepper", resolvedClassName) ?? "",
         )}
         data-slot="number-stepper"
         {...(formatOptions ? { formatOptions } : {})}
@@ -156,7 +155,7 @@ function NumberStepperDecrementButton({
       data-slot="number-stepper-decrement-button"
       slot="decrement"
     >
-      {children ?? <IconMinus data-slot="number-stepper-decrement-button-icon" />}
+      {children ?? <IconMinus />}
     </ButtonPrimitive>
   );
 }
@@ -185,7 +184,7 @@ function NumberStepperIncrementButton({
       data-slot="number-stepper-increment-button"
       slot="increment"
     >
-      {children ?? <IconPlus data-slot="number-stepper-increment-button-icon" />}
+      {children ?? <IconPlus />}
     </ButtonPrimitive>
   );
 }

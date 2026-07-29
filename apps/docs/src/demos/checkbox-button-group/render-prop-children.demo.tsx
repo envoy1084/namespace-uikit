@@ -28,23 +28,18 @@ const addons = [
 ];
 
 export const DemoRenderPropChildrenExample = () => (
-  <CheckboxButtonGroup
-    className="w-[360px]"
-    defaultValue={["backups"]}
-    name="features-render"
-    variant="secondary"
-  >
+  <CheckboxButtonGroup className="w-[360px]" name="features-render" variant="secondary">
     <Label>Select features</Label>
     {addons.map((addon) => (
       <CheckboxButtonGroup.Item key={addon.value} value={addon.value}>
-        {({ isSelected }) => (
+        {() => (
           <>
             <CheckboxButtonGroup.Indicator />
             <CheckboxButtonGroup.ItemContent>
               <Label>{addon.title}</Label>
               <Description>{addon.description}</Description>
               <NumberValue
-                className={`mt-2 text-sm font-semibold ${isSelected ? "text-accent" : ""}`}
+                className="mt-2 text-sm font-semibold"
                 currency="USD"
                 maximumFractionDigits={0}
                 style="currency"
