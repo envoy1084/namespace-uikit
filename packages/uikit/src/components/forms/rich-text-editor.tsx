@@ -16,8 +16,19 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 
-import { Button, cn, Input, Popover, Separator, ToggleButton } from "@heroui/react";
+import {
+  Button,
+  cn,
+  Input,
+  ListBox,
+  Popover,
+  Separator,
+  ToggleButton,
+  Toolbar,
+  Tooltip,
+} from "@heroui/react";
 import type { Editor, EditorOptions, Extensions, JSONContent } from "@tiptap/core";
 import { CharacterCount } from "@tiptap/extension-character-count";
 import { Link } from "@tiptap/extension-link";
@@ -53,7 +64,7 @@ export interface RichTextEditorValueChangeDetails {
   wordCount: number;
 }
 
-interface RichTextEditorContextValue {
+export interface RichTextEditorContextValue {
   editor: Editor | null;
   isDisabled: boolean;
   isReadOnly: boolean;
@@ -64,14 +75,27 @@ const RichTextEditorContext = createContext<RichTextEditorContextValue>({
   isDisabled: false,
   isReadOnly: false,
 });
-function useRichTextEditor(): RichTextEditorContextValue {
+export function useRichTextEditor(): RichTextEditorContextValue {
   return useContext(RichTextEditorContext);
+}
+export function useRichTextEditorState<T>(
+  selector: (state: { editor: Editor }) => T,
+  equalityFn?: (previous: T | null, next: T | null) => boolean,
+): T | null {
+  const { editor } = useRichTextEditor();
+  return useEditorState({
+    editor,
+    ...(equalityFn === undefined ? {} : { equalityFn }),
+    selector: ({ editor: current }) => (current ? selector({ editor: current }) : null),
+  });
 }
 
 const emptyDocument: JSONContent = {
   type: "doc",
   content: [{ type: "paragraph" }],
 };
+const defaultSuggestionPrefixes = [" "];
+
 function details(editor: Editor): RichTextEditorValueChangeDetails {
   return {
     characterCount: editor.storage.characterCount?.characters() ?? editor.getText().length,
@@ -130,6 +154,18 @@ function RichTextEditorRoot({
     ],
     [extensions, maxLength, placeholder],
   );
+  const editorAttributes = useMemo(() => {
+    const attributes = editorOptions?.editorProps?.attributes;
+    const decorate = (current: Record<string, string> = {}): Record<string, string> => ({
+      ...current,
+      class:
+        cn("rich-text-editor__prosemirror", current["class"]) ?? "rich-text-editor__prosemirror",
+      "data-slot": "rich-text-editor-prosemirror",
+    });
+    return typeof attributes === "function"
+      ? (...args: Parameters<typeof attributes>) => decorate(attributes(...args))
+      : decorate(attributes);
+  }, [editorOptions?.editorProps?.attributes]);
   const editor = useEditor(
     {
       ...editorOptions,
@@ -137,22 +173,11 @@ function RichTextEditorRoot({
       editable: !isDisabled && !isReadOnly,
       editorProps: {
         ...editorOptions?.editorProps,
-        attributes: {
-          ...(typeof editorOptions?.editorProps?.attributes === "object"
-            ? editorOptions.editorProps.attributes
-            : {}),
-          class:
-            cn(
-              "rich-text-editor__prosemirror",
-              typeof editorOptions?.editorProps?.attributes === "object"
-                ? editorOptions.editorProps.attributes["class"]
-                : undefined,
-            ) ?? "rich-text-editor__prosemirror",
-          "data-slot": "rich-text-editor-prosemirror",
-        },
+        attributes: editorAttributes,
       },
       extensions: editorExtensions,
       immediatelyRender: false,
+      shouldRerenderOnTransaction: false,
       onUpdate: (event) => {
         callbacks.current.onUpdate?.(event);
         callbacks.current.onValueChange?.(event.editor.getJSON(), details(event.editor));
@@ -163,6 +188,14 @@ function RichTextEditorRoot({
   useEffect(() => {
     editor?.setEditable(!isDisabled && !isReadOnly);
   }, [editor, isDisabled, isReadOnly]);
+  useEffect(() => {
+    editor?.setOptions({
+      editorProps: {
+        ...editorOptions?.editorProps,
+        attributes: editorAttributes,
+      },
+    });
+  }, [editor, editorAttributes, editorOptions?.editorProps]);
   useEffect(() => {
     if (!editor || value === undefined) return;
     if (JSON.stringify(editor.getJSON()) !== JSON.stringify(value))
@@ -225,9 +258,7 @@ function RichTextEditorToolbarGroup({
 }
 const RichTextEditorFooter: ReturnType<typeof slotDiv> = slotDiv("rich-text-editor__footer");
 
-export interface RichTextEditorToolbarProps extends ComponentPropsWithRef<"div"> {
-  orientation?: "horizontal" | "vertical";
-}
+export type RichTextEditorToolbarProps = ComponentProps<typeof Toolbar>;
 function RichTextEditorToolbar({
   "aria-label": ariaLabel = "Editor toolbar",
   children,
@@ -236,16 +267,20 @@ function RichTextEditorToolbar({
   ...props
 }: RichTextEditorToolbarProps): ReactElement {
   return (
-    <div
+    <Toolbar
       {...props}
       aria-label={ariaLabel}
-      className={cn("rich-text-editor__toolbar", "toolbar", className)}
-      data-orientation={orientation}
+      className={(state) =>
+        cn(
+          "rich-text-editor__toolbar",
+          typeof className === "function" ? className(state) : className,
+        ) ?? "rich-text-editor__toolbar"
+      }
       data-slot="rich-text-editor-toolbar"
-      role="toolbar"
+      orientation={orientation}
     >
       {children}
-    </div>
+    </Toolbar>
   );
 }
 function RichTextEditorToolbarSeparator({
@@ -337,6 +372,10 @@ function canRun(editor: Editor, command: RichTextEditorCommand): boolean {
       return chain.toggleHeading({ level: 3 }).run();
   }
 }
+function canInvokeAction(editor: Editor, action: RichTextEditorAction): boolean {
+  if (action === "clearContent" || action === "clearFormatting") return !editor.isEmpty;
+  return editor.can().chain().focus()[action]().run();
+}
 const commandLabels: Record<RichTextEditorCommand, string> = {
   blockquote: "Blockquote",
   bold: "Bold",
@@ -351,6 +390,15 @@ const commandLabels: Record<RichTextEditorCommand, string> = {
   strike: "Strikethrough",
   underline: "Underline",
 };
+const withEditorTooltip = (trigger: ReactElement, tooltip: ReactNode | undefined): ReactElement =>
+  tooltip ? (
+    <Tooltip delay={0}>
+      <Tooltip.Trigger>{trigger}</Tooltip.Trigger>
+      <Tooltip.Content>{tooltip}</Tooltip.Content>
+    </Tooltip>
+  ) : (
+    trigger
+  );
 
 export interface RichTextEditorToggleButtonProps extends Omit<
   ComponentProps<typeof ToggleButton>,
@@ -377,7 +425,7 @@ function RichTextEditorToggleButton({
     }),
   });
   const disabled = rootDisabled || isReadOnly || isDisabled || !editor || !state?.canRun;
-  return (
+  return withEditorTooltip(
     <ToggleButton
       {...props}
       aria-label={ariaLabel ?? (typeof tooltip === "string" ? tooltip : commandLabels[command])}
@@ -401,7 +449,8 @@ function RichTextEditorToggleButton({
       }}
     >
       {children ?? commandLabels[command]}
-    </ToggleButton>
+    </ToggleButton>,
+    tooltip,
   );
 }
 
@@ -421,17 +470,13 @@ function RichTextEditorActionButton({
   const { editor, isDisabled: rootDisabled, isReadOnly } = useRichTextEditor();
   const canInvoke = useEditorState({
     editor,
-    selector: ({ editor: current }) => {
+    selector: ({ editor: current }): boolean => {
       if (!current || current.isDestroyed) return false;
-      if (action === "undo") return true;
-      if (action === "redo") {
-        try {
-          return current.can().chain().focus().redo().run();
-        } catch {
-          return false;
-        }
+      try {
+        return canInvokeAction(current, action);
+      } catch {
+        return false;
       }
-      return !current.isEmpty;
     },
   });
   const disabled = rootDisabled || isReadOnly || isDisabled || !editor || !canInvoke;
@@ -443,7 +488,7 @@ function RichTextEditorActionButton({
     else if (action === "clearContent") chain.clearContent().run();
     else chain.unsetAllMarks().clearNodes().run();
   };
-  return (
+  return withEditorTooltip(
     <Button
       {...props}
       aria-label={
@@ -475,7 +520,8 @@ function RichTextEditorActionButton({
       }}
     >
       {children ?? action}
-    </Button>
+    </Button>,
+    tooltip,
   );
 }
 
@@ -494,20 +540,21 @@ function RichTextEditorCommandButton({
   isActive,
   isDisabled,
   onCommand,
+  tooltip,
   ...props
 }: RichTextEditorCommandButtonProps): ReactElement {
   const { editor, isDisabled: rootDisabled, isReadOnly } = useRichTextEditor();
-  const selected = editor
-    ? typeof isActive === "function"
-      ? isActive(editor)
-      : Boolean(isActive)
-    : false;
-  const disabled =
-    rootDisabled ||
-    isReadOnly ||
-    !editor ||
-    (typeof isDisabled === "function" ? isDisabled(editor) : Boolean(isDisabled));
-  return (
+  const commandState = useRichTextEditorState(
+    ({ editor: current }) => ({
+      isActive: typeof isActive === "function" ? isActive(current) : Boolean(isActive),
+      isDisabled: typeof isDisabled === "function" ? isDisabled(current) : Boolean(isDisabled),
+    }),
+    (previous, next) =>
+      previous?.isActive === next?.isActive && previous?.isDisabled === next?.isDisabled,
+  ) ?? { isActive: false, isDisabled: true };
+  const selected = commandState.isActive;
+  const disabled = rootDisabled || isReadOnly || !editor || commandState.isDisabled;
+  return withEditorTooltip(
     <Button
       {...props}
       {...(selected ? { "aria-pressed": true as const } : {})}
@@ -529,7 +576,8 @@ function RichTextEditorCommandButton({
       }}
     >
       {children}
-    </Button>
+    </Button>,
+    tooltip,
   );
 }
 
@@ -550,12 +598,25 @@ function RichTextEditorContent({
   );
 }
 
+export interface RichTextEditorBubbleMenuProps extends Omit<
+  ComponentProps<typeof BubbleMenu>,
+  "editor"
+> {
+  toolbarProps?: ComponentProps<typeof Toolbar>;
+}
 function RichTextEditorBubbleMenu({
   children,
   className,
+  toolbarProps,
   ...props
-}: Omit<ComponentProps<typeof BubbleMenu>, "editor">): ReactElement | null {
+}: RichTextEditorBubbleMenuProps): ReactElement | null {
   const { editor, isDisabled, isReadOnly } = useRichTextEditor();
+  const {
+    "aria-label": toolbarAriaLabel = "Selection formatting toolbar",
+    className: toolbarClassName,
+    orientation = "horizontal",
+    ...toolbarRest
+  } = toolbarProps ?? {};
   return editor ? (
     <BubbleMenu
       {...props}
@@ -569,21 +630,45 @@ function RichTextEditorBubbleMenu({
           : context.editor.isFocused && !context.editor.state.selection.empty)
       }
     >
-      <div className="rich-text-editor__bubble-menu-toolbar toolbar" role="toolbar">
+      <Toolbar
+        {...toolbarRest}
+        aria-label={toolbarAriaLabel}
+        className={(state) =>
+          cn(
+            "rich-text-editor__bubble-menu-toolbar",
+            typeof toolbarClassName === "function" ? toolbarClassName(state) : toolbarClassName,
+          ) ?? "rich-text-editor__bubble-menu-toolbar"
+        }
+        data-slot="rich-text-editor-bubble-menu-toolbar"
+        orientation={orientation}
+      >
         {children}
-      </div>
+      </Toolbar>
     </BubbleMenu>
   ) : null;
+}
+export interface RichTextEditorFloatingMenuProps extends Omit<
+  ComponentProps<typeof FloatingMenu>,
+  "editor"
+> {
+  toolbarProps?: ComponentProps<typeof Toolbar>;
 }
 function RichTextEditorFloatingMenu({
   children,
   className,
   shouldShow,
+  toolbarProps,
   ...props
-}: Omit<ComponentProps<typeof FloatingMenu>, "editor">): ReactElement | null {
+}: RichTextEditorFloatingMenuProps): ReactElement | null {
   const { editor, isDisabled, isReadOnly } = useRichTextEditor();
   const visibility =
     isDisabled || isReadOnly ? { shouldShow: () => false } : shouldShow ? { shouldShow } : {};
+  const {
+    "aria-label": toolbarAriaLabel = "Insertion toolbar",
+    className: toolbarClassName,
+    orientation = "horizontal",
+    ...toolbarRest
+  } = toolbarProps ?? {};
   return editor ? (
     <FloatingMenu
       {...props}
@@ -591,9 +676,20 @@ function RichTextEditorFloatingMenu({
       className={cn("rich-text-editor__floating-menu", className)}
       editor={editor}
     >
-      <div className="rich-text-editor__floating-menu-toolbar toolbar" role="toolbar">
+      <Toolbar
+        {...toolbarRest}
+        aria-label={toolbarAriaLabel}
+        className={(state) =>
+          cn(
+            "rich-text-editor__floating-menu-toolbar",
+            typeof toolbarClassName === "function" ? toolbarClassName(state) : toolbarClassName,
+          ) ?? "rich-text-editor__floating-menu-toolbar"
+        }
+        data-slot="rich-text-editor-floating-menu-toolbar"
+        orientation={orientation}
+      >
         {children}
-      </div>
+      </Toolbar>
     </FloatingMenu>
   ) : null;
 }
@@ -645,6 +741,7 @@ function RichTextEditorCharacterCount({
 
 interface LinkContextValue {
   apply: () => void;
+  close: () => void;
   href: string;
   isDisabled: boolean;
   setHref: (value: string) => void;
@@ -657,9 +754,24 @@ function useLinkContext(): LinkContextValue {
     throw new Error("RichTextEditor.LinkPopover subcomponents must be used within LinkPopover");
   return value;
 }
-function LinkPopoverRoot({ children, ...props }: ComponentProps<typeof Popover>): ReactElement {
+function LinkPopoverRoot({
+  children,
+  isOpen,
+  onOpenChange,
+  ...props
+}: ComponentProps<typeof Popover>): ReactElement {
   const { editor, isDisabled, isReadOnly } = useRichTextEditor();
   const [href, setHref] = useState("");
+  const [localOpen, setLocalOpen] = useState(false);
+  const open = isOpen ?? localOpen;
+  const setOpen = useCallback(
+    (value: boolean) => {
+      if (isOpen === undefined) setLocalOpen(value);
+      onOpenChange?.(value);
+    },
+    [isOpen, onOpenChange],
+  );
+  const close = useCallback(() => setOpen(false), [setOpen]);
   const disabled = isDisabled || isReadOnly || !editor;
   const apply = useCallback(() => {
     if (!editor || disabled) return;
@@ -670,22 +782,28 @@ function LinkPopoverRoot({ children, ...props }: ComponentProps<typeof Popover>)
         .focus()
         .extendMarkRange("link")
         .setLink({
-          href: /^(https?:\/\/|mailto:|tel:)/.test(value) ? value : `https://${value}`,
+          href: /^(https?:|mailto:|tel:|#|\/)/i.test(value) ? value : `https://${value}`,
         })
         .run();
     else editor.chain().focus().extendMarkRange("link").unsetLink().run();
-  }, [disabled, editor, href]);
+    close();
+  }, [close, disabled, editor, href]);
   const unset = useCallback(() => {
-    if (editor && !disabled) editor.chain().focus().extendMarkRange("link").unsetLink().run();
-  }, [disabled, editor]);
+    if (editor && !disabled) {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+      close();
+    }
+  }, [close, disabled, editor]);
   const contextValue = useMemo(
-    () => ({ apply, href, isDisabled: disabled, setHref, unset }),
-    [apply, disabled, href, unset],
+    () => ({ apply, close, href, isDisabled: disabled, setHref, unset }),
+    [apply, close, disabled, href, unset],
   );
 
   return (
     <LinkContext value={contextValue}>
-      <Popover {...props}>{children}</Popover>
+      <Popover {...props} isOpen={open} onOpenChange={setOpen}>
+        {children}
+      </Popover>
     </LinkContext>
   );
 }
@@ -696,6 +814,11 @@ function LinkPopoverTrigger({
 }: ComponentProps<typeof Button>): ReactElement {
   const { editor } = useRichTextEditor();
   const { isDisabled, setHref } = useLinkContext();
+  const isActive =
+    useEditorState({
+      editor,
+      selector: ({ editor: current }) => current?.isActive("link") ?? false,
+    }) ?? false;
   return (
     <Popover.Trigger>
       <Button
@@ -708,7 +831,8 @@ function LinkPopoverTrigger({
             typeof className === "function" ? className(state) : className,
           ) ?? "rich-text-editor__toolbar-button"
         }
-        data-active={editor?.isActive("link") || undefined}
+        data-active={isActive || undefined}
+        data-slot="rich-text-editor-link-popover-trigger"
         isDisabled={isDisabled}
         isIconOnly={props.isIconOnly ?? true}
         size={props.size ?? "sm"}
@@ -737,10 +861,16 @@ function LinkPopoverContent({
         ) ?? "rich-text-editor__link-popover"
       }
       data-slot="rich-text-editor-link-popover"
+      placement={props.placement ?? "bottom start"}
       {...props}
     >
       <Popover.Arrow />
-      <Popover.Dialog className="rich-text-editor__link-popover-content">{children}</Popover.Dialog>
+      <Popover.Dialog
+        className="rich-text-editor__link-popover-content"
+        data-slot="rich-text-editor-link-popover-content"
+      >
+        {children}
+      </Popover.Dialog>
     </Popover.Content>
   );
 }
@@ -750,6 +880,7 @@ function LinkPopoverInput(props: ComponentProps<typeof Input>): ReactElement {
     <Input
       {...props}
       aria-label={props["aria-label"] ?? "Link URL"}
+      fullWidth
       className={
         cn("rich-text-editor__link-input", props.className) ?? "rich-text-editor__link-input"
       }
@@ -792,12 +923,18 @@ function LinkUnsetButton({
   children = "Remove",
   ...props
 }: ComponentProps<typeof Button>): ReactElement {
+  const { editor } = useRichTextEditor();
   const { isDisabled, unset } = useLinkContext();
+  const isActive =
+    useEditorState({
+      editor,
+      selector: ({ editor: current }) => current?.isActive("link") ?? false,
+    }) ?? false;
   return (
     <Button
       {...props}
       data-slot="rich-text-editor-link-unset-button"
-      isDisabled={Boolean(isDisabled || props.isDisabled)}
+      isDisabled={Boolean(isDisabled || props.isDisabled || !isActive)}
       size={props.size ?? "sm"}
       variant={props.variant ?? "tertiary"}
       onPress={(event) => {
@@ -842,11 +979,36 @@ export interface RichTextEditorSuggestionItem {
   keywords?: string[];
   title: string;
 }
+export function filterRichTextEditorSuggestionItems(
+  items: RichTextEditorSuggestionItem[],
+  query: string,
+): RichTextEditorSuggestionItem[] {
+  const normalized = query.trim().toLowerCase();
+  return normalized
+    ? items.filter((item) =>
+        [item.title, ...(item.keywords ?? [])].join(" ").toLowerCase().includes(normalized),
+      )
+    : items;
+}
+export interface RichTextEditorSuggestionRenderProps {
+  editor: Editor;
+  isOpen: boolean;
+  items: RichTextEditorSuggestionItem[];
+  query: string;
+  range: { from: number; to: number };
+  selectItem: (item: RichTextEditorSuggestionItem) => void;
+  selectedIndex: number;
+  setSelectedIndex: (index: number) => void;
+  text: string;
+}
 export interface RichTextEditorSuggestionMenuProps extends Omit<
   ComponentPropsWithRef<"div">,
-  "onSelect"
+  "children" | "onSelect"
 > {
+  allowedPrefixes?: null | string[];
+  allowSpaces?: boolean;
   char?: string;
+  children?: (props: RichTextEditorSuggestionRenderProps) => ReactNode;
   items: (props: {
     editor: Editor;
     query: string;
@@ -859,17 +1021,24 @@ export interface RichTextEditorSuggestionMenuProps extends Omit<
     range: { from: number; to: number };
     text: string;
   }) => void;
+  pluginKey?: PluginKey | string;
+  startOfLine?: boolean;
 }
 interface SuggestionState {
   clientRect: (() => DOMRect | null) | null | undefined;
   props: SuggestionProps<RichTextEditorSuggestionItem>;
 }
 function RichTextEditorSuggestionMenu({
+  allowedPrefixes = defaultSuggestionPrefixes,
+  allowSpaces = false,
   char = "/",
+  children,
   className,
   items,
-  maxHeight = 320,
+  maxHeight = 384,
   onSelect,
+  pluginKey,
+  startOfLine = false,
   style,
   ...props
 }: RichTextEditorSuggestionMenuProps): ReactElement | null {
@@ -899,10 +1068,10 @@ function RichTextEditorSuggestionMenu({
         item,
         query: current.props.query,
         range: current.props.range,
-        text: `${char}${current.props.query}`,
+        text: current.props.text,
       };
-      if (item.command) item.command(payload);
-      else if (latest.current.onSelect) latest.current.onSelect(payload);
+      if (latest.current.onSelect) latest.current.onSelect(payload);
+      else if (item.command) item.command(payload);
       else
         current.props.editor
           .chain()
@@ -913,16 +1082,27 @@ function RichTextEditorSuggestionMenu({
       current.props.command(item);
       updateMenu(null);
     },
-    [char, updateMenu],
+    [updateMenu],
+  );
+  const resolvedPluginKey = useMemo(
+    () =>
+      pluginKey instanceof PluginKey
+        ? pluginKey
+        : new PluginKey(
+            pluginKey ?? `rich-text-editor-suggestion-${char.codePointAt(0) ?? 0}-${char.length}`,
+          ),
+    [char, pluginKey],
   );
   useEffect(() => {
     if (!editor || isDisabled || isReadOnly) return;
-    const pluginKey = new PluginKey(`rich-text-editor-suggestion-${char.codePointAt(0) ?? 0}`);
     const plugin = Suggestion<RichTextEditorSuggestionItem>({
+      allowedPrefixes,
+      allowSpaces,
       char,
       decorationClass: "rich-text-editor__suggestion-decoration",
       editor,
-      pluginKey,
+      pluginKey: resolvedPluginKey,
+      startOfLine,
       items: ({ editor: current, query }) => latest.current.items({ editor: current, query }),
       command: () => undefined,
       render: () => ({
@@ -963,64 +1143,125 @@ function RichTextEditorSuggestionMenu({
     });
     editor.registerPlugin(plugin);
     return () => {
-      editor.unregisterPlugin(pluginKey);
+      editor.unregisterPlugin(resolvedPluginKey);
       updateMenu(null);
     };
-  }, [char, editor, isDisabled, isReadOnly, select, updateMenu, updateSelectedIndex]);
+  }, [
+    allowedPrefixes,
+    allowSpaces,
+    char,
+    editor,
+    isDisabled,
+    isReadOnly,
+    resolvedPluginKey,
+    select,
+    startOfLine,
+    updateMenu,
+    updateSelectedIndex,
+  ]);
   if (!menu) return null;
   const rect = menu.clientRect?.();
   const position: CSSProperties = rect
     ? { left: rect.left, position: "fixed", top: rect.bottom + 6 }
     : {};
-  return (
+  const renderProps: RichTextEditorSuggestionRenderProps = {
+    editor: menu.props.editor,
+    isOpen: true,
+    items: menu.props.items,
+    query: menu.props.query,
+    range: menu.props.range,
+    selectItem: (item) => {
+      const index = menu.props.items.indexOf(item);
+      if (index >= 0) select(index, menu);
+    },
+    selectedIndex,
+    setSelectedIndex: updateSelectedIndex,
+    text: menu.props.text,
+  };
+  const suggestionItems = menu.props.items.map((item, index) => ({
+    index,
+    item,
+    key: item.id ?? `${item.title}-${index}`,
+  }));
+  const selectedKey = suggestionItems[selectedIndex]?.key;
+  const suggestionMenu = (
     <div
       {...props}
-      aria-label="Editor commands"
       className={cn("rich-text-editor__suggestion-menu", className)}
       data-slot="rich-text-editor-suggestion-menu"
-      role="listbox"
       style={{ ...position, ...style }}
     >
-      <div
-        className="rich-text-editor__suggestion-list rich-text-editor__suggestion-menu-list"
-        style={{ maxHeight }}
-      >
-        {menu.props.items.length ? (
-          menu.props.items.map((item, index) => (
-            <button
-              aria-selected={index === selectedIndex}
-              className="rich-text-editor__suggestion-item rich-text-editor__suggestion-menu-item"
-              key={item.id ?? item.title}
-              role="option"
-              type="button"
-              onClick={() => select(index)}
-              onMouseEnter={() => updateSelectedIndex(index)}
-            >
-              {item.icon ? (
-                <span className="rich-text-editor__suggestion-icon rich-text-editor__suggestion-menu-icon">
-                  {item.icon}
-                </span>
-              ) : null}
-              <span className="rich-text-editor__suggestion-content rich-text-editor__suggestion-menu-item-content">
-                <span className="rich-text-editor__suggestion-title rich-text-editor__suggestion-menu-title">
-                  {item.title}
-                </span>
-                {item.description ? (
-                  <span className="rich-text-editor__suggestion-description rich-text-editor__suggestion-menu-description">
-                    {item.description}
+      {children ? (
+        children(renderProps)
+      ) : (
+        <ListBox
+          aria-label="Suggestions"
+          className="rich-text-editor__suggestion-menu-list"
+          data-slot="rich-text-editor-suggestion-menu-list"
+          selectedKeys={selectedKey ? [selectedKey] : []}
+          selectionMode="single"
+          style={{ maxHeight }}
+          onAction={(key) => {
+            const suggestion = suggestionItems.find((entry) => entry.key === key);
+            if (suggestion) select(suggestion.index, menu);
+          }}
+        >
+          {menu.props.items.length ? (
+            suggestionItems.map(({ index, item, key }) => (
+              <ListBox.Item
+                className="rich-text-editor__suggestion-menu-item"
+                data-selected={index === selectedIndex || undefined}
+                data-slot="rich-text-editor-suggestion-menu-item"
+                id={key}
+                key={key}
+                textValue={item.title}
+                onMouseDown={(event) => event.preventDefault()}
+                onMouseEnter={() => updateSelectedIndex(index)}
+              >
+                {item.icon ? (
+                  <span
+                    className="rich-text-editor__suggestion-menu-icon"
+                    data-slot="rich-text-editor-suggestion-menu-icon"
+                  >
+                    {item.icon}
                   </span>
                 ) : null}
-              </span>
-            </button>
-          ))
-        ) : (
-          <div className="rich-text-editor__suggestion-empty rich-text-editor__suggestion-menu-empty">
-            No results
-          </div>
-        )}
-      </div>
+                <span
+                  className="rich-text-editor__suggestion-menu-item-content"
+                  data-slot="rich-text-editor-suggestion-menu-item-content"
+                >
+                  <span
+                    className="rich-text-editor__suggestion-menu-title"
+                    data-slot="rich-text-editor-suggestion-menu-title"
+                  >
+                    {item.title}
+                  </span>
+                  {item.description ? (
+                    <span
+                      className="rich-text-editor__suggestion-menu-description"
+                      data-slot="rich-text-editor-suggestion-menu-description"
+                    >
+                      {item.description}
+                    </span>
+                  ) : null}
+                </span>
+              </ListBox.Item>
+            ))
+          ) : (
+            <div
+              className="rich-text-editor__suggestion-menu-empty"
+              data-slot="rich-text-editor-suggestion-menu-empty"
+            >
+              No results
+            </div>
+          )}
+        </ListBox>
+      )}
     </div>
   );
+  return typeof document === "undefined"
+    ? suggestionMenu
+    : createPortal(suggestionMenu, document.body);
 }
 
 type RichTextEditorComponent = typeof RichTextEditorRoot & {

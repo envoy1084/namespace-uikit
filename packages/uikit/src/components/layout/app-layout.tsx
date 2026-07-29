@@ -2,7 +2,6 @@
 import type { ComponentPropsWithRef, ReactElement, ReactNode, Ref } from "react";
 import {
   Children,
-  cloneElement,
   createContext,
   isValidElement,
   useCallback,
@@ -70,14 +69,35 @@ export interface AppLayoutProps extends ComponentPropsWithRef<"div"> {
   toggleShortcut?: false | null | string;
   toolbar?: ReactNode;
 }
-const shortcutMatches = (e: KeyboardEvent, value: string) => {
-  const p = value.toLowerCase().split("+");
-  const key = p.pop();
+const shortcutMatches = (event: KeyboardEvent, value: string): boolean => {
+  const parts = value
+    .split("+")
+    .map((part) => part.trim().toLowerCase())
+    .filter(Boolean);
+  const key = parts.find(
+    (part) =>
+      ![
+        "alt",
+        "cmd",
+        "command",
+        "control",
+        "ctrl",
+        "meta",
+        "mod",
+        "opt",
+        "option",
+        "shift",
+      ].includes(part),
+  );
+  if (!key || event.key.toLowerCase() !== key) return false;
+  const mod = parts.includes("mod");
+  const ctrl = parts.includes("ctrl") || parts.includes("control");
+  const meta = parts.includes("meta") || parts.includes("cmd") || parts.includes("command");
+  const alt = parts.includes("alt") || parts.includes("opt") || parts.includes("option");
   return (
-    e.key.toLowerCase() === key &&
-    (!p.includes("mod") || e.metaKey || e.ctrlKey) &&
-    (!p.includes("shift") || e.shiftKey) &&
-    (!p.includes("alt") || e.altKey)
+    event.shiftKey === parts.includes("shift") &&
+    event.altKey === alt &&
+    (mod ? event.metaKey || event.ctrlKey : event.ctrlKey === ctrl && event.metaKey === meta)
   );
 };
 const useMediaQuery = (query: string): boolean => {
@@ -165,7 +185,7 @@ export function AppLayoutRoot({
     (value: boolean) => {
       if (asideOpen === undefined) {
         setLocalAside(value);
-        document.cookie = `aside_state=${value}; path=/; max-age=604800`;
+        document.cookie = `aside_state=${value}; path=/; max-age=31536000; SameSite=Lax`;
       }
       onAsideOpenChange?.(value);
     },
@@ -194,18 +214,12 @@ export function AppLayoutRoot({
     () => ({ isAsideOpen, navigate, setAsideOpen, toggleAside }),
     [isAsideOpen, navigate, setAsideOpen, toggleAside],
   );
-  const navbarNode = isValidElement(navbar)
-    ? cloneElement(navbar, {
-        ...(navigate && !(navbar.props as { navigate?: unknown }).navigate ? { navigate } : {}),
-        "data-in-app-layout": "true",
-      } as Record<string, unknown>)
-    : navbar;
   const body = (
     <div className="app-layout__body" data-slot="app-layout-body">
       <>
-        {navbarNode ? (
+        {navbar ? (
           <header className="app-layout__header" data-slot="app-layout-header">
-            {navbarNode}
+            {navbar}
           </header>
         ) : null}
         {toolbar ? (
@@ -279,7 +293,7 @@ export function AppLayoutRoot({
     <Context value={context}>
       <Sidebar.Provider
         {...props}
-        className={cn("app-layout", className)}
+        className={className}
         collapsible={sidebarCollapsible}
         data-app-layout=""
         data-resizable={resizable ? "" : undefined}

@@ -27,7 +27,7 @@ import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
 
-import { RichTextEditor, type JSONContent } from "./index";
+import { filterRichTextEditorSuggestionItems, RichTextEditor, type JSONContent } from "./index";
 
 const meta = {
   component: RichTextEditor,
@@ -789,38 +789,79 @@ export const Extensible: Story = {
           </RichTextEditor.FloatingMenu>
           <RichTextEditor.SuggestionMenu
             items={({ query }) =>
-              [
-                {
-                  title: "Heading 1",
-                  keywords: ["title"],
-                  icon: (
-                    <HugeiconsIcon
-                      aria-hidden
-                      className="size-4"
-                      icon={Heading01Icon}
-                      strokeWidth={2}
-                    />
-                  ),
-                  command: ({ editor, range }) =>
-                    editor.chain().focus().deleteRange(range).setHeading({ level: 1 }).run(),
-                },
-                {
-                  title: "Bullet list",
-                  icon: (
-                    <HugeiconsIcon
-                      aria-hidden
-                      className="size-4"
-                      icon={LeftToRightListBulletIcon}
-                      strokeWidth={2}
-                    />
-                  ),
-                  command: ({ editor, range }) =>
-                    editor.chain().focus().deleteRange(range).toggleBulletList().run(),
-                },
-              ].filter((item) =>
-                `${item.title} ${item.keywords?.join(" ") ?? ""}`
-                  .toLowerCase()
-                  .includes(query.toLowerCase()),
+              filterRichTextEditorSuggestionItems(
+                [
+                  {
+                    title: "Heading 1",
+                    keywords: ["title", "h1"],
+                    icon: (
+                      <HugeiconsIcon
+                        aria-hidden
+                        className="size-4"
+                        icon={Heading01Icon}
+                        strokeWidth={2}
+                      />
+                    ),
+                    command: ({ editor, range }) =>
+                      editor.chain().focus().deleteRange(range).setHeading({ level: 1 }).run(),
+                  },
+                  {
+                    title: "Bulleted list",
+                    keywords: ["list", "bullet"],
+                    icon: (
+                      <HugeiconsIcon
+                        aria-hidden
+                        className="size-4"
+                        icon={LeftToRightListBulletIcon}
+                        strokeWidth={2}
+                      />
+                    ),
+                    command: ({ editor, range }) =>
+                      editor.chain().focus().deleteRange(range).toggleBulletList().run(),
+                  },
+                  {
+                    title: "Blockquote",
+                    keywords: ["quote", "note"],
+                    icon: (
+                      <HugeiconsIcon
+                        aria-hidden
+                        className="size-4"
+                        icon={QuoteUpIcon}
+                        strokeWidth={2}
+                      />
+                    ),
+                    command: ({ editor, range }) =>
+                      editor.chain().focus().deleteRange(range).toggleBlockquote().run(),
+                  },
+                  {
+                    title: "Action callout",
+                    keywords: ["todo", "action", "custom"],
+                    icon: (
+                      <HugeiconsIcon
+                        aria-hidden
+                        className="size-4"
+                        icon={SparklesIcon}
+                        strokeWidth={2}
+                      />
+                    ),
+                    command: ({ editor, range }) =>
+                      editor
+                        .chain()
+                        .focus()
+                        .deleteRange(range)
+                        .insertContent({
+                          content: [
+                            {
+                              content: [{ text: "Action item: ", type: "text" }],
+                              type: "paragraph",
+                            },
+                          ],
+                          type: "blockquote",
+                        })
+                        .run(),
+                  },
+                ],
+                query,
               )
             }
           />

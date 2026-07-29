@@ -25,6 +25,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Button,
   Header,
+  RouterProvider,
   Tree,
   TreeItem,
   TreeItemContent,
@@ -62,6 +63,7 @@ const Context = createContext<SidebarContextValue>({
   toggleSidebar: () => {},
   variant: "sidebar",
 });
+const CloseMobileContext = createContext<boolean | undefined>(undefined);
 export const useSidebar = (): SidebarContextValue => useContext(Context);
 export interface SidebarProviderProps extends ComponentPropsWithRef<"div"> {
   collapsible?: SidebarCollapsible;
@@ -74,19 +76,43 @@ export interface SidebarProviderProps extends ComponentPropsWithRef<"div"> {
   toggleShortcut?: false | null | string;
   variant?: SidebarVariant;
 }
-const matchShortcut = (event: KeyboardEvent, value: string) => {
-  const parts = value.toLowerCase().split("+");
-  const key = parts.pop();
-  if (event.key.toLowerCase() !== key) return false;
-  const mod = parts.includes("mod");
-  return (
-    (!mod || event.metaKey || event.ctrlKey) &&
-    (!parts.includes("shift") || event.shiftKey) &&
-    (!parts.includes("alt") || event.altKey) &&
-    (!parts.includes("ctrl") || event.ctrlKey) &&
-    (!parts.includes("meta") || event.metaKey)
-  );
+interface ParsedShortcut {
+  alt: boolean;
+  ctrl: boolean;
+  key: string;
+  meta: boolean;
+  mod: boolean;
+  shift: boolean;
+}
+const parseShortcut = (value: string): ParsedShortcut | null => {
+  const result: ParsedShortcut = {
+    alt: false,
+    ctrl: false,
+    key: "",
+    meta: false,
+    mod: false,
+    shift: false,
+  };
+  for (const part of value
+    .split("+")
+    .map((item) => item.trim().toLowerCase())
+    .filter(Boolean)) {
+    if (part === "mod") result.mod = true;
+    else if (part === "cmd" || part === "command" || part === "meta") result.meta = true;
+    else if (part === "ctrl" || part === "control") result.ctrl = true;
+    else if (part === "shift") result.shift = true;
+    else if (part === "alt" || part === "option" || part === "opt") result.alt = true;
+    else result.key = part;
+  }
+  return result.key ? result : null;
 };
+const matchShortcut = (event: KeyboardEvent, shortcut: ParsedShortcut): boolean =>
+  event.key.toLowerCase() === shortcut.key &&
+  event.shiftKey === shortcut.shift &&
+  event.altKey === shortcut.alt &&
+  (shortcut.mod
+    ? event.metaKey || event.ctrlKey
+    : event.ctrlKey === shortcut.ctrl && event.metaKey === shortcut.meta);
 export function SidebarProvider({
   children,
   className,
@@ -107,7 +133,7 @@ export function SidebarProvider({
     (value: boolean) => {
       if (open === undefined) {
         setLocal(value);
-        document.cookie = `sidebar_state=${value}; path=/; max-age=604800`;
+        document.cookie = `sidebar_state=${value}; path=/; max-age=31536000; SameSite=Lax`;
       }
       onOpenChange?.(value);
     },
@@ -132,8 +158,10 @@ export function SidebarProvider({
   }, [collapsible, isMobile, isOpen, setOpen]);
   useEffect(() => {
     if (!toggleShortcut) return;
+    const shortcut = parseShortcut(toggleShortcut);
+    if (!shortcut) return;
     const handler = (event: KeyboardEvent) => {
-      if (matchShortcut(event, toggleShortcut)) {
+      if (matchShortcut(event, shortcut)) {
         event.preventDefault();
         toggleSidebar();
       }
@@ -168,7 +196,7 @@ export function SidebarProvider({
       variant,
     ],
   );
-  return (
+  const content = (
     <Context value={value}>
       <div
         {...props}
@@ -180,6 +208,19 @@ export function SidebarProvider({
         {children}
       </div>
     </Context>
+  );
+  return navigate ? (
+    <RouterProvider
+      navigate={(href, routerOptions) => {
+        if ((routerOptions as { forceReload?: boolean } | undefined)?.forceReload)
+          window.location.href = String(href);
+        else navigate(String(href));
+      }}
+    >
+      {content}
+    </RouterProvider>
+  ) : (
+    content
   );
 }
 export type SidebarRootProps = ComponentPropsWithRef<"aside">;
@@ -221,7 +262,26 @@ const divPart =
   );
 export const SidebarHeader: SidebarDivPart = divPart("sidebar-header", "sidebar__header");
 export const SidebarFooter: SidebarDivPart = divPart("sidebar-footer", "sidebar__footer");
-export const SidebarGroup: SidebarDivPart = divPart("sidebar-group", "sidebar__group");
+export interface SidebarGroupProps extends ComponentPropsWithRef<"div"> {
+  closeMobileOnAction?: boolean;
+}
+export function SidebarGroup({
+  children,
+  className,
+  closeMobileOnAction,
+  ...props
+}: SidebarGroupProps): ReactElement {
+  const group = (
+    <div {...props} className={cn("sidebar__group", className)} data-slot="sidebar-group">
+      {children}
+    </div>
+  );
+  return closeMobileOnAction === undefined ? (
+    group
+  ) : (
+    <CloseMobileContext value={closeMobileOnAction}>{group}</CloseMobileContext>
+  );
+}
 export const SidebarGroupLabel: SidebarDivPart = divPart(
   "sidebar-group-label",
   "sidebar__group-label",
@@ -254,14 +314,15 @@ export function SidebarMenu<T extends object = object>({
   showGuideLines = true,
   ...props
 }: SidebarMenuProps<T>): ReactElement {
-  return (
+  const inheritedCloseMobile = useContext(CloseMobileContext);
+  const resolvedCloseMobile = closeMobileOnAction ?? inheritedCloseMobile;
+  const menu = (
     <Tree
       {...props}
       className={
         cn("sidebar__menu", typeof className === "string" ? className : undefined) ??
         "sidebar__menu"
       }
-      data-close-mobile={closeMobileOnAction}
       data-guide-lines={
         showGuideLines === true ? "always" : showGuideLines === false ? "none" : "hover"
       }
@@ -269,6 +330,11 @@ export function SidebarMenu<T extends object = object>({
       data-sidebar="menu"
       data-slot="sidebar-menu"
     />
+  );
+  return resolvedCloseMobile === undefined ? (
+    menu
+  ) : (
+    <CloseMobileContext value={resolvedCloseMobile}>{menu}</CloseMobileContext>
   );
 }
 export type SidebarMenuSectionProps<T extends object = object> = ComponentPropsWithRef<
@@ -335,27 +401,30 @@ export interface SidebarMenuItemProps extends ComponentPropsWithRef<typeof TreeI
 export function SidebarMenuItem({
   children,
   className,
-  closeMobileOnAction = true,
+  closeMobileOnAction,
   forceReload = false,
   href,
   isCurrent = false,
   onAction,
+  rel,
+  target,
   tooltip,
   tooltipProps,
   ...props
 }: SidebarMenuItemProps): ReactElement {
   const state = useSidebar();
-  const action = () => {
-    onAction?.();
-    if (href) {
-      if (/^https?:\/\//.test(href)) window.open(href, "_blank", "noopener,noreferrer");
-      else if (forceReload) window.location.href = href;
-      else state.navigate?.(href);
-    }
-    if (state.isMobile && closeMobileOnAction) state.setMobileOpen(false);
-  };
+  const inheritedCloseMobile = useContext(CloseMobileContext);
+  const shouldCloseMobile = closeMobileOnAction ?? inheritedCloseMobile ?? true;
   const row: ReactNode[] = [];
   const nested: ReactNode[] = [];
+  const action = () => {
+    onAction?.();
+    if (forceReload && href) window.location.href = href;
+    if (state.isMobile && shouldCloseMobile && nested.length === 0) state.setMobileOpen(false);
+  };
+  const external = href ? /^https?:\/\//.test(href) : false;
+  const resolvedRel = rel ?? (external ? "noopener noreferrer" : undefined);
+  const resolvedTarget = target ?? (external ? "_blank" : undefined);
   let contentProps: ComponentPropsWithRef<"div"> = {};
   Children.forEach(children, (child) => {
     if (isValidElement(child) && child.type === SidebarSubmenu)
@@ -448,6 +517,8 @@ export function SidebarMenuItem({
       data-reduce-motion={state.reduceMotion || undefined}
       data-slot="sidebar-menu-item"
       {...(href === undefined ? {} : { href })}
+      {...(resolvedRel === undefined ? {} : { rel: resolvedRel })}
+      {...(resolvedTarget === undefined ? {} : { target: resolvedTarget })}
       onAction={action}
     >
       <TreeItemContent>{renderedContent}</TreeItemContent>
@@ -595,8 +666,8 @@ export function SidebarMobile({
       onOpenChange={state.setMobileOpen}
     >
       <Sheet.Backdrop variant={backdrop}>
-        <Sheet.Content>
-          <Sheet.Dialog aria-label="Mobile sidebar">
+        <Sheet.Content className="sidebar__mobile-sheet">
+          <Sheet.Dialog aria-label="Mobile sidebar" className="sidebar__mobile-dialog">
             <div {...props} className={cn("sidebar__mobile", className)} data-slot="sidebar-mobile">
               {children}
             </div>

@@ -13,7 +13,6 @@ import {
 } from "react";
 
 import { cn } from "@heroui/react";
-import { Button } from "react-aria-components";
 
 export type StepperOrientation = "horizontal" | "vertical";
 export type StepperSize = "lg" | "md" | "sm";
@@ -152,15 +151,16 @@ export function StepperStep({
         data-status={status}
       >
         {clickable ? (
-          <Button
+          <button
             {...(status === "active" ? { "aria-current": "step" as const } : {})}
             className={buttonClass ?? ""}
             data-clickable="true"
             data-slot="stepper-step-button"
-            onPress={() => stepper.onStepChange?.(index)}
+            type="button"
+            onClick={() => stepper.onStepChange?.(index)}
           >
             {contents}
-          </Button>
+          </button>
         ) : (
           <div
             aria-current={status === "active" ? "step" : undefined}

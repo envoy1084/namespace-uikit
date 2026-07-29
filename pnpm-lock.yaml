@@ -15,6 +15,9 @@ catalogs:
     '@internationalized/date':
       specifier: 3.12.2
       version: 3.12.2
+    '@react-aria/utils':
+      specifier: 3.34.1
+      version: 3.34.1
     '@react-stately/data':
       specifier: 3.16.1
       version: 3.16.1
@@ -419,6 +422,9 @@ importers:
       '@internationalized/date':
         specifier: 'catalog:'
         version: 3.12.2
+      '@react-aria/utils':
+        specifier: 'catalog:'
+        version: 3.34.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@react-stately/data':
         specifier: 'catalog:'
         version: 3.16.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -437,6 +443,9 @@ importers:
       react:
         specifier: 'catalog:'
         version: 19.2.8
+      react-aria:
+        specifier: 3.50.0
+        version: 3.50.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react-aria-components:
         specifier: 1.19.0
         version: 1.19.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)

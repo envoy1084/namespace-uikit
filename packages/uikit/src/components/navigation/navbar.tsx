@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComponentPropsWithRef, CSSProperties, ReactElement, RefObject } from "react";
+import type { ComponentPropsWithRef, ReactElement, RefObject } from "react";
 import {
   createContext,
   useCallback,
@@ -12,7 +12,10 @@ import {
 } from "react";
 
 import { cn, Separator } from "@heroui/react";
+import { handleLinkClick, useRouter } from "@react-aria/utils";
 import { ToggleButton } from "react-aria-components";
+
+import { useAppLayout } from "../layout/app-layout";
 
 export type NavbarPosition = "floating" | "static" | "sticky";
 export type NavbarSize = "lg" | "md" | "sm";
@@ -65,6 +68,8 @@ export function NavbarRoot({
   style,
   ...props
 }: NavbarRootProps): ReactElement {
+  const appLayout = useAppLayout();
+  const resolvedNavigate = navigate ?? appLayout?.navigate;
   const [local, setLocal] = useState(defaultMenuOpen);
   const menuOpen = isMenuOpen ?? local;
   const setMenuOpen = useCallback(
@@ -110,11 +115,11 @@ export function NavbarRoot({
       isHidden: hidden,
       isMenuOpen: menuOpen,
       maxWidth,
-      navigate,
+      navigate: resolvedNavigate,
       setMenuOpen,
       size,
     }),
-    [height, hidden, maxWidth, menuOpen, navigate, setMenuOpen, size],
+    [height, hidden, maxWidth, menuOpen, resolvedNavigate, setMenuOpen, size],
   );
   return (
     <Context value={value}>
@@ -123,26 +128,10 @@ export function NavbarRoot({
         ref={navRef}
         className={cn("navbar", `navbar--${position}`, className)}
         data-hidden={hidden || undefined}
+        data-in-app-layout={appLayout ? "true" : undefined}
         data-menu-open={menuOpen || undefined}
         data-slot="navbar"
-        style={
-          {
-            ...style,
-            "--navbar-height": height,
-            "--navbar-max-width":
-              maxWidth === "full"
-                ? "100%"
-                : (
-                    {
-                      sm: "640px",
-                      md: "768px",
-                      lg: "1024px",
-                      xl: "1280px",
-                      "2xl": "1536px",
-                    } as const
-                  )[maxWidth],
-          } as CSSProperties
-        }
+        style={{ ...style, "--navbar-height": height } as React.CSSProperties}
       >
         {children}
       </nav>
@@ -190,6 +179,7 @@ function NavItem({
   ...props
 }: NavbarItemProps & { menu?: boolean }): ReactElement {
   const { navigate, setMenuOpen, size } = useNavbar();
+  const router = useRouter();
   const handle = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
     if (href) {
       if (/^https?:\/\//.test(href)) {
@@ -198,7 +188,8 @@ function NavItem({
       } else if (navigate && !forceReload) {
         event.preventDefault();
         navigate(href);
-      }
+      } else if (!forceReload)
+        handleLinkClick(event as React.MouseEvent<HTMLAnchorElement>, router, href, undefined);
     }
     if (menu) setMenuOpen(false);
   };
