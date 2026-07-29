@@ -1,3 +1,5 @@
+import type { Preview } from "@storybook/react";
+
 import { DEFAULT_REACT_SCAN, REACT_SCAN_GLOBAL_TYPE_ID } from "./constants";
 
 export { REACT_SCAN_GLOBAL_TYPE_ID };
@@ -13,7 +15,6 @@ export const reactScanGlobalType = {
         { value: "false", title: "React Scan Off", icon: "eyeclose" },
         { value: "true", title: "React Scan On", icon: "eye" },
       ],
-      showName: true,
     },
   },
-};
+} satisfies NonNullable<Preview["globalTypes"]>;

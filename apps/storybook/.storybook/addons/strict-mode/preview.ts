@@ -1,3 +1,5 @@
+import type { Preview } from "@storybook/react";
+
 import { DEFAULT_STRICT_MODE, STRICT_MODE_GLOBAL_TYPE_ID } from "./constants";
 
 export { STRICT_MODE_GLOBAL_TYPE_ID };
@@ -13,7 +15,6 @@ export const strictModeGlobalType = {
         { value: "false", title: "Strict Mode Off", icon: "unlock" },
         { value: "true", title: "Strict Mode On", icon: "lock" },
       ],
-      showName: true,
     },
   },
-};
+} satisfies NonNullable<Preview["globalTypes"]>;

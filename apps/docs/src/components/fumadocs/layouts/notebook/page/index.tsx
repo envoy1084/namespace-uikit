@@ -1,10 +1,10 @@
 import type { ComponentProps, ReactNode } from "react";
 
+import { T } from "@fuma-translate/react";
 // oxlint-disable eslint/no-shadow, jsdoc/check-tag-names, unicorn/consistent-function-scoping
 import type { AnchorProviderProps, TOCItemType } from "fumadocs-core/toc";
 import { TOCProvider, TOCScrollArea } from "fumadocs-ui/components/toc";
 import { buttonVariants } from "fumadocs-ui/components/ui/button";
-import { I18nLabel } from "fumadocs-ui/contexts/i18n";
 
 import { Edit, Text } from "@/components/fumadocs/ui/icons";
 import { cn } from "@/utils/cn";
@@ -76,18 +76,32 @@ type TableOfContentOptions = Pick<AnchorProviderProps, "single"> & {
 
 type TableOfContentPopoverOptions = Omit<TableOfContentOptions, "single">;
 
+const defaultBreadcrumb: Partial<BreadcrumbOptions> = {};
+const defaultFooter: Partial<FooterOptions> = {};
+const defaultTableOfContent: Partial<TableOfContentOptions> = {};
+const defaultTableOfContentPopover: Partial<TableOfContentPopoverOptions> = {};
+const defaultToc: TOCItemType[] = [];
+
 export function DocsPage({
-  breadcrumb: { component: breadcrumb, enabled: breadcrumbEnabled = true, ...breadcrumbProps } = {},
+  breadcrumb: {
+    component: breadcrumb,
+    enabled: breadcrumbEnabled = true,
+    ...breadcrumbProps
+  } = defaultBreadcrumb,
   children,
-  footer = {},
+  footer = defaultFooter,
   full = false,
-  tableOfContent: { component: tocReplace, enabled: tocEnabled, ...tocOptions } = {},
+  tableOfContent: {
+    component: tocReplace,
+    enabled: tocEnabled,
+    ...tocOptions
+  } = defaultTableOfContent,
   tableOfContentPopover: {
     component: tocPopover,
     enabled: tocPopoverEnabled,
     ...tocPopoverOptions
-  } = {},
-  toc = [],
+  } = defaultTableOfContentPopover,
+  toc = defaultToc,
 }: DocsPageProps) {
   // disable TOC on full mode, you can still enable it with `enabled` option.
   const isTocEnabled =
@@ -150,7 +164,7 @@ export function DocsPage({
               id="toc-title"
             >
               <Text className="size-4" />
-              <I18nLabel label="toc" />
+              <T note="table of contents" text="On this page" />
             </h3>
             <TOCScrollArea>
               <TOCItems />
@@ -180,7 +194,7 @@ export function EditOnGitHub(props: ComponentProps<"a">) {
       {props.children ?? (
         <>
           <Edit className="size-3.5" />
-          <I18nLabel label="editOnGithub" />
+          <T note="edit page" text="Edit on GitHub" />
         </>
       )}
     </a>

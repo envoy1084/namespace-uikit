@@ -13,6 +13,7 @@ import {
   useState,
 } from "react";
 
+import { useTranslations } from "@fuma-translate/react";
 import {
   ArrowDown01Icon,
   ArrowLeft01Icon,
@@ -31,7 +32,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "fumadocs-ui/components/ui/collapsible";
-import { useI18n } from "fumadocs-ui/contexts/i18n";
 import { useTreeContext, useTreePath } from "fumadocs-ui/contexts/tree";
 import { useFooterItems } from "fumadocs-ui/utils/use-footer-items";
 
@@ -48,7 +48,11 @@ const TocPopoverContext = createContext<{
 export function PageTOCPopover({ children, className, ...rest }: ComponentProps<"div">) {
   const ref = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
-  const { isNavTransparent } = use(LayoutContext)!;
+  const layout = use(LayoutContext);
+
+  if (!layout) throw new Error("PageTOCPopover must be rendered within LayoutContext.");
+
+  const { isNavTransparent } = layout;
 
   const onClick = useEffectEvent((e: Event) => {
     if (!open) return;
@@ -100,8 +104,12 @@ export function PageTOCPopover({ children, className, ...rest }: ComponentProps<
 }
 
 export function PageTOCPopoverTrigger({ className, ...props }: ComponentProps<"button">) {
-  const { text } = useI18n();
-  const { open } = use(TocPopoverContext)!;
+  const t = useTranslations({ note: "table of contents" });
+  const context = use(TocPopoverContext);
+
+  if (!context) throw new Error("PageTOCPopoverTrigger must be rendered within PageTOCPopover.");
+
+  const { open } = context;
   const items = useTOCItems();
   const active = useActiveAnchor();
   const selected = useMemo(
@@ -133,7 +141,7 @@ export function PageTOCPopoverTrigger({ className, ...props }: ComponentProps<"b
             showItem && "pointer-events-none -translate-y-full opacity-0",
           )}
         >
-          {path?.name ?? text.toc}
+          {path?.name ?? t("On this page")}
         </span>
         <span
           className={cn(
@@ -226,7 +234,7 @@ export function PageLastUpdate({
   date: value,
   ...props
 }: Omit<ComponentProps<"p">, "children"> & { date: Date }) {
-  const { text } = useI18n();
+  const t = useTranslations({ note: "page footer" });
   const [date, setDate] = useState("");
 
   useEffect(() => {
@@ -236,7 +244,7 @@ export function PageLastUpdate({
 
   return (
     <p {...props} className={cn("text-fd-muted-foreground text-sm", props.className)}>
-      {text.lastUpdate} {date}
+      {t("Last updated on")} {date}
     </p>
   );
 }
@@ -284,7 +292,7 @@ export function PageFooter({ items, ...props }: FooterProps) {
 }
 
 function FooterItem({ index, item }: { item: Item; index: 0 | 1 }) {
-  const { text } = useI18n();
+  const t = useTranslations({ note: "pagination" });
   const Icon = index === 0 ? ArrowLeft01Icon : ArrowRight01Icon;
 
   return (
@@ -305,7 +313,7 @@ function FooterItem({ index, item }: { item: Item; index: 0 | 1 }) {
         <p>{item.name}</p>
       </div>
       <p className="text-fd-muted-foreground truncate">
-        {item.description ?? (index === 0 ? text.previousPage : text.nextPage)}
+        {item.description ?? (index === 0 ? t("Previous Page") : t("Next Page"))}
       </p>
     </Link>
   );
@@ -340,7 +348,7 @@ export function PageBreadcrumb({
         const className = cn("truncate", i === items.length - 1 && "text-fd-primary font-medium");
 
         return (
-          <Fragment key={i}>
+          <Fragment key={item.url ?? String(item.name)}>
             {i !== 0 && <HugeiconsIcon icon={ArrowRight01Icon} className="size-3.5 shrink-0" />}
             {item.url ? (
               <Link

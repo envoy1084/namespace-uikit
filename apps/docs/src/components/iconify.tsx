@@ -64,6 +64,8 @@ function SVGFromIconData({
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       {...restProps}
+      // Icon bodies are bundled, trusted constants rather than user-provided HTML.
+      // oxlint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: processedBody }}
     />
   );
@@ -164,6 +166,8 @@ const Iconify = forwardRef<SVGSVGElement, IconifyProps>(({ icon: iconProp, ...pr
     const componentName = toComponentName(iconName);
     const nativeIconName =
       nativeIconAliases[componentName] ?? (componentName as keyof typeof UIKitIcons);
+    // Icon names are intentionally resolved at runtime by this compatibility adapter.
+    // oxlint-disable-next-line import/namespace
     const iconData = UIKitIcons[nativeIconName];
 
     if ((iconProp.startsWith("hugeicons:") || !iconProp.includes(":")) && Array.isArray(iconData)) {

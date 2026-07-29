@@ -30,7 +30,10 @@ const Context = createContext<KanbanContextValue>({
   cardContentClass: "kanban__card-content--md",
   cardListClass: "kanban__card-list--md",
 });
-const mergeClassName = <T,>(className: ((props: T) => string) | string | undefined, base: string) =>
+const mergeClassName = <T,>(
+  className: ((props: T) => string) | string | undefined,
+  base: string,
+) =>
   typeof className === "function"
     ? (props: T) => cn(base, className(props)) ?? ""
     : (cn(base, className) ?? "");

@@ -1,3 +1,5 @@
+import type { Preview } from "@storybook/react";
+
 import { DEFAULT_LOCALE, I18N_GLOBAL_TYPE_ID, LOCALES } from "./constants";
 
 export { I18N_GLOBAL_TYPE_ID };
@@ -16,8 +18,7 @@ export const i18nGlobalType = {
       })).toSorted((a, b) =>
         a.value === "Auto" ? -1 : b.value === "Auto" ? 1 : a.title.localeCompare(b.title),
       ),
-      showName: true,
       dynamicTitle: true,
     },
   },
-};
+} satisfies NonNullable<Preview["globalTypes"]>;
