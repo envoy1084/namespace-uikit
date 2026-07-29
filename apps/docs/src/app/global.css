@@ -8,41 +8,7 @@
 @import "fumadocs-ui/css/black.css";
 @import "fumadocs-ui/css/preset.css";
 
-@keyframes float-stars {
-  0% {
-    transform: translateY(0px) translateX(0px);
-  }
-  50% {
-    transform: translateY(-40px) translateX(40px);
-  }
-  100% {
-    transform: translateY(0px) translateX(0px);
-  }
-}
-
-@keyframes float-stars-reverse {
-  0% {
-    transform: translateY(0px) translateX(0px);
-  }
-  50% {
-    transform: translateY(40px) translateX(-40px);
-  }
-  100% {
-    transform: translateY(0px) translateX(0px);
-  }
-}
-
-/* ============================================================================
-   CSS VARIABLES - ROOT & THEMES
-   ============================================================================ */
-
 :root {
-  /* Brand Accent Colors (Optional Overrides) */
-  /* --accent: oklch(0.7 0.25 260); */
-  /* --accent-foreground: oklch(0.98 0 0); */
-  /* --accent: var(--color-blue-600); */
-  /* --accent-soft: var(--color-blue-100); */
-
   /* Fumadocs UI Variables */
   --fd-layout-width: 1400px;
   --color-fd-background: var(--background);
@@ -55,29 +21,18 @@
   --color-fd-accent: #f9f9f9;
   --color-fd-muted-foreground: var(--color-neutral-500);
   --color-backdrop: rgba(255, 255, 255, 0.4);
+
   /* Fumadocs UI Animations */
   --animate-fd-fade-in: custom-fade-in 200ms ease-out forwards;
   --animate-fd-fade-out: custom-fade-out 150ms ease-out forwards;
 
   /* Default font - can be overridden by theme builder */
   --font-sans: "Satoshi", ui-sans-serif, system-ui, sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-[data-theme="light"],
-.light {
 }
 
 /* Dark Theme Variables */
 [data-theme="dark"],
 .dark {
-  /* Custom Values (Optional) */
-  /* --radius: 0.5rem; */
-  /* --cursor: default; */
-
   /* Fumadocs UI Dark Theme */
   --color-fd-primary: oklch(0.99 0 0);
   --color-fd-card: rgba(40, 40, 40, 0.4);
@@ -86,23 +41,6 @@
   --color-fd-popover: #383435;
   --color-fd-border: rgba(255, 255, 255, 0.1);
   --color-backdrop: rgba(0, 0, 0, 0.4);
-}
-
-/* ============================================================================
-   NAMESPACE UIKIT COMPONENT OVERRIDES
-   ============================================================================ */
-
-/* Namespace UIKit Component Style Overrides */
-/* @utility button {
-  @apply rounded-sm;
-} */
-
-/* ============================================================================
-   FUMADOCS UI - NAVIGATION COMPONENTS
-   ============================================================================ */
-
-#nd-notebook-layout {
-  transition: none;
 }
 
 [data-theme-toggle] {
@@ -126,10 +64,6 @@
       @apply px-6;
     }
   }
-}
-
-.showcase-detail-page #nd-home-layout {
-  padding-top: 0;
 }
 
 /* Main Navigation */
@@ -560,47 +494,9 @@ code {
   background-color: #d6d8e3 !important;
 }
 
-.showcase-source-wrapper {
-  .code-block-wrapper {
-    background: transparent !important;
-  }
-
-  .fd-scroll-container {
-    max-height: 100%;
-    background: transparent;
-  }
-}
-
 /* ============================================================================
    ANIMATIONS & KEYFRAMES
    ============================================================================ */
-
-@keyframes shine {
-  0% {
-    translate: -100% 0;
-  }
-  100% {
-    translate: 100% 0;
-  }
-}
-
-@keyframes scrolling-banner {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(calc(-50% - var(--gap) / 2));
-  }
-}
-
-@keyframes scrolling-banner-vertical {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(calc(-50% - var(--gap) / 2));
-  }
-}
 
 @keyframes custom-fade-in {
   from {
@@ -626,54 +522,6 @@ code {
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
   }
-}
-
-/* ============================================================================
-   UTILITY CLASSES
-   ============================================================================ */
-
-.animate-scrolling-banner {
-  animation: scrolling-banner var(--duration) linear infinite;
-}
-
-.animate-scrolling-banner-vertical {
-  animation: scrolling-banner-vertical var(--duration) linear infinite;
-}
-
-@utility animate-shine {
-  overflow: hidden;
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      120deg,
-      transparent 10%,
-      rgba(255, 255, 255, 0.3) 45%,
-      rgba(255, 255, 255, 0.1) 55%,
-      transparent 90%
-    );
-    animation: shine 3s ease-in-out infinite;
-    pointer-events: none;
-  }
-
-  [data-theme="dark"] &::after,
-  .dark &::after {
-    background: linear-gradient(
-      120deg,
-      transparent 10%,
-      rgba(255, 255, 255, 0.1) 45%,
-      rgba(255, 255, 255, 0.04) 55%,
-      transparent 90%
-    );
-  }
-}
-
-@utility mask-to-t {
-  mask: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 1) 100%);
 }
 
 @utility mask-to-bottom {
