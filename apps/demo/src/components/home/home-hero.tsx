@@ -1,6 +1,13 @@
-import { Typography } from "@thenamespace/uikit";
+"use client";
+
+import { Button, Typography } from "@thenamespace/uikit";
+import { ArrowRight01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { InstallCommand } from "./install-command";
+
+function openDocs() {
+  window.location.assign("/docs");
+}
 
 export function HomeHero() {
   return (
@@ -17,7 +24,13 @@ export function HomeHero() {
             React components, hooks, and typed actions for ENS v2.
           </Typography.Paragraph>
 
-          <InstallCommand />
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <InstallCommand />
+            <Button onPress={openDocs} size="lg" variant="secondary">
+              Docs
+              <HugeiconsIcon aria-hidden icon={ArrowRight01Icon} size={17} />
+            </Button>
+          </div>
         </div>
 
         <div className="relative flex min-h-[24rem] items-center overflow-hidden lg:min-h-full">

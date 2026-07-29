@@ -67,7 +67,7 @@ export function ProfileEditorShowcase() {
     <section
       aria-labelledby="profile-editor-title"
       className="mx-auto grid max-w-7xl scroll-mt-24 items-start gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[minmax(16.25rem,0.68fr)_minmax(38rem,1fr)] lg:gap-16 lg:px-12 lg:py-30"
-      id="profile-editor-demo"
+      id="name-profile-editor"
     >
       <div className="lg:sticky lg:top-28 lg:pt-6">
         <SectionLabel>Available now</SectionLabel>

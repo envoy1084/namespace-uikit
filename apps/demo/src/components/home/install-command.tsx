@@ -30,7 +30,7 @@ export function InstallCommand() {
   }, []);
 
   return (
-    <ButtonGroup className="mt-8 w-full max-w-[20rem]" fullWidth size="lg" variant="secondary">
+    <ButtonGroup className="w-full max-w-[20rem]" fullWidth size="lg" variant="secondary">
       <Button aria-label={`Copy ${installCommand}`} onPress={handleCopy}>
         <span className="w-full truncate text-start font-mono text-sm sm:text-[15px]">
           {installCommand}

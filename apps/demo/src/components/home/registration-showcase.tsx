@@ -26,7 +26,7 @@ export function RegistrationShowcase() {
     <section
       aria-labelledby="registration-title"
       className="mx-auto grid max-w-7xl scroll-mt-24 items-start gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[minmax(16.25rem,0.72fr)_minmax(28rem,1fr)] lg:gap-20 lg:px-12 lg:py-30"
-      id="playground"
+      id="name-registration"
     >
       <div className="lg:sticky lg:top-28 lg:pt-6">
         <SectionLabel>Available now</SectionLabel>

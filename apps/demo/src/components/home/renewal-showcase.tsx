@@ -22,7 +22,11 @@ const renewalDialogSlots = {
 
 export function RenewalShowcase() {
   return (
-    <section aria-labelledby="renewal-title" className="border-y border-[#dedede] bg-white">
+    <section
+      aria-labelledby="renewal-title"
+      className="scroll-mt-24 border-y border-[#dedede] bg-white"
+      id="name-renewal"
+    >
       <div className="mx-auto grid max-w-7xl items-start gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[minmax(28rem,1fr)_minmax(16.25rem,0.72fr)] lg:gap-20 lg:px-12 lg:py-30">
         <div className="mx-auto w-full max-w-md rounded-3xl border border-[#d7d7d7] bg-white shadow-sm">
           <NameRenewal defaultLabel={DEMO_NAME} presentation="inline" slots={renewalGraphics} />

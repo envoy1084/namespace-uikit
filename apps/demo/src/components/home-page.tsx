@@ -16,6 +16,7 @@ import {
   RegistrationShowcase,
   RenewalShowcase,
   ToolkitOverview,
+  TransactionProgressShowcase,
 } from "./home";
 import { AppNavbar } from "./navbar";
 
@@ -74,6 +75,7 @@ export function HomePage() {
                 <RegistrationShowcase />
                 <RenewalShowcase />
                 <ProfileEditorShowcase />
+                <TransactionProgressShowcase />
                 <HomeFooter />
               </main>
             </div>
