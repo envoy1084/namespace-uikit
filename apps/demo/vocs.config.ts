@@ -6,7 +6,7 @@ const page = (text: string, path: string) => ({ text, link: docs(path) });
 export default defineConfig({
   accentColor: "#587cff",
   baseUrl: "https://ens-components.vercel.app",
-  colorScheme: "light dark",
+  colorScheme: "dark",
   description: "React components, hooks, and typed actions for integrating ENS v2.",
   head: {
     link: [{ rel: "manifest", href: "/site.webmanifest" }],
