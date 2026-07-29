@@ -492,7 +492,7 @@ export const EmptyStateDemo: Story = {
  * which also allows placing static cells (e.g. checkbox) before the dynamic ones.
  */
 export const DynamicCollection: Story = {
-  render: () => {
+  render: function Story() {
     const pagination = usePagination(users);
 
     return (
@@ -676,7 +676,7 @@ export const AsyncLoading: Story = {
   args: {
     variant: "primary",
   },
-  render: ({ variant }) => {
+  render: function Story({ variant }) {
     const { hasMore, isLoading, items, loadMore } = useAsyncUsers();
 
     return (
@@ -723,7 +723,7 @@ export const AsyncLoading: Story = {
 };
 
 export const Virtualization: Story = {
-  render: () => {
+  render: function Story() {
     const roles = [
       "Software Engineer",
       "Senior Engineer",
@@ -851,7 +851,7 @@ export const Virtualization: Story = {
 };
 
 export const ExpandableRows: Story = {
-  render: () => {
+  render: function Story() {
     const data: ExpandableRow[] = [
       {
         children: [

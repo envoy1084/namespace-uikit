@@ -52,7 +52,7 @@ export const Default: Story = {
     orientation: "horizontal",
     colorSpace: "hsl",
   },
-  render: (args) => {
+  render: function Story(args) {
     const isVertical = args.orientation === "vertical";
 
     return (
@@ -75,7 +75,7 @@ export const SaturationChannel: Story = {
     defaultValue: "hsl(0, 100%, 50%)",
     colorSpace: "hsl",
   },
-  render: (args) => {
+  render: function Story(args) {
     return (
       <ColorSlider {...args}>
         <Label>Saturation</Label>
@@ -94,7 +94,7 @@ export const LightnessChannel: Story = {
     defaultValue: "hsl(0, 100%, 50%)",
     colorSpace: "hsl",
   },
-  render: (args) => {
+  render: function Story(args) {
     return (
       <ColorSlider {...args}>
         <Label>Lightness</Label>
@@ -113,7 +113,7 @@ export const AlphaChannel: Story = {
     defaultValue: "hsla(0, 100%, 50%, 0.5)",
     colorSpace: "hsl",
   },
-  render: (args) => {
+  render: function Story(args) {
     return (
       <ColorSlider {...args}>
         <Label>Alpha</Label>
@@ -127,7 +127,7 @@ export const AlphaChannel: Story = {
 };
 
 export const RGBChannels: Story = {
-  render: (_args) => {
+  render: function Story(_args) {
     const [color, setColor] = useState(parseColor("rgb(255, 0, 0)"));
 
     return (
@@ -166,7 +166,7 @@ export const Vertical: Story = {
       </div>
     ),
   ],
-  render: (_args) => {
+  render: function Story(_args) {
     return (
       <>
         <ColorSlider channel="hue" defaultValue="hsl(0, 100%, 50%)" orientation="vertical">
@@ -195,7 +195,7 @@ export const Disabled: Story = {
     channel: "hue",
     defaultValue: "hsl(200, 100%, 50%)",
   },
-  render: (args) => {
+  render: function Story(args) {
     return (
       <ColorSlider {...args}>
         <Label>Hue</Label>
@@ -254,7 +254,7 @@ export const WithoutLabel: Story = {
     defaultValue: "hsl(200, 100%, 50%)",
     "aria-label": "Hue",
   },
-  render: (args) => {
+  render: function Story(args) {
     return (
       <ColorSlider {...args}>
         <ColorSlider.Track>

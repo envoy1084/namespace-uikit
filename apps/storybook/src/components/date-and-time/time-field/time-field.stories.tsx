@@ -124,7 +124,7 @@ export const Invalid: Story = {
 };
 
 export const Disabled: Story = {
-  render: () => {
+  render: function Story() {
     const currentTime = now(getLocalTimeZone());
     const timeValue = new Time(currentTime.hour, currentTime.minute, currentTime.second);
 
@@ -154,7 +154,7 @@ export const Disabled: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState<TimeValue | null>(null);
 
     return (
@@ -189,7 +189,7 @@ export const Controlled: Story = {
 };
 
 export const WithValidation: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState<Time | null>(null);
     const minTime = parseTime("09:00");
     const maxTime = parseTime("17:00");
@@ -271,7 +271,7 @@ export const WithPrefixAndSuffix: Story = {
 };
 
 export const FormExample: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState<Time | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const minTime = parseTime("09:00");

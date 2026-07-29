@@ -79,7 +79,7 @@ export const Sizes: Story = {
 };
 
 export const Variants: Story = {
-  render: () => {
+  render: function Story() {
     return (
       <div className="flex flex-col gap-8">
         <TagGroup selectionMode="single" variant="default">
@@ -131,7 +131,7 @@ export const Disabled: Story = {
 };
 
 export const SelectionModes: Story = {
-  render: () => {
+  render: function Story() {
     const [singleSelected, setSingleSelected] = useState<Iterable<Key>>(new Set(["news"]));
     const [multipleSelected, setMultipleSelected] = useState<Iterable<Key>>(
       new Set(["news", "travel"]),
@@ -174,7 +174,7 @@ export const SelectionModes: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [selected, setSelected] = useState<Iterable<Key>>(new Set(["news", "travel"]));
 
     return (
@@ -201,7 +201,7 @@ export const Controlled: Story = {
 };
 
 export const WithErrorMessage: Story = {
-  render: () => {
+  render: function Story() {
     const [selected, setSelected] = useState<Iterable<Key>>(new Set());
 
     const isInvalid = useMemo(() => Array.from(selected).length === 0, [selected]);
@@ -289,7 +289,7 @@ export const WithPrefix: Story = {
 };
 
 export const WithRemoveButton: Story = {
-  render: () => {
+  render: function Story() {
     type Tag = { id: string; name: string };
 
     const [tags, setTags] = useState<Tag[]>([
@@ -384,7 +384,7 @@ export const WithRemoveButton: Story = {
 };
 
 export const WithListData: Story = {
-  render: () => {
+  render: function Story() {
     type User = {
       id: string;
       name: string;

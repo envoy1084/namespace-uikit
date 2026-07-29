@@ -210,7 +210,7 @@ export const WithIconPrefixAndCopySuffix: Story = {
 };
 
 export const PasswordWithToggle: Story = {
-  render: () => {
+  render: function Story() {
     const [isVisible, setIsVisible] = useState(false);
 
     return (
@@ -359,7 +359,7 @@ export const Disabled: Story = {
 };
 
 export const WithTextArea: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 

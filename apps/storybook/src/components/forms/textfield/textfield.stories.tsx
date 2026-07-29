@@ -166,7 +166,7 @@ export const InputTypes: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [inputValue, setInputValue] = React.useState("");
     const [TextAreaValue, setTextAreaValue] = React.useState("");
 
@@ -188,7 +188,7 @@ export const Controlled: Story = {
 };
 
 export const WithValidation: Story = {
-  render: () => {
+  render: function Story() {
     const [username, setUsername] = React.useState("");
     const [bio, setBio] = React.useState("");
     const isUsernameInvalid = username.length > 0 && username.length < 3;

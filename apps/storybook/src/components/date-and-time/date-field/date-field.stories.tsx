@@ -167,7 +167,7 @@ export const Disabled: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState<DateValue | null>(null);
 
     return (
@@ -195,7 +195,7 @@ export const Controlled: Story = {
 };
 
 export const WithValidation: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState<DateValue | null>(null);
     const todayDate = today(getLocalTimeZone());
     const isInvalid = value !== null && value.compare(todayDate) < 0;
@@ -275,7 +275,7 @@ export const WithPrefixAndSuffix: Story = {
 };
 
 export const FormExample: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState<DateValue | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const todayDate = today(getLocalTimeZone());
@@ -340,7 +340,7 @@ export const FormExample: Story = {
 };
 
 export const Granularity: Story = {
-  render: () => {
+  render: function Story() {
     const granularityOptions = [
       { id: "day", label: "Day" },
       { id: "hour", label: "Hour" },

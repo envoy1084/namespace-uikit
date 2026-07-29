@@ -35,7 +35,7 @@ export default meta;
 type Story = StoryObj<typeof Slider>;
 
 export const Default: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <Slider defaultValue={30} {...args}>
         <Label>Volume</Label>
@@ -57,7 +57,7 @@ export const Vertical: Story = {
       </div>
     ),
   ],
-  render: (args) => {
+  render: function Story(args) {
     return (
       <Slider defaultValue={30} orientation="vertical" {...args}>
         <Label>Volume</Label>
@@ -72,7 +72,7 @@ export const Vertical: Story = {
 };
 
 export const Disabled: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <Slider isDisabled defaultValue={30} {...args}>
         <Label>Volume</Label>
@@ -87,7 +87,7 @@ export const Disabled: Story = {
 };
 
 export const Range: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <Slider
         defaultValue={[100, 500]}
@@ -104,6 +104,8 @@ export const Range: Story = {
             <>
               <Slider.Fill />
               {state.values.map((_, i) => (
+                // Thumb identity is its stable position in the slider's ordered value tuple.
+                // oxlint-disable-next-line react/no-array-index-key
                 <Slider.Thumb key={i} index={i} />
               ))}
             </>

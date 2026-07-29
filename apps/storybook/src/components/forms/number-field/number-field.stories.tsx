@@ -204,7 +204,7 @@ export const Disabled: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = React.useState(1024);
 
     return (
@@ -232,7 +232,7 @@ export const Controlled: Story = {
 };
 
 export const WithValidation: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = React.useState<number | undefined>(undefined);
     const isInvalid = value !== undefined && (value < 0 || value > 100);
 
@@ -443,7 +443,7 @@ export const WithChevrons: Story = {
 };
 
 export const FormExample: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const [value, setValue] = React.useState<number | undefined>(undefined);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const STOCK_AVAILABLE = 3;

@@ -40,7 +40,7 @@ const handleFieldsetSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 };
 
 export const Default: Story = {
-  render: () => {
+  render: function Story() {
     return (
       <Form onSubmit={handleFieldsetSubmit}>
         <Fieldset className="w-96">

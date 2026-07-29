@@ -34,9 +34,9 @@ const trafficData = [
 
 const revenueData = [4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500].map(
   (revenue, index) => ({
-    month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][
-      index
-    ]!,
+    month:
+      ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][index] ??
+      "Unknown",
     revenue,
   }),
 );
@@ -341,7 +341,7 @@ export const StatsWithChart: Story = {
       },
     },
   },
-  render: () => {
+  render: function Story() {
     const stats = [
       { label: "Revenue", trend: "up", value: "$228,441" },
       { label: "Expenses", trend: "down", value: "$25,108" },
@@ -403,8 +403,9 @@ export const StatsWithChart: Story = {
 
 const multiData = trafficData.map((item, index) => ({
   ...item,
-  directTraffic: [800, 1500, 2200, 1800, 2600, 2000, 3100, 2800, 3500, 3200, 4000, 3700][index]!,
-  referral: [500, 1200, 2100, 2800, 3200, 2600, 4100, 3800, 4500, 5200, 5800, 5100][index]!,
+  directTraffic:
+    [800, 1500, 2200, 1800, 2600, 2000, 3100, 2800, 3500, 3200, 4000, 3700][index] ?? 0,
+  referral: [500, 1200, 2100, 2800, 3200, 2600, 4100, 3800, 4500, 5200, 5800, 5100][index] ?? 0,
 }));
 const multiSeries = [
   { color: "var(--chart-4)", key: "organic", label: "Organic" },
@@ -532,8 +533,8 @@ export const CustomTooltip: Story = {
               return (
                 <ChartTooltip indicator="line">
                   <ChartTooltip.Header>{label}</ChartTooltip.Header>
-                  {payload.map((entry, index) => (
-                    <ChartTooltip.Item key={index}>
+                  {payload.map((entry) => (
+                    <ChartTooltip.Item key={`${String(entry.name)}-${String(entry.dataKey)}`}>
                       <ChartTooltip.Indicator color={entry.stroke} />
                       <ChartTooltip.Label>{entry.name}</ChartTooltip.Label>
                       <ChartTooltip.Value>
@@ -597,11 +598,12 @@ export const DashedComparison: Story = {
       },
     },
   },
-  render: () => {
+  render: function Story() {
     const data = revenueData.map((item, index) => ({
       actual: item.revenue,
       month: item.month,
-      target: [5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000, 10500][index]!,
+      target:
+        [5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000, 10500][index] ?? 0,
     }));
     return (
       <Card className="w-[520px] rounded-2xl">

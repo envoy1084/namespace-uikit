@@ -222,7 +222,7 @@ export const StackedBarWithLine: Story = {
       },
     },
   },
-  render: () => {
+  render: function Story() {
     const bars = [
       { color: "var(--chart-4)", key: "ide", label: "IDE" },
       { color: "var(--chart-2)", key: "cli", label: "CLI" },
@@ -284,12 +284,12 @@ export const StackedBarWithLine: Story = {
 
 const sessions = defaultData.map((item, index) => ({
   month: item.month,
-  sessions: [12000, 18000, 15000, 22000, 19000, 25000, 23000, 28000, 26000, 31000, 29000, 34000][
-    index
-  ]!,
-  target: [15000, 16000, 17000, 18000, 19000, 20000, 21000, 22000, 23000, 24000, 25000, 26000][
-    index
-  ]!,
+  sessions:
+    [12000, 18000, 15000, 22000, 19000, 25000, 23000, 28000, 26000, 31000, 29000, 34000][index] ??
+    0,
+  target:
+    [15000, 16000, 17000, 18000, 19000, 20000, 21000, 22000, 23000, 24000, 25000, 26000][index] ??
+    0,
 }));
 
 export const AreaWithLine: Story = {
@@ -346,10 +346,10 @@ export const AreaWithLine: Story = {
 };
 
 const impressions = defaultData.map((item, index) => ({
-  ctr: [3.2, 3.8, 3.5, 4.2, 4, 4.8, 4.5, 5.1, 4.9, 5.5, 5.2, 5.8][index]!,
-  impressions: [45000, 52000, 48000, 61000, 58000, 72000, 68000, 78000, 75000, 85000, 82000, 92000][
-    index
-  ]!,
+  ctr: [3.2, 3.8, 3.5, 4.2, 4, 4.8, 4.5, 5.1, 4.9, 5.5, 5.2, 5.8][index] ?? 0,
+  impressions:
+    [45000, 52000, 48000, 61000, 58000, 72000, 68000, 78000, 75000, 85000, 82000, 92000][index] ??
+    0,
   month: item.month,
 }));
 
@@ -431,12 +431,11 @@ export const BarWithArea: Story = {
 };
 
 const analytics = defaultData.map((item, index) => ({
-  bounceRate: [42, 38, 40, 35, 37, 32, 34, 30, 31, 28, 29, 26][index]!,
+  bounceRate: [42, 38, 40, 35, 37, 32, 34, 30, 31, 28, 29, 26][index] ?? 0,
   month: item.month,
-  pageViews: [8200, 11500, 9800, 14200, 12100, 16800, 15200, 18400, 17200, 20500, 19600, 23000][
-    index
-  ]!,
-  users: [3200, 4500, 3800, 5600, 4800, 6600, 6000, 7200, 6800, 8100, 7700, 9100][index]!,
+  pageViews:
+    [8200, 11500, 9800, 14200, 12100, 16800, 15200, 18400, 17200, 20500, 19600, 23000][index] ?? 0,
+  users: [3200, 4500, 3800, 5600, 4800, 6600, 6000, 7200, 6800, 8100, 7700, 9100][index] ?? 0,
 }));
 
 export const MultiType: Story = {

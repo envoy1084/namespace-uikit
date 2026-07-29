@@ -92,7 +92,7 @@ export const Composable: Story = {
 };
 export const StackedFavicons: Story = {
   name: "Stacked Favicons",
-  render: () => {
+  render: function Story() {
     const sources = [
       { href: "https://www.reuters.com", label: "Reuters" },
       { href: "https://nypost.com", label: "New York Post" },

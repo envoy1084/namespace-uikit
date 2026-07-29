@@ -46,6 +46,8 @@ function Cells({ data }: { data: ReadonlyArray<unknown> }) {
   return (
     <>
       {data.map((_, index) => (
+        // Recharts cells mirror the immutable input order and have no independent identity.
+        // oxlint-disable-next-line react/no-array-index-key
         <PieChart.Cell fill={colors[index % colors.length]} key={index} />
       ))}
     </>
@@ -178,7 +180,7 @@ export const DonutWithLabel: Story = {
       },
     },
   },
-  render: () => {
+  render: function Story() {
     const total = storage.reduce((sum, item) => sum + item.value, 0);
     return (
       <Card className="w-[360px] rounded-2xl">
@@ -235,7 +237,7 @@ export const DonutWithContent: Story = {
       },
     },
   },
-  render: () => {
+  render: function Story() {
     const total = devices.reduce((sum, item) => sum + item.value, 0);
     return (
       <Card className="w-[360px] rounded-2xl">
@@ -304,7 +306,7 @@ export const WithBreakdown: Story = {
       },
     },
   },
-  render: () => {
+  render: function Story() {
     const total = plans.reduce((sum, item) => sum + item.value, 0);
     return (
       <Card className="w-[460px] rounded-2xl">
@@ -367,7 +369,7 @@ export const CustomTooltip: Story = {
       },
     },
   },
-  render: () => {
+  render: function Story() {
     const total = browsers.reduce((sum, item) => sum + item.value, 0);
     return (
       <Card className="w-[360px] rounded-2xl">

@@ -163,7 +163,7 @@ export const WithPattern: Story = {
 };
 
 export const Controlled: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const [value, setValue] = React.useState("");
 
     return (
@@ -203,7 +203,7 @@ export const Controlled: Story = {
 };
 
 export const WithValidation: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const [value, setValue] = React.useState("");
     const [isInvalid, setIsInvalid] = React.useState(false);
 
@@ -268,7 +268,7 @@ export const WithValidation: Story = {
 };
 
 export const OnComplete: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const [value, setValue] = React.useState("");
     const [isComplete, setIsComplete] = React.useState(false);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -338,7 +338,7 @@ export const OnComplete: Story = {
 };
 
 export const FormExample: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const [value, setValue] = React.useState("");
     const [error, setError] = React.useState("");
     const [isSubmitting, setIsSubmitting] = React.useState(false);

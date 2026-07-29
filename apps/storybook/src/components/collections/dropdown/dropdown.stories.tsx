@@ -60,7 +60,7 @@ export const Default: Story = {
 };
 
 export const WithSingleSelection: Story = {
-  render: () => {
+  render: function Story() {
     const [selected, setSelected] = React.useState<Selection>(new Set(["apple"]));
 
     return (
@@ -105,7 +105,7 @@ export const WithSingleSelection: Story = {
 };
 
 export const SingleWithCustomIndicator: Story = {
-  render: () => {
+  render: function Story() {
     const [selected, setSelected] = React.useState<Selection>(new Set(["apple"]));
 
     const CustomCheckmarkIcon = (
@@ -164,7 +164,7 @@ export const SingleWithCustomIndicator: Story = {
 };
 
 export const WithMultipleSelection: Story = {
-  render: () => {
+  render: function Story() {
     const [selected, setSelected] = React.useState<Selection>(new Set(["apple"]));
 
     return (
@@ -209,7 +209,7 @@ export const WithMultipleSelection: Story = {
 };
 
 export const WithSectionLevelSelection: Story = {
-  render: () => {
+  render: function Story() {
     const [textStyles, setTextStyles] = React.useState<Selection>(new Set(["bold", "italic"]));
     const [textAlignment, setTextAlignment] = React.useState<Selection>(new Set(["left"]));
 
@@ -754,7 +754,7 @@ export const WithCustomSubmenuIndicator: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [selected, setSelected] = React.useState<Selection>(new Set(["bold"]));
 
     const selectedItems = Array.from(selected);
@@ -795,7 +795,7 @@ export const Controlled: Story = {
 };
 
 export const ControlledOpenState: Story = {
-  render: () => {
+  render: function Story() {
     const [open, setOpen] = React.useState(false);
 
     return (

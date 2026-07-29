@@ -136,7 +136,7 @@ export const DefaultValue: Story = {
 };
 
 export const Controlled: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const [value, setValue] = useState<DateRange | null>(null);
     const [focusedDate, setFocusedDate] = useState<DateValue>(parseDate("2025-12-25"));
     const { locale } = useLocale();
@@ -231,7 +231,7 @@ export const Controlled: Story = {
 };
 
 export const MinMaxDates: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const now = today(getLocalTimeZone());
     const minDate = now;
     const maxDate = now.add({ months: 3 });
@@ -279,7 +279,7 @@ export const MinMaxDates: Story = {
 };
 
 export const UnavailableDates: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const now = today(getLocalTimeZone());
     const blockedRanges = [
       [now.add({ days: 2 }), now.add({ days: 5 })],
@@ -321,7 +321,7 @@ export const WeeksInMonth: Story = {
 };
 
 export const AnchorUnavailableDates: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const now = today(getLocalTimeZone());
 
     return (
@@ -341,7 +341,7 @@ export const AnchorUnavailableDates: Story = {
 };
 
 export const AllowsNonContiguousRanges: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const now = today(getLocalTimeZone());
     const blockedRanges = [
       [now.add({ days: 2 }), now.add({ days: 5 })],
@@ -409,7 +409,7 @@ export const ReadOnly: Story = {
 };
 
 export const Invalid: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const now = today(getLocalTimeZone());
     const [value, setValue] = useState<DateRange>({
       end: now.add({ days: 14 }),
@@ -437,7 +437,7 @@ export const Invalid: Story = {
 };
 
 export const FocusedValue: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const [focusedDate, setFocusedDate] = useState<DateValue>(parseDate("2025-06-15"));
 
     return (
@@ -625,7 +625,7 @@ const dayViewOptions = [
 ] as const;
 
 export const DayView: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const [days, setDays] = useState(5);
 
     return (
@@ -683,7 +683,7 @@ const weekViewOptions = [
 ] as const;
 
 export const WeekView: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const [weeks, setWeeks] = useState(1);
 
     return (
@@ -746,7 +746,7 @@ export const InternationalCalendar: Story = {
 };
 
 export const BookingCalendar: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(null);
     const { locale } = useLocale();
 

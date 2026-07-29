@@ -19,9 +19,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const sales = [18, 32, 28, 45, 38, 52, 42, 55, 48, 60, 53, 58].map((value, index) => ({
-  month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][
-    index
-  ]!,
+  month:
+    ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][index] ??
+    "Unknown",
   sales: value,
 }));
 
@@ -360,7 +360,7 @@ export const Comparison: Story = {
       },
     },
   },
-  render: () => {
+  render: function Story() {
     const data = [
       { current: 120, day: "Mon", previous: 90 },
       { current: 180, day: "Tue", previous: 150 },
@@ -490,8 +490,8 @@ export const CustomTooltip: Story = {
               return (
                 <ChartTooltip>
                   <ChartTooltip.Header>{label}</ChartTooltip.Header>
-                  {payload.map((entry, index) => (
-                    <ChartTooltip.Item key={index}>
+                  {payload.map((entry) => (
+                    <ChartTooltip.Item key={`${String(entry.name)}-${String(entry.dataKey)}`}>
                       <ChartTooltip.Indicator color={entry.fill} />
                       <ChartTooltip.Label>{entry.name}</ChartTooltip.Label>
                       <ChartTooltip.Value>

@@ -177,7 +177,7 @@ export const Disabled: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = React.useState("");
 
     return (
@@ -205,7 +205,7 @@ export const Controlled: Story = {
 };
 
 export const WithValidation: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = React.useState("");
     const isInvalid = value.length > 0 && value.length < 3;
 
@@ -256,7 +256,7 @@ export const CustomIcons: Story = {
 };
 
 export const FormExample: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = React.useState("");
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const MIN_LENGTH = 3;
@@ -323,7 +323,7 @@ export const FormExample: Story = {
 };
 
 export const WithKeyboardShortcut: Story = {
-  render: () => {
+  render: function Story() {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const [value, setValue] = React.useState("");
 

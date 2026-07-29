@@ -146,7 +146,7 @@ export const Controlled: Story = {
 };
 
 export const WithSwatches: Story = {
-  render: () => {
+  render: function Story() {
     return (
       <ColorPicker defaultValue="#F43F5E">
         <ColorPicker.Trigger>
@@ -189,7 +189,7 @@ export const WithSwatches: Story = {
 };
 
 export const WidthFields: Story = {
-  render: () => {
+  render: function Story() {
     const [colorSpace, setColorSpace] = React.useState<ColorSpace>("hsl");
 
     const colorChannelsByColorSpace: Record<ColorSpace, ColorChannel[]> = {
@@ -263,7 +263,7 @@ export const WidthFields: Story = {
 };
 
 export const WithSliders: Story = {
-  render: () => {
+  render: function Story() {
     const [colorSpace, setColorSpace] = React.useState<ColorSpace>("hsl");
 
     const colorChannelsByColorSpace: Record<ColorSpace, ColorChannel[]> = {

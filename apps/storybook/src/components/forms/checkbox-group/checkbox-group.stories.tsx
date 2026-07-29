@@ -92,7 +92,7 @@ export const WithCustomIndicator: Story = {
 };
 
 export const Indeterminate: Story = {
-  render: () => {
+  render: function Story() {
     const [selected, setSelected] = React.useState(["coding"]);
     const allOptions = ["coding", "design", "writing"];
 
@@ -147,7 +147,7 @@ export const Indeterminate: Story = {
 };
 
 export const Validation: Story = {
-  render: () => {
+  render: function Story() {
     return (
       <Form
         className="flex flex-col gap-4 px-4"
@@ -196,7 +196,7 @@ export const Validation: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [selected, setSelected] = React.useState(["coding", "design"]);
 
     return (

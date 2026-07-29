@@ -52,7 +52,7 @@ const handleAutocompleteRequiredSubmit = (e: React.FormEvent<HTMLFormElement>) =
 };
 
 export const Default: Story = {
-  render: () => {
+  render: function Story() {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
     const { contains } = useFilter({ sensitivity: "base" });
 
@@ -103,7 +103,7 @@ export const Default: Story = {
 };
 
 export const WithClearButton: Story = {
-  render: () => {
+  render: function Story() {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
     const { contains } = useFilter({ sensitivity: "base" });
 
@@ -155,7 +155,7 @@ export const WithClearButton: Story = {
 };
 
 export const WithOnClearCallback: Story = {
-  render: () => {
+  render: function Story() {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
     const [clearCount, setClearCount] = useState(0);
     const [lastClearedAt, setLastClearedAt] = useState<string | null>(null);
@@ -236,7 +236,7 @@ export const WithOnClearCallback: Story = {
 };
 
 export const Variants: Story = {
-  render: () => {
+  render: function Story() {
     const [selectedKey1, setSelectedKey1] = useState<Key | null>(null);
     const [selectedKey2, setSelectedKey2] = useState<Key | null>(null);
     const [selectedKeys1, setSelectedKeys1] = useState<Key[]>([]);
@@ -464,7 +464,7 @@ export const Variants: Story = {
 };
 
 export const MultipleSelect: Story = {
-  render: () => {
+  render: function Story() {
     const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
     const { contains } = useFilter({ sensitivity: "base" });
 
@@ -546,7 +546,7 @@ export const MultipleSelect: Story = {
 };
 
 export const FullWidth: Story = {
-  render: () => {
+  render: function Story() {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
     const { contains } = useFilter({ sensitivity: "base" });
 
@@ -601,7 +601,7 @@ export const FullWidth: Story = {
 };
 
 export const WithDescription: Story = {
-  render: () => {
+  render: function Story() {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
     const { contains } = useFilter({ sensitivity: "base" });
 
@@ -654,7 +654,7 @@ export const WithDescription: Story = {
 };
 
 export const WithSections: Story = {
-  render: () => {
+  render: function Story() {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
     const { contains } = useFilter({ sensitivity: "base" });
 
@@ -750,7 +750,7 @@ export const WithSections: Story = {
 };
 
 export const WithDisabledOptions: Story = {
-  render: () => {
+  render: function Story() {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
     const { contains } = useFilter({ sensitivity: "base" });
 
@@ -812,7 +812,7 @@ export const WithDisabledOptions: Story = {
 };
 
 export const CustomIndicator: Story = {
-  render: () => {
+  render: function Story() {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
     const { contains } = useFilter({ sensitivity: "base" });
 
@@ -866,7 +866,7 @@ export const CustomIndicator: Story = {
 };
 
 export const Required: Story = {
-  render: () => {
+  render: function Story() {
     const { contains } = useFilter({ sensitivity: "base" });
 
     const states = [
@@ -964,7 +964,7 @@ export const Required: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const states = [
       { id: "california", name: "California" },
       { id: "texas", name: "Texas" },
@@ -1021,7 +1021,7 @@ export const Controlled: Story = {
 };
 
 export const ControlledOpenState: Story = {
-  render: () => {
+  render: function Story() {
     const [isOpen, setIsOpen] = React.useState(false);
     const { contains } = useFilter({ sensitivity: "base" });
 
@@ -1081,7 +1081,7 @@ interface Pokemon {
 }
 
 export const AsynchronousFiltering: Story = {
-  render: () => {
+  render: function Story() {
     const list = useAsyncList<Pokemon>({
       async load({ filterText, signal }) {
         const res = await fetch(`https://swapi.py4e.com/api/people/?search=${filterText}`, {
@@ -1201,8 +1201,8 @@ function generateUsers(n: number): User[] {
   const users: User[] = [];
 
   for (let i = 0; i < n; i++) {
-    const firstName = firstNames[i % firstNames.length]!;
-    const lastName = lastNames[Math.floor(i / firstNames.length) % lastNames.length]!;
+    const firstName = firstNames[i % firstNames.length] ?? "";
+    const lastName = lastNames[Math.floor(i / firstNames.length) % lastNames.length] ?? "";
     const name = `${firstName} ${lastName}`;
 
     users.push({
@@ -1216,7 +1216,7 @@ function generateUsers(n: number): User[] {
 }
 
 export const Virtualization: Story = {
-  render: () => {
+  render: function Story() {
     const [selectedKey, setSelectedKey] = useState<Key | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
     const { contains } = useFilter({ sensitivity: "base" });
@@ -1279,7 +1279,7 @@ export const Virtualization: Story = {
 };
 
 export const Disabled: Story = {
-  render: () => {
+  render: function Story() {
     const { contains } = useFilter({ sensitivity: "base" });
 
     const items = [
@@ -1374,7 +1374,7 @@ export const Disabled: Story = {
 };
 
 export const UserSelection: Story = {
-  render: () => {
+  render: function Story() {
     const users = [
       {
         id: "1",
@@ -1490,7 +1490,7 @@ export const UserSelection: Story = {
 };
 
 export const UserSelectionMultiple: Story = {
-  render: () => {
+  render: function Story() {
     const users = [
       {
         id: "1",
@@ -1620,7 +1620,7 @@ interface City {
 }
 
 export const LocationSearch: Story = {
-  render: () => {
+  render: function Story() {
     const allCities: City[] = [
       { name: "New York", country: "USA" },
       { name: "Los Angeles", country: "USA" },
@@ -1693,7 +1693,7 @@ export const LocationSearch: Story = {
 };
 
 export const TagGroupSelection: Story = {
-  render: () => {
+  render: function Story() {
     const tags = [
       { id: "react", name: "React" },
       { id: "typescript", name: "TypeScript" },
@@ -1777,7 +1777,7 @@ export const TagGroupSelection: Story = {
 };
 
 export const EmailRecipients: Story = {
-  render: () => {
+  render: function Story() {
     const emails = [
       {
         id: "alice@example.com",

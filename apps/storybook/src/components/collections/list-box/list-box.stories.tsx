@@ -286,7 +286,7 @@ export const CustomCheckIcon: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [selected, setSelected] = React.useState<Selection>(new Set(["1"]));
 
     const selectedItems = Array.from(selected);
@@ -356,7 +356,7 @@ export const Controlled: Story = {
 };
 
 export const Virtualization: Story = {
-  render: () => {
+  render: function Story() {
     const firstNames = [
       "Emma",
       "Liam",

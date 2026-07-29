@@ -103,7 +103,7 @@ export const Default: Story = {
 };
 
 export const Gauge: Story = {
-  render: () => {
+  render: function Story() {
     const data = [{ fill: "var(--chart-3)", name: "Active Users", value: 780 }];
     return (
       <Card className="w-[280px] rounded-2xl">
@@ -254,7 +254,7 @@ export const GaugeGrid: Story = {
 };
 
 export const ProgressRing: Story = {
-  render: () => {
+  render: function Story() {
     const value = 7452;
     const max = 10000;
     const percent = ((value / max) * 100).toFixed(0);

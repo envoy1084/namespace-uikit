@@ -220,7 +220,7 @@ export const WithCustomStyles: Story = {
 };
 
 export const WithIcons: Story = {
-  render: () => {
+  render: function Story() {
     const icons = {
       lock: {
         off: "hugeicons:volume-fill",

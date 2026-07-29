@@ -78,7 +78,7 @@ export const Default: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState<DateValue | null>(today(getLocalTimeZone()));
 
     return (
@@ -101,7 +101,7 @@ export const Disabled: Story = {
 };
 
 export const WithValidation: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState<DateValue | null>(null);
     const currentDate = today(getLocalTimeZone());
     const isInvalid = value != null && value.compare(currentDate) < 0;
@@ -161,7 +161,7 @@ export const WithCustomIndicator: Story = {
 };
 
 export const FormExample: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState<DateValue | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const currentDate = today(getLocalTimeZone());

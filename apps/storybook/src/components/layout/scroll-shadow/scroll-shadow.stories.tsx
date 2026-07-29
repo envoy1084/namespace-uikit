@@ -1,3 +1,4 @@
+/* oxlint-disable react/no-array-index-key -- Static placeholder content never reorders. */
 import React, { useState } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -169,7 +170,7 @@ export const CustomSize: Story = {
 };
 
 export const VisibilityChange: Story = {
-  render: (args) => {
+  render: function Story(args) {
     const [verticalState, setVerticalState] = useState<ScrollShadowVisibility>("none");
     const [horizontalState, setHorizontalState] = useState<ScrollShadowVisibility>("none");
 

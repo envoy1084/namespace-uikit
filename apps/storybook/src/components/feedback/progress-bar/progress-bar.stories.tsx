@@ -36,7 +36,7 @@ export default meta;
 type Story = StoryObj<typeof ProgressBar>;
 
 export const Default: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <ProgressBar value={60} {...args}>
         <Label>Loading</Label>
@@ -50,7 +50,7 @@ export const Default: Story = {
 };
 
 export const Sizes: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <div className="flex w-full flex-col gap-6">
         <ProgressBar size="sm" value={40} {...args}>
@@ -80,7 +80,7 @@ export const Sizes: Story = {
 };
 
 export const Colors: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <div className="flex w-full flex-col gap-6">
         <ProgressBar color="default" value={50} {...args}>
@@ -124,7 +124,7 @@ export const Colors: Story = {
 };
 
 export const Indeterminate: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <ProgressBar isIndeterminate {...args}>
         <Label>Loading...</Label>
@@ -137,7 +137,7 @@ export const Indeterminate: Story = {
 };
 
 export const CustomValue: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <ProgressBar
         formatOptions={{ style: "currency", currency: "USD" }}
@@ -157,7 +157,7 @@ export const CustomValue: Story = {
 };
 
 export const WithoutLabel: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <ProgressBar aria-label="Loading progress" value={45} {...args}>
         <ProgressBar.Track>

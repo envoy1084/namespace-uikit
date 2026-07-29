@@ -411,7 +411,7 @@ export const CustomIndicator: Story = {
 };
 
 export const Required: Story = {
-  render: () => {
+  render: function Story() {
     return (
       <Form className="flex w-[256px] flex-col gap-4" onSubmit={handleSelectRequiredSubmit}>
         <Select isRequired className="w-full" name="state" placeholder="Select one">
@@ -493,7 +493,7 @@ export const Required: Story = {
 };
 
 export const CustomValue: Story = {
-  render: () => {
+  render: function Story() {
     const users = [
       {
         id: "1",
@@ -590,7 +590,7 @@ export const CustomValue: Story = {
 };
 
 export const CustomValueMultiple: Story = {
-  render: () => {
+  render: function Story() {
     const users = [
       {
         id: "1",
@@ -690,7 +690,7 @@ export const CustomValueMultiple: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const states = [
       {
         id: "california",
@@ -753,7 +753,7 @@ export const Controlled: Story = {
 };
 
 export const ControlledMultiple: Story = {
-  render: () => {
+  render: function Story() {
     const [selected, setSelected] = React.useState<Key[]>(["california", "texas"]);
 
     return (
@@ -808,7 +808,7 @@ export const ControlledMultiple: Story = {
 };
 
 export const ControlledOpenState: Story = {
-  render: () => {
+  render: function Story() {
     const [isOpen, setIsOpen] = React.useState(false);
 
     return (
@@ -865,7 +865,7 @@ interface Pokemon {
 }
 
 export const AsynchronousLoading: Story = {
-  render: () => {
+  render: function Story() {
     const list = useAsyncList<Pokemon>({
       async load({ cursor, signal }) {
         const res = await fetch(cursor || `https://pokeapi.co/api/v2/pokemon`, {

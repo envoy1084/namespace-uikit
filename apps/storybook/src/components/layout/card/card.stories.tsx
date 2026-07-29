@@ -453,7 +453,7 @@ export const WithImages: Story = {
 };
 
 export const WithForm: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <Card className="w-full max-w-md" {...args}>
         <Card.Header>

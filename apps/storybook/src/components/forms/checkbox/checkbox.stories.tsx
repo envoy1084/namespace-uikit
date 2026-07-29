@@ -122,7 +122,7 @@ export const WithCustomIndicator: Story = {
 };
 
 export const Indeterminate: Story = {
-  render: () => {
+  render: function Story() {
     return (
       <Checkbox isIndeterminate id="select-all">
         <Checkbox.Content>
@@ -164,7 +164,7 @@ export const Disabled: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [isSelected, setIsSelected] = React.useState(true);
 
     return (
@@ -292,7 +292,7 @@ export const FullRounded: Story = {
 };
 
 export const FeaturesAndAddOnsExample: Story = {
-  render: () => {
+  render: function Story() {
     const addOns = [
       {
         title: "Email Notifications",

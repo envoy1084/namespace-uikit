@@ -36,7 +36,7 @@ export default meta;
 type Story = StoryObj<typeof Meter>;
 
 export const Default: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <Meter value={60} {...args}>
         <Label>Storage</Label>
@@ -50,7 +50,7 @@ export const Default: Story = {
 };
 
 export const Sizes: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <div className="flex w-full flex-col gap-6">
         <Meter size="sm" value={40} {...args}>
@@ -80,7 +80,7 @@ export const Sizes: Story = {
 };
 
 export const Colors: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <div className="flex w-full flex-col gap-6">
         <Meter color="default" value={50} {...args}>
@@ -124,7 +124,7 @@ export const Colors: Story = {
 };
 
 export const CustomValue: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <Meter
         formatOptions={{ style: "currency", currency: "USD" }}
@@ -144,7 +144,7 @@ export const CustomValue: Story = {
 };
 
 export const WithoutLabel: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <Meter aria-label="Storage usage" value={45} {...args}>
         <Meter.Track>

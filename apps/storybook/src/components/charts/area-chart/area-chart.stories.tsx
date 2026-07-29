@@ -201,8 +201,8 @@ export const MultiArea: Story = {
 
 const stackedData = trafficData.map((item, index) => ({
   ...item,
-  direct: [800, 1500, 2200, 1800, 2600, 2000, 3100, 2800, 3500, 3200, 4000, 3700][index]!,
-  referral: [500, 1200, 2100, 2800, 3200, 2600, 4100, 3800, 4500, 5200, 5800, 5100][index]!,
+  direct: [800, 1500, 2200, 1800, 2600, 2000, 3100, 2800, 3500, 3200, 4000, 3700][index] ?? 0,
+  referral: [500, 1200, 2100, 2800, 3200, 2600, 4100, 3800, 4500, 5200, 5800, 5100][index] ?? 0,
 }));
 
 export const Stacked: Story = {
@@ -214,7 +214,7 @@ export const Stacked: Story = {
       },
     },
   },
-  render: () => {
+  render: function Story() {
     const series = [
       { color: "var(--chart-4)", key: "organic", label: "Organic" },
       { color: "var(--chart-3)", key: "paidAds", label: "Paid Ads" },
@@ -464,8 +464,8 @@ export const CustomTooltip: Story = {
               return (
                 <ChartTooltip indicator="line">
                   <ChartTooltip.Header>{label}</ChartTooltip.Header>
-                  {payload.map((entry, index) => (
-                    <ChartTooltip.Item key={index}>
+                  {payload.map((entry) => (
+                    <ChartTooltip.Item key={`${String(entry.name)}-${String(entry.dataKey)}`}>
                       <ChartTooltip.Indicator color={entry.stroke} />
                       <ChartTooltip.Label>{entry.name}</ChartTooltip.Label>
                       <ChartTooltip.Value>

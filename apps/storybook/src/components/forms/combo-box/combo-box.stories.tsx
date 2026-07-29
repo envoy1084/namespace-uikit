@@ -374,7 +374,7 @@ export const CustomIndicator: Story = {
 };
 
 export const Required: Story = {
-  render: () => {
+  render: function Story() {
     return (
       <Form className="flex w-[256px] flex-col gap-4" onSubmit={handleComboBoxRequiredSubmit}>
         <ComboBox isRequired className="w-full" name="animal">
@@ -420,7 +420,7 @@ export const Required: Story = {
 };
 
 export const CustomValue: Story = {
-  render: () => {
+  render: function Story() {
     const users = [
       {
         id: "1",
@@ -489,7 +489,7 @@ export const CustomValue: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const animals = [
       {
         id: "cat",
@@ -547,7 +547,7 @@ export const Controlled: Story = {
 };
 
 export const ControlledInputValue: Story = {
-  render: () => {
+  render: function Story() {
     const [inputValue, setInputValue] = React.useState("");
 
     return (
@@ -598,7 +598,7 @@ interface Character {
 }
 
 export const AsynchronousLoading: Story = {
-  render: () => {
+  render: function Story() {
     const list = useAsyncList<Character>({
       async load({ cursor, filterText, signal }) {
         const normalizedCursor = cursor?.replace(/^http:\/\//i, "https://");
@@ -657,7 +657,7 @@ export const AsynchronousLoading: Story = {
 };
 
 export const CustomFiltering: Story = {
-  render: () => {
+  render: function Story() {
     const animals = [
       { id: "cat", name: "Cat" },
       { id: "dog", name: "Dog" },

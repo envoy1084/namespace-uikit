@@ -28,7 +28,7 @@ type Story = StoryObj<typeof meta>;
 const DEFAULT_COLOR = parseColor("#0485F7");
 
 export const Default: Story = {
-  render: () => {
+  render: function Story() {
     const [color, setColor] = useState<Color | null>(DEFAULT_COLOR);
 
     return (
@@ -172,7 +172,7 @@ export const Disabled: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState<Color | null>(parseColor("#0485F7"));
 
     return (
@@ -204,7 +204,7 @@ export const Controlled: Story = {
 };
 
 export const ChannelEditing: Story = {
-  render: () => {
+  render: function Story() {
     const [color, setColor] = useState<Color | null>(parseColor("#7F007F"));
 
     return (
@@ -267,7 +267,7 @@ export const ChannelEditing: Story = {
 };
 
 export const RGBChannels: Story = {
-  render: () => {
+  render: function Story() {
     const [color, setColor] = useState<Color | null>(parseColor("#3B82F6"));
 
     return (
@@ -324,7 +324,7 @@ export const RGBChannels: Story = {
 };
 
 export const FormExample: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState<Color | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const isInvalid = value === null;
@@ -382,7 +382,7 @@ export const FormExample: Story = {
 };
 
 export const WithColorPresets: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = useState<Color | null>(parseColor("#0485F7"));
     const presets = ["#EF4444", "#F59E0B", "#10B981", "#3B82F6", "#8B5CF6", "#EC4899"];
 
@@ -415,7 +415,7 @@ export const WithColorPresets: Story = {
 };
 
 export const AllVariations: Story = {
-  render: () => {
+  render: function Story() {
     const [color1, setColor1] = useState<Color | null>(parseColor("#0485F7"));
     const [color2, setColor2] = useState<Color | null>(parseColor("#10B981"));
     const [color3, setColor3] = useState<Color | null>(parseColor("#F43F5E"));

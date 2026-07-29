@@ -237,7 +237,7 @@ export const Orientation: Story = {
 };
 
 export const Validation: Story = {
-  render: () => {
+  render: function Story() {
     return (
       <Form
         className="flex flex-col gap-4 px-4"
@@ -288,7 +288,7 @@ export const Validation: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function Story() {
     const [value, setValue] = React.useState("pro");
 
     return (
@@ -332,7 +332,7 @@ export const Controlled: Story = {
 };
 
 export const Uncontrolled: Story = {
-  render: () => {
+  render: function Story() {
     const [selection, setSelection] = React.useState("pro");
 
     return (
@@ -418,7 +418,7 @@ export const Disabled: Story = {
 };
 
 export const DeliveryAndPaymentExample: Story = {
-  render: () => {
+  render: function Story() {
     const deliveryOptions = [
       {
         description: "4-10 business days",

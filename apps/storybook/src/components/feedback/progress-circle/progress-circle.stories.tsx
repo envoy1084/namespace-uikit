@@ -29,7 +29,7 @@ export default meta;
 type Story = StoryObj<typeof ProgressCircle>;
 
 export const Default: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <ProgressCircle aria-label="Loading" value={60} {...args}>
         <ProgressCircle.Track>
@@ -42,7 +42,7 @@ export const Default: Story = {
 };
 
 export const Sizes: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <div className="flex items-center gap-6">
         <ProgressCircle aria-label="Loading" size="sm" value={40} {...args}>
@@ -69,7 +69,7 @@ export const Sizes: Story = {
 };
 
 export const Colors: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <div className="flex items-center gap-6">
         <ProgressCircle aria-label="Loading" color="default" value={60} {...args}>
@@ -108,7 +108,7 @@ export const Colors: Story = {
 };
 
 export const Indeterminate: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <ProgressCircle isIndeterminate aria-label="Loading" {...args}>
         <ProgressCircle.Track>
@@ -121,7 +121,7 @@ export const Indeterminate: Story = {
 };
 
 export const WithLabel: Story = {
-  render: (args) => {
+  render: function Story(args) {
     return (
       <div className="flex items-center gap-3">
         <ProgressCircle aria-label="Loading" value={75} {...args}>
