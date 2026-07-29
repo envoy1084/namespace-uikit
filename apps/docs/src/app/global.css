@@ -2,11 +2,34 @@
    IMPORTS
    ============================================================================ */
 
-@import url("https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,800,900&display=swap");
 @import "@thenamespace/uikit/styles";
 @import "tailwindcss";
 @import "fumadocs-ui/css/black.css";
 @import "fumadocs-ui/css/preset.css";
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Inter-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500 600;
+  font-display: swap;
+  src: url("/fonts/Inter-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+  src: url("/fonts/Inter-Bold.ttf") format("truetype");
+}
 
 :root {
   /* Fumadocs UI Variables */
@@ -26,8 +49,13 @@
   --animate-fd-fade-in: custom-fade-in 200ms ease-out forwards;
   --animate-fd-fade-out: custom-fade-out 150ms ease-out forwards;
 
-  /* Default font - can be overridden by theme builder */
-  --font-sans: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  /* Match the HeroUI docs typography while keeping the font self-hosted. */
+  --font-inter: "Inter";
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Dark Theme Variables */

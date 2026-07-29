@@ -1,3 +1,4 @@
+/* oxlint-disable react/no-danger -- JSON-LD is generated from trusted static site metadata. */
 import type { ReactNode } from "react";
 
 import type { Metadata } from "next";
@@ -100,7 +101,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html suppressHydrationWarning lang="en">
-      <body>
+      <body className="flex min-h-screen flex-col font-sans">
         <script
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredData).replaceAll("<", "\\u003c"),
