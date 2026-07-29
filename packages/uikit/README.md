@@ -4,9 +4,10 @@ Namespace UI Kit is the Namespace theme and package surface built on top of [Her
 
 ## Requirements
 
-- React 19
-- React DOM 19
+- React and React DOM 19
 - Tailwind CSS 4
+- HeroUI 3.2.1
+- React Aria Components 1.18.0
 
 ## Installation
 
@@ -14,7 +15,12 @@ Namespace UI Kit is the Namespace theme and package surface built on top of [Her
 pnpm add @thenamespace/uikit
 ```
 
-The package includes its HeroUI runtime dependencies. React, React DOM, and Tailwind CSS remain peer dependencies so an application uses a single compatible copy.
+HeroUI and the React Aria foundation are exact peer dependencies. Current package managers install
+them automatically; keeping them as peers ensures the application and UI kit share one set of
+contexts and types. React 19 and Tailwind CSS 4 use compatible major-version peer ranges.
+
+If an existing application reports a peer conflict, remove direct React Aria version overrides and
+regenerate its lockfile so the versions required by the UI kit can resolve together.
 
 ## Styles
 
@@ -28,6 +34,9 @@ Import Tailwind first, followed by the UI kit, in the application's main CSS fil
 The `@thenamespace/uikit/styles` alias is also supported.
 
 Import the stylesheet once at the application root. JavaScript component imports do not automatically inject CSS. The stylesheet contains HeroUI's layered base and component styles followed by Namespace theme variables. It does not set application layout or body styles.
+
+The theme uses `"Satoshi"` as its preferred sans-serif font but does not load fonts or make external
+network requests. Applications can load Satoshi themselves or override `--font-sans`.
 
 The theme supports HeroUI's standard selectors:
 

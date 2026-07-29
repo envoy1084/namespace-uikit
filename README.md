@@ -7,6 +7,7 @@ Namespace UI Kit is the Namespace design-system package built on [HeroUI v3](htt
 This pnpm and Turborepo monorepo contains:
 
 - [`packages/uikit`](./packages/uikit) — the publishable `@thenamespace/uikit` package.
+- [`apps/docs`](./apps/docs) — the documentation site and component demos.
 - [`apps/storybook`](./apps/storybook) — the component catalogue and visual development environment.
 
 See the [package README](./packages/uikit/README.md) for installation, imports, theming, component subpaths, and API usage.
