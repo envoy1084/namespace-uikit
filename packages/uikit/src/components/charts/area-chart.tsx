@@ -16,10 +16,9 @@ import {
 
 import { ChartTooltip } from "./chart-tooltip";
 
-export interface AreaChartRootProps extends Omit<
-  HTMLAttributes<HTMLDivElement>,
-  "children"
-> {
+const defaultMargin: Margin = { bottom: 0, left: 0, right: 8, top: 8 };
+
+export interface AreaChartRootProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
   children: ReactNode;
   data: Record<string, number | string>[];
   height?: number;
@@ -33,18 +32,13 @@ function AreaChartRoot({
   className,
   data,
   height = 300,
-  margin = { bottom: 0, left: 0, right: 8, top: 8 },
+  margin = defaultMargin,
   ref,
   width = "100%",
   ...props
 }: AreaChartRootProps): ReactElement {
   return (
-    <div
-      ref={ref}
-      {...props}
-      className={cn("area-chart", className)}
-      data-slot="area-chart"
-    >
+    <div ref={ref} {...props} className={cn("area-chart", className)} data-slot="area-chart">
       <ResponsiveContainer height={height} width={width}>
         <RechartsAreaChart data={data} margin={margin}>
           {children}

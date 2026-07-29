@@ -7,6 +7,7 @@ import {
   type ReactNode,
   type Ref,
   useContext,
+  useMemo,
 } from "react";
 
 import { cn } from "@heroui/react";
@@ -35,10 +36,12 @@ function ChartTooltipRoot({
   ref,
   ...props
 }: ChartTooltipRootProps): ReactElement | null {
+  const contextValue = useMemo(() => ({ indicator }), [indicator]);
+
   if (!active) return null;
 
   return (
-    <ChartTooltipContext.Provider value={{ indicator }}>
+    <ChartTooltipContext.Provider value={contextValue}>
       <div
         ref={ref}
         {...props}
@@ -90,22 +93,18 @@ function ChartTooltipContent({
       {!hideHeader && resolvedLabel !== undefined && resolvedLabel !== "" ? (
         <ChartTooltipHeader>{resolvedLabel}</ChartTooltipHeader>
       ) : null}
-      {payload.map((entry, index) => {
+      {payload.map((entry) => {
         const name = entry.name ?? entry.dataKey ?? "";
         const value = entry.value ?? "";
         const payloadColor =
-          typeof entry.payload?.["fill"] === "string"
-            ? entry.payload["fill"]
-            : undefined;
+          typeof entry.payload?.["fill"] === "string" ? entry.payload["fill"] : undefined;
         const color = entry.stroke ?? entry.color ?? entry.fill ?? payloadColor;
 
         return (
-          <ChartTooltipItem key={`${String(entry.dataKey ?? name)}-${index}`}>
+          <ChartTooltipItem key={String(entry.dataKey ?? name)}>
             <ChartTooltipIndicator {...(color ? { color } : {})} />
             <ChartTooltipLabel>{name}</ChartTooltipLabel>
-            <ChartTooltipValue>
-              {valueFormatter ? valueFormatter(value) : value}
-            </ChartTooltipValue>
+            <ChartTooltipValue>{valueFormatter ? valueFormatter(value) : value}</ChartTooltipValue>
           </ChartTooltipItem>
         );
       })}
@@ -117,11 +116,7 @@ export interface ChartTooltipHeaderProps extends HTMLAttributes<HTMLDivElement> 
   ref?: Ref<HTMLDivElement>;
 }
 
-function ChartTooltipHeader({
-  className,
-  ref,
-  ...props
-}: ChartTooltipHeaderProps): ReactElement {
+function ChartTooltipHeader({ className, ref, ...props }: ChartTooltipHeaderProps): ReactElement {
   return (
     <div
       ref={ref}
@@ -136,11 +131,7 @@ export interface ChartTooltipItemProps extends HTMLAttributes<HTMLDivElement> {
   ref?: Ref<HTMLDivElement>;
 }
 
-function ChartTooltipItem({
-  className,
-  ref,
-  ...props
-}: ChartTooltipItemProps): ReactElement {
+function ChartTooltipItem({ className, ref, ...props }: ChartTooltipItemProps): ReactElement {
   return (
     <div
       ref={ref}
@@ -184,11 +175,7 @@ export interface ChartTooltipLabelProps extends HTMLAttributes<HTMLSpanElement> 
   ref?: Ref<HTMLSpanElement>;
 }
 
-function ChartTooltipLabel({
-  className,
-  ref,
-  ...props
-}: ChartTooltipLabelProps): ReactElement {
+function ChartTooltipLabel({ className, ref, ...props }: ChartTooltipLabelProps): ReactElement {
   return (
     <span
       ref={ref}
@@ -203,11 +190,7 @@ export interface ChartTooltipValueProps extends HTMLAttributes<HTMLSpanElement> 
   ref?: Ref<HTMLSpanElement>;
 }
 
-function ChartTooltipValue({
-  className,
-  ref,
-  ...props
-}: ChartTooltipValueProps): ReactElement {
+function ChartTooltipValue({ className, ref, ...props }: ChartTooltipValueProps): ReactElement {
   return (
     <span
       ref={ref}
@@ -227,14 +210,11 @@ type ChartTooltipComponent = typeof ChartTooltipRoot & {
   Value: typeof ChartTooltipValue;
 };
 
-export const ChartTooltip: ChartTooltipComponent = Object.assign(
-  ChartTooltipRoot,
-  {
-    Content: ChartTooltipContent,
-    Header: ChartTooltipHeader,
-    Indicator: ChartTooltipIndicator,
-    Item: ChartTooltipItem,
-    Label: ChartTooltipLabel,
-    Value: ChartTooltipValue,
-  },
-);
+export const ChartTooltip: ChartTooltipComponent = Object.assign(ChartTooltipRoot, {
+  Content: ChartTooltipContent,
+  Header: ChartTooltipHeader,
+  Indicator: ChartTooltipIndicator,
+  Item: ChartTooltipItem,
+  Label: ChartTooltipLabel,
+  Value: ChartTooltipValue,
+});

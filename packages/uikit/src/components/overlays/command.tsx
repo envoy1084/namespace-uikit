@@ -22,6 +22,7 @@ export type CommandSize = "lg" | "md" | "sm";
 export type CommandBackdropVariant = "blur" | "opaque" | "transparent";
 type Slots = { size?: CommandSize };
 const Context = createContext<Slots>({});
+const defaultContextValue: Slots = {};
 const defaultCommandFilter = (textValue: string, query: string) =>
   textValue.toLocaleLowerCase().includes(query.toLocaleLowerCase());
 
@@ -29,7 +30,7 @@ export interface CommandRootProps {
   children: ReactNode;
 }
 export function CommandRoot({ children }: CommandRootProps): ReactElement {
-  return <Context value={{}}>{children}</Context>;
+  return <Context value={defaultContextValue}>{children}</Context>;
 }
 
 export interface CommandBackdropProps extends ComponentPropsWithRef<typeof ModalOverlay> {

@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
-import { Children, createContext, isValidElement, useContext } from "react";
+import { Children, createContext, isValidElement, useContext, useMemo } from "react";
 
 import { cn } from "@heroui/react";
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
@@ -32,8 +32,10 @@ function NativeSelectRoot({
   variant = "primary",
   ...props
 }: NativeSelectRootProps): ReactElement {
+  const contextValue = useMemo(() => ({ fullWidth, variant }), [fullWidth, variant]);
+
   return (
-    <NativeSelectContext value={{ fullWidth, variant }}>
+    <NativeSelectContext value={contextValue}>
       <div
         {...props}
         className={cn(
@@ -110,12 +112,7 @@ function NativeSelectIndicator({
       data-slot="native-select-indicator"
     >
       {children ?? (
-        <HugeiconsIcon
-          aria-hidden="true"
-          icon={ArrowDown01Icon}
-          size={16}
-          strokeWidth={2}
-        />
+        <HugeiconsIcon aria-hidden="true" icon={ArrowDown01Icon} size={16} strokeWidth={2} />
       )}
     </span>
   );
@@ -123,19 +120,13 @@ function NativeSelectIndicator({
 
 export type NativeSelectOptionProps = ComponentPropsWithRef<"option">;
 
-function NativeSelectOption({
-  children,
-  ...props
-}: NativeSelectOptionProps): ReactElement {
+function NativeSelectOption({ children, ...props }: NativeSelectOptionProps): ReactElement {
   return <option {...props}>{children}</option>;
 }
 
 export type NativeSelectOptGroupProps = ComponentPropsWithRef<"optgroup">;
 
-function NativeSelectOptGroup({
-  children,
-  ...props
-}: NativeSelectOptGroupProps): ReactElement {
+function NativeSelectOptGroup({ children, ...props }: NativeSelectOptGroupProps): ReactElement {
   return <optgroup {...props}>{children}</optgroup>;
 }
 
@@ -147,13 +138,10 @@ type NativeSelectComponent = typeof NativeSelectRoot & {
   Trigger: typeof NativeSelectTrigger;
 };
 
-export const NativeSelect: NativeSelectComponent = Object.assign(
-  NativeSelectRoot,
-  {
-    Indicator: NativeSelectIndicator,
-    OptGroup: NativeSelectOptGroup,
-    Option: NativeSelectOption,
-    Root: NativeSelectRoot,
-    Trigger: NativeSelectTrigger,
-  },
-);
+export const NativeSelect: NativeSelectComponent = Object.assign(NativeSelectRoot, {
+  Indicator: NativeSelectIndicator,
+  OptGroup: NativeSelectOptGroup,
+  Option: NativeSelectOption,
+  Root: NativeSelectRoot,
+  Trigger: NativeSelectTrigger,
+});

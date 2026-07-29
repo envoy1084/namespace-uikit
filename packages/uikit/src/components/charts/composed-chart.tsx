@@ -18,10 +18,9 @@ import {
 
 import { ChartTooltip } from "./chart-tooltip";
 
-export interface ComposedChartRootProps extends Omit<
-  HTMLAttributes<HTMLDivElement>,
-  "children"
-> {
+const defaultMargin: Margin = { bottom: 0, left: 0, right: 8, top: 8 };
+
+export interface ComposedChartRootProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
   children: ReactNode;
   data: Record<string, number | string>[];
   height?: number;
@@ -35,7 +34,7 @@ function ComposedChartRoot({
   className,
   data,
   height = 300,
-  margin = { bottom: 0, left: 0, right: 8, top: 8 },
+  margin = defaultMargin,
   ref,
   width = "100%",
   ...props
@@ -68,17 +67,14 @@ type ComposedChartComponent = typeof ComposedChartRoot & {
   YAxis: typeof YAxis;
 };
 
-export const ComposedChart: ComposedChartComponent = Object.assign(
-  ComposedChartRoot,
-  {
-    Area,
-    Bar,
-    Grid: CartesianGrid,
-    Line,
-    Root: ComposedChartRoot,
-    Tooltip,
-    TooltipContent: ChartTooltip.Content,
-    XAxis,
-    YAxis,
-  },
-);
+export const ComposedChart: ComposedChartComponent = Object.assign(ComposedChartRoot, {
+  Area,
+  Bar,
+  Grid: CartesianGrid,
+  Line,
+  Root: ComposedChartRoot,
+  Tooltip,
+  TooltipContent: ChartTooltip.Content,
+  XAxis,
+  YAxis,
+});

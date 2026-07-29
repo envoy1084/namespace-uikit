@@ -1,6 +1,6 @@
 "use client";
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useMemo } from "react";
 
 import { Button, cn, Disclosure } from "@heroui/react";
 import {
@@ -97,8 +97,13 @@ export function ChatToolRoot({
     toolCallId,
   );
   const expandable = isExpandable ?? (children ? true : hasBody);
+  const contextValue = useMemo(
+    () => ({ active: isActive, expandable, state, toolName }),
+    [expandable, isActive, state, toolName],
+  );
+
   return (
-    <Context value={{ active: isActive, expandable, state, toolName }}>
+    <Context value={contextValue}>
       <Disclosure
         className={cls(`chat-tool chat-tool--${stateClass(state)}`, className)}
         data-active={isActive || undefined}

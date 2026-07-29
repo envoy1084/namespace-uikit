@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect, useMemo, useRef, useState } from "react";
+
+import { Button, Modal, Surface, cn } from "@thenamespace/uikit";
 import type { Address } from "viem";
 
 import type {
@@ -7,18 +10,13 @@ import type {
   NameProfileEditorPresentation,
   NameProfileEditorSlots,
 } from "#/components/name-profile-editor/customization";
+import { DEFAULT_NAME_PROFILE_EDITOR_MESSAGES } from "#/components/name-profile-editor/customization";
+import { ProfileEditor } from "#/components/name-profile-editor/editor/editor";
 import type { NameProfileEditorEvents } from "#/components/name-profile-editor/events";
 import type {
   NameProfileFormValues,
   NameProfileImageUpload,
 } from "#/components/name-profile-editor/types";
-
-import { useEffect, useMemo, useRef, useState } from "react";
-
-import { Button, Modal, Surface, cn } from "@thenamespace/uikit";
-
-import { DEFAULT_NAME_PROFILE_EDITOR_MESSAGES } from "#/components/name-profile-editor/customization";
-import { ProfileEditor } from "#/components/name-profile-editor/editor/editor";
 
 export interface NameProfileEditorProps {
   className?: string;
@@ -32,15 +30,18 @@ export interface NameProfileEditorProps {
   uploadImage?: NameProfileImageUpload | undefined;
 }
 
+const defaultEvents: NameProfileEditorEvents = {};
+const defaultSlots: NameProfileEditorSlots = {};
+
 export function NameProfileEditor({
   className,
-  events = {},
+  events = defaultEvents,
   initialRecords,
   messages: messageOverrides,
   name,
   presentation = "dialog",
   resolverAddress,
-  slots = {},
+  slots = defaultSlots,
   uploadImage,
 }: NameProfileEditorProps) {
   const messages = useMemo(
@@ -94,10 +95,7 @@ export function NameProfileEditor({
   if (presentation === "inline") {
     return (
       <Surface
-        className={
-          cn("relative flex w-full max-w-md flex-col rounded-3xl", className) ??
-          ""
-        }
+        className={cn("relative flex w-full max-w-md flex-col rounded-3xl", className) ?? ""}
         data-name-profile-editor-presentation="inline"
       >
         {content}
@@ -107,9 +105,7 @@ export function NameProfileEditor({
 
   return (
     <Modal onOpenChange={handleDialogOpenChange}>
-      {slots.trigger ?? (
-        <Button variant="secondary">{messages.triggerLabel}</Button>
-      )}
+      {slots.trigger ?? <Button variant="secondary">{messages.triggerLabel}</Button>}
       <Modal.Backdrop
         data-name-profile-editor-presentation="dialog"
         isDismissable={!isTransactionPending}

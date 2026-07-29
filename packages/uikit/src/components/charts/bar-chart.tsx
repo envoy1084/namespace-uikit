@@ -16,10 +16,9 @@ import {
 
 import { ChartTooltip } from "./chart-tooltip";
 
-export interface BarChartRootProps extends Omit<
-  HTMLAttributes<HTMLDivElement>,
-  "children"
-> {
+const defaultMargin: Margin = { bottom: 0, left: 0, right: 8, top: 8 };
+
+export interface BarChartRootProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
   children: ReactNode;
   data: Record<string, number | string>[];
   height?: number;
@@ -35,24 +34,15 @@ function BarChartRoot({
   data,
   height = 300,
   layout,
-  margin = { bottom: 0, left: 0, right: 8, top: 8 },
+  margin = defaultMargin,
   ref,
   width = "100%",
   ...props
 }: BarChartRootProps): ReactElement {
   return (
-    <div
-      ref={ref}
-      {...props}
-      className={cn("bar-chart", className)}
-      data-slot="bar-chart"
-    >
+    <div ref={ref} {...props} className={cn("bar-chart", className)} data-slot="bar-chart">
       <ResponsiveContainer height={height} width={width}>
-        <RechartsBarChart
-          data={data}
-          margin={margin}
-          {...(layout ? { layout } : {})}
-        >
+        <RechartsBarChart data={data} margin={margin} {...(layout ? { layout } : {})}>
           {children}
         </RechartsBarChart>
       </ResponsiveContainer>

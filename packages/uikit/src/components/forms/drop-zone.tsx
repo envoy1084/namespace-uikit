@@ -7,7 +7,7 @@ import type {
   ReactElement,
   ReactNode,
 } from "react";
-import { createContext, useCallback, useContext, useRef } from "react";
+import { createContext, useCallback, useContext, useMemo, useRef } from "react";
 
 import { Button, cn } from "@heroui/react";
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
@@ -28,20 +28,14 @@ export interface DropZoneRootProps extends ComponentPropsWithRef<"div"> {
   children: ReactNode;
 }
 
-function DropZoneRoot({
-  children,
-  className,
-  ...props
-}: DropZoneRootProps): ReactElement {
+function DropZoneRoot({ children, className, ...props }: DropZoneRootProps): ReactElement {
   const inputRef = useRef<HTMLInputElement>(null);
   const openFilePicker = useCallback(() => inputRef.current?.click(), []);
+  const contextValue = useMemo(() => ({ inputRef, openFilePicker }), [openFilePicker]);
+
   return (
-    <DropZoneContext value={{ inputRef, openFilePicker }}>
-      <div
-        {...props}
-        className={cn("drop-zone", className)}
-        data-slot="drop-zone"
-      >
+    <DropZoneContext value={contextValue}>
+      <div {...props} className={cn("drop-zone", className)} data-slot="drop-zone">
         {children}
       </div>
     </DropZoneContext>
@@ -50,11 +44,7 @@ function DropZoneRoot({
 
 export type DropZoneAreaProps = ComponentProps<typeof DropZonePrimitive>;
 
-function DropZoneArea({
-  children,
-  className,
-  ...props
-}: DropZoneAreaProps): ReactElement {
+function DropZoneArea({ children, className, ...props }: DropZoneAreaProps): ReactElement {
   return (
     <DropZonePrimitive
       {...props}
@@ -86,17 +76,9 @@ function UploadIcon(): ReactElement {
   );
 }
 
-function DropZoneIcon({
-  children,
-  className,
-  ...props
-}: DropZoneIconProps): ReactElement {
+function DropZoneIcon({ children, className, ...props }: DropZoneIconProps): ReactElement {
   return (
-    <span
-      {...props}
-      className={cn("drop-zone__icon", className)}
-      data-slot="drop-zone-icon"
-    >
+    <span {...props} className={cn("drop-zone__icon", className)} data-slot="drop-zone-icon">
       {children ?? <UploadIcon />}
     </span>
   );
@@ -104,11 +86,7 @@ function DropZoneIcon({
 
 export type DropZoneLabelProps = ComponentPropsWithRef<"span">;
 
-function DropZoneLabel({
-  children,
-  className,
-  ...props
-}: DropZoneLabelProps): ReactElement {
+function DropZoneLabel({ children, className, ...props }: DropZoneLabelProps): ReactElement {
   return (
     <span
       {...props}
@@ -146,11 +124,7 @@ export interface DropZoneInputProps extends Omit<
   onSelect?: (files: FileList) => void;
 }
 
-function DropZoneInput({
-  className,
-  onSelect,
-  ...props
-}: DropZoneInputProps): ReactElement {
+function DropZoneInput({ className, onSelect, ...props }: DropZoneInputProps): ReactElement {
   const { inputRef } = useContext(DropZoneContext);
   return (
     <input
@@ -198,11 +172,7 @@ function DropZoneTrigger({
 }
 
 export type DropZoneFileListProps = ComponentPropsWithRef<"div">;
-function DropZoneFileList({
-  children,
-  className,
-  ...props
-}: DropZoneFileListProps): ReactElement {
+function DropZoneFileList({ children, className, ...props }: DropZoneFileListProps): ReactElement {
   return (
     <div
       {...props}
@@ -235,10 +205,7 @@ function DropZoneFileItem({
   );
 }
 
-export interface DropZoneFileFormatIconProps extends Omit<
-  ComponentPropsWithRef<"svg">,
-  "color"
-> {
+export interface DropZoneFileFormatIconProps extends Omit<ComponentPropsWithRef<"svg">, "color"> {
   color?: "blue" | "gray" | "green" | "orange" | "purple" | "red";
   format?: string;
 }
@@ -265,11 +232,7 @@ function DropZoneFileFormatIcon({
         stroke="var(--color-border)"
         strokeWidth="1.5"
       />
-      <path
-        d="M19 1v7a4 4 0 0 0 4 4h8"
-        stroke="var(--color-border)"
-        strokeWidth="1.5"
-      />
+      <path d="M19 1v7a4 4 0 0 0 4 4h8" stroke="var(--color-border)" strokeWidth="1.5" />
       {format ? (
         <foreignObject height="40" width="32">
           <div className="drop-zone__file-format-icon-badge" data-color={color}>
@@ -327,10 +290,7 @@ function DropZoneFileMeta({
   );
 }
 
-export interface DropZoneFileProgressProps extends Omit<
-  ComponentPropsWithRef<"div">,
-  "children"
-> {
+export interface DropZoneFileProgressProps extends Omit<ComponentPropsWithRef<"div">, "children"> {
   children: ReactNode;
   maxValue?: number;
   minValue?: number;
@@ -354,11 +314,7 @@ function DropZoneFileProgress({
   return (
     <div
       {...props}
-      className={cn(
-        "drop-zone__file-progress",
-        `progress-bar--${size}`,
-        className,
-      )}
+      className={cn("drop-zone__file-progress", `progress-bar--${size}`, className)}
       data-slot="drop-zone-file-progress"
       style={
         {

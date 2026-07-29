@@ -16,10 +16,9 @@ import {
 
 import { ChartTooltip } from "./chart-tooltip";
 
-export interface LineChartRootProps extends Omit<
-  HTMLAttributes<HTMLDivElement>,
-  "children"
-> {
+const defaultMargin: Margin = { bottom: 0, left: 0, right: 8, top: 8 };
+
+export interface LineChartRootProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
   children: ReactNode;
   data: Record<string, number | string>[];
   height?: number;
@@ -33,18 +32,13 @@ function LineChartRoot({
   className,
   data,
   height = 300,
-  margin = { bottom: 0, left: 0, right: 8, top: 8 },
+  margin = defaultMargin,
   ref,
   width = "100%",
   ...props
 }: LineChartRootProps): ReactElement {
   return (
-    <div
-      ref={ref}
-      {...props}
-      className={cn("line-chart", className)}
-      data-slot="line-chart"
-    >
+    <div ref={ref} {...props} className={cn("line-chart", className)} data-slot="line-chart">
       <ResponsiveContainer height={height} width={width}>
         <RechartsLineChart data={data} margin={margin}>
           {children}

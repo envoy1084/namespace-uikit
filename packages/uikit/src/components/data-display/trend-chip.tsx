@@ -1,17 +1,10 @@
 "use client";
 
-import type { ChipRootProps } from "@heroui/react/chip";
-
 import type { HTMLAttributes, ReactElement, ReactNode } from "react";
-import {
-  Children,
-  cloneElement,
-  createContext,
-  isValidElement,
-  useContext,
-} from "react";
+import { Children, cloneElement, createContext, isValidElement, useContext } from "react";
 
 import { Chip, cn } from "@heroui/react";
+import type { ChipRootProps } from "@heroui/react/chip";
 
 type Trend = "down" | "neutral" | "up";
 type TrendChipSize = "lg" | "md" | "sm";
@@ -21,6 +14,11 @@ const TrendChipContext = createContext({
   prefixClassName: "trend-chip__prefix",
   suffixClassName: "trend-chip__suffix",
 });
+const trendChipContextValue = {
+  indicatorClassName: "trend-chip__indicator",
+  prefixClassName: "trend-chip__prefix",
+  suffixClassName: "trend-chip__suffix",
+};
 
 function ArrowUp(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -75,11 +73,7 @@ export interface TrendChipAffixProps extends HTMLAttributes<HTMLSpanElement> {
   children: ReactNode;
 }
 
-function TrendChipPrefix({
-  children,
-  className,
-  ...props
-}: TrendChipAffixProps): ReactElement {
+function TrendChipPrefix({ children, className, ...props }: TrendChipAffixProps): ReactElement {
   const context = useContext(TrendChipContext);
   return (
     <span
@@ -91,11 +85,7 @@ function TrendChipPrefix({
     </span>
   );
 }
-function TrendChipSuffix({
-  children,
-  className,
-  ...props
-}: TrendChipAffixProps): ReactElement {
+function TrendChipSuffix({ children, className, ...props }: TrendChipAffixProps): ReactElement {
   const context = useContext(TrendChipContext);
   return (
     <span
@@ -108,10 +98,7 @@ function TrendChipSuffix({
   );
 }
 
-export interface TrendChipRootProps extends Omit<
-  ChipRootProps,
-  "children" | "color" | "size"
-> {
+export interface TrendChipRootProps extends Omit<ChipRootProps, "children" | "color" | "size"> {
   children: ReactNode;
   size?: TrendChipSize;
   trend?: Trend;
@@ -139,26 +126,13 @@ function TrendChipRoot({
   });
   const defaultIndicator =
     trend === "up" ? (
-      <ArrowUp
-        className="trend-chip__indicator"
-        data-slot="trend-chip-indicator"
-      />
+      <ArrowUp className="trend-chip__indicator" data-slot="trend-chip-indicator" />
     ) : trend === "down" ? (
-      <ArrowDown
-        className="trend-chip__indicator"
-        data-slot="trend-chip-indicator"
-      />
+      <ArrowDown className="trend-chip__indicator" data-slot="trend-chip-indicator" />
     ) : null;
-  const color =
-    trend === "up" ? "success" : trend === "down" ? "danger" : "default";
+  const color = trend === "up" ? "success" : trend === "down" ? "danger" : "default";
   return (
-    <TrendChipContext
-      value={{
-        indicatorClassName: "trend-chip__indicator",
-        prefixClassName: "trend-chip__prefix",
-        suffixClassName: "trend-chip__suffix",
-      }}
-    >
+    <TrendChipContext value={trendChipContextValue}>
       <Chip
         className={cn("trend-chip", `trend-chip--${size}`, className) ?? ""}
         color={color}

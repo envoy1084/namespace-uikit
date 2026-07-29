@@ -263,9 +263,10 @@ export function MapRoot({
 
   const isLoaded = isMapLoaded && isStyleLoaded;
   const showLoader = !isMapLoaded || isLoading;
+  const contextValue = useMemo(() => ({ isLoaded, map }), [isLoaded, map]);
 
   return (
-    <Context value={{ isLoaded, map }}>
+    <Context value={contextValue}>
       <div
         aria-describedby={ariaDescribedBy}
         aria-label={ariaLabel}
@@ -413,7 +414,8 @@ export function MapMarker({
       marker.off("dragend", end);
     };
   }, [marker]);
-  return marker ? <MarkerContext value={{ map, marker }}>{children}</MarkerContext> : null;
+  const contextValue = useMemo(() => (marker ? { map, marker } : null), [map, marker]);
+  return contextValue ? <MarkerContext value={contextValue}>{children}</MarkerContext> : null;
 }
 export interface MapMarkerContentProps extends ComponentPropsWithRef<"div"> {}
 export function MapMarkerContent({
@@ -1285,11 +1287,14 @@ export interface MapClusterLayerProps {
   pointColor?: string;
   pointPaint?: CircleLayerSpecification["paint"];
 }
+const defaultClusterColors: [string, string, string] = ["#22c55e", "#eab308", "#ef4444"];
+const defaultClusterThresholds: [number, number] = [100, 750];
+
 export function MapClusterLayer({
-  clusterColors = ["#22c55e", "#eab308", "#ef4444"],
+  clusterColors = defaultClusterColors,
   clusterMaxZoom = 14,
   clusterRadius = 50,
-  clusterThresholds = [100, 750],
+  clusterThresholds = defaultClusterThresholds,
   data,
   id,
   onClusterClick,

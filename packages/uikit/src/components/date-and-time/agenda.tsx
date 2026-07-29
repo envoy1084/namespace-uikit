@@ -26,6 +26,9 @@ import { Segment } from "../buttons/segment";
 
 export type AgendaView = "day" | "month" | "week";
 export type AgendaEventStatus = "confirmed" | "unconfirmed";
+const defaultCollapsedLabel = (count: number) => `${count} event${count === 1 ? "" : "s"}`;
+const defaultMoreLabel = (count: number) => `${count} more`;
+
 export interface AgendaEventData {
   color?: string;
   end: CalendarDateTime;
@@ -210,8 +213,9 @@ export function useAgenda(options: AgendaStateOptions): AgendaState {
           .map((day, index) => (eventOnDate(event, day) ? index : -1))
           .filter((index) => index >= 0);
         if (!covered.length) continue;
-        const colStart = covered[0]!,
-          colSpan = covered.at(-1)! - colStart + 1;
+        const colStart = covered[0] ?? 0;
+        const colEnd = covered.at(-1) ?? colStart;
+        const colSpan = colEnd - colStart + 1;
         let row = rowEnds.findIndex((end) => end < colStart);
         if (row < 0) {
           row = rowEnds.length;
@@ -310,6 +314,7 @@ function AgendaRoot({ children, className, ...state }: AgendaRootProps): ReactEl
         className={cn("agenda", `agenda--${state.view}`, className)}
         data-slot="agenda"
         data-view={state.view}
+        role="group"
         tabIndex={-1}
         onKeyDown={(event) => {
           if ((event.key === "Delete" || event.key === "Backspace") && state.selectedEventId)
@@ -457,7 +462,7 @@ function AgendaWeekHeader({
 function AgendaAllDaySection({
   children,
   className,
-  collapsedLabel = (count: number) => `${count} event${count === 1 ? "" : "s"}`,
+  collapsedLabel = defaultCollapsedLabel,
 }: ComponentPropsWithRef<"div"> & {
   collapsedLabel?: (count: number) => string;
 }): ReactElement {
@@ -910,11 +915,21 @@ function AgendaMonthGrid({
   className,
   ...props
 }: ComponentPropsWithRef<"div">): ReactElement {
+  const weekdays = [
+    ["sun", "S"],
+    ["mon", "M"],
+    ["tue", "T"],
+    ["wed", "W"],
+    ["thu", "T"],
+    ["fri", "F"],
+    ["sat", "S"],
+  ] as const;
+
   return (
     <div {...props} className={cn("agenda__month-grid", className)} data-slot="agenda-month-grid">
       <div className="agenda__month-weekday-header">
-        {"SMTWTFS".split("").map((day, index) => (
-          <span className="agenda__month-weekday" key={index}>
+        {weekdays.map(([key, day]) => (
+          <span className="agenda__month-weekday" key={key}>
             {day}
           </span>
         ))}
@@ -958,7 +973,7 @@ function AgendaMonthCell({
   className,
   date,
   maxEvents = 2,
-  moreLabel = (count: number) => `${count} more`,
+  moreLabel = defaultMoreLabel,
   spanningRowCount = 0,
   ...props
 }: ComponentPropsWithRef<"div"> & {

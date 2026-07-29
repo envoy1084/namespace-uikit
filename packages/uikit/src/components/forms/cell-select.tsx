@@ -1,12 +1,7 @@
 "use client";
 
-import type {
-  ComponentProps,
-  ComponentPropsWithRef,
-  ReactElement,
-  ReactNode,
-} from "react";
-import { createContext, useContext } from "react";
+import type { ComponentProps, ComponentPropsWithRef, ReactElement, ReactNode } from "react";
+import { createContext, useContext, useMemo } from "react";
 
 import { cn, Select } from "@heroui/react";
 import { UnfoldMoreIcon } from "@hugeicons/core-free-icons";
@@ -36,17 +31,15 @@ function CellSelectRoot({
   variant = "default",
   ...props
 }: CellSelectRootProps): ReactElement {
+  const contextValue = useMemo(() => ({ variant }), [variant]);
+
   return (
-    <CellSelectContext value={{ variant }}>
+    <CellSelectContext value={contextValue}>
       <Select
         {...props}
         className={(renderProps) =>
-          cn(
-            "cell-select",
-            typeof className === "function"
-              ? className(renderProps)
-              : className,
-          ) ?? "cell-select"
+          cn("cell-select", typeof className === "function" ? className(renderProps) : className) ??
+          "cell-select"
         }
         data-slot="cell-select"
       >
@@ -83,17 +76,9 @@ function CellSelectTrigger({
 
 export type CellSelectLabelProps = ComponentPropsWithRef<"span">;
 
-function CellSelectLabel({
-  children,
-  className,
-  ...props
-}: CellSelectLabelProps): ReactElement {
+function CellSelectLabel({ children, className, ...props }: CellSelectLabelProps): ReactElement {
   return (
-    <span
-      {...props}
-      className={cn("cell-select__label", className)}
-      data-slot="cell-select-label"
-    >
+    <span {...props} className={cn("cell-select__label", className)} data-slot="cell-select-label">
       {children}
     </span>
   );
@@ -101,11 +86,7 @@ function CellSelectLabel({
 
 export type CellSelectValueProps = ComponentProps<typeof Select.Value>;
 
-function CellSelectValue({
-  children,
-  className,
-  ...props
-}: CellSelectValueProps): ReactElement {
+function CellSelectValue({ children, className, ...props }: CellSelectValueProps): ReactElement {
   return (
     <Select.Value
       {...props}
@@ -132,18 +113,11 @@ function CellSelectIndicator({
   return (
     <Select.Indicator
       {...props}
-      className={
-        cn("cell-select__indicator", className) ?? "cell-select__indicator"
-      }
+      className={cn("cell-select__indicator", className) ?? "cell-select__indicator"}
       data-slot="cell-select-indicator"
     >
       {children === undefined ? (
-        <HugeiconsIcon
-          aria-hidden
-          icon={UnfoldMoreIcon}
-          size={16}
-          strokeWidth={2}
-        />
+        <HugeiconsIcon aria-hidden icon={UnfoldMoreIcon} size={16} strokeWidth={2} />
       ) : (
         children
       )}

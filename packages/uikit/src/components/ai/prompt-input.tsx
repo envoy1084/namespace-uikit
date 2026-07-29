@@ -159,7 +159,7 @@ export function PromptInputShell({
   return (
     // Clicking the non-interactive shell is a pointer convenience that forwards
     // focus to the keyboard-accessible textarea.
-    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events
+    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       className={cls(
         `prompt-input__shell prompt-input__shell--${state.layout} prompt-input__shell--${state.variant}`,
@@ -408,8 +408,10 @@ export function PromptInputQueueList<T>({
 }: PromptInputQueueListProps<T>): ReactElement {
   usePrompt();
   const enabled = values !== undefined && onReorder !== undefined && values.length > 1;
+  const contextValue = useMemo(() => ({ reorderEnabled: enabled }), [enabled]);
+
   return (
-    <QueueContext value={{ reorderEnabled: enabled }}>
+    <QueueContext value={contextValue}>
       <ScrollShadow
         className={cls("prompt-input__queue-list", className)}
         data-slot="prompt-input-queue-list"
@@ -450,8 +452,9 @@ export function PromptInputQueueItem<T>({
   const state = usePrompt();
   const { reorderEnabled } = useContext(QueueContext);
   const controls = useDragControls();
+  const contextValue = useMemo(() => ({ dragControls: controls }), [controls]);
   const content = (
-    <ItemContext value={{ dragControls: controls }}>
+    <ItemContext value={contextValue}>
       {reorderEnabled && value !== undefined ? (
         <Reorder.Item
           as="li"

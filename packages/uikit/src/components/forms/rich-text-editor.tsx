@@ -678,8 +678,13 @@ function LinkPopoverRoot({ children, ...props }: ComponentProps<typeof Popover>)
   const unset = useCallback(() => {
     if (editor && !disabled) editor.chain().focus().extendMarkRange("link").unsetLink().run();
   }, [disabled, editor]);
+  const contextValue = useMemo(
+    () => ({ apply, href, isDisabled: disabled, setHref, unset }),
+    [apply, disabled, href, unset],
+  );
+
   return (
-    <LinkContext value={{ apply, href, isDisabled: disabled, setHref, unset }}>
+    <LinkContext value={contextValue}>
       <Popover {...props}>{children}</Popover>
     </LinkContext>
   );

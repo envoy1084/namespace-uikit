@@ -1,11 +1,10 @@
 "use client";
 
-import type { ToggleButtonProps } from "react-aria-components";
-
 import type { HTMLAttributes, ReactElement } from "react";
 import { createContext, useContext } from "react";
 
 import { cn } from "@heroui/react";
+import type { ToggleButtonProps } from "react-aria-components";
 import { ToggleButton } from "react-aria-components";
 
 type EmojiReactionButtonSize = "lg" | "md" | "sm";
@@ -14,6 +13,10 @@ const Context = createContext({
   countClassName: "emoji-reaction-button__count",
   emojiClassName: "emoji-reaction-button__emoji",
 });
+const contextValue = {
+  countClassName: "emoji-reaction-button__count",
+  emojiClassName: "emoji-reaction-button__emoji",
+};
 
 export interface EmojiReactionButtonRootProps extends ToggleButtonProps {
   isReadOnly?: boolean;
@@ -38,21 +41,10 @@ function EmojiReactionButtonRoot({
   ...props
 }: EmojiReactionButtonRootProps): ReactElement {
   return (
-    <Context
-      value={{
-        countClassName: "emoji-reaction-button__count",
-        emojiClassName: "emoji-reaction-button__emoji",
-      }}
-    >
+    <Context value={contextValue}>
       <ToggleButton
         {...props}
-        className={
-          cn(
-            "emoji-reaction-button",
-            `emoji-reaction-button--${size}`,
-            className,
-          ) ?? ""
-        }
+        className={cn("emoji-reaction-button", `emoji-reaction-button--${size}`, className) ?? ""}
         data-readonly={isReadOnly || undefined}
         data-slot="emoji-reaction-button"
         {...(isReadOnly
@@ -76,11 +68,7 @@ function EmojiReactionButtonRoot({
   );
 }
 
-function Emoji({
-  children,
-  className,
-  ...props
-}: HTMLAttributes<HTMLSpanElement>): ReactElement {
+function Emoji({ children, className, ...props }: HTMLAttributes<HTMLSpanElement>): ReactElement {
   const context = useContext(Context);
   return (
     <span
@@ -92,11 +80,7 @@ function Emoji({
     </span>
   );
 }
-function Count({
-  children,
-  className,
-  ...props
-}: HTMLAttributes<HTMLSpanElement>): ReactElement {
+function Count({ children, className, ...props }: HTMLAttributes<HTMLSpanElement>): ReactElement {
   const context = useContext(Context);
   return (
     <span

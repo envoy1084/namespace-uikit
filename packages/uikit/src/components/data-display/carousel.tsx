@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentPropsWithRef, CSSProperties, ReactElement, ReactNode } from "react";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { Button, cn } from "@heroui/react";
@@ -72,23 +72,38 @@ function CarouselRoot({
   const scrollPrev = useCallback(() => api?.scrollPrev(), [api]),
     scrollNext = useCallback(() => api?.scrollNext(), [api]),
     scrollTo = useCallback((index: number) => api?.scrollTo(index), [api]);
+  const contextValue = useMemo(
+    () => ({
+      api,
+      canScrollNext,
+      canScrollPrev,
+      emblaRef,
+      scrollNext,
+      scrollPrev,
+      scrollSnapCount,
+      scrollTo,
+      selectedIndex,
+      setViewportWrapper,
+      type,
+      viewportWrapper,
+    }),
+    [
+      api,
+      canScrollNext,
+      canScrollPrev,
+      emblaRef,
+      scrollNext,
+      scrollPrev,
+      scrollSnapCount,
+      scrollTo,
+      selectedIndex,
+      type,
+      viewportWrapper,
+    ],
+  );
+
   return (
-    <Context
-      value={{
-        api,
-        canScrollNext,
-        canScrollPrev,
-        emblaRef,
-        scrollNext,
-        scrollPrev,
-        scrollSnapCount,
-        scrollTo,
-        selectedIndex,
-        setViewportWrapper,
-        type,
-        viewportWrapper,
-      }}
-    >
+    <Context value={contextValue}>
       {/* The carousel viewport is intentionally focusable for arrow-key navigation. */}
       {/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div

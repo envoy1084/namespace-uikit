@@ -26,12 +26,7 @@ import { CloseButton, cn } from "@heroui/react";
 import { File01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-export type ChatAttachmentMediaType =
-  | "audio"
-  | "document"
-  | "image"
-  | "unknown"
-  | "video";
+export type ChatAttachmentMediaType = "audio" | "document" | "image" | "unknown" | "video";
 interface AttachmentContextValue {
   mediaType: ChatAttachmentMediaType;
   mimeType?: string | undefined;
@@ -43,15 +38,12 @@ const useAttachment = (): AttachmentContextValue =>
   useContext(AttachmentContext) ?? { mediaType: "unknown" };
 const cls = (base: string, className: unknown): string =>
   cn(base, typeof className === "string" ? className : undefined) ?? base;
-export const inferChatAttachmentMediaType = (
-  mimeType?: string,
-): ChatAttachmentMediaType => {
+export const inferChatAttachmentMediaType = (mimeType?: string): ChatAttachmentMediaType => {
   if (!mimeType) return "unknown";
   if (mimeType.startsWith("image/")) return "image";
   if (mimeType.startsWith("video/")) return "video";
   if (mimeType.startsWith("audio/")) return "audio";
-  if (mimeType.startsWith("text/") || mimeType.startsWith("application/"))
-    return "document";
+  if (mimeType.startsWith("text/") || mimeType.startsWith("application/")) return "document";
   return "unknown";
 };
 export interface ChatAttachmentRootProps extends ComponentPropsWithRef<"div"> {
@@ -80,11 +72,7 @@ export function ChatAttachmentRoot({
   );
   return (
     <AttachmentContext value={value}>
-      <div
-        className={cls("chat-attachment", className)}
-        data-slot="chat-attachment"
-        {...props}
-      >
+      <div className={cls("chat-attachment", className)} data-slot="chat-attachment" {...props}>
         {children ?? <ChatAttachmentPreview />}
       </div>
     </AttachmentContext>
@@ -100,21 +88,15 @@ export function ChatAttachmentPreview({
 }: ChatAttachmentPreviewProps): ReactElement {
   const { mediaType, name, src } = useAttachment();
   if (children && isValidElement(children))
-    return cloneElement(
-      children as ReactElement<{ className?: string; "data-slot"?: string }>,
-      {
-        className: cls(
-          "chat-attachment__preview",
-          cn(className, (children.props as { className?: string }).className),
-        ),
-        "data-slot": "chat-attachment-preview",
-      },
-    );
+    return cloneElement(children as ReactElement<{ className?: string; "data-slot"?: string }>, {
+      className: cls(
+        "chat-attachment__preview",
+        cn(className, (children.props as { className?: string }).className),
+      ),
+      "data-slot": "chat-attachment-preview",
+    });
   return (
-    <div
-      className={cls("chat-attachment__preview", className)}
-      data-slot="chat-attachment-preview"
-    >
+    <div className={cls("chat-attachment__preview", className)} data-slot="chat-attachment-preview">
       {mediaType === "image" && src ? (
         <img
           alt={name ?? "Attachment"}
@@ -153,9 +135,7 @@ export function ChatAttachmentName({
     </span>
   );
 }
-export type ChatAttachmentRemoveProps = ComponentPropsWithRef<
-  typeof CloseButton
->;
+export type ChatAttachmentRemoveProps = ComponentPropsWithRef<typeof CloseButton>;
 export function ChatAttachmentRemove({
   className,
   ...props
@@ -309,8 +289,9 @@ const compose =
     original?.(event);
     added(event);
   };
-export type ChatAttachmentInputDropzoneRenderProps =
-  ComponentPropsWithoutRef<"div"> & { "data-dragging"?: true };
+export type ChatAttachmentInputDropzoneRenderProps = ComponentPropsWithoutRef<"div"> & {
+  "data-dragging"?: true;
+};
 export interface ChatAttachmentInputDropzoneProps extends ComponentPropsWithoutRef<"div"> {
   render?: (props: ChatAttachmentInputDropzoneRenderProps) => ReactNode;
 }
@@ -337,8 +318,7 @@ export function ChatAttachmentInputDropzone({
     if (!state?.disabled) {
       event.preventDefault();
       const related = event.relatedTarget as Node | null;
-      if (!related || !event.currentTarget.contains(related))
-        setDragging(false);
+      if (!related || !event.currentTarget.contains(related)) setDragging(false);
     }
   };
   const drop = (event: DragEvent<HTMLDivElement>) => {
@@ -346,8 +326,8 @@ export function ChatAttachmentInputDropzone({
     event.preventDefault();
     setDragging(false);
     let files = Array.from(event.dataTransfer.files ?? []);
-    if (state?.accept)
-      files = files.filter((file) => accepts(file, state.accept!));
+    const accept = state?.accept;
+    if (accept) files = files.filter((file) => accepts(file, accept));
     if (files.length) state?.addFiles(files);
   };
   const paste = (event: ClipboardEvent<HTMLDivElement>) => {
@@ -355,11 +335,10 @@ export function ChatAttachmentInputDropzone({
     let files = Array.from(event.clipboardData?.files ?? []).filter((file) =>
       file.type.startsWith("image/"),
     );
-    if (state?.accept)
-      files = files.filter((file) => accepts(file, state.accept!));
+    const accept = state?.accept;
+    if (accept) files = files.filter((file) => accepts(file, accept));
     if (files.length) {
-      if (!event.clipboardData?.types?.includes("text/plain"))
-        event.preventDefault();
+      if (!event.clipboardData?.types?.includes("text/plain")) event.preventDefault();
       state?.addFiles(files);
     }
   };
@@ -381,15 +360,12 @@ type ChatAttachmentComponent = typeof ChatAttachmentRoot & {
   Remove: typeof ChatAttachmentRemove;
   Root: typeof ChatAttachmentRoot;
 };
-export const ChatAttachment: ChatAttachmentComponent = Object.assign(
-  ChatAttachmentRoot,
-  {
-    Name: ChatAttachmentName,
-    Preview: ChatAttachmentPreview,
-    Remove: ChatAttachmentRemove,
-    Root: ChatAttachmentRoot,
-  },
-);
+export const ChatAttachment: ChatAttachmentComponent = Object.assign(ChatAttachmentRoot, {
+  Name: ChatAttachmentName,
+  Preview: ChatAttachmentPreview,
+  Remove: ChatAttachmentRemove,
+  Root: ChatAttachmentRoot,
+});
 type ChatAttachmentGroupComponent = typeof ChatAttachmentGroupRoot & {
   Root: typeof ChatAttachmentGroupRoot;
 };

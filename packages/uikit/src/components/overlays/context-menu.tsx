@@ -122,11 +122,9 @@ export function ContextMenuTrigger({
   };
   const move = (e: ReactTouchEvent) => {
     if (!touch.current || e.touches.length !== 1) return;
-    const p = e.touches[0]!;
-    if (
-      Math.abs(p.clientX - touch.current.x) > 10 ||
-      Math.abs(p.clientY - touch.current.y) > 10
-    )
+    const p = e.touches.item(0);
+    if (!p) return;
+    if (Math.abs(p.clientX - touch.current.x) > 10 || Math.abs(p.clientY - touch.current.y) > 10)
       clearTimeout(timer.current);
   };
   return (
@@ -146,7 +144,8 @@ export function ContextMenuTrigger({
       onTouchMove={move}
       onTouchStart={(e) => {
         if (e.touches.length !== 1) return;
-        const p = e.touches[0]!;
+        const p = e.touches.item(0);
+        if (!p) return;
         touch.current = { x: p.clientX, y: p.clientY };
         timer.current = setTimeout(() => state.open(p.clientX, p.clientY), 500);
       }}
@@ -188,10 +187,8 @@ export function ContextMenuPopover({
     <Popover
       {...props}
       className={
-        cn(
-          "context-menu__popover",
-          typeof className === "string" ? className : undefined,
-        ) ?? "context-menu__popover"
+        cn("context-menu__popover", typeof className === "string" ? className : undefined) ??
+        "context-menu__popover"
       }
       data-slot="context-menu-popover"
       offset={offset}
@@ -204,10 +201,8 @@ export function ContextMenuPopover({
       {...props}
       ref={state.popoverRef}
       className={
-        cn(
-          "context-menu__popover",
-          typeof className === "string" ? className : undefined,
-        ) ?? "context-menu__popover"
+        cn("context-menu__popover", typeof className === "string" ? className : undefined) ??
+        "context-menu__popover"
       }
       data-slot="context-menu-popover"
       isOpen={state.isOpen}
@@ -222,8 +217,7 @@ export function ContextMenuPopover({
     </Popover>
   );
 }
-export type ContextMenuMenuProps<T extends object = object> =
-  ComponentPropsWithRef<typeof Menu<T>>;
+export type ContextMenuMenuProps<T extends object = object> = ComponentPropsWithRef<typeof Menu<T>>;
 export function ContextMenuMenu<T extends object = object>({
   className,
   onClose,
@@ -234,10 +228,8 @@ export function ContextMenuMenu<T extends object = object>({
     <Menu
       {...props}
       className={
-        cn(
-          "context-menu__menu",
-          typeof className === "string" ? className : undefined,
-        ) ?? "context-menu__menu"
+        cn("context-menu__menu", typeof className === "string" ? className : undefined) ??
+        "context-menu__menu"
       }
       data-slot="context-menu-menu"
       onClose={onClose ?? state.close}
@@ -253,10 +245,8 @@ export function ContextMenuSeparator({
     <Separator
       {...props}
       className={
-        cn(
-          "context-menu__separator",
-          typeof className === "string" ? className : undefined,
-        ) ?? "context-menu__separator"
+        cn("context-menu__separator", typeof className === "string" ? className : undefined) ??
+        "context-menu__separator"
       }
       data-slot="context-menu-separator"
     />
@@ -267,12 +257,14 @@ export function ContextMenuSubmenuTrigger({
   ...props
 }: ComponentPropsWithRef<typeof DropdownSubmenuTrigger>): ReactElement {
   const parts = children as ReactElement[];
+  const trigger = parts[0];
+  const popover = parts[1];
+  if (!trigger || !popover)
+    throw new Error("ContextMenu.SubmenuTrigger requires trigger and popover children");
+
   return (
     <DropdownSubmenuTrigger {...props}>
-      {[
-        parts[0]!,
-        cloneElement(parts[1]!, { _nested: true } as InternalPopoverProps),
-      ]}
+      {[trigger, cloneElement(popover, { _nested: true } as InternalPopoverProps)]}
     </DropdownSubmenuTrigger>
   );
 }
@@ -288,18 +280,15 @@ type ContextMenuComponent = typeof ContextMenuRoot & {
   SubmenuTrigger: typeof ContextMenuSubmenuTrigger;
   Trigger: typeof ContextMenuTrigger;
 };
-export const ContextMenu: ContextMenuComponent = Object.assign(
-  ContextMenuRoot,
-  {
-    Item: DropdownItem,
-    ItemIndicator: DropdownItemIndicator,
-    Menu: ContextMenuMenu,
-    Popover: ContextMenuPopover,
-    Root: ContextMenuRoot,
-    Section: DropdownSection,
-    Separator: ContextMenuSeparator,
-    SubmenuIndicator: DropdownSubmenuIndicator,
-    SubmenuTrigger: ContextMenuSubmenuTrigger,
-    Trigger: ContextMenuTrigger,
-  },
-);
+export const ContextMenu: ContextMenuComponent = Object.assign(ContextMenuRoot, {
+  Item: DropdownItem,
+  ItemIndicator: DropdownItemIndicator,
+  Menu: ContextMenuMenu,
+  Popover: ContextMenuPopover,
+  Root: ContextMenuRoot,
+  Section: DropdownSection,
+  Separator: ContextMenuSeparator,
+  SubmenuIndicator: DropdownSubmenuIndicator,
+  SubmenuTrigger: ContextMenuSubmenuTrigger,
+  Trigger: ContextMenuTrigger,
+});

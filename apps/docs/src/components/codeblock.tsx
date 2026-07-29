@@ -1,6 +1,5 @@
-import type { CodeBlockProps } from "fumadocs-ui/components/codeblock";
-
 import { highlight } from "fumadocs-core/highlight";
+import type { CodeBlockProps } from "fumadocs-ui/components/codeblock";
 import * as Base from "fumadocs-ui/components/codeblock";
 
 import { CodeBlockClient } from "@/components/codeblock-client";
@@ -48,8 +47,7 @@ export async function CodeBlock({
         lang: lang || "text",
       });
     }
-  } catch (error) {
-    console.error("Syntax highlighting error:", error);
+  } catch {
     rendered = (
       <Base.Pre>
         <code>{code}</code>

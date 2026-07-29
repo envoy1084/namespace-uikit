@@ -6,13 +6,11 @@ import {
   type ReactElement,
   type ReactNode,
   useContext,
+  useMemo,
 } from "react";
 
 import { cn } from "@heroui/react";
-import NumberFlow, {
-  type Format,
-  type NumberFlowProps,
-} from "@number-flow/react";
+import NumberFlow, { type Format, type NumberFlowProps } from "@number-flow/react";
 import {
   Button as ButtonPrimitive,
   composeRenderProps,
@@ -36,9 +34,7 @@ const NumberStepperContext = createContext<NumberStepperContextValue>({
   size: "md",
 });
 
-export interface NumberStepperRootProps extends ComponentPropsWithRef<
-  typeof NumberFieldPrimitive
-> {
+export interface NumberStepperRootProps extends ComponentPropsWithRef<typeof NumberFieldPrimitive> {
   formatOptions?: Format;
   size?: NumberStepperSize;
 }
@@ -49,18 +45,16 @@ function NumberStepperRoot({
   size = "md",
   ...props
 }: NumberStepperRootProps): ReactElement {
+  const contextValue = useMemo(() => ({ formatOptions, size }), [formatOptions, size]);
+
   return (
-    <NumberStepperContext.Provider value={{ formatOptions, size }}>
+    <NumberStepperContext.Provider value={contextValue}>
       <NumberFieldPrimitive
         {...props}
         className={composeRenderProps(
           className,
           (resolvedClassName) =>
-            cn(
-              "number-stepper",
-              `number-stepper--${size}`,
-              resolvedClassName,
-            ) ?? "",
+            cn("number-stepper", `number-stepper--${size}`, resolvedClassName) ?? "",
         )}
         data-slot="number-stepper"
         {...(formatOptions ? { formatOptions } : {})}
@@ -69,9 +63,7 @@ function NumberStepperRoot({
   );
 }
 
-export type NumberStepperGroupProps = ComponentPropsWithRef<
-  typeof GroupPrimitive
->;
+export type NumberStepperGroupProps = ComponentPropsWithRef<typeof GroupPrimitive>;
 
 function NumberStepperGroup({
   children,
@@ -86,34 +78,22 @@ function NumberStepperGroup({
       className={composeRenderProps(
         className,
         (resolvedClassName) =>
-          cn(
-            "number-stepper__group",
-            `number-stepper__group--${size}`,
-            resolvedClassName,
-          ) ?? "",
+          cn("number-stepper__group", `number-stepper__group--${size}`, resolvedClassName) ?? "",
       )}
       data-slot="number-stepper-group"
     >
       {composeRenderProps(children, (resolvedChildren) => (
         <>
           {resolvedChildren}
-          <InputPrimitive
-            className="number-stepper__input"
-            data-slot="number-stepper-input"
-          />
+          <InputPrimitive className="number-stepper__input" data-slot="number-stepper-input" />
         </>
       ))}
     </GroupPrimitive>
   );
 }
 
-export interface NumberStepperValueProps extends Omit<
-  NumberFlowProps,
-  "children" | "value"
-> {
-  children?:
-    | ReactNode
-    | ((values: { formatOptions?: Format; value: number }) => ReactNode);
+export interface NumberStepperValueProps extends Omit<NumberFlowProps, "children" | "value"> {
+  children?: ReactNode | ((values: { formatOptions?: Format; value: number }) => ReactNode);
   format?: Format;
   value?: number;
 }
@@ -144,11 +124,7 @@ function NumberStepperValue({
   return (
     <NumberFlow
       {...props}
-      className={cn(
-        "number-stepper__value",
-        `number-stepper__value--${size}`,
-        className,
-      )}
+      className={cn("number-stepper__value", `number-stepper__value--${size}`, className)}
       data-slot="number-stepper-value"
       {...(resolvedFormat ? { format: resolvedFormat } : {})}
       value={value}
@@ -156,9 +132,7 @@ function NumberStepperValue({
   );
 }
 
-export type NumberStepperDecrementButtonProps = ComponentPropsWithRef<
-  typeof ButtonPrimitive
->;
+export type NumberStepperDecrementButtonProps = ComponentPropsWithRef<typeof ButtonPrimitive>;
 
 function NumberStepperDecrementButton({
   children,
@@ -182,16 +156,12 @@ function NumberStepperDecrementButton({
       data-slot="number-stepper-decrement-button"
       slot="decrement"
     >
-      {children ?? (
-        <IconMinus data-slot="number-stepper-decrement-button-icon" />
-      )}
+      {children ?? <IconMinus data-slot="number-stepper-decrement-button-icon" />}
     </ButtonPrimitive>
   );
 }
 
-export type NumberStepperIncrementButtonProps = ComponentPropsWithRef<
-  typeof ButtonPrimitive
->;
+export type NumberStepperIncrementButtonProps = ComponentPropsWithRef<typeof ButtonPrimitive>;
 
 function NumberStepperIncrementButton({
   children,
@@ -215,9 +185,7 @@ function NumberStepperIncrementButton({
       data-slot="number-stepper-increment-button"
       slot="increment"
     >
-      {children ?? (
-        <IconPlus data-slot="number-stepper-increment-button-icon" />
-      )}
+      {children ?? <IconPlus data-slot="number-stepper-increment-button-icon" />}
     </ButtonPrimitive>
   );
 }
@@ -229,12 +197,9 @@ type NumberStepperComponent = typeof NumberStepperRoot & {
   Value: typeof NumberStepperValue;
 };
 
-export const NumberStepper: NumberStepperComponent = Object.assign(
-  NumberStepperRoot,
-  {
-    DecrementButton: NumberStepperDecrementButton,
-    Group: NumberStepperGroup,
-    IncrementButton: NumberStepperIncrementButton,
-    Value: NumberStepperValue,
-  },
-);
+export const NumberStepper: NumberStepperComponent = Object.assign(NumberStepperRoot, {
+  DecrementButton: NumberStepperDecrementButton,
+  Group: NumberStepperGroup,
+  IncrementButton: NumberStepperIncrementButton,
+  Value: NumberStepperValue,
+});

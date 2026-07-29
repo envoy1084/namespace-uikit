@@ -8,7 +8,7 @@
     "dev": "next dev",
     "format": "oxfmt . --write --no-error-on-unmatched-pattern",
     "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
-    "lint": "oxlint src next.config.ts source.config.ts --no-error-on-unmatched-pattern",
+    "lint": "pnpm --dir ../.. exec oxlint apps/docs/src apps/docs/next.config.ts apps/docs/source.config.ts --no-error-on-unmatched-pattern",
     "lint:fix": "oxlint src next.config.ts source.config.ts --fix --no-error-on-unmatched-pattern",
     "postinstall": "fumadocs-mdx",
     "start": "next start",
