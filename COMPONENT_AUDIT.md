@@ -396,6 +396,24 @@ needs to be proven:
 - Batch validation passed: docs and Storybook lint (warnings only), both TypeScript checks, the
   173-page production docs build, and the complete Storybook production build.
 
+### Core interaction batch three evidence
+
+- Source-reviewed Tag Group, Toast, Toggle Button, Toggle Button Group, Toolbar, Calendar, Range
+  Calendar, Color Picker, Dropdown, and Slider stories against the official snapshot. Remaining
+  differences are intentional icon-library, local-asset, Namespace-copy, formatter, performance,
+  or equivalent-expression substitutions.
+- Restored distinct filled selected-state glyphs in the shared docs/Storybook icon adapter and the
+  controlled Toggle Button demo. The previous `*-fill` mappings reused an outline Hugeicon without
+  applying a fill, so selected and unselected examples looked identical.
+- Replaced the shared and direct Toolbar Undo/Redo mappings with Hugeicons' distinct `UndoIcon` and
+  `RedoIcon`; both controls previously rendered the same refresh glyph.
+- Browser-verified Tag Group selection and validation clearing; Toast creation; controlled Toggle
+  Button and multi-select Toggle Button Group state; Toolbar toggle behavior; Calendar year-picker
+  navigation; Range Calendar range selection; Color Picker dialog/swatch selection; nested
+  Dropdown keyboard disclosure; and Slider keyboard adjustment.
+- Batch validation passed: docs and Storybook lint (warnings only), both TypeScript checks, the
+  173-page production docs build, and the complete Storybook production build.
+
 ## Package and upgrade baseline
 
 - [x] HeroUI packages aligned on `3.2.2`.

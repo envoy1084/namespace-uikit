@@ -72,6 +72,7 @@ import {
   Plug01Icon,
   QrCodeIcon,
   QuoteUpIcon,
+  RedoIcon,
   RefreshIcon,
   ReceiptDollarIcon,
   Rocket01Icon,
@@ -104,6 +105,7 @@ import {
   UserIcon,
   UserSettings01Icon,
   Upload01Icon,
+  UndoIcon,
   Video01Icon,
   Wallet01Icon,
   Wrench01Icon,
@@ -122,8 +124,8 @@ const icons: Record<string, IconSvgElement> = {
   "arrow-up": ArrowUp01Icon,
   "arrow-up-linear": ArrowUp01Icon,
   "arrow-right-from-square": ArrowUpRight01Icon,
-  "arrow-uturn-ccw-left": RefreshIcon,
-  "arrow-uturn-cw-right": RefreshIcon,
+  "arrow-uturn-ccw-left": UndoIcon,
+  "arrow-uturn-cw-right": RedoIcon,
   at: AtIcon,
   bars: Menu01Icon,
   bell: Notification01Icon,
@@ -294,9 +296,12 @@ export function Icon({ height, icon, inline: _inline, width, ...props }: IconPro
   const name = icon.includes(":") ? icon.slice(icon.indexOf(":") + 1) : icon;
   const selected = icons[name] ?? File01Icon;
   const dimension = Number(width ?? height ?? 16);
+  const fill = name.endsWith("-fill") ? "currentColor" : undefined;
+
   return (
     <HugeiconsIcon
       aria-hidden={props["aria-label"] ? undefined : true}
+      fill={fill}
       icon={selected}
       size={Number.isFinite(dimension) ? dimension : 16}
       strokeWidth={2}

@@ -7,13 +7,14 @@ import {
   Toolbar,
 } from "@thenamespace/uikit";
 import {
-  RefreshIcon,
+  RedoIcon,
   TextBoldIcon,
   TextItalicIcon,
   TextAlignCenterIcon,
   TextAlignLeftIcon,
   TextAlignRightIcon,
   TextUnderlineIcon,
+  UndoIcon,
   HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
@@ -22,12 +23,12 @@ export function WithButtonGroup() {
     <Toolbar aria-label="Editor toolbar">
       <ButtonGroup variant="tertiary">
         <Button>
-          <HugeiconsIcon icon={RefreshIcon} />
+          <HugeiconsIcon icon={UndoIcon} />
           Undo
         </Button>
         <Button>
           <ButtonGroup.Separator />
-          <HugeiconsIcon icon={RefreshIcon} />
+          <HugeiconsIcon icon={RedoIcon} />
           Redo
         </Button>
       </ButtonGroup>

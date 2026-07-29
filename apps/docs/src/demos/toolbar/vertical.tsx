@@ -7,10 +7,11 @@ import {
   Toolbar,
 } from "@thenamespace/uikit";
 import {
-  RefreshIcon,
+  RedoIcon,
   TextBoldIcon,
   TextItalicIcon,
   TextUnderlineIcon,
+  UndoIcon,
   HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 
@@ -33,11 +34,11 @@ export function Vertical() {
       <Separator />
       <ButtonGroup variant="tertiary">
         <Button isIconOnly aria-label="Undo">
-          <HugeiconsIcon icon={RefreshIcon} />
+          <HugeiconsIcon icon={UndoIcon} />
         </Button>
         <Button isIconOnly aria-label="Redo">
           <ButtonGroup.Separator />
-          <HugeiconsIcon icon={RefreshIcon} />
+          <HugeiconsIcon icon={RedoIcon} />
         </Button>
       </ButtonGroup>
     </Toolbar>

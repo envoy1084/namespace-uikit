@@ -14,7 +14,7 @@ export function Controlled() {
         {({ isSelected: selected }) => (
           <>
             {selected ? (
-              <HugeiconsIcon icon={FavouriteIcon} />
+              <HugeiconsIcon fill="currentColor" icon={FavouriteIcon} />
             ) : (
               <HugeiconsIcon icon={FavouriteIcon} />
             )}
