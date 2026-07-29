@@ -5,6 +5,7 @@ import React from "react";
 
 import { LineChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
+import { Segment } from "@thenamespace/uikit/segment";
 
 const portfolioRanges = {
   "1H": {
@@ -69,22 +70,17 @@ function PortfolioExample() {
             <span className="text-xs font-medium text-green-500">{current.change}</span>
           </div>
         </div>
-        <div className="bg-default flex rounded-lg p-0.5">
+        <Segment
+          defaultSelectedKey="1M"
+          size="sm"
+          onSelectionChange={(key) => setRange(key as keyof typeof portfolioRanges)}
+        >
           {(Object.keys(portfolioRanges) as Array<keyof typeof portfolioRanges>).map((key) => (
-            <button
-              className={
-                range === key
-                  ? "bg-surface text-foreground rounded-md px-2 py-1 text-xs shadow-sm"
-                  : "text-muted rounded-md px-2 py-1 text-xs"
-              }
-              key={key}
-              onClick={() => setRange(key)}
-              type="button"
-            >
+            <Segment.Item id={key} key={key}>
               {key}
-            </button>
+            </Segment.Item>
           ))}
-        </div>
+        </Segment>
       </Card.Header>
       <Card.Content>
         <LineChart

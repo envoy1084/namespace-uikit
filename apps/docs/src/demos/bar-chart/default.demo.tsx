@@ -8,9 +8,9 @@ import { Chip } from "@thenamespace/uikit/chip";
 import { ArrowUp02Icon, Icon } from "@thenamespace/uikit/icons";
 
 const sales = [18, 32, 28, 45, 38, 52, 42, 55, 48, 60, 53, 58].map((value, index) => ({
-  month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][
-    index
-  ]!,
+  month:
+    ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][index] ??
+    "Unknown",
   sales: value,
 }));
 
@@ -23,7 +23,7 @@ export const DemoDefaultExample = () => (
       </div>
       <Chip color="success" size="sm" variant="soft">
         <Icon icon={ArrowUp02Icon} size={12} />
-        <Chip.Label>12.5%</Chip.Label>
+        12.5%
       </Chip>
     </Card.Header>
     <Card.Content>

@@ -40,9 +40,9 @@ export const LineIndicator: Story = {
     <ChartTooltip indicator="line">
       <ChartTooltip.Header>March 2025</ChartTooltip.Header>
       {[
-        ["Organic", "15,200", "var(--chart-1)"],
+        ["Organic", "15,200", "var(--chart-3)"],
         ["Paid Ads", "8,400", "var(--chart-2)"],
-        ["Referral", "3,100", "var(--chart-3)"],
+        ["Referral", "3,100", "var(--chart-1)"],
       ].map(([label, value, color]) => (
         <ChartTooltip.Item key={label}>
           <ChartTooltip.Indicator color={color} />
@@ -100,7 +100,7 @@ export const ChartColors: Story = {
     },
   },
   render: () => (
-    <div className="flex gap-4">
+    <div className="flex gap-6">
       <ColorTooltip />
       <ColorTooltip indicator="line" />
     </div>
@@ -116,7 +116,7 @@ export const AutoContent: Story = {
     },
   },
   render: () => (
-    <div className="flex gap-4">
+    <div className="flex gap-6">
       <ChartTooltip.Content
         active
         label="February"
@@ -130,9 +130,9 @@ export const AutoContent: Story = {
         indicator="line"
         label="Q1 2025"
         payload={[
-          { color: "var(--chart-1)", name: "Organic", value: 22000 },
-          { color: "var(--chart-2)", name: "Paid Ads", value: 14500 },
-          { color: "var(--chart-3)", name: "Referral", value: 5200 },
+          { name: "Organic", stroke: "var(--chart-3)", value: 22000 },
+          { name: "Paid Ads", stroke: "var(--chart-2)", value: 14500 },
+          { name: "Referral", stroke: "var(--chart-1)", value: 5200 },
         ]}
       />
     </div>
@@ -147,18 +147,18 @@ export const CustomFormatters: Story = {
     <ChartTooltip.Content
       active
       label="2025-01-15"
-      labelFormatter={() => "January 15, 2025"}
-      payload={[
-        { color: "var(--chart-3)", name: "Portfolio", value: 24801.32 },
-        { color: "var(--chart-1)", name: "Benchmark", value: 21500 },
-      ]}
-      valueFormatter={(value) =>
-        new Intl.NumberFormat("en-US", {
-          currency: "USD",
-          maximumFractionDigits: 2,
-          style: "currency",
-        }).format(Number(value))
+      labelFormatter={(label) =>
+        new Date(String(label)).toLocaleDateString("en-US", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })
       }
+      payload={[
+        { name: "Portfolio", stroke: "var(--chart-3)", value: 24801.32 },
+        { name: "Benchmark", stroke: "var(--chart-2)", value: 21500 },
+      ]}
+      valueFormatter={(value) => `$${Number(value).toLocaleString()}`}
     />
   ),
 };
@@ -170,13 +170,15 @@ export const Inactive: Story = {
     },
   },
   render: () => (
-    <div className="space-y-3 text-center">
+    <div className="flex flex-col gap-4">
       <p className="text-muted text-sm">
         The tooltip below is inactive (active=false) — nothing should render:
       </p>
-      <div className="border-separator text-muted rounded border border-dashed p-6 text-sm">
-        <ChartTooltip active={false}>Hidden</ChartTooltip>
-        (empty — tooltip hidden)
+      <div className="bg-default flex h-16 items-center justify-center rounded-lg">
+        <ChartTooltip.Content active={false}>
+          <ChartTooltip.Header>This should not be visible</ChartTooltip.Header>
+        </ChartTooltip.Content>
+        <span className="text-muted text-xs">(empty — tooltip hidden)</span>
       </div>
     </div>
   ),

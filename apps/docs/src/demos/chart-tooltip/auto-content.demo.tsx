@@ -4,7 +4,7 @@
 import { ChartTooltip } from "@thenamespace/uikit";
 
 export const DemoAutoContentExample = () => (
-  <div className="flex gap-4">
+  <div className="flex gap-6">
     <ChartTooltip.Content
       active
       label="February"
@@ -18,9 +18,9 @@ export const DemoAutoContentExample = () => (
       indicator="line"
       label="Q1 2025"
       payload={[
-        { color: "var(--chart-1)", name: "Organic", value: 22000 },
-        { color: "var(--chart-2)", name: "Paid Ads", value: 14500 },
-        { color: "var(--chart-3)", name: "Referral", value: 5200 },
+        { name: "Organic", stroke: "var(--chart-3)", value: 22000 },
+        { name: "Paid Ads", stroke: "var(--chart-2)", value: 14500 },
+        { name: "Referral", stroke: "var(--chart-1)", value: 5200 },
       ]}
     />
   </div>

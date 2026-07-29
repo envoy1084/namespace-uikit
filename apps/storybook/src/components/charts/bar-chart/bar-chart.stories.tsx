@@ -4,6 +4,7 @@ import { ArrowUp02Icon, Icon } from "@thenamespace/uikit/icons";
 import { ChartTooltip } from "@/components/charts/chart-tooltip";
 import { Chip } from "@/components/data-display/chip";
 import { KPI } from "@/components/data-display/kpi";
+import { TrendChip } from "@/components/data-display/trend-chip";
 import { Card } from "@/components/layout/card";
 
 import { BarChart } from "./index";
@@ -65,7 +66,7 @@ export const Default: Story = {
         </div>
         <Chip color="success" size="sm" variant="soft">
           <Icon icon={ArrowUp02Icon} size={12} />
-          <Chip.Label>12.5%</Chip.Label>
+          12.5%
         </Chip>
       </Card.Header>
       <Card.Content>
@@ -427,11 +428,12 @@ export const KPIWithBarChart: Story = {
         <KPI.Title>Monthly Sales</KPI.Title>
       </KPI.Header>
       <KPI.Content className="flex flex-col gap-3">
-        <div className="flex items-center gap-3 self-start">
-          <KPI.Value value={278} />
-          <KPI.Trend trend="up">
-            3.3% <span className="text-muted">last 30d</span>
-          </KPI.Trend>
+        <div className="flex gap-3 self-start">
+          <KPI.Value className="text-3xl" maximumFractionDigits={0} value={278} />
+          <TrendChip trend="up" variant="tertiary">
+            3.3%
+            <TrendChip.Suffix>last 30d</TrendChip.Suffix>
+          </TrendChip>
         </div>
         <BarChart data={sales} height={160}>
           <BarChart.Grid vertical={false} />

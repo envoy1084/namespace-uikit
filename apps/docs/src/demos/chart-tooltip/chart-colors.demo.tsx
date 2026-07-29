@@ -28,7 +28,7 @@ function ColorTooltip({ indicator = "dot" }: { indicator?: "dot" | "line" }) {
 }
 
 export const DemoChartColorsExample = () => (
-  <div className="flex gap-4">
+  <div className="flex gap-6">
     <ColorTooltip />
     <ColorTooltip indicator="line" />
   </div>

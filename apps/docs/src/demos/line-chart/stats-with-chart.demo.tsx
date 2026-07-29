@@ -3,12 +3,14 @@
 // @demo-title Stats With Chart
 import { LineChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
+import { Chip } from "@thenamespace/uikit/chip";
+import { ArrowDown02Icon, ArrowUp02Icon, Icon } from "@thenamespace/uikit/icons";
 
 const revenueData = [4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500].map(
   (revenue, index) => ({
-    month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][
-      index
-    ]!,
+    month:
+      ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][index] ??
+      "Unknown",
     revenue,
   }),
 );
@@ -54,9 +56,9 @@ function TrafficAxes({ currency = false }: { currency?: boolean }) {
 
 export const DemoStatsWithChartExample = () => {
   const stats = [
-    { label: "Revenue", trend: "up", value: "$228,441" },
-    { label: "Expenses", trend: "down", value: "$25,108" },
-    { label: "Sales", trend: "up", value: "458" },
+    { label: "Revenue", trend: "up", trendValue: "3.3%", value: "$228,441" },
+    { label: "Expenses", trend: "down", trendValue: "3.3%", value: "$25,108" },
+    { label: "Sales", trend: "up", trendValue: "3.3%", value: "458" },
   ];
   return (
     <div className="flex w-[700px] flex-col gap-3">
@@ -68,15 +70,13 @@ export const DemoStatsWithChartExample = () => {
             </Card.Header>
             <Card.Content className="flex flex-row items-center gap-2">
               <span className="text-foreground flex-1 text-2xl font-semibold">{stat.value}</span>
-              <span
-                className={
-                  stat.trend === "up"
-                    ? "bg-success/15 text-success rounded-full px-2 py-1 text-xs"
-                    : "bg-danger/15 text-danger rounded-full px-2 py-1 text-xs"
-                }
-              >
-                {stat.trend === "up" ? "↑" : "↓"} 3.3%
-              </span>
+              <Chip color={stat.trend === "up" ? "success" : "danger"} size="sm" variant="soft">
+                <Icon
+                  className="size-3"
+                  icon={stat.trend === "up" ? ArrowUp02Icon : ArrowDown02Icon}
+                />
+                {stat.trendValue}
+              </Chip>
             </Card.Content>
           </Card>
         ))}

@@ -3,11 +3,12 @@
 // @demo-title KPIWith Bar Chart
 import { BarChart } from "@thenamespace/uikit";
 import { KPI } from "@thenamespace/uikit/kpi";
+import { TrendChip } from "@thenamespace/uikit/trend-chip";
 
 const sales = [18, 32, 28, 45, 38, 52, 42, 55, 48, 60, 53, 58].map((value, index) => ({
-  month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][
-    index
-  ]!,
+  month:
+    ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][index] ??
+    "Unknown",
   sales: value,
 }));
 
@@ -17,11 +18,12 @@ export const DemoKPIWithBarChartExample = () => (
       <KPI.Title>Monthly Sales</KPI.Title>
     </KPI.Header>
     <KPI.Content className="flex flex-col gap-3">
-      <div className="flex items-center gap-3 self-start">
-        <KPI.Value value={278} />
-        <KPI.Trend trend="up">
-          3.3% <span className="text-muted">last 30d</span>
-        </KPI.Trend>
+      <div className="flex gap-3 self-start">
+        <KPI.Value className="text-3xl" maximumFractionDigits={0} value={278} />
+        <TrendChip trend="up" variant="tertiary">
+          3.3%
+          <TrendChip.Suffix>last 30d</TrendChip.Suffix>
+        </TrendChip>
       </div>
       <BarChart data={sales} height={160}>
         <BarChart.Grid vertical={false} />

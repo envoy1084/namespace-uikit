@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { ChartTooltip } from "@/components/charts/chart-tooltip";
+import { KPI } from "@/components/data-display/kpi";
+import { TrendChip } from "@/components/data-display/trend-chip";
 import { Card } from "@/components/layout/card";
 
 import { AreaChart } from "./index";
@@ -357,24 +359,39 @@ export const KPIWithAreaChart: Story = {
   render: () => (
     <div className="grid w-full max-w-[900px] grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {kpis.map((kpi) => (
-        <Card className="min-h-[148px]" key={kpi.label}>
-          <Card.Header>
-            <Card.Title className="text-muted">{kpi.label}</Card.Title>
-          </Card.Header>
-          <Card.Content className="grid grid-cols-[1fr_1fr] items-end">
+        <KPI key={kpi.label}>
+          <KPI.Header>
+            <KPI.Title>{kpi.label}</KPI.Title>
+          </KPI.Header>
+          <KPI.Content className="grid-cols-[1fr_1fr] items-end">
             <div className="flex flex-col gap-1">
-              <span className="text-foreground text-3xl font-semibold">{kpi.value}</span>
-              <span
-                className={
-                  kpi.direction === "up"
-                    ? "text-success flex items-center gap-1 text-xs"
-                    : "text-danger flex items-center gap-1 text-xs"
-                }
-              >
-                <span>{kpi.direction === "up" ? "↑" : "↓"}</span>
-                <span>{kpi.trend}</span>
-                <span className="text-muted">{kpi.suffix}</span>
-              </span>
+              {kpi.label === "Total Revenue" ? (
+                <KPI.Value
+                  className="text-3xl"
+                  currency="USD"
+                  maximumFractionDigits={0}
+                  style="currency"
+                  value={228451}
+                />
+              ) : kpi.label === "Bounce Rate" ? (
+                <KPI.Value
+                  className="text-3xl"
+                  maximumFractionDigits={1}
+                  style="percent"
+                  value={0.423}
+                />
+              ) : (
+                <KPI.Value
+                  className="text-3xl"
+                  maximumFractionDigits={0}
+                  notation="compact"
+                  value={97859}
+                />
+              )}
+              <TrendChip trend={kpi.direction} variant="tertiary">
+                {kpi.trend}
+                <TrendChip.Suffix>{kpi.suffix}</TrendChip.Suffix>
+              </TrendChip>
             </div>
             <div className="min-w-0">
               <AreaChart
@@ -398,8 +415,8 @@ export const KPIWithAreaChart: Story = {
                 />
               </AreaChart>
             </div>
-          </Card.Content>
-        </Card>
+          </KPI.Content>
+        </KPI>
       ))}
     </div>
   ),

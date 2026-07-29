@@ -1,8 +1,13 @@
 import React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
+import { ArrowDown02Icon, ArrowUp02Icon, Icon } from "@thenamespace/uikit/icons";
 
+import { Segment } from "@/components/buttons/segment";
 import { ChartTooltip } from "@/components/charts/chart-tooltip";
+import { Chip } from "@/components/data-display/chip";
+import { KPI } from "@/components/data-display/kpi";
+import { TrendChip } from "@/components/data-display/trend-chip";
 import { Card } from "@/components/layout/card";
 
 import { LineChart } from "./index";
@@ -204,22 +209,17 @@ function PortfolioExample() {
             <span className="text-xs font-medium text-green-500">{current.change}</span>
           </div>
         </div>
-        <div className="bg-default flex rounded-lg p-0.5">
+        <Segment
+          defaultSelectedKey="1M"
+          size="sm"
+          onSelectionChange={(key) => setRange(key as keyof typeof portfolioRanges)}
+        >
           {(Object.keys(portfolioRanges) as Array<keyof typeof portfolioRanges>).map((key) => (
-            <button
-              className={
-                range === key
-                  ? "bg-surface text-foreground rounded-md px-2 py-1 text-xs shadow-sm"
-                  : "text-muted rounded-md px-2 py-1 text-xs"
-              }
-              key={key}
-              onClick={() => setRange(key)}
-              type="button"
-            >
+            <Segment.Item id={key} key={key}>
               {key}
-            </button>
+            </Segment.Item>
           ))}
-        </div>
+        </Segment>
       </Card.Header>
       <Card.Content>
         <LineChart
@@ -295,23 +295,34 @@ export const KPIWithChart: Story = {
   render: () => (
     <div className="grid w-[900px] grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {kpis.map((kpi) => (
-        <Card className="min-h-[148px]" key={kpi.label}>
-          <Card.Header>
-            <Card.Title className="text-muted">{kpi.label}</Card.Title>
-          </Card.Header>
-          <Card.Content className="grid grid-cols-[1fr_1fr] items-end">
+        <KPI key={kpi.label}>
+          <KPI.Header>
+            <KPI.Title>{kpi.label}</KPI.Title>
+          </KPI.Header>
+          <KPI.Content className="grid-cols-[1fr_1fr] items-end">
             <div className="flex flex-col gap-1">
-              <span className="text-foreground text-3xl font-semibold">{kpi.value}</span>
-              <span
-                className={
-                  kpi.direction === "up"
-                    ? "text-success flex gap-1 text-xs"
-                    : "text-danger flex gap-1 text-xs"
-                }
-              >
-                {kpi.direction === "up" ? "↑" : "↓"} {kpi.trend}{" "}
-                <span className="text-muted">{kpi.suffix}</span>
-              </span>
+              {kpi.label === "Total Revenue" ? (
+                <KPI.Value
+                  className="text-3xl"
+                  currency="USD"
+                  maximumFractionDigits={0}
+                  style="currency"
+                  value={228451}
+                />
+              ) : kpi.label === "Bounce Rate" ? (
+                <KPI.Value
+                  className="text-3xl"
+                  maximumFractionDigits={1}
+                  style="percent"
+                  value={0.423}
+                />
+              ) : (
+                <KPI.Value className="text-3xl" maximumFractionDigits={0} value={1234} />
+              )}
+              <TrendChip trend={kpi.direction} variant="tertiary">
+                {kpi.trend}
+                <TrendChip.Suffix>{kpi.suffix}</TrendChip.Suffix>
+              </TrendChip>
             </div>
             <LineChart
               data={[...kpi.data]}
@@ -326,8 +337,8 @@ export const KPIWithChart: Story = {
                 type="monotone"
               />
             </LineChart>
-          </Card.Content>
-        </Card>
+          </KPI.Content>
+        </KPI>
       ))}
     </div>
   ),
@@ -343,9 +354,9 @@ export const StatsWithChart: Story = {
   },
   render: function Story() {
     const stats = [
-      { label: "Revenue", trend: "up", value: "$228,441" },
-      { label: "Expenses", trend: "down", value: "$25,108" },
-      { label: "Sales", trend: "up", value: "458" },
+      { label: "Revenue", trend: "up", trendValue: "3.3%", value: "$228,441" },
+      { label: "Expenses", trend: "down", trendValue: "3.3%", value: "$25,108" },
+      { label: "Sales", trend: "up", trendValue: "3.3%", value: "458" },
     ];
     return (
       <div className="flex w-[700px] flex-col gap-3">
@@ -357,15 +368,13 @@ export const StatsWithChart: Story = {
               </Card.Header>
               <Card.Content className="flex flex-row items-center gap-2">
                 <span className="text-foreground flex-1 text-2xl font-semibold">{stat.value}</span>
-                <span
-                  className={
-                    stat.trend === "up"
-                      ? "bg-success/15 text-success rounded-full px-2 py-1 text-xs"
-                      : "bg-danger/15 text-danger rounded-full px-2 py-1 text-xs"
-                  }
-                >
-                  {stat.trend === "up" ? "↑" : "↓"} 3.3%
-                </span>
+                <Chip color={stat.trend === "up" ? "success" : "danger"} size="sm" variant="soft">
+                  <Icon
+                    className="size-3"
+                    icon={stat.trend === "up" ? ArrowUp02Icon : ArrowDown02Icon}
+                  />
+                  {stat.trendValue}
+                </Chip>
               </Card.Content>
             </Card>
           ))}

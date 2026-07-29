@@ -3,8 +3,13 @@
 import type { ComponentPropsWithRef, ReactElement } from "react";
 import { createContext, useCallback, useContext, useMemo } from "react";
 
-import { cn, ToggleButton, ToggleButtonGroup } from "@heroui/react";
-import { SelectionIndicator, type Key } from "react-aria-components";
+import { cn } from "@heroui/react";
+import {
+  SelectionIndicator,
+  ToggleButton,
+  ToggleButtonGroup,
+  type Key,
+} from "react-aria-components";
 
 export type SegmentSize = "lg" | "md" | "sm";
 export type SegmentVariant = "default" | "ghost";

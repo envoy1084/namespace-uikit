@@ -2,7 +2,8 @@
 
 // @demo-title KPIWith Chart
 import { LineChart } from "@thenamespace/uikit";
-import { Card } from "@thenamespace/uikit/card";
+import { KPI } from "@thenamespace/uikit/kpi";
+import { TrendChip } from "@thenamespace/uikit/trend-chip";
 
 const sparkUp = [30, 35, 28, 42, 38, 45, 50, 48, 55, 60, 58, 65].map((value) => ({ value }));
 
@@ -41,23 +42,34 @@ const kpis = [
 export const DemoKPIWithChartExample = () => (
   <div className="grid w-[900px] grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
     {kpis.map((kpi) => (
-      <Card className="min-h-[148px]" key={kpi.label}>
-        <Card.Header>
-          <Card.Title className="text-muted">{kpi.label}</Card.Title>
-        </Card.Header>
-        <Card.Content className="grid grid-cols-[1fr_1fr] items-end">
+      <KPI key={kpi.label}>
+        <KPI.Header>
+          <KPI.Title>{kpi.label}</KPI.Title>
+        </KPI.Header>
+        <KPI.Content className="grid-cols-[1fr_1fr] items-end">
           <div className="flex flex-col gap-1">
-            <span className="text-foreground text-3xl font-semibold">{kpi.value}</span>
-            <span
-              className={
-                kpi.direction === "up"
-                  ? "text-success flex gap-1 text-xs"
-                  : "text-danger flex gap-1 text-xs"
-              }
-            >
-              {kpi.direction === "up" ? "↑" : "↓"} {kpi.trend}{" "}
-              <span className="text-muted">{kpi.suffix}</span>
-            </span>
+            {kpi.label === "Total Revenue" ? (
+              <KPI.Value
+                className="text-3xl"
+                currency="USD"
+                maximumFractionDigits={0}
+                style="currency"
+                value={228451}
+              />
+            ) : kpi.label === "Bounce Rate" ? (
+              <KPI.Value
+                className="text-3xl"
+                maximumFractionDigits={1}
+                style="percent"
+                value={0.423}
+              />
+            ) : (
+              <KPI.Value className="text-3xl" maximumFractionDigits={0} value={1234} />
+            )}
+            <TrendChip trend={kpi.direction} variant="tertiary">
+              {kpi.trend}
+              <TrendChip.Suffix>{kpi.suffix}</TrendChip.Suffix>
+            </TrendChip>
           </div>
           <LineChart
             data={[...kpi.data]}
@@ -72,8 +84,8 @@ export const DemoKPIWithChartExample = () => (
               type="monotone"
             />
           </LineChart>
-        </Card.Content>
-      </Card>
+        </KPI.Content>
+      </KPI>
     ))}
   </div>
 );
