@@ -18,7 +18,7 @@ import {
 } from "react";
 
 import { cn } from "@heroui/react";
-import { OverlayArrow, Popover as RacPopover } from "react-aria-components";
+import { composeRenderProps, OverlayArrow, Popover as RacPopover } from "react-aria-components";
 
 interface ContextValue {
   cancelClose: () => void;
@@ -179,10 +179,10 @@ function HoverCardContent({
   return (
     <RacPopover
       {...props}
-      className={
-        cn("hover-card__content", typeof className === "string" ? className : undefined) ??
-        "hover-card__content"
-      }
+      className={composeRenderProps(
+        className,
+        (resolvedClassName) => cn("hover-card__content", resolvedClassName) ?? "",
+      )}
       data-slot="hover-card-content"
       isNonModal
       isOpen={context.isOpen}
@@ -212,10 +212,10 @@ function HoverCardArrow({ children, className, ...props }: HoverCardArrowProps):
   return (
     <OverlayArrow
       {...props}
-      className={
-        cn("hover-card__arrow", typeof className === "string" ? className : undefined) ??
-        "hover-card__arrow"
-      }
+      className={composeRenderProps(
+        className,
+        (resolvedClassName) => cn("hover-card__arrow", resolvedClassName) ?? "",
+      )}
       data-slot="hover-card-arrow"
     >
       {children ?? (

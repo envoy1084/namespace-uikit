@@ -24,14 +24,18 @@ const sparksUp = [
 const sparksDown = sparksUp.toReversed();
 
 function SparkMetric({
+  change,
   color,
   data,
+  suffix,
   title,
   trend,
   value,
 }: {
+  change: string;
   color: string;
   data: { value: number }[];
+  suffix: string;
   title: string;
   trend: "down" | "up";
   value: React.ReactNode;
@@ -45,8 +49,8 @@ function SparkMetric({
         <div className="flex flex-col gap-1">
           {value}
           <TrendChip trend={trend} variant="tertiary">
-            {trend === "up" ? "3.3%" : "5.9%"}
-            <TrendChip.Suffix>{trend === "up" ? "last 30d" : "vs last 7d"}</TrendChip.Suffix>
+            {change}
+            <TrendChip.Suffix>{suffix}</TrendChip.Suffix>
           </TrendChip>
         </div>
         <KPI.Chart color={color} data={data} height={60} strokeWidth={1.5} />
@@ -58,16 +62,16 @@ function SparkMetric({
 export const DemoWithKPIsExample = () => (
   <Widget className="w-full max-w-[900px]">
     <Widget.Header>
-      <div>
-        <Widget.Title>Key Metrics</Widget.Title>
-        <Widget.Description className="block">Last 30 days</Widget.Description>
-      </div>
+      <Widget.Title>Key Metrics</Widget.Title>
+      <Widget.Description>Last 30 days</Widget.Description>
     </Widget.Header>
     <Widget.Content>
       <KPIGroup className="bg-transparent shadow-none">
         <SparkMetric
+          change="3.3%"
           color="var(--color-accent)"
           data={sparksUp}
+          suffix="last 30d"
           title="Total Revenue"
           trend="up"
           value={
@@ -82,8 +86,10 @@ export const DemoWithKPIsExample = () => (
         />
         <KPIGroup.Separator />
         <SparkMetric
+          change="5.9%"
           color="var(--color-danger)"
           data={sparksDown}
+          suffix="vs last 7d"
           title="Bounce Rate"
           trend="down"
           value={
@@ -97,8 +103,10 @@ export const DemoWithKPIsExample = () => (
         />
         <KPIGroup.Separator />
         <SparkMetric
+          change="10.9%"
           color="var(--color-success)"
           data={sparksUp}
+          suffix="this month"
           title="Active Users"
           trend="up"
           value={

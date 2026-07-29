@@ -39,56 +39,88 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const icons = [
-  Flag02Icon,
-  CheckmarkCircle02Icon,
-  SecurityWarningIcon,
-  Megaphone02Icon,
-  Clock01Icon,
-  BadgeCheckIcon,
-];
 const TimelineGlyph = ({ icon }: { icon: IconSvgElement }) => (
   <HugeiconsIcon aria-hidden icon={icon} strokeWidth={2} />
 );
-const statuses: TimelineStatus[] = ["default", "current", "warning", "default", "muted", "success"];
 const rollout = [
-  [
-    "Feature flag created",
-    "Created checkout-redesign for the billing workspace.",
-    "Owner assigned",
-    "09:12",
-  ],
-  [
-    "Canary rollout started",
-    "Enabled for 5% of workspaces with session replay sampling on.",
-    "Canary",
-    "09:34",
-  ],
-  [
-    "Regional guardrail tripped",
-    "Latency climbed in eu-central-1; rollout is holding while routing warms.",
-    "Paused",
-    "09:51",
-  ],
-  [
-    "Customer messaging prepared",
-    "Support macro and changelog draft are ready in Launch notes.",
-    "Docs",
-    "10:05",
-  ],
-  [
-    "Launch window scheduled",
-    "Full rollout waits for the next error-budget sweep.",
-    "Queued",
-    "10:30",
-  ],
-  [
-    "Release checklist verified",
-    "Rollback owner and dashboard checks are recorded in the release audit.",
-    "Ready",
-    "10:42",
-  ],
-];
+  {
+    description: (
+      <>
+        Created <span className="text-foreground font-medium">checkout-redesign</span> for the
+        billing workspace.
+      </>
+    ),
+    icon: Flag02Icon,
+    meta: "Owner assigned",
+    metaColor: "default",
+    status: "default",
+    time: "09:12",
+    title: "Feature flag created",
+  },
+  {
+    description: (
+      <>
+        Enabled for <span className="text-foreground font-medium">5% of workspaces</span> with
+        session replay sampling on.
+      </>
+    ),
+    icon: CheckmarkCircle02Icon,
+    meta: "Canary",
+    metaColor: "accent",
+    status: "current",
+    time: "09:34",
+    title: "Canary rollout started",
+  },
+  {
+    description: (
+      <>
+        Latency climbed in <span className="text-foreground font-medium">eu-central-1</span>;
+        rollout is holding while routing warms.
+      </>
+    ),
+    icon: SecurityWarningIcon,
+    meta: "Paused",
+    metaColor: "warning",
+    status: "warning",
+    time: "09:51",
+    title: "Regional guardrail tripped",
+  },
+  {
+    description: (
+      <>
+        Support macro and changelog draft are ready in{" "}
+        <Link className="text-xs" href="#">
+          Launch notes
+        </Link>
+        .
+      </>
+    ),
+    icon: Megaphone02Icon,
+    meta: "Docs",
+    metaColor: "default",
+    status: "default",
+    time: "10:05",
+    title: "Customer messaging prepared",
+  },
+  {
+    description: "Full rollout waits for the next error-budget sweep.",
+    icon: Clock01Icon,
+    meta: "Queued",
+    metaColor: "default",
+    status: "muted",
+    time: "10:30",
+    title: "Launch window scheduled",
+  },
+  {
+    description: <>Rollback owner and dashboard checks are recorded in the release audit.</>,
+    icon: BadgeCheckIcon,
+    meta: "Ready",
+    metaColor: "success",
+    status: "success",
+    time: "10:42",
+    title: "Release checklist verified",
+  },
+] as const;
 export const Default: Story = {
   render: () => (
     <div className="w-full max-w-[560px] min-w-0">
@@ -97,35 +129,25 @@ export const Default: Story = {
         <h3 className="text-foreground m-0 text-base font-semibold">Checkout redesign</h3>
       </div>
       <Timeline density="compact" size="sm">
-        {rollout.map(([title, description, label, time], index) => (
-          <Timeline.Item align="center" key={title} status={statuses[index]}>
+        {rollout.map((item) => (
+          <Timeline.Item align="center" key={item.title} status={item.status as TimelineStatus}>
             <Timeline.Marker aria-hidden="true">
-              <TimelineGlyph icon={icons[index]!} />
+              <TimelineGlyph icon={item.icon} />
             </Timeline.Marker>
             <Timeline.Content>
               <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                 <div className="min-w-0">
                   <div className="flex min-w-0 flex-wrap items-center gap-2">
-                    <h3 className="text-foreground m-0 text-xs leading-5 font-medium">{title}</h3>
-                    <Chip
-                      color={
-                        index === 1
-                          ? "accent"
-                          : index === 2
-                            ? "warning"
-                            : index === 5
-                              ? "success"
-                              : "default"
-                      }
-                      size="sm"
-                      variant="soft"
-                    >
-                      {label}
+                    <h3 className="text-foreground m-0 text-xs leading-5 font-medium">
+                      {item.title}
+                    </h3>
+                    <Chip color={item.metaColor} size="sm" variant="soft">
+                      {item.meta}
                     </Chip>
                   </div>
-                  <p className="text-muted m-0 mt-1 text-xs leading-5">{description}</p>
+                  <p className="text-muted m-0 mt-1 text-xs leading-5">{item.description}</p>
                 </div>
-                <time className="text-muted shrink-0 text-xs leading-5">{time}</time>
+                <time className="text-muted shrink-0 text-xs leading-5">{item.time}</time>
               </div>
             </Timeline.Content>
           </Timeline.Item>
@@ -394,6 +416,12 @@ const compact = [
   ["Payment authorized", "Mar 6, 10:21 AM", "default", ""],
   ["Invoice generated", "Mar 6, 10:20 AM", "muted", ""],
 ];
+const compactIcons = [
+  SecurityWarningIcon,
+  CreditCardIcon,
+  CheckmarkCircle02Icon,
+  ReceiptTextIcon,
+] as const;
 export const CompactLog: Story = {
   render: () => (
     <div className="box-border w-full max-w-[520px] min-w-0 px-2 sm:px-0">
@@ -405,13 +433,7 @@ export const CompactLog: Story = {
             status={item[2] as TimelineStatus}
           >
             <Timeline.Marker>
-              <TimelineGlyph
-                icon={
-                  [SecurityWarningIcon, CreditCardIcon, CheckmarkCircle02Icon, ReceiptTextIcon][
-                    index
-                  ]!
-                }
-              />
+              <TimelineGlyph icon={compactIcons[index] ?? SecurityWarningIcon} />
             </Timeline.Marker>
             <Timeline.Content className="gap-1">
               <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:justify-between">

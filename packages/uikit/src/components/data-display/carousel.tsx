@@ -1,12 +1,21 @@
 "use client";
 
-import type { ComponentPropsWithRef, CSSProperties, ReactElement, ReactNode } from "react";
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
+import {
+  createContext,
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 
-import { Button, cn } from "@heroui/react";
+import { Button, cn, ScrollShadow } from "@heroui/react";
 import type { EmblaCarouselType, EmblaOptionsType, EmblaPluginType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
+import { Button as RacButton } from "react-aria-components";
 
 import { IconChevronLeft, IconChevronRight } from "../../heroui-icons";
 
@@ -41,7 +50,6 @@ export interface CarouselRootProps extends ComponentPropsWithRef<"div"> {
 function CarouselRoot({
   children,
   className,
-  onKeyDown,
   opts,
   plugins,
   setApi,
@@ -110,10 +118,15 @@ function CarouselRoot({
         {...props}
         aria-roledescription="carousel"
         className={cn("carousel", `carousel--${type}`, className)}
-        onKeyDown={(event) => {
-          onKeyDown?.(event);
-          if (!event.defaultPrevented && event.key === "ArrowLeft") scrollPrev();
-          if (!event.defaultPrevented && event.key === "ArrowRight") scrollNext();
+        data-slot="carousel"
+        onKeyDownCapture={(event) => {
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            scrollPrev();
+          } else if (event.key === "ArrowRight") {
+            event.preventDefault();
+            scrollNext();
+          }
         }}
         role="region"
         // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
@@ -129,14 +142,15 @@ function CarouselContent({
   className,
   ...props
 }: ComponentPropsWithRef<"div">): ReactElement {
-  const { emblaRef, setViewportWrapper, type } = useCarousel();
+  const { emblaRef, setViewportWrapper } = useCarousel();
   return (
-    <div className="carousel__viewport-wrapper" ref={setViewportWrapper}>
-      <div className="carousel__viewport" ref={emblaRef}>
-        <div
-          {...props}
-          className={cn("carousel__content", `carousel__content--${type}`, className)}
-        >
+    <div
+      className="carousel__viewport-wrapper"
+      data-slot="carousel-viewport-wrapper"
+      ref={setViewportWrapper}
+    >
+      <div className="carousel__viewport" data-slot="carousel-viewport" ref={emblaRef}>
+        <div {...props} className={cn("carousel__content", className)} data-slot="carousel-content">
           {children}
         </div>
       </div>
@@ -144,12 +158,13 @@ function CarouselContent({
   );
 }
 function CarouselItem({ className, ...props }: ComponentPropsWithRef<"div">): ReactElement {
-  const { type } = useCarousel();
+  useCarousel();
   return (
     <div
       {...props}
       aria-roledescription="slide"
-      className={cn("carousel__item", `carousel__item--${type}`, className)}
+      className={cn("carousel__item", className)}
+      data-slot="carousel-item"
       role="group"
     />
   );
@@ -160,44 +175,65 @@ interface CarouselControlProps extends Omit<
 > {
   children?: ReactNode;
   className?: string;
+  icon?: ReactNode;
 }
-function CarouselPrevious({ children, className, ...props }: CarouselControlProps): ReactElement {
+function CarouselPrevious({
+  children,
+  className,
+  icon,
+  ...props
+}: CarouselControlProps): ReactElement | null {
   const { canScrollPrev, scrollPrev, type, viewportWrapper } = useCarousel();
   const button = (
     <Button
-      {...props}
-      aria-label={props["aria-label"] ?? "Previous slide"}
+      aria-label="Previous slide"
       className={
         cn("carousel__previous", `carousel__previous--${type}`, className) ?? "carousel__previous"
       }
+      data-slot="carousel-previous"
       isDisabled={!canScrollPrev}
       isIconOnly
       onPress={scrollPrev}
       size="sm"
       variant="tertiary"
+      {...props}
     >
-      {children ?? <IconChevronLeft />}
+      {children ?? icon ?? <IconChevronLeft />}
     </Button>
   );
-  return type === "miniatures" || !viewportWrapper ? button : createPortal(button, viewportWrapper);
+  return type === "miniatures"
+    ? button
+    : viewportWrapper
+      ? createPortal(button, viewportWrapper)
+      : null;
 }
-function CarouselNext({ children, className, ...props }: CarouselControlProps): ReactElement {
+function CarouselNext({
+  children,
+  className,
+  icon,
+  ...props
+}: CarouselControlProps): ReactElement | null {
   const { canScrollNext, scrollNext, type, viewportWrapper } = useCarousel();
   const button = (
     <Button
-      {...props}
-      aria-label={props["aria-label"] ?? "Next slide"}
+      aria-label="Next slide"
       className={cn("carousel__next", `carousel__next--${type}`, className) ?? "carousel__next"}
+      data-slot="carousel-next"
       isDisabled={!canScrollNext}
       isIconOnly
       onPress={scrollNext}
       size="sm"
       variant="tertiary"
+      {...props}
     >
-      {children ?? <IconChevronRight />}
+      {children ?? icon ?? <IconChevronRight />}
     </Button>
   );
-  return type === "miniatures" || !viewportWrapper ? button : createPortal(button, viewportWrapper);
+  return type === "miniatures"
+    ? button
+    : viewportWrapper
+      ? createPortal(button, viewportWrapper)
+      : null;
 }
 
 export interface CarouselDotsProps extends ComponentPropsWithRef<"div"> {
@@ -211,24 +247,32 @@ function CarouselDots({ className, renderDot, ...props }: CarouselDotsProps): Re
       {...props}
       aria-label="Slide indicators"
       className={cn("carousel__dots", className)}
+      data-slot="carousel-dots"
       role="tablist"
     >
-      {Array.from({ length: scrollSnapCount }, (_, index) => (
-        <button
-          aria-label={`Go to slide ${index + 1}`}
-          className="carousel__dot"
-          data-selected={selectedIndex === index || undefined}
-          key={index}
-          type="button"
-          onClick={() => scrollTo(index)}
-        >
-          {renderDot?.({ index, isSelected: selectedIndex === index })}
-        </button>
-      ))}
+      {Array.from({ length: scrollSnapCount }, (_, index) => {
+        const isSelected = selectedIndex === index;
+        return renderDot ? (
+          <Fragment key={index}>{renderDot({ index, isSelected })}</Fragment>
+        ) : (
+          <RacButton
+            aria-label={`Go to slide ${index + 1}`}
+            aria-selected={isSelected}
+            className="carousel__dot"
+            data-selected={isSelected || undefined}
+            data-slot="carousel-dot"
+            key={index}
+            onPress={() => scrollTo(index)}
+          />
+        );
+      })}
     </div>
   );
 }
-export interface CarouselThumbnailsProps extends ComponentPropsWithRef<"div"> {
+export interface CarouselThumbnailsProps extends Omit<
+  ComponentPropsWithRef<typeof ScrollShadow>,
+  "size"
+> {
   hideScrollBar?: boolean;
   scrollShadowSize?: number;
 }
@@ -236,32 +280,28 @@ function CarouselThumbnails({
   className,
   hideScrollBar = true,
   scrollShadowSize = 40,
-  style,
   ...props
 }: CarouselThumbnailsProps): ReactElement {
   const { type } = useCarousel();
   return (
-    <div
+    <ScrollShadow
       {...props}
       aria-label="Slide thumbnails"
       className={cn(
         "carousel__thumbnails",
-        `carousel__thumbnails--${type}`,
-        hideScrollBar && "carousel__thumbnails--hide-scrollbar",
+        type === "miniatures" && "carousel__thumbnails--miniatures",
         className,
       )}
+      data-slot="carousel-thumbnails"
+      hideScrollBar={hideScrollBar}
+      orientation="horizontal"
       role="tablist"
-      style={
-        {
-          ...style,
-          "--carousel-scroll-shadow-size": `${scrollShadowSize}px`,
-        } as CSSProperties
-      }
+      size={scrollShadowSize}
     />
   );
 }
 export interface CarouselThumbnailProps extends Omit<
-  ComponentPropsWithRef<typeof Button>,
+  ComponentPropsWithRef<typeof RacButton>,
   "children" | "className" | "onPress"
 > {
   alt?: string;
@@ -280,18 +320,17 @@ function CarouselThumbnail({
 }: CarouselThumbnailProps): ReactElement {
   const { scrollTo, selectedIndex } = useCarousel();
   return (
-    <Button
-      {...props}
-      aria-label={props["aria-label"] ?? `Go to slide ${index + 1}`}
+    <RacButton
+      aria-label={`Go to slide ${index + 1}`}
       aria-selected={selectedIndex === index}
       className={cn("carousel__thumbnail", className) ?? "carousel__thumbnail"}
       data-selected={selectedIndex === index || undefined}
-      isIconOnly
+      data-slot="carousel-thumbnail"
       onPress={() => scrollTo(index)}
-      variant="tertiary"
+      {...props}
     >
-      {children ?? (src ? <img alt={alt} src={src} /> : null)}
-    </Button>
+      {children ?? (src ? <img alt={alt} draggable={false} src={src} /> : null)}
+    </RacButton>
   );
 }
 

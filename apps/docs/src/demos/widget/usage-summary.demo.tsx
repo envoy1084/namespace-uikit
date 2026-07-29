@@ -28,8 +28,10 @@ export const DemoUsageSummaryExample = () => (
         <Table.ScrollContainer>
           <Table.Content aria-label="Usage summary">
             <Table.Header className="sr-only">
-              <Table.Column isRowHeader>Usage Type</Table.Column>
-              <Table.Column>Amount</Table.Column>
+              <Table.Column isRowHeader className="bg-transparent">
+                Usage Type
+              </Table.Column>
+              <Table.Column className="bg-transparent">Amount</Table.Column>
             </Table.Header>
             <Table.Body>
               {usage.map((item, index) => (

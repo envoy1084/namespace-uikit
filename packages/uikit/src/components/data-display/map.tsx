@@ -283,7 +283,12 @@ export function MapRoot({
       >
         {showLoader ? (
           <div className="map__loader" data-slot="map-loader">
-            <Spinner className="map__loader-spinner" color="current" size="sm" />
+            <Spinner
+              className="map__loader-spinner"
+              color="current"
+              data-slot="map-loader-spinner"
+              size="sm"
+            />
           </div>
         ) : null}
         {map ? children : null}
@@ -497,7 +502,12 @@ const PopupContent = ({
     data-slot={slot}
   >
     {closeButton ? (
-      <CloseButton aria-label="Close popup" className="map__popup-close-button" onPress={onClose} />
+      <CloseButton
+        aria-label="Close popup"
+        className="map__popup-close-button"
+        data-slot="map-popup-close-button"
+        onPress={onClose}
+      />
     ) : null}
     {children}
   </div>
@@ -775,20 +785,36 @@ export function MapControlSeparator({
   );
 }
 const ControlIcon = ({
+  ref,
   type,
 }: {
+  ref?: Ref<SVGSVGElement>;
   type: "compass" | "fullscreen" | "locate" | "minus" | "plus";
 }): ReactElement => {
   if (type === "plus" || type === "minus")
     return (
-      <svg aria-hidden="true" className="map__control-icon" fill="none" viewBox="0 0 16 16">
+      <svg
+        aria-hidden="true"
+        className="map__control-icon"
+        data-slot="map-control-icon"
+        fill="none"
+        ref={ref}
+        viewBox="0 0 16 16"
+      >
         <path d="M3 8h10M8 3v10" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
         {type === "minus" ? <path d="M8 2v12" stroke="var(--overlay)" strokeWidth="3" /> : null}
       </svg>
     );
   if (type === "locate")
     return (
-      <svg aria-hidden="true" className="map__control-icon" fill="none" viewBox="0 0 16 16">
+      <svg
+        aria-hidden="true"
+        className="map__control-icon"
+        data-slot="map-control-icon"
+        fill="none"
+        ref={ref}
+        viewBox="0 0 16 16"
+      >
         <path
           clipRule="evenodd"
           d="M8.75 1.75a.75.75 0 0 0-1.5 0v.79A5.51 5.51 0 0 0 2.54 7.25h-.79a.75.75 0 0 0 0 1.5h.79a5.51 5.51 0 0 0 4.71 4.71v.79a.75.75 0 0 0 1.5 0v-.79a5.51 5.51 0 0 0 4.71-4.71h.79a.75.75 0 0 0 0-1.5h-.79a5.51 5.51 0 0 0-4.71-4.71zM8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8m0 2.25a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5"
@@ -799,7 +825,14 @@ const ControlIcon = ({
     );
   if (type === "fullscreen")
     return (
-      <svg aria-hidden="true" className="map__control-icon" fill="none" viewBox="0 0 16 16">
+      <svg
+        aria-hidden="true"
+        className="map__control-icon"
+        data-slot="map-control-icon"
+        fill="none"
+        ref={ref}
+        viewBox="0 0 16 16"
+      >
         <path
           d="M2.5 5.5v-3h3m5 0h3v3m0 5v3h-3m-5 0h-3v-3"
           stroke="currentColor"
@@ -810,7 +843,14 @@ const ControlIcon = ({
       </svg>
     );
   return (
-    <svg aria-hidden="true" className="map__compass-icon" fill="none" viewBox="0 0 24 24">
+    <svg
+      aria-hidden="true"
+      className="map__compass-icon"
+      data-slot="map-compass-icon"
+      fill="none"
+      ref={ref}
+      viewBox="0 0 24 24"
+    >
       <path d="M12 2 16 12h-4V2Z" data-needle="north-right" />
       <path d="m12 2-4 10h4V2Z" data-needle="north-left" />
       <path d="m12 22 4-10h-4v10Z" data-needle="south-right" />
@@ -856,7 +896,7 @@ export function MapCompassControl({
   ...props
 }: MapCompassControlProps): ReactElement {
   const { map } = useMapContext();
-  const iconRef = useRef<HTMLSpanElement>(null);
+  const iconRef = useRef<SVGSVGElement>(null);
   useEffect(() => {
     if (!map || !iconRef.current) return;
     const update = () => {
@@ -878,9 +918,7 @@ export function MapCompassControl({
         label="Reset bearing to north"
         onPress={() => map?.resetNorthPitch({ duration })}
       >
-        <span ref={iconRef} className="map__compass-icon">
-          <ControlIcon type="compass" />
-        </span>
+        <ControlIcon ref={iconRef} type="compass" />
       </MapControlButton>
     </MapControlGroup>
   );
@@ -931,7 +969,11 @@ export function MapLocateControl({
         label="Find my location"
         onPress={locate}
       >
-        {loading ? <Spinner size="sm" /> : <ControlIcon type="locate" />}
+        {loading ? (
+          <Spinner color="current" data-slot="map-control-spinner" size="sm" />
+        ) : (
+          <ControlIcon type="locate" />
+        )}
       </MapControlButton>
     </MapControlGroup>
   );

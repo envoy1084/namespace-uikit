@@ -224,14 +224,18 @@ export const WithPieChart: Story = {
 };
 
 function SparkMetric({
+  change,
   color,
   data,
+  suffix,
   title,
   trend,
   value,
 }: {
+  change: string;
   color: string;
   data: { value: number }[];
+  suffix: string;
   title: string;
   trend: "down" | "up";
   value: React.ReactNode;
@@ -245,8 +249,8 @@ function SparkMetric({
         <div className="flex flex-col gap-1">
           {value}
           <TrendChip trend={trend} variant="tertiary">
-            {trend === "up" ? "3.3%" : "5.9%"}
-            <TrendChip.Suffix>{trend === "up" ? "last 30d" : "vs last 7d"}</TrendChip.Suffix>
+            {change}
+            <TrendChip.Suffix>{suffix}</TrendChip.Suffix>
           </TrendChip>
         </div>
         <KPI.Chart color={color} data={data} height={60} strokeWidth={1.5} />
@@ -259,16 +263,16 @@ export const WithKPIs: Story = {
   render: () => (
     <Widget className="w-full max-w-[900px]">
       <Widget.Header>
-        <div>
-          <Widget.Title>Key Metrics</Widget.Title>
-          <Widget.Description className="block">Last 30 days</Widget.Description>
-        </div>
+        <Widget.Title>Key Metrics</Widget.Title>
+        <Widget.Description>Last 30 days</Widget.Description>
       </Widget.Header>
       <Widget.Content>
         <KPIGroup className="bg-transparent shadow-none">
           <SparkMetric
+            change="3.3%"
             color="var(--color-accent)"
             data={sparksUp}
+            suffix="last 30d"
             title="Total Revenue"
             trend="up"
             value={
@@ -283,8 +287,10 @@ export const WithKPIs: Story = {
           />
           <KPIGroup.Separator />
           <SparkMetric
+            change="5.9%"
             color="var(--color-danger)"
             data={sparksDown}
+            suffix="vs last 7d"
             title="Bounce Rate"
             trend="down"
             value={
@@ -298,8 +304,10 @@ export const WithKPIs: Story = {
           />
           <KPIGroup.Separator />
           <SparkMetric
+            change="10.9%"
             color="var(--color-success)"
             data={sparksUp}
+            suffix="this month"
             title="Active Users"
             trend="up"
             value={
@@ -336,10 +344,8 @@ export const WithTable: Story = {
   render: () => (
     <Widget className="w-full max-w-[640px]">
       <Widget.Header>
-        <div>
-          <Widget.Title>Team Members</Widget.Title>
-          <Widget.Description className="block">4 members</Widget.Description>
-        </div>
+        <Widget.Title>Team Members</Widget.Title>
+        <Widget.Description>4 members</Widget.Description>
       </Widget.Header>
       <Widget.Content className="p-0">
         <Table variant="secondary">
@@ -394,8 +400,10 @@ export const UsageSummary: Story = {
           <Table.ScrollContainer>
             <Table.Content aria-label="Usage summary">
               <Table.Header className="sr-only">
-                <Table.Column isRowHeader>Usage Type</Table.Column>
-                <Table.Column>Amount</Table.Column>
+                <Table.Column isRowHeader className="bg-transparent">
+                  Usage Type
+                </Table.Column>
+                <Table.Column className="bg-transparent">Amount</Table.Column>
               </Table.Header>
               <Table.Body>
                 {usage.map((item, index) => (
@@ -472,15 +480,27 @@ export const DashboardGrid: Story = {
         </Widget.Header>
         <Widget.Content>
           <AreaChart data={revenue} height={180}>
+            <defs>
+              <linearGradient id="dash-revenue" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stopColor="var(--chart-3)" stopOpacity={0.2} />
+                <stop offset="100%" stopColor="var(--chart-3)" stopOpacity={0.02} />
+              </linearGradient>
+            </defs>
             <AreaChart.Grid vertical={false} />
             <AreaChart.XAxis dataKey="month" tickMargin={8} />
-            <AreaChart.YAxis width={40} />
+            <AreaChart.YAxis
+              tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+              width={40}
+            />
             <AreaChart.Area
               dataKey="revenue"
               dot={false}
-              fill="var(--chart-3)"
+              fill="url(#dash-revenue)"
               stroke="var(--chart-3)"
+              strokeWidth={2}
+              type="monotone"
             />
+            <AreaChart.Tooltip content={<AreaChart.TooltipContent />} />
           </AreaChart>
         </Widget.Content>
       </Widget>
@@ -495,10 +515,30 @@ export const DashboardGrid: Story = {
         <Widget.Content>
           <LineChart data={traffic.slice(0, 6)} height={180}>
             <LineChart.Grid vertical={false} />
-            <LineChart.XAxis dataKey="month" />
-            <LineChart.YAxis width={30} />
-            <LineChart.Line dataKey="organic" dot={false} stroke="var(--chart-3)" />
-            <LineChart.Line dataKey="paidAds" dot={false} stroke="var(--chart-1)" />
+            <LineChart.XAxis dataKey="month" tickMargin={8} />
+            <LineChart.YAxis
+              tickFormatter={(value) =>
+                value >= 1000 ? `${(value / 1000).toFixed(0)}k` : `${value}`
+              }
+              width={30}
+            />
+            <LineChart.Line
+              dataKey="organic"
+              dot={false}
+              name="Organic"
+              stroke="var(--chart-3)"
+              strokeWidth={2}
+              type="monotone"
+            />
+            <LineChart.Line
+              dataKey="paidAds"
+              dot={false}
+              name="Paid"
+              stroke="var(--chart-1)"
+              strokeWidth={2}
+              type="monotone"
+            />
+            <LineChart.Tooltip content={<LineChart.TooltipContent />} />
           </LineChart>
         </Widget.Content>
       </Widget>
@@ -516,13 +556,17 @@ export const DashboardGrid: Story = {
             height={180}
           >
             <BarChart.Grid vertical={false} />
-            <BarChart.XAxis dataKey="month" />
+            <BarChart.XAxis dataKey="month" tickMargin={8} />
             <BarChart.YAxis width={30} />
             <BarChart.Bar
               barSize={20}
               dataKey="sales"
               fill="var(--accent)"
+              name="Sales"
               radius={[24, 24, 24, 24]}
+            />
+            <BarChart.Tooltip
+              content={<BarChart.TooltipContent valueFormatter={(value) => `${value} units`} />}
             />
           </BarChart>
         </Widget.Content>

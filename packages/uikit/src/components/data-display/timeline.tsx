@@ -155,18 +155,17 @@ export function TimelineItem({
     else contents.push(child);
   });
   const resolvedRail = rail as ReactElement<TimelineRailProps> | null;
-  const renderedRail = resolvedRail ? (
-    cloneElement(resolvedRail, {
-      children: (
-        <>
-          {resolvedRail.props.children}
-          {railParts}
-        </>
-      ),
-    })
-  ) : (
-    <TimelineRail>{railParts}</TimelineRail>
-  );
+  const renderedRail =
+    resolvedRail && railParts.length > 0
+      ? cloneElement(resolvedRail, {
+          children: (
+            <>
+              {resolvedRail.props.children}
+              {railParts}
+            </>
+          ),
+        })
+      : (resolvedRail ?? <TimelineRail>{railParts}</TimelineRail>);
 
   return (
     <ItemContext value={context}>

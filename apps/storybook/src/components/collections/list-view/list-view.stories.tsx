@@ -7,6 +7,7 @@ import type { Selection, SelectionMode } from "react-aria-components";
 import { Button } from "@/components/buttons/button";
 import { Chip } from "@/components/data-display/chip";
 import { Separator } from "@/components/layout/separator";
+import { Tooltip } from "@/components/overlays/tooltip";
 import { Icon } from "@/icon";
 
 import { ListView } from "./index";
@@ -145,21 +146,34 @@ function Actions({ count, clear }: { clear: () => void; count: number }) {
       </ActionBar.Content>
       <Separator />
       <ActionBar.Suffix>
-        <Button isIconOnly aria-label="Clear selection" size="sm" variant="ghost" onPress={clear}>
-          <Icon icon="lucide:x" />
-        </Button>
+        <Tooltip>
+          <Button isIconOnly aria-label="Clear selection" size="sm" variant="ghost" onPress={clear}>
+            <Icon icon="lucide:x" />
+          </Button>
+          <Tooltip.Content>Clear selection</Tooltip.Content>
+        </Tooltip>
       </ActionBar.Suffix>
     </ActionBar>
   );
 }
 function WithActionsDemo() {
+  const actionFiles = [
+    { icon: "folder", id: "1", name: "Design System", updated: "2 days ago" },
+    { icon: "folder", id: "2", name: "Photos", updated: "1 week ago" },
+    { icon: "file", id: "3", name: "README.md", updated: "3 hours ago" },
+    { icon: "file", id: "4", name: "package.json", updated: "Yesterday" },
+    { icon: "folder", id: "5", name: "src", updated: "Just now" },
+    { icon: "file", id: "6", name: ".gitignore", updated: "2 weeks ago" },
+    { icon: "file", id: "7", name: "tsconfig.json", updated: "3 days ago" },
+    { icon: "folder", id: "8", name: "node_modules", updated: "1 day ago" },
+  ];
   const [selected, setSelected] = useState<Selection>(new Set());
-  const count = selected === "all" ? files.length : selected.size;
+  const count = selected === "all" ? actionFiles.length : selected.size;
   return (
     <div className="w-full max-w-md">
       <ListView
         aria-label="Project files"
-        items={files}
+        items={actionFiles}
         selectedKeys={selected}
         selectionMode="multiple"
         onSelectionChange={setSelected}
@@ -171,12 +185,12 @@ function WithActionsDemo() {
   );
 }
 const disabledFiles = [
-  { ...files[0], locked: false },
-  { ...files[1], locked: false },
-  { ...files[2], locked: true },
-  { ...files[3], locked: false },
-  { ...files[4], locked: true },
-  { ...files[5], locked: false },
+  { icon: "folder", id: "1", name: "Documents" },
+  { icon: "file", id: "2", name: "Budget.xlsx" },
+  { icon: "file", id: "3", locked: true, name: "Archived.zip" },
+  { icon: "folder", id: "4", name: "Photos" },
+  { icon: "file", id: "5", locked: true, name: "Old backup.tar" },
+  { icon: "file", id: "6", name: "README.md" },
 ];
 function DisabledItemsDemo() {
   return (

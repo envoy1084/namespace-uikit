@@ -19,7 +19,7 @@ import {
 } from "react";
 
 import { cn } from "@heroui/react";
-import { Popover as RacPopover } from "react-aria-components";
+import { composeRenderProps, Popover as RacPopover } from "react-aria-components";
 
 type Placement = "left" | "right";
 type TriggerMode = "hover" | "press";
@@ -267,10 +267,10 @@ function FloatingTocContent({
   return (
     <RacPopover
       {...props}
-      className={
-        cn("floating-toc__content", typeof className === "string" ? className : undefined) ??
-        "floating-toc__content"
-      }
+      className={composeRenderProps(
+        className,
+        (resolvedClassName) => cn("floating-toc__content", resolvedClassName) ?? "",
+      )}
       data-slot="floating-toc-content"
       isNonModal
       isOpen={context.isOpen}

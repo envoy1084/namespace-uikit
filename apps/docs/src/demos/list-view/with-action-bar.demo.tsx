@@ -7,18 +7,21 @@ import { ActionBar } from "@thenamespace/uikit/action-bar";
 import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
 import { Separator } from "@thenamespace/uikit/separator";
+import { Tooltip } from "@thenamespace/uikit/tooltip";
 // @demo-title With Action Bar
 import type { Selection } from "react-aria-components";
 
 import { Icon } from "@/demos/icon";
 
 const files = [
-  { icon: "folder", id: "1", name: "Documents", updated: "2 days ago" },
+  { icon: "folder", id: "1", name: "Design System", updated: "2 days ago" },
   { icon: "folder", id: "2", name: "Photos", updated: "1 week ago" },
   { icon: "file", id: "3", name: "README.md", updated: "3 hours ago" },
   { icon: "file", id: "4", name: "package.json", updated: "Yesterday" },
   { icon: "folder", id: "5", name: "src", updated: "Just now" },
   { icon: "file", id: "6", name: ".gitignore", updated: "2 weeks ago" },
+  { icon: "file", id: "7", name: "tsconfig.json", updated: "3 days ago" },
+  { icon: "folder", id: "8", name: "node_modules", updated: "1 day ago" },
 ];
 
 function FileRows({ compact = false }: { compact?: boolean }) {
@@ -63,9 +66,12 @@ function Actions({ count, clear }: { clear: () => void; count: number }) {
       </ActionBar.Content>
       <Separator />
       <ActionBar.Suffix>
-        <Button isIconOnly aria-label="Clear selection" size="sm" variant="ghost" onPress={clear}>
-          <Icon icon="lucide:x" />
-        </Button>
+        <Tooltip>
+          <Button isIconOnly aria-label="Clear selection" size="sm" variant="ghost" onPress={clear}>
+            <Icon icon="lucide:x" />
+          </Button>
+          <Tooltip.Content>Clear selection</Tooltip.Content>
+        </Tooltip>
       </ActionBar.Suffix>
     </ActionBar>
   );

@@ -5,22 +5,13 @@ import { ListView } from "@thenamespace/uikit";
 
 import { Icon } from "@/demos/icon";
 
-const files = [
-  { icon: "folder", id: "1", name: "Documents", updated: "2 days ago" },
-  { icon: "folder", id: "2", name: "Photos", updated: "1 week ago" },
-  { icon: "file", id: "3", name: "README.md", updated: "3 hours ago" },
-  { icon: "file", id: "4", name: "package.json", updated: "Yesterday" },
-  { icon: "folder", id: "5", name: "src", updated: "Just now" },
-  { icon: "file", id: "6", name: ".gitignore", updated: "2 weeks ago" },
-];
-
 const disabledFiles = [
-  { ...files[0], locked: false },
-  { ...files[1], locked: false },
-  { ...files[2], locked: true },
-  { ...files[3], locked: false },
-  { ...files[4], locked: true },
-  { ...files[5], locked: false },
+  { icon: "folder", id: "1", name: "Documents" },
+  { icon: "file", id: "2", name: "Budget.xlsx" },
+  { icon: "file", id: "3", locked: true, name: "Archived.zip" },
+  { icon: "folder", id: "4", name: "Photos" },
+  { icon: "file", id: "5", locked: true, name: "Old backup.tar" },
+  { icon: "file", id: "6", name: "README.md" },
 ];
 
 function DisabledItemsDemo() {

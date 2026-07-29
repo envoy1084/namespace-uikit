@@ -25,6 +25,12 @@ const compact = [
   ["Payment authorized", "Mar 6, 10:21 AM", "default", ""],
   ["Invoice generated", "Mar 6, 10:20 AM", "muted", ""],
 ];
+const compactIcons = [
+  SecurityWarningIcon,
+  CreditCardIcon,
+  CheckmarkCircle02Icon,
+  ReceiptTextIcon,
+] as const;
 
 export const DemoCompactLogExample = () => (
   <div className="box-border w-full max-w-[520px] min-w-0 px-2 sm:px-0">
@@ -36,13 +42,7 @@ export const DemoCompactLogExample = () => (
           status={item[2] as TimelineStatus}
         >
           <Timeline.Marker>
-            <TimelineGlyph
-              icon={
-                [SecurityWarningIcon, CreditCardIcon, CheckmarkCircle02Icon, ReceiptTextIcon][
-                  index
-                ]!
-              }
-            />
+            <TimelineGlyph icon={compactIcons[index] ?? SecurityWarningIcon} />
           </Timeline.Marker>
           <Timeline.Content className="gap-1">
             <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:justify-between">

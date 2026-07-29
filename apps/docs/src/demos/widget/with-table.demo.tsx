@@ -24,10 +24,8 @@ const members = [
 export const DemoWithTableExample = () => (
   <Widget className="w-full max-w-[640px]">
     <Widget.Header>
-      <div>
-        <Widget.Title>Team Members</Widget.Title>
-        <Widget.Description className="block">4 members</Widget.Description>
-      </div>
+      <Widget.Title>Team Members</Widget.Title>
+      <Widget.Description>4 members</Widget.Description>
     </Widget.Header>
     <Widget.Content className="p-0">
       <Table variant="secondary">

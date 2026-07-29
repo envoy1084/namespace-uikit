@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Selection } from "react-aria-components";
@@ -6,8 +6,10 @@ import type { Selection } from "react-aria-components";
 import { Button } from "@/components/buttons/button";
 import { DataGrid, type DataGridColumn } from "@/components/collections/data-grid";
 import { ListView } from "@/components/collections/list-view";
+import { Avatar } from "@/components/data-display/avatar";
 import { Chip } from "@/components/data-display/chip";
 import { Separator } from "@/components/layout/separator";
+import { Tooltip } from "@/components/overlays/tooltip";
 import { Icon } from "@/icon";
 
 import { ActionBar } from "./index";
@@ -56,9 +58,12 @@ function Bar({ clear, count }: { clear: () => void; count: number }) {
       </ActionBar.Content>
       <Separator />
       <ActionBar.Suffix>
-        <Button isIconOnly aria-label="Clear selection" size="sm" variant="ghost" onPress={clear}>
-          <Icon icon="lucide:x" />
-        </Button>
+        <Tooltip>
+          <Button isIconOnly aria-label="Clear selection" size="sm" variant="ghost" onPress={clear}>
+            <Icon icon="lucide:x" />
+          </Button>
+          <Tooltip.Content>Clear selection</Tooltip.Content>
+        </Tooltip>
       </ActionBar.Suffix>
     </ActionBar>
   );
@@ -89,42 +94,182 @@ function DefaultDemo() {
   );
 }
 type Employee = {
+  avatar: string;
   department: string;
+  email: string;
   id: number;
+  joinDate: string;
   name: string;
-  status: string;
+  status: "Active" | "Inactive" | "Pending";
 };
 const employees: Employee[] = [
   {
-    department: "Engineering",
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=20",
+    department: "Product",
+    email: "elena.rodriguez@company.com",
     id: 1,
+    joinDate: "2024-01-28",
     name: "Elena Rodriguez",
     status: "Active",
   },
-  { department: "Design", id: 2, name: "Marcus Chen", status: "Active" },
-  { department: "Marketing", id: 3, name: "Priya Patel", status: "Pending" },
-  { department: "Sales", id: 4, name: "James O'Brien", status: "Inactive" },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=21",
+    department: "Design",
+    email: "marcus.chen@company.com",
+    id: 2,
+    joinDate: "2024-02-03",
+    name: "Marcus Chen",
+    status: "Pending",
+  },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=22",
+    department: "Product",
+    email: "priya.patel@company.com",
+    id: 3,
+    joinDate: "2024-03-04",
+    name: "Priya Patel",
+    status: "Active",
+  },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=23",
+    department: "Support",
+    email: "james.o.brien@company.com",
+    id: 4,
+    joinDate: "2024-04-14",
+    name: "James O'Brien",
+    status: "Active",
+  },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=24",
+    department: "Support",
+    email: "yuki.tanaka@company.com",
+    id: 5,
+    joinDate: "2024-05-08",
+    name: "Yuki Tanaka",
+    status: "Inactive",
+  },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=25",
+    department: "Sales",
+    email: "amara.okafor@company.com",
+    id: 6,
+    joinDate: "2024-06-27",
+    name: "Amara Okafor",
+    status: "Pending",
+  },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=26",
+    department: "Engineering",
+    email: "luca.bianchi@company.com",
+    id: 7,
+    joinDate: "2024-07-25",
+    name: "Luca Bianchi",
+    status: "Active",
+  },
+  {
+    avatar: "https://img.heroui.chat/image/avatar?w=200&h=200&u=27",
+    department: "Design",
+    email: "sofia.andersson@company.com",
+    id: 8,
+    joinDate: "2024-08-08",
+    name: "Sofia Andersson",
+    status: "Active",
+  },
 ];
+const statusColors = {
+  Active: "success",
+  Inactive: "danger",
+  Pending: "warning",
+} as const;
+const formatDate = (value: string) =>
+  new Date(value).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 const employeeColumns: DataGridColumn<Employee>[] = [
   {
     accessorKey: "name",
     allowsSorting: true,
+    cell: (employee) => (
+      <div className="flex items-center gap-3">
+        <Avatar size="sm">
+          <Avatar.Image alt={employee.name} src={employee.avatar} />
+          <Avatar.Fallback>
+            {employee.name
+              .split(" ")
+              .map((part) => part[0])
+              .join("")}
+          </Avatar.Fallback>
+        </Avatar>
+        <div className="flex flex-col">
+          <span className="text-sm font-medium">{employee.name}</span>
+          <span className="text-muted text-xs">{employee.email}</span>
+        </div>
+      </div>
+    ),
     header: "Employee",
     id: "name",
     isRowHeader: true,
+    minWidth: 240,
   },
-  { accessorKey: "department", header: "Department", id: "department" },
-  { accessorKey: "status", header: "Status", id: "status" },
+  {
+    accessorKey: "department",
+    allowsSorting: true,
+    header: "Department",
+    id: "department",
+  },
+  {
+    accessorKey: "status",
+    allowsSorting: true,
+    cell: (employee) => (
+      <Chip color={statusColors[employee.status]} size="sm" variant="soft">
+        <span aria-hidden className="size-1.5 rounded-full bg-current" />
+        <Chip.Label>{employee.status}</Chip.Label>
+      </Chip>
+    ),
+    header: "Status",
+    id: "status",
+  },
+  {
+    accessorKey: "joinDate",
+    allowsSorting: true,
+    cell: (employee) => (
+      <span className="text-muted text-sm tabular-nums">{formatDate(employee.joinDate)}</span>
+    ),
+    header: "Joined",
+    id: "joinDate",
+  },
 ];
 function WithDataGridDemo() {
   const [data, setData] = useState(employees);
   const [selected, setSelected] = useState<Selection>(new Set());
   const count = selected === "all" ? data.length : selected.size;
-  const remove = () => {
-    const keys = selected === "all" ? new Set(data.map((item) => item.id)) : selected;
-    setData((current) => current.filter((item) => !keys.has(item.id)));
+  const selectedKeys = useMemo(
+    () => (selected === "all" ? new Set(data.map((item) => item.id)) : selected),
+    [data, selected],
+  );
+  const remove = useCallback(() => {
+    setData((current) => current.filter((item) => !selectedKeys.has(item.id)));
     setSelected(new Set());
-  };
+  }, [selectedKeys]);
+  const exportSelected = useCallback(() => {
+    const csv = [
+      "Name,Email,Department,Status,Join Date",
+      ...data
+        .filter((item) => selectedKeys.has(item.id))
+        .map(
+          (item) => `${item.name},${item.email},${item.department},${item.status},${item.joinDate}`,
+        ),
+    ].join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "employees.csv";
+    anchor.click();
+    URL.revokeObjectURL(url);
+  }, [data, selectedKeys]);
   return (
     <div className="w-full max-w-4xl">
       <DataGrid
@@ -140,17 +285,23 @@ function WithDataGridDemo() {
       />
       <ActionBar aria-label="Bulk actions" isOpen={count > 0}>
         <ActionBar.Prefix>
-          <Chip size="sm">{count}</Chip>
+          <Chip className="shrink-0 tabular-nums" size="sm">
+            {count}
+          </Chip>
         </ActionBar.Prefix>
         <Separator />
         <ActionBar.Content>
-          <Button size="sm" variant="ghost">
+          <Button aria-label="Edit" size="sm" variant="ghost">
             <Icon icon="lucide:pencil" />
-            Edit
+            <span className="action-bar__label">Edit</span>
           </Button>
-          <Button size="sm" variant="ghost">
+          <Button aria-label="Export" size="sm" variant="ghost" onPress={exportSelected}>
             <Icon icon="lucide:download" />
-            Export
+            <span className="action-bar__label">Export</span>
+          </Button>
+          <Button aria-label="Archive" size="sm" variant="ghost">
+            <Icon icon="lucide:archive" />
+            <span className="action-bar__label">Archive</span>
           </Button>
           <Button
             aria-label="Delete"
@@ -160,20 +311,23 @@ function WithDataGridDemo() {
             onPress={remove}
           >
             <Icon icon="lucide:trash-2" />
-            Delete
+            <span className="action-bar__label">Delete</span>
           </Button>
         </ActionBar.Content>
         <Separator />
         <ActionBar.Suffix>
-          <Button
-            isIconOnly
-            aria-label="Clear selection"
-            size="sm"
-            variant="ghost"
-            onPress={() => setSelected(new Set())}
-          >
-            <Icon icon="lucide:x" />
-          </Button>
+          <Tooltip>
+            <Button
+              isIconOnly
+              aria-label="Clear selection"
+              size="sm"
+              variant="ghost"
+              onPress={() => setSelected(new Set())}
+            >
+              <Icon icon="lucide:x" />
+            </Button>
+            <Tooltip.Content>Clear selection</Tooltip.Content>
+          </Tooltip>
         </ActionBar.Suffix>
       </ActionBar>
     </div>

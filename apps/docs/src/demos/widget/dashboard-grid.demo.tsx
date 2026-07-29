@@ -59,15 +59,24 @@ export const DemoDashboardGridExample = () => (
       </Widget.Header>
       <Widget.Content>
         <AreaChart data={revenue} height={180}>
+          <defs>
+            <linearGradient id="dash-revenue" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="var(--chart-3)" stopOpacity={0.2} />
+              <stop offset="100%" stopColor="var(--chart-3)" stopOpacity={0.02} />
+            </linearGradient>
+          </defs>
           <AreaChart.Grid vertical={false} />
           <AreaChart.XAxis dataKey="month" tickMargin={8} />
-          <AreaChart.YAxis width={40} />
+          <AreaChart.YAxis tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} width={40} />
           <AreaChart.Area
             dataKey="revenue"
             dot={false}
-            fill="var(--chart-3)"
+            fill="url(#dash-revenue)"
             stroke="var(--chart-3)"
+            strokeWidth={2}
+            type="monotone"
           />
+          <AreaChart.Tooltip content={<AreaChart.TooltipContent />} />
         </AreaChart>
       </Widget.Content>
     </Widget>
@@ -82,10 +91,30 @@ export const DemoDashboardGridExample = () => (
       <Widget.Content>
         <LineChart data={traffic.slice(0, 6)} height={180}>
           <LineChart.Grid vertical={false} />
-          <LineChart.XAxis dataKey="month" />
-          <LineChart.YAxis width={30} />
-          <LineChart.Line dataKey="organic" dot={false} stroke="var(--chart-3)" />
-          <LineChart.Line dataKey="paidAds" dot={false} stroke="var(--chart-1)" />
+          <LineChart.XAxis dataKey="month" tickMargin={8} />
+          <LineChart.YAxis
+            tickFormatter={(value) =>
+              value >= 1000 ? `${(value / 1000).toFixed(0)}k` : `${value}`
+            }
+            width={30}
+          />
+          <LineChart.Line
+            dataKey="organic"
+            dot={false}
+            name="Organic"
+            stroke="var(--chart-3)"
+            strokeWidth={2}
+            type="monotone"
+          />
+          <LineChart.Line
+            dataKey="paidAds"
+            dot={false}
+            name="Paid"
+            stroke="var(--chart-1)"
+            strokeWidth={2}
+            type="monotone"
+          />
+          <LineChart.Tooltip content={<LineChart.TooltipContent />} />
         </LineChart>
       </Widget.Content>
     </Widget>
@@ -103,13 +132,17 @@ export const DemoDashboardGridExample = () => (
           height={180}
         >
           <BarChart.Grid vertical={false} />
-          <BarChart.XAxis dataKey="month" />
+          <BarChart.XAxis dataKey="month" tickMargin={8} />
           <BarChart.YAxis width={30} />
           <BarChart.Bar
             barSize={20}
             dataKey="sales"
             fill="var(--accent)"
+            name="Sales"
             radius={[24, 24, 24, 24]}
+          />
+          <BarChart.Tooltip
+            content={<BarChart.TooltipContent valueFormatter={(value) => `${value} units`} />}
           />
         </BarChart>
       </Widget.Content>

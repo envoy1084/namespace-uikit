@@ -3,15 +3,20 @@
 import { useEffect, useState } from "react";
 
 import { Carousel } from "@thenamespace/uikit";
+import { Card } from "@thenamespace/uikit/card";
 // @demo-title API Access
 import type { EmblaCarouselType } from "embla-carousel";
 
 const NumberSlides = ({ count = 5 }: { count?: number }) => (
   <>
-    {Array.from({ length: count }, (_, index) => (
-      <Carousel.Item key={index}>
-        <div className="bg-default flex aspect-square items-center justify-center rounded-xl text-4xl font-semibold">
-          {index + 1}
+    {Array.from({ length: count }, (_, index) => index + 1).map((number) => (
+      <Carousel.Item key={number}>
+        <div className="p-1">
+          <Card className="select-none">
+            <Card.Content className="flex aspect-square items-center justify-center">
+              <span className="text-4xl font-semibold tabular-nums">{number}</span>
+            </Card.Content>
+          </Card>
         </div>
       </Carousel.Item>
     ))}
@@ -35,15 +40,15 @@ function ApiExample() {
     };
   }, [api]);
   return (
-    <div>
-      <Carousel className="max-w-xs" setApi={setApi}>
+    <div className="flex w-full max-w-xs flex-col gap-2">
+      <Carousel setApi={setApi}>
         <Carousel.Content>
           <NumberSlides />
         </Carousel.Content>
         <Carousel.Previous />
         <Carousel.Next />
       </Carousel>
-      <p className="text-muted mt-3 text-center text-sm">
+      <p className="text-muted text-center text-sm tabular-nums">
         Slide {current} of {count}
       </p>
     </div>

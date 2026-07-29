@@ -7,6 +7,7 @@ import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
 import { ListView } from "@thenamespace/uikit/list-view";
 import { Separator } from "@thenamespace/uikit/separator";
+import { Tooltip } from "@thenamespace/uikit/tooltip";
 // @demo-title Default
 import type { Selection } from "react-aria-components";
 
@@ -49,9 +50,12 @@ function Bar({ clear, count }: { clear: () => void; count: number }) {
       </ActionBar.Content>
       <Separator />
       <ActionBar.Suffix>
-        <Button isIconOnly aria-label="Clear selection" size="sm" variant="ghost" onPress={clear}>
-          <Icon icon="lucide:x" />
-        </Button>
+        <Tooltip>
+          <Button isIconOnly aria-label="Clear selection" size="sm" variant="ghost" onPress={clear}>
+            <Icon icon="lucide:x" />
+          </Button>
+          <Tooltip.Content>Clear selection</Tooltip.Content>
+        </Tooltip>
       </ActionBar.Suffix>
     </ActionBar>
   );
