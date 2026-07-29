@@ -46,7 +46,7 @@ export function SiteNavbar({ className, mobileAction, position = "sticky" }: Sit
       navigate={router.push}
       position={position}
     >
-      <Navbar.Header>
+      <Navbar.Header className="relative">
         <Navbar.Brand>
           <LinkRoot
             aria-label="Namespace UIKit home"
@@ -57,7 +57,7 @@ export function SiteNavbar({ className, mobileAction, position = "sticky" }: Sit
           </LinkRoot>
         </Navbar.Brand>
 
-        <Navbar.Content className="hidden md:flex">
+        <Navbar.Content className="hidden xl:flex">
           {navigation.map((item) => (
             <Navbar.Item
               href={item.href}
@@ -71,8 +71,12 @@ export function SiteNavbar({ className, mobileAction, position = "sticky" }: Sit
 
         <Navbar.Spacer />
 
+        <LargeSearchToggle
+          hideIfDisabled
+          className="absolute left-1/2 hidden w-full max-w-sm -translate-x-1/2 rounded-xl ps-2.5 lg:inline-flex"
+        />
+
         <Navbar.Content>
-          <LargeSearchToggle hideIfDisabled className="hidden w-64 lg:inline-flex" />
           <SearchToggle hideIfDisabled className="lg:hidden" />
           <div className="hidden sm:block">
             <GitHubLink />

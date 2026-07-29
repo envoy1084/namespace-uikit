@@ -3,10 +3,11 @@
 /* oxlint-disable jsx-a11y/no-autofocus -- Opening the search dialog should focus its query input. */
 
 import type { ComponentProps } from "react";
+import { useMemo } from "react";
 
 import { useRouter } from "next/navigation";
 
-import { Button, Kbd } from "@thenamespace/uikit";
+import { Kbd } from "@thenamespace/uikit";
 import { useDocsSearch } from "fumadocs-core/search/client";
 import type { SearchItemType, SharedProps } from "fumadocs-ui/components/dialog/search";
 import {
@@ -18,32 +19,69 @@ import {
   SearchDialogOverlay,
   useSearch,
 } from "fumadocs-ui/components/dialog/search";
-import { Blocks, BookOpen, Palette, Rocket, X } from "lucide-react";
+import { ArrowRight, Book, BookOpen, PaintBucket, Palette, Rocket } from "lucide-react";
 
 export default function CustomSearchDialog(props: SharedProps) {
   const { query, search, setSearch } = useDocsSearch({ type: "fetch" });
   const router = useRouter();
   const { onOpenChange, ...rest } = props;
-  const suggestions: SearchItemType[] = [
-    ["Introduction", "/docs/getting-started", <BookOpen className="size-4" key="introduction" />],
-    [
-      "Quick Start",
-      "/docs/getting-started/quick-start",
-      <Rocket className="size-4" key="quick-start" />,
-    ],
-    ["All Components", "/docs/components", <Blocks className="size-4" key="components" />],
-    ["Theming", "/docs/getting-started/theming", <Palette className="size-4" key="theming" />],
-  ].map(([title, url, icon]) => ({
-    id: `suggestion-${url}`,
-    node: (
-      <div className="inline-flex items-center gap-2">
-        {icon}
-        <span>{title}</span>
-      </div>
-    ),
-    onSelect: () => router.push(url as string),
-    type: "action",
-  }));
+  const suggestions = useMemo<SearchItemType[]>(
+    () =>
+      [
+        [
+          "Introduction",
+          "/docs/getting-started",
+          <BookOpen className="size-4" key="introduction" />,
+        ],
+        [
+          "Quick Start",
+          "/docs/getting-started/quick-start",
+          <Rocket className="size-4" key="quick-start" />,
+        ],
+        [
+          "Design Principles",
+          "/docs/getting-started/design-principles",
+          <Book className="size-4" key="design-principles" />,
+        ],
+        ["Colors", "/docs/getting-started/colors", <PaintBucket className="size-4" key="colors" />],
+        ["Theming", "/docs/getting-started/theming", <Palette className="size-4" key="theming" />],
+      ].map(([title, url, icon]) => ({
+        id: `suggestion-${url}`,
+        node: (
+          <div className="inline-flex items-center gap-2">
+            {icon}
+            <span>{title}</span>
+          </div>
+        ),
+        onSelect: () => router.push(url as string),
+        type: "action" as const,
+      })),
+    [router],
+  );
+  const queryData = Array.isArray(query.data) ? query.data : [];
+  const normalizedSearch = search.trim().toLowerCase();
+  const matchingPage = queryData.find((item) => {
+    if (item.type !== "page") return false;
+
+    return stripSearchMarkup(item.content).toLowerCase().startsWith(normalizedSearch);
+  });
+  const matchingPageTitle = matchingPage ? stripSearchMarkup(matchingPage.content) : "";
+  const quickAction: SearchItemType | undefined =
+    normalizedSearch && matchingPage
+      ? {
+          id: "quick-action",
+          node: (
+            <div className="text-fd-muted-foreground inline-flex items-center gap-2">
+              <ArrowRight className="size-4" />
+              <p>
+                Jump to <span className="text-fd-foreground font-medium">{matchingPageTitle}</span>
+              </p>
+            </div>
+          ),
+          onSelect: () => router.push(matchingPage.url),
+          type: "action",
+        }
+      : undefined;
 
   return (
     <SearchDialog
@@ -58,14 +96,20 @@ export default function CustomSearchDialog(props: SharedProps) {
     >
       <SearchDialogOverlay />
       <SearchDialogContent className="bg-surface border-none">
-        <SearchDialogHeader className="border-separator flex items-center gap-2 border-b">
+        <SearchDialogHeader className="border-separator border-b">
           <SearchDialogIcon />
-          <SearchInput placeholder="Search Namespace UIKit documentation" />
-          <SearchClose />
+          <SearchInput placeholder="What are you searching for?" />
+          <SearchClose>ESC</SearchClose>
         </SearchDialogHeader>
         <SearchDialogList
           className="**:aria-selected:bg-default **:aria-selected:text-foreground"
-          items={search.length === 0 ? suggestions : query.data === "empty" ? null : query.data}
+          items={
+            search.length === 0
+              ? suggestions
+              : queryData.length > 0 || quickAction
+                ? [...(quickAction ? [quickAction] : []), ...queryData]
+                : null
+          }
         />
       </SearchDialogContent>
     </SearchDialog>
@@ -86,21 +130,20 @@ function SearchInput(props: ComponentProps<"input">) {
   );
 }
 
-function SearchClose() {
+function SearchClose({
+  children,
+  className,
+  ...props
+}: ComponentProps<"kbd"> & { children: string }) {
   const { onOpenChange } = useSearch();
 
   return (
-    <Button
-      aria-label="Close search"
-      className="h-8 shrink-0 gap-1.5 px-2"
-      size="sm"
-      variant="ghost"
-      onPress={() => onOpenChange(false)}
-    >
-      <X aria-hidden="true" className="size-4 sm:hidden" />
-      <Kbd className="pointer-events-none hidden sm:inline-flex">
-        <Kbd.Content>ESC</Kbd.Content>
-      </Kbd>
-    </Button>
+    <Kbd className={className} onClick={() => onOpenChange(false)} {...props}>
+      <Kbd.Content>{children}</Kbd.Content>
+    </Kbd>
   );
+}
+
+function stripSearchMarkup(value: string) {
+  return value.replaceAll("<mark>", "").replaceAll("</mark>", "");
 }
