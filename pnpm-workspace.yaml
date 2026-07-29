@@ -5,11 +5,11 @@ dedupePeerDependents: true
 resolvePeersFromWorkspaceRoot: true
 blockExoticSubdeps: true
 overrides:
-  "@adobe/react-spectrum": "3.47.1"
-  "@react-types/shared": "3.35.0"
-  react-aria: "3.49.0"
-  react-aria-components: "1.18.0"
-  react-stately: "3.47.0"
+  "@adobe/react-spectrum": "3.47.2"
+  "@react-types/shared": "3.36.0"
+  react-aria: "3.50.0"
+  react-aria-components: "1.19.0"
+  react-stately: "3.48.0"
   use-sync-external-store: "1.6.0"
 packages:
   - "apps/*"
@@ -25,17 +25,17 @@ allowBuilds:
   utf-8-validate: false
   vue-demi: false
 catalog:
-  "@heroui/react": "3.2.1"
-  "@heroui/styles": "3.2.1"
+  "@heroui/react": "3.2.2"
+  "@heroui/styles": "3.2.2"
   "@internationalized/date": "3.12.2"
-  "@react-stately/data": "3.15.1"
-  "@react-types/shared": "3.35.0"
+  "@react-stately/data": "3.16.1"
+  "@react-types/shared": "3.36.0"
   "oxfmt": "0.56.0"
   "oxlint": "1.71.0"
   "react": "19.2.8"
-  "react-aria-components": "1.18.0"
+  "react-aria-components": "1.19.0"
   "react-dom": "19.2.8"
-  "react-stately": "3.47.0"
+  "react-stately": "3.48.0"
   "tailwindcss": "4.3.2"
   "@tailwindcss/cli": "4.3.2"
   "@tailwindcss/vite": "4.3.2"

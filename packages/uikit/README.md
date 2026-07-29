@@ -6,8 +6,8 @@ Namespace UI Kit is the Namespace theme and package surface built on top of [Her
 
 - React and React DOM 19
 - Tailwind CSS 4
-- HeroUI 3.2.1
-- React Aria Components 1.18.0
+- HeroUI 3.2.2
+- React Aria Components 1.19.0
 
 ## Installation
 
