@@ -21,7 +21,6 @@ import {
 import { AppNavbar } from "./navbar";
 
 const ensConfig = createEnsConfig("testnet");
-const lightColorScheme = { colorScheme: "light" } as const;
 
 export function HomePage() {
   const [queryClient] = useState(() => new QueryClient());
@@ -31,11 +30,7 @@ export function HomePage() {
       <QueryClientProvider client={queryClient}>
         <EnsProvider config={ensConfig}>
           <RainbowKitProvider>
-            <div
-              className="min-h-screen overflow-hidden bg-[#f4f4f4] font-sans text-[#1f1f1f]"
-              data-theme="light"
-              style={lightColorScheme}
-            >
+            <div className="min-h-screen overflow-hidden bg-[#f4f4f4] font-sans text-[#1f1f1f]">
               <AppNavbar />
               <main id="content">
                 <HomeHero />

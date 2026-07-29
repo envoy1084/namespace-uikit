@@ -26,7 +26,7 @@ export function HomeHero() {
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <InstallCommand />
-            <Button onPress={openDocs} size="lg" variant="secondary">
+            <Button onPress={openDocs} size="lg" variant="primary">
               Docs
               <HugeiconsIcon aria-hidden icon={ArrowRight01Icon} size={17} />
             </Button>
