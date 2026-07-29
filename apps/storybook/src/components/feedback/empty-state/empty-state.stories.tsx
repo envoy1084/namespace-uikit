@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 import { Avatar } from "@/components/data-display/avatar";
+import { Badge } from "@/components/data-display/badge";
 import { Icon } from "@/icon";
 
 import { EmptyState } from "./index";
@@ -96,7 +97,18 @@ function WithAvatarDemo() {
       <EmptyState>
         <EmptyState.Header>
           <EmptyState.Media>
-            <UserAvatar alt="John Doe" src="/assets/avatars/blue.jpg" />
+            <Badge.Anchor>
+              <Avatar className="size-12">
+                <Avatar.Image alt="John Doe" src="/assets/avatars/blue.jpg" />
+                <Avatar.Fallback>JD</Avatar.Fallback>
+              </Avatar>
+              <Badge
+                className="right-1 bottom-0.5 size-3 min-h-3 min-w-3"
+                color="danger"
+                placement="bottom-right"
+                size="sm"
+              />
+            </Badge.Anchor>
           </EmptyState.Media>
           <EmptyState.Title>User Offline</EmptyState.Title>
           <EmptyState.Description>

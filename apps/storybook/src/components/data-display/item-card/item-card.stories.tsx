@@ -3,9 +3,13 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
+import { Dropdown } from "@thenamespace/uikit/dropdown";
 import { InlineSelect } from "@thenamespace/uikit/inline-select";
 import { ListBox } from "@thenamespace/uikit/list-box";
+import { PressableFeedback } from "@thenamespace/uikit/pressable-feedback";
+import { Separator } from "@thenamespace/uikit/separator";
 import { Switch } from "@thenamespace/uikit/switch";
+import { Tooltip } from "@thenamespace/uikit/tooltip";
 
 import { Icon } from "@/icon";
 
@@ -21,8 +25,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 const Glyph = ({ icon }: { icon: string }) => <Icon icon={icon} />;
 const Arrow = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
+const defaultCardAction = <Arrow />;
 function Card({
-  action = <Arrow />,
+  action = defaultCardAction,
   description,
   icon = "solar:global-linear",
   title,
@@ -169,9 +174,33 @@ export const EmailSetting: Story = {
           </ItemCard.Description>
         </ItemCard.Content>
         <ItemCard.Action>
-          <Button aria-label="Actions" isIconOnly size="sm" variant="outline">
-            <Glyph icon="solar:menu-dots-bold" />
-          </Button>
+          <Dropdown>
+            <Tooltip delay={0}>
+              <Tooltip.Trigger>
+                <Button aria-label="Actions" isIconOnly size="sm" variant="outline">
+                  <Glyph icon="solar:menu-dots-bold" />
+                </Button>
+              </Tooltip.Trigger>
+              <Tooltip.Content>Actions</Tooltip.Content>
+            </Tooltip>
+            <Dropdown.Popover className="min-w-[180px]" placement="bottom end">
+              <Dropdown.Menu>
+                <Dropdown.Item textValue="Change Email">
+                  <Glyph icon="solar:pen-linear" />
+                  <span>Change Email</span>
+                </Dropdown.Item>
+                <Dropdown.Item textValue="Set as Primary">
+                  <Glyph icon="solar:star-linear" />
+                  <span>Set as Primary</span>
+                </Dropdown.Item>
+                <Separator />
+                <Dropdown.Item textValue="Remove Email">
+                  <Glyph icon="solar:trash-bin-trash-linear" />
+                  <span className="text-danger">Remove Email</span>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown.Popover>
+          </Dropdown>
         </ItemCard.Action>
       </ItemCard>
     </div>
@@ -209,27 +238,38 @@ export const DeviceList: Story = {
 export const Pressable: Story = {
   render: () => (
     <div className="w-[500px] space-y-4 rounded-2xl p-6">
-      {[
-        ["Account settings", "Manage your account preferences", "solar:user-linear"],
-        ["Security", "Passwords and two-factor authentication", "solar:key-linear"],
-      ].map(([title, description, icon]) => (
-        <ItemCard
-          className="relative w-full cursor-pointer overflow-hidden"
-          key={title}
-          render={(props) => <button type="button" {...props} />}
-        >
-          <ItemCard.Icon>
-            <Glyph icon={icon} />
-          </ItemCard.Icon>
-          <ItemCard.Content>
-            <ItemCard.Title>{title}</ItemCard.Title>
-            <ItemCard.Description>{description}</ItemCard.Description>
-          </ItemCard.Content>
-          <ItemCard.Action>
-            <Arrow />
-          </ItemCard.Action>
-        </ItemCard>
-      ))}
+      <ItemCard
+        className="relative w-full cursor-pointer overflow-hidden"
+        render={(props) => <button type="button" {...props} />}
+      >
+        <PressableFeedback.Highlight />
+        <ItemCard.Icon>
+          <Glyph icon="solar:user-linear" />
+        </ItemCard.Icon>
+        <ItemCard.Content>
+          <ItemCard.Title>Account settings</ItemCard.Title>
+          <ItemCard.Description>Manage your account preferences</ItemCard.Description>
+        </ItemCard.Content>
+        <ItemCard.Action>
+          <Arrow />
+        </ItemCard.Action>
+      </ItemCard>
+      <ItemCard
+        className="relative w-full cursor-pointer overflow-hidden"
+        render={(props) => <button type="button" {...props} />}
+      >
+        <PressableFeedback.Ripple />
+        <ItemCard.Icon>
+          <Glyph icon="solar:key-linear" />
+        </ItemCard.Icon>
+        <ItemCard.Content className="w-full flex-1">
+          <ItemCard.Title>Security</ItemCard.Title>
+          <ItemCard.Description>Passwords and two-factor authentication</ItemCard.Description>
+        </ItemCard.Content>
+        <ItemCard.Action>
+          <Arrow />
+        </ItemCard.Action>
+      </ItemCard>
     </div>
   ),
 };
@@ -254,6 +294,7 @@ function SelectCard({ multiple = false }: { multiple?: boolean }) {
           <InlineSelect
             aria-label={multiple ? "Event Invites channels" : "Language"}
             selectionMode={multiple ? "multiple" : "single"}
+            style={multiple ? { "--inline-select-value-max-width": "8rem" } : undefined}
             value={value}
             onChange={setValue}
           >

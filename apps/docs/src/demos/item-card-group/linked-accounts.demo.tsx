@@ -13,15 +13,18 @@ type Item = {
   action?: React.ReactNode;
   description?: string;
   icon: string;
+  iconClassName?: string;
   title: string;
 };
 
 const Chevron = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
+const defaultRowAction = <Chevron />;
 
 function Row({
-  action = <Chevron />,
+  action = defaultRowAction,
   description,
   icon,
+  iconClassName,
   pressable = false,
   title,
 }: Item & { pressable?: boolean }) {
@@ -40,7 +43,7 @@ function Row({
           }
         : {})}
     >
-      <ItemCard.Icon>
+      <ItemCard.Icon className={iconClassName}>
         <Icon icon={icon} />
       </ItemCard.Icon>
       <ItemCard.Content>
@@ -110,6 +113,7 @@ export const DemoLinkedAccountsExample = () => (
         }
         description={account.description}
         icon={account.icon}
+        iconClassName="bg-default text-foreground"
         key={account.name}
         title={account.name}
       />

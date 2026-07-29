@@ -13,9 +13,10 @@ import { Icon } from "@/demos/icon";
 const Glyph = ({ icon }: { icon: string }) => <Icon icon={icon} />;
 
 const Arrow = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
+const defaultCardAction = <Arrow />;
 
 function Card({
-  action = <Arrow />,
+  action = defaultCardAction,
   description,
   icon = "solar:global-linear",
   title,
@@ -62,6 +63,7 @@ function SelectCard({ multiple = false }: { multiple?: boolean }) {
           <InlineSelect
             aria-label={multiple ? "Event Invites channels" : "Language"}
             selectionMode={multiple ? "multiple" : "single"}
+            style={{ "--inline-select-value-max-width": "8rem" }}
             value={value}
             onChange={setValue}
           >

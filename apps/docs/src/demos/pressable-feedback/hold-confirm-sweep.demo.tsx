@@ -7,6 +7,7 @@ import { Button } from "@thenamespace/uikit/button";
 import { Icon } from "@/demos/icon";
 
 const Trash = () => <Icon icon="solar:trash-bin-trash-linear" />;
+const Gear = () => <Icon icon="solar:settings-linear" />;
 
 export const DemoHoldConfirmSweepExample = () => (
   <div className="flex flex-col gap-6">
@@ -22,6 +23,16 @@ export const DemoHoldConfirmSweepExample = () => (
           </PressableFeedback.HoldConfirm>
           <Trash />
           Sweep {sweep[0].toUpperCase() + sweep.slice(1)}
+        </Button>
+      ))}
+    </div>
+    <div className="flex gap-3">
+      {(["up", "down", "left"] as const).map((sweep) => (
+        <Button isIconOnly key={sweep} variant="secondary">
+          <PressableFeedback.HoldConfirm className="bg-accent text-accent-foreground" sweep={sweep}>
+            <Gear />
+          </PressableFeedback.HoldConfirm>
+          <Gear />
         </Button>
       ))}
     </div>

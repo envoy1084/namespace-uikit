@@ -5,6 +5,8 @@ import { ArrowRight01Icon, UserIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
+import { Avatar } from "@/components/data-display/avatar";
+import { ItemCard } from "@/components/data-display/item-card";
 import { Card } from "@/components/layout/card";
 import { Icon } from "@/icon";
 
@@ -164,7 +166,7 @@ export const PressableCards: Story = {
           image: "demo1.jpg",
           color: "text-rose-200",
           author: "John",
-          authorAvatar: "/assets/avatars/blue.jpg",
+          authorAvatar: "/assets/avatars/red.jpg",
         },
         {
           name: "AI Builders",
@@ -172,28 +174,26 @@ export const PressableCards: Story = {
           image: "demo2.jpg",
           color: "text-sky-300",
           author: "Martha",
-          authorAvatar: "/assets/avatars/pink.jpg",
+          authorAvatar: "/assets/avatars/blue.jpg",
         },
       ].map((item) => (
         <Card className="col-span-6 cursor-pointer gap-2 overflow-hidden" key={item.name}>
           <PressableFeedback.Ripple className={item.color} />
           <Card.Header>
-            <img
-              alt={item.name}
-              className="size-14 rounded-xl object-cover"
-              src={`/assets/docs/${item.image}`}
-            />
+            <Avatar className="size-14 rounded-xl">
+              <Avatar.Image alt={item.name} src={`/assets/docs/${item.image}`} />
+              <Avatar.Fallback>{item.name === "Indie Hackers" ? "IH" : "AB"}</Avatar.Fallback>
+            </Avatar>
           </Card.Header>
           <Card.Content className="mt-1">
             <p className="text-sm leading-4 font-medium">{item.name}</p>
             <p className="text-muted text-xs">{item.members} members</p>
           </Card.Content>
-          <Card.Footer className="flex items-center gap-1.5">
-            <img
-              alt={item.author}
-              className="size-5 rounded-full object-cover"
-              src={item.authorAvatar}
-            />
+          <Card.Footer className="flex items-center gap-2">
+            <Avatar className="size-4">
+              <Avatar.Image alt={item.author} src={item.authorAvatar} />
+              <Avatar.Fallback>{item.author[0]}</Avatar.Fallback>
+            </Avatar>
             <p className="text-muted text-xs">By {item.author}</p>
           </Card.Footer>
         </Card>
@@ -278,9 +278,25 @@ export const WithHoldConfirm: Story = {
         </Button>
         <Button variant="tertiary">
           <PressableFeedback.HoldConfirm className="bg-accent text-accent-foreground">
+            <Icon icon="solar:add-circle-linear" />
             Added!
           </PressableFeedback.HoldConfirm>
+          <Icon icon="solar:add-circle-linear" />
           Hold to Add
+        </Button>
+      </div>
+      <div className="flex gap-3">
+        <Button isIconOnly variant="danger-soft">
+          <PressableFeedback.HoldConfirm className="bg-danger text-danger-foreground" sweep="up">
+            <Trash />
+          </PressableFeedback.HoldConfirm>
+          <Trash />
+        </Button>
+        <Button isIconOnly variant="secondary">
+          <PressableFeedback.HoldConfirm className="bg-accent text-accent-foreground">
+            <Gear />
+          </PressableFeedback.HoldConfirm>
+          <Gear />
         </Button>
       </div>
     </div>
@@ -318,6 +334,19 @@ export const HoldConfirmSweep: Story = {
             </PressableFeedback.HoldConfirm>
             <Trash />
             Sweep {sweep[0].toUpperCase() + sweep.slice(1)}
+          </Button>
+        ))}
+      </div>
+      <div className="flex gap-3">
+        {(["up", "down", "left"] as const).map((sweep) => (
+          <Button isIconOnly key={sweep} variant="secondary">
+            <PressableFeedback.HoldConfirm
+              className="bg-accent text-accent-foreground"
+              sweep={sweep}
+            >
+              <Gear />
+            </PressableFeedback.HoldConfirm>
+            <Gear />
           </Button>
         ))}
       </div>
@@ -371,9 +400,28 @@ export const WithProgressFeedback: Story = {
         </Button>
         <Button variant="tertiary">
           <PressableFeedback.ProgressFeedback className="bg-accent text-accent-foreground">
+            <Icon icon="solar:add-circle-linear" />
             Added!
           </PressableFeedback.ProgressFeedback>
+          <Icon icon="solar:add-circle-linear" />
           Add Item
+        </Button>
+      </div>
+      <div className="flex gap-3">
+        <Button isIconOnly variant="danger-soft">
+          <PressableFeedback.ProgressFeedback
+            className="bg-danger text-danger-foreground"
+            sweep="up"
+          >
+            <Trash />
+          </PressableFeedback.ProgressFeedback>
+          <Trash />
+        </Button>
+        <Button isIconOnly variant="secondary">
+          <PressableFeedback.ProgressFeedback className="bg-accent text-accent-foreground">
+            <Gear />
+          </PressableFeedback.ProgressFeedback>
+          <Gear />
         </Button>
       </div>
     </div>
@@ -421,6 +469,19 @@ export const ProgressFeedbackSweep: Story = {
               Sweep {sweep[0].toUpperCase() + sweep.slice(1)}
             </PressableFeedback.ProgressFeedback>
             Sweep {sweep[0].toUpperCase() + sweep.slice(1)}
+          </Button>
+        ))}
+      </div>
+      <div className="flex gap-3">
+        {(["up", "down", "left"] as const).map((sweep) => (
+          <Button isIconOnly key={sweep} variant="secondary">
+            <PressableFeedback.ProgressFeedback
+              className="bg-accent text-accent-foreground"
+              sweep={sweep}
+            >
+              <Gear />
+            </PressableFeedback.ProgressFeedback>
+            <Gear />
           </Button>
         ))}
       </div>
@@ -494,12 +555,28 @@ export const Comparison: Story = {
                 {label === "Ripple" && <PressableFeedback.Ripple />}
                 {label === "Highlight" && <PressableFeedback.Highlight />}
                 {label === "Hold Confirm" && (
-                  <PressableFeedback.HoldConfirm className="bg-accent text-accent-foreground">
+                  <PressableFeedback.HoldConfirm
+                    className={
+                      variant === "primary"
+                        ? "bg-accent text-accent-foreground"
+                        : variant === "secondary"
+                          ? "bg-accent-soft text-accent-soft-foreground"
+                          : "bg-danger text-danger-foreground"
+                    }
+                  >
                     {variant}
                   </PressableFeedback.HoldConfirm>
                 )}
                 {label === "Progress Feedback" && (
-                  <PressableFeedback.ProgressFeedback className="bg-accent text-accent-foreground">
+                  <PressableFeedback.ProgressFeedback
+                    className={
+                      variant === "primary"
+                        ? "bg-accent text-accent-foreground"
+                        : variant === "secondary"
+                          ? "bg-accent-soft text-accent-soft-foreground"
+                          : "bg-danger text-danger-foreground"
+                    }
+                  >
                     {variant}
                   </PressableFeedback.ProgressFeedback>
                 )}
@@ -583,27 +660,27 @@ export const Disabled: Story = {
 function StandaloneRow({ mode }: { mode: "highlight" | "ripple" }) {
   return (
     <div className="w-[500px]">
-      <button
-        className="border-separator bg-surface relative flex w-full cursor-pointer items-center gap-4 overflow-hidden rounded-2xl border p-4 text-left"
-        type="button"
+      <ItemCard
+        className="relative w-full cursor-pointer overflow-hidden"
+        render={(props) => <button type="button" {...props} />}
       >
         {mode === "ripple" ? <PressableFeedback.Ripple /> : <PressableFeedback.Highlight />}
-        <span className="bg-default flex size-10 items-center justify-center rounded-xl">
+        <ItemCard.Icon>
           <HugeiconsIcon aria-hidden icon={UserIcon} size={16} strokeWidth={2} />
-        </span>
-        <span className="flex flex-1 flex-col">
-          <strong>Profile</strong>
-          <span className="text-muted text-sm">Update your personal information</span>
-        </span>
-        <span>
+        </ItemCard.Icon>
+        <ItemCard.Content>
+          <ItemCard.Title>Profile</ItemCard.Title>
+          <ItemCard.Description>Update your personal information</ItemCard.Description>
+        </ItemCard.Content>
+        <ItemCard.Action>
           <HugeiconsIcon
             aria-hidden
             className="text-muted size-4"
             icon={ArrowRight01Icon}
             strokeWidth={2}
           />
-        </span>
-      </button>
+        </ItemCard.Action>
+      </ItemCard>
     </div>
   );
 }

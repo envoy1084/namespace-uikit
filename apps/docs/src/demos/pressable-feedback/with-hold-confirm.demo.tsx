@@ -32,9 +32,25 @@ export const DemoWithHoldConfirmExample = () => (
       </Button>
       <Button variant="tertiary">
         <PressableFeedback.HoldConfirm className="bg-accent text-accent-foreground">
+          <Icon icon="solar:add-circle-linear" />
           Added!
         </PressableFeedback.HoldConfirm>
+        <Icon icon="solar:add-circle-linear" />
         Hold to Add
+      </Button>
+    </div>
+    <div className="flex gap-3">
+      <Button isIconOnly variant="danger-soft">
+        <PressableFeedback.HoldConfirm className="bg-danger text-danger-foreground" sweep="up">
+          <Trash />
+        </PressableFeedback.HoldConfirm>
+        <Trash />
+      </Button>
+      <Button isIconOnly variant="secondary">
+        <PressableFeedback.HoldConfirm className="bg-accent text-accent-foreground">
+          <Gear />
+        </PressableFeedback.HoldConfirm>
+        <Gear />
       </Button>
     </div>
   </div>

@@ -3,6 +3,7 @@
 
 // @demo-title Pressable
 import { ItemCard } from "@thenamespace/uikit";
+import { PressableFeedback } from "@thenamespace/uikit/pressable-feedback";
 
 import { Icon } from "@/demos/icon";
 
@@ -12,26 +13,37 @@ const Arrow = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-ri
 
 export const DemoPressableExample = () => (
   <div className="w-[500px] space-y-4 rounded-2xl p-6">
-    {[
-      ["Account settings", "Manage your account preferences", "solar:user-linear"],
-      ["Security", "Passwords and two-factor authentication", "solar:key-linear"],
-    ].map(([title, description, icon]) => (
-      <ItemCard
-        className="relative w-full cursor-pointer overflow-hidden"
-        key={title}
-        render={(props) => <button type="button" {...props} />}
-      >
-        <ItemCard.Icon>
-          <Glyph icon={icon} />
-        </ItemCard.Icon>
-        <ItemCard.Content>
-          <ItemCard.Title>{title}</ItemCard.Title>
-          <ItemCard.Description>{description}</ItemCard.Description>
-        </ItemCard.Content>
-        <ItemCard.Action>
-          <Arrow />
-        </ItemCard.Action>
-      </ItemCard>
-    ))}
+    <ItemCard
+      className="relative w-full cursor-pointer overflow-hidden"
+      render={(props) => <button type="button" {...props} />}
+    >
+      <PressableFeedback.Highlight />
+      <ItemCard.Icon>
+        <Glyph icon="solar:user-linear" />
+      </ItemCard.Icon>
+      <ItemCard.Content>
+        <ItemCard.Title>Account settings</ItemCard.Title>
+        <ItemCard.Description>Manage your account preferences</ItemCard.Description>
+      </ItemCard.Content>
+      <ItemCard.Action>
+        <Arrow />
+      </ItemCard.Action>
+    </ItemCard>
+    <ItemCard
+      className="relative w-full cursor-pointer overflow-hidden"
+      render={(props) => <button type="button" {...props} />}
+    >
+      <PressableFeedback.Ripple />
+      <ItemCard.Icon>
+        <Glyph icon="solar:key-linear" />
+      </ItemCard.Icon>
+      <ItemCard.Content className="w-full flex-1">
+        <ItemCard.Title>Security</ItemCard.Title>
+        <ItemCard.Description>Passwords and two-factor authentication</ItemCard.Description>
+      </ItemCard.Content>
+      <ItemCard.Action>
+        <Arrow />
+      </ItemCard.Action>
+    </ItemCard>
   </div>
 );

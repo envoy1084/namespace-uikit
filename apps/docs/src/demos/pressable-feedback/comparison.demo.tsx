@@ -15,12 +15,28 @@ export const DemoComparisonExample = () => (
               {label === "Ripple" && <PressableFeedback.Ripple />}
               {label === "Highlight" && <PressableFeedback.Highlight />}
               {label === "Hold Confirm" && (
-                <PressableFeedback.HoldConfirm className="bg-accent text-accent-foreground">
+                <PressableFeedback.HoldConfirm
+                  className={
+                    variant === "primary"
+                      ? "bg-accent text-accent-foreground"
+                      : variant === "secondary"
+                        ? "bg-accent-soft text-accent-soft-foreground"
+                        : "bg-danger text-danger-foreground"
+                  }
+                >
                   {variant}
                 </PressableFeedback.HoldConfirm>
               )}
               {label === "Progress Feedback" && (
-                <PressableFeedback.ProgressFeedback className="bg-accent text-accent-foreground">
+                <PressableFeedback.ProgressFeedback
+                  className={
+                    variant === "primary"
+                      ? "bg-accent text-accent-foreground"
+                      : variant === "secondary"
+                        ? "bg-accent-soft text-accent-soft-foreground"
+                        : "bg-danger text-danger-foreground"
+                  }
+                >
                   {variant}
                 </PressableFeedback.ProgressFeedback>
               )}

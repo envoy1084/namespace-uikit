@@ -1,19 +1,9 @@
 "use client";
 
-import type { CSSProperties, ReactElement, ReactNode } from "react";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import type { ComponentPropsWithRef, CSSProperties, ReactElement, ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 
-import { cn } from "@heroui/react";
-import type { ButtonProps } from "react-aria-components";
-import { Button as AriaButton } from "react-aria-components";
+import { cn, dom, type DOMRenderProps } from "@heroui/react";
 
 type Sweep = "down" | "left" | "right" | "up";
 
@@ -282,13 +272,19 @@ function Ripple({
   minimumPressDuration = 225,
   pressedOpacity,
   style,
+  touchDelay = 150,
 }: RippleProps): ReactElement {
   const rootRef = useRef<HTMLDivElement>(null);
   const surfaceRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
   const [pressed, setPressed] = useState(false);
+  const initialSize = useRef("");
+  const scale = useRef("");
+  const initialSizeValue = useRef(0);
   const animation = useRef<Animation>(null);
-  const startedAt = useRef(0);
+  const touchState = useRef<0 | 1 | 2 | 3>(0);
+  const pointerEvent = useRef<PointerEvent | undefined>(undefined);
+  const ignoreEmulatedMouseEvents = useRef(false);
 
   useEffect(() => {
     const surface = surfaceRef.current;
@@ -304,30 +300,88 @@ function Ripple({
       surface.style.setProperty("--pressable-feedback-ripple-duration", `${duration}ms`);
   }, [duration, hoverOpacity, pressedOpacity]);
 
+  const isTouch = useCallback((event: PointerEvent) => event.pointerType === "touch", []);
+  const nested = useCallback(
+    (event: PointerEvent | MouseEvent) =>
+      isNestedInteractive(rootRef.current?.parentElement ?? null, event.target),
+    [],
+  );
+  const valid = useCallback(
+    (event: PointerEvent) => {
+      if (
+        isDisabled ||
+        (rootRef.current?.parentElement as HTMLButtonElement | null)?.disabled ||
+        !event.isPrimary ||
+        (pointerEvent.current && pointerEvent.current.pointerId !== event.pointerId)
+      )
+        return false;
+      if (event.type === "pointerenter" || event.type === "pointerleave") return !isTouch(event);
+      if (nested(event)) return false;
+      return isTouch(event) || event.buttons === 1;
+    },
+    [isDisabled, isTouch, nested],
+  );
+  const isInside = useCallback((event: PointerEvent) => {
+    const root = rootRef.current;
+    if (!root) return false;
+    const rect = root.getBoundingClientRect();
+    return (
+      event.x >= rect.left && event.x <= rect.right && event.y >= rect.top && event.y <= rect.bottom
+    );
+  }, []);
+  const measure = useCallback(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const { height, width } = root.getBoundingClientRect();
+    const size = Math.max(height, width);
+    const extra = Math.max(0.35 * size, 75);
+    const initial = Math.floor(size * 0.2);
+    const final = Math.sqrt(width ** 2 + height ** 2) + 12;
+    initialSizeValue.current = initial;
+    initialSize.current = `${initial}px`;
+    scale.current = String((final + extra) / initial);
+  }, []);
+  const eventPoint = useCallback((event: MouseEvent | PointerEvent) => {
+    const root = rootRef.current;
+    if (!root) return { x: 0, y: 0 };
+    const rect = root.getBoundingClientRect();
+    return {
+      x: event.pageX - (window.scrollX + rect.left),
+      y: event.pageY - (window.scrollY + rect.top),
+    };
+  }, []);
+  const points = useCallback(
+    (event?: MouseEvent | PointerEvent) => {
+      const parent = rootRef.current?.parentElement;
+      if (!parent) return { endPoint: { x: 0, y: 0 }, startPoint: { x: 0, y: 0 } };
+      const rect = parent.getBoundingClientRect();
+      const center = {
+        x: (rect.width - initialSizeValue.current) / 2,
+        y: (rect.height - initialSizeValue.current) / 2,
+      };
+      return {
+        endPoint: center,
+        startPoint: event ? eventPoint(event) : center,
+      };
+    },
+    [eventPoint],
+  );
   const start = useCallback(
-    (event?: PointerEvent) => {
-      const root = rootRef.current;
+    (event?: MouseEvent | PointerEvent) => {
       const surface = surfaceRef.current;
-      if (!root || !surface) return;
-      const rect = root.getBoundingClientRect();
-      const size = Math.max(rect.height, rect.width);
-      const initial = Math.floor(size * 0.2);
-      const final = Math.sqrt(rect.width ** 2 + rect.height ** 2) + 12;
-      const startX = event ? event.pageX - window.scrollX - rect.left : rect.width / 2;
-      const startY = event ? event.pageY - window.scrollY - rect.top : rect.height / 2;
-      const endX = (rect.width - initial) / 2;
-      const endY = (rect.height - initial) / 2;
+      if (!surface) return;
       setPressed(true);
-      startedAt.current = performance.now();
       animation.current?.cancel();
+      measure();
+      const { endPoint, startPoint } = points(event);
       animation.current = surface.animate(
         {
-          height: [`${initial}px`, `${initial}px`],
+          height: [initialSize.current, initialSize.current],
           transform: [
-            `translate(${startX}px,${startY}px) scale(1)`,
-            `translate(${endX}px,${endY}px) scale(${(final + Math.max(0.35 * size, 75)) / initial})`,
+            `translate(${startPoint.x}px,${startPoint.y}px) scale(1)`,
+            `translate(${endPoint.x}px,${endPoint.y}px) scale(${scale.current})`,
           ],
-          width: [`${initial}px`, `${initial}px`],
+          width: [initialSize.current, initialSize.current],
         },
         {
           duration,
@@ -337,57 +391,140 @@ function Ripple({
         },
       );
     },
-    [duration, easing],
+    [duration, easing, measure, points],
   );
   const end = useCallback(() => {
-    const elapsed = performance.now() - startedAt.current;
-    if (elapsed >= minimumPressDuration) setPressed(false);
-    else setTimeout(() => setPressed(false), minimumPressDuration - elapsed);
+    pointerEvent.current = undefined;
+    touchState.current = 0;
+    const currentAnimation = animation.current;
+    const currentTime = currentAnimation?.currentTime;
+    let elapsed = Number.POSITIVE_INFINITY;
+    if (typeof currentTime === "number") elapsed = currentTime;
+    else if (
+      currentTime &&
+      typeof currentTime === "object" &&
+      "to" in currentTime &&
+      typeof currentTime.to === "function"
+    )
+      elapsed = currentTime.to("ms").value;
+    if (elapsed >= minimumPressDuration) {
+      setPressed(false);
+      return;
+    }
+    if (elapsed < minimumPressDuration)
+      setTimeout(() => {
+        if (animation.current === currentAnimation) setPressed(false);
+      }, minimumPressDuration - elapsed);
   }, [minimumPressDuration]);
 
+  const pointerEnter = useCallback(
+    (event: PointerEvent) => {
+      if (valid(event)) setHovered(true);
+    },
+    [valid],
+  );
+  const pointerLeave = useCallback(
+    (event: PointerEvent) => {
+      if (!valid(event)) return;
+      setHovered(false);
+      if (touchState.current !== 0) end();
+    },
+    [end, valid],
+  );
+  const pointerUp = useCallback(
+    (event: PointerEvent) => {
+      if (!valid(event)) return;
+      if (touchState.current === 2) {
+        touchState.current = 3;
+        return;
+      }
+      if (touchState.current === 1) {
+        touchState.current = 3;
+        start(pointerEvent.current);
+      }
+    },
+    [start, valid],
+  );
+  const pointerDown = useCallback(
+    (event: PointerEvent) => {
+      if (!valid(event)) return;
+      pointerEvent.current = event;
+      if (!isTouch(event)) {
+        touchState.current = 3;
+        start(event);
+        return;
+      }
+      if (ignoreEmulatedMouseEvents.current && !isInside(event)) return;
+      ignoreEmulatedMouseEvents.current = false;
+      touchState.current = 1;
+      setTimeout(() => {
+        if (touchState.current === 1) {
+          touchState.current = 2;
+          start(event);
+        }
+      }, touchDelay);
+    },
+    [isInside, isTouch, start, touchDelay, valid],
+  );
+  const click = useCallback(
+    (event: MouseEvent) => {
+      if (isDisabled || nested(event)) return;
+      if (touchState.current === 3) {
+        end();
+        return;
+      }
+      if (touchState.current === 0) {
+        start(event);
+        end();
+      }
+    },
+    [end, isDisabled, nested, start],
+  );
+  const pointerCancel = useCallback(
+    (event: PointerEvent) => {
+      if (valid(event)) end();
+    },
+    [end, valid],
+  );
+  const contextMenu = useCallback(() => {
+    if (!isDisabled) {
+      ignoreEmulatedMouseEvents.current = true;
+      end();
+    }
+  }, [end, isDisabled]);
   useEffect(() => {
     const parent = rootRef.current?.parentElement;
     if (!parent) return;
-    const valid = (event: PointerEvent) =>
-      !isDisabled &&
-      event.isPrimary &&
-      !hasDisabledParent(rootRef.current) &&
-      !isNestedInteractive(parent, event.target);
-    const pointerEnter = (event: PointerEvent) =>
-      valid(event) && event.pointerType !== "touch" && setHovered(true);
-    const pointerLeave = (event: PointerEvent) => {
-      if (valid(event)) {
-        setHovered(false);
-        end();
-      }
-    };
-    const pointerDown = (event: PointerEvent) => {
-      if (valid(event)) start(event);
-    };
-    const pointerEnd = (event: PointerEvent) => {
-      if (valid(event)) end();
-    };
-    const click = (event: MouseEvent) => {
-      if (!isDisabled && !isNestedInteractive(parent, event.target) && !pressed) {
-        start();
-        end();
-      }
-    };
+    parent.addEventListener("click", click, true);
+    parent.addEventListener("contextmenu", contextMenu, true);
+    parent.addEventListener("pointercancel", pointerCancel, true);
+    parent.addEventListener("pointerdown", pointerDown, true);
     parent.addEventListener("pointerenter", pointerEnter, true);
     parent.addEventListener("pointerleave", pointerLeave, true);
-    parent.addEventListener("pointerdown", pointerDown, true);
-    parent.addEventListener("pointerup", pointerEnd, true);
-    parent.addEventListener("pointercancel", pointerEnd, true);
-    parent.addEventListener("click", click, true);
+    parent.addEventListener("pointerup", pointerUp, true);
     return () => {
+      parent.removeEventListener("click", click, true);
+      parent.removeEventListener("contextmenu", contextMenu, true);
+      parent.removeEventListener("pointercancel", pointerCancel, true);
+      parent.removeEventListener("pointerdown", pointerDown, true);
       parent.removeEventListener("pointerenter", pointerEnter, true);
       parent.removeEventListener("pointerleave", pointerLeave, true);
-      parent.removeEventListener("pointerdown", pointerDown, true);
-      parent.removeEventListener("pointerup", pointerEnd, true);
-      parent.removeEventListener("pointercancel", pointerEnd, true);
-      parent.removeEventListener("click", click, true);
+      parent.removeEventListener("pointerup", pointerUp, true);
     };
-  }, [end, isDisabled, pressed, start]);
+  }, [
+    click,
+    contextMenu,
+    duration,
+    easing,
+    isDisabled,
+    minimumPressDuration,
+    pointerCancel,
+    pointerDown,
+    pointerEnter,
+    pointerLeave,
+    pointerUp,
+    touchDelay,
+  ]);
 
   return (
     <div
@@ -395,7 +532,6 @@ function Ripple({
       aria-disabled={isDisabled || undefined}
       aria-hidden="true"
       className={cn("pressable-feedback__ripple", className)}
-      data-slot="pressable-feedback-ripple"
       style={style}
     >
       <div
@@ -410,12 +546,13 @@ function Ripple({
   );
 }
 
-const PressableFeedbackContext = createContext({
-  highlightClassName: "pressable-feedback__highlight",
-});
+const PressableFeedbackContext = createContext(true);
 
-export interface PressableFeedbackRootProps extends Omit<ButtonProps, "children"> {
+export interface PressableFeedbackRootProps
+  extends Omit<ComponentPropsWithRef<"button">, "className">, DOMRenderProps<"button", undefined> {
   children: ReactNode;
+  className?: string;
+  isDisabled?: boolean;
 }
 
 function PressableFeedbackRoot({
@@ -424,28 +561,28 @@ function PressableFeedbackRoot({
   isDisabled,
   ...props
 }: PressableFeedbackRootProps): ReactElement {
-  const context = useMemo(() => ({ highlightClassName: "pressable-feedback__highlight" }), []);
   return (
-    <PressableFeedbackContext value={context}>
-      <AriaButton
+    <PressableFeedbackContext value>
+      <dom.button
+        aria-disabled={isDisabled || undefined}
         className={cn("pressable-feedback", className) ?? ""}
         data-slot="pressable-feedback"
-        {...(isDisabled ? { "aria-disabled": true } : {})}
-        {...(isDisabled !== undefined ? { isDisabled } : {})}
+        disabled={isDisabled || undefined}
+        type="button"
         {...props}
       >
         {children}
-      </AriaButton>
+      </dom.button>
     </PressableFeedbackContext>
   );
 }
 
 function Highlight({ className, ...props }: React.HTMLAttributes<HTMLDivElement>): ReactElement {
-  const context = useContext(PressableFeedbackContext);
+  useContext(PressableFeedbackContext);
   return (
     <div
       aria-hidden="true"
-      className={cn(context.highlightClassName, className)}
+      className={cn("pressable-feedback__highlight", className)}
       data-slot="pressable-feedback-highlight"
       {...props}
     />

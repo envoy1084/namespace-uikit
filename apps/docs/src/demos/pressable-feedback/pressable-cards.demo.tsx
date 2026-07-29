@@ -2,6 +2,7 @@
 
 // @demo-title Pressable Cards
 import { PressableFeedback } from "@thenamespace/uikit";
+import { Avatar } from "@thenamespace/uikit/avatar";
 import { Button } from "@thenamespace/uikit/button";
 import { Card } from "@thenamespace/uikit/card";
 
@@ -39,7 +40,7 @@ export const DemoPressableCardsExample = () => (
         image: "demo1.jpg",
         color: "text-rose-200",
         author: "John",
-        authorAvatar: "/assets/avatars/blue.jpg",
+        authorAvatar: "/assets/avatars/red.jpg",
       },
       {
         name: "AI Builders",
@@ -47,28 +48,26 @@ export const DemoPressableCardsExample = () => (
         image: "demo2.jpg",
         color: "text-sky-300",
         author: "Martha",
-        authorAvatar: "/assets/avatars/pink.jpg",
+        authorAvatar: "/assets/avatars/blue.jpg",
       },
     ].map((item) => (
       <Card className="col-span-6 cursor-pointer gap-2 overflow-hidden" key={item.name}>
         <PressableFeedback.Ripple className={item.color} />
         <Card.Header>
-          <img
-            alt={item.name}
-            className="size-14 rounded-xl object-cover"
-            src={`/assets/docs/${item.image}`}
-          />
+          <Avatar className="size-14 rounded-xl">
+            <Avatar.Image alt={item.name} src={`/assets/docs/${item.image}`} />
+            <Avatar.Fallback>{item.name === "Indie Hackers" ? "IH" : "AB"}</Avatar.Fallback>
+          </Avatar>
         </Card.Header>
         <Card.Content className="mt-1">
           <p className="text-sm leading-4 font-medium">{item.name}</p>
           <p className="text-muted text-xs">{item.members} members</p>
         </Card.Content>
-        <Card.Footer className="flex items-center gap-1.5">
-          <img
-            alt={item.author}
-            className="size-5 rounded-full object-cover"
-            src={item.authorAvatar}
-          />
+        <Card.Footer className="flex items-center gap-2">
+          <Avatar className="size-4">
+            <Avatar.Image alt={item.author} src={item.authorAvatar} />
+            <Avatar.Fallback>{item.author[0]}</Avatar.Fallback>
+          </Avatar>
           <p className="text-muted text-xs">By {item.author}</p>
         </Card.Footer>
       </Card>

@@ -2,9 +2,11 @@ import { Fragment, useState } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@thenamespace/uikit/button";
+import { Dropdown } from "@thenamespace/uikit/dropdown";
 import { InlineSelect } from "@thenamespace/uikit/inline-select";
 import { ItemCard } from "@thenamespace/uikit/item-card";
 import { ListBox } from "@thenamespace/uikit/list-box";
+import { PressableFeedback } from "@thenamespace/uikit/pressable-feedback";
 import { Separator } from "@thenamespace/uikit/separator";
 import { Switch } from "@thenamespace/uikit/switch";
 import { Tooltip } from "@thenamespace/uikit/tooltip";
@@ -24,14 +26,19 @@ type Story = StoryObj<typeof meta>;
 type Item = {
   action?: React.ReactNode;
   description?: string;
+  descriptionClassName?: string;
   icon: string;
+  iconClassName?: string;
   title: string;
 };
 const Chevron = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
+const defaultRowAction = <Chevron />;
 function Row({
-  action = <Chevron />,
+  action = defaultRowAction,
   description,
+  descriptionClassName,
   icon,
+  iconClassName,
   pressable = false,
   title,
 }: Item & { pressable?: boolean }) {
@@ -50,14 +57,19 @@ function Row({
           }
         : {})}
     >
-      <ItemCard.Icon>
+      {pressable && <PressableFeedback.Ripple />}
+      <ItemCard.Icon className={iconClassName}>
         <Icon icon={icon} />
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>{title}</ItemCard.Title>
-        {description && <ItemCard.Description>{description}</ItemCard.Description>}
+        {description && (
+          <ItemCard.Description className={descriptionClassName}>
+            {description}
+          </ItemCard.Description>
+        )}
       </ItemCard.Content>
-      <ItemCard.Action>{action}</ItemCard.Action>
+      {action !== null && <ItemCard.Action>{action}</ItemCard.Action>}
     </ItemCard>
   );
 }
@@ -189,11 +201,15 @@ export const Grid: Story = {
   render: () => (
     <div className="w-[600px] rounded-2xl p-6">
       <ItemCardGroup layout="grid">
-        {settings.slice(0, 2).map((item) => (
-          <Row {...item} action={undefined} key={item.title} />
-        ))}
-        <Row description="English (US)" icon="solar:global-linear" title="Language" />
-        <Row description="Theme & colors" icon="solar:palette-linear" title="Appearance" />
+        <Row action={null} description="Personal info" icon="solar:user-linear" title="Profile" />
+        <Row action={null} description="2FA & passwords" icon="solar:key-linear" title="Security" />
+        <Row action={null} description="English (US)" icon="solar:global-linear" title="Language" />
+        <Row
+          action={null}
+          description="Theme & colors"
+          icon="solar:palette-linear"
+          title="Appearance"
+        />
       </ItemCardGroup>
     </div>
   ),
@@ -211,7 +227,7 @@ export const GridThreeColumns: Story = {
           ["iMac", "3 days ago", "solar:monitor-linear"],
           ["iPhone 15", "1 hour ago", "solar:smartphone-linear"],
         ].map(([title, description, icon]) => (
-          <Row description={description} icon={icon} key={title} title={title} />
+          <Row action={null} description={description} icon={icon} key={title} title={title} />
         ))}
       </ItemCardGroup>
     </div>
@@ -276,6 +292,7 @@ export const LinkedAccounts: Story = {
           }
           description={account.description}
           icon={account.icon}
+          iconClassName="bg-default text-foreground"
           key={account.name}
           title={account.name}
         />
@@ -285,22 +302,35 @@ export const LinkedAccounts: Story = {
 };
 export const MultipleSections: Story = {
   render: () => (
-    <div className="flex w-[600px] flex-col gap-6 p-6">
-      <ItemCardGroup variant="transparent">
-        <ItemCardGroup.Header className="mb-1 px-1.5">
+    <div className="flex w-[500px] flex-col gap-6 rounded-2xl p-6">
+      <ItemCardGroup>
+        <ItemCardGroup.Header>
           <ItemCardGroup.Title>Account</ItemCardGroup.Title>
         </ItemCardGroup.Header>
-        <ItemCardGroup className="overflow-hidden">
-          <Rows items={settings.slice(0, 2)} />
-        </ItemCardGroup>
+        <Row {...settings[0]} action={<Chevron />} />
+        <Separator />
+        <Row {...settings[1]} action={<Chevron />} />
       </ItemCardGroup>
-      <ItemCardGroup variant="transparent">
-        <ItemCardGroup.Header className="mb-1 px-1.5">
+      <ItemCardGroup>
+        <ItemCardGroup.Header>
           <ItemCardGroup.Title>Preferences</ItemCardGroup.Title>
         </ItemCardGroup.Header>
-        <ItemCardGroup className="overflow-hidden">
-          <Rows items={settings.slice(2)} />
-        </ItemCardGroup>
+        <Row {...settings[2]} />
+        <Separator />
+        <Row
+          action={
+            <Switch aria-label="Switch Dark mode">
+              <Switch.Content>
+                <Switch.Control>
+                  <Switch.Thumb />
+                </Switch.Control>
+              </Switch.Content>
+            </Switch>
+          }
+          description="Use dark theme across the app"
+          icon="solar:moon-linear"
+          title="Dark mode"
+        />
       </ItemCardGroup>
     </div>
   ),
@@ -336,20 +366,34 @@ export const Pressable: Story = {
   ),
 };
 
-function SelectAction({ label, multiple = false }: { label: string; multiple?: boolean }) {
-  const [value, setValue] = useState<string | string[]>(multiple ? ["email", "push"] : "view");
-  const options = multiple
-    ? [
-        ["email", "Email"],
-        ["whatsapp", "WhatsApp"],
-        ["push", "Push Notification"],
-      ]
-    : [
-        ["none", "None"],
-        ["view", "View"],
-        ["edit", "Edit"],
-        ["manage", "Manage"],
-      ];
+function SelectAction({
+  label,
+  multiple = false,
+  options: optionsProp,
+  value: valueProp,
+}: {
+  label: string;
+  multiple?: boolean;
+  options?: string[][];
+  value?: string[];
+}) {
+  const [value, setValue] = useState<string | string[]>(
+    valueProp ?? (multiple ? ["email", "push"] : "view"),
+  );
+  const options =
+    optionsProp ??
+    (multiple
+      ? [
+          ["email", "Email"],
+          ["whatsapp", "WhatsApp"],
+          ["push", "Push Notification"],
+        ]
+      : [
+          ["none", "None"],
+          ["view", "View"],
+          ["edit", "Edit"],
+          ["manage", "Manage"],
+        ]);
   return (
     <InlineSelect
       aria-label={label}
@@ -376,7 +420,7 @@ function SelectAction({ label, multiple = false }: { label: string; multiple?: b
 }
 export const NotificationPreferences: Story = {
   render: () => (
-    <div className="w-[500px] rounded-2xl p-6">
+    <div className="w-[550px] rounded-2xl p-6">
       <ItemCardGroup>
         <ItemCardGroup.Header>
           <ItemCardGroup.Title>Notification Preferences</ItemCardGroup.Title>
@@ -384,16 +428,41 @@ export const NotificationPreferences: Story = {
             Choose how you receive notifications for each event type
           </ItemCardGroup.Description>
         </ItemCardGroup.Header>
-        <Rows
-          items={[
-            ["Event Invites", "solar:letter-linear"],
-            ["Event Reminders", "solar:bell-linear"],
-            ["Event Blasts", "solar:megaphone-linear"],
-          ].map(([title, icon]) => ({
-            title,
-            icon,
-            action: <SelectAction label={title} multiple />,
-          }))}
+        <Row
+          action={<SelectAction label="Event Invites" multiple />}
+          icon="solar:letter-linear"
+          title="Event Invites"
+        />
+        <Separator />
+        <Row
+          action={
+            <SelectAction
+              label="Event Reminders"
+              multiple
+              options={[
+                ["email", "Email"],
+                ["push", "Push Notification"],
+              ]}
+              value={["email"]}
+            />
+          }
+          icon="solar:bell-linear"
+          title="Event Reminders"
+        />
+        <Separator />
+        <Row
+          action={
+            <SelectAction
+              label="Event Blasts"
+              multiple
+              options={[
+                ["email", "Email"],
+                ["push", "Push Notification"],
+              ]}
+            />
+          }
+          icon="solar:megaphone-linear"
+          title="Event Blasts"
         />
       </ItemCardGroup>
     </div>
@@ -496,34 +565,69 @@ export const DeveloperSettings: Story = {
       <ItemCardGroup variant="transparent">
         <ItemCardGroup.Header className="mb-1 flex items-center justify-between px-1.5">
           <ItemCardGroup.Title>Source Control</ItemCardGroup.Title>
-          <Button size="sm" variant="outline">
-            Add Provider
-          </Button>
+          <Dropdown>
+            <Button size="sm" variant="outline">
+              Add Provider
+              <Icon className="size-3" icon="solar:alt-arrow-down-linear" />
+            </Button>
+            <Dropdown.Popover className="min-w-[180px]" placement="bottom end">
+              <Dropdown.Menu>
+                <Dropdown.Item textValue="GitHub Enterprise">
+                  <Icon className="size-4" icon="logos:github-icon" />
+                  <span>GitHub Enterprise</span>
+                </Dropdown.Item>
+                <Dropdown.Item textValue="GitLab Self Hosted">
+                  <Icon className="size-4" icon="logos:gitlab" />
+                  <span>GitLab Self Hosted</span>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown.Popover>
+          </Dropdown>
         </ItemCardGroup.Header>
         <ItemCardGroup className="overflow-hidden">
           <Rows
             items={[
               {
                 title: "GitHub",
-                description: "Connected as @jrgarciadev",
+                description:
+                  "Connected as @jrgarciadev to repositories in organizations: heroui-inc",
+                descriptionClassName: "max-w-xs",
                 icon: "logos:github-icon",
                 action: (
                   <Button size="sm" variant="outline">
                     Manage
+                    <Icon className="size-3" icon="solar:alt-arrow-down-linear" />
                   </Button>
                 ),
               },
               {
                 title: "GitLab",
-                description: "Connect GitLab for Cloud Agents",
+                description:
+                  "Connect GitLab for Cloud Agents, Bugbot and enhanced codebase context",
+                descriptionClassName: "max-w-xs",
                 icon: "logos:gitlab",
                 action: (
                   <Button size="sm" variant="outline">
                     Connect
+                    <Icon className="size-3" icon="solar:alt-arrow-right-linear" />
                   </Button>
                 ),
               },
             ]}
+          />
+          <Separator />
+          <Row
+            description="Register a GitHub Enterprise App via Manifest"
+            icon="logos:github-icon"
+            pressable
+            title="GitHub Enterprise"
+          />
+          <Separator />
+          <Row
+            description="Register a self-hosted GitLab instance"
+            icon="logos:gitlab"
+            pressable
+            title="GitLab Self Hosted"
           />
         </ItemCardGroup>
       </ItemCardGroup>
@@ -541,16 +645,18 @@ export const DeveloperSettings: Story = {
                 action: (
                   <Button size="sm" variant="outline">
                     Connect
+                    <Icon className="size-3" icon="solar:alt-arrow-right-linear" />
                   </Button>
                 ),
               },
               {
                 title: "Linear",
-                description: "Connect a Linear workspace",
+                description: "Connect a Linear workspace to delegate issues to Cloud Agents",
                 icon: "simple-icons:linear",
                 action: (
                   <Button size="sm" variant="outline">
                     Connect
+                    <Icon className="size-3" icon="solar:alt-arrow-right-linear" />
                   </Button>
                 ),
               },

@@ -2,7 +2,7 @@
 "use client";
 
 // @demo-title Notification Preferences
-import { Fragment, useState } from "react";
+import { useState } from "react";
 
 import { ItemCardGroup } from "@thenamespace/uikit";
 import { InlineSelect } from "@thenamespace/uikit/inline-select";
@@ -20,9 +20,10 @@ type Item = {
 };
 
 const Chevron = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
+const defaultRowAction = <Chevron />;
 
 function Row({
-  action = <Chevron />,
+  action = defaultRowAction,
   description,
   icon,
   pressable = false,
@@ -55,46 +56,29 @@ function Row({
   );
 }
 
-function Rows({ items, pressable = false }: { items: Item[]; pressable?: boolean }) {
+function SelectAction({
+  label,
+  options: optionsProp,
+  value: valueProp,
+}: {
+  label: string;
+  options?: string[][];
+  value?: string[];
+}) {
+  const [value, setValue] = useState<string[]>(valueProp ?? ["email", "push"]);
+  const options = optionsProp ?? [
+    ["email", "Email"],
+    ["whatsapp", "WhatsApp"],
+    ["push", "Push Notification"],
+  ];
   return (
-    <>
-      {items.map((item, index) => (
-        <Fragment key={item.title}>
-          {index > 0 && <Separator />}
-          <Row {...item} pressable={pressable} />
-        </Fragment>
-      ))}
-    </>
-  );
-}
-
-function SelectAction({ label, multiple = false }: { label: string; multiple?: boolean }) {
-  const [value, setValue] = useState<string | string[]>(multiple ? ["email", "push"] : "view");
-  const options = multiple
-    ? [
-        ["email", "Email"],
-        ["whatsapp", "WhatsApp"],
-        ["push", "Push Notification"],
-      ]
-    : [
-        ["none", "None"],
-        ["view", "View"],
-        ["edit", "Edit"],
-        ["manage", "Manage"],
-      ];
-  return (
-    <InlineSelect
-      aria-label={label}
-      selectionMode={multiple ? "multiple" : "single"}
-      value={value}
-      onChange={setValue}
-    >
+    <InlineSelect aria-label={label} selectionMode="multiple" value={value} onChange={setValue}>
       <InlineSelect.Trigger>
         <InlineSelect.Value />
         <InlineSelect.Indicator />
       </InlineSelect.Trigger>
       <InlineSelect.Popover>
-        <ListBox selectionMode={multiple ? "multiple" : "single"}>
+        <ListBox selectionMode="multiple">
           {options.map(([id, text]) => (
             <ListBox.Item id={id} key={id} textValue={text}>
               {text}
@@ -108,7 +92,7 @@ function SelectAction({ label, multiple = false }: { label: string; multiple?: b
 }
 
 export const DemoNotificationPreferencesExample = () => (
-  <div className="w-[500px] rounded-2xl p-6">
+  <div className="w-[550px] rounded-2xl p-6">
     <ItemCardGroup>
       <ItemCardGroup.Header>
         <ItemCardGroup.Title>Notification Preferences</ItemCardGroup.Title>
@@ -116,16 +100,39 @@ export const DemoNotificationPreferencesExample = () => (
           Choose how you receive notifications for each event type
         </ItemCardGroup.Description>
       </ItemCardGroup.Header>
-      <Rows
-        items={[
-          ["Event Invites", "solar:letter-linear"],
-          ["Event Reminders", "solar:bell-linear"],
-          ["Event Blasts", "solar:megaphone-linear"],
-        ].map(([title, icon]) => ({
-          title,
-          icon,
-          action: <SelectAction label={title} multiple />,
-        }))}
+      <Row
+        action={<SelectAction label="Event Invites" />}
+        icon="solar:letter-linear"
+        title="Event Invites"
+      />
+      <Separator />
+      <Row
+        action={
+          <SelectAction
+            label="Event Reminders"
+            options={[
+              ["email", "Email"],
+              ["push", "Push Notification"],
+            ]}
+            value={["email"]}
+          />
+        }
+        icon="solar:bell-linear"
+        title="Event Reminders"
+      />
+      <Separator />
+      <Row
+        action={
+          <SelectAction
+            label="Event Blasts"
+            options={[
+              ["email", "Email"],
+              ["push", "Push Notification"],
+            ]}
+          />
+        }
+        icon="solar:megaphone-linear"
+        title="Event Blasts"
       />
     </ItemCardGroup>
   </div>

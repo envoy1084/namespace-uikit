@@ -2,12 +2,11 @@
 "use client";
 
 // @demo-title Multiple Sections
-import { Fragment } from "react";
-
 import { ItemCardGroup } from "@thenamespace/uikit";
 import { Button } from "@thenamespace/uikit/button";
 import { ItemCard } from "@thenamespace/uikit/item-card";
 import { Separator } from "@thenamespace/uikit/separator";
+import { Switch } from "@thenamespace/uikit/switch";
 
 import { Icon } from "@/demos/icon";
 
@@ -19,9 +18,10 @@ type Item = {
 };
 
 const Chevron = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
+const defaultRowAction = <Chevron />;
 
 function Row({
-  action = <Chevron />,
+  action = defaultRowAction,
   description,
   icon,
   pressable = false,
@@ -51,19 +51,6 @@ function Row({
       </ItemCard.Content>
       <ItemCard.Action>{action}</ItemCard.Action>
     </ItemCard>
-  );
-}
-
-function Rows({ items, pressable = false }: { items: Item[]; pressable?: boolean }) {
-  return (
-    <>
-      {items.map((item, index) => (
-        <Fragment key={item.title}>
-          {index > 0 && <Separator />}
-          <Row {...item} pressable={pressable} />
-        </Fragment>
-      ))}
-    </>
   );
 }
 
@@ -101,22 +88,35 @@ const settings: Item[] = [
 ];
 
 export const DemoMultipleSectionsExample = () => (
-  <div className="flex w-[600px] flex-col gap-6 p-6">
-    <ItemCardGroup variant="transparent">
-      <ItemCardGroup.Header className="mb-1 px-1.5">
+  <div className="flex w-[500px] flex-col gap-6 rounded-2xl p-6">
+    <ItemCardGroup>
+      <ItemCardGroup.Header>
         <ItemCardGroup.Title>Account</ItemCardGroup.Title>
       </ItemCardGroup.Header>
-      <ItemCardGroup className="overflow-hidden">
-        <Rows items={settings.slice(0, 2)} />
-      </ItemCardGroup>
+      <Row {...settings[0]} action={<Chevron />} />
+      <Separator />
+      <Row {...settings[1]} action={<Chevron />} />
     </ItemCardGroup>
-    <ItemCardGroup variant="transparent">
-      <ItemCardGroup.Header className="mb-1 px-1.5">
+    <ItemCardGroup>
+      <ItemCardGroup.Header>
         <ItemCardGroup.Title>Preferences</ItemCardGroup.Title>
       </ItemCardGroup.Header>
-      <ItemCardGroup className="overflow-hidden">
-        <Rows items={settings.slice(2)} />
-      </ItemCardGroup>
+      <Row {...settings[2]} />
+      <Separator />
+      <Row
+        action={
+          <Switch aria-label="Switch Dark mode">
+            <Switch.Content>
+              <Switch.Control>
+                <Switch.Thumb />
+              </Switch.Control>
+            </Switch.Content>
+          </Switch>
+        }
+        description="Use dark theme across the app"
+        icon="solar:moon-linear"
+        title="Dark mode"
+      />
     </ItemCardGroup>
   </div>
 );

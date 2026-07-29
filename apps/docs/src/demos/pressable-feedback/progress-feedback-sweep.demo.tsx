@@ -4,6 +4,10 @@
 import { PressableFeedback } from "@thenamespace/uikit";
 import { Button } from "@thenamespace/uikit/button";
 
+import { Icon } from "@/demos/icon";
+
+const Gear = () => <Icon icon="solar:settings-linear" />;
+
 export const DemoProgressFeedbackSweepExample = () => (
   <div className="flex flex-col gap-6">
     <p className="text-muted text-xs">
@@ -19,6 +23,19 @@ export const DemoProgressFeedbackSweepExample = () => (
             Sweep {sweep[0].toUpperCase() + sweep.slice(1)}
           </PressableFeedback.ProgressFeedback>
           Sweep {sweep[0].toUpperCase() + sweep.slice(1)}
+        </Button>
+      ))}
+    </div>
+    <div className="flex gap-3">
+      {(["up", "down", "left"] as const).map((sweep) => (
+        <Button isIconOnly key={sweep} variant="secondary">
+          <PressableFeedback.ProgressFeedback
+            className="bg-accent text-accent-foreground"
+            sweep={sweep}
+          >
+            <Gear />
+          </PressableFeedback.ProgressFeedback>
+          <Gear />
         </Button>
       ))}
     </div>

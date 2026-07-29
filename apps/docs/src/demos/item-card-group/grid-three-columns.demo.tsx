@@ -15,9 +15,10 @@ type Item = {
 };
 
 const Chevron = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
+const defaultRowAction = <Chevron />;
 
 function Row({
-  action = <Chevron />,
+  action = defaultRowAction,
   description,
   icon,
   pressable = false,
@@ -45,7 +46,7 @@ function Row({
         <ItemCard.Title>{title}</ItemCard.Title>
         {description && <ItemCard.Description>{description}</ItemCard.Description>}
       </ItemCard.Content>
-      <ItemCard.Action>{action}</ItemCard.Action>
+      {action !== null && <ItemCard.Action>{action}</ItemCard.Action>}
     </ItemCard>
   );
 }
@@ -62,7 +63,7 @@ export const DemoGridThreeColumnsExample = () => (
         ["iMac", "3 days ago", "solar:monitor-linear"],
         ["iPhone 15", "1 hour ago", "solar:smartphone-linear"],
       ].map(([title, description, icon]) => (
-        <Row description={description} icon={icon} key={title} title={title} />
+        <Row action={null} description={description} icon={icon} key={title} title={title} />
       ))}
     </ItemCardGroup>
   </div>
