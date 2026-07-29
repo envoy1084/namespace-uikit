@@ -42,7 +42,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
         <DocsDescription className="text-md mt-2 mb-4">{page.data.description}</DocsDescription>
         {componentLinks ? <ComponentLinks links={componentLinks} /> : null}
       </section>
-      <DocsBody className="prose-sm">
+      <DocsBody>
         <Content
           components={getMDXComponents({
             a: createRelativeLink(source, page),
