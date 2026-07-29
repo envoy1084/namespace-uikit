@@ -1,3 +1,4 @@
+/* oxlint-disable react/iframe-missing-sandbox -- The cross-origin HeroUI Pro previews require scripts and same-origin storage. */
 "use client";
 
 import type { CSSProperties } from "react";
@@ -131,7 +132,9 @@ export function DemoShowcase({
   }, [sendMessageToIframe]);
 
   return (
-    <div className={cn("flex min-h-0 w-full flex-1 flex-col py-6 lg:py-10", className)}>
+    <div
+      className={cn("flex min-h-0 w-full max-w-[1200px] flex-1 flex-col py-6 lg:py-10", className)}
+    >
       <div
         className={cn(
           "mb-4 w-full flex-col justify-between gap-4 px-2 lg:flex-row lg:items-center",
@@ -208,7 +211,7 @@ export function DemoShowcase({
               <iframe
                 ref={iframeRef}
                 className="border-border/50 absolute inset-0 h-full w-full rounded-2xl border"
-                sandbox="allow-forms allow-modals allow-popups allow-scripts"
+                sandbox="allow-forms allow-modals allow-popups allow-same-origin allow-scripts"
                 src={iframeTabs[selectedTab]}
                 title={selectedTab}
                 onLoad={handleIframeLoad}
