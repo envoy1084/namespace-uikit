@@ -1,7 +1,7 @@
 "use client";
 
 import { Accordion, Button, Typography } from "@thenamespace/uikit";
-import { useConnection } from "wagmi";
+import { useAccount } from "wagmi";
 
 import { useNameRegistration } from "#/components/name-registration/context";
 import { useCommitmentSubmission } from "#/components/name-registration/steps/registration-process/steps/commitment/use-commitment-submission";
@@ -24,7 +24,7 @@ export function CommitmentStep({
   onErrorClear,
   onPendingChange,
 }: CommitmentStepProps) {
-  const connection = useConnection();
+  const connection = useAccount();
   const { chain } = useEnsConfig();
   const { slots } = useNameRegistration();
   const submission = useCommitmentSubmission({

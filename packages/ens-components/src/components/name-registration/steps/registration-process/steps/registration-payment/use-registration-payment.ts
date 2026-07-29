@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { isAddressEqual, type Hex } from "viem";
-import { useConnection, usePublicClient, useSwitchChain, useWalletClient } from "wagmi";
+import { useAccount, usePublicClient, useSwitchChain, useWalletClient } from "wagmi";
 
 import type { ContractWriteProgress, NameRegistrationPaymentStatus } from "#/actions";
 import { emitComponentEvent } from "#/components/emit-event";
@@ -50,7 +50,7 @@ export function useRegistrationPayment({
   onPendingChange,
   onSuccess,
 }: UseRegistrationPaymentProps) {
-  const connection = useConnection();
+  const connection = useAccount();
   const { chain, contracts } = useEnsConfig();
   const wagmiChainId = asWagmiChainId(chain.id);
   const publicClient = usePublicClient({ chainId: wagmiChainId });

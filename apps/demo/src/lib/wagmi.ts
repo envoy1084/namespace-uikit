@@ -1,11 +1,11 @@
-import { createConfig, http } from "wagmi";
+import { getDefaultConfig } from "@rainbow-me/rainbowkit";
+import { http } from "wagmi";
 import { sepolia } from "wagmi/chains";
-import { injected } from "wagmi/connectors";
 
-export const wagmiConfig = createConfig({
+export const wagmiConfig = getDefaultConfig({
+  appName: "ENS Components",
+  projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID,
   chains: [sepolia],
-  connectors: [injected()],
-  multiInjectedProviderDiscovery: false,
   ssr: true,
   transports: {
     [sepolia.id]: http(),

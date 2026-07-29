@@ -14,7 +14,7 @@ import {
 import { Button, Form, Surface, Typography } from "@thenamespace/uikit";
 import { FormProvider } from "react-hook-form";
 import type { Address } from "viem";
-import { useConnection } from "wagmi";
+import { useAccount } from "wagmi";
 
 import { emitComponentEvent } from "#/components/emit-event";
 import type {
@@ -74,7 +74,7 @@ export function ProfileEditor({
   slots: NameProfileEditorSlots;
   uploadImage?: NameProfileImageUpload | undefined;
 }) {
-  const connection = useConnection();
+  const connection = useAccount();
   const { chain } = useEnsConfig();
   const continueStatusId = useId();
   const [view, setView] = useState<NameProfileEditorView>("editor");

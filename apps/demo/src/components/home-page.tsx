@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { createEnsConfig, EnsProvider } from "ens-components";
 import { WagmiProvider } from "wagmi";
 
@@ -28,18 +29,20 @@ export function HomePage() {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <EnsProvider config={ensConfig}>
-          <div className="min-h-screen overflow-hidden bg-[#f4f4f4] font-sans text-[#1f1f1f]">
-            <AppNavbar />
-            <main id="content">
-              <HomeHero />
-              <ToolkitOverview />
-              <RegistrationShowcase />
-              <RenewalShowcase />
-              <ProfileEditorShowcase />
-              <TransactionProgressShowcase />
-              <HomeFooter />
-            </main>
-          </div>
+          <RainbowKitProvider>
+            <div className="min-h-screen overflow-hidden bg-[#f4f4f4] font-sans text-[#1f1f1f]">
+              <AppNavbar />
+              <main id="content">
+                <HomeHero />
+                <ToolkitOverview />
+                <RegistrationShowcase />
+                <RenewalShowcase />
+                <ProfileEditorShowcase />
+                <TransactionProgressShowcase />
+                <HomeFooter />
+              </main>
+            </div>
+          </RainbowKitProvider>
         </EnsProvider>
       </QueryClientProvider>
     </WagmiProvider>

@@ -9,6 +9,7 @@
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },
   "dependencies": {
+    "@rainbow-me/rainbowkit": "2.2.11",
     "@tanstack/react-query": "catalog:",
     "@thenamespace/uikit": "workspace:*",
     "ens-components": "workspace:*",

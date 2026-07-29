@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { err, ok } from "neverthrow";
 import type { Hex } from "viem";
 import { isAddressEqual } from "viem";
-import { useConnection, usePublicClient, useSwitchChain, useWalletClient } from "wagmi";
+import { useAccount, usePublicClient, useSwitchChain, useWalletClient } from "wagmi";
 
 import type { ContractWriteProgress } from "#/actions";
 import { emitComponentEvent } from "#/components/emit-event";
@@ -43,7 +43,7 @@ export function useProfileUpdateSubmission({
   onPendingChange,
   onSuccess,
 }: UseProfileUpdateSubmissionParameters) {
-  const connection = useConnection();
+  const connection = useAccount();
   const { chain } = useEnsConfig();
   const wagmiChainId = asWagmiChainId(chain.id);
   const publicClient = usePublicClient({ chainId: wagmiChainId });

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Button, Modal, Surface } from "@thenamespace/uikit";
 import { isAddressEqual, zeroAddress, zeroHash } from "viem";
-import { useConnection } from "wagmi";
+import { useAccount } from "wagmi";
 
 import {
   COMMITMENT_VALID_DURATION_MS,
@@ -29,7 +29,7 @@ export type NameRegistrationProps = Omit<NameRegistrationProviderProps, "childre
 type NameRegistrationView = "name-search" | "registration-process" | "registration-success";
 
 function NameRegistrationContent() {
-  const connection = useConnection();
+  const connection = useAccount();
   const {
     duration,
     input,

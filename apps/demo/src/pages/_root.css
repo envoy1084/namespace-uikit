@@ -1,4 +1,5 @@
 @import "ens-components/styles.css";
+@import "@rainbow-me/rainbowkit/styles.css";
 @import "tailwindcss";
 
 @custom-variant dark (&:where(:root[style*="color-scheme:dark"] *, :root[style*="color-scheme: dark"] *));

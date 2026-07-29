@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { isAddressEqual, type Hex } from "viem";
-import { useConnection, usePublicClient, useSwitchChain, useWalletClient } from "wagmi";
+import { useAccount, usePublicClient, useSwitchChain, useWalletClient } from "wagmi";
 
 import { emitComponentEvent } from "#/components/emit-event";
 import { useNameRegistration } from "#/components/name-registration/context";
@@ -45,7 +45,7 @@ export function useCommitmentSubmission({
   onErrorClear,
   onPendingChange,
 }: UseCommitmentSubmissionParameters) {
-  const connection = useConnection();
+  const connection = useAccount();
   const { chain, contracts } = useEnsConfig();
   const wagmiChainId = asWagmiChainId(chain.id);
   const publicClient = usePublicClient({ chainId: wagmiChainId });

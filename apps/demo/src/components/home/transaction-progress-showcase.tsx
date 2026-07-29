@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { Button, Surface, Typography } from "@thenamespace/uikit";
+import { Button, Typography } from "@thenamespace/uikit";
 import { HugeiconsIcon, ReloadIcon } from "@thenamespace/uikit/icons";
 import { TransactionProgress } from "ens-components";
 
@@ -53,29 +53,24 @@ export function TransactionProgressShowcase() {
           </Typography.Paragraph>
         </div>
 
-        <Surface
-          className="mx-auto flex w-full max-w-md flex-col gap-5 rounded-[2rem] p-7"
-          variant="secondary"
-        >
-          <div className="flex items-center gap-3">
-            <div className="min-w-0 flex-1">
-              <TransactionProgress key={run} chainId={11_155_111} isConfirmed={isConfirmed} />
-            </div>
-            <Button
-              isIconOnly
-              aria-label="Restart transaction progress"
-              className="size-9 min-w-9 shrink-0 rounded-xl"
-              size="sm"
-              variant="secondary"
-              onPress={() => {
-                setIsConfirmed(false);
-                setRun((currentRun) => currentRun + 1);
-              }}
-            >
-              <HugeiconsIcon aria-hidden="true" className="size-4" icon={ReloadIcon} />
-            </Button>
+        <div className="mx-auto flex w-full max-w-md items-center gap-3">
+          <div className="min-w-0 flex-1">
+            <TransactionProgress key={run} chainId={11_155_111} isConfirmed={isConfirmed} />
           </div>
-        </Surface>
+          <Button
+            isIconOnly
+            aria-label="Restart transaction progress"
+            className="size-9 min-w-9 shrink-0 rounded-xl"
+            size="sm"
+            variant="secondary"
+            onPress={() => {
+              setIsConfirmed(false);
+              setRun((currentRun) => currentRun + 1);
+            }}
+          >
+            <HugeiconsIcon aria-hidden="true" className="size-4" icon={ReloadIcon} />
+          </Button>
+        </div>
       </div>
     </section>
   );

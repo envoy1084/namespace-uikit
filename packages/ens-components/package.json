@@ -124,10 +124,10 @@
     "wagmi": "catalog:"
   },
   "peerDependencies": {
-    "@tanstack/react-query": "5.101.2",
+    "@tanstack/react-query": ">=5.0.0 <6",
     "react": ">=19.2.7 <20",
     "react-dom": ">=19.2.7 <20",
     "viem": ">=2.55.0 <3",
-    "wagmi": ">=3.7.1 <4"
+    "wagmi": ">=2.19.5 <4"
   }
 }

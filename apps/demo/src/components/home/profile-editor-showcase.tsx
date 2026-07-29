@@ -102,9 +102,9 @@ export function ProfileEditorShowcase() {
         )}
       </div>
 
-      <div className="mx-auto w-full max-w-md">
+      <div className="mx-auto w-full max-w-md rounded-3xl border border-[#d7d7d7] bg-white shadow-sm">
         {profileData === undefined ? (
-          <Surface className="flex min-h-[44rem] w-full items-center justify-center rounded-3xl">
+          <Surface className="flex min-h-176 w-full items-center justify-center rounded-3xl">
             <output
               aria-live="polite"
               className="flex max-w-xs flex-col items-center gap-3 px-6 text-center"
