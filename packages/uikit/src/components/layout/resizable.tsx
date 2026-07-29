@@ -45,6 +45,63 @@ const browserStorage: LayoutStorage = {
   },
 };
 
+export interface CookieStorageOptions {
+  fallbackStorage?: LayoutStorage;
+  maxAge?: number;
+  path?: string;
+  sameSite?: "lax" | "none" | "strict";
+  secure?: boolean;
+}
+
+/**
+ * Creates synchronous storage that mirrors layouts to a cookie and a fallback
+ * storage provider. Cookie values can be read during SSR to avoid layout shift.
+ */
+export function createCookieStorage({
+  fallbackStorage = browserStorage,
+  maxAge = 60 * 60 * 24 * 365,
+  path = "/",
+  sameSite = "lax",
+  secure,
+}: CookieStorageOptions = {}): LayoutStorage {
+  return {
+    getItem(key) {
+      if (typeof document !== "undefined") {
+        const encodedKey = `${encodeURIComponent(key)}=`;
+        const cookie = document.cookie
+          .split(";")
+          .map((value) => value.trim())
+          .find((value) => value.startsWith(encodedKey));
+
+        if (cookie) {
+          try {
+            return decodeURIComponent(cookie.slice(encodedKey.length));
+          } catch {
+            // Fall through to the secondary storage provider.
+          }
+        }
+      }
+
+      return fallbackStorage.getItem(key);
+    },
+    setItem(key, value) {
+      fallbackStorage.setItem(key, value);
+      if (typeof document === "undefined") return;
+
+      const useSecureCookie =
+        secure ?? (typeof window !== "undefined" && window.location.protocol === "https:");
+      const attributes = [
+        `Path=${path}`,
+        `Max-Age=${maxAge}`,
+        `SameSite=${sameSite.charAt(0).toUpperCase()}${sameSite.slice(1)}`,
+      ];
+
+      if (useSecureCookie) attributes.push("Secure");
+      document.cookie = `${encodeURIComponent(key)}=${encodeURIComponent(value)}; ${attributes.join("; ")}`;
+    },
+  };
+}
+
 export interface ResizableRootProps extends Omit<
   GroupProps,
   "defaultLayout" | "groupRef" | "onLayoutChange" | "orientation"
@@ -64,15 +121,24 @@ function ResizableRoot({
   handleRef,
   id,
   onLayoutChange,
+  onLayoutChanged,
   orientation = "horizontal",
   storage,
   style,
   ...props
 }: ResizableRootProps): ReactElement {
-  const persistence = useDefaultLayout({
+  const { defaultLayout, onLayoutChanged: persistLayout } = useDefaultLayout({
     id: autoSaveId || "__no_persist__",
     storage: autoSaveId ? (storage ?? browserStorage) : memoryStorage,
   });
+  const handleLayoutChanged: NonNullable<GroupProps["onLayoutChanged"]> = useCallback(
+    (layout, meta) => {
+      if (autoSaveId) persistLayout(layout, meta);
+      onLayoutChanged?.(layout, meta);
+    },
+    [autoSaveId, onLayoutChanged, persistLayout],
+  );
+
   return (
     <Context value={orientation}>
       <Group
@@ -83,11 +149,9 @@ function ResizableRoot({
         id={id}
         orientation={orientation}
         style={style}
-        {...(autoSaveId && persistence.defaultLayout
-          ? { defaultLayout: persistence.defaultLayout }
-          : {})}
+        {...(autoSaveId && defaultLayout ? { defaultLayout } : {})}
         {...(onLayoutChange ? { onLayoutChange } : {})}
-        {...(autoSaveId ? { onLayoutChanged: persistence.onLayoutChanged } : {})}
+        {...(autoSaveId || onLayoutChanged ? { onLayoutChanged: handleLayoutChanged } : {})}
       >
         {children}
       </Group>

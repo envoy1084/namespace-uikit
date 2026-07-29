@@ -74,7 +74,7 @@ catalog.
 | [Pressable Feedback](https://heroui.pro/docs/react/components/pressable-feedback)       | [source](packages/uikit/src/components/buttons/pressable-feedback.tsx)    | [docs](apps/docs/content/docs/components/pressable-feedback.mdx)    | [16/16](https://storybook.heroui.pro/?path=/docs/components-pressablefeedback--docs) · [local](apps/storybook/src/components/buttons/pressable-feedback/pressable-feedback.stories.tsx)       | ⬜ Inventory | Ripple, highlight, hold/progress timing and cancellation.                                            |
 | [Rating](https://heroui.pro/docs/react/components/rating)                               | [source](packages/uikit/src/components/data-display/rating.tsx)           | [docs](apps/docs/content/docs/components/rating.mdx)                | [12/12](https://storybook.heroui.pro/?path=/docs/components-rating--docs) · [local](apps/storybook/src/components/data-display/rating/rating.stories.tsx)                                     | ⬜ Inventory | Pointer, keyboard, fractional and read-only behavior.                                                |
 | [Trend Chip](https://heroui.pro/docs/react/components/trend-chip)                       | [source](packages/uikit/src/components/data-display/trend-chip.tsx)       | [docs](apps/docs/content/docs/components/trend-chip.mdx)            | [6/6](https://storybook.heroui.pro/?path=/docs/components-trendchip--docs) · [local](apps/storybook/src/components/data-display/trend-chip/trend-chip.stories.tsx)                            | ⬜ Inventory |                                                                                                      |
-| [Resizable](https://heroui.pro/docs/react/components/resizable)                         | [source](packages/uikit/src/components/layout/resizable.tsx)              | [docs](apps/docs/content/docs/components/resizable.mdx)             | [7/7](https://storybook.heroui.pro/?path=/docs/components-resizable--docs) · [local](apps/storybook/src/components/layout/resizable/resizable.stories.tsx)                                    | ⬜ Inventory | Pointer, touch and keyboard resize; collapse and nesting.                                            |
+| [Resizable](https://heroui.pro/docs/react/components/resizable)                         | [source](packages/uikit/src/components/layout/resizable.tsx)              | [docs](apps/docs/content/docs/components/resizable.mdx)             | [7/7](https://storybook.heroui.pro/?path=/docs/components-resizable--docs) · [local](apps/storybook/src/components/layout/resizable/resizable.stories.tsx)                                    |      🛠 Fixed | Added promised cookie storage and current v4 callback docs. Final touch/SSR matrix remains.          |
 | [Cell Color Picker](https://heroui.pro/docs/react/components/cell-color-picker)         | [source](packages/uikit/src/components/forms/cell-color-picker.tsx)       | [docs](apps/docs/content/docs/components/cell-color-picker.mdx)     | [6/6](https://storybook.heroui.pro/?path=/docs/components-cellcolorpicker--docs) · [local](apps/storybook/src/components/forms/cell-color-picker/cell-color-picker.stories.tsx)               | ⬜ Inventory |                                                                                                      |
 | [Cell Select](https://heroui.pro/docs/react/components/cell-select)                     | [source](packages/uikit/src/components/forms/cell-select.tsx)             | [docs](apps/docs/content/docs/components/cell-select.mdx)           | [7/7](https://storybook.heroui.pro/?path=/docs/components-cellselect--docs) · [local](apps/storybook/src/components/forms/cell-select/cell-select.stories.tsx)                                | ⬜ Inventory |                                                                                                      |
 | [Cell Slider](https://heroui.pro/docs/react/components/cell-slider)                     | [source](packages/uikit/src/components/forms/cell-slider.tsx)             | [docs](apps/docs/content/docs/components/cell-slider.mdx)           | [7/7](https://storybook.heroui.pro/?path=/docs/components-cellslider--docs) · [local](apps/storybook/src/components/forms/cell-slider/cell-slider.stories.tsx)                                | ⬜ Inventory |                                                                                                      |
@@ -165,6 +165,22 @@ catalog.
   and visible rendering match.
 - Final verification still required: real touch, side-placement thresholds, custom fade
   transitions, dark mode, and reduced motion.
+
+### Resizable evidence
+
+- The live Pro docs hierarchy and all seven Storybook entries match the local inventory.
+- Initial accessibility snapshots match upstream exactly for Default, Vertical, Types, Variants,
+  Nested, With Collapse, and With Indicator.
+- Paired keyboard and pointer resizing produce identical separator values and geometry. Imperative
+  collapse/expand also matches, including button state, focus, and the collapsed separator value.
+- The latest `react-resizable-panels` DOM, ARIA attributes, generated ids, panel flex values, handle
+  classes, and cursor behavior match upstream.
+- Implemented the `createCookieStorage` helper already promised by the Pro/local docs, with encoded
+  cookie values, local-storage fallback, secure-cookie defaults, and configurable cookie policy.
+- Updated stale pre-v4 API names in the docs and composed consumer `onLayoutChanged` callbacks with
+  automatic persistence instead of silently replacing them.
+- Final verification still required: real touch resizing, persisted-layout reload and malformed
+  storage recovery, SSR cookie round-trip, nested constraint edges, dark mode, and reduced motion.
 
 ## HeroUI OSS/core audit
 

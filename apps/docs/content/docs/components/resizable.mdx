@@ -115,7 +115,7 @@ Pass `autoSaveId` to persist panel sizes to `localStorage`. Reloads restore the 
 
 ### SSR-friendly persistence with cookies
 
-On SSR frameworks, `localStorage` isn't available on the server, so the first paint uses the default sizes and the client re-renders after hydration. To avoid this flash, use `createCookieStorage` — a built-in helper that returns a cookie-backed `PanelGroupStorage`. Pass it to the `storage` prop alongside `autoSaveId`:
+On SSR frameworks, `localStorage` isn't available on the server, so the first paint uses the default sizes and the client re-renders after hydration. To avoid this flash, use `createCookieStorage` — a built-in helper that returns a cookie-backed `LayoutStorage`. Pass it to the `storage` prop alongside `autoSaveId`:
 
 ```tsx
 import { createCookieStorage, Resizable } from "@thenamespace/uikit";
@@ -189,14 +189,15 @@ export default async function Layout({
 
 ### Resizable
 
-| Prop          | Type                              | Default        | Description                                              |
-| ------------- | --------------------------------- | -------------- | -------------------------------------------------------- |
-| `orientation` | `"horizontal" \| "vertical"`      | `"horizontal"` | Layout direction.                                        |
-| `autoSaveId`  | `string`                          | —              | Unique id used to persist panel sizes to `localStorage`. |
-| `onLayout`    | `(sizes: number[]) => void`       | —              | Fires on every layout change (including while dragging). |
-| `storage`     | `PanelGroupStorage`               | `localStorage` | Custom storage implementation for SSR-safe persistence.  |
-| `id`          | `string`                          | —              | Unique identifier (required for nested groups).          |
-| `handleRef`   | `Ref<ImperativePanelGroupHandle>` | —              | Imperative handle (`setLayout`, `getLayout`).            |
+| Prop              | Type                                                    | Default        | Description                                                                 |
+| ----------------- | ------------------------------------------------------- | -------------- | --------------------------------------------------------------------------- |
+| `orientation`     | `"horizontal" \| "vertical"`                            | `"horizontal"` | Layout direction.                                                           |
+| `autoSaveId`      | `string`                                                | —              | Unique id used to persist panel sizes to `localStorage`.                    |
+| `onLayoutChange`  | `(layout: Record<string, number>) => void`              | —              | Fires while the layout is changing, including during pointer dragging.      |
+| `onLayoutChanged` | `(layout: Record<string, number>, meta) => void`        | —              | Fires after a completed change. Composes with persistence when both are set. |
+| `storage`         | `LayoutStorage`                                         | `localStorage` | Custom synchronous storage implementation for persistence.                  |
+| `id`              | `string \| number`                                      | —              | Unique identifier (required for nested groups).                             |
+| `handleRef`       | `Ref<GroupImperativeHandle \| null>`                    | —              | Imperative handle (`setLayout`, `getLayout`).                               |
 
 ### Resizable.Panel
 
