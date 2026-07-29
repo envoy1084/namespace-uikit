@@ -81,6 +81,7 @@ const MemoizedBlock = memo(function MemoizedBlock({
     </div>
   );
 });
+MemoizedBlock.displayName = "MemoizedMarkdownBlock";
 export interface MarkdownProps extends Omit<ComponentPropsWithRef<"div">, "children"> {
   children: string;
   components?: Partial<Components>;

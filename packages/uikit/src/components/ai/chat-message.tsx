@@ -46,11 +46,11 @@ export function ChatMessageAction({
   const button = (
     <Button
       isIconOnly
-      aria-label={ariaLabel ?? "Message action"}
       className={cls("chat-message__action", className)}
       data-slot="chat-message-action"
       size="sm"
       variant="ghost"
+      {...(ariaLabel === undefined ? {} : { "aria-label": ariaLabel })}
       {...props}
     >
       {children}

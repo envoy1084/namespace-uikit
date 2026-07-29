@@ -1,10 +1,11 @@
 /* oxlint-disable react/no-danger -- Shiki escapes source and returns trusted highlighted markup. */
 "use client";
 
-import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
+import type { ComponentPropsWithRef, ReactElement, ReactNode, SVGProps } from "react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 import { Button, cn } from "@heroui/react";
+import { AnimatePresence, domAnimation, LazyMotion, m, useReducedMotion } from "motion/react";
 import { codeToHtml } from "shiki";
 
 const Context = createContext(true);
@@ -134,26 +135,50 @@ export function CodeBlockCode({
     </div>
   );
 }
-const CopyIcon = (): ReactElement => (
-  <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
-    <rect height="13" rx="2" stroke="currentColor" strokeWidth="2" width="13" x="8" y="8" />
-    <path
-      d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"
-      stroke="currentColor"
-      strokeWidth="2"
-    />
-  </svg>
+const icon =
+  (path: string) =>
+  (props: SVGProps<SVGSVGElement>): ReactElement => (
+    <svg
+      fill="none"
+      height="16"
+      viewBox="0 0 16 16"
+      width="16"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path clipRule="evenodd" d={path} fill="currentColor" fillRule="evenodd" />
+    </svg>
+  );
+const CopyIcon = icon(
+  "M12 2.5H8A1.5 1.5 0 0 0 6.5 4v1H8a3 3 0 0 1 3 3v1.5h1A1.5 1.5 0 0 0 13.5 8V4A1.5 1.5 0 0 0 12 2.5M11 11h1a3 3 0 0 0 3-3V4a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v1H4a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3h4a3 3 0 0 0 3-3zM4 6.5h4A1.5 1.5 0 0 1 9.5 8v4A1.5 1.5 0 0 1 8 13.5H4A1.5 1.5 0 0 1 2.5 12V8A1.5 1.5 0 0 1 4 6.5",
 );
-const CheckIcon = (): ReactElement => (
-  <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
-    <path
-      d="m5 12 4 4L19 6"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-    />
-  </svg>
+const CheckIcon = icon(
+  "M13.488 3.43a.75.75 0 0 1 .081 1.058l-6 7a.75.75 0 0 1-1.1.042l-3.5-3.5A.75.75 0 0 1 4.03 6.97l2.928 2.927 5.473-6.385a.75.75 0 0 1 1.057-.081",
+);
+const CopyMotionIcon = ({
+  copied,
+  reduceMotion,
+}: {
+  copied: boolean;
+  reduceMotion: boolean | null;
+}): ReactElement => (
+  <LazyMotion features={domAnimation}>
+    <AnimatePresence initial={false} mode="popLayout">
+      <m.span
+        animate={reduceMotion ? { opacity: 1 } : { filter: "blur(0px)", opacity: 1, scale: 1 }}
+        className="flex size-3.5 items-center justify-center"
+        data-slot="code-block-copy-button-icon-motion"
+        exit={reduceMotion ? { opacity: 0 } : { filter: "blur(4px)", opacity: 0, scale: 0.25 }}
+        initial={reduceMotion ? { opacity: 0 } : { filter: "blur(4px)", opacity: 0, scale: 0.25 }}
+        key={copied ? "check" : "copy"}
+        transition={
+          reduceMotion ? { duration: 0.12 } : { bounce: 0, duration: 0.3, type: "spring" }
+        }
+      >
+        {copied ? <CheckIcon className="size-3.5" /> : <CopyIcon className="size-3.5" />}
+      </m.span>
+    </AnimatePresence>
+  </LazyMotion>
 );
 export interface CodeBlockCopyButtonProps {
   "aria-label"?: string;
@@ -168,6 +193,7 @@ export function CodeBlockCopyButton({
   useContext(Context);
   const [copied, setCopied] = useState(false);
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reduceMotion = useReducedMotion();
   useEffect(
     () => () => {
       if (timeout.current) clearTimeout(timeout.current);
@@ -192,15 +218,12 @@ export function CodeBlockCopyButton({
       isIconOnly
       aria-label={ariaLabel}
       className={part("code-block__copy-button", className)}
-      data-copied={copied || undefined}
       data-slot="code-block-copy-button"
       size="sm"
       variant="ghost"
       onPress={copy}
     >
-      <span className="code-block__copy-button-icon" data-slot="code-block-copy-button-icon-motion">
-        {copied ? <CheckIcon /> : <CopyIcon />}
-      </span>
+      <CopyMotionIcon copied={copied} reduceMotion={reduceMotion} />
     </Button>
   );
 }
