@@ -3,8 +3,6 @@ import { ArrowUpRight01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { NameRegistration } from "ens-components";
 
 import { RegistrationHeaderGraphic, RegistrationSuccessGraphic } from "../component-graphics";
-import { SectionLabel } from "./section-label";
-
 const registrationGraphics = {
   processGraphic: <RegistrationHeaderGraphic />,
   searchGraphic: <RegistrationHeaderGraphic />,
@@ -29,9 +27,8 @@ export function RegistrationShowcase() {
       id="name-registration"
     >
       <div className="lg:sticky lg:top-28 lg:pt-6">
-        <SectionLabel>Available now</SectionLabel>
         <Typography.Heading
-          className="mt-4 text-[clamp(2.4rem,4vw,4.6rem)] leading-[1.06] font-semibold tracking-[-0.04em] text-balance"
+          className="text-[clamp(2.4rem,4vw,4.6rem)] leading-[1.06] font-semibold tracking-[-0.04em] text-balance"
           id="registration-title"
           level={2}
         >

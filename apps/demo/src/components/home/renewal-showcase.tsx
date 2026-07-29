@@ -3,8 +3,6 @@ import { ArrowUpRight01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { NameRenewal } from "ens-components";
 
 import { RegistrationHeaderGraphic, RegistrationSuccessGraphic } from "../component-graphics";
-import { SectionLabel } from "./section-label";
-
 const DEMO_NAME = "enscomponents.eth";
 const renewalGraphics = {
   formGraphic: <RegistrationHeaderGraphic />,
@@ -33,9 +31,8 @@ export function RenewalShowcase() {
         </div>
 
         <div className="lg:sticky lg:top-28 lg:pt-6">
-          <SectionLabel>Available now</SectionLabel>
           <Typography.Heading
-            className="mt-4 text-[clamp(2.4rem,4vw,4.6rem)] leading-[1.06] font-semibold tracking-[-0.04em] text-balance"
+            className="text-[clamp(2.4rem,4vw,4.6rem)] leading-[1.06] font-semibold tracking-[-0.04em] text-balance"
             id="renewal-title"
             level={2}
           >

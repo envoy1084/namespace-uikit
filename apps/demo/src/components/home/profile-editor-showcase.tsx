@@ -6,8 +6,6 @@ import { formatError, NameProfileEditor } from "ens-components";
 import { useNameProfile } from "ens-components/hooks";
 
 import { RegistrationHeaderGraphic, RegistrationSuccessGraphic } from "../component-graphics";
-import { SectionLabel } from "./section-label";
-
 const profileGraphics = {
   reviewGraphic: <RegistrationHeaderGraphic />,
   successGraphic: <RegistrationSuccessGraphic />,
@@ -70,9 +68,8 @@ export function ProfileEditorShowcase() {
       id="name-profile-editor"
     >
       <div className="lg:sticky lg:top-28 lg:pt-6">
-        <SectionLabel>Available now</SectionLabel>
         <Typography.Heading
-          className="mt-4 text-[clamp(2.4rem,4vw,4.6rem)] leading-[1.06] font-semibold tracking-[-0.04em] text-balance"
+          className="text-[clamp(2.4rem,4vw,4.6rem)] leading-[1.06] font-semibold tracking-[-0.04em] text-balance"
           id="profile-editor-title"
           level={2}
         >
