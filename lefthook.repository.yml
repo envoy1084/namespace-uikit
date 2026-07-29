@@ -1,0 +1,4 @@
+pre-push:
+  jobs:
+    - name: check
+      run: node scripts/run-turbo.mjs run typecheck build
