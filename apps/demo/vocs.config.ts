@@ -16,12 +16,9 @@ export default defineConfig({
   },
   iconUrl: "/namespace.svg",
   logoUrl: {
-    dark: "/ens-components-logo-dark.svg",
+    dark: "/ens-components-logo-dark.png",
     light: "/ens-components-logo-light.svg",
   },
-  ogImageUrl: (_path, { baseUrl }) =>
-    `${baseUrl ?? ""}/api/og?title=%title&description=%description`,
-  renderStrategy: "partial-static",
   sidebar: {
     "/docs": [
       {
