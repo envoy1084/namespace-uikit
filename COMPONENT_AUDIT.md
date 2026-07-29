@@ -460,8 +460,23 @@ type/helper entry point.
       `react-aria 3.50`, `@react-stately/* 3.48` family).
 - [x] Peer dependency pack inspection passes.
 - [x] `pnpm check` passes after the dependency and toolchain upgrades.
-- [ ] Repeat the complete validation after every component-fix batch.
-- [ ] Perform a final packed-tarball consumer smoke test after component fidelity is complete.
+- [x] Repeat the complete validation after every component-fix batch.
+- [x] Perform a final packed-tarball consumer smoke test after component fidelity is complete.
+
+### Packed-package release evidence
+
+- The final UIKit build generated all 149 component entry points and passed export generation,
+  shared dependency alignment, declaration generation, and `publint`.
+- `pnpm pack` produced a `0.2.1` tarball with 157 public export-map keys. Catalog references were
+  correctly materialized to the pinned HeroUI `3.2.2`, React Aria Components `1.19.0`, React Aria
+  `3.50.0`, and aligned React Stately/React Types peer versions.
+- A clean external pnpm project installed the tarball and its peers, typechecked representative
+  root, component-subpath, icon, CSS, OSS, Pro, AI, and overlay imports, and successfully loaded the
+  root, Calendar, and icons entry points at runtime.
+- The consumer smoke uses TypeScript's `Bundler` resolution and `skipLibCheck`, matching the
+  repository and typical Next/Vite application configuration. HeroUI/MapLibre/Number Flow
+  dependency declarations do not pass a consumer-wide `skipLibCheck: false` check; that limitation
+  is upstream rather than emitted by Namespace's declarations.
 
 ## Audit sequence
 
