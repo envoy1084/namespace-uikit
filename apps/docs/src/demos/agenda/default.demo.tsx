@@ -2,7 +2,7 @@
 "use client";
 
 // @demo-title Default
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { CalendarDateTime } from "@internationalized/date";
 import { Agenda, type AgendaEventData, useAgenda } from "@thenamespace/uikit";
@@ -19,129 +19,182 @@ function initialEvents(): AgendaEventData[] {
     {
       color: "#10b981",
       end: at(year, month, day + 2, 23, 59),
-      id: "holiday",
+      id: "allday-1",
       isAllDay: true,
-      start: at(year, month, day),
+      start: at(year, month, day, 0),
       title: "Company Holiday",
     },
     {
       color: "#3b82f6",
       end: at(year, month, day, 23, 59),
-      id: "offsite",
+      id: "allday-2",
       isAllDay: true,
-      start: at(year, month, day),
+      start: at(year, month, day, 0),
       title: "Team Offsite",
     },
     {
       end: at(year, month, day, 9, 30),
-      id: "standup",
+      id: "1",
       start: at(year, month, day, 9),
       title: "Team Standup",
     },
     {
       color: "#d946ef",
       end: at(year, month, day, 13),
-      id: "lunch",
+      id: "2",
       start: at(year, month, day, 12),
       title: "Lunch",
     },
     {
       color: "#3b82f6",
       end: at(year, month, day, 15, 30),
-      id: "review",
+      id: "3",
       start: at(year, month, day, 14),
       title: "Design Review",
     },
     {
       color: "#10b981",
       end: at(year, month, day, 16, 30),
-      id: "one-one",
+      id: "4",
       start: at(year, month, day, 16),
       title: "1:1 with Manager",
     },
     {
       color: "#f59e0b",
-      end: at(year, month, day + 1, 10),
-      id: "product",
-      start: at(year, month, day + 1, 9),
+      end: at(year, month, day, 10),
+      id: "5",
+      start: at(year, month, day, 9),
       title: "Product Sync",
     },
     {
       color: "#8b5cf6",
-      end: at(year, month, day + 1, 10, 15),
-      id: "eng",
-      start: at(year, month, day + 1, 9, 15),
+      end: at(year, month, day, 10, 15),
+      id: "6",
+      start: at(year, month, day, 9, 15),
       title: "Eng Huddle",
     },
     {
       color: "#ef4444",
-      end: at(year, month, day + 1, 15, 30),
-      id: "client",
-      start: at(year, month, day + 1, 14, 30),
+      end: at(year, month, day, 15, 30),
+      id: "7",
+      start: at(year, month, day, 14, 30),
       title: "Client Call",
     },
     {
       color: "#06b6d4",
-      end: at(year, month, day + 2, 14, 20),
-      id: "check-in",
-      start: at(year, month, day + 2, 14),
+      end: at(year, month, day, 14, 20),
+      id: "8",
+      start: at(year, month, day, 14),
       title: "Quick Check-in",
     },
     {
-      color: "#06b6d4",
-      end: at(year, month, day + 2, 15),
-      id: "wrap-up",
-      start: at(year, month, day + 2, 14, 40),
+      color: "#84cc16",
+      end: at(year, month, day, 15),
+      id: "9",
+      start: at(year, month, day, 14, 40),
       title: "Wrap-up Notes",
     },
     {
+      color: "#f59e0b",
+      end: at(year, month, day - 1, 11, 30),
+      id: "10",
+      start: at(year, month, day - 1, 10),
+      title: "Sprint Planning",
+    },
+    {
+      color: "#8b5cf6",
+      end: at(year, month, day + 3, 16),
+      id: "11",
+      start: at(year, month, day + 3, 15),
+      title: "Retro",
+    },
+    {
+      color: "#ef4444",
+      end: at(year, month, day + 9, 16, 30),
+      id: "12",
+      start: at(year, month, day + 9, 16),
+      title: "1:1 with Manager",
+    },
+    {
+      color: "#10b981",
+      end: at(year, month, day + 13, 23, 59),
+      id: "13",
+      isAllDay: true,
+      start: at(year, month, day + 13, 0),
+      title: "Holiday",
+    },
+    {
+      color: "#10b981",
+      end: at(year, month, day + 2, 12),
+      id: "14",
+      start: at(year, month, day + 2, 11),
+      title: "Code Review",
+    },
+    {
       color: "#3b82f6",
-      end: at(year, month, day + 3, 11, 15),
-      id: "planning",
-      start: at(year, month, day + 3, 10, 15),
+      end: at(year, month, day + 8, 10, 30),
+      id: "15",
+      start: at(year, month, day + 8, 9),
+      title: "Board Meeting",
+    },
+    {
+      color: "#3b82f6",
+      end: at(year, month, day, 11, 15),
+      id: "16",
+      start: at(year, month, day, 10, 15),
       status: "unconfirmed",
       title: "Planning",
     },
     {
       color: "#6b7280",
-      end: at(year, month, day + 4, 10),
-      id: "allhands",
+      end: at(year, month, day + 1, 10),
+      id: "17",
       isReadOnly: true,
-      start: at(year, month, day + 4, 9),
+      start: at(year, month, day + 1, 9),
       title: "Company All-Hands",
-    },
-    {
-      color: "#8b5cf6",
-      end: at(year, month, day + 4, 12),
-      id: "code-review",
-      start: at(year, month, day + 4, 11),
-      title: "Code Review",
-    },
-    {
-      color: "#ef4444",
-      end: at(year, month, day + 4, 16),
-      id: "retro",
-      start: at(year, month, day + 4, 15),
-      title: "Retro",
     },
   ];
 }
 
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const update = (event: MediaQueryListEvent | MediaQueryList) => setMatches(event.matches);
+
+    update(media);
+    media.addEventListener("change", update);
+
+    return () => media.removeEventListener("change", update);
+  }, [query]);
+
+  return matches;
+}
+
+let nextEventId = 100;
+const eventColors = ["#3b82f6", "#10b981", "#f59e0b", "#d946ef", "#8b5cf6", "#ef4444", "#06b6d4"];
+
 function Demo() {
   const seed = useMemo(initialEvents, []);
   const [events, setEvents] = useState(seed);
+  const isMobile = useMediaQuery("(max-width: 639px)");
   const create = useCallback(
-    ({ end, start }: { end: CalendarDateTime; start: CalendarDateTime }) =>
+    ({ end, start }: { end: CalendarDateTime; start: CalendarDateTime }) => {
+      const id = String(nextEventId++);
+      const color = eventColors[nextEventId % eventColors.length];
+
       setEvents((current) => [
         ...current,
         {
-          color: "#06b6d4",
+          color,
           end,
-          id: `new-${current.length}`,
+          id,
           start,
           title: "New Event",
         },
-      ]),
+      ]);
+    },
     [],
   );
   const move = useCallback(
@@ -158,10 +211,11 @@ function Demo() {
   const state = useAgenda({
     defaultView: "week",
     events,
-    onEventCreate: create,
+    onEventCreate: isMobile ? undefined : create,
     onEventDelete: remove,
-    onEventMove: move,
-    onEventResize: move,
+    onEventMove: isMobile ? undefined : move,
+    onEventResize: isMobile ? undefined : move,
+    weekDays: isMobile ? 3 : 7,
   });
   return (
     <div className="h-[600px] w-full">
@@ -197,10 +251,10 @@ function Demo() {
             </>
           ) : (
             <Agenda.MonthGrid>
-              {state.visibleWeeks.map((week, row) => {
+              {state.visibleWeeks.map((week) => {
                 const layout = state.getMonthRowLayout(week);
                 return (
-                  <Agenda.MonthRow key={row} spanningRowCount={layout.rowCount}>
+                  <Agenda.MonthRow key={week[0]?.toString()} spanningRowCount={layout.rowCount}>
                     {layout.items.map((item) => (
                       <Agenda.MonthSpanningEvent {...item} key={item.event.id} />
                     ))}
@@ -208,14 +262,12 @@ function Demo() {
                       <Agenda.MonthCell
                         date={date}
                         key={date.toString()}
+                        maxEvents={isMobile ? 1 : 2}
                         spanningRowCount={layout.rowCountPerCol[column] ?? 0}
                       >
-                        {state
-                          .getPerCellEvents(date, week)
-                          .slice(0, 2)
-                          .map((event) => (
-                            <Agenda.MonthEvent event={event} key={event.id} />
-                          ))}
+                        {state.getPerCellEvents(date, week).map((event) => (
+                          <Agenda.MonthEvent event={event} key={event.id} />
+                        ))}
                       </Agenda.MonthCell>
                     ))}
                   </Agenda.MonthRow>
