@@ -132,7 +132,7 @@ export function ProfileDiffScreen({
       </NameProfileEditorBody>
 
       <NameProfileEditorFooter
-        className="mt-5 flex-col px-3 min-[420px]:px-6"
+        className="mt-5 flex-col px-3 pb-3 min-[420px]:px-6 min-[420px]:pb-6"
         presentation={presentation}
       >
         {isConfirming ? (

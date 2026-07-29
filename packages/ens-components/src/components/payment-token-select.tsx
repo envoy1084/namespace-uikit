@@ -46,7 +46,7 @@ export function PaymentTokenSelect({
     >
       <InlineSelect.Trigger className="gap-1.5">
         <TokenIcon token={selectedToken} />
-        <span className="text-xs font-medium">{selectedToken.symbol}</span>
+        <span className="text-foreground text-xs font-medium">{selectedToken.symbol}</span>
         <InlineSelect.Indicator />
       </InlineSelect.Trigger>
       <InlineSelect.Popover className="min-w-32">
@@ -54,7 +54,7 @@ export function PaymentTokenSelect({
           {tokens.map((token) => (
             <ListBox.Item id={token.address} key={token.address} textValue={token.symbol}>
               <TokenIcon token={token} />
-              <span className="text-sm font-medium">{token.symbol}</span>
+              <span className="text-foreground text-sm font-medium">{token.symbol}</span>
               <ListBox.ItemIndicator />
             </ListBox.Item>
           ))}
