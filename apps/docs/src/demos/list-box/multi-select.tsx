@@ -1,10 +1,4 @@
-import {
-  Avatar,
-  Description,
-  Label,
-  ListBox,
-  Surface,
-} from "@thenamespace/uikit";
+import { Avatar, Description, Label, ListBox, Surface } from "@thenamespace/uikit";
 
 export function MultiSelect() {
   return (

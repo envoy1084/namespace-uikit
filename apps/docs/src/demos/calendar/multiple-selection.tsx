@@ -1,9 +1,8 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { Calendar, Description } from "@thenamespace/uikit";
 
 export function MultipleSelection() {
@@ -11,12 +10,7 @@ export function MultipleSelection() {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <Calendar
-        aria-label="Event dates"
-        selectionMode="multiple"
-        value={value}
-        onChange={setValue}
-      >
+      <Calendar aria-label="Event dates" selectionMode="multiple" value={value} onChange={setValue}>
         <Calendar.Header>
           <Calendar.Heading />
           <Calendar.NavButton slot="previous" />
@@ -26,15 +20,11 @@ export function MultipleSelection() {
           <Calendar.GridHeader>
             {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
           </Calendar.GridHeader>
-          <Calendar.GridBody>
-            {(date) => <Calendar.Cell date={date} />}
-          </Calendar.GridBody>
+          <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
         </Calendar.Grid>
       </Calendar>
       <Description className="text-center">
-        {value?.length
-          ? `${value.length} date(s) selected`
-          : "Select multiple dates"}
+        {value?.length ? `${value.length} date(s) selected` : "Select multiple dates"}
       </Description>
     </div>
   );

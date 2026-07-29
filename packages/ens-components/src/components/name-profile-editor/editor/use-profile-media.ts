@@ -1,5 +1,8 @@
 "use client";
 
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { useRef, useState } from "react";
+
 import type { UseFormReturn } from "react-hook-form";
 
 import type { ProfileEditorSection } from "#/components/name-profile-editor/editor/types";
@@ -9,10 +12,6 @@ import type {
   NameProfileImageUpload,
   NameProfileTextRecord,
 } from "#/components/name-profile-editor/types";
-
-import type { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { useRef, useState } from "react";
-
 import { formatError } from "#/lib/error";
 
 function textRecordValue(
@@ -43,9 +42,7 @@ export function useProfileMedia({
   uploadImage?: NameProfileImageUpload | undefined;
   values: NameProfileFormValues;
 }) {
-  const [uploadingRecords, setUploadingRecords] = useState<
-    Set<NameProfileImageRecord>
-  >(new Set());
+  const [uploadingRecords, setUploadingRecords] = useState<Set<NameProfileImageRecord>>(new Set());
   const [uploadError, setUploadError] = useState<string>();
   const avatarInput = useRef<HTMLInputElement>(null);
   const headerInput = useRef<HTMLInputElement>(null);
@@ -84,10 +81,7 @@ export function useProfileMedia({
     (record === "avatar" ? avatarInput : headerInput).current?.click();
   }
 
-  async function uploadMedia(
-    record: NameProfileImageRecord,
-    event: ChangeEvent<HTMLInputElement>,
-  ) {
+  async function uploadMedia(record: NameProfileImageRecord, event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     event.target.value = "";
     if (file === undefined || uploadImage === undefined) return;

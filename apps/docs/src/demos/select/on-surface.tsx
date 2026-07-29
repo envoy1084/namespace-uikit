@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Button,
-  FieldError,
-  Form,
-  Label,
-  ListBox,
-  Select,
-  Surface,
-} from "@thenamespace/uikit";
+import { Button, FieldError, Form, Label, ListBox, Select, Surface } from "@thenamespace/uikit";
 
 export function OnSurface() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {

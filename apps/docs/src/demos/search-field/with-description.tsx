@@ -7,10 +7,7 @@ export function WithDescription() {
         <Label>Search products</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input
-            className="w-[280px]"
-            placeholder="Search products..."
-          />
+          <SearchField.Input className="w-[280px]" placeholder="Search products..." />
           <SearchField.ClearButton />
         </SearchField.Group>
         <Description>Enter keywords to search for products</Description>
@@ -19,10 +16,7 @@ export function WithDescription() {
         <Label>Search users</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input
-            className="w-[280px]"
-            placeholder="Search users..."
-          />
+          <SearchField.Input className="w-[280px]" placeholder="Search users..." />
           <SearchField.ClearButton />
         </SearchField.Group>
         <Description>Search by name, email, or username</Description>

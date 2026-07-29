@@ -19,22 +19,15 @@ export function WithImages() {
             <Card.Header className="gap-1">
               <Card.Title className="pr-8">Become an ACME Creator!</Card.Title>
               <Card.Description>
-                Lorem ipsum dolor sit amet consectetur. Sed arcu donec id
-                aliquam dolor sed amet faucibus etiam.
+                Lorem ipsum dolor sit amet consectetur. Sed arcu donec id aliquam dolor sed amet
+                faucibus etiam.
               </Card.Description>
-              <CloseButton
-                aria-label="Close banner"
-                className="absolute top-3 right-3"
-              />
+              <CloseButton aria-label="Close banner" className="absolute top-3 right-3" />
             </Card.Header>
             <Card.Footer className="mt-auto flex w-full flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex flex-col">
-                <span className="text-foreground text-sm font-medium">
-                  Only 10 spots
-                </span>
-                <span className="text-muted text-xs">
-                  Submission ends Oct 10.
-                </span>
+                <span className="text-foreground text-sm font-medium">Only 10 spots</span>
+                <span className="text-muted text-xs">Submission ends Oct 10.</span>
               </div>
               <Button className="w-full sm:w-auto">Apply Now</Button>
             </Card.Footer>
@@ -58,9 +51,7 @@ export function WithImages() {
                   role="img"
                 />
                 <div className="flex flex-col gap-1">
-                  <span className="text-muted text-xs font-medium uppercase">
-                    PAYMENT
-                  </span>
+                  <span className="text-muted text-xs font-medium uppercase">PAYMENT</span>
                   <Card.Title className="pr-8 text-sm sm:text-base">
                     You can now withdraw on crypto
                   </Card.Title>
@@ -70,11 +61,7 @@ export function WithImages() {
                 </div>
               </Card.Header>
               <Card.Footer>
-                <Link
-                  aria-label="Go to settings"
-                  href="#"
-                  rel="noopener noreferrer"
-                >
+                <Link aria-label="Go to settings" href="#" rel="noopener noreferrer">
                   Go to settings
                   <Link.Icon aria-hidden="true" />
                 </Link>
@@ -147,16 +134,10 @@ export function WithImages() {
             {/* Footer */}
             <Card.Footer className="z-10 mt-auto flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-black">
-                  Available soon
-                </div>
+                <div className="text-sm font-medium text-black">Available soon</div>
                 <div className="text-xs text-black/60">Get notified</div>
               </div>
-              <Button
-                className="bg-white text-black"
-                size="sm"
-                variant="tertiary"
-              >
+              <Button className="bg-white text-black" size="sm" variant="tertiary">
                 Notify me
               </Button>
             </Card.Footer>
@@ -176,18 +157,10 @@ export function WithImages() {
 
             <Card.Footer className="z-10 mt-auto flex items-end justify-between">
               <div>
-                <div className="text-base font-medium text-black sm:text-lg">
-                  NEO
-                </div>
-                <div className="text-xs font-medium text-black/50 sm:text-sm">
-                  $499/m
-                </div>
+                <div className="text-base font-medium text-black sm:text-lg">NEO</div>
+                <div className="text-xs font-medium text-black/50 sm:text-sm">$499/m</div>
               </div>
-              <Button
-                className="bg-white text-black"
-                size="sm"
-                variant="tertiary"
-              >
+              <Button className="bg-white text-black" size="sm" variant="tertiary">
                 Get now
               </Button>
             </Card.Footer>
@@ -205,9 +178,7 @@ export function WithImages() {
               />
               <div className="flex flex-1 flex-col justify-center gap-1">
                 <Card.Title className="text-sm">Bridging the Future</Card.Title>
-                <Card.Description className="text-xs">
-                  Today, 6:30 PM
-                </Card.Description>
+                <Card.Description className="text-xs">Today, 6:30 PM</Card.Description>
               </div>
             </Card>
             {/* 2 */}
@@ -220,9 +191,7 @@ export function WithImages() {
               />
               <div className="flex flex-1 flex-col justify-center gap-1">
                 <Card.Title className="text-sm">Avocado Hackathon</Card.Title>
-                <Card.Description className="text-xs">
-                  Wed, 4:30 PM
-                </Card.Description>
+                <Card.Description className="text-xs">Wed, 4:30 PM</Card.Description>
               </div>
             </Card>
             {/* 3 */}
@@ -234,12 +203,8 @@ export function WithImages() {
                 src="/assets/docs/oranges.jpeg"
               />
               <div className="flex flex-1 flex-col justify-center gap-1">
-                <Card.Title className="text-sm">
-                  Sound Electro | Beyond art
-                </Card.Title>
-                <Card.Description className="text-xs">
-                  Fri, 8:00 PM
-                </Card.Description>
+                <Card.Title className="text-sm">Sound Electro | Beyond art</Card.Title>
+                <Card.Description className="text-xs">Fri, 8:00 PM</Card.Description>
               </div>
             </Card>
           </div>

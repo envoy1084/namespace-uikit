@@ -1,9 +1,8 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import { Description, RangeCalendar } from "@thenamespace/uikit";
 
@@ -36,9 +35,7 @@ export function Invalid() {
         </RangeCalendar.Header>
         <RangeCalendar.Grid>
           <RangeCalendar.GridHeader>
-            {(day) => (
-              <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-            )}
+            {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
           </RangeCalendar.GridHeader>
           <RangeCalendar.GridBody>
             {(date) => <RangeCalendar.Cell date={date} />}
@@ -48,9 +45,7 @@ export function Invalid() {
       {isInvalid ? (
         <p className="text-danger text-sm">Maximum stay duration is 1 week</p>
       ) : (
-        <Description className="text-center">
-          Select a stay of up to 7 days
-        </Description>
+        <Description className="text-center">Select a stay of up to 7 days</Description>
       )}
     </div>
   );

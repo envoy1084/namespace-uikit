@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta } from "@storybook/react";
 
 import type { SkeletonProps } from "./index";
 import { Skeleton } from "./index";

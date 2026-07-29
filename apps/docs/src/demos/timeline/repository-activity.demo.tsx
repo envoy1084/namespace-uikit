@@ -85,15 +85,11 @@ export const DemoRepositoryActivityExample = () => (
           <Timeline.Content className="gap-2.5">
             <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
               <div className="min-w-0">
-                <h3 className="text-foreground m-0 text-sm leading-5 font-medium">
-                  {item.title}
-                </h3>
+                <h3 className="text-foreground m-0 text-sm leading-5 font-medium">{item.title}</h3>
                 <p className="text-muted m-0 text-xs leading-5">{item.actor}</p>
               </div>
               {"date" in item ? (
-                <time className="text-muted shrink-0 text-xs leading-5">
-                  {item.date}
-                </time>
+                <time className="text-muted shrink-0 text-xs leading-5">{item.date}</time>
               ) : null}
             </div>
             {"repositories" in item ? (
@@ -120,9 +116,7 @@ export const DemoRepositoryActivityExample = () => (
                     icon={GitPullRequestIcon}
                   />
                   <div className="min-w-0">
-                    <Card.Title className="text-sm leading-5">
-                      {item.pullRequest.title}
-                    </Card.Title>
+                    <Card.Title className="text-sm leading-5">{item.pullRequest.title}</Card.Title>
                     <Card.Description className="mt-1 text-xs leading-5">
                       {item.pullRequest.description}
                     </Card.Description>
@@ -142,9 +136,7 @@ export const DemoRepositoryActivityExample = () => (
                     <span className="bg-danger size-2" />
                     <span className="bg-separator size-2" />
                   </div>
-                  <span className="text-muted text-xs">
-                    - {item.pullRequest.comments}
-                  </span>
+                  <span className="text-muted text-xs">- {item.pullRequest.comments}</span>
                 </Card.Footer>
               </Card>
             ) : null}

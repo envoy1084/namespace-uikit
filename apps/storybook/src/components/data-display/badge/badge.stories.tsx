@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta } from "@storybook/react";
 
 import { Avatar } from "@/components/data-display/avatar";
 import { Separator } from "@/components/layout/separator";
@@ -161,12 +161,7 @@ const WithContentTemplate = (props: BadgeProps) => (
 );
 
 const PlacementsTemplate = () => {
-  const placements = [
-    "top-right",
-    "top-left",
-    "bottom-right",
-    "bottom-left",
-  ] as const;
+  const placements = ["top-right", "top-left", "bottom-right", "bottom-left"] as const;
 
   return (
     <div className="flex items-center gap-8">
@@ -194,9 +189,7 @@ const VariantsTemplate = () => {
       {variants.map((variant, index) => (
         <React.Fragment key={variant}>
           <div className="flex flex-col gap-4">
-            <h3 className="text-muted text-sm font-semibold capitalize">
-              {variant}
-            </h3>
+            <h3 className="text-muted text-sm font-semibold capitalize">{variant}</h3>
             <div className="flex items-center gap-8">
               {colors.map((color) => (
                 <div key={color} className="flex flex-col items-center gap-2">

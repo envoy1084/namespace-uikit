@@ -16,9 +16,8 @@ const Assistant = ({ children }: { children: React.ReactNode }) => (
 export const DemoComposableExample = () => (
   <Assistant>
     <ChatMessage.Content>
-      React&apos;s documentation has a clear explanation of component
-      composition and state-driven rendering. The source chip below uses custom
-      trigger content with a fetched favicon.
+      React&apos;s documentation has a clear explanation of component composition and state-driven
+      rendering. The source chip below uses custom trigger content with a fetched favicon.
     </ChatMessage.Content>
     <ChatSource enablePreview href="https://react.dev">
       <ChatSource.Trigger>
@@ -29,9 +28,7 @@ export const DemoComposableExample = () => (
         <div className="flex max-w-72 flex-col gap-2">
           <div className="flex items-center gap-2">
             <ChatSource.Icon faviconUrl={favicon("https://react.dev")} />
-            <span className="text-foreground text-sm font-medium">
-              react.dev
-            </span>
+            <span className="text-foreground text-sm font-medium">react.dev</span>
           </div>
           <p className="text-muted text-sm">
             Official React documentation for learning modern React patterns.

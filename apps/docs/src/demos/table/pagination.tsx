@@ -89,26 +89,17 @@ export function PaginationDemo() {
   return (
     <Table>
       <Table.ScrollContainer>
-        <Table.Content
-          aria-label="Table with pagination"
-          className="min-w-[600px]"
-        >
+        <Table.Content aria-label="Table with pagination" className="min-w-[600px]">
           <Table.Header columns={columns}>
             {(column) => (
-              <Table.Column isRowHeader={column.id === "name"}>
-                {column.name}
-              </Table.Column>
+              <Table.Column isRowHeader={column.id === "name"}>{column.name}</Table.Column>
             )}
           </Table.Header>
           <Table.Body items={paginatedItems}>
             {(user) => (
               <Table.Row>
                 <Table.Collection items={columns}>
-                  {(column) => (
-                    <Table.Cell>
-                      {user[column.id as keyof typeof user]}
-                    </Table.Cell>
-                  )}
+                  {(column) => <Table.Cell>{user[column.id as keyof typeof user]}</Table.Cell>}
                 </Table.Collection>
               </Table.Row>
             )}
@@ -132,10 +123,7 @@ export function PaginationDemo() {
             </Pagination.Item>
             {pages.map((p) => (
               <Pagination.Item key={p}>
-                <Pagination.Link
-                  isActive={p === page}
-                  onPress={() => setPage(p)}
-                >
+                <Pagination.Link isActive={p === page} onPress={() => setPage(p)}>
                   {p}
                 </Pagination.Link>
               </Pagination.Item>

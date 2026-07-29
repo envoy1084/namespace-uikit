@@ -1,21 +1,11 @@
 "use client";
 
-import type {
-  GridListItemProps,
-  GridListProps,
-  SelectionMode,
-} from "react-aria-components";
-
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 import { createContext, useContext, useMemo, useRef } from "react";
 
 import { Checkbox, cn } from "@heroui/react";
-import {
-  GridList,
-  GridListItem,
-  ListLayout,
-  Virtualizer,
-} from "react-aria-components";
+import type { GridListItemProps, GridListProps, SelectionMode } from "react-aria-components";
+import { GridList, GridListItem, ListLayout, Virtualizer } from "react-aria-components";
 
 export type ListViewVariant = "primary" | "secondary";
 interface ListViewContextValue {
@@ -54,16 +44,10 @@ function ListViewRoot<T extends object>({
   ...props
 }: ListViewRootProps<T>): ReactElement {
   const ref = useRef<HTMLDivElement | null>(null);
-  const value = useMemo(
-    () => ({ selectionMode, variant }),
-    [selectionMode, variant],
-  );
+  const value = useMemo(() => ({ selectionMode, variant }), [selectionMode, variant]);
   const empty = renderEmptyState
     ? () => (
-        <div
-          className="list-view__empty-state"
-          data-slot="list-view-empty-state"
-        >
+        <div className="list-view__empty-state" data-slot="list-view-empty-state">
           {renderEmptyState()}
         </div>
       )
@@ -81,9 +65,7 @@ function ListViewRoot<T extends object>({
       data-slot="list-view"
       data-virtualized={virtualized || undefined}
       {...(empty ? { renderEmptyState: empty } : {})}
-      {...(selectionMode === "none"
-        ? {}
-        : { selectionBehavior, selectionMode })}
+      {...(selectionMode === "none" ? {} : { selectionBehavior, selectionMode })}
       {...props}
     >
       {children}
@@ -92,10 +74,7 @@ function ListViewRoot<T extends object>({
   return (
     <ListViewContext value={value}>
       {virtualized ? (
-        <Virtualizer
-          layout={ListLayout}
-          layoutOptions={{ estimatedRowHeight: rowHeight }}
-        >
+        <Virtualizer layout={ListLayout} layoutOptions={{ estimatedRowHeight: rowHeight }}>
           {grid}
         </Virtualizer>
       ) : (
@@ -108,32 +87,21 @@ function ListViewRoot<T extends object>({
 export interface ListViewItemProps extends Omit<GridListItemProps, "children"> {
   children: ReactNode;
 }
-function ListViewItem({
-  children,
-  className,
-  ...props
-}: ListViewItemProps): ReactElement {
+function ListViewItem({ children, className, ...props }: ListViewItemProps): ReactElement {
   const { selectionMode, variant } = useContext(ListViewContext);
   return (
     <GridListItem
       className={(state) =>
-        cn(
-          "list-view__item",
-          typeof className === "function" ? className(state) : className,
-        ) ?? "list-view__item"
+        cn("list-view__item", typeof className === "function" ? className(state) : className) ??
+        "list-view__item"
       }
       data-slot="list-view-item"
       {...props}
     >
       {({ selectionBehavior, selectionMode: currentMode }) => (
         <>
-          {selectionMode !== "none" &&
-          currentMode !== "none" &&
-          selectionBehavior === "toggle" ? (
-            <div
-              className="list-view__selection-cell"
-              data-slot="list-view-selection-cell"
-            >
+          {selectionMode !== "none" && currentMode !== "none" && selectionBehavior === "toggle" ? (
+            <div className="list-view__selection-cell" data-slot="list-view-selection-cell">
               <Checkbox
                 aria-label="Select row"
                 slot="selection"
@@ -175,11 +143,7 @@ function ListViewTitle({
   ...props
 }: ComponentPropsWithRef<"span">): ReactElement {
   return (
-    <span
-      className={cn("list-view__title", className)}
-      data-slot="list-view-title"
-      {...props}
-    >
+    <span className={cn("list-view__title", className)} data-slot="list-view-title" {...props}>
       {children}
     </span>
   );

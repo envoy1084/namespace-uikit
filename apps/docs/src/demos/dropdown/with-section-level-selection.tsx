@@ -1,25 +1,13 @@
 "use client";
 
-import type { Selection } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
-import {
-  Button,
-  Dropdown,
-  Header,
-  Kbd,
-  Label,
-  Separator,
-} from "@thenamespace/uikit";
+import type { Selection } from "@thenamespace/uikit";
+import { Button, Dropdown, Header, Kbd, Label, Separator } from "@thenamespace/uikit";
 
 export function WithSectionLevelSelection() {
-  const [textStyles, setTextStyles] = useState<Selection>(
-    new Set(["bold", "italic"]),
-  );
-  const [textAlignment, setTextAlignment] = useState<Selection>(
-    new Set(["left"]),
-  );
+  const [textStyles, setTextStyles] = useState<Selection>(new Set(["bold", "italic"]));
+  const [textAlignment, setTextAlignment] = useState<Selection>(new Set(["left"]));
 
   return (
     <Dropdown>

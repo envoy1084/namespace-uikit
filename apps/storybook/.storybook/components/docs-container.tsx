@@ -1,8 +1,7 @@
-import type { Preview } from "@storybook/react";
-
 import React, { useEffect, useMemo, useState } from "react";
 
 import { DocsContainer as StorybookDocsContainer } from "@storybook/addon-docs/blocks";
+import type { Preview } from "@storybook/react";
 import { addons } from "storybook/preview-api";
 
 import {
@@ -17,28 +16,23 @@ import { themes } from "../styles/theme";
  * Synchronize the documentation theme with the toolbar theme, matching HeroUI's
  * Storybook configuration.
  */
-export const DocsContainer: NonNullable<
-  Preview["parameters"]
->["docs"]["container"] = ({ children, context }) => {
+export const DocsContainer: NonNullable<Preview["parameters"]>["docs"]["container"] = ({
+  children,
+  context,
+}) => {
   const initialTheme = useMemo(
     () =>
-      ensureThemeKey(
-        (context?.globals?.[THEME_GLOBAL_TYPE_ID] as string | undefined) ||
-          undefined,
-      ),
+      ensureThemeKey((context?.globals?.[THEME_GLOBAL_TYPE_ID] as string | undefined) || undefined),
     [context?.globals],
   );
   const [themeKey, setThemeKey] = useState(initialTheme);
 
   useEffect(() => {
     const nextTheme = ensureThemeKey(
-      (context?.globals?.[THEME_GLOBAL_TYPE_ID] as string | undefined) ||
-        undefined,
+      (context?.globals?.[THEME_GLOBAL_TYPE_ID] as string | undefined) || undefined,
     );
 
-    setThemeKey((currentTheme) =>
-      currentTheme === nextTheme ? currentTheme : nextTheme,
-    );
+    setThemeKey((currentTheme) => (currentTheme === nextTheme ? currentTheme : nextTheme));
   }, [context?.globals]);
 
   useEffect(() => {
@@ -46,9 +40,7 @@ export const DocsContainer: NonNullable<
     const handleThemeChange = (event: { theme: string }) => {
       const nextTheme = ensureThemeKey(event.theme);
 
-      setThemeKey((currentTheme) =>
-        currentTheme === nextTheme ? currentTheme : nextTheme,
-      );
+      setThemeKey((currentTheme) => (currentTheme === nextTheme ? currentTheme : nextTheme));
     };
 
     channel.on(THEME_EVENT_NAME, handleThemeChange);
@@ -56,8 +48,7 @@ export const DocsContainer: NonNullable<
     return () => channel.off(THEME_EVENT_NAME, handleThemeChange);
   }, []);
 
-  const selectedTheme =
-    themes[themeKey as keyof typeof themes] || themes[DEFAULT_THEME];
+  const selectedTheme = themes[themeKey as keyof typeof themes] || themes[DEFAULT_THEME];
 
   return (
     <StorybookDocsContainer context={context} theme={selectedTheme}>

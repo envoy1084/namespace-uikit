@@ -15,9 +15,7 @@ const Assistant = ({ children }: { children: React.ReactNode }) => (
 
 export const DemoDefaultExample = () => (
   <Assistant>
-    <ChatMessage.Content>
-      Here is an answer backed by a single web source.
-    </ChatMessage.Content>
+    <ChatMessage.Content>Here is an answer backed by a single web source.</ChatMessage.Content>
     <ChatSource
       description="Namespace UIKit ships presentation-only AI chat compounds for React."
       faviconUrl={favicon("https://namespace.ninja")}

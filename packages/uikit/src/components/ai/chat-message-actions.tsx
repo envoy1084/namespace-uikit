@@ -1,12 +1,6 @@
 "use client";
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
-import {
-  cloneElement,
-  isValidElement,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { cloneElement, isValidElement, useEffect, useRef, useState } from "react";
 
 import { cn } from "@heroui/react";
 
@@ -29,43 +23,44 @@ type IconProps = ComponentPropsWithRef<"span">;
 const icon = (symbol: string, slot: string) =>
   function Icon({ children, className, ...props }: IconProps): ReactElement {
     if (children && isValidElement(children))
-      return cloneElement(
-        children as ReactElement<{ className?: string; "data-slot"?: string }>,
-        {
-          ...props,
-          className: cls(
-            "size-4",
-            cn(className, (children.props as { className?: string }).className),
-          ),
-          "data-slot": slot,
-        },
-      );
+      return cloneElement(children as ReactElement<{ className?: string; "data-slot"?: string }>, {
+        ...props,
+        className: cls(
+          "size-4",
+          cn(className, (children.props as { className?: string }).className),
+        ),
+        "data-slot": slot,
+      });
     return (
-      <span
-        aria-hidden
-        className={cls("size-4", className)}
-        data-slot={slot}
-        {...props}
-      >
+      <span aria-hidden className={cls("size-4", className)} data-slot={slot} {...props}>
         {symbol}
       </span>
     );
   };
-export const ChatMessageActionsCopyIcon: (props: IconProps) => ReactElement =
-  icon("⧉", "chat-message-actions-copy-icon");
-export const ChatMessageActionsCopiedIcon: (props: IconProps) => ReactElement =
-  icon("✓", "chat-message-actions-copied-icon");
-export const ChatMessageActionsRegenerateIcon: (
-  props: IconProps,
-) => ReactElement = icon("↻", "chat-message-actions-regenerate-icon");
-export const ChatMessageActionsMenuIcon: (props: IconProps) => ReactElement =
-  icon("•••", "chat-message-actions-menu-icon");
-export const ChatMessageActionsThumbsUpIcon: (
-  props: IconProps,
-) => ReactElement = icon("↑", "chat-message-actions-thumbs-up-icon");
-export const ChatMessageActionsThumbsDownIcon: (
-  props: IconProps,
-) => ReactElement = icon("↓", "chat-message-actions-thumbs-down-icon");
+export const ChatMessageActionsCopyIcon: (props: IconProps) => ReactElement = icon(
+  "⧉",
+  "chat-message-actions-copy-icon",
+);
+export const ChatMessageActionsCopiedIcon: (props: IconProps) => ReactElement = icon(
+  "✓",
+  "chat-message-actions-copied-icon",
+);
+export const ChatMessageActionsRegenerateIcon: (props: IconProps) => ReactElement = icon(
+  "↻",
+  "chat-message-actions-regenerate-icon",
+);
+export const ChatMessageActionsMenuIcon: (props: IconProps) => ReactElement = icon(
+  "•••",
+  "chat-message-actions-menu-icon",
+);
+export const ChatMessageActionsThumbsUpIcon: (props: IconProps) => ReactElement = icon(
+  "↑",
+  "chat-message-actions-thumbs-up-icon",
+);
+export const ChatMessageActionsThumbsDownIcon: (props: IconProps) => ReactElement = icon(
+  "↓",
+  "chat-message-actions-thumbs-down-icon",
+);
 export interface ChatMessageActionsCopyProps extends ComponentPropsWithRef<
   typeof ChatMessage.Action
 > {
@@ -126,43 +121,32 @@ export function ChatMessageActionsCopy({
   );
 }
 type ActionProps = ComponentPropsWithRef<typeof ChatMessage.Action>;
-export function ChatMessageActionsAction({
-  className,
-  ...props
-}: ActionProps): ReactElement {
+export function ChatMessageActionsAction({ className, ...props }: ActionProps): ReactElement {
   return (
-    <ChatMessage.Action
-      className={cls("chat-message-actions__action", className)}
-      {...props}
-    />
+    <ChatMessage.Action className={cls("chat-message-actions__action", className)} {...props} />
   );
 }
 const action = (Icon: (props: IconProps) => ReactElement) =>
   // oxlint-disable-next-line unicorn/consistent-function-scoping -- factory captures Icon.
-  function Action({
-    children,
-    className,
-    ...props
-  }: ActionProps): ReactElement {
+  function Action({ children, className, ...props }: ActionProps): ReactElement {
     return (
-      <ChatMessage.Action
-        className={cls("chat-message-actions__action", className)}
-        {...props}
-      >
+      <ChatMessage.Action className={cls("chat-message-actions__action", className)} {...props}>
         {children && isValidElement(children) ? children : <Icon />}
       </ChatMessage.Action>
     );
   };
-export const ChatMessageActionsRegenerate: (
-  props: ActionProps,
-) => ReactElement = action(ChatMessageActionsRegenerateIcon);
-export const ChatMessageActionsMenu: (props: ActionProps) => ReactElement =
-  action(ChatMessageActionsMenuIcon);
-export const ChatMessageActionsThumbsUp: (props: ActionProps) => ReactElement =
-  action(ChatMessageActionsThumbsUpIcon);
-export const ChatMessageActionsThumbsDown: (
-  props: ActionProps,
-) => ReactElement = action(ChatMessageActionsThumbsDownIcon);
+export const ChatMessageActionsRegenerate: (props: ActionProps) => ReactElement = action(
+  ChatMessageActionsRegenerateIcon,
+);
+export const ChatMessageActionsMenu: (props: ActionProps) => ReactElement = action(
+  ChatMessageActionsMenuIcon,
+);
+export const ChatMessageActionsThumbsUp: (props: ActionProps) => ReactElement = action(
+  ChatMessageActionsThumbsUpIcon,
+);
+export const ChatMessageActionsThumbsDown: (props: ActionProps) => ReactElement = action(
+  ChatMessageActionsThumbsDownIcon,
+);
 interface Component extends Function {
   Action: typeof ChatMessageActionsAction;
   Root: typeof ChatMessageActionsRoot;

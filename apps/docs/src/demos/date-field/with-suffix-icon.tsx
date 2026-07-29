@@ -8,9 +8,7 @@ export function WithSuffixIcon() {
     <DateField className="w-[256px]" name="date">
       <Label>Date</Label>
       <DateField.Group>
-        <DateField.Input>
-          {(segment) => <DateField.Segment segment={segment} />}
-        </DateField.Input>
+        <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
         <DateField.Suffix>
           <HugeiconsIcon icon={Calendar03Icon} className="text-muted size-4" />
         </DateField.Suffix>

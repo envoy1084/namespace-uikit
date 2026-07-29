@@ -16,8 +16,7 @@ function FullHeightDemo() {
           </EmptyState.Media>
           <EmptyState.Title>No Results Found</EmptyState.Title>
           <EmptyState.Description className="max-w-xs text-pretty">
-            We couldn&apos;t find anything matching your search. Try adjusting
-            your filters.
+            We couldn&apos;t find anything matching your search. Try adjusting your filters.
           </EmptyState.Description>
         </EmptyState.Header>
         <EmptyState.Content>

@@ -38,25 +38,18 @@ export const DemoCompactLogExample = () => (
           <Timeline.Marker>
             <TimelineGlyph
               icon={
-                [
-                  SecurityWarningIcon,
-                  CreditCardIcon,
-                  CheckmarkCircle02Icon,
-                  ReceiptTextIcon,
-                ][index]!
+                [SecurityWarningIcon, CreditCardIcon, CheckmarkCircle02Icon, ReceiptTextIcon][
+                  index
+                ]!
               }
             />
           </Timeline.Marker>
           <Timeline.Content className="gap-1">
             <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:justify-between">
-              <h3 className="text-foreground m-0 text-xs font-medium">
-                {item[0]}
-              </h3>
+              <h3 className="text-foreground m-0 text-xs font-medium">{item[0]}</h3>
               <time className="text-muted shrink-0 text-xs">{item[1]}</time>
             </div>
-            {item[3] ? (
-              <p className="text-muted m-0 text-xs leading-snug">{item[3]}</p>
-            ) : null}
+            {item[3] ? <p className="text-muted m-0 text-xs leading-snug">{item[3]}</p> : null}
           </Timeline.Content>
         </Timeline.Item>
       ))}

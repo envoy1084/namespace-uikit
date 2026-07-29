@@ -18,9 +18,7 @@ type Item = {
   title: string;
 };
 
-const Chevron = () => (
-  <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />
-);
+const Chevron = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
 
 function Row({
   action = <Chevron />,
@@ -49,22 +47,14 @@ function Row({
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>{title}</ItemCard.Title>
-        {description && (
-          <ItemCard.Description>{description}</ItemCard.Description>
-        )}
+        {description && <ItemCard.Description>{description}</ItemCard.Description>}
       </ItemCard.Content>
       <ItemCard.Action>{action}</ItemCard.Action>
     </ItemCard>
   );
 }
 
-function Rows({
-  items,
-  pressable = false,
-}: {
-  items: Item[];
-  pressable?: boolean;
-}) {
+function Rows({ items, pressable = false }: { items: Item[]; pressable?: boolean }) {
   return (
     <>
       {items.map((item, index) => (
@@ -112,18 +102,10 @@ const settings: Item[] = [
 
 export const DemoVariantsExample = () => (
   <div className="flex w-[500px] flex-col gap-6 p-6">
-    {(
-      ["default", "secondary", "tertiary", "outline", "transparent"] as const
-    ).map((variant) => (
-      <ItemCardGroup
-        className="overflow-hidden"
-        key={variant}
-        variant={variant}
-      >
+    {(["default", "secondary", "tertiary", "outline", "transparent"] as const).map((variant) => (
+      <ItemCardGroup className="overflow-hidden" key={variant} variant={variant}>
         <ItemCardGroup.Header>
-          <ItemCardGroup.Title>
-            {variant[0].toUpperCase() + variant.slice(1)}
-          </ItemCardGroup.Title>
+          <ItemCardGroup.Title>{variant[0].toUpperCase() + variant.slice(1)}</ItemCardGroup.Title>
           <ItemCardGroup.Description>
             {
               {

@@ -16,9 +16,7 @@ export const DemoPressableCardsExample = () => (
         src="/assets/docs/neo1.jpeg"
       />
       <Card.Header className="z-10">
-        <Card.Title className="text-xs font-semibold tracking-wide text-black/70">
-          NEO
-        </Card.Title>
+        <Card.Title className="text-xs font-semibold tracking-wide text-black/70">NEO</Card.Title>
         <Card.Description className="text-sm leading-5 font-medium text-black/50">
           Home Robot
         </Card.Description>
@@ -52,10 +50,7 @@ export const DemoPressableCardsExample = () => (
         authorAvatar: "/assets/avatars/pink.jpg",
       },
     ].map((item) => (
-      <Card
-        className="col-span-6 cursor-pointer gap-2 overflow-hidden"
-        key={item.name}
-      >
+      <Card className="col-span-6 cursor-pointer gap-2 overflow-hidden" key={item.name}>
         <PressableFeedback.Ripple className={item.color} />
         <Card.Header>
           <img

@@ -130,23 +130,14 @@ export const DemoStudioReviewExample = () => (
   <div className="w-full max-w-[620px] min-w-0">
     <div className="mb-4">
       <p className="text-muted m-0 text-xs font-medium">Studio review</p>
-      <h3 className="text-foreground m-0 text-base font-semibold">
-        Runner launch assets
-      </h3>
+      <h3 className="text-foreground m-0 text-base font-semibold">Runner launch assets</h3>
     </div>
     <Timeline density="compact" size="sm">
       {studio.map((item, index) => (
-        <Timeline.Item
-          align="center"
-          key={item[0]}
-          status={item[3] as TimelineStatus}
-        >
+        <Timeline.Item align="center" key={item[0]} status={item[3] as TimelineStatus}>
           <Timeline.Marker className="size-6 overflow-hidden border-0 p-0 shadow-none">
             <Avatar className="size-full" size="sm">
-              <Avatar.Image
-                alt=""
-                src={`/assets/avatars/${avatars[index]}.jpg`}
-              />
+              <Avatar.Image alt="" src={`/assets/avatars/${avatars[index]}.jpg`} />
               <Avatar.Fallback>
                 {item[1]
                   .split(" ")
@@ -158,9 +149,7 @@ export const DemoStudioReviewExample = () => (
           <Timeline.Content className="gap-2">
             <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
               <div className="flex min-w-0 flex-wrap items-center gap-2">
-                <h3 className="text-foreground m-0 text-xs leading-5 font-medium">
-                  {item[0]}
-                </h3>
+                <h3 className="text-foreground m-0 text-xs leading-5 font-medium">{item[0]}</h3>
                 {item[4] === "asset" ? (
                   <Chip color="accent" size="sm" variant="soft">
                     Review
@@ -186,8 +175,8 @@ export const DemoStudioReviewExample = () => (
                   />
                   <div className="flex min-w-0 flex-col gap-3 p-3">
                     <p className="text-muted m-0 text-xs leading-5">
-                      Final hero crop is ready for retouch review with the side
-                      profile, lace detail, and marketplace thumbnail queued.
+                      Final hero crop is ready for retouch review with the side profile, lace
+                      detail, and marketplace thumbnail queued.
                     </p>
                     <div className="flex flex-wrap items-center gap-2">
                       <Chip size="sm" variant="secondary">

@@ -42,17 +42,9 @@ function EmptyStateRoot({
 export interface EmptyStateHeaderProps extends ComponentPropsWithRef<"div"> {
   children: ReactNode;
 }
-function EmptyStateHeader({
-  children,
-  className,
-  ...props
-}: EmptyStateHeaderProps): ReactElement {
+function EmptyStateHeader({ children, className, ...props }: EmptyStateHeaderProps): ReactElement {
   return (
-    <div
-      {...props}
-      className={cn("empty-state__header", className)}
-      data-slot="empty-state-header"
-    >
+    <div {...props} className={cn("empty-state__header", className)} data-slot="empty-state-header">
       {children}
     </div>
   );
@@ -84,17 +76,9 @@ function EmptyStateMedia({
 export interface EmptyStateTitleProps extends ComponentPropsWithRef<"h3"> {
   children: ReactNode;
 }
-function EmptyStateTitle({
-  children,
-  className,
-  ...props
-}: EmptyStateTitleProps): ReactElement {
+function EmptyStateTitle({ children, className, ...props }: EmptyStateTitleProps): ReactElement {
   return (
-    <h3
-      {...props}
-      className={cn("empty-state__title", className)}
-      data-slot="empty-state-title"
-    >
+    <h3 {...props} className={cn("empty-state__title", className)} data-slot="empty-state-title">
       {children}
     </h3>
   );

@@ -1,11 +1,6 @@
 "use client";
 
-import type {
-  ComponentProps,
-  ComponentPropsWithRef,
-  ReactElement,
-  ReactNode,
-} from "react";
+import type { ComponentProps, ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 
 import { cn, Radio, RadioGroup } from "@heroui/react";
 
@@ -54,15 +49,11 @@ function RadioButtonGroupItem({
         className={(renderProps) =>
           cn(
             "radio-button-group__item",
-            typeof className === "function"
-              ? className(renderProps)
-              : className,
+            typeof className === "function" ? className(renderProps) : className,
           ) ?? "radio-button-group__item"
         }
       >
-        {(renderProps) =>
-          typeof children === "function" ? children(renderProps) : children
-        }
+        {(renderProps) => (typeof children === "function" ? children(renderProps) : children)}
       </Radio.Content>
     </Radio>
   );
@@ -80,8 +71,7 @@ function RadioButtonGroupIndicator({
       <Radio.Control
         {...props}
         className={
-          cn("radio-button-group__indicator", className) ??
-          "radio-button-group__indicator"
+          cn("radio-button-group__indicator", className) ?? "radio-button-group__indicator"
         }
         data-slot="radio-button-group-indicator"
       >
@@ -149,13 +139,10 @@ type RadioButtonGroupComponent = typeof RadioButtonGroupRoot & {
   Root: typeof RadioButtonGroupRoot;
 };
 
-export const RadioButtonGroup: RadioButtonGroupComponent = Object.assign(
-  RadioButtonGroupRoot,
-  {
-    Indicator: RadioButtonGroupIndicator,
-    Item: RadioButtonGroupItem,
-    ItemContent: RadioButtonGroupItemContent,
-    ItemIcon: RadioButtonGroupItemIcon,
-    Root: RadioButtonGroupRoot,
-  },
-);
+export const RadioButtonGroup: RadioButtonGroupComponent = Object.assign(RadioButtonGroupRoot, {
+  Indicator: RadioButtonGroupIndicator,
+  Item: RadioButtonGroupItem,
+  ItemContent: RadioButtonGroupItemContent,
+  ItemIcon: RadioButtonGroupItemIcon,
+  Root: RadioButtonGroupRoot,
+});

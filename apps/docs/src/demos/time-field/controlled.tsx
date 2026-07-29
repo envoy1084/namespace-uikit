@@ -1,10 +1,9 @@
 "use client";
 
-import type { TimeValue } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
 import { Time, getLocalTimeZone, now } from "@internationalized/date";
+import type { TimeValue } from "@thenamespace/uikit";
 import { Button, Description, Label, TimeField } from "@thenamespace/uikit";
 
 export function Controlled() {
@@ -12,21 +11,12 @@ export function Controlled() {
 
   return (
     <div className="flex flex-col gap-4">
-      <TimeField
-        className="w-[256px]"
-        name="time"
-        value={value}
-        onChange={setValue}
-      >
+      <TimeField className="w-[256px]" name="time" value={value} onChange={setValue}>
         <Label>Time</Label>
         <TimeField.Group>
-          <TimeField.Input>
-            {(segment) => <TimeField.Segment segment={segment} />}
-          </TimeField.Input>
+          <TimeField.Input>{(segment) => <TimeField.Segment segment={segment} />}</TimeField.Input>
         </TimeField.Group>
-        <Description>
-          Current value: {value ? value.toString() : "(empty)"}
-        </Description>
+        <Description>Current value: {value ? value.toString() : "(empty)"}</Description>
       </TimeField>
       <div className="flex gap-2">
         <Button
@@ -34,13 +24,7 @@ export function Controlled() {
           onPress={() => {
             const currentTime = now(getLocalTimeZone());
 
-            setValue(
-              new Time(
-                currentTime.hour,
-                currentTime.minute,
-                currentTime.second,
-              ),
-            );
+            setValue(new Time(currentTime.hour, currentTime.minute, currentTime.second));
           }}
         >
           Set now

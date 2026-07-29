@@ -1,16 +1,12 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import React from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import { Label, ListBox, Select } from "@thenamespace/uikit";
 
 export function ControlledMultiple() {
-  const [selected, setSelected] = React.useState<Key[]>([
-    "california",
-    "texas",
-  ]);
+  const [selected, setSelected] = React.useState<Key[]>(["california", "texas"]);
 
   return (
     <div className="space-y-4">

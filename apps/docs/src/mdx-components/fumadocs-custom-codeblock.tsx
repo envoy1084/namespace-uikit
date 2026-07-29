@@ -1,10 +1,9 @@
 "use client";
 
-import type { CodeBlockProps } from "fumadocs-ui/components/codeblock";
-
 import type { ComponentProps, RefObject } from "react";
 import { useRef } from "react";
 
+import type { CodeBlockProps } from "fumadocs-ui/components/codeblock";
 import { CodeBlock } from "fumadocs-ui/components/codeblock";
 import { useCopyButton } from "fumadocs-ui/utils/use-copy-button";
 import { Check, Copy } from "lucide-react";
@@ -27,10 +26,7 @@ export function FumadocsCustomCodeblock({
       // @ts-expect-error fumadocs viewport ref type
       viewportProps={{ ref: areaRef }}
       Actions={(actionsProps) => (
-        <div
-          {...actionsProps}
-          className={cn("z-1! empty:hidden", actionsProps.className)}
-        >
+        <div {...actionsProps} className={cn("z-1! empty:hidden", actionsProps.className)}>
           {allowCopy ? <CopyButton code={code} containerRef={areaRef} /> : null}
         </div>
       )}

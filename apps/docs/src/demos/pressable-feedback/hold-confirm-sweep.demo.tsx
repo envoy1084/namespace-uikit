@@ -16,10 +16,7 @@ export const DemoHoldConfirmSweepExample = () => (
     <div className="flex gap-3">
       {(["right", "left", "down", "up"] as const).map((sweep) => (
         <Button key={sweep} variant="danger-soft">
-          <PressableFeedback.HoldConfirm
-            className="bg-danger text-danger-foreground"
-            sweep={sweep}
-          >
+          <PressableFeedback.HoldConfirm className="bg-danger text-danger-foreground" sweep={sweep}>
             <Trash />
             Sweep {sweep[0].toUpperCase() + sweep.slice(1)}
           </PressableFeedback.HoldConfirm>

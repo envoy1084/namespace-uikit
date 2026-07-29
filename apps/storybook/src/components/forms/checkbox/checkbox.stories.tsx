@@ -1,12 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
 
-import {
-  Add01Icon,
-  FavouriteIcon,
-  MinusSignIcon,
-} from "@thenamespace/uikit/icons";
+import type { Meta, StoryObj } from "@storybook/react";
+import { Add01Icon, FavouriteIcon, MinusSignIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { cx } from "tailwind-variants";
 
@@ -94,9 +89,7 @@ export const WithCustomIndicator: Story = {
         <Checkbox.Content>
           <Checkbox.Control>
             <Checkbox.Indicator>
-              {({ isSelected }) =>
-                isSelected ? <HugeiconsIcon icon={FavouriteIcon} /> : null
-              }
+              {({ isSelected }) => (isSelected ? <HugeiconsIcon icon={FavouriteIcon} /> : null)}
             </Checkbox.Indicator>
           </Checkbox.Control>
           Heart
@@ -106,9 +99,7 @@ export const WithCustomIndicator: Story = {
         <Checkbox.Content>
           <Checkbox.Control>
             <Checkbox.Indicator>
-              {({ isSelected }) =>
-                isSelected ? <HugeiconsIcon icon={Add01Icon} /> : null
-              }
+              {({ isSelected }) => (isSelected ? <HugeiconsIcon icon={Add01Icon} /> : null)}
             </Checkbox.Indicator>
           </Checkbox.Control>
           Plus
@@ -178,11 +169,7 @@ export const Controlled: Story = {
 
     return (
       <div className="flex flex-col gap-3 px-4">
-        <Checkbox
-          id="notifications"
-          isSelected={isSelected}
-          onChange={setIsSelected}
-        >
+        <Checkbox id="notifications" isSelected={isSelected} onChange={setIsSelected}>
           <Checkbox.Content>
             <Checkbox.Control>
               <Checkbox.Indicator />
@@ -191,10 +178,7 @@ export const Controlled: Story = {
           </Checkbox.Content>
         </Checkbox>
         <p className="text-muted mt-2 text-sm">
-          Status:{" "}
-          <span className="font-medium">
-            {isSelected ? "Enabled" : "Disabled"}
-          </span>
+          Status: <span className="font-medium">{isSelected ? "Enabled" : "Disabled"}</span>
         </p>
       </div>
     );
@@ -213,9 +197,7 @@ export const RenderProps: Story = {
             {isSelected ? "Terms accepted" : "Accept terms"}
           </Checkbox.Content>
           <Description>
-            {isSelected
-              ? "Thank you for accepting"
-              : "Please read and accept the terms"}
+            {isSelected ? "Thank you for accepting" : "Please read and accept the terms"}
           </Description>
         </>
       )}
@@ -242,9 +224,7 @@ export const Validation: Story = {
     <Checkbox
       isRequired
       name="newsletter"
-      validate={(isSelected) =>
-        isSelected ? true : "Please subscribe to continue"
-      }
+      validate={(isSelected) => (isSelected ? true : "Please subscribe to continue")}
     >
       <Checkbox.Content>
         <Checkbox.Control>
@@ -342,11 +322,7 @@ export const FeaturesAndAddOnsExample: Story = {
             <Description>Choose how you want to receive updates</Description>
             <div className="flex flex-col gap-2">
               {addOns.map((addon) => (
-                <Checkbox
-                  key={addon.value}
-                  id={addon.value}
-                  value={addon.value}
-                >
+                <Checkbox key={addon.value} id={addon.value} value={addon.value}>
                   <Checkbox.Content
                     className={cx(
                       "group relative flex w-full flex-row items-start justify-start gap-4 rounded-3xl bg-surface-tertiary px-5 py-4 transition-all",

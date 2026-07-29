@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { UnfoldMoreIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
@@ -77,20 +76,11 @@ export const WithGroups: Story = {
           {[
             ["Engineering", ["Frontend", "Backend", "DevOps"]],
             ["Sales", ["Sales Rep", "Account Manager", "Sales Director"]],
-            [
-              "Operations",
-              ["Customer Support", "Product Manager", "Operations Manager"],
-            ],
+            ["Operations", ["Customer Support", "Product Manager", "Operations Manager"]],
           ].map(([group, options]) => (
-            <NativeSelect.OptGroup
-              key={group as string}
-              label={group as string}
-            >
+            <NativeSelect.OptGroup key={group as string} label={group as string}>
               {(options as string[]).map((option) => (
-                <NativeSelect.Option
-                  key={option}
-                  value={option.toLowerCase().replaceAll(" ", "-")}
-                >
+                <NativeSelect.Option key={option} value={option.toLowerCase().replaceAll(" ", "-")}>
                   {option}
                 </NativeSelect.Option>
               ))}
@@ -111,9 +101,7 @@ function LabeledStatus({ description = false }: { description?: boolean }) {
         <StatusOptions />
         <NativeSelect.Indicator />
       </NativeSelect.Trigger>
-      {description ? (
-        <Description>Choose the current task status</Description>
-      ) : null}
+      {description ? <Description>Choose the current task status</Description> : null}
     </NativeSelect>
   );
 }
@@ -237,16 +225,11 @@ export const CustomIndicator: Story = {
       <NativeSelect fullWidth>
         <Label>Priority</Label>
         <NativeSelect.Trigger name="priority">
-          {["Select priority", "Low", "Medium", "High", "Critical"].map(
-            (label, index) => (
-              <NativeSelect.Option
-                key={label}
-                value={index ? label.toLowerCase() : ""}
-              >
-                {label}
-              </NativeSelect.Option>
-            ),
-          )}
+          {["Select priority", "Low", "Medium", "High", "Critical"].map((label, index) => (
+            <NativeSelect.Option key={label} value={index ? label.toLowerCase() : ""}>
+              {label}
+            </NativeSelect.Option>
+          ))}
           <NativeSelect.Indicator>
             <HugeiconsIcon icon={UnfoldMoreIcon} />
           </NativeSelect.Indicator>
@@ -276,16 +259,12 @@ export const FormExample: Story = {
           <NativeSelect.Trigger required name="country">
             <NativeSelect.Option value="">Select a country</NativeSelect.Option>
             <NativeSelect.OptGroup label="North America">
-              <NativeSelect.Option value="us">
-                United States
-              </NativeSelect.Option>
+              <NativeSelect.Option value="us">United States</NativeSelect.Option>
               <NativeSelect.Option value="ca">Canada</NativeSelect.Option>
               <NativeSelect.Option value="mx">Mexico</NativeSelect.Option>
             </NativeSelect.OptGroup>
             <NativeSelect.OptGroup label="Europe">
-              <NativeSelect.Option value="uk">
-                United Kingdom
-              </NativeSelect.Option>
+              <NativeSelect.Option value="uk">United Kingdom</NativeSelect.Option>
               <NativeSelect.Option value="fr">France</NativeSelect.Option>
               <NativeSelect.Option value="de">Germany</NativeSelect.Option>
             </NativeSelect.OptGroup>

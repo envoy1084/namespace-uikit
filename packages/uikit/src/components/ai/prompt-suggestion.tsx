@@ -18,25 +18,15 @@ export function PromptSuggestionRoot({
   return (
     <Context value={variant}>
       <div
-        className={cls(
-          `prompt-suggestion prompt-suggestion--${variant}`,
-          className,
-        )}
+        className={cls(`prompt-suggestion prompt-suggestion--${variant}`, className)}
         data-slot="prompt-suggestion"
         {...props}
       />
     </Context>
   );
 }
-const part = <T extends "div" | "h2" | "p">(
-  tag: T,
-  base: string,
-  slot: string,
-) =>
-  function Part({
-    className,
-    ...props
-  }: ComponentPropsWithRef<T>): ReactElement {
+const part = <T extends "div" | "h2" | "p">(tag: T, base: string, slot: string) =>
+  function Part({ className, ...props }: ComponentPropsWithRef<T>): ReactElement {
     return createElement(tag, {
       ...props,
       className: cls(base, className),
@@ -79,13 +69,9 @@ export function PromptSuggestionGroup({
     >
       {label || description ? (
         <div className="flex flex-col gap-1">
-          {label ? (
-            <h3 className="prompt-suggestion__group-label">{label}</h3>
-          ) : null}
+          {label ? <h3 className="prompt-suggestion__group-label">{label}</h3> : null}
           {description ? (
-            <p className="prompt-suggestion__group-description">
-              {description}
-            </p>
+            <p className="prompt-suggestion__group-description">{description}</p>
           ) : null}
         </div>
       ) : null}
@@ -100,10 +86,7 @@ export function PromptSuggestionItems({
   const variant = useContext(Context);
   return (
     <div
-      className={cls(
-        `prompt-suggestion__items prompt-suggestion__items--${variant}`,
-        className,
-      )}
+      className={cls(`prompt-suggestion__items prompt-suggestion__items--${variant}`, className)}
       data-slot="prompt-suggestion-items"
       {...props}
     />
@@ -126,10 +109,7 @@ export function PromptSuggestionItem({
   if (variant === "card")
     return (
       <Card
-        className={cls(
-          "prompt-suggestion__item prompt-suggestion__item--card",
-          className,
-        )}
+        className={cls("prompt-suggestion__item prompt-suggestion__item--card", className)}
         data-slot="prompt-suggestion-item"
         {...(props as unknown as ComponentPropsWithRef<typeof Card>)}
       >
@@ -138,10 +118,7 @@ export function PromptSuggestionItem({
     );
   return (
     <Button
-      className={cls(
-        "prompt-suggestion__item prompt-suggestion__item--pill",
-        className,
-      )}
+      className={cls("prompt-suggestion__item prompt-suggestion__item--pill", className)}
       data-slot="prompt-suggestion-item"
       {...props}
     >

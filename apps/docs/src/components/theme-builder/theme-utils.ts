@@ -27,15 +27,9 @@ export function colorToOklch(value: string) {
   return `oklch(${lightness}% ${chroma} ${hue})`;
 }
 
-export function themeStyles(
-  config: ThemeConfig,
-  mode: ThemeMode,
-): CSSProperties {
+export function themeStyles(config: ThemeConfig, mode: ThemeMode): CSSProperties {
   const variables = Object.fromEntries(
-    Object.entries(config.colors[mode]).map(([token, value]) => [
-      `--${token}`,
-      value,
-    ]),
+    Object.entries(config.colors[mode]).map(([token, value]) => [`--${token}`, value]),
   );
 
   return {

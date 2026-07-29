@@ -17,11 +17,7 @@ export const DemoSubscriptionPlansExample = () => (
   >
     {[
       ["annual", "Annual", "Billed at USD 99.99/year (US$ 8.33/month)"],
-      [
-        "annual-toolkit",
-        "Annual + Toolkit",
-        "Billed at USD 149.99/year (US$ 12.50/month)",
-      ],
+      ["annual-toolkit", "Annual + Toolkit", "Billed at USD 149.99/year (US$ 12.50/month)"],
     ].map(([value, title, billing], index) => (
       <RadioButtonGroup.Item
         key={value}
@@ -42,21 +38,14 @@ export const DemoSubscriptionPlansExample = () => (
             </RadioButtonGroup.Indicator>
             <RadioButtonGroup.ItemContent>
               {index ? (
-                <Chip
-                  className="absolute -top-1.5 -left-1 w-fit bg-[#e95f2a] text-black"
-                  size="sm"
-                >
+                <Chip className="absolute -top-1.5 -left-1 w-fit bg-[#e95f2a] text-black" size="sm">
                   <Chip.Label>Save up to 50%</Chip.Label>
                 </Chip>
               ) : null}
-              <Label
-                className={`text-xl font-bold ${isSelected ? "text-background" : ""}`}
-              >
+              <Label className={`text-xl font-bold ${isSelected ? "text-background" : ""}`}>
                 {title}
               </Label>
-              <Description
-                className={`mt-1 ${isSelected ? "text-background/70" : ""}`}
-              >
+              <Description className={`mt-1 ${isSelected ? "text-background/70" : ""}`}>
                 {billing}
               </Description>
             </RadioButtonGroup.ItemContent>

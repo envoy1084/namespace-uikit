@@ -1,10 +1,9 @@
 "use client";
 
-import type { CodeBlockProps } from "fumadocs-ui/components/codeblock";
-
 import { useState } from "react";
 
 import { Button } from "@thenamespace/uikit";
+import type { CodeBlockProps } from "fumadocs-ui/components/codeblock";
 
 import { FumadocsCustomCodeblock as BaseCodeBlock } from "@/mdx-components/fumadocs-custom-codeblock";
 import { cn } from "@/utils/cn";
@@ -54,8 +53,7 @@ export function CodeBlockClient({
         className={cn(
           "code-block-wrapper",
           isIsolated && "is-isolated",
-          isCollapsed &&
-            "mask-to-bottom relative max-h-[150px] overflow-hidden",
+          isCollapsed && "mask-to-bottom relative max-h-[150px] overflow-hidden",
           !isCollapsed && "pb-10",
         )}
       >

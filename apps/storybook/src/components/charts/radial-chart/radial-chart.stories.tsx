@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import type { ReactNode } from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { ChartTooltip } from "@/components/charts/chart-tooltip";
 import { Card } from "@/components/layout/card";
@@ -77,9 +77,7 @@ export const Default: Story = {
           {activity.map((item) => (
             <div className="flex flex-col" key={item.name}>
               <span className="text-muted text-xs">{item.name}</span>
-              <span className="text-foreground text-sm font-semibold">
-                {item.valueText}
-              </span>
+              <span className="text-foreground text-sm font-semibold">{item.valueText}</span>
             </div>
           ))}
         </div>
@@ -96,9 +94,7 @@ export const Default: Story = {
           </RadialChart>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-muted text-[10px]">Calories</span>
-            <span className="text-foreground text-sm font-semibold">
-              700 kcal
-            </span>
+            <span className="text-foreground text-sm font-semibold">700 kcal</span>
           </div>
         </div>
       </Card.Content>
@@ -132,19 +128,12 @@ export const Gauge: Story = {
                 tick={false}
                 type="number"
               />
-              <RadialChart.Bar
-                background
-                angleAxisId={0}
-                cornerRadius={12}
-                dataKey="value"
-              />
+              <RadialChart.Bar background angleAxisId={0} cornerRadius={12} dataKey="value" />
               <RadialChart.Tooltip content={<RadialTooltip />} />
             </RadialChart>
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
               <span className="text-muted text-xs">Active Users</span>
-              <span className="text-foreground text-xl font-bold">
-                {(1358).toLocaleString()}
-              </span>
+              <span className="text-foreground text-xl font-bold">{(1358).toLocaleString()}</span>
             </div>
           </div>
         </Card.Content>
@@ -164,24 +153,14 @@ export const WithLegend: Story = {
     <Card className="w-[400px] rounded-2xl">
       <Card.Header>
         <Card.Title className="text-base">Storage Breakdown</Card.Title>
-        <Card.Description className="text-muted text-xs">
-          88 GB of 128 GB used
-        </Card.Description>
+        <Card.Description className="text-muted text-xs">88 GB of 128 GB used</Card.Description>
       </Card.Header>
       <Card.Content className="flex items-center gap-6">
         <div className="relative shrink-0">
-          <RadialChart
-            data={storage}
-            height={180}
-            innerRadius="40%"
-            outerRadius="100%"
-            width={180}
-          >
+          <RadialChart data={storage} height={180} innerRadius="40%" outerRadius="100%" width={180}>
             <RadialChart.Bar background cornerRadius={12} dataKey="value" />
             <RadialChart.Tooltip
-              content={
-                <RadialTooltip valueFormatter={(value) => `${value} GB`} />
-              }
+              content={<RadialTooltip valueFormatter={(value) => `${value} GB`} />}
             />
           </RadialChart>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
@@ -198,9 +177,7 @@ export const WithLegend: Story = {
               />
               <div className="flex flex-1 items-center justify-between">
                 <span className="text-foreground text-sm">{item.name}</span>
-                <span className="text-foreground text-sm font-semibold">
-                  {item.value} GB
-                </span>
+                <span className="text-foreground text-sm font-semibold">{item.value} GB</span>
               </div>
             </div>
           ))}
@@ -236,16 +213,12 @@ export const GaugeGrid: Story = {
   render: () => (
     <div className="grid w-[640px] grid-cols-2 gap-3 lg:grid-cols-4">
       {gauges.map((gauge) => {
-        const data = [
-          { fill: gauge.color, name: gauge.label, value: gauge.value },
-        ];
+        const data = [{ fill: gauge.color, name: gauge.label, value: gauge.value }];
         const percent = ((gauge.value / gauge.max) * 100).toFixed(0);
         return (
           <Card className="rounded-2xl" key={gauge.label}>
             <Card.Header className="pb-0">
-              <Card.Title className="text-muted text-xs font-medium">
-                {gauge.label}
-              </Card.Title>
+              <Card.Title className="text-muted text-xs font-medium">{gauge.label}</Card.Title>
             </Card.Header>
             <Card.Content className="flex flex-col items-center">
               <div className="relative">
@@ -265,18 +238,11 @@ export const GaugeGrid: Story = {
                     tick={false}
                     type="number"
                   />
-                  <RadialChart.Bar
-                    background
-                    angleAxisId={0}
-                    cornerRadius={12}
-                    dataKey="value"
-                  />
+                  <RadialChart.Bar background angleAxisId={0} cornerRadius={12} dataKey="value" />
                   <RadialChart.Tooltip content={<RadialTooltip />} />
                 </RadialChart>
                 <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-foreground text-lg font-bold">
-                    {percent}%
-                  </span>
+                  <span className="text-foreground text-lg font-bold">{percent}%</span>
                 </div>
               </div>
             </Card.Content>
@@ -308,30 +274,14 @@ export const ProgressRing: Story = {
               outerRadius="100%"
               width={200}
             >
-              <RadialChart.AngleAxis
-                angleAxisId={0}
-                domain={[0, max]}
-                tick={false}
-                type="number"
-              />
-              <RadialChart.Bar
-                background
-                angleAxisId={0}
-                cornerRadius={12}
-                dataKey="value"
-              />
+              <RadialChart.AngleAxis angleAxisId={0} domain={[0, max]} tick={false} type="number" />
+              <RadialChart.Bar background angleAxisId={0} cornerRadius={12} dataKey="value" />
               <RadialChart.Tooltip
-                content={
-                  <RadialTooltip
-                    valueFormatter={(item) => Number(item).toLocaleString()}
-                  />
-                }
+                content={<RadialTooltip valueFormatter={(item) => Number(item).toLocaleString()} />}
               />
             </RadialChart>
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-foreground text-3xl font-bold">
-                {percent}%
-              </span>
+              <span className="text-foreground text-3xl font-bold">{percent}%</span>
               <span className="text-muted text-xs">
                 {value.toLocaleString()} / {max.toLocaleString()}
               </span>

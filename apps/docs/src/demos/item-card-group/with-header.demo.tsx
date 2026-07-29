@@ -18,9 +18,7 @@ type Item = {
   title: string;
 };
 
-const Chevron = () => (
-  <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />
-);
+const Chevron = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
 
 function Row({
   action = <Chevron />,
@@ -49,9 +47,7 @@ function Row({
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>{title}</ItemCard.Title>
-        {description && (
-          <ItemCard.Description>{description}</ItemCard.Description>
-        )}
+        {description && <ItemCard.Description>{description}</ItemCard.Description>}
       </ItemCard.Content>
       <ItemCard.Action>{action}</ItemCard.Action>
     </ItemCard>
@@ -98,9 +94,7 @@ function HeaderDemo() {
       <ItemCardGroup>
         <ItemCardGroup.Header>
           <ItemCardGroup.Title>General</ItemCardGroup.Title>
-          <ItemCardGroup.Description>
-            Manage your basic account settings
-          </ItemCardGroup.Description>
+          <ItemCardGroup.Description>Manage your basic account settings</ItemCardGroup.Description>
         </ItemCardGroup.Header>
         <Row {...settings[2]} />
         <Row
@@ -115,11 +109,7 @@ function HeaderDemo() {
         />
         <Row
           action={
-            <Switch
-              aria-label="Switch Dark mode"
-              isSelected={dark}
-              onChange={setDark}
-            >
+            <Switch aria-label="Switch Dark mode" isSelected={dark} onChange={setDark}>
               <Switch.Content>
                 <Switch.Control>
                   <Switch.Thumb />

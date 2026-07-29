@@ -1,8 +1,5 @@
 import { Button, Tooltip } from "@thenamespace/uikit";
-import {
-  InformationCircleIcon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import { InformationCircleIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function TooltipBasic() {
   return (

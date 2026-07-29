@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { Button, Chip, Kbd } from "@thenamespace/uikit";
 
 import { Icon } from "@/icon";
@@ -38,9 +37,7 @@ function Contents({ minimal = false }: { minimal?: boolean }) {
           <Icon icon="lucide:search" />
         </Command.InputGroup.Prefix>
         <Command.InputGroup.Input
-          placeholder={
-            minimal ? "What do you need?" : "Type a command or search..."
-          }
+          placeholder={minimal ? "What do you need?" : "Type a command or search..."}
         />
         <Command.InputGroup.ClearButton />
         <Command.InputGroup.Suffix>
@@ -97,11 +94,7 @@ function Palette({
         {label} <Kbd>⌘ K</Kbd>
       </Button>
       <Command>
-        <Command.Backdrop
-          isOpen={open}
-          variant={variant}
-          onOpenChange={setOpen}
-        >
+        <Command.Backdrop isOpen={open} variant={variant} onOpenChange={setOpen}>
           <Command.Container size={size}>
             <Command.Dialog>{children ?? <Contents />}</Command.Dialog>
           </Command.Container>
@@ -142,9 +135,7 @@ function SizesDemo() {
 }
 export const Sizes: Story = { render: () => <SizesDemo /> };
 function Backdrops() {
-  const [variant, setVariant] = useState<"transparent" | "opaque" | "blur">(
-    "opaque",
-  );
+  const [variant, setVariant] = useState<"transparent" | "opaque" | "blur">("opaque");
   const [open, setOpen] = useState(false);
   return (
     <div className="flex gap-2">
@@ -161,11 +152,7 @@ function Backdrops() {
         </Button>
       ))}
       <Command>
-        <Command.Backdrop
-          isOpen={open}
-          variant={variant}
-          onOpenChange={setOpen}
-        >
+        <Command.Backdrop isOpen={open} variant={variant} onOpenChange={setOpen}>
           <Command.Container>
             <Command.Dialog>
               <Contents />
@@ -273,13 +260,7 @@ export const Launcher: Story = {
         <Command.InputGroup.ClearButton />
       </Command.InputGroup>
       <Command.List>
-        {[
-          "Design Tool",
-          "Project Tracker",
-          "Team Chat",
-          "Calendar",
-          "Settings",
-        ].map((x, i) => (
+        {["Design Tool", "Project Tracker", "Team Chat", "Calendar", "Settings"].map((x, i) => (
           <Command.Item key={x} textValue={x}>
             <span className="flex size-5 items-center justify-center rounded bg-violet-500 text-white">
               <Icon
@@ -304,15 +285,7 @@ export const Launcher: Story = {
 };
 function Split() {
   const [selected, setSelected] = useState("Button");
-  const items = [
-    "Button",
-    "Input",
-    "Radio",
-    "Chip",
-    "Slider",
-    "Avatar",
-    "Switch",
-  ];
+  const items = ["Button", "Input", "Radio", "Chip", "Slider", "Avatar", "Switch"];
   return (
     <Palette label="Split View" size="lg">
       <Command.InputGroup>
@@ -323,10 +296,7 @@ function Split() {
         <Command.InputGroup.ClearButton />
       </Command.InputGroup>
       <div className="flex min-h-[308px]">
-        <Command.List
-          className="!w-2/5 !flex-none"
-          onAction={(key) => setSelected(String(key))}
-        >
+        <Command.List className="!w-2/5 !flex-none" onAction={(key) => setSelected(String(key))}>
           <Command.Group heading="Components">
             {items.map((x) => (
               <Command.Item id={x} key={x} textValue={x}>

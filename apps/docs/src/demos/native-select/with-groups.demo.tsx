@@ -11,17 +11,11 @@ export const DemoWithGroupsExample = () => (
         {[
           ["Engineering", ["Frontend", "Backend", "DevOps"]],
           ["Sales", ["Sales Rep", "Account Manager", "Sales Director"]],
-          [
-            "Operations",
-            ["Customer Support", "Product Manager", "Operations Manager"],
-          ],
+          ["Operations", ["Customer Support", "Product Manager", "Operations Manager"]],
         ].map(([group, options]) => (
           <NativeSelect.OptGroup key={group as string} label={group as string}>
             {(options as string[]).map((option) => (
-              <NativeSelect.Option
-                key={option}
-                value={option.toLowerCase().replaceAll(" ", "-")}
-              >
+              <NativeSelect.Option key={option} value={option.toLowerCase().replaceAll(" ", "-")}>
                 {option}
               </NativeSelect.Option>
             ))}

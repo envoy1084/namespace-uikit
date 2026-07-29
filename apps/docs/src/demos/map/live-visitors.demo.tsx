@@ -150,18 +150,9 @@ const visitorClusters = [
 
 export const DemoLiveVisitorsExample = () => (
   <div className="relative h-[500px] w-full overflow-hidden rounded-lg border">
-    <Map
-      center={[18, 34]}
-      projection={{ type: "globe" }}
-      styles={styles}
-      zoom={2.5}
-    >
+    <Map center={[18, 34]} projection={{ type: "globe" }} styles={styles} zoom={2.5}>
       {visitors.map((visitor) => (
-        <Map.Marker
-          key={visitor.city}
-          latitude={visitor.latitude}
-          longitude={visitor.longitude}
-        >
+        <Map.Marker key={visitor.city} latitude={visitor.latitude} longitude={visitor.longitude}>
           <Map.MarkerContent>
             <Avatar className="ring-2 ring-white" size="sm">
               <Avatar.Image alt={visitor.name} src={visitor.avatar} />

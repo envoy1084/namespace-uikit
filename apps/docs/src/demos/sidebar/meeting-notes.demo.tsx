@@ -2,15 +2,7 @@
 "use client";
 
 // @demo-title Meeting Notes
-import {
-  Avatar,
-  Breadcrumbs,
-  Button,
-  Chip,
-  Dropdown,
-  Kbd,
-  Label,
-} from "@thenamespace/uikit";
+import { Avatar, Breadcrumbs, Button, Chip, Dropdown, Kbd, Label } from "@thenamespace/uikit";
 import { Sidebar } from "@thenamespace/uikit";
 import {
   Analytics01Icon,
@@ -59,24 +51,15 @@ function MoreActions({ label }: { label: string }) {
       <Dropdown.Popover className="w-44" offset={6} placement="right top">
         <Dropdown.Menu aria-label={`${label} actions`}>
           <Dropdown.Item id="open" textValue="Open">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={FolderOpenIcon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={FolderOpenIcon} />
             <Label>Open</Label>
           </Dropdown.Item>
           <Dropdown.Item id="duplicate" textValue="Duplicate">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={Copy01Icon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={Copy01Icon} />
             <Label>Duplicate</Label>
           </Dropdown.Item>
           <Dropdown.Item id="delete" textValue="Delete" variant="danger">
-            <HugeiconsIcon
-              className="text-danger size-4 shrink-0"
-              icon={Delete02Icon}
-            />
+            <HugeiconsIcon className="text-danger size-4 shrink-0" icon={Delete02Icon} />
             <Label>Delete</Label>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -93,10 +76,7 @@ function Menu({
   nested?: boolean;
 }) {
   return (
-    <Sidebar.Menu
-      aria-label="Navigation"
-      defaultExpandedKeys={nested ? ["Analytics"] : []}
-    >
+    <Sidebar.Menu aria-label="Navigation" defaultExpandedKeys={nested ? ["Analytics"] : []}>
       {nav.map((item) => (
         <Sidebar.MenuItem
           href={item.items ? undefined : "#"}
@@ -125,21 +105,19 @@ function Menu({
           ) : null}
           {nested && item.items ? (
             <Sidebar.Submenu>
-              {(item.label === "Analytics" ? analyticsItems : item.items).map(
-                (child) => (
-                  <Sidebar.MenuItem
-                    href="#"
-                    id={`${item.label}-${child}`}
-                    key={child}
-                    textValue={child}
-                  >
-                    <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
-                    <Sidebar.MenuActions className="ml-auto">
-                      <MoreActions label={child} />
-                    </Sidebar.MenuActions>
-                  </Sidebar.MenuItem>
-                ),
-              )}
+              {(item.label === "Analytics" ? analyticsItems : item.items).map((child) => (
+                <Sidebar.MenuItem
+                  href="#"
+                  id={`${item.label}-${child}`}
+                  key={child}
+                  textValue={child}
+                >
+                  <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
+                  <Sidebar.MenuActions className="ml-auto">
+                    <MoreActions label={child} />
+                  </Sidebar.MenuActions>
+                </Sidebar.MenuItem>
+              ))}
             </Sidebar.Submenu>
           ) : null}
         </Sidebar.MenuItem>
@@ -171,21 +149,14 @@ function MeetingNotesDemo() {
         </Sidebar.Header>
         <Sidebar.Content>
           <Sidebar.Group>
-            <Sidebar.Menu
-              aria-label="Main navigation"
-              defaultExpandedKeys={["meeting-chat"]}
-            >
+            <Sidebar.Menu aria-label="Main navigation" defaultExpandedKeys={["meeting-chat"]}>
               <Sidebar.MenuItem href="#" id="meeting-home" textValue="Home">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={Home01Icon} size={16} />
                 </Sidebar.MenuIcon>
                 <Sidebar.MenuLabel>Home</Sidebar.MenuLabel>
               </Sidebar.MenuItem>
-              <Sidebar.MenuItem
-                href="#"
-                id="meeting-shared"
-                textValue="Shared with me"
-              >
+              <Sidebar.MenuItem href="#" id="meeting-shared" textValue="Shared with me">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={UserMultipleIcon} size={16} />
                 </Sidebar.MenuIcon>
@@ -219,10 +190,7 @@ function MeetingNotesDemo() {
           </Sidebar.Group>
           <Sidebar.Group>
             <Sidebar.GroupLabel>Spaces</Sidebar.GroupLabel>
-            <Sidebar.Menu
-              aria-label="Spaces"
-              defaultExpandedKeys={["meeting-my-notes"]}
-            >
+            <Sidebar.Menu aria-label="Spaces" defaultExpandedKeys={["meeting-my-notes"]}>
               <Sidebar.MenuItem id="meeting-my-notes" textValue="My notes">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={LibraryIcon} size={16} />
@@ -234,20 +202,12 @@ function MeetingNotesDemo() {
                   </Sidebar.MenuTrigger>
                 </Sidebar.MenuLabel>
                 <Sidebar.Submenu>
-                  <Sidebar.MenuItem
-                    href="#"
-                    id="meeting-personal"
-                    textValue="Personal"
-                  >
+                  <Sidebar.MenuItem href="#" id="meeting-personal" textValue="Personal">
                     <Sidebar.MenuLabel>Personal</Sidebar.MenuLabel>
                   </Sidebar.MenuItem>
                 </Sidebar.Submenu>
               </Sidebar.MenuItem>
-              <Sidebar.MenuItem
-                href="#"
-                id="meeting-design-team"
-                textValue="Design team"
-              >
+              <Sidebar.MenuItem href="#" id="meeting-design-team" textValue="Design team">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={UserMultipleIcon} size={16} />
                 </Sidebar.MenuIcon>
@@ -257,9 +217,7 @@ function MeetingNotesDemo() {
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={Add01Icon} size={16} />
                 </Sidebar.MenuIcon>
-                <Sidebar.MenuLabel className="text-muted">
-                  Add folder
-                </Sidebar.MenuLabel>
+                <Sidebar.MenuLabel className="text-muted">Add folder</Sidebar.MenuLabel>
               </Sidebar.MenuItem>
             </Sidebar.Menu>
           </Sidebar.Group>
@@ -278,10 +236,7 @@ function MeetingNotesDemo() {
           </div>
           <Sidebar.Separator />
           <Dropdown>
-            <Dropdown.Trigger
-              aria-label="Sarah"
-              className="w-full justify-start"
-            >
+            <Dropdown.Trigger aria-label="Sarah" className="w-full justify-start">
               <Avatar className="size-7">
                 <Avatar.Fallback>Sarah</Avatar.Fallback>
               </Avatar>
@@ -311,8 +266,8 @@ function MeetingNotesDemo() {
         </div>
         <div className="p-6">
           <p className="text-muted">
-            Meeting notes sidebar with search, spaces, and user menu. Uses
-            offcanvas collapsible mode.
+            Meeting notes sidebar with search, spaces, and user menu. Uses offcanvas collapsible
+            mode.
           </p>
         </div>
       </Sidebar.Main>

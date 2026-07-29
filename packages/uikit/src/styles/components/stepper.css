@@ -126,15 +126,11 @@
     left: calc(50% + var(--stepper-indicator-size) / 2);
     position: absolute;
     right: calc(-50% + var(--stepper-indicator-size) / 2);
-    top: calc(
-      var(--stepper-indicator-size) / 2 - var(--stepper-separator-size) / 2
-    );
+    top: calc(var(--stepper-indicator-size) / 2 - var(--stepper-separator-size) / 2);
   }
   .stepper__separator--vertical {
     bottom: 0;
-    left: calc(
-      var(--stepper-indicator-size) / 2 - var(--stepper-separator-size) / 2
-    );
+    left: calc(var(--stepper-indicator-size) / 2 - var(--stepper-separator-size) / 2);
     position: absolute;
     top: var(--stepper-indicator-size);
   }

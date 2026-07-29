@@ -12,9 +12,7 @@ import { Icon } from "@/demos/icon";
 
 const Glyph = ({ icon }: { icon: string }) => <Icon icon={icon} />;
 
-const Arrow = () => (
-  <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />
-);
+const Arrow = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
 
 function Card({
   action = <Arrow />,
@@ -36,9 +34,7 @@ function Card({
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>{title}</ItemCard.Title>
-        {description && (
-          <ItemCard.Description>{description}</ItemCard.Description>
-        )}
+        {description && <ItemCard.Description>{description}</ItemCard.Description>}
       </ItemCard.Content>
       <ItemCard.Action>{action}</ItemCard.Action>
     </ItemCard>
@@ -46,9 +42,7 @@ function Card({
 }
 
 function SelectCard({ multiple = false }: { multiple?: boolean }) {
-  const [value, setValue] = useState<string | string[]>(
-    multiple ? ["email", "push"] : "en",
-  );
+  const [value, setValue] = useState<string | string[]>(multiple ? ["email", "push"] : "en");
   const options = multiple
     ? [
         ["email", "Email"],
@@ -88,9 +82,7 @@ function SelectCard({ multiple = false }: { multiple?: boolean }) {
           </InlineSelect>
         }
         description={
-          multiple
-            ? "Choose how you receive invitations"
-            : "Choose your preferred language"
+          multiple ? "Choose how you receive invitations" : "Choose your preferred language"
         }
         icon={multiple ? "solar:bell-linear" : "solar:global-linear"}
         title={multiple ? "Event Invites" : "Language"}

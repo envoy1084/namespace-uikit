@@ -29,8 +29,8 @@ function WithAvatarDemo() {
           </EmptyState.Media>
           <EmptyState.Title>User Offline</EmptyState.Title>
           <EmptyState.Description>
-            This user is currently offline. You can leave a message to notify
-            them or try again later.
+            This user is currently offline. You can leave a message to notify them or try again
+            later.
           </EmptyState.Description>
         </EmptyState.Header>
         <EmptyState.Content>

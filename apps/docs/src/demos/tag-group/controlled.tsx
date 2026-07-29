@@ -1,15 +1,12 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import { Description, Label, Tag, TagGroup } from "@thenamespace/uikit";
 
 export function TagGroupControlled() {
-  const [selected, setSelected] = useState<Iterable<Key>>(
-    new Set(["news", "travel"]),
-  );
+  const [selected, setSelected] = useState<Iterable<Key>>(new Set(["news", "travel"]));
 
   return (
     <div className="flex flex-col gap-3">
@@ -26,10 +23,7 @@ export function TagGroupControlled() {
           <Tag id="shopping">Shopping</Tag>
         </TagGroup.List>
         <Description>
-          Selected:{" "}
-          {Array.from(selected).length > 0
-            ? Array.from(selected).join(", ")
-            : "None"}
+          Selected: {Array.from(selected).length > 0 ? Array.from(selected).join(", ") : "None"}
         </Description>
       </TagGroup>
     </div>

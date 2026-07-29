@@ -7,25 +7,13 @@ export function Simple() {
     <div className="flex h-full max-w-xl flex-col items-center justify-center">
       <Toast.Provider placement="bottom" />
       <div className="flex w-full flex-wrap items-center justify-center gap-4">
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => toast("Simple message")}
-        >
+        <Button size="sm" variant="secondary" onPress={() => toast("Simple message")}>
           Default
         </Button>
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => toast.success("Operation completed")}
-        >
+        <Button size="sm" variant="secondary" onPress={() => toast.success("Operation completed")}>
           Success
         </Button>
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => toast.info("New update available")}
-        >
+        <Button size="sm" variant="secondary" onPress={() => toast.info("New update available")}>
           Info
         </Button>
         <Button
@@ -35,11 +23,7 @@ export function Simple() {
         >
           Warning
         </Button>
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => toast.danger("Something went wrong")}
-        >
+        <Button size="sm" variant="secondary" onPress={() => toast.danger("Something went wrong")}>
           Error
         </Button>
       </div>

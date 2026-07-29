@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
 import { Comment01Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
@@ -40,10 +39,7 @@ function DefaultDemo() {
     <div className="w-[480px]">
       <ChatListView aria-label="Recent chats" items={chats}>
         {(chat) => (
-          <ChatListView.Item
-            id={chat.id}
-            textValue={`${chat.title} ${chat.preview}`}
-          >
+          <ChatListView.Item id={chat.id} textValue={`${chat.title} ${chat.preview}`}>
             <ChatListView.ItemContent>
               <ChatListView.Icon>
                 <HugeiconsIcon icon={Comment01Icon} />

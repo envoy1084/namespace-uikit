@@ -23,21 +23,13 @@ function FontSelect({
 }) {
   const [value, setValue] = useState("inter");
   return (
-    <CellSelect
-      aria-label={`${label} font`}
-      value={value}
-      variant={variant}
-      onChange={setValue}
-    >
+    <CellSelect aria-label={`${label} font`} value={value} variant={variant} onChange={setValue}>
       <CellSelect.Trigger>
         <CellSelect.Label>{label}</CellSelect.Label>
         <CellSelect.Value>
           {({ defaultChildren, isPlaceholder, state }) => {
-            if (isPlaceholder || state.selectedItems.length === 0)
-              return defaultChildren;
-            const item = fonts.find(
-              (option) => option.id === state.selectedItems[0]?.key,
-            );
+            if (isPlaceholder || state.selectedItems.length === 0) return defaultChildren;
+            const item = fonts.find((option) => option.id === state.selectedItems[0]?.key);
             return item ? (
               <span className="flex items-center justify-end gap-1.5 text-end">
                 {item.name}

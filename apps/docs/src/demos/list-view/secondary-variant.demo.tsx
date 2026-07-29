@@ -1,11 +1,10 @@
 "use client";
 
-// @demo-title Secondary Variant
-import type { Selection } from "react-aria-components";
-
 import { useState } from "react";
 
 import { ListView } from "@thenamespace/uikit";
+// @demo-title Secondary Variant
+import type { Selection } from "react-aria-components";
 
 import { Icon } from "@/demos/icon";
 
@@ -25,9 +24,7 @@ function FileRows({ compact = false }: { compact?: boolean }) {
         <Icon icon={item.icon === "folder" ? "lucide:folder" : "lucide:file"} />
         <div className="flex min-w-0 flex-col">
           <ListView.Title>{item.name}</ListView.Title>
-          {compact ? null : (
-            <ListView.Description>Updated {item.updated}</ListView.Description>
-          )}
+          {compact ? null : <ListView.Description>Updated {item.updated}</ListView.Description>}
         </div>
       </ListView.ItemContent>
     </ListView.Item>

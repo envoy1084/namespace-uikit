@@ -17,14 +17,12 @@ export function Placements() {
                 {placement === "bottom" && <Drawer.Handle />}
                 <Drawer.Header>
                   <Drawer.Heading>
-                    {placement.charAt(0).toUpperCase() + placement.slice(1)}{" "}
-                    Drawer
+                    {placement.charAt(0).toUpperCase() + placement.slice(1)} Drawer
                   </Drawer.Heading>
                 </Drawer.Header>
                 <Drawer.Body>
                   <p>
-                    This drawer slides in from the <strong>{placement}</strong>{" "}
-                    edge of the screen.
+                    This drawer slides in from the <strong>{placement}</strong> edge of the screen.
                   </p>
                 </Drawer.Body>
                 <Drawer.Footer>

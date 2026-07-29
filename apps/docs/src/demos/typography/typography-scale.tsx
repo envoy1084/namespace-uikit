@@ -40,8 +40,7 @@ const scale = [
   {
     label: "body",
     meta: "16px / 400 / 1.75",
-    sample:
-      "Primary body text used across documentation, marketing copy, and descriptions.",
+    sample: "Primary body text used across documentation, marketing copy, and descriptions.",
     type: "body" as const,
   },
   {
@@ -68,17 +67,10 @@ export const TypographyScale = () => {
   return (
     <div className="divide-border flex w-full flex-col divide-y">
       {scale.map((row) => (
-        <div
-          key={row.label}
-          className="grid grid-cols-[160px_1fr] items-center gap-8 py-5"
-        >
+        <div key={row.label} className="grid grid-cols-[160px_1fr] items-center gap-8 py-5">
           <div className="flex shrink-0 flex-col gap-0.5">
-            <span className="text-foreground text-sm font-semibold">
-              {row.label}
-            </span>
-            <span className="text-muted text-xs whitespace-nowrap">
-              {row.meta}
-            </span>
+            <span className="text-foreground text-sm font-semibold">{row.label}</span>
+            <span className="text-muted text-xs whitespace-nowrap">{row.meta}</span>
           </div>
           <Typography type={row.type}>{row.sample}</Typography>
         </div>

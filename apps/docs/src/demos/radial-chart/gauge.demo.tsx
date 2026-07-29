@@ -55,25 +55,13 @@ export const DemoGaugeExample = () => {
             startAngle={225}
             width={200}
           >
-            <RadialChart.AngleAxis
-              angleAxisId={0}
-              domain={[0, 1358]}
-              tick={false}
-              type="number"
-            />
-            <RadialChart.Bar
-              background
-              angleAxisId={0}
-              cornerRadius={12}
-              dataKey="value"
-            />
+            <RadialChart.AngleAxis angleAxisId={0} domain={[0, 1358]} tick={false} type="number" />
+            <RadialChart.Bar background angleAxisId={0} cornerRadius={12} dataKey="value" />
             <RadialChart.Tooltip content={<RadialTooltip />} />
           </RadialChart>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-muted text-xs">Active Users</span>
-            <span className="text-foreground text-xl font-bold">
-              {(1358).toLocaleString()}
-            </span>
+            <span className="text-foreground text-xl font-bold">{(1358).toLocaleString()}</span>
           </div>
         </div>
       </Card.Content>

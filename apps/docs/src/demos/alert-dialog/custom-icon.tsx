@@ -19,8 +19,8 @@ export function CustomIcon() {
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                We'll send a password reset link to your email address. You'll
-                need to create a new password to regain access to your account.
+                We'll send a password reset link to your email address. You'll need to create a new
+                password to regain access to your account.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

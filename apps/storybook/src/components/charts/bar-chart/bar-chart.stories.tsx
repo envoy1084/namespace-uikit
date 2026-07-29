@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
 import { ArrowUp02Icon, Icon } from "@thenamespace/uikit/icons";
 
 import { ChartTooltip } from "@/components/charts/chart-tooltip";
@@ -19,25 +18,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const sales = [18, 32, 28, 45, 38, 52, 42, 55, 48, 60, 53, 58].map(
-  (value, index) => ({
-    month: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ][index]!,
-    sales: value,
-  }),
-);
+const sales = [18, 32, 28, 45, 38, 52, 42, 55, 48, 60, 53, 58].map((value, index) => ({
+  month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][
+    index
+  ]!,
+  sales: value,
+}));
 
 const channels = [
   { direct: 3200, month: "Jan", online: 4200, retail: 2800 },
@@ -48,19 +34,12 @@ const channels = [
   { direct: 5800, month: "Jun", online: 8400, retail: 4500 },
 ];
 
-function Legend({
-  items,
-}: {
-  items: ReadonlyArray<{ color: string; label: string }>;
-}) {
+function Legend({ items }: { items: ReadonlyArray<{ color: string; label: string }> }) {
   return (
     <div className="flex items-center gap-3">
       {items.map(({ color, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
-          <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: color }}
-          />
+          <span className="size-3 rounded-full" style={{ backgroundColor: color }} />
           <span className="text-muted text-xs">{label}</span>
         </div>
       ))}
@@ -82,9 +61,7 @@ export const Default: Story = {
       <Card.Header className="flex-row items-center justify-between">
         <div>
           <Card.Title className="text-base">Daily Sales</Card.Title>
-          <Card.Description className="text-muted text-xs">
-            Units sold per month
-          </Card.Description>
+          <Card.Description className="text-muted text-xs">Units sold per month</Card.Description>
         </div>
         <Chip color="success" size="sm" variant="soft">
           <Icon icon={ArrowUp02Icon} size={12} />
@@ -109,15 +86,9 @@ export const Default: Story = {
                   <ChartTooltip.Header>{label}</ChartTooltip.Header>
                   {payload.map((entry) => (
                     <ChartTooltip.Item key={String(entry.dataKey)}>
-                      <ChartTooltip.Indicator
-                        color={entry.color ?? entry.fill}
-                      />
-                      <ChartTooltip.Label>
-                        {entry.name ?? "Sales"}
-                      </ChartTooltip.Label>
-                      <ChartTooltip.Value>
-                        {entry.value} units
-                      </ChartTooltip.Value>
+                      <ChartTooltip.Indicator color={entry.color ?? entry.fill} />
+                      <ChartTooltip.Label>{entry.name ?? "Sales"}</ChartTooltip.Label>
+                      <ChartTooltip.Value>{entry.value} units</ChartTooltip.Value>
                     </ChartTooltip.Item>
                   ))}
                 </ChartTooltip>
@@ -266,9 +237,7 @@ export const Horizontal: Story = {
     <Card className="w-full max-w-[420px] rounded-2xl">
       <Card.Header>
         <Card.Title className="text-base">Top Products</Card.Title>
-        <Card.Description className="text-muted text-xs">
-          Units sold this quarter
-        </Card.Description>
+        <Card.Description className="text-muted text-xs">Units sold this quarter</Card.Description>
       </Card.Header>
       <Card.Content>
         <BarChart
@@ -283,12 +252,7 @@ export const Horizontal: Story = {
           layout="vertical"
         >
           <BarChart.XAxis tickMargin={4} type="number" />
-          <BarChart.YAxis
-            dataKey="product"
-            tickMargin={4}
-            type="category"
-            width={60}
-          />
+          <BarChart.YAxis dataKey="product" tickMargin={4} type="category" width={60} />
           <BarChart.Bar
             barSize={14}
             dataKey="units"
@@ -340,12 +304,7 @@ export const HorizontalStacked: Story = {
           margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
         >
           <BarChart.XAxis hide type="number" />
-          <BarChart.YAxis
-            dataKey="day"
-            tickMargin={8}
-            type="category"
-            width={36}
-          />
+          <BarChart.YAxis dataKey="day" tickMargin={8} type="category" width={36} />
           <BarChart.Bar
             barSize={18}
             dataKey="low"
@@ -458,8 +417,7 @@ export const KPIWithBarChart: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "KPI card with bar chart — matching the dashboard-demo sales card.",
+        story: "KPI card with bar chart — matching the dashboard-demo sales card.",
       },
     },
   },
@@ -528,10 +486,7 @@ export const CustomTooltip: Story = {
                 !payload.every((entry) => typeof entry.value === "number")
               )
                 return null;
-              const total = payload.reduce(
-                (sum, entry) => sum + Number(entry.value ?? 0),
-                0,
-              );
+              const total = payload.reduce((sum, entry) => sum + Number(entry.value ?? 0), 0);
               return (
                 <ChartTooltip>
                   <ChartTooltip.Header>{label}</ChartTooltip.Header>
@@ -545,9 +500,7 @@ export const CustomTooltip: Story = {
                     </ChartTooltip.Item>
                   ))}
                   <div className="border-separator mt-1 flex items-center justify-between border-t pt-1.5">
-                    <span className="text-muted text-xs font-medium">
-                      Total
-                    </span>
+                    <span className="text-muted text-xs font-medium">Total</span>
                     <span className="text-foreground text-xs font-semibold">
                       ${total.toLocaleString()}
                     </span>

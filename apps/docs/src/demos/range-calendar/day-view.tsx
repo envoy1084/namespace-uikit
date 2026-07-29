@@ -32,11 +32,7 @@ export function DayView() {
         <Select.Popover>
           <ListBox>
             {dayOptions.map((option) => (
-              <ListBox.Item
-                key={option.id}
-                id={option.id}
-                textValue={option.name}
-              >
+              <ListBox.Item key={option.id} id={option.id} textValue={option.name}>
                 {option.name}
                 <ListBox.ItemIndicator />
               </ListBox.Item>
@@ -45,11 +41,7 @@ export function DayView() {
         </Select.Popover>
       </Select>
 
-      <RangeCalendar
-        key={days}
-        aria-label="Trip dates"
-        visibleDuration={{ days }}
-      >
+      <RangeCalendar key={days} aria-label="Trip dates" visibleDuration={{ days }}>
         <RangeCalendar.Header>
           <RangeCalendar.Heading />
           <RangeCalendar.NavButton slot="previous" />
@@ -57,9 +49,7 @@ export function DayView() {
         </RangeCalendar.Header>
         <RangeCalendar.Grid>
           <RangeCalendar.GridHeader>
-            {(day) => (
-              <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-            )}
+            {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
           </RangeCalendar.GridHeader>
           <RangeCalendar.GridBody>
             {(date) => <RangeCalendar.Cell date={date} />}

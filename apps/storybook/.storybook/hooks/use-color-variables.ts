@@ -24,11 +24,7 @@ function getCssVariableValue(element: Element, variableName: string): string {
 /**
  * Set a CSS custom property value on an element
  */
-function setCssVariableValue(
-  element: HTMLElement,
-  variableName: string,
-  value: string,
-): void {
+function setCssVariableValue(element: HTMLElement, variableName: string, value: string): void {
   element.style.setProperty(variableName, value);
 }
 
@@ -46,22 +42,20 @@ export function useColorVariables(containerRef?: React.RefObject<HTMLElement>) {
   const readVariables = useCallback(() => {
     const element = containerRef?.current || document.documentElement;
 
-    const values: ColorVariableValue[] = COLOR_VARIABLES.map(
-      (variable: ColorVariable) => {
-        const rawValue = getCssVariableValue(element, variable.name);
-        const computedValue = rawValue || "unset";
-        const oklch = parseOklch(computedValue);
+    const values: ColorVariableValue[] = COLOR_VARIABLES.map((variable: ColorVariable) => {
+      const rawValue = getCssVariableValue(element, variable.name);
+      const computedValue = rawValue || "unset";
+      const oklch = parseOklch(computedValue);
 
-        return {
-          name: variable.name,
-          label: variable.label,
-          category: variable.category,
-          rawValue,
-          computedValue,
-          oklch,
-        };
-      },
-    );
+      return {
+        name: variable.name,
+        label: variable.label,
+        category: variable.category,
+        rawValue,
+        computedValue,
+        oklch,
+      };
+    });
 
     setVariables(values);
   }, [containerRef]);

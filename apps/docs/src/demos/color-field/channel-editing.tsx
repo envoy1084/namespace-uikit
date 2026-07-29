@@ -1,15 +1,9 @@
 "use client";
 
-import type { Color } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
-import {
-  ColorField,
-  ColorSwatch,
-  Label,
-  parseColor,
-} from "@thenamespace/uikit";
+import type { Color } from "@thenamespace/uikit";
+import { ColorField, ColorSwatch, Label, parseColor } from "@thenamespace/uikit";
 
 export function ChannelEditing() {
   const [color, setColor] = useState<Color | null>(parseColor("#7F007F"));
@@ -66,9 +60,7 @@ export function ChannelEditing() {
       </div>
       <div className="flex items-center gap-2">
         <ColorSwatch color={color ?? undefined} size="md" />
-        <span className="text-sm">
-          Current: {color ? color.toString("hex") : "(empty)"}
-        </span>
+        <span className="text-sm">Current: {color ? color.toString("hex") : "(empty)"}</span>
       </div>
     </div>
   );

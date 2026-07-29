@@ -1,9 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
-import type { ColorChannel, ColorSpace } from "@/components/utilities/rac";
-
 import React from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { parseColor } from "react-aria-components/ColorArea";
 
 import { Button } from "@/components/buttons/button";
@@ -15,6 +12,7 @@ import { ColorSwatch } from "@/components/colors/color-swatch";
 import { ColorSwatchPicker } from "@/components/colors/color-swatch-picker";
 import { Label } from "@/components/forms/label";
 import { Select } from "@/components/forms/select";
+import type { ColorChannel, ColorSpace } from "@/components/utilities/rac";
 import { Icon } from "@/icon";
 
 import { ColorPicker } from "./index";
@@ -81,11 +79,7 @@ export const Controlled: Story = {
       const randomSaturation = 50 + Math.floor(Math.random() * 50); // 50-100%
       const randomLightness = 40 + Math.floor(Math.random() * 30); // 40-70%
 
-      setColor(
-        parseColor(
-          `hsl(${randomHue}, ${randomSaturation}%, ${randomLightness}%)`,
-        ),
-      );
+      setColor(parseColor(`hsl(${randomHue}, ${randomSaturation}%, ${randomLightness}%)`));
     };
 
     return (
@@ -307,24 +301,22 @@ export const WithSliders: Story = {
             </Select.Popover>
           </Select>
           <div className="flex flex-col gap-2">
-            {colorChannelsByColorSpace[colorSpace].map(
-              (channel: ColorChannel) => (
-                // @ts-expect-error - TypeScript can't correlate dynamic colorSpace with channel type
-                <ColorSlider
-                  key={channel}
-                  aria-label={channel}
-                  channel={channel}
-                  className="gap-1 px-1"
-                  colorSpace={colorSpace}
-                >
-                  <Label>{channel}</Label>
-                  <ColorSlider.Output className="text-muted" />
-                  <ColorSlider.Track>
-                    <ColorSlider.Thumb />
-                  </ColorSlider.Track>
-                </ColorSlider>
-              ),
-            )}
+            {colorChannelsByColorSpace[colorSpace].map((channel: ColorChannel) => (
+              // @ts-expect-error - TypeScript can't correlate dynamic colorSpace with channel type
+              <ColorSlider
+                key={channel}
+                aria-label={channel}
+                channel={channel}
+                className="gap-1 px-1"
+                colorSpace={colorSpace}
+              >
+                <Label>{channel}</Label>
+                <ColorSlider.Output className="text-muted" />
+                <ColorSlider.Track>
+                  <ColorSlider.Thumb />
+                </ColorSlider.Track>
+              </ColorSlider>
+            ))}
           </div>
         </ColorPicker.Popover>
       </ColorPicker>

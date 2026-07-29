@@ -4,19 +4,12 @@
 import { BarChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 
-function Legend({
-  items,
-}: {
-  items: ReadonlyArray<{ color: string; label: string }>;
-}) {
+function Legend({ items }: { items: ReadonlyArray<{ color: string; label: string }> }) {
   return (
     <div className="flex items-center gap-3">
       {items.map(({ color, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
-          <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: color }}
-          />
+          <span className="size-3 rounded-full" style={{ backgroundColor: color }} />
           <span className="text-muted text-xs">{label}</span>
         </div>
       ))}
@@ -52,12 +45,7 @@ export const DemoHorizontalStackedExample = () => (
         margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
       >
         <BarChart.XAxis hide type="number" />
-        <BarChart.YAxis
-          dataKey="day"
-          tickMargin={8}
-          type="category"
-          width={36}
-        />
+        <BarChart.YAxis dataKey="day" tickMargin={8} type="category" width={36} />
         <BarChart.Bar
           barSize={18}
           dataKey="low"
@@ -83,10 +71,7 @@ export const DemoHorizontalStackedExample = () => (
         />
         <BarChart.Tooltip
           content={
-            <BarChart.TooltipContent
-              indicator="line"
-              valueFormatter={(value) => `${value} kcal`}
-            />
+            <BarChart.TooltipContent indicator="line" valueFormatter={(value) => `${value} kcal`} />
           }
         />
       </BarChart>

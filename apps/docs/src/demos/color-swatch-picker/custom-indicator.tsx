@@ -2,15 +2,7 @@ import { ColorSwatchPicker } from "@thenamespace/uikit";
 import { FavouriteIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomIndicator() {
-  const colors = [
-    "#F43F5E",
-    "#D946EF",
-    "#8B5CF6",
-    "#3B82F6",
-    "#06B6D4",
-    "#10B981",
-    "#84CC16",
-  ];
+  const colors = ["#F43F5E", "#D946EF", "#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#84CC16"];
 
   return (
     <ColorSwatchPicker>

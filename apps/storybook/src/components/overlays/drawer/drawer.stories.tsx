@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 import { Input } from "@/components/forms/input";
@@ -32,9 +32,8 @@ export const Default = () => {
             </Drawer.Header>
             <Drawer.Body>
               <p>
-                This is a bottom drawer built with React Aria's Modal component.
-                It slides up from the bottom of the screen with a smooth CSS
-                transition.
+                This is a bottom drawer built with React Aria's Modal component. It slides up from
+                the bottom of the screen with a smooth CSS transition.
               </p>
             </Drawer.Body>
             <Drawer.Footer>
@@ -67,14 +66,12 @@ export const Placements = () => {
                 {placement === "bottom" && <Drawer.Handle />}
                 <Drawer.Header>
                   <Drawer.Heading>
-                    {placement.charAt(0).toUpperCase() + placement.slice(1)}{" "}
-                    Drawer
+                    {placement.charAt(0).toUpperCase() + placement.slice(1)} Drawer
                   </Drawer.Heading>
                 </Drawer.Header>
                 <Drawer.Body>
                   <p>
-                    This drawer slides in from the <strong>{placement}</strong>{" "}
-                    edge of the screen.
+                    This drawer slides in from the <strong>{placement}</strong> edge of the screen.
                   </p>
                 </Drawer.Body>
                 <Drawer.Footer>
@@ -100,9 +97,7 @@ export const BackdropVariants = () => {
     <div className="flex flex-wrap gap-4">
       {variants.map((variant) => (
         <Drawer key={variant}>
-          <Button variant="secondary">
-            {variant.charAt(0).toUpperCase() + variant.slice(1)}
-          </Button>
+          <Button variant="secondary">{variant.charAt(0).toUpperCase() + variant.slice(1)}</Button>
           <Drawer.Backdrop variant={variant}>
             <Drawer.Content>
               <Drawer.Dialog>
@@ -110,14 +105,12 @@ export const BackdropVariants = () => {
                 <Drawer.CloseTrigger />
                 <Drawer.Header>
                   <Drawer.Heading>
-                    Backdrop:{" "}
-                    {variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    Backdrop: {variant.charAt(0).toUpperCase() + variant.slice(1)}
                   </Drawer.Heading>
                 </Drawer.Header>
                 <Drawer.Body>
                   <p>
-                    This drawer uses the <code>{variant}</code> backdrop
-                    variant.
+                    This drawer uses the <code>{variant}</code> backdrop variant.
                   </p>
                 </Drawer.Body>
                 <Drawer.Footer>
@@ -156,10 +149,7 @@ export const WithForm = () => (
               </TextField>
               <TextField className="w-full" name="bio">
                 <Label>Bio</Label>
-                <Input
-                  placeholder="Tell us about yourself"
-                  variant="secondary"
-                />
+                <Input placeholder="Tell us about yourself" variant="secondary" />
               </TextField>
             </form>
           </Drawer.Body>
@@ -189,10 +179,9 @@ export const WithScrollableContent = () => (
           <Drawer.Body>
             {Array.from({ length: 20 }).map((_, i) => (
               <p key={i} className="mb-3">
-                Paragraph {i + 1}: Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit. Nullam pulvinar risus non risus hendrerit
-                venenatis. Pellentesque sit amet hendrerit risus, sed porttitor
-                quam.
+                Paragraph {i + 1}: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+                pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet hendrerit risus,
+                sed porttitor quam.
               </p>
             ))}
           </Drawer.Body>
@@ -263,8 +252,8 @@ export const NonDismissable = () => (
           </Drawer.Header>
           <Drawer.Body>
             <p>
-              This drawer cannot be dismissed by clicking outside. You must use
-              one of the buttons below.
+              This drawer cannot be dismissed by clicking outside. You must use one of the buttons
+              below.
             </p>
           </Drawer.Body>
           <Drawer.Footer>

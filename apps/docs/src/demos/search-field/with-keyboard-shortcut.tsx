@@ -11,13 +11,7 @@ export function WithKeyboardShortcut() {
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Check for Shift+S
-      if (
-        e.shiftKey &&
-        e.key === "S" &&
-        !e.metaKey &&
-        !e.ctrlKey &&
-        !e.altKey
-      ) {
+      if (e.shiftKey && e.key === "S" && !e.metaKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
         inputRef.current?.focus();
       }
@@ -43,16 +37,10 @@ export function WithKeyboardShortcut() {
           <Label>Search</Label>
           <SearchField.Group>
             <SearchField.SearchIcon />
-            <SearchField.Input
-              ref={inputRef}
-              className="w-[280px]"
-              placeholder="Search..."
-            />
+            <SearchField.Input ref={inputRef} className="w-[280px]" placeholder="Search..." />
             <SearchField.ClearButton />
           </SearchField.Group>
-          <Description>
-            Use keyboard shortcut to quickly focus this field
-          </Description>
+          <Description>Use keyboard shortcut to quickly focus this field</Description>
         </SearchField>
       </div>
       <div className="text-default-500 flex items-center gap-2 text-sm">

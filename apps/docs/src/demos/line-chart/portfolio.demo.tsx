@@ -11,47 +11,45 @@ const portfolioRanges = {
     balance: "$24,801.32",
     change: "$42.10 (0.17%)",
     data: [
-      24759, 24820, 24690, 24780, 24650, 24730, 24860, 24710, 24840, 24770,
-      24900, 24680, 24810, 24750, 24801,
+      24759, 24820, 24690, 24780, 24650, 24730, 24860, 24710, 24840, 24770, 24900, 24680, 24810,
+      24750, 24801,
     ],
   },
   "1D": {
     balance: "$24,801.32",
     change: "$312.55 (1.28%)",
     data: [
-      24490, 24680, 24350, 24520, 24750, 24410, 24600, 24380, 24720, 24550,
-      24830, 24460, 24690, 24580, 24801,
+      24490, 24680, 24350, 24520, 24750, 24410, 24600, 24380, 24720, 24550, 24830, 24460, 24690,
+      24580, 24801,
     ],
   },
   "1W": {
     balance: "$24,801.32",
     change: "$842.18 (3.51%)",
-    data: [
-      23960, 24100, 23850, 24200, 24050, 24350, 24500, 24400, 24650, 24801,
-    ],
+    data: [23960, 24100, 23850, 24200, 24050, 24350, 24500, 24400, 24650, 24801],
   },
   "1M": {
     balance: "$24,801.32",
     change: "$1,242.77 (5.32%)",
     data: [
-      18000, 17500, 17800, 18200, 19000, 18500, 19200, 20500, 20000, 21000,
-      20800, 22000, 21500, 22800, 24801,
+      18000, 17500, 17800, 18200, 19000, 18500, 19200, 20500, 20000, 21000, 20800, 22000, 21500,
+      22800, 24801,
     ],
   },
   "1Y": {
     balance: "$24,801.32",
     change: "$8,401.32 (51.2%)",
     data: [
-      16400, 15200, 17100, 16800, 18500, 19200, 18000, 20100, 21500, 19800,
-      22400, 23100, 21800, 24200, 24801,
+      16400, 15200, 17100, 16800, 18500, 19200, 18000, 20100, 21500, 19800, 22400, 23100, 21800,
+      24200, 24801,
     ],
   },
   ALL: {
     balance: "$24,801.32",
     change: "$19,801.32 (396%)",
     data: [
-      5000, 6200, 5800, 7500, 9200, 8400, 11000, 12800, 14500, 13200, 16800,
-      18500, 20100, 22400, 24801,
+      5000, 6200, 5800, 7500, 9200, 8400, 11000, 12800, 14500, 13200, 16800, 18500, 20100, 22400,
+      24801,
     ],
   },
 } as const;
@@ -67,18 +65,12 @@ function PortfolioExample() {
           <Card.Title className="text-base">Portfolio</Card.Title>
           <div className="flex flex-col gap-0.5">
             <span className="text-muted text-xs">Total balance</span>
-            <span className="text-foreground text-2xl font-semibold">
-              {current.balance}
-            </span>
-            <span className="text-xs font-medium text-green-500">
-              {current.change}
-            </span>
+            <span className="text-foreground text-2xl font-semibold">{current.balance}</span>
+            <span className="text-xs font-medium text-green-500">{current.change}</span>
           </div>
         </div>
         <div className="bg-default flex rounded-lg p-0.5">
-          {(
-            Object.keys(portfolioRanges) as Array<keyof typeof portfolioRanges>
-          ).map((key) => (
+          {(Object.keys(portfolioRanges) as Array<keyof typeof portfolioRanges>).map((key) => (
             <button
               className={
                 range === key

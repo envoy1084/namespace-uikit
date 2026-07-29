@@ -5,12 +5,7 @@ import { PieChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 import { ChartTooltip } from "@thenamespace/uikit/chart-tooltip";
 
-const colors = [
-  "var(--chart-4)",
-  "var(--chart-3)",
-  "var(--chart-2)",
-  "var(--chart-1)",
-];
+const colors = ["var(--chart-4)", "var(--chart-3)", "var(--chart-2)", "var(--chart-1)"];
 
 interface PieTooltipProps {
   active?: boolean;
@@ -65,9 +60,7 @@ function Legend({
           />
           <span className="text-muted text-xs">
             {item.name}
-            {suffix !== undefined
-              ? ` (${item.value.toLocaleString()}${suffix})`
-              : ""}
+            {suffix !== undefined ? ` (${item.value.toLocaleString()}${suffix})` : ""}
           </span>
         </div>
       ))}
@@ -108,9 +101,7 @@ export const DemoDonutWithLabelExample = () => {
             >
               <Cells data={storage} />
             </PieChart.Pie>
-            <PieChart.Tooltip
-              content={<PieTooltip valueFormatter={(value) => `${value} GB`} />}
-            />
+            <PieChart.Tooltip content={<PieTooltip valueFormatter={(value) => `${value} GB`} />} />
           </PieChart>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-foreground text-2xl font-bold">{total}</span>

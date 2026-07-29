@@ -12,11 +12,7 @@ export function CustomIndicator() {
           <Radio.Control>
             <Radio.Indicator>
               {({ isSelected }) =>
-                isSelected ? (
-                  <span className="text-background text-xs leading-none">
-                    ✓
-                  </span>
-                ) : null
+                isSelected ? <span className="text-background text-xs leading-none">✓</span> : null
               }
             </Radio.Indicator>
           </Radio.Control>
@@ -29,11 +25,7 @@ export function CustomIndicator() {
           <Radio.Control>
             <Radio.Indicator>
               {({ isSelected }) =>
-                isSelected ? (
-                  <span className="text-background text-xs leading-none">
-                    ✓
-                  </span>
-                ) : null
+                isSelected ? <span className="text-background text-xs leading-none">✓</span> : null
               }
             </Radio.Indicator>
           </Radio.Control>
@@ -46,11 +38,7 @@ export function CustomIndicator() {
           <Radio.Control>
             <Radio.Indicator>
               {({ isSelected }) =>
-                isSelected ? (
-                  <span className="text-background text-xs leading-none">
-                    ✓
-                  </span>
-                ) : null
+                isSelected ? <span className="text-background text-xs leading-none">✓</span> : null
               }
             </Radio.Indicator>
           </Radio.Control>

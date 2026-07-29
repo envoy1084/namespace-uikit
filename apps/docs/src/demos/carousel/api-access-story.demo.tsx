@@ -1,11 +1,10 @@
 "use client";
 
-// @demo-title API Access
-import type { EmblaCarouselType } from "embla-carousel";
-
 import { useEffect, useState } from "react";
 
 import { Carousel } from "@thenamespace/uikit";
+// @demo-title API Access
+import type { EmblaCarouselType } from "embla-carousel";
 
 const NumberSlides = ({ count = 5 }: { count?: number }) => (
   <>

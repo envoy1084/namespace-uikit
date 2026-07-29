@@ -1,24 +1,17 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { parseDate } from "@internationalized/date";
 import { Button, Calendar, Description } from "@thenamespace/uikit";
 
 export function FocusedValue() {
-  const [focusedDate, setFocusedDate] = useState<DateValue>(
-    parseDate("2025-06-15"),
-  );
+  const [focusedDate, setFocusedDate] = useState<DateValue>(parseDate("2025-06-15"));
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <Calendar
-        aria-label="Event date"
-        focusedValue={focusedDate}
-        onFocusChange={setFocusedDate}
-      >
+      <Calendar aria-label="Event date" focusedValue={focusedDate} onFocusChange={setFocusedDate}>
         <Calendar.Header>
           <Calendar.Heading />
           <Calendar.NavButton slot="previous" />
@@ -28,15 +21,11 @@ export function FocusedValue() {
           <Calendar.GridHeader>
             {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
           </Calendar.GridHeader>
-          <Calendar.GridBody>
-            {(date) => <Calendar.Cell date={date} />}
-          </Calendar.GridBody>
+          <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
         </Calendar.Grid>
       </Calendar>
 
-      <Description className="text-center">
-        Focused: {focusedDate.toString()}
-      </Description>
+      <Description className="text-center">Focused: {focusedDate.toString()}</Description>
 
       <div className="flex flex-wrap justify-center gap-2">
         <Button

@@ -10,9 +10,7 @@ import { Icon } from "@/demos/icon";
 
 const Glyph = ({ icon }: { icon: string }) => <Icon icon={icon} />;
 
-const Arrow = () => (
-  <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />
-);
+const Arrow = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
 
 function Card({
   action = <Arrow />,
@@ -34,9 +32,7 @@ function Card({
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>{title}</ItemCard.Title>
-        {description && (
-          <ItemCard.Description>{description}</ItemCard.Description>
-        )}
+        {description && <ItemCard.Description>{description}</ItemCard.Description>}
       </ItemCard.Content>
       <ItemCard.Action>{action}</ItemCard.Action>
     </ItemCard>
@@ -49,11 +45,7 @@ function SwitchCard() {
     <div className="w-[500px] rounded-2xl p-6">
       <Card
         action={
-          <Switch
-            aria-label="Switch Dark mode"
-            isSelected={selected}
-            onChange={setSelected}
-          >
+          <Switch aria-label="Switch Dark mode" isSelected={selected} onChange={setSelected}>
             <Switch.Content>
               <Switch.Control>
                 <Switch.Thumb />

@@ -1,9 +1,8 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import {
   Autocomplete,
   EmptyState,
@@ -65,17 +64,9 @@ export function Variants() {
                     <SearchField.ClearButton />
                   </SearchField.Group>
                 </SearchField>
-                <ListBox
-                  renderEmptyState={() => (
-                    <EmptyState>No results found</EmptyState>
-                  )}
-                >
+                <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                   {items.map((item) => (
-                    <ListBox.Item
-                      key={item.id}
-                      id={item.id}
-                      textValue={item.name}
-                    >
+                    <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                       {item.name}
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
@@ -107,17 +98,9 @@ export function Variants() {
                     <SearchField.ClearButton />
                   </SearchField.Group>
                 </SearchField>
-                <ListBox
-                  renderEmptyState={() => (
-                    <EmptyState>No results found</EmptyState>
-                  )}
-                >
+                <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                   {items.map((item) => (
-                    <ListBox.Item
-                      key={item.id}
-                      id={item.id}
-                      textValue={item.name}
-                    >
+                    <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                       {item.name}
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
@@ -147,17 +130,13 @@ export function Variants() {
                     return defaultChildren;
                   }
 
-                  const selectedItemsKeys = state.selectedItems.map(
-                    (item) => item.key,
-                  );
+                  const selectedItemsKeys = state.selectedItems.map((item) => item.key);
 
                   return (
                     <TagGroup size="sm" onRemove={onRemoveTags1}>
                       <TagGroup.List>
                         {selectedItemsKeys.map((selectedItemKey) => {
-                          const item = items.find(
-                            (s) => s.id === selectedItemKey,
-                          );
+                          const item = items.find((s) => s.id === selectedItemKey);
 
                           if (!item) return null;
 
@@ -184,17 +163,9 @@ export function Variants() {
                     <SearchField.ClearButton />
                   </SearchField.Group>
                 </SearchField>
-                <ListBox
-                  renderEmptyState={() => (
-                    <EmptyState>No results found</EmptyState>
-                  )}
-                >
+                <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                   {items.map((item) => (
-                    <ListBox.Item
-                      key={item.id}
-                      id={item.id}
-                      textValue={item.name}
-                    >
+                    <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                       {item.name}
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
@@ -219,21 +190,13 @@ export function Variants() {
                     return defaultChildren;
                   }
 
-                  const selectedItemsKeys = state.selectedItems.map(
-                    (item) => item.key,
-                  );
+                  const selectedItemsKeys = state.selectedItems.map((item) => item.key);
 
                   return (
-                    <TagGroup
-                      size="sm"
-                      variant="surface"
-                      onRemove={onRemoveTags2}
-                    >
+                    <TagGroup size="sm" variant="surface" onRemove={onRemoveTags2}>
                       <TagGroup.List>
                         {selectedItemsKeys.map((selectedItemKey) => {
-                          const item = items.find(
-                            (s) => s.id === selectedItemKey,
-                          );
+                          const item = items.find((s) => s.id === selectedItemKey);
 
                           if (!item) return null;
 
@@ -260,17 +223,9 @@ export function Variants() {
                     <SearchField.ClearButton />
                   </SearchField.Group>
                 </SearchField>
-                <ListBox
-                  renderEmptyState={() => (
-                    <EmptyState>No results found</EmptyState>
-                  )}
-                >
+                <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
                   {items.map((item) => (
-                    <ListBox.Item
-                      key={item.id}
-                      id={item.id}
-                      textValue={item.name}
-                    >
+                    <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                       {item.name}
                       <ListBox.ItemIndicator />
                     </ListBox.Item>

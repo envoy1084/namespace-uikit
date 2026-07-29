@@ -1,7 +1,5 @@
 "use client";
 
-import type { ButtonProps } from "react-aria-components";
-
 import type { CSSProperties, ReactElement, ReactNode } from "react";
 import {
   createContext,
@@ -14,6 +12,7 @@ import {
 } from "react";
 
 import { cn } from "@heroui/react";
+import type { ButtonProps } from "react-aria-components";
 import { Button as AriaButton } from "react-aria-components";
 
 type Sweep = "down" | "left" | "right" | "up";
@@ -26,18 +25,10 @@ function hasDisabledParent(element: HTMLElement | null): boolean {
   );
 }
 
-function isNestedInteractive(
-  parent: HTMLElement | null,
-  target: EventTarget | null,
-): boolean {
-  if (!parent || !(target instanceof Element) || target === parent)
-    return false;
-  const interactive = target.closest(
-    "a,button,input,select,textarea,[role='button']",
-  );
-  return Boolean(
-    interactive && interactive !== parent && parent.contains(interactive),
-  );
+function isNestedInteractive(parent: HTMLElement | null, target: EventTarget | null): boolean {
+  if (!parent || !(target instanceof Element) || target === parent) return false;
+  const interactive = target.closest("a,button,input,select,textarea,[role='button']");
+  return Boolean(interactive && interactive !== parent && parent.contains(interactive));
 }
 
 export interface HoldConfirmProps {
@@ -96,8 +87,7 @@ function HoldConfirm({
         )
           return;
       } else if (event instanceof KeyboardEvent) {
-        if ((event.key !== " " && event.key !== "Enter") || event.repeat)
-          return;
+        if ((event.key !== " " && event.key !== "Enter") || event.repeat) return;
       } else return;
       start();
     },
@@ -105,12 +95,7 @@ function HoldConfirm({
   );
   const onKeyUp = useCallback(
     (event: Event) => {
-      if (
-        event instanceof KeyboardEvent &&
-        event.key !== " " &&
-        event.key !== "Enter"
-      )
-        return;
+      if (event instanceof KeyboardEvent && event.key !== " " && event.key !== "Enter") return;
       cancel();
     },
     [cancel],
@@ -309,20 +294,14 @@ function Ripple({
     const surface = surfaceRef.current;
     if (!surface) return;
     if (hoverOpacity != null)
-      surface.style.setProperty(
-        "--pressable-feedback-ripple-hover-opacity",
-        String(hoverOpacity),
-      );
+      surface.style.setProperty("--pressable-feedback-ripple-hover-opacity", String(hoverOpacity));
     if (pressedOpacity != null)
       surface.style.setProperty(
         "--pressable-feedback-ripple-pressed-opacity",
         String(pressedOpacity),
       );
     if (duration !== 150)
-      surface.style.setProperty(
-        "--pressable-feedback-ripple-duration",
-        `${duration}ms`,
-      );
+      surface.style.setProperty("--pressable-feedback-ripple-duration", `${duration}ms`);
   }, [duration, hoverOpacity, pressedOpacity]);
 
   const start = useCallback(
@@ -334,12 +313,8 @@ function Ripple({
       const size = Math.max(rect.height, rect.width);
       const initial = Math.floor(size * 0.2);
       const final = Math.sqrt(rect.width ** 2 + rect.height ** 2) + 12;
-      const startX = event
-        ? event.pageX - window.scrollX - rect.left
-        : rect.width / 2;
-      const startY = event
-        ? event.pageY - window.scrollY - rect.top
-        : rect.height / 2;
+      const startX = event ? event.pageX - window.scrollX - rect.left : rect.width / 2;
+      const startY = event ? event.pageY - window.scrollY - rect.top : rect.height / 2;
       const endX = (rect.width - initial) / 2;
       const endY = (rect.height - initial) / 2;
       setPressed(true);
@@ -393,11 +368,7 @@ function Ripple({
       if (valid(event)) end();
     };
     const click = (event: MouseEvent) => {
-      if (
-        !isDisabled &&
-        !isNestedInteractive(parent, event.target) &&
-        !pressed
-      ) {
+      if (!isDisabled && !isNestedInteractive(parent, event.target) && !pressed) {
         start();
         end();
       }
@@ -443,10 +414,7 @@ const PressableFeedbackContext = createContext({
   highlightClassName: "pressable-feedback__highlight",
 });
 
-export interface PressableFeedbackRootProps extends Omit<
-  ButtonProps,
-  "children"
-> {
+export interface PressableFeedbackRootProps extends Omit<ButtonProps, "children"> {
   children: ReactNode;
 }
 
@@ -456,10 +424,7 @@ function PressableFeedbackRoot({
   isDisabled,
   ...props
 }: PressableFeedbackRootProps): ReactElement {
-  const context = useMemo(
-    () => ({ highlightClassName: "pressable-feedback__highlight" }),
-    [],
-  );
+  const context = useMemo(() => ({ highlightClassName: "pressable-feedback__highlight" }), []);
   return (
     <PressableFeedbackContext value={context}>
       <AriaButton
@@ -475,10 +440,7 @@ function PressableFeedbackRoot({
   );
 }
 
-function Highlight({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>): ReactElement {
+function Highlight({ className, ...props }: React.HTMLAttributes<HTMLDivElement>): ReactElement {
   const context = useContext(PressableFeedbackContext);
   return (
     <div
@@ -498,13 +460,10 @@ type PressableFeedbackComponent = typeof PressableFeedbackRoot & {
   Root: typeof PressableFeedbackRoot;
 };
 
-export const PressableFeedback: PressableFeedbackComponent = Object.assign(
-  PressableFeedbackRoot,
-  {
-    Highlight,
-    HoldConfirm,
-    ProgressFeedback,
-    Ripple,
-    Root: PressableFeedbackRoot,
-  },
-);
+export const PressableFeedback: PressableFeedbackComponent = Object.assign(PressableFeedbackRoot, {
+  Highlight,
+  HoldConfirm,
+  ProgressFeedback,
+  Ripple,
+  Root: PressableFeedbackRoot,
+});

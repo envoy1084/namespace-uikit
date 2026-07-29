@@ -16,10 +16,7 @@ export function OnSurface() {
         <Label>Advanced search</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input
-            className="w-full"
-            placeholder="Advanced search..."
-          />
+          <SearchField.Input className="w-full" placeholder="Advanced search..." />
           <SearchField.ClearButton />
         </SearchField.Group>
         <Description>Use filters to refine your search</Description>

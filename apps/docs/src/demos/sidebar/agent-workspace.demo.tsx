@@ -2,15 +2,7 @@
 "use client";
 
 // @demo-title Agent Workspace
-import {
-  Avatar,
-  Breadcrumbs,
-  Chip,
-  Dropdown,
-  Kbd,
-  Label,
-  Tooltip,
-} from "@thenamespace/uikit";
+import { Avatar, Breadcrumbs, Chip, Dropdown, Kbd, Label, Tooltip } from "@thenamespace/uikit";
 import { Sidebar } from "@thenamespace/uikit";
 import {
   Analytics01Icon,
@@ -57,24 +49,15 @@ function MoreActions({ label }: { label: string }) {
       <Dropdown.Popover className="w-44" offset={6} placement="right top">
         <Dropdown.Menu aria-label={`${label} actions`}>
           <Dropdown.Item id="open" textValue="Open">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={FolderOpenIcon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={FolderOpenIcon} />
             <Label>Open</Label>
           </Dropdown.Item>
           <Dropdown.Item id="duplicate" textValue="Duplicate">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={Copy01Icon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={Copy01Icon} />
             <Label>Duplicate</Label>
           </Dropdown.Item>
           <Dropdown.Item id="delete" textValue="Delete" variant="danger">
-            <HugeiconsIcon
-              className="text-danger size-4 shrink-0"
-              icon={Delete02Icon}
-            />
+            <HugeiconsIcon className="text-danger size-4 shrink-0" icon={Delete02Icon} />
             <Label>Delete</Label>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -91,10 +74,7 @@ function Menu({
   nested?: boolean;
 }) {
   return (
-    <Sidebar.Menu
-      aria-label="Navigation"
-      defaultExpandedKeys={nested ? ["Analytics"] : []}
-    >
+    <Sidebar.Menu aria-label="Navigation" defaultExpandedKeys={nested ? ["Analytics"] : []}>
       {nav.map((item) => (
         <Sidebar.MenuItem
           href={item.items ? undefined : "#"}
@@ -123,21 +103,19 @@ function Menu({
           ) : null}
           {nested && item.items ? (
             <Sidebar.Submenu>
-              {(item.label === "Analytics" ? analyticsItems : item.items).map(
-                (child) => (
-                  <Sidebar.MenuItem
-                    href="#"
-                    id={`${item.label}-${child}`}
-                    key={child}
-                    textValue={child}
-                  >
-                    <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
-                    <Sidebar.MenuActions className="ml-auto">
-                      <MoreActions label={child} />
-                    </Sidebar.MenuActions>
-                  </Sidebar.MenuItem>
-                ),
-              )}
+              {(item.label === "Analytics" ? analyticsItems : item.items).map((child) => (
+                <Sidebar.MenuItem
+                  href="#"
+                  id={`${item.label}-${child}`}
+                  key={child}
+                  textValue={child}
+                >
+                  <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
+                  <Sidebar.MenuActions className="ml-auto">
+                    <MoreActions label={child} />
+                  </Sidebar.MenuActions>
+                </Sidebar.MenuItem>
+              ))}
             </Sidebar.Submenu>
           ) : null}
         </Sidebar.MenuItem>
@@ -208,12 +186,7 @@ function AgentWorkspaceDemo() {
                 </Kbd>
               </Sidebar.MenuChip>
             </Sidebar.MenuItem>
-            <Sidebar.MenuItem
-              href="#"
-              id="aw-marketplace"
-              isCurrent
-              textValue="Marketplace"
-            >
+            <Sidebar.MenuItem href="#" id="aw-marketplace" isCurrent textValue="Marketplace">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={Globe02Icon} size={16} />
               </Sidebar.MenuIcon>
@@ -268,9 +241,7 @@ function AgentWorkspaceDemo() {
                     <Sidebar.MenuLabel>{label}</Sidebar.MenuLabel>
                     {timeAgo ? (
                       <Sidebar.MenuChip>
-                        <span className="text-muted text-[10px] leading-none">
-                          {timeAgo}
-                        </span>
+                        <span className="text-muted text-[10px] leading-none">{timeAgo}</span>
                       </Sidebar.MenuChip>
                     ) : null}
                     <Sidebar.MenuActions className="ml-auto">
@@ -292,15 +263,9 @@ function AgentWorkspaceDemo() {
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={MoreVerticalIcon} size={16} />
                 </Sidebar.MenuIcon>
-                <Sidebar.MenuLabel className="text-muted">
-                  More
-                </Sidebar.MenuLabel>
+                <Sidebar.MenuLabel className="text-muted">More</Sidebar.MenuLabel>
               </Sidebar.MenuItem>
-              <Sidebar.MenuItem
-                href="#"
-                id="aw-open-workspace"
-                textValue="Open Workspace"
-              >
+              <Sidebar.MenuItem href="#" id="aw-open-workspace" textValue="Open Workspace">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={FolderOpenIcon} size={16} />
                 </Sidebar.MenuIcon>
@@ -313,19 +278,14 @@ function AgentWorkspaceDemo() {
           <Dropdown>
             <Dropdown.Trigger className="hover:bg-default flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left outline-none">
               <Avatar size="sm">
-                <Avatar.Image
-                  alt="Alex Chen"
-                  src="/assets/avatars/blue-light.jpg"
-                />
+                <Avatar.Image alt="Alex Chen" src="/assets/avatars/blue-light.jpg" />
                 <Avatar.Fallback delayMs={600}>AC</Avatar.Fallback>
               </Avatar>
               <div className="flex min-w-0 flex-col" data-sidebar="label">
                 <span className="text-foreground truncate text-sm leading-tight font-medium">
                   Alex Chen
                 </span>
-                <span className="text-muted truncate text-xs leading-tight">
-                  Hero Labs
-                </span>
+                <span className="text-muted truncate text-xs leading-tight">Hero Labs</span>
               </div>
             </Dropdown.Trigger>
             <Dropdown.Popover placement="top start">
@@ -356,8 +316,8 @@ function AgentWorkspaceDemo() {
         </div>
         <div className="p-6">
           <p className="text-muted">
-            Workspace sidebar with agent tasks grouped by repository. Mirrors
-            the pattern used by AI coding tools.
+            Workspace sidebar with agent tasks grouped by repository. Mirrors the pattern used by AI
+            coding tools.
           </p>
         </div>
       </Sidebar.Main>

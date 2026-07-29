@@ -25,12 +25,7 @@ function ControlledSwitch({
 }) {
   const [selected, setSelected] = useState(defaultSelected);
   return (
-    <CellSwitch
-      aria-label={label}
-      isSelected={selected}
-      variant={variant}
-      onChange={setSelected}
-    >
+    <CellSwitch aria-label={label} isSelected={selected} variant={variant} onChange={setSelected}>
       <SwitchContents label={label} />
     </CellSwitch>
   );
@@ -38,15 +33,7 @@ function ControlledSwitch({
 
 export const DemoSecondaryGroupExample = () => (
   <div className="flex w-[252px] flex-col gap-2">
-    <ControlledSwitch
-      defaultSelected
-      label="Notifications"
-      variant="secondary"
-    />
-    <ControlledSwitch
-      defaultSelected={false}
-      label="Marketing emails"
-      variant="secondary"
-    />
+    <ControlledSwitch defaultSelected label="Notifications" variant="secondary" />
+    <ControlledSwitch defaultSelected={false} label="Marketing emails" variant="secondary" />
   </div>
 );

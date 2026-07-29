@@ -34,19 +34,12 @@ function AxisSet() {
   );
 }
 
-function Legend({
-  items,
-}: {
-  items: ReadonlyArray<{ color: string; label: string }>;
-}) {
+function Legend({ items }: { items: ReadonlyArray<{ color: string; label: string }> }) {
   return (
     <div className="flex items-center gap-3">
       {items.map(({ color, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
-          <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: color }}
-          />
+          <span className="size-3 rounded-full" style={{ backgroundColor: color }} />
           <span className="text-muted text-xs">{label}</span>
         </div>
       ))}
@@ -56,12 +49,8 @@ function Legend({
 
 const stackedData = trafficData.map((item, index) => ({
   ...item,
-  direct: [
-    800, 1500, 2200, 1800, 2600, 2000, 3100, 2800, 3500, 3200, 4000, 3700,
-  ][index]!,
-  referral: [
-    500, 1200, 2100, 2800, 3200, 2600, 4100, 3800, 4500, 5200, 5800, 5100,
-  ][index]!,
+  direct: [800, 1500, 2200, 1800, 2600, 2000, 3100, 2800, 3500, 3200, 4000, 3700][index]!,
+  referral: [500, 1200, 2100, 2800, 3200, 2600, 4100, 3800, 4500, 5200, 5800, 5100][index]!,
 }));
 
 export const DemoStackedExample = () => {
@@ -82,14 +71,7 @@ export const DemoStackedExample = () => {
         <AreaChart data={stackedData} height={240}>
           <defs>
             {series.map(({ color, key }) => (
-              <linearGradient
-                id={`stacked-${key}`}
-                key={key}
-                x1="0"
-                x2="0"
-                y1="0"
-                y2="1"
-              >
+              <linearGradient id={`stacked-${key}`} key={key} x1="0" x2="0" y1="0" y2="1">
                 <stop offset="0%" stopColor={color} stopOpacity={0.4} />
                 <stop offset="100%" stopColor={color} stopOpacity={0.1} />
               </linearGradient>
@@ -109,9 +91,7 @@ export const DemoStackedExample = () => {
               type="monotone"
             />
           ))}
-          <AreaChart.Tooltip
-            content={<AreaChart.TooltipContent indicator="line" />}
-          />
+          <AreaChart.Tooltip content={<AreaChart.TooltipContent indicator="line" />} />
         </AreaChart>
       </Card.Content>
     </Card>

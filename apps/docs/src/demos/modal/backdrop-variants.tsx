@@ -10,9 +10,7 @@ export function BackdropVariants() {
     <div className="flex flex-wrap gap-4">
       {variants.map((variant) => (
         <Modal key={variant}>
-          <Button variant="secondary">
-            {variant.charAt(0).toUpperCase() + variant.slice(1)}
-          </Button>
+          <Button variant="secondary">{variant.charAt(0).toUpperCase() + variant.slice(1)}</Button>
           <Modal.Backdrop variant={variant}>
             <Modal.Container>
               <Modal.Dialog className="sm:max-w-[360px]">
@@ -22,16 +20,14 @@ export function BackdropVariants() {
                     <HugeiconsIcon icon={Rocket01Icon} className="size-5" />
                   </Modal.Icon>
                   <Modal.Heading>
-                    Backdrop:{" "}
-                    {variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    Backdrop: {variant.charAt(0).toUpperCase() + variant.slice(1)}
                   </Modal.Heading>
                 </Modal.Header>
                 <Modal.Body>
                   <p>
-                    This modal uses the <code>{variant}</code> backdrop variant.
-                    Compare the different visual effects: opaque provides full
-                    opacity, blur adds a backdrop filter, and transparent
-                    removes the background.
+                    This modal uses the <code>{variant}</code> backdrop variant. Compare the
+                    different visual effects: opaque provides full opacity, blur adds a backdrop
+                    filter, and transparent removes the background.
                   </p>
                 </Modal.Body>
                 <Modal.Footer>

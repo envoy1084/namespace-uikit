@@ -1,9 +1,8 @@
 "use client";
 
-import type { SortDescriptor } from "@thenamespace/uikit";
-
 import { useMemo, useState } from "react";
 
+import type { SortDescriptor } from "@thenamespace/uikit";
 import { Table } from "@thenamespace/uikit";
 
 interface User {

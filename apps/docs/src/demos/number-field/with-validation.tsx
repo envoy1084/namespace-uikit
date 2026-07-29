@@ -2,12 +2,7 @@
 
 import React from "react";
 
-import {
-  Description,
-  FieldError,
-  Label,
-  NumberField,
-} from "@thenamespace/uikit";
+import { Description, FieldError, Label, NumberField } from "@thenamespace/uikit";
 
 export function WithValidation() {
   const [value, setValue] = React.useState<number | undefined>(undefined);

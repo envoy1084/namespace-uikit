@@ -4,10 +4,7 @@ import { Label, SearchField } from "@thenamespace/uikit";
 
 export function CustomRenderFunction() {
   return (
-    <SearchField
-      name="search"
-      render={(props) => <div {...props} data-custom="foo" />}
-    >
+    <SearchField name="search" render={(props) => <div {...props} data-custom="foo" />}>
       <Label>Search</Label>
       <SearchField.Group>
         <SearchField.SearchIcon />

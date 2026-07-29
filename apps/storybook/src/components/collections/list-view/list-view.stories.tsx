@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import type { Selection, SelectionMode } from "react-aria-components";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { ActionBar } from "@thenamespace/uikit/action-bar";
+import type { Selection, SelectionMode } from "react-aria-components";
 
 import { Button } from "@/components/buttons/button";
 import { Chip } from "@/components/data-display/chip";
@@ -35,9 +34,7 @@ function FileRows({ compact = false }: { compact?: boolean }) {
         <Icon icon={item.icon === "folder" ? "lucide:folder" : "lucide:file"} />
         <div className="flex min-w-0 flex-col">
           <ListView.Title>{item.name}</ListView.Title>
-          {compact ? null : (
-            <ListView.Description>Updated {item.updated}</ListView.Description>
-          )}
+          {compact ? null : <ListView.Description>Updated {item.updated}</ListView.Description>}
         </div>
       </ListView.ItemContent>
     </ListView.Item>
@@ -60,13 +57,7 @@ function DefaultDemo() {
     </div>
   );
 }
-function SelectionDemo({
-  label,
-  selectionMode,
-}: {
-  label: string;
-  selectionMode: SelectionMode;
-}) {
+function SelectionDemo({ label, selectionMode }: { label: string; selectionMode: SelectionMode }) {
   const [selected, setSelected] = useState<Selection>(new Set());
   return (
     <div className="flex flex-col gap-2">
@@ -147,25 +138,14 @@ function Actions({ count, clear }: { clear: () => void; count: number }) {
           </Button>
         ))}
         <Separator orientation="vertical" />
-        <Button
-          aria-label="Delete"
-          className="bg-danger/10 text-danger"
-          size="sm"
-          variant="ghost"
-        >
+        <Button aria-label="Delete" className="bg-danger/10 text-danger" size="sm" variant="ghost">
           <Icon icon="lucide:trash-2" />
           <span className="action-bar__label">Delete</span>
         </Button>
       </ActionBar.Content>
       <Separator />
       <ActionBar.Suffix>
-        <Button
-          isIconOnly
-          aria-label="Clear selection"
-          size="sm"
-          variant="ghost"
-          onPress={clear}
-        >
+        <Button isIconOnly aria-label="Clear selection" size="sm" variant="ghost" onPress={clear}>
           <Icon icon="lucide:x" />
         </Button>
       </ActionBar.Suffix>
@@ -203,18 +183,14 @@ function DisabledItemsDemo() {
     <div className="w-full max-w-md">
       <ListView
         aria-label="Files"
-        disabledKeys={disabledFiles
-          .filter((item) => item.locked)
-          .map((item) => item.id)}
+        disabledKeys={disabledFiles.filter((item) => item.locked).map((item) => item.id)}
         items={disabledFiles}
         selectionMode="multiple"
       >
         {(item) => (
           <ListView.Item id={item.id} textValue={item.name}>
             <ListView.ItemContent>
-              <Icon
-                icon={item.icon === "folder" ? "lucide:folder" : "lucide:file"}
-              />
+              <Icon icon={item.icon === "folder" ? "lucide:folder" : "lucide:file"} />
               <div className="flex min-w-0 flex-col">
                 <ListView.Title>{item.name}</ListView.Title>
               </div>

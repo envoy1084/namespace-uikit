@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta } from "@storybook/react";
 
 import { ColorSwatch } from "@/components/colors/color-swatch";
 import { parseColor } from "@/components/utilities/rac";
@@ -50,8 +50,7 @@ const ControlledTemplate = (_props: ColorAreaRootProps) => {
         <ColorArea.Thumb />
       </ColorArea>
       <p className="text-muted w-full min-w-[300px] text-sm">
-        Current color:{" "}
-        <span className="font-medium">{color.toString("hsl")}</span>
+        Current color: <span className="font-medium">{color.toString("hsl")}</span>
       </p>
     </div>
   );
@@ -60,30 +59,20 @@ const ControlledTemplate = (_props: ColorAreaRootProps) => {
 const ColorChannelsTemplate = (_props: ColorAreaRootProps) => (
   <div className="flex flex-col gap-8">
     <div className="flex flex-col gap-2">
-      <p className="text-muted text-sm font-medium">
-        HSB: Saturation vs Brightness (default)
-      </p>
+      <p className="text-muted text-sm font-medium">HSB: Saturation vs Brightness (default)</p>
       <ColorArea defaultValue="hsl(30, 100%, 50%)">
         <ColorArea.Thumb />
       </ColorArea>
     </div>
     <div className="flex flex-col gap-2">
       <p className="text-muted text-sm font-medium">RGB: Red vs Green</p>
-      <ColorArea
-        defaultValue="rgb(255, 100, 50)"
-        xChannel="red"
-        yChannel="green"
-      >
+      <ColorArea defaultValue="rgb(255, 100, 50)" xChannel="red" yChannel="green">
         <ColorArea.Thumb />
       </ColorArea>
     </div>
     <div className="flex flex-col gap-2">
       <p className="text-muted text-sm font-medium">RGB: Blue vs Green</p>
-      <ColorArea
-        defaultValue="rgb(50, 100, 255)"
-        xChannel="blue"
-        yChannel="green"
-      >
+      <ColorArea defaultValue="rgb(50, 100, 255)" xChannel="blue" yChannel="green">
         <ColorArea.Thumb />
       </ColorArea>
     </div>

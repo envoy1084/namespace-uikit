@@ -35,17 +35,10 @@ function HierarchicalDemo({ press = false }: { press?: boolean }) {
   const [active, setActive] = useState(press ? "s1" : "s3-2-1");
   return (
     <div className="px-10 py-10">
-      <FloatingToc
-        placement={press ? "left" : "right"}
-        triggerMode={press ? "press" : "hover"}
-      >
+      <FloatingToc placement={press ? "left" : "right"} triggerMode={press ? "press" : "hover"}>
         <FloatingToc.Trigger aria-label="Table of contents">
           {hierarchy.map((item) => (
-            <FloatingToc.Bar
-              active={item.id === active}
-              key={item.id}
-              level={item.level}
-            />
+            <FloatingToc.Bar active={item.id === active} key={item.id} level={item.level} />
           ))}
         </FloatingToc.Trigger>
         <FloatingToc.Content>

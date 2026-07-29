@@ -25,9 +25,7 @@ const airports = [
   { code: "SYD", latitude: -33.9399, longitude: 151.1753, name: "Sydney" },
 ];
 
-const airportByCode = Object.fromEntries(
-  airports.map((airport) => [airport.code, airport]),
-);
+const airportByCode = Object.fromEntries(airports.map((airport) => [airport.code, airport]));
 
 const flightOperations = [
   {
@@ -98,12 +96,7 @@ const flights = flightOperations.map((flight) => {
 
 export const DemoFlightPathsExample = () => (
   <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
-    <Map
-      center={[24, 28]}
-      projection={{ type: "globe" }}
-      styles={styles}
-      zoom={1.9}
-    >
+    <Map center={[24, 28]} projection={{ type: "globe" }} styles={styles} zoom={1.9}>
       <Map.Arc
         curvature={0.34}
         data={flights}
@@ -115,11 +108,7 @@ export const DemoFlightPathsExample = () => (
         }}
       />
       {airports.map((airport) => (
-        <Map.Marker
-          key={airport.code}
-          latitude={airport.latitude}
-          longitude={airport.longitude}
-        >
+        <Map.Marker key={airport.code} latitude={airport.latitude} longitude={airport.longitude}>
           <Map.MarkerContent>
             <Map.MarkerDot color="#4285f4" />
             <Map.MarkerLabel>{airport.code}</Map.MarkerLabel>
@@ -157,10 +146,7 @@ export const DemoFlightPathsExample = () => (
         </div>
         <div className="space-y-1">
           {flights.slice(0, 3).map((flight) => (
-            <div
-              className="flex items-center justify-between text-xs"
-              key={flight.id}
-            >
+            <div className="flex items-center justify-between text-xs" key={flight.id}>
               <span className="flex items-center gap-2">
                 <span
                   className="h-0.5 w-4 rounded-full"

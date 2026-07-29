@@ -1,10 +1,5 @@
 import { Button, ButtonGroup } from "@thenamespace/uikit";
-import {
-  Globe02Icon,
-  Add01Icon,
-  Delete02Icon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import { Globe02Icon, Add01Icon, Delete02Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function WithIcons() {
   return (

@@ -1,8 +1,5 @@
 "use client";
 
-// @demo-title Pinned Columns Compact
-import type { Selection } from "react-aria-components";
-
 import { useMemo, useState } from "react";
 
 import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
@@ -19,15 +16,12 @@ import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { SearchField } from "@thenamespace/uikit/search-field";
 import { Separator } from "@thenamespace/uikit/separator";
+// @demo-title Pinned Columns Compact
+import type { Selection } from "react-aria-components";
 
 type Company = {
   categories: string[];
-  connectionStrength:
-    | "No communication"
-    | "Strong"
-    | "Very strong"
-    | "Very weak"
-    | "Weak";
+  connectionStrength: "No communication" | "Strong" | "Very strong" | "Very weak" | "Weak";
   country: string;
   dotColor: string;
   id: number;
@@ -40,38 +34,26 @@ type Company = {
 
 const categoryClasses: Record<string, string> = {
   Airlines: "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-400",
-  Automation:
-    "bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400",
+  Automation: "bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400",
   B2B: "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-400",
   B2C: "bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-400",
   Broadcasting: "bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-400",
-  "Consumer Discretionary":
-    "bg-pink-100 text-pink-700 dark:bg-pink-500/15 dark:text-pink-400",
-  "Consumer Electronics":
-    "bg-pink-100 text-pink-700 dark:bg-pink-500/15 dark:text-pink-400",
-  "E-commerce":
-    "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
-  Enterprise:
-    "bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400",
+  "Consumer Discretionary": "bg-pink-100 text-pink-700 dark:bg-pink-500/15 dark:text-pink-400",
+  "Consumer Electronics": "bg-pink-100 text-pink-700 dark:bg-pink-500/15 dark:text-pink-400",
+  "E-commerce": "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
+  Enterprise: "bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400",
   Finance: "bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-400",
-  "Financial Services":
-    "bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-400",
+  "Financial Services": "bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-400",
   Food: "bg-yellow-100 text-yellow-700 dark:bg-yellow-500/15 dark:text-yellow-400",
   ISP: "bg-slate-100 text-slate-700 dark:bg-slate-500/15 dark:text-slate-400",
-  "Information Technology":
-    "bg-gray-100 text-gray-700 dark:bg-gray-500/15 dark:text-gray-400",
+  "Information Technology": "bg-gray-100 text-gray-700 dark:bg-gray-500/15 dark:text-gray-400",
   Internet: "bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-400",
-  Marketplace:
-    "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
-  Mobile:
-    "bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-500/15 dark:text-fuchsia-400",
-  Performance:
-    "bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-400",
-  Publishing:
-    "bg-lime-100 text-lime-700 dark:bg-lime-500/15 dark:text-lime-400",
+  Marketplace: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
+  Mobile: "bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-500/15 dark:text-fuchsia-400",
+  Performance: "bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-400",
+  Publishing: "bg-lime-100 text-lime-700 dark:bg-lime-500/15 dark:text-lime-400",
   SaaS: "bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-400",
-  Transportation:
-    "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-400",
+  Transportation: "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-400",
 };
 
 const companies: Company[] = [
@@ -100,12 +82,7 @@ const companies: Company[] = [
     twitterHandle: "Disney",
   },
   {
-    categories: [
-      "B2C",
-      "Finance",
-      "Financial Services",
-      "Information Technology",
-    ],
+    categories: ["B2C", "Finance", "Financial Services", "Information Technology"],
     connectionStrength: "No communication",
     country: "US",
     dotColor: "bg-blue-500",
@@ -213,13 +190,7 @@ const companies: Company[] = [
     twitterHandle: "attio",
   },
   {
-    categories: [
-      "B2B",
-      "B2C",
-      "Information Technology",
-      "Mobile",
-      "Performance",
-    ],
+    categories: ["B2B", "B2C", "Information Technology", "Mobile", "Performance"],
     connectionStrength: "Very weak",
     country: "DE",
     dotColor: "bg-red-600",
@@ -252,10 +223,7 @@ const strengthRank: Record<Company["connectionStrength"], number> = {
   "Very strong": 4,
 };
 
-const strengthClasses: Record<
-  Company["connectionStrength"],
-  { color: string; dot: string }
-> = {
+const strengthClasses: Record<Company["connectionStrength"], { color: string; dot: string }> = {
   "No communication": { color: "text-muted", dot: "text-muted" },
   Strong: {
     color: "text-emerald-600 dark:text-emerald-400",
@@ -282,23 +250,15 @@ function CompanyCategories({ categories }: { categories: string[] }) {
           {category.length > 14 ? `${category.slice(0, 12)}…` : category}
         </span>
       ))}
-      {remaining > 0 ? (
-        <span className="text-muted text-[11px]">+{remaining}</span>
-      ) : null}
+      {remaining > 0 ? <span className="text-muted text-[11px]">+{remaining}</span> : null}
     </span>
   );
 }
 
-function ConnectionStrength({
-  strength,
-}: {
-  strength: Company["connectionStrength"];
-}) {
+function ConnectionStrength({ strength }: { strength: Company["connectionStrength"] }) {
   const classes = strengthClasses[strength];
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 text-xs ${classes.color}`}
-    >
+    <span className={`inline-flex items-center gap-1.5 text-xs ${classes.color}`}>
       <HugeiconsIcon
         className={`size-2 ${classes.dot}`}
         icon={CircleIcon}
@@ -317,17 +277,12 @@ export const DemoPinnedColumnsCompactExample = function Demo() {
   const [strength, setStrength] = useState("all");
   const filtered = useMemo(() => {
     let result = companies;
-    if (region === "us")
-      result = result.filter((company) => company.country === "US");
+    if (region === "us") result = result.filter((company) => company.country === "US");
     else if (region === "europe")
-      result = result.filter((company) =>
-        ["UK", "DE", "FR"].includes(company.country),
-      );
+      result = result.filter((company) => ["UK", "DE", "FR"].includes(company.country));
     if (strength !== "all")
       result = result.filter(
-        (company) =>
-          company.connectionStrength.toLowerCase().replace(/\s+/g, "-") ===
-          strength,
+        (company) => company.connectionStrength.toLowerCase().replace(/\s+/g, "-") === strength,
       );
     if (query) {
       const normalized = query.toLowerCase();
@@ -335,9 +290,7 @@ export const DemoPinnedColumnsCompactExample = function Demo() {
         (company) =>
           company.name.toLowerCase().includes(normalized) ||
           company.linkedin.toLowerCase().includes(normalized) ||
-          company.categories.some((category) =>
-            category.toLowerCase().includes(normalized),
-          ),
+          company.categories.some((category) => category.toLowerCase().includes(normalized)),
       );
     }
     return result;
@@ -348,9 +301,7 @@ export const DemoPinnedColumnsCompactExample = function Demo() {
       allowsSorting: true,
       cell: (company) => (
         <span className="inline-flex items-center gap-2">
-          <span
-            className={`size-2.5 shrink-0 rounded-full ${company.dotColor}`}
-          />
+          <span className={`size-2.5 shrink-0 rounded-full ${company.dotColor}`} />
           <span className="text-xs font-medium">{company.name}</span>
         </span>
       ),
@@ -387,9 +338,7 @@ export const DemoPinnedColumnsCompactExample = function Demo() {
       accessorKey: "lastInteraction",
       allowsSorting: true,
       cell: (company) => (
-        <span className="text-muted text-xs">
-          {company.lastInteraction ?? "No contact"}
-        </span>
+        <span className="text-muted text-xs">{company.lastInteraction ?? "No contact"}</span>
       ),
       header: "Last interaction",
       id: "lastInteraction",
@@ -397,33 +346,26 @@ export const DemoPinnedColumnsCompactExample = function Demo() {
     },
     {
       allowsSorting: true,
-      cell: (company) => (
-        <ConnectionStrength strength={company.connectionStrength} />
-      ),
+      cell: (company) => <ConnectionStrength strength={company.connectionStrength} />,
       header: "Connection strength",
       id: "connectionStrength",
       minWidth: 160,
       sortFn: (left, right) =>
-        strengthRank[left.connectionStrength] -
-        strengthRank[right.connectionStrength],
+        strengthRank[left.connectionStrength] - strengthRank[right.connectionStrength],
     },
     {
       accessorKey: "twitterFollowers",
       align: "end",
       allowsSorting: true,
       cell: (company) => (
-        <span className="text-xs tabular-nums">
-          {company.twitterFollowers.toLocaleString()}
-        </span>
+        <span className="text-xs tabular-nums">{company.twitterFollowers.toLocaleString()}</span>
       ),
       header: "Twitter followers",
       id: "twitterFollowers",
       minWidth: 120,
     },
     {
-      cell: (company) => (
-        <span className="text-accent text-xs">{company.twitterHandle}</span>
-      ),
+      cell: (company) => <span className="text-accent text-xs">{company.twitterHandle}</span>,
       header: "Twitter",
       id: "twitter",
       minWidth: 100,
@@ -450,11 +392,7 @@ export const DemoPinnedColumnsCompactExample = function Demo() {
                 : region === "us"
                   ? "US Companies"
                   : "UK & European Co."}
-              <HugeiconsIcon
-                className="text-muted size-3"
-                icon={ArrowDown01Icon}
-                strokeWidth={2}
-              />
+              <HugeiconsIcon className="text-muted size-3" icon={ArrowDown01Icon} strokeWidth={2} />
             </Button>
             <Dropdown.Popover className="min-w-[200px]">
               <Dropdown.Menu
@@ -481,29 +419,19 @@ export const DemoPinnedColumnsCompactExample = function Demo() {
         </div>
         <div className="flex items-center gap-2">
           <Button size="sm" variant="ghost">
-            <HugeiconsIcon
-              className="size-3.5"
-              icon={SlidersHorizontalIcon}
-              strokeWidth={2}
-            />
+            <HugeiconsIcon className="size-3.5" icon={SlidersHorizontalIcon} strokeWidth={2} />
             Sort
           </Button>
           <Dropdown>
             <Button size="sm" variant="ghost">
-              <HugeiconsIcon
-                className="size-3.5"
-                icon={FilterIcon}
-                strokeWidth={2}
-              />
+              <HugeiconsIcon className="size-3.5" icon={FilterIcon} strokeWidth={2} />
               Filter
             </Button>
             <Dropdown.Popover>
               <Dropdown.Menu
                 selectedKeys={new Set([strength])}
                 selectionMode="single"
-                onSelectionChange={(keys) =>
-                  setStrength(String([...keys][0] ?? "all"))
-                }
+                onSelectionChange={(keys) => setStrength(String([...keys][0] ?? "all"))}
               >
                 {[
                   ["all", "All"],
@@ -522,17 +450,10 @@ export const DemoPinnedColumnsCompactExample = function Demo() {
             </Dropdown.Popover>
           </Dropdown>
           <Separator className="!h-4 self-center" orientation="vertical" />
-          <SearchField
-            aria-label="Search companies"
-            value={query}
-            onChange={setQuery}
-          >
+          <SearchField aria-label="Search companies" value={query} onChange={setQuery}>
             <SearchField.Group>
               <SearchField.SearchIcon />
-              <SearchField.Input
-                className="w-[140px] text-xs"
-                placeholder="Search..."
-              />
+              <SearchField.Input className="w-[140px] text-xs" placeholder="Search..." />
               <SearchField.ClearButton />
             </SearchField.Group>
           </SearchField>

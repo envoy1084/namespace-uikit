@@ -20,11 +20,7 @@ const itemVariants = tv({
   },
 });
 
-const full = [
-  ["light", Sun] as const,
-  ["dark", Moon] as const,
-  ["system", Airplay] as const,
-];
+const full = [["light", Sun] as const, ["dark", Moon] as const, ["system", Airplay] as const];
 
 export function ThemeToggle({
   className,

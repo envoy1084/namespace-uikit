@@ -1,19 +1,11 @@
 "use client";
 
 import { Button, InputGroup, Label, TextField } from "@thenamespace/uikit";
-import {
-  Copy01Icon,
-  Globe02Icon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import { Copy01Icon, Globe02Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function WithIconPrefixAndCopySuffix() {
   return (
-    <TextField
-      className="w-full max-w-[280px]"
-      defaultValue="namespace.ninja"
-      name="website"
-    >
+    <TextField className="w-full max-w-[280px]" defaultValue="namespace.ninja" name="website">
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Prefix>

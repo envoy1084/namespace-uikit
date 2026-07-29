@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Button,
-  Checkbox,
-  CheckboxGroup,
-  FieldError,
-  Form,
-  Label,
-} from "@thenamespace/uikit";
+import { Button, Checkbox, CheckboxGroup, FieldError, Form, Label } from "@thenamespace/uikit";
 
 export function Validation() {
   return (

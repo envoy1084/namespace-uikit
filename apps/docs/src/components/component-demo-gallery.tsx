@@ -23,16 +23,13 @@ export function ComponentDemoGallery() {
   const [loadError, setLoadError] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
   const selectedDemo =
-    galleryDemos.find((item) => item.component === selectedComponent) ??
-    galleryDemos[0]!;
+    galleryDemos.find((item) => item.component === selectedComponent) ?? galleryDemos[0]!;
   const filteredDemos = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase().replaceAll(/\s+/g, "-");
 
     if (!normalizedQuery) return galleryDemos;
 
-    return galleryDemos.filter((item) =>
-      item.component.includes(normalizedQuery),
-    );
+    return galleryDemos.filter((item) => item.component.includes(normalizedQuery));
   }, [query]);
 
   useEffect(() => {
@@ -74,12 +71,7 @@ export function ComponentDemoGallery() {
                 {galleryDemos.length}
               </span>
             </div>
-            <SearchField
-              fullWidth
-              aria-label="Find a component"
-              value={query}
-              onChange={setQuery}
-            >
+            <SearchField fullWidth aria-label="Find a component" value={query} onChange={setQuery}>
               <SearchField.Group className="w-full">
                 <SearchField.SearchIcon />
                 <SearchField.Input placeholder="Find a component…" />
@@ -101,16 +93,12 @@ export function ComponentDemoGallery() {
                       textValue={componentLabel(item.component)}
                       onAction={() => setSelectedComponent(item.component)}
                     >
-                      <Sidebar.MenuLabel>
-                        {componentLabel(item.component)}
-                      </Sidebar.MenuLabel>
+                      <Sidebar.MenuLabel>{componentLabel(item.component)}</Sidebar.MenuLabel>
                     </Sidebar.MenuItem>
                   );
                 })}
                 {filteredDemos.length === 0 ? (
-                  <p className="text-muted px-2 py-6 text-center text-xs">
-                    No components found.
-                  </p>
+                  <p className="text-muted px-2 py-6 text-center text-xs">No components found.</p>
                 ) : null}
               </Sidebar.Menu>
             </Sidebar.Group>
@@ -127,9 +115,7 @@ export function ComponentDemoGallery() {
               <h2 className="truncate text-sm font-semibold">
                 {componentLabel(selectedDemo.component)}
               </h2>
-              <p className="text-muted truncate font-mono text-[10px]">
-                {selectedDemo.demo}
-              </p>
+              <p className="text-muted truncate font-mono text-[10px]">{selectedDemo.demo}</p>
             </div>
             <LinkRoot
               className="text-muted hover:text-foreground flex shrink-0 items-center gap-1 text-xs transition-colors"
@@ -158,9 +144,7 @@ export function ComponentDemoGallery() {
               </div>
             ) : (
               <div className="grid min-h-full min-w-full place-items-center p-4 sm:p-6">
-                <Spinner
-                  aria-label={`Loading ${selectedDemo.component} demo`}
-                />
+                <Spinner aria-label={`Loading ${selectedDemo.component} demo`} />
               </div>
             )}
           </div>

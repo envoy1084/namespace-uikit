@@ -1,11 +1,10 @@
 "use client";
 
-// @demo-title Selection Modes
-import type { Selection, SelectionMode } from "react-aria-components";
-
 import { useState } from "react";
 
 import { ListView } from "@thenamespace/uikit";
+// @demo-title Selection Modes
+import type { Selection, SelectionMode } from "react-aria-components";
 
 import { Icon } from "@/demos/icon";
 
@@ -25,22 +24,14 @@ function FileRows({ compact = false }: { compact?: boolean }) {
         <Icon icon={item.icon === "folder" ? "lucide:folder" : "lucide:file"} />
         <div className="flex min-w-0 flex-col">
           <ListView.Title>{item.name}</ListView.Title>
-          {compact ? null : (
-            <ListView.Description>Updated {item.updated}</ListView.Description>
-          )}
+          {compact ? null : <ListView.Description>Updated {item.updated}</ListView.Description>}
         </div>
       </ListView.ItemContent>
     </ListView.Item>
   );
 }
 
-function SelectionDemo({
-  label,
-  selectionMode,
-}: {
-  label: string;
-  selectionMode: SelectionMode;
-}) {
+function SelectionDemo({ label, selectionMode }: { label: string; selectionMode: SelectionMode }) {
   const [selected, setSelected] = useState<Selection>(new Set());
   return (
     <div className="flex flex-col gap-2">

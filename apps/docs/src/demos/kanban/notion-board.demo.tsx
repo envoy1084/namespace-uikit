@@ -28,8 +28,7 @@ const people: Record<string, string> = {
   Sam: "purple",
 };
 
-const avatar = (name: string) =>
-  `/assets/avatars/${people[name] ?? "blue"}.jpg`;
+const avatar = (name: string) => `/assets/avatars/${people[name] ?? "blue"}.jpg`;
 
 type NotionStatus = "Done" | "In Progress" | "To Document" | "Todo";
 
@@ -45,9 +44,10 @@ interface NotionTask {
   title: string;
 }
 
-const notionAssignee = (
-  name: "Alex" | "Diego" | "Emily" | "Jake" | "Maria" | "Sam",
-) => ({ avatar: avatar(name), name });
+const notionAssignee = (name: "Alex" | "Diego" | "Emily" | "Jake" | "Maria" | "Sam") => ({
+  avatar: avatar(name),
+  name,
+});
 
 const notionTasks: NotionTask[] = [
   {
@@ -303,20 +303,14 @@ const notionColumnStyles: Record<
 
 function NotionTaskCard({ task }: { task: NotionTask }) {
   const priorityColor =
-    task.priority === "High"
-      ? "danger"
-      : task.priority === "Medium"
-        ? "warning"
-        : "success";
+    task.priority === "High" ? "danger" : task.priority === "Medium" ? "warning" : "success";
   return (
     <>
       <div className="flex items-start gap-2">
         <span
           className={`mt-1 size-2.5 shrink-0 rounded-sm ${task.priority === "High" ? "bg-danger" : task.priority === "Medium" ? "bg-warning" : "bg-success"}`}
         />
-        <span className="text-foreground leading-snug font-semibold">
-          {task.title}
-        </span>
+        <span className="text-foreground leading-snug font-semibold">{task.title}</span>
       </div>
       <div className="flex flex-wrap items-center gap-1.5">
         <Chip color={priorityColor} size="sm" variant="soft">
@@ -326,11 +320,7 @@ function NotionTaskCard({ task }: { task: NotionTask }) {
           {task.size}
         </Chip>
         {task.assignees.map((person) => (
-          <Avatar
-            className="ring-background size-5 ring-2"
-            key={person.name}
-            size="sm"
-          >
+          <Avatar className="ring-background size-5 ring-2" key={person.name} size="sm">
             <Avatar.Image alt={person.name} src={person.avatar} />
             <Avatar.Fallback>{person.name[0]}</Avatar.Fallback>
           </Avatar>
@@ -338,20 +328,12 @@ function NotionTaskCard({ task }: { task: NotionTask }) {
       </div>
       <div className="flex items-center justify-between gap-2">
         <span className="text-muted flex items-center gap-1 text-xs">
-          <HugeiconsIcon
-            aria-hidden
-            className="text-warning size-3"
-            icon={FlashIcon}
-          />
+          <HugeiconsIcon aria-hidden className="text-warning size-3" icon={FlashIcon} />
           {task.epic}
         </span>
         {task.dueDate ? (
           <span className="text-muted flex shrink-0 items-center gap-1 text-xs">
-            <HugeiconsIcon
-              aria-hidden
-              className="size-3"
-              icon={Calendar03Icon}
-            />
+            <HugeiconsIcon aria-hidden className="size-3" icon={Calendar03Icon} />
             {task.dueDate}
           </span>
         ) : null}
@@ -395,9 +377,7 @@ function NotionColumn({
             <Kanban.ColumnIndicator className={styles.indicator} />
             <Kanban.ColumnTitle>{column}</Kanban.ColumnTitle>
           </span>
-          <Kanban.ColumnCount className={styles.count}>
-            {items.length}
-          </Kanban.ColumnCount>
+          <Kanban.ColumnCount className={styles.count}>{items.length}</Kanban.ColumnCount>
           <Kanban.ColumnActions>
             <Button
               isIconOnly
@@ -453,16 +433,10 @@ function NotionBoardDemo() {
   });
   return (
     <div className="w-full pr-3">
-      <Kanban
-        className="items-start overflow-visible"
-        hideScrollBar
-        isEnabled={false}
-      >
-        {(["Todo", "In Progress", "To Document", "Done"] as const).map(
-          (column) => (
-            <NotionColumn column={column} kanban={kanban} key={column} />
-          ),
-        )}
+      <Kanban className="items-start overflow-visible" hideScrollBar isEnabled={false}>
+        {(["Todo", "In Progress", "To Document", "Done"] as const).map((column) => (
+          <NotionColumn column={column} kanban={kanban} key={column} />
+        ))}
       </Kanban>
     </div>
   );

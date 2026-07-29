@@ -20,8 +20,8 @@ function SizesDemo() {
                 </EmptyState.Media>
                 <EmptyState.Title>No Projects Yet</EmptyState.Title>
                 <EmptyState.Description>
-                  You haven&apos;t created any projects yet. Get started by
-                  creating your first project.
+                  You haven&apos;t created any projects yet. Get started by creating your first
+                  project.
                 </EmptyState.Description>
               </EmptyState.Header>
               <EmptyState.Content className="flex-row gap-2">

@@ -12,9 +12,7 @@ const Assistant = ({ children }: { children: React.ReactNode }) => (
 
 export const DemoDefaultExample = () => (
   <Assistant>
-    <ChatMessage.Content>
-      Completed tool call with JSON args and result.
-    </ChatMessage.Content>
+    <ChatMessage.Content>Completed tool call with JSON args and result.</ChatMessage.Content>
     <ChatTool
       argsText='{"city":"Paris"}'
       defaultExpanded={false}

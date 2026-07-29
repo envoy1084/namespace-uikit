@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { CellSlider } from "./index";
 
@@ -47,12 +47,7 @@ export const Variants: Story = {
       {(["default", "secondary"] as const).map((variant) => (
         <div className="flex flex-col gap-1" key={variant}>
           <span className="text-muted text-xs">{variant}</span>
-          <CellSlider
-            {...decimalProps}
-            aria-label="Spacing"
-            defaultValue={0.5}
-            variant={variant}
-          >
+          <CellSlider {...decimalProps} aria-label="Spacing" defaultValue={0.5} variant={variant}>
             <SliderContents label="Spacing" />
           </CellSlider>
         </div>
@@ -66,12 +61,7 @@ export const Controlled: Story = {
     const [value, setValue] = useState(0.5);
     return (
       <div className="flex w-[252px] flex-col gap-2">
-        <CellSlider
-          {...decimalProps}
-          aria-label="Spacing"
-          value={value}
-          onChange={setValue}
-        >
+        <CellSlider {...decimalProps} aria-label="Spacing" value={value} onChange={setValue}>
           <SliderContents label="Spacing" />
         </CellSlider>
         <p className="text-muted px-1 text-sm">Value: {value.toFixed(2)}</p>
@@ -123,16 +113,8 @@ export const SettingsGroup: Story = {
 export const SecondaryGroup: Story = {
   render: () => (
     <div className="flex w-[252px] flex-col gap-2">
-      <ControlledCellSlider
-        defaultValue={0.5}
-        label="Spacing"
-        variant="secondary"
-      />
-      <ControlledCellSlider
-        defaultValue={0.3}
-        label="Font Size"
-        variant="secondary"
-      />
+      <ControlledCellSlider defaultValue={0.5} label="Spacing" variant="secondary" />
+      <ControlledCellSlider defaultValue={0.3} label="Font Size" variant="secondary" />
     </div>
   ),
 };
@@ -160,20 +142,10 @@ export const IntegerStep: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="flex w-[252px] flex-col gap-2">
-      <CellSlider
-        {...decimalProps}
-        isDisabled
-        aria-label="Spacing"
-        defaultValue={0.5}
-      >
+      <CellSlider {...decimalProps} isDisabled aria-label="Spacing" defaultValue={0.5}>
         <SliderContents label="Spacing" />
       </CellSlider>
-      <CellSlider
-        {...decimalProps}
-        isDisabled
-        aria-label="Font Size"
-        defaultValue={0.3}
-      >
+      <CellSlider {...decimalProps} isDisabled aria-label="Font Size" defaultValue={0.3}>
         <SliderContents label="Font Size" />
       </CellSlider>
     </div>

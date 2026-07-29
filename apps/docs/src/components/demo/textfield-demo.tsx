@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Description,
-  FieldError,
-  Input,
-  Label,
-  TextField,
-} from "@thenamespace/uikit";
+import { Description, FieldError, Input, Label, TextField } from "@thenamespace/uikit";
 
 import { useDictionary } from "@/components/demo/dictionary";
 

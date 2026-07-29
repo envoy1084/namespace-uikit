@@ -1,12 +1,6 @@
 "use client";
 
-import type {
-  ComponentPropsWithRef,
-  ReactElement,
-  ReactNode,
-  Ref,
-  UIEvent,
-} from "react";
+import type { ComponentPropsWithRef, ReactElement, ReactNode, Ref, UIEvent } from "react";
 import {
   createContext,
   useCallback,
@@ -46,11 +40,9 @@ const measure = (element: HTMLDivElement): ScrollState => ({
   isAtBottom: isAtBottom(element),
 });
 const sameState = (left: ScrollState, right: ScrollState): boolean =>
-  left.hasOverflow === right.hasOverflow &&
-  left.isAtBottom === right.isAtBottom;
-const browserBehavior = (
-  behavior: ChatConversationScrollBehavior,
-): ScrollBehavior => (behavior === "smooth" ? "smooth" : "auto");
+  left.hasOverflow === right.hasOverflow && left.isAtBottom === right.isAtBottom;
+const browserBehavior = (behavior: ChatConversationScrollBehavior): ScrollBehavior =>
+  behavior === "smooth" ? "smooth" : "auto";
 
 const mergeRefs =
   <T,>(...refs: Array<Ref<T> | undefined>): Ref<T> =>
@@ -61,10 +53,7 @@ const mergeRefs =
     }
   };
 
-export interface ChatConversationRootProps extends Omit<
-  ComponentPropsWithRef<"div">,
-  "children"
-> {
+export interface ChatConversationRootProps extends Omit<ComponentPropsWithRef<"div">, "children"> {
   children: ReactNode;
   /** Scroll behavior used on initial mount. @default "smooth" */
   initial?: ChatConversationScrollBehavior;
@@ -101,10 +90,7 @@ export function ChatConversationRoot({
       const next = measure(root);
       updateState({
         hasOverflow: next.hasOverflow,
-        isAtBottom:
-          preserveAtBottom && stateRef.current.isAtBottom
-            ? true
-            : next.isAtBottom,
+        isAtBottom: preserveAtBottom && stateRef.current.isAtBottom ? true : next.isAtBottom,
       });
     },
     [updateState],
@@ -185,13 +171,7 @@ export function ChatConversationRoot({
       resize,
       scrollToBottom,
     }),
-    [
-      measureScrollState,
-      resize,
-      scrollState.hasOverflow,
-      scrollState.isAtBottom,
-      scrollToBottom,
-    ],
+    [measureScrollState, resize, scrollState.hasOverflow, scrollState.isAtBottom, scrollToBottom],
   );
 
   return (
@@ -270,9 +250,7 @@ export function ChatConversationScrollAnchor({
   );
 }
 
-export interface ChatConversationScrollButtonProps extends ComponentPropsWithRef<
-  typeof Button
-> {
+export interface ChatConversationScrollButtonProps extends ComponentPropsWithRef<typeof Button> {
   tooltip?: ReactNode;
 }
 
@@ -291,8 +269,7 @@ export function ChatConversationScrollButton({
       isIconOnly
       aria-hidden={visible ? undefined : true}
       className={
-        cn("chat-conversation__scroll-button", className) ??
-        "chat-conversation__scroll-button"
+        cn("chat-conversation__scroll-button", className) ?? "chat-conversation__scroll-button"
       }
       data-slot="chat-conversation-scroll-button"
       size="sm"

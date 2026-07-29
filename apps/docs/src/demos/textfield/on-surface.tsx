@@ -1,11 +1,4 @@
-import {
-  Description,
-  Input,
-  Label,
-  Surface,
-  TextArea,
-  TextField,
-} from "@thenamespace/uikit";
+import { Description, Input, Label, Surface, TextArea, TextField } from "@thenamespace/uikit";
 
 export function OnSurface() {
   return (
@@ -21,11 +14,7 @@ export function OnSurface() {
       </TextField>
       <TextField name="bio" variant="secondary">
         <Label>Bio</Label>
-        <TextArea
-          className="w-full"
-          placeholder="Tell us about yourself..."
-          rows={4}
-        />
+        <TextArea className="w-full" placeholder="Tell us about yourself..." rows={4} />
         <Description>Minimum 4 rows</Description>
       </TextField>
     </Surface>

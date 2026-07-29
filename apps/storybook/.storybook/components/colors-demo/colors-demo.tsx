@@ -1,9 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import {
-  buildThemeCssVars,
-  generateThemeColors,
-} from "../../utils/apcach-colors";
+import { buildThemeCssVars, generateThemeColors } from "../../utils/apcach-colors";
 import type { ColorVariable, OklchColor } from "../../utils/oklch-utils";
 import { COLOR_VARIABLES, parseOklch } from "../../utils/oklch-utils";
 import { ColorControls } from "./color-controls";
@@ -37,22 +34,20 @@ export function ColorsDemo() {
     const element = lightRef.current || document.documentElement;
     const computedStyle = getComputedStyle(element);
 
-    const values: ColorVariableValue[] = COLOR_VARIABLES.map(
-      (variable: ColorVariable) => {
-        const rawValue = computedStyle.getPropertyValue(variable.name).trim();
-        const computedValue = rawValue || "unset";
-        const oklch = parseOklch(computedValue);
+    const values: ColorVariableValue[] = COLOR_VARIABLES.map((variable: ColorVariable) => {
+      const rawValue = computedStyle.getPropertyValue(variable.name).trim();
+      const computedValue = rawValue || "unset";
+      const oklch = parseOklch(computedValue);
 
-        return {
-          name: variable.name,
-          label: variable.label,
-          category: variable.category,
-          rawValue,
-          computedValue,
-          oklch,
-        };
-      },
-    );
+      return {
+        name: variable.name,
+        label: variable.label,
+        category: variable.category,
+        rawValue,
+        computedValue,
+        oklch,
+      };
+    });
 
     setVariables(values);
   }, []);

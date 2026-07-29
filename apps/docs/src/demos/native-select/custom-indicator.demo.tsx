@@ -11,16 +11,11 @@ export const DemoCustomIndicatorExample = () => (
     <NativeSelect fullWidth>
       <Label>Priority</Label>
       <NativeSelect.Trigger name="priority">
-        {["Select priority", "Low", "Medium", "High", "Critical"].map(
-          (label, index) => (
-            <NativeSelect.Option
-              key={label}
-              value={index ? label.toLowerCase() : ""}
-            >
-              {label}
-            </NativeSelect.Option>
-          ),
-        )}
+        {["Select priority", "Low", "Medium", "High", "Critical"].map((label, index) => (
+          <NativeSelect.Option key={label} value={index ? label.toLowerCase() : ""}>
+            {label}
+          </NativeSelect.Option>
+        ))}
         <NativeSelect.Indicator>
           <HugeiconsIcon icon={UnfoldMoreIcon} />
         </NativeSelect.Indicator>

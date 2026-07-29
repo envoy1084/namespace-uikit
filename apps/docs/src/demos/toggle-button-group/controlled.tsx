@@ -1,9 +1,8 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import { ToggleButton, ToggleButtonGroup } from "@thenamespace/uikit";
 import {
   TextBoldIcon,

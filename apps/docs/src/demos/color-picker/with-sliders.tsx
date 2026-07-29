@@ -1,17 +1,9 @@
 "use client";
 
-import type { ColorChannel, ColorSpace } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
-import {
-  ColorPicker,
-  ColorSlider,
-  ColorSwatch,
-  Label,
-  ListBox,
-  Select,
-} from "@thenamespace/uikit";
+import type { ColorChannel, ColorSpace } from "@thenamespace/uikit";
+import { ColorPicker, ColorSlider, ColorSwatch, Label, ListBox, Select } from "@thenamespace/uikit";
 
 export function WithSliders() {
   const [colorSpace, setColorSpace] = useState<ColorSpace>("hsl");
@@ -42,12 +34,7 @@ export function WithSliders() {
           <Select.Popover>
             <ListBox>
               {Object.keys(colorChannelsByColorSpace).map((space) => (
-                <ListBox.Item
-                  key={space}
-                  className="uppercase"
-                  id={space}
-                  textValue={space}
-                >
+                <ListBox.Item key={space} className="uppercase" id={space} textValue={space}>
                   {space}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
@@ -56,24 +43,22 @@ export function WithSliders() {
           </Select.Popover>
         </Select>
         <div className="flex flex-col gap-2">
-          {colorChannelsByColorSpace[colorSpace].map(
-            (channel: ColorChannel) => (
-              // @ts-expect-error - TypeScript can't correlate dynamic colorSpace with channel type
-              <ColorSlider
-                key={channel}
-                aria-label={channel}
-                channel={channel}
-                className="gap-1 px-1"
-                colorSpace={colorSpace}
-              >
-                <Label className="capitalize">{channel}</Label>
-                <ColorSlider.Output className="text-muted" />
-                <ColorSlider.Track>
-                  <ColorSlider.Thumb />
-                </ColorSlider.Track>
-              </ColorSlider>
-            ),
-          )}
+          {colorChannelsByColorSpace[colorSpace].map((channel: ColorChannel) => (
+            // @ts-expect-error - TypeScript can't correlate dynamic colorSpace with channel type
+            <ColorSlider
+              key={channel}
+              aria-label={channel}
+              channel={channel}
+              className="gap-1 px-1"
+              colorSpace={colorSpace}
+            >
+              <Label className="capitalize">{channel}</Label>
+              <ColorSlider.Output className="text-muted" />
+              <ColorSlider.Track>
+                <ColorSlider.Thumb />
+              </ColorSlider.Track>
+            </ColorSlider>
+          ))}
         </div>
       </ColorPicker.Popover>
     </ColorPicker>

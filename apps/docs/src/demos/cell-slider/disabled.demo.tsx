@@ -23,20 +23,10 @@ function SliderContents({ label }: { label: string }) {
 
 export const DemoDisabledExample = () => (
   <div className="flex w-[252px] flex-col gap-2">
-    <CellSlider
-      {...decimalProps}
-      isDisabled
-      aria-label="Spacing"
-      defaultValue={0.5}
-    >
+    <CellSlider {...decimalProps} isDisabled aria-label="Spacing" defaultValue={0.5}>
       <SliderContents label="Spacing" />
     </CellSlider>
-    <CellSlider
-      {...decimalProps}
-      isDisabled
-      aria-label="Font Size"
-      defaultValue={0.3}
-    >
+    <CellSlider {...decimalProps} isDisabled aria-label="Font Size" defaultValue={0.3}>
       <SliderContents label="Font Size" />
     </CellSlider>
   </div>

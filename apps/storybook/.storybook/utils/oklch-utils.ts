@@ -77,10 +77,7 @@ export function withChroma(color: OklchColor, chroma: number): OklchColor {
 /**
  * Create an Oklch color with modified lightness
  */
-export function withLightness(
-  color: OklchColor,
-  lightness: number,
-): OklchColor {
+export function withLightness(color: OklchColor, lightness: number): OklchColor {
   return { ...color, l: Math.max(0, Math.min(1, lightness)) };
 }
 
@@ -90,11 +87,7 @@ export function withLightness(
  * @param chroma - The chroma/saturation value
  * @param steps - Number of lightness steps to generate
  */
-export function generatePalette(
-  baseHue: number,
-  chroma: number,
-  steps = 10,
-): OklchColor[] {
+export function generatePalette(baseHue: number, chroma: number, steps = 10): OklchColor[] {
   const palette: OklchColor[] = [];
 
   for (let i = 0; i < steps; i++) {
@@ -113,9 +106,7 @@ export function generatePalette(
 /**
  * Calculate appropriate foreground color (black or white) for a given Oklch background
  */
-export function calculateForegroundColor(
-  bgColor: OklchColor,
-): "black" | "white" {
+export function calculateForegroundColor(bgColor: OklchColor): "black" | "white" {
   // Use lightness to determine foreground - simple threshold at 0.6
   return bgColor.l > 0.6 ? "black" : "white";
 }
@@ -125,10 +116,7 @@ export function calculateForegroundColor(
  * @param baseChroma - The base chroma value
  * @param grayAmount - Amount of color in gray (0-1, where 0 is pure gray)
  */
-export function adjustGrayChroma(
-  baseChroma: number,
-  grayAmount: number,
-): number {
+export function adjustGrayChroma(baseChroma: number, grayAmount: number): number {
   return baseChroma * grayAmount;
 }
 

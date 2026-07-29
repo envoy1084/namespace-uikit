@@ -4,10 +4,7 @@ import { ComboBox, Input, Label, ListBox } from "@thenamespace/uikit";
 
 export function CustomRenderFunction() {
   return (
-    <ComboBox
-      className="w-[256px]"
-      render={(props) => <div {...props} data-custom="foo" />}
-    >
+    <ComboBox className="w-[256px]" render={(props) => <div {...props} data-custom="foo" />}>
       <Label>Favorite Animal</Label>
       <ComboBox.InputGroup>
         <Input placeholder="Search animals..." />

@@ -49,24 +49,15 @@ function MoreActions({ label }: { label: string }) {
       <Dropdown.Popover className="w-44" offset={6} placement="right top">
         <Dropdown.Menu aria-label={`${label} actions`}>
           <Dropdown.Item id="open" textValue="Open">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={FolderOpenIcon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={FolderOpenIcon} />
             <Label>Open</Label>
           </Dropdown.Item>
           <Dropdown.Item id="duplicate" textValue="Duplicate">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={Copy01Icon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={Copy01Icon} />
             <Label>Duplicate</Label>
           </Dropdown.Item>
           <Dropdown.Item id="delete" textValue="Delete" variant="danger">
-            <HugeiconsIcon
-              className="text-danger size-4 shrink-0"
-              icon={Delete02Icon}
-            />
+            <HugeiconsIcon className="text-danger size-4 shrink-0" icon={Delete02Icon} />
             <Label>Delete</Label>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -83,10 +74,7 @@ function Menu({
   nested?: boolean;
 }) {
   return (
-    <Sidebar.Menu
-      aria-label="Navigation"
-      defaultExpandedKeys={nested ? ["Analytics"] : []}
-    >
+    <Sidebar.Menu aria-label="Navigation" defaultExpandedKeys={nested ? ["Analytics"] : []}>
       {nav.map((item) => (
         <Sidebar.MenuItem
           href={item.items ? undefined : "#"}
@@ -115,21 +103,19 @@ function Menu({
           ) : null}
           {nested && item.items ? (
             <Sidebar.Submenu>
-              {(item.label === "Analytics" ? analyticsItems : item.items).map(
-                (child) => (
-                  <Sidebar.MenuItem
-                    href="#"
-                    id={`${item.label}-${child}`}
-                    key={child}
-                    textValue={child}
-                  >
-                    <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
-                    <Sidebar.MenuActions className="ml-auto">
-                      <MoreActions label={child} />
-                    </Sidebar.MenuActions>
-                  </Sidebar.MenuItem>
-                ),
-              )}
+              {(item.label === "Analytics" ? analyticsItems : item.items).map((child) => (
+                <Sidebar.MenuItem
+                  href="#"
+                  id={`${item.label}-${child}`}
+                  key={child}
+                  textValue={child}
+                >
+                  <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
+                  <Sidebar.MenuActions className="ml-auto">
+                    <MoreActions label={child} />
+                  </Sidebar.MenuActions>
+                </Sidebar.MenuItem>
+              ))}
             </Sidebar.Submenu>
           ) : null}
         </Sidebar.MenuItem>
@@ -166,10 +152,7 @@ function WithGroupsDemo() {
             <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
               <span className="text-sm font-bold text-white">H</span>
             </span>
-            <span
-              className="text-foreground text-sm font-semibold"
-              data-sidebar="label"
-            >
+            <span className="text-foreground text-sm font-semibold" data-sidebar="label">
               Namespace UIKit
             </span>
           </div>

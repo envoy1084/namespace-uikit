@@ -40,9 +40,7 @@ type ProjectNode = (typeof project)[number] & {
 
 const renderDynamicNode = (node: ProjectNode): React.JSX.Element => (
   <FileTree.Item id={node.id} textValue={node.name} title={node.name}>
-    {node.children ? (
-      <Collection items={node.children}>{renderDynamicNode}</Collection>
-    ) : null}
+    {node.children ? <Collection items={node.children}>{renderDynamicNode}</Collection> : null}
   </FileTree.Item>
 );
 

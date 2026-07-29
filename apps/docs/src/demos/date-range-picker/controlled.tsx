@@ -1,9 +1,8 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   Button,
@@ -28,12 +27,7 @@ export function Controlled() {
 
   return (
     <div className="flex w-80 flex-col gap-4">
-      <DateRangePicker
-        endName="endDate"
-        startName="startDate"
-        value={value}
-        onChange={setValue}
-      >
+      <DateRangePicker endName="endDate" startName="startDate" value={value} onChange={setValue}>
         <Label>Trip dates</Label>
         <DateField.Group fullWidth>
           <DateField.Input slot="start">
@@ -61,9 +55,7 @@ export function Controlled() {
             </RangeCalendar.Header>
             <RangeCalendar.Grid>
               <RangeCalendar.GridHeader>
-                {(day) => (
-                  <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-                )}
+                {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
               </RangeCalendar.GridHeader>
               <RangeCalendar.GridBody>
                 {(date) => <RangeCalendar.Cell date={date} />}
@@ -78,10 +70,7 @@ export function Controlled() {
         </DateRangePicker.Popover>
       </DateRangePicker>
       <Description>
-        Current value:{" "}
-        {value
-          ? `${value.start.toString()} -> ${value.end.toString()}`
-          : "(empty)"}
+        Current value: {value ? `${value.start.toString()} -> ${value.end.toString()}` : "(empty)"}
       </Description>
       <div className="flex gap-2">
         <Button

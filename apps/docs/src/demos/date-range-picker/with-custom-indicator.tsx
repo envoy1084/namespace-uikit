@@ -1,13 +1,7 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import {
-  DateField,
-  DateRangePicker,
-  Description,
-  Label,
-  RangeCalendar,
-} from "@thenamespace/uikit";
+import { DateField, DateRangePicker, Description, Label, RangeCalendar } from "@thenamespace/uikit";
 
 export function WithCustomIndicator() {
   return (
@@ -29,9 +23,7 @@ export function WithCustomIndicator() {
           </DateRangePicker.Trigger>
         </DateField.Suffix>
       </DateField.Group>
-      <Description>
-        Replace the default calendar icon by passing custom children.
-      </Description>
+      <Description>Replace the default calendar icon by passing custom children.</Description>
       <DateRangePicker.Popover>
         <RangeCalendar aria-label="Trip dates">
           <RangeCalendar.Header>
@@ -44,9 +36,7 @@ export function WithCustomIndicator() {
           </RangeCalendar.Header>
           <RangeCalendar.Grid>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}

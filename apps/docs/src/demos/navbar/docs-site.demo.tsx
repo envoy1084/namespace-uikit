@@ -3,12 +3,7 @@
 // @demo-title Docs Site
 import { Kbd, SearchField, Segment } from "@thenamespace/uikit";
 import { Navbar } from "@thenamespace/uikit";
-import {
-  ComputerIcon,
-  Icon,
-  Moon02Icon,
-  Sun01Icon,
-} from "@thenamespace/uikit/icons";
+import { ComputerIcon, Icon, Moon02Icon, Sun01Icon } from "@thenamespace/uikit/icons";
 
 export const DemoDocsSiteExample = () => (
   <Navbar position="static">

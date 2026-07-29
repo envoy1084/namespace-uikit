@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React, { useState } from "react";
+
+import type { Meta } from "@storybook/react";
 
 import { Icon } from "@/icon";
 

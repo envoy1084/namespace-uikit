@@ -34,8 +34,7 @@ export function RGBChannels() {
       <div className="flex items-center gap-2">
         <ColorSwatch color={color} size="sm" />
         <p className="text-muted text-sm">
-          Current color:{" "}
-          <code className="font-mono">{color.toString("rgb")}</code>
+          Current color: <code className="font-mono">{color.toString("rgb")}</code>
         </p>
       </div>
     </div>

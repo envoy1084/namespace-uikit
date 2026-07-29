@@ -2,13 +2,7 @@
 
 import React from "react";
 
-import {
-  Button,
-  Description,
-  Form,
-  InputOTP,
-  Label,
-} from "@thenamespace/uikit";
+import { Button, Description, Form, InputOTP, Label } from "@thenamespace/uikit";
 
 export function WithValidation() {
   const [value, setValue] = React.useState("");

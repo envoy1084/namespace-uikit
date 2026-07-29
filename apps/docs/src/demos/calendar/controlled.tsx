@@ -1,9 +1,8 @@
 "use client";
 
-import type { CalendarDate } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { CalendarDate } from "@internationalized/date";
 import {
   getLocalTimeZone,
   parseDate,
@@ -11,19 +10,12 @@ import {
   startOfWeek,
   today,
 } from "@internationalized/date";
-import {
-  Button,
-  ButtonGroup,
-  Calendar,
-  Description,
-} from "@thenamespace/uikit";
+import { Button, ButtonGroup, Calendar, Description } from "@thenamespace/uikit";
 import { useLocale } from "react-aria-components";
 
 export function Controlled() {
   const [value, setValue] = useState<CalendarDate | null>(null);
-  const [focusedDate, setFocusedDate] = useState<CalendarDate>(
-    parseDate("2025-12-25"),
-  );
+  const [focusedDate, setFocusedDate] = useState<CalendarDate>(parseDate("2025-12-25"));
   const { locale } = useLocale();
 
   return (
@@ -41,10 +33,7 @@ export function Controlled() {
         </Button>
         <Button
           onPress={() => {
-            const nextWeekStart = startOfWeek(
-              today(getLocalTimeZone()),
-              locale,
-            );
+            const nextWeekStart = startOfWeek(today(getLocalTimeZone()), locale);
 
             setValue(nextWeekStart);
             setFocusedDate(nextWeekStart);
@@ -80,9 +69,7 @@ export function Controlled() {
           <Calendar.GridHeader>
             {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
           </Calendar.GridHeader>
-          <Calendar.GridBody>
-            {(date) => <Calendar.Cell date={date} />}
-          </Calendar.GridBody>
+          <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
         </Calendar.Grid>
       </Calendar>
 

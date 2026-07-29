@@ -3,10 +3,7 @@ import { forwardRef, memo } from "react";
 
 import { cn } from "tailwind-variants";
 
-const IconRender = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>,
-) => {
+const IconRender = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => {
   const { className, ...restProps } = props;
 
   return (

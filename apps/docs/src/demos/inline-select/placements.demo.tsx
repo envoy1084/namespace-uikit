@@ -1,12 +1,11 @@
 "use client";
 
-// @demo-title Placements
-import type { Placement } from "react-aria-components";
-
 import { useState } from "react";
 
 import { InlineSelect } from "@thenamespace/uikit";
 import { ListBox } from "@thenamespace/uikit/list-box";
+// @demo-title Placements
+import type { Placement } from "react-aria-components";
 
 const placements: Placement[] = [
   "bottom",
@@ -39,14 +38,8 @@ export const DemoPlacementsExample = function Demo() {
         <InlineSelect.Popover placement={value}>
           <ListBox>
             {placements.map((placement) => (
-              <ListBox.Item
-                id={placement}
-                key={placement}
-                textValue={placement}
-              >
-                {placement === "bottom end"
-                  ? "bottom end (default)"
-                  : placement}
+              <ListBox.Item id={placement} key={placement} textValue={placement}>
+                {placement === "bottom end" ? "bottom end (default)" : placement}
                 <ListBox.ItemIndicator />
               </ListBox.Item>
             ))}

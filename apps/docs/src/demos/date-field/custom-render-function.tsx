@@ -9,17 +9,9 @@ export function CustomRenderFunction() {
       name="date"
       render={(props) => <div {...props} data-custom="date-field" />}
     >
-      <Label
-        render={(props) => <span {...props} data-custom="date-field-label" />}
-      >
-        Date
-      </Label>
-      <DateField.Group
-        render={(props) => <div {...props} data-custom="date-field-group" />}
-      >
-        <DateField.Input
-          render={(props) => <div {...props} data-custom="date-field-input" />}
-        >
+      <Label render={(props) => <span {...props} data-custom="date-field-label" />}>Date</Label>
+      <DateField.Group render={(props) => <div {...props} data-custom="date-field-group" />}>
+        <DateField.Input render={(props) => <div {...props} data-custom="date-field-input" />}>
           {(segment) => <DateField.Segment segment={segment} />}
         </DateField.Input>
       </DateField.Group>

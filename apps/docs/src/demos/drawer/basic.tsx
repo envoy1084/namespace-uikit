@@ -12,9 +12,8 @@ export function Basic() {
             </Drawer.Header>
             <Drawer.Body>
               <p>
-                This is a bottom drawer built with React Aria's Modal component.
-                It slides up from the bottom of the screen with a smooth CSS
-                transition.
+                This is a bottom drawer built with React Aria's Modal component. It slides up from
+                the bottom of the screen with a smooth CSS transition.
               </p>
             </Drawer.Body>
             <Drawer.Footer>

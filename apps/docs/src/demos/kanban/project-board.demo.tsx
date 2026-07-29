@@ -1,12 +1,7 @@
 "use client";
 
 // @demo-title Project Board
-import {
-  Kanban,
-  useKanban,
-  useKanbanColumn,
-  type UseKanbanReturn,
-} from "@thenamespace/uikit";
+import { Kanban, useKanban, useKanbanColumn, type UseKanbanReturn } from "@thenamespace/uikit";
 import { Avatar } from "@thenamespace/uikit/avatar";
 import { Button } from "@thenamespace/uikit/button";
 import { Add01Icon, MoreHorizontalIcon } from "@thenamespace/uikit/icons";
@@ -22,8 +17,7 @@ const people: Record<string, string> = {
   Sam: "purple",
 };
 
-const avatar = (name: string) =>
-  `/assets/avatars/${people[name] ?? "blue"}.jpg`;
+const avatar = (name: string) => `/assets/avatars/${people[name] ?? "blue"}.jpg`;
 
 type ProjectStatus = "Backlog" | "Done" | "In Progress" | "In Review" | "To Do";
 
@@ -126,11 +120,7 @@ const projectTasks: ProjectTask[] = [
     title: "Push notification permission flow",
   },
   {
-    assignees: [
-      projectAssignee("Jake"),
-      projectAssignee("Alex"),
-      projectAssignee("Maria"),
-    ],
+    assignees: [projectAssignee("Jake"), projectAssignee("Alex"), projectAssignee("Maria")],
     category: "Engineering",
     categoryColor: "#3b82f6",
     id: "p9",
@@ -197,12 +187,7 @@ function ProjectColumn({
           <Button isIconOnly aria-label="Add task" size="sm" variant="ghost">
             <HugeiconsIcon icon={Add01Icon} />
           </Button>
-          <Button
-            isIconOnly
-            aria-label="More options"
-            size="sm"
-            variant="ghost"
-          >
+          <Button isIconOnly aria-label="More options" size="sm" variant="ghost">
             <HugeiconsIcon icon={MoreHorizontalIcon} />
           </Button>
         </Kanban.ColumnActions>
@@ -236,9 +221,7 @@ function ProjectColumn({
                       className="flex-1"
                       color="accent"
                       size="sm"
-                      value={
-                        (task.subtasksCompleted! / task.subtasksTotal) * 100
-                      }
+                      value={(task.subtasksCompleted! / task.subtasksTotal) * 100}
                     >
                       <ProgressBar.Track>
                         <ProgressBar.Fill />
@@ -252,19 +235,13 @@ function ProjectColumn({
                 <div className="mt-0.5 flex items-center justify-between">
                   <div className="flex -space-x-2">
                     {task.assignees.slice(0, 3).map((person) => (
-                      <Avatar
-                        className="ring-background size-5 ring-2"
-                        key={person.name}
-                        size="sm"
-                      >
+                      <Avatar className="ring-background size-5 ring-2" key={person.name} size="sm">
                         <Avatar.Image alt={person.name} src={person.avatar} />
                         <Avatar.Fallback>{person.name[0]}</Avatar.Fallback>
                       </Avatar>
                     ))}
                   </div>
-                  {task.dueDate ? (
-                    <span className="text-muted text-xs">{task.dueDate}</span>
-                  ) : null}
+                  {task.dueDate ? <span className="text-muted text-xs">{task.dueDate}</span> : null}
                 </div>
               </Kanban.Card>
             )}
@@ -283,11 +260,9 @@ function ProjectBoardDemo() {
   });
   return (
     <Kanban>
-      {(["Backlog", "To Do", "In Progress", "In Review", "Done"] as const).map(
-        (column) => (
-          <ProjectColumn column={column} kanban={kanban} key={column} />
-        ),
-      )}
+      {(["Backlog", "To Do", "In Progress", "In Review", "Done"] as const).map((column) => (
+        <ProjectColumn column={column} kanban={kanban} key={column} />
+      ))}
     </Kanban>
   );
 }

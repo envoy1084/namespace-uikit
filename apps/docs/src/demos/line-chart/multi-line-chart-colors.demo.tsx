@@ -29,11 +29,7 @@ function Legend({
       {items.map(({ color, dashed, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
           <span
-            className={
-              dashed
-                ? "h-0 w-3 border-t-2 border-dashed"
-                : "size-3 rounded-full"
-            }
+            className={dashed ? "h-0 w-3 border-t-2 border-dashed" : "size-3 rounded-full"}
             style={dashed ? { borderColor: color } : { backgroundColor: color }}
           />
           <span className="text-muted text-xs">{label}</span>
@@ -64,12 +60,8 @@ function TrafficAxes({ currency = false }: { currency?: boolean }) {
 
 const multiData = trafficData.map((item, index) => ({
   ...item,
-  directTraffic: [
-    800, 1500, 2200, 1800, 2600, 2000, 3100, 2800, 3500, 3200, 4000, 3700,
-  ][index]!,
-  referral: [
-    500, 1200, 2100, 2800, 3200, 2600, 4100, 3800, 4500, 5200, 5800, 5100,
-  ][index]!,
+  directTraffic: [800, 1500, 2200, 1800, 2600, 2000, 3100, 2800, 3500, 3200, 4000, 3700][index]!,
+  referral: [500, 1200, 2100, 2800, 3200, 2600, 4100, 3800, 4500, 5200, 5800, 5100][index]!,
 }));
 
 const multiSeries = [
@@ -99,9 +91,7 @@ export const DemoMultiLineChartColorsExample = () => (
             type="monotone"
           />
         ))}
-        <LineChart.Tooltip
-          content={<LineChart.TooltipContent indicator="line" />}
-        />
+        <LineChart.Tooltip content={<LineChart.TooltipContent indicator="line" />} />
       </LineChart>
     </Card.Content>
   </Card>

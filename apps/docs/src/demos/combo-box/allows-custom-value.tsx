@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ComboBox,
-  Description,
-  Input,
-  Label,
-  ListBox,
-} from "@thenamespace/uikit";
+import { ComboBox, Description, Input, Label, ListBox } from "@thenamespace/uikit";
 
 export function AllowsCustomValue() {
   return (
@@ -44,9 +38,7 @@ export function AllowsCustomValue() {
           </ListBox.Item>
         </ListBox>
       </ComboBox.Popover>
-      <Description>
-        You can type any animal name, even if it's not in the list
-      </Description>
+      <Description>You can type any animal name, even if it's not in the list</Description>
     </ComboBox>
   );
 }

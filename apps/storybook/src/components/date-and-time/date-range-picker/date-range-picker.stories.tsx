@@ -1,9 +1,8 @@
-import type { DateValue } from "@internationalized/date";
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React, { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { getLocalTimeZone, today } from "@internationalized/date";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 import { DateField } from "@/components/date-and-time/date-field";
@@ -59,11 +58,7 @@ const RangeCalendarContent = () => (
   </RangeCalendar>
 );
 
-const DateRangePickerField = ({
-  showDescription = false,
-}: {
-  showDescription?: boolean;
-}) => (
+const DateRangePickerField = ({ showDescription = false }: { showDescription?: boolean }) => (
   <>
     <Label>Trip dates</Label>
     <DateField.Group fullWidth>
@@ -80,9 +75,7 @@ const DateRangePickerField = ({
         </DateRangePicker.Trigger>
       </DateField.Suffix>
     </DateField.Group>
-    {showDescription ? (
-      <Description>Select your check-in and check-out dates.</Description>
-    ) : null}
+    {showDescription ? <Description>Select your check-in and check-out dates.</Description> : null}
     <DateRangePicker.Popover>
       <RangeCalendarContent />
     </DateRangePicker.Popover>
@@ -91,11 +84,7 @@ const DateRangePickerField = ({
 
 export const Default: Story = {
   render: () => (
-    <DateRangePicker
-      className="w-[320px]"
-      endName="endDate"
-      startName="startDate"
-    >
+    <DateRangePicker className="w-[320px]" endName="endDate" startName="startDate">
       <DateRangePickerField />
     </DateRangePicker>
   ),
@@ -121,9 +110,7 @@ export const Controlled: Story = {
         </DateRangePicker>
         <Description>
           Current value:{" "}
-          {value
-            ? `${value.start.toString()} -> ${value.end.toString()}`
-            : "(empty)"}
+          {value ? `${value.start.toString()} -> ${value.end.toString()}` : "(empty)"}
         </Description>
       </div>
     );
@@ -153,9 +140,7 @@ export const WithValidation: Story = {
     const [value, setValue] = useState<DateRange | null>(null);
     const currentDate = today(getLocalTimeZone());
     const isInvalid =
-      value != null &&
-      (value.start.compare(currentDate) < 0 ||
-        value.end.compare(value.start) < 0);
+      value != null && (value.start.compare(currentDate) < 0 || value.end.compare(value.start) < 0);
 
     return (
       <DateRangePicker
@@ -198,11 +183,7 @@ export const WithValidation: Story = {
 
 export const WithCustomIndicator: Story = {
   render: () => (
-    <DateRangePicker
-      className="w-[320px]"
-      endName="endDate"
-      startName="startDate"
-    >
+    <DateRangePicker className="w-[320px]" endName="endDate" startName="startDate">
       <Label>Trip dates</Label>
       <DateField.Group fullWidth>
         <DateField.Input slot="start">
@@ -236,9 +217,7 @@ export const FormExample: Story = {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const currentDate = today(getLocalTimeZone());
     const isInvalid =
-      value != null &&
-      (value.start.compare(currentDate) < 0 ||
-        value.end.compare(value.start) < 0);
+      value != null && (value.start.compare(currentDate) < 0 || value.end.compare(value.start) < 0);
 
     const handleSubmit = (event: React.FormEvent) => {
       event.preventDefault();

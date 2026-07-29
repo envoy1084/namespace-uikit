@@ -11,9 +11,7 @@ export function WithPrefixIcon() {
         <DateField.Prefix>
           <HugeiconsIcon icon={Calendar03Icon} className="text-muted size-4" />
         </DateField.Prefix>
-        <DateField.Input>
-          {(segment) => <DateField.Segment segment={segment} />}
-        </DateField.Input>
+        <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
       </DateField.Group>
     </DateField>
   );

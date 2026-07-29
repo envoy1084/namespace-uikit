@@ -1,16 +1,13 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { parseDate } from "@internationalized/date";
 import { Button, Description, RangeCalendar } from "@thenamespace/uikit";
 
 export function FocusedValue() {
-  const [focusedDate, setFocusedDate] = useState<DateValue>(
-    parseDate("2025-06-15"),
-  );
+  const [focusedDate, setFocusedDate] = useState<DateValue>(parseDate("2025-06-15"));
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -27,18 +24,14 @@ export function FocusedValue() {
         </RangeCalendar.Header>
         <RangeCalendar.Grid>
           <RangeCalendar.GridHeader>
-            {(day) => (
-              <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-            )}
+            {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
           </RangeCalendar.GridHeader>
           <RangeCalendar.GridBody>
             {(date) => <RangeCalendar.Cell date={date} />}
           </RangeCalendar.GridBody>
         </RangeCalendar.Grid>
       </RangeCalendar>
-      <Description className="text-center">
-        Focused: {focusedDate.toString()}
-      </Description>
+      <Description className="text-center">Focused: {focusedDate.toString()}</Description>
       <div className="flex flex-wrap justify-center gap-2">
         <Button
           size="sm"

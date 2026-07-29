@@ -1,12 +1,8 @@
-import type { Selection } from "@react-types/shared";
-import type { Meta, StoryObj } from "@storybook/react";
-
 import * as React from "react";
 
-import {
-  ArrowRight01Icon,
-  CheckmarkCircle02Icon,
-} from "@thenamespace/uikit/icons";
+import type { Selection } from "@react-types/shared";
+import type { Meta, StoryObj } from "@storybook/react";
+import { ArrowRight01Icon, CheckmarkCircle02Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
@@ -53,11 +49,7 @@ export const Default: Story = {
           </Dropdown.Section>
           <Separator />
           <Dropdown.Section>
-            <Dropdown.Item
-              id="delete-file"
-              textValue="Delete file"
-              variant="danger"
-            >
+            <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
               <Label>Delete file</Label>
             </Dropdown.Item>
           </Dropdown.Section>
@@ -69,9 +61,7 @@ export const Default: Story = {
 
 export const WithSingleSelection: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState<Selection>(
-      new Set(["apple"]),
-    );
+    const [selected, setSelected] = React.useState<Selection>(new Set(["apple"]));
 
     return (
       <Dropdown>
@@ -116,16 +106,10 @@ export const WithSingleSelection: Story = {
 
 export const SingleWithCustomIndicator: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState<Selection>(
-      new Set(["apple"]),
-    );
+    const [selected, setSelected] = React.useState<Selection>(new Set(["apple"]));
 
     const CustomCheckmarkIcon = (
-      <HugeiconsIcon
-        className="text-accent"
-        icon={CheckmarkCircle02Icon}
-        size={16}
-      />
+      <HugeiconsIcon className="text-accent" icon={CheckmarkCircle02Icon} size={16} />
     );
 
     return (
@@ -143,25 +127,19 @@ export const SingleWithCustomIndicator: Story = {
               <Header>Select a fruit</Header>
               <Dropdown.Item id="apple" textValue="Apple">
                 <Dropdown.ItemIndicator>
-                  {({ isSelected }) =>
-                    isSelected ? CustomCheckmarkIcon : null
-                  }
+                  {({ isSelected }) => (isSelected ? CustomCheckmarkIcon : null)}
                 </Dropdown.ItemIndicator>
                 <Label>Apple</Label>
               </Dropdown.Item>
               <Dropdown.Item id="banana" textValue="Banana">
                 <Dropdown.ItemIndicator>
-                  {({ isSelected }) =>
-                    isSelected ? CustomCheckmarkIcon : null
-                  }
+                  {({ isSelected }) => (isSelected ? CustomCheckmarkIcon : null)}
                 </Dropdown.ItemIndicator>
                 <Label>Banana</Label>
               </Dropdown.Item>
               <Dropdown.Item id="cherry" textValue="Cherry">
                 <Dropdown.ItemIndicator>
-                  {({ isSelected }) =>
-                    isSelected ? CustomCheckmarkIcon : null
-                  }
+                  {({ isSelected }) => (isSelected ? CustomCheckmarkIcon : null)}
                 </Dropdown.ItemIndicator>
                 <Label>Cherry</Label>
               </Dropdown.Item>
@@ -187,9 +165,7 @@ export const SingleWithCustomIndicator: Story = {
 
 export const WithMultipleSelection: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState<Selection>(
-      new Set(["apple"]),
-    );
+    const [selected, setSelected] = React.useState<Selection>(new Set(["apple"]));
 
     return (
       <Dropdown>
@@ -234,12 +210,8 @@ export const WithMultipleSelection: Story = {
 
 export const WithSectionLevelSelection: Story = {
   render: () => {
-    const [textStyles, setTextStyles] = React.useState<Selection>(
-      new Set(["bold", "italic"]),
-    );
-    const [textAlignment, setTextAlignment] = React.useState<Selection>(
-      new Set(["left"]),
-    );
+    const [textStyles, setTextStyles] = React.useState<Selection>(new Set(["bold", "italic"]));
+    const [textAlignment, setTextAlignment] = React.useState<Selection>(new Set(["left"]));
 
     return (
       <Dropdown>
@@ -395,10 +367,7 @@ export const WithIcons: Story = {
       <Dropdown.Popover>
         <Dropdown.Menu onAction={(key) => alert(`Selected: ${key}`)}>
           <Dropdown.Item id="new-file" textValue="New file">
-            <Icon
-              className="text-muted size-4 shrink-0"
-              icon="hugeicons:square-plus"
-            />
+            <Icon className="text-muted size-4 shrink-0" icon="hugeicons:square-plus" />
             <Label>New file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
               <Kbd.Abbr keyValue="command" />
@@ -406,10 +375,7 @@ export const WithIcons: Story = {
             </Kbd>
           </Dropdown.Item>
           <Dropdown.Item id="open-file" textValue="Open file">
-            <Icon
-              className="text-muted size-4 shrink-0"
-              icon="hugeicons:folder-open"
-            />
+            <Icon className="text-muted size-4 shrink-0" icon="hugeicons:folder-open" />
             <Label>Open file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
               <Kbd.Abbr keyValue="command" />
@@ -417,25 +383,15 @@ export const WithIcons: Story = {
             </Kbd>
           </Dropdown.Item>
           <Dropdown.Item id="save-file" textValue="Save file">
-            <Icon
-              className="text-muted size-4 shrink-0"
-              icon="hugeicons:floppy-disk"
-            />
+            <Icon className="text-muted size-4 shrink-0" icon="hugeicons:floppy-disk" />
             <Label>Save file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
               <Kbd.Abbr keyValue="command" />
               <Kbd.Content>S</Kbd.Content>
             </Kbd>
           </Dropdown.Item>
-          <Dropdown.Item
-            id="delete-file"
-            textValue="Delete file"
-            variant="danger"
-          >
-            <Icon
-              className="text-danger size-4 shrink-0"
-              icon="hugeicons:trash-bin"
-            />
+          <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
+            <Icon className="text-danger size-4 shrink-0" icon="hugeicons:trash-bin" />
             <Label>Delete file</Label>
             <Kbd className="ms-auto" slot="keyboard" variant="light">
               <Kbd.Abbr keyValue="command" />
@@ -466,11 +422,7 @@ export const LongPressTrigger: Story = {
           <Dropdown.Item id="save-file" textValue="Save file">
             <Label>Save file</Label>
           </Dropdown.Item>
-          <Dropdown.Item
-            id="delete-file"
-            textValue="Delete file"
-            variant="danger"
-          >
+          <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
             <Label>Delete file</Label>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -489,10 +441,7 @@ export const WithDescriptions: Story = {
         <Dropdown.Menu onAction={(key) => alert(`Selected: ${key}`)}>
           <Dropdown.Item id="new-file" textValue="New file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon
-                className="text-muted size-4 shrink-0"
-                icon="hugeicons:square-plus"
-              />
+              <Icon className="text-muted size-4 shrink-0" icon="hugeicons:square-plus" />
             </div>
             <div className="flex flex-col">
               <Label>New file</Label>
@@ -505,10 +454,7 @@ export const WithDescriptions: Story = {
           </Dropdown.Item>
           <Dropdown.Item id="open-file" textValue="Open file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon
-                className="text-muted size-4 shrink-0"
-                icon="hugeicons:folder-open"
-              />
+              <Icon className="text-muted size-4 shrink-0" icon="hugeicons:folder-open" />
             </div>
             <div className="flex flex-col">
               <Label>Open file</Label>
@@ -521,10 +467,7 @@ export const WithDescriptions: Story = {
           </Dropdown.Item>
           <Dropdown.Item id="save-file" textValue="Save file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon
-                className="text-muted size-4 shrink-0"
-                icon="hugeicons:floppy-disk"
-              />
+              <Icon className="text-muted size-4 shrink-0" icon="hugeicons:floppy-disk" />
             </div>
             <div className="flex flex-col">
               <Label>Save file</Label>
@@ -535,16 +478,9 @@ export const WithDescriptions: Story = {
               <Kbd.Content>S</Kbd.Content>
             </Kbd>
           </Dropdown.Item>
-          <Dropdown.Item
-            id="delete-file"
-            textValue="Delete file"
-            variant="danger"
-          >
+          <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon
-                className="text-danger size-4 shrink-0"
-                icon="hugeicons:trash-bin"
-              />
+              <Icon className="text-danger size-4 shrink-0" icon="hugeicons:trash-bin" />
             </div>
             <div className="flex flex-col">
               <Label>Delete file</Label>
@@ -577,10 +513,7 @@ export const WithSections: Story = {
             <Header>Actions</Header>
             <Dropdown.Item id="new-file" textValue="New file">
               <div className="flex h-8 items-start justify-center pt-px">
-                <Icon
-                  className="text-muted size-4 shrink-0"
-                  icon="hugeicons:square-plus"
-                />
+                <Icon className="text-muted size-4 shrink-0" icon="hugeicons:square-plus" />
               </div>
               <div className="flex flex-col">
                 <Label>New file</Label>
@@ -593,10 +526,7 @@ export const WithSections: Story = {
             </Dropdown.Item>
             <Dropdown.Item id="edit-file" textValue="Edit file">
               <div className="flex h-8 items-start justify-center pt-px">
-                <Icon
-                  className="text-muted size-4 shrink-0"
-                  icon="hugeicons:pencil"
-                />
+                <Icon className="text-muted size-4 shrink-0" icon="hugeicons:pencil" />
               </div>
               <div className="flex flex-col">
                 <Label>Edit file</Label>
@@ -611,16 +541,9 @@ export const WithSections: Story = {
           <Separator />
           <Dropdown.Section>
             <Header>Danger zone</Header>
-            <Dropdown.Item
-              id="delete-file"
-              textValue="Delete file"
-              variant="danger"
-            >
+            <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
               <div className="flex h-8 items-start justify-center pt-px">
-                <Icon
-                  className="text-danger size-4 shrink-0"
-                  icon="hugeicons:trash-bin"
-                />
+                <Icon className="text-danger size-4 shrink-0" icon="hugeicons:trash-bin" />
               </div>
               <div className="flex flex-col">
                 <Label>Delete file</Label>
@@ -646,18 +569,12 @@ export const WithDisabledItems: Story = {
         <Icon className="outline-none" icon="hugeicons:bars" />
       </Button>
       <Dropdown.Popover className="min-w-[220px]">
-        <Dropdown.Menu
-          disabledKeys={["delete-file"]}
-          onAction={(key) => alert(`Selected: ${key}`)}
-        >
+        <Dropdown.Menu disabledKeys={["delete-file"]} onAction={(key) => alert(`Selected: ${key}`)}>
           <Dropdown.Section>
             <Header>Actions</Header>
             <Dropdown.Item id="new-file" textValue="New file">
               <div className="flex h-8 items-start justify-center pt-px">
-                <Icon
-                  className="text-muted size-4 shrink-0"
-                  icon="hugeicons:square-plus"
-                />
+                <Icon className="text-muted size-4 shrink-0" icon="hugeicons:square-plus" />
               </div>
               <div className="flex flex-col">
                 <Label>New file</Label>
@@ -670,10 +587,7 @@ export const WithDisabledItems: Story = {
             </Dropdown.Item>
             <Dropdown.Item id="edit-file" textValue="Edit file">
               <div className="flex h-8 items-start justify-center pt-px">
-                <Icon
-                  className="text-muted size-4 shrink-0"
-                  icon="hugeicons:pencil"
-                />
+                <Icon className="text-muted size-4 shrink-0" icon="hugeicons:pencil" />
               </div>
               <div className="flex flex-col">
                 <Label>Edit file</Label>
@@ -688,16 +602,9 @@ export const WithDisabledItems: Story = {
           <Separator />
           <Dropdown.Section>
             <Header>Danger zone</Header>
-            <Dropdown.Item
-              id="delete-file"
-              textValue="Delete file"
-              variant="danger"
-            >
+            <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
               <div className="flex h-8 items-start justify-center pt-px">
-                <Icon
-                  className="text-danger size-4 shrink-0"
-                  icon="hugeicons:trash-bin"
-                />
+                <Icon className="text-danger size-4 shrink-0" icon="hugeicons:trash-bin" />
               </div>
               <div className="flex flex-col">
                 <Label>Delete file</Label>
@@ -792,10 +699,7 @@ export const WithCustomSubmenuIndicator: Story = {
             <Dropdown.Item id="share" textValue="Share">
               <Label>More options</Label>
               <Dropdown.SubmenuIndicator>
-                <Icon
-                  className="text-muted size-3.5"
-                  icon="hugeicons:arrow-right"
-                />
+                <Icon className="text-muted size-3.5" icon="hugeicons:arrow-right" />
               </Dropdown.SubmenuIndicator>
             </Dropdown.Item>
             <Dropdown.Popover>
@@ -810,11 +714,7 @@ export const WithCustomSubmenuIndicator: Story = {
                   <Dropdown.Item id="email" textValue="Email">
                     <Label>Email</Label>
                     <Dropdown.SubmenuIndicator>
-                      <HugeiconsIcon
-                        className="text-muted"
-                        icon={ArrowRight01Icon}
-                        size={14}
-                      />
+                      <HugeiconsIcon className="text-muted" icon={ArrowRight01Icon} size={14} />
                     </Dropdown.SubmenuIndicator>
                   </Dropdown.Item>
                   <Dropdown.Popover>
@@ -855,9 +755,7 @@ export const WithCustomSubmenuIndicator: Story = {
 
 export const Controlled: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState<Selection>(
-      new Set(["bold"]),
-    );
+    const [selected, setSelected] = React.useState<Selection>(new Set(["bold"]));
 
     const selectedItems = Array.from(selected);
 
@@ -889,8 +787,7 @@ export const Controlled: Story = {
           </Dropdown.Popover>
         </Dropdown>
         <p className="text-muted text-sm">
-          Selected:{" "}
-          {selectedItems.length > 0 ? selectedItems.join(", ") : "None"}
+          Selected: {selectedItems.length > 0 ? selectedItems.join(", ") : "None"}
         </p>
       </div>
     );
@@ -921,11 +818,7 @@ export const ControlledOpenState: Story = {
               <Dropdown.Item id="save-file" textValue="Save file">
                 <Label>Save file</Label>
               </Dropdown.Item>
-              <Dropdown.Item
-                id="delete-file"
-                textValue="Delete file"
-                variant="danger"
-              >
+              <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
                 <Label>Delete file</Label>
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -954,9 +847,7 @@ export const CustomTrigger: Story = {
             </Avatar>
             <div className="flex flex-col gap-0">
               <p className="text-sm leading-5 font-medium">Jane Doe</p>
-              <p className="text-muted text-xs leading-none">
-                jane@example.com
-              </p>
+              <p className="text-muted text-xs leading-none">jane@example.com</p>
             </div>
           </div>
         </div>
@@ -982,10 +873,7 @@ export const CustomTrigger: Story = {
           <Dropdown.Item id="logout" textValue="Logout" variant="danger">
             <div className="flex w-full items-center justify-between gap-2">
               <Label>Log Out</Label>
-              <Icon
-                className="text-danger size-3.5"
-                icon="hugeicons:arrow-right-from-square"
-              />
+              <Icon className="text-danger size-3.5" icon="hugeicons:arrow-right-from-square" />
             </div>
           </Dropdown.Item>
         </Dropdown.Menu>

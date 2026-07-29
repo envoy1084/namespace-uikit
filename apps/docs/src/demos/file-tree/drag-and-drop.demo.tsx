@@ -3,11 +3,7 @@
 
 // @demo-title Drag And Drop
 import { useTreeData } from "@react-stately/data";
-import {
-  FileTree,
-  useFileTreeDrag,
-  type FileTreeItemRenderProps,
-} from "@thenamespace/uikit";
+import { FileTree, useFileTreeDrag, type FileTreeItemRenderProps } from "@thenamespace/uikit";
 import { Collection } from "react-aria-components";
 
 import { Icon } from "@/demos/icon";
@@ -60,9 +56,7 @@ function DragAndDropDemo() {
         textValue={node.value.name}
         title={node.value.name}
       >
-        {hasChildren ? (
-          <Collection items={node.children}>{renderNode}</Collection>
-        ) : null}
+        {hasChildren ? <Collection items={node.children}>{renderNode}</Collection> : null}
       </FileTree.Item>
     );
   };

@@ -21,12 +21,7 @@ export function FormExample() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (
-      value === undefined ||
-      value === null ||
-      value < 1 ||
-      value > STOCK_AVAILABLE
-    ) {
+    if (value === undefined || value === null || value < 1 || value > STOCK_AVAILABLE) {
       return;
     }
 

@@ -33,12 +33,7 @@ export function ComponentsCategory({ category }: { category: string }) {
           if (!page) return null;
 
           return (
-            <ComponentItem
-              href={page.url}
-              imageName={slug}
-              key={slug}
-              title={page.data.title}
-            />
+            <ComponentItem href={page.url} imageName={slug} key={slug} title={page.data.title} />
           );
         })}
       </div>

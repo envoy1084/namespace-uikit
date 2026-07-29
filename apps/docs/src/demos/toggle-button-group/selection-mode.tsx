@@ -15,10 +15,7 @@ export function SelectionMode() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
         <span className="text-muted text-sm">Single selection</span>
-        <ToggleButtonGroup
-          defaultSelectedKeys={["center"]}
-          selectionMode="single"
-        >
+        <ToggleButtonGroup defaultSelectedKeys={["center"]} selectionMode="single">
           <ToggleButton id="left">
             <HugeiconsIcon icon={TextAlignLeftIcon} />
             Left
@@ -37,10 +34,7 @@ export function SelectionMode() {
       </div>
       <div className="flex flex-col gap-2">
         <span className="text-muted text-sm">Multiple selection</span>
-        <ToggleButtonGroup
-          defaultSelectedKeys={["bold", "underline"]}
-          selectionMode="multiple"
-        >
+        <ToggleButtonGroup defaultSelectedKeys={["bold", "underline"]} selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
             <HugeiconsIcon icon={TextBoldIcon} />
           </ToggleButton>
@@ -52,11 +46,7 @@ export function SelectionMode() {
             <ToggleButtonGroup.Separator />
             <HugeiconsIcon icon={TextUnderlineIcon} />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <ToggleButtonGroup.Separator />
             <HugeiconsIcon icon={TextStrikethroughIcon} />
           </ToggleButton>

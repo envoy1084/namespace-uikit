@@ -4,17 +4,9 @@ export function ColumnResizing() {
   return (
     <Table>
       <Table.ResizableContainer>
-        <Table.Content
-          aria-label="Table with resizable columns"
-          className="min-w-[700px]"
-        >
+        <Table.Content aria-label="Table with resizable columns" className="min-w-[700px]">
           <Table.Header>
-            <Table.Column
-              isRowHeader
-              defaultWidth="1fr"
-              id="name"
-              minWidth={160}
-            >
+            <Table.Column isRowHeader defaultWidth="1fr" id="name" minWidth={160}>
               Name
               <Table.ColumnResizer />
             </Table.Column>

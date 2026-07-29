@@ -40,14 +40,12 @@ function PressInPage() {
           .filter((item) => item.level === 1)
           .map((item) => (
             <div className="mb-10 last:mb-0" key={item.id}>
-              <h2
-                className={`text-base font-semibold ${item.id === active ? "text-accent" : ""}`}
-              >
+              <h2 className={`text-base font-semibold ${item.id === active ? "text-accent" : ""}`}>
                 {item.label}
               </h2>
               <p className="text-muted mt-2 text-sm leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua.
               </p>
             </div>
           ))}
@@ -56,11 +54,7 @@ function PressInPage() {
         <FloatingToc placement="left" triggerMode="press">
           <FloatingToc.Trigger aria-label="Table of contents">
             {hierarchy.map((item) => (
-              <FloatingToc.Bar
-                active={item.id === active}
-                key={item.id}
-                level={item.level}
-              />
+              <FloatingToc.Bar active={item.id === active} key={item.id} level={item.level} />
             ))}
           </FloatingToc.Trigger>
           <FloatingToc.Content>

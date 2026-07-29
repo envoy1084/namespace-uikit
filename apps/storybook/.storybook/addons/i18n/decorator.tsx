@@ -1,7 +1,6 @@
-import type { Decorator } from "@storybook/react";
-
 import React, { useEffect } from "react";
 
+import type { Decorator } from "@storybook/react";
 import { useGlobals } from "storybook/preview-api";
 
 import { DEFAULT_LOCALE, I18N_GLOBAL_TYPE_ID, LOCALES } from "./constants";

@@ -14,11 +14,7 @@ export const i18nGlobalType = {
         title: locale.label,
         right: locale.value === "Auto" ? undefined : locale.value,
       })).toSorted((a, b) =>
-        a.value === "Auto"
-          ? -1
-          : b.value === "Auto"
-            ? 1
-            : a.title.localeCompare(b.title),
+        a.value === "Auto" ? -1 : b.value === "Auto" ? 1 : a.title.localeCompare(b.title),
       ),
       showName: true,
       dynamicTitle: true,

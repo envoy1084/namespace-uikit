@@ -20,8 +20,7 @@ export function Controlled() {
       <div className="flex items-center gap-2">
         <ColorSwatch color={color} size="sm" />
         <p className="text-muted text-sm">
-          Current color:{" "}
-          <code className="font-mono">{color.toString("hsl")}</code>
+          Current color: <code className="font-mono">{color.toString("hsl")}</code>
         </p>
       </div>
     </div>

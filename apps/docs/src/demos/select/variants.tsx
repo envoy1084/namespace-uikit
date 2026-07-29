@@ -22,11 +22,7 @@ export function Variants() {
           </ListBox>
         </Select.Popover>
       </Select>
-      <Select
-        className="w-[256px]"
-        placeholder="Select one"
-        variant="secondary"
-      >
+      <Select className="w-[256px]" placeholder="Select one" variant="secondary">
         <Label>Secondary variant</Label>
         <Select.Trigger>
           <Select.Value />

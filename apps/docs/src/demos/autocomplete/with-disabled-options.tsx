@@ -1,9 +1,8 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import {
   Autocomplete,
   EmptyState,
@@ -41,9 +40,7 @@ export function WithDisabledOptions() {
               <SearchField.ClearButton />
             </SearchField.Group>
           </SearchField>
-          <ListBox
-            renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-          >
+          <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
             <ListBox.Item id="dog" textValue="Dog">
               Dog
               <ListBox.ItemIndicator />

@@ -3,13 +3,7 @@
 // @demo-title Variants
 import { Resizable } from "@thenamespace/uikit";
 
-const Content = ({
-  children,
-  className = "",
-}: {
-  children: string;
-  className?: string;
-}) => (
+const Content = ({ children, className = "" }: { children: string; className?: string }) => (
   <div className={`flex h-full items-center justify-center p-6 ${className}`}>
     <span className="text-sm font-medium">{children}</span>
   </div>
@@ -38,9 +32,7 @@ export const DemoVariantsExample = () => (
       },
     ].map((item) => (
       <div className="flex flex-col gap-2" key={item.variant}>
-        <span className="text-muted text-xs font-medium tracking-wide uppercase">
-          {item.label}
-        </span>
+        <span className="text-muted text-xs font-medium tracking-wide uppercase">{item.label}</span>
         <div
           className={`${item.bg} border-border h-[180px] w-full overflow-hidden rounded-xl border`}
         >
@@ -48,9 +40,7 @@ export const DemoVariantsExample = () => (
             <Resizable.Panel defaultSize={50}>
               <Content className={item.fg}>Left</Content>
             </Resizable.Panel>
-            <Resizable.Handle
-              variant={item.variant as "primary" | "secondary" | "tertiary"}
-            />
+            <Resizable.Handle variant={item.variant as "primary" | "secondary" | "tertiary"} />
             <Resizable.Panel defaultSize={50}>
               <Content className={item.fg}>Right</Content>
             </Resizable.Panel>

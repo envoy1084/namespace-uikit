@@ -1,10 +1,9 @@
 // oxlint-disable eslint/no-shadow, jsdoc/check-tag-names, unicorn/consistent-function-scoping
 "use client";
 
-import type { ButtonProps } from "fumadocs-ui/components/ui/button";
-
 import type { ComponentProps } from "react";
 
+import type { ButtonProps } from "fumadocs-ui/components/ui/button";
 import { buttonVariants } from "fumadocs-ui/components/ui/button";
 import { useI18n } from "fumadocs-ui/contexts/i18n";
 import { useSearchContext } from "fumadocs-ui/contexts/search";
@@ -12,8 +11,7 @@ import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { Search } from "@/components/fumadocs/ui/icons";
 import { cn } from "@/utils/cn";
 
-interface SearchToggleProps
-  extends Omit<ComponentProps<"button">, "color">, ButtonProps {
+interface SearchToggleProps extends Omit<ComponentProps<"button">, "color">, ButtonProps {
   hideIfDisabled?: boolean;
 }
 

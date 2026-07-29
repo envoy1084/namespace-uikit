@@ -24,9 +24,7 @@ export function CustomTrigger() {
             </Avatar>
             <div className="flex flex-col gap-0">
               <p className="text-sm leading-5 font-medium">Jane Doe</p>
-              <p className="text-muted text-xs leading-none">
-                jane@example.com
-              </p>
+              <p className="text-muted text-xs leading-none">jane@example.com</p>
             </div>
           </div>
         </div>
@@ -40,28 +38,19 @@ export function CustomTrigger() {
           <Dropdown.Item id="settings" textValue="Settings">
             <div className="flex w-full items-center justify-between gap-2">
               <Label>Settings</Label>
-              <HugeiconsIcon
-                icon={Settings01Icon}
-                className="text-muted size-3.5"
-              />
+              <HugeiconsIcon icon={Settings01Icon} className="text-muted size-3.5" />
             </div>
           </Dropdown.Item>
           <Dropdown.Item id="new-project" textValue="New project">
             <div className="flex w-full items-center justify-between gap-2">
               <Label>Create Team</Label>
-              <HugeiconsIcon
-                icon={UserGroupIcon}
-                className="text-muted size-3.5"
-              />
+              <HugeiconsIcon icon={UserGroupIcon} className="text-muted size-3.5" />
             </div>
           </Dropdown.Item>
           <Dropdown.Item id="logout" textValue="Logout" variant="danger">
             <div className="flex w-full items-center justify-between gap-2">
               <Label>Log Out</Label>
-              <HugeiconsIcon
-                icon={ArrowUpRight01Icon}
-                className="text-danger size-3.5"
-              />
+              <HugeiconsIcon icon={ArrowUpRight01Icon} className="text-danger size-3.5" />
             </div>
           </Dropdown.Item>
         </Dropdown.Menu>

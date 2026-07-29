@@ -5,10 +5,7 @@ import { source } from "@/lib/source";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(
-  _request: Request,
-  { params }: { params: Promise<{ slug: string[] }> },
-) {
+export async function GET(_request: Request, { params }: { params: Promise<{ slug: string[] }> }) {
   const { slug } = await params;
   const page = source.getPage(slug);
 

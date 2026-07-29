@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 import { PressableFeedback } from "@/components/buttons/pressable-feedback";
@@ -37,13 +37,7 @@ const features = [
   },
 ];
 
-function FeatureContent({
-  description,
-  value,
-}: {
-  description: string;
-  value: string;
-}) {
+function FeatureContent({ description, value }: { description: string; value: string }) {
   return (
     <CheckboxButtonGroup.ItemContent>
       <Label className="capitalize">{value}</Label>
@@ -171,9 +165,7 @@ export const CustomIndicator: Story = {
             <Icon icon="solar:check-circle-bold" />
           </CheckboxButtonGroup.Indicator>
           <CheckboxButtonGroup.ItemContent>
-            <Label className="capitalize">
-              {(value as string).replace(/-/g, " ")}
-            </Label>
+            <Label className="capitalize">{(value as string).replace(/-/g, " ")}</Label>
             <Description>{description}</Description>
             <NumberValue
               className="mt-3 text-sm font-semibold"
@@ -181,10 +173,7 @@ export const CustomIndicator: Story = {
               value={subscribers as number}
             >
               <NumberValue.Suffix>
-                <span className="text-muted text-xs font-normal">
-                  {" "}
-                  subscribers
-                </span>
+                <span className="text-muted text-xs font-normal"> subscribers</span>
               </NumberValue.Suffix>
             </NumberValue>
           </CheckboxButtonGroup.ItemContent>
@@ -231,11 +220,7 @@ export const IconCards: Story = {
     >
       <Label>Security features</Label>
       {securityFeatures.map((feature) => (
-        <CheckboxButtonGroup.Item
-          className="bg-default"
-          key={feature.value}
-          value={feature.value}
-        >
+        <CheckboxButtonGroup.Item className="bg-default" key={feature.value} value={feature.value}>
           <CheckboxButtonGroup.Indicator>
             <Icon icon="solar:check-circle-bold" />
           </CheckboxButtonGroup.Indicator>
@@ -262,30 +247,10 @@ export const IconCards: Story = {
 };
 
 const permissions = [
-  [
-    "content",
-    "Content Management",
-    "Create, edit, and delete content",
-    "solar:cloud-outline",
-  ],
-  [
-    "users",
-    "User Administration",
-    "Manage team members and roles",
-    "solar:shield-keyhole-outline",
-  ],
-  [
-    "analytics",
-    "Analytics Access",
-    "View and export reports",
-    "solar:database-outline",
-  ],
-  [
-    "settings",
-    "Settings",
-    "Configure system preferences",
-    "solar:lock-outline",
-  ],
+  ["content", "Content Management", "Create, edit, and delete content", "solar:cloud-outline"],
+  ["users", "User Administration", "Manage team members and roles", "solar:shield-keyhole-outline"],
+  ["analytics", "Analytics Access", "View and export reports", "solar:database-outline"],
+  ["settings", "Settings", "Configure system preferences", "solar:lock-outline"],
 ];
 
 export const WithIcons: Story = {
@@ -419,9 +384,7 @@ export const Controlled: Story = {
         </CheckboxButtonGroup>
         <p className="text-muted text-sm">
           Selected:{" "}
-          <span className="text-foreground font-medium">
-            {value.join(", ") || "None"}
-          </span>
+          <span className="text-foreground font-medium">{value.join(", ") || "None"}</span>
         </p>
       </div>
     );
@@ -436,38 +399,20 @@ const plans = [
     12,
     "Full suite of saving, investing, and learning tools for you and your family.",
   ],
-  [
-    "silver",
-    "Silver",
-    0.2,
-    6,
-    "Level up your saving and investing skills with even more tools.",
-  ],
-  [
-    "bronze",
-    "Bronze",
-    0.1,
-    3,
-    "Investing tools to get you started on your financial journey.",
-  ],
+  ["silver", "Silver", 0.2, 6, "Level up your saving and investing skills with even more tools."],
+  ["bronze", "Bronze", 0.1, 3, "Investing tools to get you started on your financial journey."],
 ] as const;
 
 export const SubscriptionPlans: Story = {
   render: () => (
     <div className="flex w-[420px] flex-col items-center gap-6">
       <div className="flex flex-col items-center gap-1 text-center">
-        <h2 className="text-3xl font-bold tracking-tight">
-          Choose a subscription
-        </h2>
+        <h2 className="text-3xl font-bold tracking-tight">Choose a subscription</h2>
         <p className="text-muted text-sm">
           Pick a plan. <Link href="#">Try a month on us!</Link>
         </p>
       </div>
-      <CheckboxButtonGroup
-        className="w-full"
-        defaultValue={["silver"]}
-        name="subscription-plan"
-      >
+      <CheckboxButtonGroup className="w-full" defaultValue={["silver"]} name="subscription-plan">
         {plans.map(([value, title, daily, monthly, description]) => (
           <CheckboxButtonGroup.Item key={value} value={value}>
             {({ isSelected }) => (
@@ -480,11 +425,7 @@ export const SubscriptionPlans: Story = {
                   <Description>{description}</Description>
                   <p className="mt-3 text-sm">
                     <span className={isSelected ? "text-success" : ""}>
-                      <NumberValue
-                        currency="USD"
-                        style="currency"
-                        value={daily}
-                      >
+                      <NumberValue currency="USD" style="currency" value={daily}>
                         <NumberValue.Suffix>/day</NumberValue.Suffix>
                       </NumberValue>
                     </span>{" "}
@@ -507,8 +448,7 @@ export const SubscriptionPlans: Story = {
       </CheckboxButtonGroup>
       <div className="flex w-full flex-col items-center gap-4">
         <p className="text-muted px-2 text-center text-xs">
-          *APY is variable and subject to change at our discretion, without
-          prior notice.
+          *APY is variable and subject to change at our discretion, without prior notice.
         </p>
         <Button fullWidth className="rounded-full" size="lg">
           Try a month on us

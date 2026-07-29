@@ -42,9 +42,7 @@ export const DemoWithTableExample = () => (
             <Table.Body>
               {members.map((member, index) => (
                 <Table.Row
-                  className={
-                    index === members.length - 1 ? "[&_td]:border-b-0" : ""
-                  }
+                  className={index === members.length - 1 ? "[&_td]:border-b-0" : ""}
                   key={member.email}
                 >
                   <Table.Cell>{member.name}</Table.Cell>

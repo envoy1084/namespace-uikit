@@ -13,12 +13,7 @@ export const DemoIconExpandExample = () => (
       { icon: "lucide:video", id: "meetings", label: "Meetings" },
       { icon: "lucide:inbox", id: "inbox", label: "Inbox" },
     ].map((item) => (
-      <Segment.Item
-        className="w-auto"
-        id={item.id}
-        key={item.id}
-        style={{ gap: 0 }}
-      >
+      <Segment.Item className="w-auto" id={item.id} key={item.id} style={{ gap: 0 }}>
         {({ isSelected }) => (
           <>
             <Icon icon={item.icon} />

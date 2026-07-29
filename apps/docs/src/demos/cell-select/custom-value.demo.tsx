@@ -5,11 +5,7 @@
 import { useState } from "react";
 
 import { CellSelect } from "@thenamespace/uikit";
-import {
-  Globe02Icon,
-  PaintBoardIcon,
-  SmileIcon,
-} from "@thenamespace/uikit/icons";
+import { Globe02Icon, PaintBoardIcon, SmileIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 import { ListBox } from "@thenamespace/uikit/list-box";
 
@@ -32,11 +28,8 @@ export const DemoCustomValueExample = function Demo() {
           <CellSelect.Label>Icons</CellSelect.Label>
           <CellSelect.Value>
             {({ defaultChildren, isPlaceholder, state }) => {
-              if (isPlaceholder || state.selectedItems.length === 0)
-                return defaultChildren;
-              const item = iconSets.find(
-                (option) => option.id === state.selectedItems[0]?.key,
-              );
+              if (isPlaceholder || state.selectedItems.length === 0) return defaultChildren;
+              const item = iconSets.find((option) => option.id === state.selectedItems[0]?.key);
               return item ? (
                 <span className="flex items-center justify-end gap-1.5 text-end">
                   {item.name}

@@ -30,21 +30,14 @@ const guestTypes = [
 
 export const DemoGuestPickerExample = () => (
   <div className="w-80 space-y-5">
-    <p className="text-muted text-sm">
-      Guest picker using the default NumberStepper look.
-    </p>
+    <p className="text-muted text-sm">Guest picker using the default NumberStepper look.</p>
     {guestTypes.map(({ description, label }) => (
       <div className="flex items-center justify-between gap-8" key={label}>
         <div>
           <p className="text-foreground font-medium">{label}</p>
           <p className="text-muted text-sm">{description}</p>
         </div>
-        <NumberStepper
-          aria-label={label}
-          defaultValue={0}
-          minValue={0}
-          size="sm"
-        >
+        <NumberStepper aria-label={label} defaultValue={0} minValue={0} size="sm">
           <StepperContent
             decrementLabel={`Decrease ${label}`}
             incrementLabel={`Increase ${label}`}

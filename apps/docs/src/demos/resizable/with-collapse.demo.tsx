@@ -1,21 +1,14 @@
 // @ts-nocheck -- Complex demo data intentionally uses heterogeneous shapes.
 "use client";
 
-// @demo-title With Collapse
-import type { PanelImperativeHandle } from "@thenamespace/uikit";
-
 import { useRef, useState } from "react";
 
+// @demo-title With Collapse
+import type { PanelImperativeHandle } from "@thenamespace/uikit";
 import { Resizable } from "@thenamespace/uikit";
 import { Button } from "@thenamespace/uikit/button";
 
-const Content = ({
-  children,
-  className = "",
-}: {
-  children: string;
-  className?: string;
-}) => (
+const Content = ({ children, className = "" }: { children: string; className?: string }) => (
   <div className={`flex h-full items-center justify-center p-6 ${className}`}>
     <span className="text-sm font-medium">{children}</span>
   </div>
@@ -30,11 +23,7 @@ export const DemoWithCollapseExample = function Demo() {
         <Button
           size="sm"
           variant="secondary"
-          onPress={() =>
-            collapsed
-              ? panelRef.current?.expand()
-              : panelRef.current?.collapse()
-          }
+          onPress={() => (collapsed ? panelRef.current?.expand() : panelRef.current?.collapse())}
         >
           {collapsed ? "Expand" : "Collapse"} sidebar
         </Button>
@@ -51,9 +40,7 @@ export const DemoWithCollapseExample = function Demo() {
             onCollapse={() => setCollapsed(true)}
             onExpand={() => setCollapsed(false)}
           >
-            <Content className="bg-surface text-surface-foreground">
-              Sidebar
-            </Content>
+            <Content className="bg-surface text-surface-foreground">Sidebar</Content>
           </Resizable.Panel>
           <Resizable.Handle />
           <Resizable.Panel defaultSize={75} id="main">

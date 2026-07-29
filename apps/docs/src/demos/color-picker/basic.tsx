@@ -1,10 +1,4 @@
-import {
-  ColorArea,
-  ColorPicker,
-  ColorSlider,
-  ColorSwatch,
-  Label,
-} from "@thenamespace/uikit";
+import { ColorArea, ColorPicker, ColorSlider, ColorSwatch, Label } from "@thenamespace/uikit";
 
 export function Basic() {
   return (

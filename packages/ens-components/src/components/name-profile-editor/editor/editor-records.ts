@@ -1,14 +1,13 @@
+import {
+  findRecordDefinition,
+  recordDefinitions,
+} from "#/components/name-profile-editor/editor/record-definitions";
 import type {
   EditorRecord,
   EditorRecordFieldIds,
   RecordDefinition,
 } from "#/components/name-profile-editor/editor/types";
 import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
-
-import {
-  findRecordDefinition,
-  recordDefinitions,
-} from "#/components/name-profile-editor/editor/record-definitions";
 
 function contenthashProtocol(value: string): string {
   const protocol = value.trim().toLowerCase().split(":")[0] ?? "";
@@ -28,21 +27,17 @@ function activeDefinition(
   activeDefinitionIds: ReadonlySet<string>,
 ): RecordDefinition | undefined {
   return recordDefinitions.find(
-    (definition) =>
-      definition.type === type && activeDefinitionIds.has(definition.id),
+    (definition) => definition.type === type && activeDefinitionIds.has(definition.id),
   );
 }
 
-export function createInitialActiveDefinitionIds(
-  records: NameProfileFormValues,
-): Set<string> {
+export function createInitialActiveDefinitionIds(records: NameProfileFormValues): Set<string> {
   const active = new Set<string>();
 
   if (records.contenthash.length > 0) {
     const protocol = contenthashProtocol(records.contenthash);
     const definition =
-      findRecordDefinition("contenthash", protocol) ??
-      findRecordDefinition("contenthash", "ipfs");
+      findRecordDefinition("contenthash", protocol) ?? findRecordDefinition("contenthash", "ipfs");
     if (definition) active.add(definition.id);
   }
 
@@ -98,9 +93,7 @@ export function createEditorRecords({
     const stableKey = fieldKeys.text[index] ?? "";
     const isCustom = customTextFieldIds.has(id);
     const key = isCustom ? (values.text[index]?.key ?? stableKey) : stableKey;
-    const definition = isCustom
-      ? customText
-      : (findRecordDefinition("text", key) ?? customText);
+    const definition = isCustom ? customText : (findRecordDefinition("text", key) ?? customText);
 
     if (!definition) continue;
     records.push({
@@ -118,9 +111,7 @@ export function createEditorRecords({
     const coinType = isCustom
       ? (values.addresses[index]?.coinType ?? stableCoinType)
       : stableCoinType;
-    const knownDefinition = isCustom
-      ? undefined
-      : findRecordDefinition("address", coinType);
+    const knownDefinition = isCustom ? undefined : findRecordDefinition("address", coinType);
     const definition = isCustom ? customAddress : knownDefinition;
     if (!definition) continue;
 
@@ -187,8 +178,7 @@ export function isRecordDefinitionActive(
   }
 
   return records.some(
-    (record) =>
-      record.type === definition.type && record.name === definition.name,
+    (record) => record.type === definition.type && record.name === definition.name,
   );
 }
 

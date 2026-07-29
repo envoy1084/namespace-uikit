@@ -16,12 +16,7 @@ import {
 } from "@thenamespace/uikit";
 import { ArrowLeft, ChevronDown, Plus, Trash2, Type } from "lucide-react";
 
-import {
-  createThemeFont,
-  injectThemeFont,
-  isValidFontSource,
-  type ThemeFont,
-} from "./font-utils";
+import { createThemeFont, injectThemeFont, isValidFontSource, type ThemeFont } from "./font-utils";
 import { fontOptions } from "./theme-config";
 
 export function FontPicker({
@@ -51,9 +46,7 @@ export function FontPicker({
     const normalizedSource = source.trim();
 
     if (!isValidFontSource(normalizedSource)) {
-      setError(
-        "Use an HTTPS URL from Google Fonts, Fontshare, CDNFonts, or Fontsource.",
-      );
+      setError("Use an HTTPS URL from Google Fonts, Fontshare, CDNFonts, or Fontsource.");
       return;
     }
 
@@ -63,17 +56,13 @@ export function FontPicker({
       return;
     }
 
-    const existing = customFonts.find(
-      (item) => item.source === nextFont.source,
-    );
+    const existing = customFonts.find((item) => item.source === nextFont.source);
     if (existing) {
       setError(`${existing.label} has already been imported.`);
       return;
     }
 
-    const sameIdCount = customFonts.filter((item) =>
-      item.id.startsWith(nextFont.id),
-    ).length;
+    const sameIdCount = customFonts.filter((item) => item.id.startsWith(nextFont.id)).length;
     const uniqueFont = sameIdCount
       ? { ...nextFont, id: `${nextFont.id}-${sameIdCount + 1}` }
       : nextFont;
@@ -103,28 +92,18 @@ export function FontPicker({
         }
       }}
     >
-      <Popover.Trigger
-        aria-label={`Font family: ${font.label}`}
-        className="w-full"
-      >
+      <Popover.Trigger aria-label={`Font family: ${font.label}`} className="w-full">
         <InputGroup className="w-full cursor-pointer">
           <InputGroup.Prefix>
             <Type className="size-4" />
           </InputGroup.Prefix>
-          <InputGroup.Input
-            readOnly
-            className="min-w-0 grow cursor-pointer"
-            value={font.label}
-          />
+          <InputGroup.Input readOnly className="min-w-0 grow cursor-pointer" value={font.label} />
           <InputGroup.Suffix className="ml-auto">
             <ChevronDown className="text-muted size-4" />
           </InputGroup.Suffix>
         </InputGroup>
       </Popover.Trigger>
-      <Popover.Content
-        className="w-[min(22rem,calc(100vw-2rem))]"
-        placement="top"
-      >
+      <Popover.Content className="w-[min(22rem,calc(100vw-2rem))]" placement="top">
         <Popover.Dialog className="p-3">
           {mode === "fonts" ? (
             <>
@@ -132,11 +111,7 @@ export function FontPicker({
                 <p className="text-sm font-semibold">
                   {customFonts.length ? "All fonts" : "Suggested fonts"}
                 </p>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onPress={() => setMode("source")}
-                >
+                <Button size="sm" variant="ghost" onPress={() => setMode("source")}>
                   Add source
                   <Plus className="size-4" />
                 </Button>
@@ -159,9 +134,7 @@ export function FontPicker({
                   }}
                 >
                   {fonts.map((item) => {
-                    const isCustom = customFonts.some(
-                      (custom) => custom.id === item.id,
-                    );
+                    const isCustom = customFonts.some((custom) => custom.id === item.id);
 
                     return (
                       <ListBox.Item
@@ -195,11 +168,7 @@ export function FontPicker({
             </>
           ) : (
             <div className="space-y-3">
-              <Button
-                size="sm"
-                variant="ghost"
-                onPress={() => setMode("fonts")}
-              >
+              <Button size="sm" variant="ghost" onPress={() => setMode("fonts")}>
                 <ArrowLeft className="size-4" />
                 Suggested fonts
               </Button>
@@ -214,8 +183,7 @@ export function FontPicker({
                 <Label>Font source URL</Label>
                 <Input placeholder="https://fonts.googleapis.com/css2?family=..." />
                 <Description>
-                  Supports Google Fonts, Fontshare, CDNFonts, and Fontsource
-                  URLs.
+                  Supports Google Fonts, Fontshare, CDNFonts, and Fontsource URLs.
                 </Description>
                 {error ? <FieldError>{error}</FieldError> : null}
               </TextField>

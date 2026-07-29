@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Checkbox,
-  Radio,
-  RadioGroup,
-  Spinner,
-  Switch,
-} from "@thenamespace/uikit";
+import { Checkbox, Radio, RadioGroup, Spinner, Switch } from "@thenamespace/uikit";
 
 import { useDictionary } from "@/components/demo/dictionary";
 

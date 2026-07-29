@@ -1,13 +1,7 @@
 "use client";
 
 import { getLocalTimeZone, today } from "@internationalized/date";
-import {
-  DateField,
-  DateRangePicker,
-  Description,
-  Label,
-  RangeCalendar,
-} from "@thenamespace/uikit";
+import { DateField, DateRangePicker, Description, Label, RangeCalendar } from "@thenamespace/uikit";
 
 export function Disabled() {
   const start = today(getLocalTimeZone());
@@ -48,9 +42,7 @@ export function Disabled() {
           </RangeCalendar.Header>
           <RangeCalendar.Grid>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}

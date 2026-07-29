@@ -7,22 +7,12 @@ export type ProfileTextRecordValidationError =
   | "INVALID_URL";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/u;
-const IMAGE_URI_PROTOCOLS = new Set([
-  "data:",
-  "eip155:",
-  "http:",
-  "https:",
-  "ipfs:",
-  "ipns:",
-]);
+const IMAGE_URI_PROTOCOLS = new Set(["data:", "eip155:", "http:", "https:", "ipfs:", "ipns:"]);
 
 function isHttpUrl(value: string): boolean {
   try {
     const url = new URL(value);
-    return (
-      (url.protocol === "http:" || url.protocol === "https:") &&
-      url.hostname.length > 0
-    );
+    return (url.protocol === "http:" || url.protocol === "https:") && url.hostname.length > 0;
   } catch {
     return false;
   }
@@ -50,10 +40,7 @@ function isIanaTimeZone(value: string): boolean {
       const area = value.split("/")[0] ?? "";
       const resolvedArea = resolved.split("/")[0] ?? "";
       return (
-        area.length > 0 &&
-        value.includes("/") &&
-        area === resolvedArea &&
-        supported.has(resolved)
+        area.length > 0 && value.includes("/") && area === resolvedArea && supported.has(resolved)
       );
     }
 

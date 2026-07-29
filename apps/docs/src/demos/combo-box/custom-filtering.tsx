@@ -28,11 +28,7 @@ export function CustomFiltering() {
       <ComboBox.Popover>
         <ListBox>
           {animals.map((animal) => (
-            <ListBox.Item
-              key={animal.id}
-              id={animal.id}
-              textValue={animal.name}
-            >
+            <ListBox.Item key={animal.id} id={animal.id} textValue={animal.name}>
               {animal.name}
               <ListBox.ItemIndicator />
             </ListBox.Item>

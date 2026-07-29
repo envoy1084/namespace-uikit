@@ -1,18 +1,10 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { getLocalTimeZone, today } from "@internationalized/date";
-import {
-  Button,
-  DateField,
-  Description,
-  FieldError,
-  Form,
-  Label,
-} from "@thenamespace/uikit";
+import { Button, DateField, Description, FieldError, Form, Label } from "@thenamespace/uikit";
 import { Calendar03Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function FormExample() {
@@ -52,14 +44,9 @@ export function FormExample() {
         <Label>Appointment date</Label>
         <DateField.Group>
           <DateField.Prefix>
-            <HugeiconsIcon
-              icon={Calendar03Icon}
-              className="text-muted size-4"
-            />
+            <HugeiconsIcon icon={Calendar03Icon} className="text-muted size-4" />
           </DateField.Prefix>
-          <DateField.Input>
-            {(segment) => <DateField.Segment segment={segment} />}
-          </DateField.Input>
+          <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
         </DateField.Group>
         {isInvalid ? (
           <FieldError>Date must be today or in the future</FieldError>

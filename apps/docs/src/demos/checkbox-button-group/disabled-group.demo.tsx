@@ -20,13 +20,7 @@ const features = [
   },
 ];
 
-function FeatureContent({
-  description,
-  value,
-}: {
-  description: string;
-  value: string;
-}) {
+function FeatureContent({ description, value }: { description: string; value: string }) {
   return (
     <CheckboxButtonGroup.ItemContent>
       <Label className="capitalize">{value}</Label>

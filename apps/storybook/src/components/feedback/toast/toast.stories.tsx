@@ -1,7 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React from "react";
 
+import type { Meta } from "@storybook/react";
 import { Tick02Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
@@ -30,14 +29,7 @@ const meta: Meta<ToastStoryProps> = {
   argTypes: {
     placement: {
       control: "radio",
-      options: [
-        "top start",
-        "top",
-        "top end",
-        "bottom start",
-        "bottom",
-        "bottom end",
-      ],
+      options: ["top start", "top", "top end", "bottom start", "bottom", "bottom end"],
     },
     timeout: {
       control: "number",
@@ -155,14 +147,7 @@ export const Default = {
   render: Template,
 };
 
-const placements = [
-  "top start",
-  "top",
-  "top end",
-  "bottom start",
-  "bottom",
-  "bottom end",
-] as const;
+const placements = ["top start", "top", "top end", "bottom start", "bottom", "bottom end"] as const;
 
 // Create a separate queue for each placement
 const placementQueues = Object.fromEntries(
@@ -186,12 +171,7 @@ const PlacementsTemplate = () => {
       ))}
       <div className="flex max-w-xs flex-wrap justify-center gap-2">
         {placements.map((p) => (
-          <Button
-            key={p}
-            size="sm"
-            variant="secondary"
-            onPress={() => showToast(p)}
-          >
+          <Button key={p} size="sm" variant="secondary" onPress={() => showToast(p)}>
             {p}
           </Button>
         ))}
@@ -210,25 +190,13 @@ const SimpleToastTemplate = () => {
     <div className="flex h-full max-w-xl flex-col items-center justify-center">
       <Toast.Provider placement="bottom" />
       <div className="flex w-full flex-wrap items-center justify-center gap-4">
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => toast("Simple message")}
-        >
+        <Button size="sm" variant="secondary" onPress={() => toast("Simple message")}>
           Default
         </Button>
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => toast.success("Operation completed")}
-        >
+        <Button size="sm" variant="secondary" onPress={() => toast.success("Operation completed")}>
           Success
         </Button>
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => toast.info("New update available")}
-        >
+        <Button size="sm" variant="secondary" onPress={() => toast.info("New update available")}>
           Info
         </Button>
         <Button
@@ -238,11 +206,7 @@ const SimpleToastTemplate = () => {
         >
           Warning
         </Button>
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => toast.danger("Something went wrong")}
-        >
+        <Button size="sm" variant="secondary" onPress={() => toast.danger("Something went wrong")}>
           Error
         </Button>
       </div>
@@ -262,10 +226,7 @@ const uploadFile = (): Promise<{ filename: string; size: number }> => {
 
 const createEvent = (): Promise<never> => {
   return new Promise((_, reject) => {
-    setTimeout(
-      () => reject(new Error("Network error. Please try again.")),
-      2000,
-    );
+    setTimeout(() => reject(new Error("Network error. Please try again.")), 2000);
   });
 };
 
@@ -283,10 +244,7 @@ const saveData = (): Promise<{ count: number }> => {
 
 const fetchUser = (): Promise<{ name: string; email: string }> => {
   return new Promise((resolve) => {
-    setTimeout(
-      () => resolve({ name: "John Doe", email: "john@example.com" }),
-      2000,
-    );
+    setTimeout(() => resolve({ name: "John Doe", email: "john@example.com" }), 2000);
   });
 };
 
@@ -303,8 +261,7 @@ const PromiseToastTemplate = () => {
             toast.promise(uploadFile(), {
               error: "Failed to upload file",
               loading: "Uploading file...",
-              success: (data) =>
-                `File ${data.filename} uploaded (${data.size}KB)`,
+              success: (data) => `File ${data.filename} uploaded (${data.size}KB)`,
             });
           }}
         >
@@ -548,9 +505,7 @@ const WithCallbacksTemplate = () => {
         </div>
         <div className="border-border bg-surface min-h-[120px] space-y-2 rounded-lg border p-4">
           {closedHistory.length === 0 ? (
-            <p className="text-muted text-sm">
-              No toasts closed yet. Try closing one above!
-            </p>
+            <p className="text-muted text-sm">No toasts closed yet. Try closing one above!</p>
           ) : (
             closedHistory.map((item, index) => (
               <div
@@ -598,15 +553,10 @@ const CustomToastTemplate = () => {
             >
               <ToastContent>
                 <div className="flex items-center gap-2">
-                  <ToastIndicator
-                    className="text-accent"
-                    variant={content.variant}
-                  />
+                  <ToastIndicator className="text-accent" variant={content.variant} />
                   <div className="flex flex-col pr-6">
                     {content.title ? (
-                      <ToastTitle className="text-accent">
-                        {content.title}
-                      </ToastTitle>
+                      <ToastTitle className="text-accent">{content.title}</ToastTitle>
                     ) : null}
                     {content.description ? (
                       <ToastDescription>{content.description}</ToastDescription>

@@ -45,8 +45,7 @@ function MessageView({
             <ChainOfThought.Content>
               <ChainOfThought.Steps>
                 <ChainOfThought.Step label="Check scroll behavior">
-                  Verified the viewport remains pinned while the assistant
-                  streams.
+                  Verified the viewport remains pinned while the assistant streams.
                 </ChainOfThought.Step>
                 <ChainOfThought.Step label="Compose response">
                   Added reasoning UI inline with the assistant message body.
@@ -58,10 +57,7 @@ function MessageView({
         {showActions ? (
           <ChatMessageActions>
             <ChatMessageActions.Copy aria-label="Copy" tooltip="Copy" />
-            <ChatMessageActions.Regenerate
-              aria-label="Regenerate"
-              tooltip="Regenerate"
-            />
+            <ChatMessageActions.Regenerate aria-label="Regenerate" tooltip="Regenerate" />
           </ChatMessageActions>
         ) : null}
       </ChatMessage.Body>
@@ -100,9 +96,7 @@ const initialFullChatMessages: Message[] = [
 function FullChatDemo() {
   const [currentMessages, setMessages] = useState(initialFullChatMessages);
   const [value, setValue] = useState("");
-  const [status, setStatus] = useState<"ready" | "streaming" | "submitted">(
-    "ready",
-  );
+  const [status, setStatus] = useState<"ready" | "streaming" | "submitted">("ready");
   const timers = useRef<number[]>([]);
   const clearTimers = useCallback(() => {
     timers.current.forEach((timer) => window.clearTimeout(timer));
@@ -118,10 +112,7 @@ function FullChatDemo() {
   const submit = () => {
     const text = value.trim();
     if (!text || status !== "ready") return;
-    setMessages((current) => [
-      ...current,
-      { id: String(Date.now()), role: "user", text },
-    ]);
+    setMessages((current) => [...current, { id: String(Date.now()), role: "user", text }]);
     setValue("");
     setStatus("submitted");
     clearTimers();
@@ -172,9 +163,7 @@ function FullChatDemo() {
               </PromptInput.ToolbarEnd>
             </PromptInput.Toolbar>
           </PromptInput.Shell>
-          <PromptInput.Footer>
-            AI can make mistakes. Check important info.
-          </PromptInput.Footer>
+          <PromptInput.Footer>AI can make mistakes. Check important info.</PromptInput.Footer>
         </PromptInput>
       </div>
     </div>

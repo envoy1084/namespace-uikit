@@ -11,25 +11,16 @@ import { TrendChip, type TrendChipRootProps } from "./trend-chip";
 
 const Context = createContext(true);
 const useKpi = () => useContext(Context);
-const part = (name: string, className?: string) =>
-  cn(`kpi__${name}`, className);
+const part = (name: string, className?: string) => cn(`kpi__${name}`, className);
 type Status = "danger" | "success" | "warning";
 
 export interface KPIRootProps extends ComponentPropsWithRef<typeof Card> {
   children: ReactNode;
 }
-function KPIRoot({
-  children,
-  className,
-  ...props
-}: KPIRootProps): ReactElement {
+function KPIRoot({ children, className, ...props }: KPIRootProps): ReactElement {
   return (
     <Context value>
-      <Card
-        {...props}
-        className={cn("kpi", className) ?? "kpi"}
-        data-slot="kpi"
-      >
+      <Card {...props} className={cn("kpi", className) ?? "kpi"} data-slot="kpi">
         {children}
       </Card>
     </Context>
@@ -38,18 +29,10 @@ function KPIRoot({
 export interface KPIHeaderProps extends ComponentPropsWithRef<"div"> {
   children: ReactNode;
 }
-function KPIHeader({
-  children,
-  className,
-  ...props
-}: KPIHeaderProps): ReactElement {
+function KPIHeader({ children, className, ...props }: KPIHeaderProps): ReactElement {
   useKpi();
   return (
-    <div
-      {...props}
-      className={part("header", className)}
-      data-slot="kpi-header"
-    >
+    <div {...props} className={part("header", className)} data-slot="kpi-header">
       {children}
     </div>
   );
@@ -57,18 +40,10 @@ function KPIHeader({
 export interface KPIContentProps extends ComponentPropsWithRef<"div"> {
   children: ReactNode;
 }
-function KPIContent({
-  children,
-  className,
-  ...props
-}: KPIContentProps): ReactElement {
+function KPIContent({ children, className, ...props }: KPIContentProps): ReactElement {
   useKpi();
   return (
-    <div
-      {...props}
-      className={part("content", className)}
-      data-slot="kpi-content"
-    >
+    <div {...props} className={part("content", className)} data-slot="kpi-content">
       {children}
     </div>
   );
@@ -77,20 +52,10 @@ export interface KPIIconProps extends ComponentPropsWithRef<"div"> {
   children: ReactNode;
   status?: Status;
 }
-function KPIIcon({
-  children,
-  className,
-  status,
-  ...props
-}: KPIIconProps): ReactElement {
+function KPIIcon({ children, className, status, ...props }: KPIIconProps): ReactElement {
   useKpi();
   return (
-    <div
-      {...props}
-      className={part("icon", className)}
-      data-slot="kpi-icon"
-      data-status={status}
-    >
+    <div {...props} className={part("icon", className)} data-slot="kpi-icon" data-status={status}>
       {children}
     </div>
   );
@@ -98,11 +63,7 @@ function KPIIcon({
 export interface KPITitleProps extends ComponentPropsWithRef<"dt"> {
   children: ReactNode;
 }
-function KPITitle({
-  children,
-  className,
-  ...props
-}: KPITitleProps): ReactElement {
+function KPITitle({ children, className, ...props }: KPITitleProps): ReactElement {
   useKpi();
   return (
     <dt {...props} className={part("title", className)} data-slot="kpi-title">
@@ -113,11 +74,7 @@ function KPITitle({
 export interface KPIValueProps extends Omit<NumberValueRootProps, "className"> {
   className?: string;
 }
-function KPIValue({
-  children,
-  className,
-  ...props
-}: KPIValueProps): ReactElement {
+function KPIValue({ children, className, ...props }: KPIValueProps): ReactElement {
   useKpi();
   return (
     <NumberValue {...props}>
@@ -142,10 +99,7 @@ function KPITrend({ className, ...props }: KPITrendProps): ReactElement {
     />
   );
 }
-export interface KPIProgressProps extends Omit<
-  ComponentPropsWithRef<"div">,
-  "children"
-> {
+export interface KPIProgressProps extends Omit<ComponentPropsWithRef<"div">, "children"> {
   status?: Status;
   value: number;
 }
@@ -158,17 +112,8 @@ function KPIProgress({
   useKpi();
   const clamped = Math.max(0, Math.min(100, value));
   return (
-    <div
-      {...props}
-      className={part("progress", className)}
-      data-slot="kpi-progress"
-    >
-      <ProgressBar
-        aria-label="Progress"
-        color={status}
-        size="sm"
-        value={clamped}
-      >
+    <div {...props} className={part("progress", className)} data-slot="kpi-progress">
+      <ProgressBar aria-label="Progress" color={status} size="sm" value={clamped}>
         <ProgressBar.Track>
           <ProgressBar.Fill />
         </ProgressBar.Track>
@@ -179,21 +124,11 @@ function KPIProgress({
 export interface KPIActionsProps extends ComponentPropsWithRef<typeof Button> {
   children?: ReactNode;
 }
-function KPIActions({
-  children,
-  className,
-  ...props
-}: KPIActionsProps): ReactElement {
+function KPIActions({ children, className, ...props }: KPIActionsProps): ReactElement {
   useKpi();
   return (
     <div className="kpi__actions" data-slot="kpi-actions">
-      <Button
-        {...props}
-        {...(className ? { className } : {})}
-        isIconOnly
-        size="sm"
-        variant="ghost"
-      >
+      <Button {...props} {...(className ? { className } : {})} isIconOnly size="sm" variant="ghost">
         {children ?? (
           <svg aria-hidden fill="currentColor" viewBox="0 0 16 16">
             <circle cx="8" cy="3" r="1.5" />
@@ -205,10 +140,7 @@ function KPIActions({
     </div>
   );
 }
-export interface KPIChartProps extends Omit<
-  ComponentPropsWithRef<"div">,
-  "color"
-> {
+export interface KPIChartProps extends Omit<ComponentPropsWithRef<"div">, "color"> {
   color?: string;
   data: Record<string, number | string>[];
   dataKey?: string;
@@ -232,10 +164,7 @@ function KPIChart({
   return (
     <div {...props} className={part("chart", className)} data-slot="kpi-chart">
       <ResponsiveContainer height={height} width="100%">
-        <AreaChart
-          data={data}
-          margin={{ bottom: 0, left: 0, right: 0, top: 4 }}
-        >
+        <AreaChart data={data} margin={{ bottom: 0, left: 0, right: 0, top: 4 }}>
           <defs>
             <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
               <stop offset="0%" stopColor={fill} stopOpacity={0.2} />
@@ -255,22 +184,14 @@ function KPIChart({
     </div>
   );
 }
-export interface KPISeparatorProps extends ComponentPropsWithRef<
-  typeof Separator
-> {}
-function KPISeparator({
-  className,
-  ...props
-}: KPISeparatorProps): ReactElement {
+export interface KPISeparatorProps extends ComponentPropsWithRef<typeof Separator> {}
+function KPISeparator({ className, ...props }: KPISeparatorProps): ReactElement {
   useKpi();
   return (
     <Separator
       {...props}
       className={
-        part(
-          "separator",
-          typeof className === "string" ? className : undefined,
-        ) ?? "kpi__separator"
+        part("separator", typeof className === "string" ? className : undefined) ?? "kpi__separator"
       }
       data-slot="kpi-separator"
     />
@@ -279,18 +200,10 @@ function KPISeparator({
 export interface KPIFooterProps extends ComponentPropsWithRef<"div"> {
   children: ReactNode;
 }
-function KPIFooter({
-  children,
-  className,
-  ...props
-}: KPIFooterProps): ReactElement {
+function KPIFooter({ children, className, ...props }: KPIFooterProps): ReactElement {
   useKpi();
   return (
-    <div
-      {...props}
-      className={part("footer", className)}
-      data-slot="kpi-footer"
-    >
+    <div {...props} className={part("footer", className)} data-slot="kpi-footer">
       {children}
     </div>
   );

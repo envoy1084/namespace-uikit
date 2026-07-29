@@ -1,11 +1,7 @@
 "use client";
 
 import { Button, Toast, toast } from "@thenamespace/uikit";
-import {
-  HardDriveIcon,
-  UserGroupIcon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import { HardDriveIcon, UserGroupIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 const noop = () => {};
 
@@ -24,8 +20,7 @@ export function Variants() {
                 onPress: () => toast.clear(),
                 variant: "tertiary",
               },
-              description:
-                "Bob sent you an invitation to join Namespace UIKit team",
+              description: "Bob sent you an invitation to join Namespace UIKit team",
               indicator: <HugeiconsIcon icon={UserGroupIcon} />,
               variant: "default",
             });

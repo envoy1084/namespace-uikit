@@ -13,9 +13,7 @@ export function AlertDemo() {
       <Alert.Indicator />
       <Alert.Content className="text-left">
         <Alert.Title className="leading-5">{t.title}</Alert.Title>
-        <Alert.Description className="text-xs">
-          {t.description}
-        </Alert.Description>
+        <Alert.Description className="text-xs">{t.description}</Alert.Description>
       </Alert.Content>
       <Button variant="tertiary">{t.action}</Button>
     </Alert>

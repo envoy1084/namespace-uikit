@@ -7,10 +7,7 @@ const Context = createContext(true);
 const cls = (base: string, className: unknown): string =>
   cn(base, typeof className === "string" ? className : undefined) ?? base;
 const root = (base: string, slot: string) =>
-  function Root({
-    className,
-    ...props
-  }: ComponentPropsWithRef<"div">): ReactElement {
+  function Root({ className, ...props }: ComponentPropsWithRef<"div">): ReactElement {
     return (
       <Context value>
         <div className={cls(base, className)} data-slot={slot} {...props} />
@@ -18,41 +15,24 @@ const root = (base: string, slot: string) =>
     );
   };
 type DivPart = (props: ComponentPropsWithRef<"div">) => ReactElement;
-export const ChatMessageUser: DivPart = root(
-  "chat-message--user",
-  "chat-message-user",
-);
+export const ChatMessageUser: DivPart = root("chat-message--user", "chat-message-user");
 export const ChatMessageAssistant: DivPart = root(
   "chat-message--assistant",
   "chat-message-assistant",
 );
 const part = (base: string, slot: string) =>
-  function Part({
-    className,
-    ...props
-  }: ComponentPropsWithRef<"div">): ReactElement {
+  function Part({ className, ...props }: ComponentPropsWithRef<"div">): ReactElement {
     useContext(Context);
     return <div className={cls(base, className)} data-slot={slot} {...props} />;
   };
-export const ChatMessageBubble: DivPart = part(
-  "chat-message__bubble",
-  "chat-message-bubble",
-);
-export const ChatMessageContent: DivPart = part(
-  "chat-message__content",
-  "chat-message-content",
-);
+export const ChatMessageBubble: DivPart = part("chat-message__bubble", "chat-message-bubble");
+export const ChatMessageContent: DivPart = part("chat-message__content", "chat-message-content");
 export const ChatMessageActionsContainer: DivPart = part(
   "chat-message__actions",
   "chat-message-actions",
 );
-export const ChatMessageBody: DivPart = part(
-  "chat-message__body",
-  "chat-message-body",
-);
-export interface ChatMessageActionProps extends ComponentPropsWithRef<
-  typeof Button
-> {
+export const ChatMessageBody: DivPart = part("chat-message__body", "chat-message-body");
+export interface ChatMessageActionProps extends ComponentPropsWithRef<typeof Button> {
   tooltip?: ReactNode;
 }
 export function ChatMessageAction({
@@ -85,10 +65,7 @@ export function ChatMessageAction({
     button
   );
 }
-export interface ChatMessageAvatarProps extends Omit<
-  ComponentPropsWithRef<"div">,
-  "children"
-> {
+export interface ChatMessageAvatarProps extends Omit<ComponentPropsWithRef<"div">, "children"> {
   alt: string;
   fallback?: string;
   show?: boolean;

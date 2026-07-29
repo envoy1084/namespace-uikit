@@ -51,10 +51,7 @@ export const DemoCustomTooltipExample = () => (
               !payload.every((entry) => typeof entry.value === "number")
             )
               return null;
-            const total = payload.reduce(
-              (sum, entry) => sum + Number(entry.value ?? 0),
-              0,
-            );
+            const total = payload.reduce((sum, entry) => sum + Number(entry.value ?? 0), 0);
             return (
               <ChartTooltip>
                 <ChartTooltip.Header>{label}</ChartTooltip.Header>
@@ -62,9 +59,7 @@ export const DemoCustomTooltipExample = () => (
                   <ChartTooltip.Item key={index}>
                     <ChartTooltip.Indicator color={entry.fill} />
                     <ChartTooltip.Label>{entry.name}</ChartTooltip.Label>
-                    <ChartTooltip.Value>
-                      ${Number(entry.value).toLocaleString()}
-                    </ChartTooltip.Value>
+                    <ChartTooltip.Value>${Number(entry.value).toLocaleString()}</ChartTooltip.Value>
                   </ChartTooltip.Item>
                 ))}
                 <div className="border-separator mt-1 flex items-center justify-between border-t pt-1.5">

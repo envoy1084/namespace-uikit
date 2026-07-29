@@ -1,11 +1,6 @@
 "use client";
 
-import type {
-  ComponentProps,
-  ComponentPropsWithRef,
-  ReactElement,
-  ReactNode,
-} from "react";
+import type { ComponentProps, ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 import { createContext, useContext } from "react";
 
 import { cn, Switch } from "@heroui/react";
@@ -36,9 +31,7 @@ function CellSwitchRoot({
           cn(
             "cell-switch",
             variant === "secondary" && "cell-switch--secondary",
-            typeof className === "function"
-              ? className(renderProps)
-              : className,
+            typeof className === "function" ? className(renderProps) : className,
           ) ?? "cell-switch"
         }
         data-slot="cell-switch"
@@ -49,9 +42,7 @@ function CellSwitchRoot({
   );
 }
 
-export interface CellSwitchTriggerProps extends ComponentProps<
-  typeof Switch.Content
-> {
+export interface CellSwitchTriggerProps extends ComponentProps<typeof Switch.Content> {
   children: ReactNode;
 }
 
@@ -80,17 +71,9 @@ function CellSwitchTrigger({
 
 export type CellSwitchLabelProps = ComponentPropsWithRef<"span">;
 
-function CellSwitchLabel({
-  children,
-  className,
-  ...props
-}: CellSwitchLabelProps): ReactElement {
+function CellSwitchLabel({ children, className, ...props }: CellSwitchLabelProps): ReactElement {
   return (
-    <span
-      {...props}
-      className={cn("cell-switch__label", className)}
-      data-slot="cell-switch-label"
-    >
+    <span {...props} className={cn("cell-switch__label", className)} data-slot="cell-switch-label">
       {children}
     </span>
   );

@@ -8,9 +8,7 @@ export const DemoHorizontalExample = () => (
   <Card className="w-full max-w-[420px] rounded-2xl">
     <Card.Header>
       <Card.Title className="text-base">Top Products</Card.Title>
-      <Card.Description className="text-muted text-xs">
-        Units sold this quarter
-      </Card.Description>
+      <Card.Description className="text-muted text-xs">Units sold this quarter</Card.Description>
     </Card.Header>
     <Card.Content>
       <BarChart
@@ -25,12 +23,7 @@ export const DemoHorizontalExample = () => (
         layout="vertical"
       >
         <BarChart.XAxis tickMargin={4} type="number" />
-        <BarChart.YAxis
-          dataKey="product"
-          tickMargin={4}
-          type="category"
-          width={60}
-        />
+        <BarChart.YAxis dataKey="product" tickMargin={4} type="category" width={60} />
         <BarChart.Bar
           barSize={14}
           dataKey="units"

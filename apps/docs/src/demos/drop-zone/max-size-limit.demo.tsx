@@ -22,9 +22,7 @@ export const DemoMaxSizeLimitExample = function Demo() {
       <DropZone.Input
         multiple
         onSelect={(files) => {
-          const rejected = Array.from(files).filter(
-            (file) => file.size > 5 * 1024 * 1024,
-          );
+          const rejected = Array.from(files).filter((file) => file.size > 5 * 1024 * 1024);
           setError(
             rejected.length
               ? `Rejected (over 5 MB): ${rejected.map((file) => file.name).join(", ")}`

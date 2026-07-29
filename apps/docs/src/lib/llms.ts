@@ -1,10 +1,9 @@
-import type { DocsPage } from "@/lib/source";
-
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { getDemo } from "@/demos";
 import { absoluteSiteUrl, site } from "@/lib/site";
+import type { DocsPage } from "@/lib/source";
 
 export const textHeaders = {
   "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
@@ -46,13 +45,11 @@ function cleanMdx(source: string) {
   return source
     .replace(
       /<SiteUrlCode\s+prefix=["']([^"']*)["']\s+path=["']([^"']+)["']\s*\/>/g,
-      (_match, prefix: string, path: string) =>
-        `${prefix}${absoluteSiteUrl(path)}`,
+      (_match, prefix: string, path: string) => `${prefix}${absoluteSiteUrl(path)}`,
     )
     .replace(
       /<CollapsibleCode\s+lang\s*=\s*["']([^"']+)["']\s+code\s*=\s*{?`([\s\S]*?)`}?\s*\/>/g,
-      (_match, lang: string, code: string) =>
-        `\`\`\`${lang || "tsx"}\n${code}\n\`\`\``,
+      (_match, lang: string, code: string) => `\`\`\`${lang || "tsx"}\n${code}\n\`\`\``,
     )
     .replace(/<(RelatedComponents|RelatedShowcases|DocsImage)[^>]*\/?>/g, "")
     .replace(/<br\s*\/?>/g, "\n")
@@ -69,9 +66,7 @@ export async function pageText(page: DocsPage) {
   const title = page.data.title || DEFAULT_TITLE;
   const url = absoluteSiteUrl(page.url);
   const sourceUrl = `${site.repository}/blob/main/apps/docs/content/docs/${page.path}`;
-  const description = page.data.description
-    ? `\n> ${page.data.description}\n`
-    : "";
+  const description = page.data.description ? `\n> ${page.data.description}\n` : "";
 
   return `<page url="${page.url}">
 # ${title}

@@ -167,12 +167,8 @@ function IncidentMonitorDemo() {
     coordinates: [number, number];
     properties: (typeof incidentData.features)[number]["properties"];
   } | null>(null);
-  const critical = incidents.filter(
-    (incident) => incident.severity === "critical",
-  ).length;
-  const warning = incidents.filter(
-    (incident) => incident.severity === "warning",
-  ).length;
+  const critical = incidents.filter((incident) => incident.severity === "critical").length;
+  const warning = incidents.filter((incident) => incident.severity === "warning").length;
   return (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
       <Map center={[-73.985, 40.728]} pitch={18} styles={styles} zoom={10.7}>
@@ -233,30 +229,21 @@ function IncidentMonitorDemo() {
         <Card.Content className="gap-3">
           <div className="grid grid-cols-3 gap-3 text-xs">
             <span>
-              <strong className="text-foreground block text-base">
-                {incidents.length}
-              </strong>
+              <strong className="text-foreground block text-base">{incidents.length}</strong>
               Open
             </span>
             <span>
-              <strong className="text-foreground block text-base">
-                {critical}
-              </strong>
+              <strong className="text-foreground block text-base">{critical}</strong>
               Critical
             </span>
             <span>
-              <strong className="text-foreground block text-base">
-                {warning}
-              </strong>
+              <strong className="text-foreground block text-base">{warning}</strong>
               Warning
             </span>
           </div>
           <div className="space-y-1">
             {(["critical", "warning", "info"] as const).map((severity) => (
-              <div
-                className="flex items-center justify-between text-xs"
-                key={severity}
-              >
+              <div className="flex items-center justify-between text-xs" key={severity}>
                 <span className="flex items-center gap-2 capitalize">
                   <span
                     className="size-2 rounded-full"
@@ -265,11 +252,7 @@ function IncidentMonitorDemo() {
                   {severity}
                 </span>
                 <span className="text-muted">
-                  {
-                    incidents.filter(
-                      (incident) => incident.severity === severity,
-                    ).length
-                  }
+                  {incidents.filter((incident) => incident.severity === severity).length}
                 </span>
               </div>
             ))}

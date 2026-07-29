@@ -4,19 +4,12 @@
 import { ComposedChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 
-function Legend({
-  items,
-}: {
-  items: ReadonlyArray<{ color: string; label: string }>;
-}) {
+function Legend({ items }: { items: ReadonlyArray<{ color: string; label: string }> }) {
   return (
     <div className="flex items-center gap-3">
       {items.map(({ color, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
-          <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: color }}
-          />
+          <span className="size-3 rounded-full" style={{ backgroundColor: color }} />
           <span className="text-muted text-xs">{label}</span>
         </div>
       ))}
@@ -108,9 +101,7 @@ export const DemoStackedBarWithLineExample = () => {
   return (
     <Card className="w-full max-w-[700px] rounded-2xl">
       <Card.Header className="flex-row items-center justify-between">
-        <Card.Title className="text-base">
-          AI Share of Committed Code
-        </Card.Title>
+        <Card.Title className="text-base">AI Share of Committed Code</Card.Title>
         <Legend items={[...bars, { color: "var(--muted)", label: "AI %" }]} />
       </Card.Header>
       <Card.Content>
@@ -152,9 +143,7 @@ export const DemoStackedBarWithLineExample = () => {
             type="monotone"
             yAxisId="right"
           />
-          <ComposedChart.Tooltip
-            content={<ComposedChart.TooltipContent indicator="line" />}
-          />
+          <ComposedChart.Tooltip content={<ComposedChart.TooltipContent indicator="line" />} />
         </ComposedChart>
       </Card.Content>
     </Card>

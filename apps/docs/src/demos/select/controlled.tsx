@@ -1,9 +1,8 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import { Label, ListBox, Select } from "@thenamespace/uikit";
 
 export function Controlled() {
@@ -62,9 +61,7 @@ export function Controlled() {
           </ListBox>
         </Select.Popover>
       </Select>
-      <p className="text-muted text-sm">
-        Selected: {selectedState?.name || "None"}
-      </p>
+      <p className="text-muted text-sm">Selected: {selectedState?.name || "None"}</p>
     </div>
   );
 }

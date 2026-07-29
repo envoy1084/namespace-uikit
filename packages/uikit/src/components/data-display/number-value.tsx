@@ -1,13 +1,7 @@
 "use client";
 
 import type { HTMLAttributes, ReactElement, ReactNode, Ref } from "react";
-import {
-  Children,
-  createContext,
-  isValidElement,
-  useContext,
-  useMemo,
-} from "react";
+import { Children, createContext, isValidElement, useContext, useMemo } from "react";
 
 import { cn } from "@heroui/react";
 import { useLocale } from "react-aria-components";
@@ -136,11 +130,7 @@ function NumberValueRoot({
   );
 
   if (typeof children === "function") {
-    return (
-      <NumberValueContext value={context}>
-        {children(formatted)}
-      </NumberValueContext>
-    );
+    return <NumberValueContext value={context}>{children(formatted)}</NumberValueContext>;
   }
 
   let prefix: ReactElement | null = null;
@@ -160,12 +150,7 @@ function NumberValueRoot({
 
   return (
     <NumberValueContext value={context}>
-      <span
-        ref={ref}
-        className={cn("number-value", className)}
-        data-slot="number-value"
-        {...props}
-      >
+      <span ref={ref} className={cn("number-value", className)} data-slot="number-value" {...props}>
         {prefix}
         <span className="number-value__value" data-slot="number-value-value">
           {formatted}
@@ -183,11 +168,8 @@ type NumberValueComponent = typeof NumberValueRoot & {
   Suffix: typeof NumberValueSuffix;
 };
 
-export const NumberValue: NumberValueComponent = Object.assign(
-  NumberValueRoot,
-  {
-    Prefix: NumberValuePrefix,
-    Root: NumberValueRoot,
-    Suffix: NumberValueSuffix,
-  },
-);
+export const NumberValue: NumberValueComponent = Object.assign(NumberValueRoot, {
+  Prefix: NumberValuePrefix,
+  Root: NumberValueRoot,
+  Suffix: NumberValueSuffix,
+});

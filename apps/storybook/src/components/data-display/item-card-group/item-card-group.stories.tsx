@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { Fragment, useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@thenamespace/uikit/button";
 import { InlineSelect } from "@thenamespace/uikit/inline-select";
 import { ItemCard } from "@thenamespace/uikit/item-card";
@@ -28,9 +27,7 @@ type Item = {
   icon: string;
   title: string;
 };
-const Chevron = () => (
-  <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />
-);
+const Chevron = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
 function Row({
   action = <Chevron />,
   description,
@@ -58,21 +55,13 @@ function Row({
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>{title}</ItemCard.Title>
-        {description && (
-          <ItemCard.Description>{description}</ItemCard.Description>
-        )}
+        {description && <ItemCard.Description>{description}</ItemCard.Description>}
       </ItemCard.Content>
       <ItemCard.Action>{action}</ItemCard.Action>
     </ItemCard>
   );
 }
-function Rows({
-  items,
-  pressable = false,
-}: {
-  items: Item[];
-  pressable?: boolean;
-}) {
+function Rows({ items, pressable = false }: { items: Item[]; pressable?: boolean }) {
   return (
     <>
       {items.map((item, index) => (
@@ -127,18 +116,10 @@ export const List: Story = {
 export const Variants: Story = {
   render: () => (
     <div className="flex w-[500px] flex-col gap-6 p-6">
-      {(
-        ["default", "secondary", "tertiary", "outline", "transparent"] as const
-      ).map((variant) => (
-        <ItemCardGroup
-          className="overflow-hidden"
-          key={variant}
-          variant={variant}
-        >
+      {(["default", "secondary", "tertiary", "outline", "transparent"] as const).map((variant) => (
+        <ItemCardGroup className="overflow-hidden" key={variant} variant={variant}>
           <ItemCardGroup.Header>
-            <ItemCardGroup.Title>
-              {variant[0].toUpperCase() + variant.slice(1)}
-            </ItemCardGroup.Title>
+            <ItemCardGroup.Title>{variant[0].toUpperCase() + variant.slice(1)}</ItemCardGroup.Title>
             <ItemCardGroup.Description>
               {
                 {
@@ -172,9 +153,7 @@ function HeaderDemo() {
       <ItemCardGroup>
         <ItemCardGroup.Header>
           <ItemCardGroup.Title>General</ItemCardGroup.Title>
-          <ItemCardGroup.Description>
-            Manage your basic account settings
-          </ItemCardGroup.Description>
+          <ItemCardGroup.Description>Manage your basic account settings</ItemCardGroup.Description>
         </ItemCardGroup.Header>
         <Row {...settings[2]} />
         <Row
@@ -189,11 +168,7 @@ function HeaderDemo() {
         />
         <Row
           action={
-            <Switch
-              aria-label="Switch Dark mode"
-              isSelected={dark}
-              onChange={setDark}
-            >
+            <Switch aria-label="Switch Dark mode" isSelected={dark} onChange={setDark}>
               <Switch.Content>
                 <Switch.Control>
                   <Switch.Thumb />
@@ -217,16 +192,8 @@ export const Grid: Story = {
         {settings.slice(0, 2).map((item) => (
           <Row {...item} action={undefined} key={item.title} />
         ))}
-        <Row
-          description="English (US)"
-          icon="solar:global-linear"
-          title="Language"
-        />
-        <Row
-          description="Theme & colors"
-          icon="solar:palette-linear"
-          title="Appearance"
-        />
+        <Row description="English (US)" icon="solar:global-linear" title="Language" />
+        <Row description="Theme & colors" icon="solar:palette-linear" title="Appearance" />
       </ItemCardGroup>
     </div>
   ),
@@ -237,21 +204,14 @@ export const GridThreeColumns: Story = {
       <ItemCardGroup columns={3} layout="grid">
         <ItemCardGroup.Header>
           <ItemCardGroup.Title>Devices</ItemCardGroup.Title>
-          <ItemCardGroup.Description>
-            Manage your connected devices
-          </ItemCardGroup.Description>
+          <ItemCardGroup.Description>Manage your connected devices</ItemCardGroup.Description>
         </ItemCardGroup.Header>
         {[
           ["MacBook Pro", "Active now", "solar:laptop-linear"],
           ["iMac", "3 days ago", "solar:monitor-linear"],
           ["iPhone 15", "1 hour ago", "solar:smartphone-linear"],
         ].map(([title, description, icon]) => (
-          <Row
-            description={description}
-            icon={icon}
-            key={title}
-            title={title}
-          />
+          <Row description={description} icon={icon} key={title} title={title} />
         ))}
       </ItemCardGroup>
     </div>
@@ -297,10 +257,7 @@ export const LinkedAccounts: Story = {
         <Row
           action={
             account.connected ? (
-              <Icon
-                className="text-success size-5"
-                icon="solar:check-circle-bold"
-              />
+              <Icon className="text-success size-5" icon="solar:check-circle-bold" />
             ) : (
               <Tooltip delay={0}>
                 <Tooltip.Trigger>
@@ -379,16 +336,8 @@ export const Pressable: Story = {
   ),
 };
 
-function SelectAction({
-  label,
-  multiple = false,
-}: {
-  label: string;
-  multiple?: boolean;
-}) {
-  const [value, setValue] = useState<string | string[]>(
-    multiple ? ["email", "push"] : "view",
-  );
+function SelectAction({ label, multiple = false }: { label: string; multiple?: boolean }) {
+  const [value, setValue] = useState<string | string[]>(multiple ? ["email", "push"] : "view");
   const options = multiple
     ? [
         ["email", "Email"],
@@ -456,9 +405,7 @@ export const PermissionLevels: Story = {
       <ItemCardGroup variant="transparent">
         <ItemCardGroup.Header>
           <ItemCardGroup.Title>Permissions</ItemCardGroup.Title>
-          <ItemCardGroup.Description>
-            Control access levels for your team
-          </ItemCardGroup.Description>
+          <ItemCardGroup.Description>Control access levels for your team</ItemCardGroup.Description>
         </ItemCardGroup.Header>
         {[
           ["Documents", "Access to shared files", "solar:folder-open-linear"],
@@ -519,9 +466,7 @@ export const WalletList: Story = {
         <Fragment key={wallet.address}>
           {index > 0 && <Separator />}
           <ItemCard>
-            <ItemCard.Icon
-              className={`size-10 rounded-full ${wallet.bg} text-lg`}
-            >
+            <ItemCard.Icon className={`size-10 rounded-full ${wallet.bg} text-lg`}>
               <Icon icon={wallet.icon} width={20} />
             </ItemCard.Icon>
             <ItemCard.Content>
@@ -531,17 +476,10 @@ export const WalletList: Story = {
             <ItemCard.Action>
               <div className="flex items-center gap-2">
                 <div className="text-right">
-                  <p className="text-foreground text-sm font-semibold">
-                    {wallet.usd}
-                  </p>
+                  <p className="text-foreground text-sm font-semibold">{wallet.usd}</p>
                   <p className="text-muted text-xs">{wallet.eth}</p>
                 </div>
-                <Button
-                  aria-label="Wallet actions"
-                  isIconOnly
-                  size="sm"
-                  variant="ghost"
-                >
+                <Button aria-label="Wallet actions" isIconOnly size="sm" variant="ghost">
                   <Icon icon="solar:menu-dots-bold" />
                 </Button>
               </div>

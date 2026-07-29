@@ -1,11 +1,4 @@
-import {
-  Button,
-  ButtonGroup,
-  Chip,
-  Description,
-  Dropdown,
-  Label,
-} from "@thenamespace/uikit";
+import { Button, ButtonGroup, Chip, Description, Dropdown, Label } from "@thenamespace/uikit";
 import {
   ArrowDown01Icon,
   ArrowLeft01Icon,
@@ -47,8 +40,7 @@ export function Basic() {
                 >
                   <Label>Create a merge commit</Label>
                   <Description>
-                    All commits from this branch will be added to the base
-                    branch
+                    All commits from this branch will be added to the base branch
                   </Description>
                 </Dropdown.Item>
                 <Dropdown.Item
@@ -58,8 +50,8 @@ export function Basic() {
                 >
                   <Label>Squash and merge</Label>
                   <Description>
-                    The 14 commits from this branch will be combined into one
-                    commit in the base branch
+                    The 14 commits from this branch will be combined into one commit in the base
+                    branch
                   </Description>
                 </Dropdown.Item>
                 <Dropdown.Item
@@ -69,8 +61,7 @@ export function Basic() {
                 >
                   <Label>Rebase and merge</Label>
                   <Description>
-                    The 14 commits from this branch will be rebased and added to
-                    the base branch
+                    The 14 commits from this branch will be rebased and added to the base branch
                   </Description>
                 </Dropdown.Item>
               </Dropdown.Menu>

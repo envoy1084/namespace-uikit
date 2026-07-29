@@ -10,11 +10,7 @@ export function MinMaxDates() {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <RangeCalendar
-        aria-label="Trip dates"
-        maxValue={maxDate}
-        minValue={minDate}
-      >
+      <RangeCalendar aria-label="Trip dates" maxValue={maxDate} minValue={minDate}>
         <RangeCalendar.Header>
           <RangeCalendar.Heading />
           <RangeCalendar.NavButton slot="previous" />
@@ -22,9 +18,7 @@ export function MinMaxDates() {
         </RangeCalendar.Header>
         <RangeCalendar.Grid>
           <RangeCalendar.GridHeader>
-            {(day) => (
-              <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-            )}
+            {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
           </RangeCalendar.GridHeader>
           <RangeCalendar.GridBody>
             {(date) => <RangeCalendar.Cell date={date} />}

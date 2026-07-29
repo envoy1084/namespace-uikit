@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 import { Avatar } from "@/components/data-display/avatar";
@@ -98,9 +98,7 @@ const TemplateWithCustomContent = (props: Popover["ContentProps"]) => {
             </Avatar>
             <div className="flex flex-col gap-0">
               <p className="text-sm leading-5 font-medium">Zoe</p>
-              <p className="text-muted text-xs leading-none">
-                zoe@namespace.ninja
-              </p>
+              <p className="text-muted text-xs leading-none">zoe@namespace.ninja</p>
             </div>
           </div>
         </Popover.Trigger>
@@ -110,10 +108,7 @@ const TemplateWithCustomContent = (props: Popover["ContentProps"]) => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Avatar size="md">
-                    <Avatar.Image
-                      alt="Zoe"
-                      src="/assets/generated/avatar-5.jpg"
-                    />
+                    <Avatar.Image alt="Zoe" src="/assets/generated/avatar-5.jpg" />
                     <Avatar.Fallback>Z</Avatar.Fallback>
                   </Avatar>
                   <div className="flex h-full flex-col items-start justify-center">
@@ -191,12 +186,9 @@ const SpringAnimationTemplate = (props: Popover["ContentProps"]) => (
             <Popover.Arrow />
             <Popover.Heading>Spring Animation 🎉</Popover.Heading>
             <p className="text-muted mt-2 text-sm">
-              Notice the subtle bounce effect when the popover appears and
-              disappears.
+              Notice the subtle bounce effect when the popover appears and disappears.
             </p>
-            <p className="text-muted mt-4 text-xs">
-              Easing: cubic-bezier(0.36, 1.66, 0.04, 1)
-            </p>
+            <p className="text-muted mt-4 text-xs">Easing: cubic-bezier(0.36, 1.66, 0.04, 1)</p>
           </Popover.Dialog>
         </Popover.Content>
       </Popover>
@@ -205,9 +197,8 @@ const SpringAnimationTemplate = (props: Popover["ContentProps"]) => (
     <div className="text-muted space-y-1 text-center text-xs">
       <p>Animation classes applied:</p>
       <code className="bg-surface rounded px-2 py-1 text-xs">
-        data-[entering]:animate-in data-[entering]:zoom-in-90
-        data-[entering]:fade-in-0 data-[entering]:ease-spring
-        data-[entering]:duration-600
+        data-[entering]:animate-in data-[entering]:zoom-in-90 data-[entering]:fade-in-0
+        data-[entering]:ease-spring data-[entering]:duration-600
       </code>
     </div>
   </div>
@@ -229,33 +220,26 @@ const CardWithHelptextTemplate = (props: Popover["ContentProps"]) => (
               <Icon className="text-muted" icon="hugeicons:circle-info" />
             </Button>
           </Popover.Trigger>
-          <Popover.Content
-            {...props}
-            className="max-w-[200px]"
-            placement="right"
-          >
+          <Popover.Content {...props} className="max-w-[200px]" placement="right">
             <Popover.Dialog>
               <Popover.Arrow />
               <Popover.Heading>Help Information</Popover.Heading>
               <p className="text-muted text-sm">
-                This is a helptext popover that appears on top of the card
-                surface. It provides additional context or information about the
-                card title.
+                This is a helptext popover that appears on top of the card surface. It provides
+                additional context or information about the card title.
               </p>
             </Popover.Dialog>
           </Popover.Content>
         </Popover>
       </div>
       <Card.Description>
-        This card demonstrates how a popover looks when displayed on top of a
-        card surface.
+        This card demonstrates how a popover looks when displayed on top of a card surface.
       </Card.Description>
     </Card.Header>
     <Card.Content>
       <p className="text-sm">
-        The popover help icon is positioned right after the title, allowing
-        users to access additional information without cluttering the main
-        content area.
+        The popover help icon is positioned right after the title, allowing users to access
+        additional information without cluttering the main content area.
       </p>
     </Card.Content>
   </Card>

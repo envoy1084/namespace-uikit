@@ -1,8 +1,5 @@
 "use client";
 
-// @demo-title Default
-import type { Selection } from "react-aria-components";
-
 import { useState } from "react";
 
 import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
@@ -17,6 +14,8 @@ import {
   ViewIcon,
 } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
+// @demo-title Default
+import type { Selection } from "react-aria-components";
 
 type Payment = {
   amount: number;
@@ -234,9 +233,7 @@ const paymentColumns: DataGridColumn<Payment>[] = [
       align: "end",
       allowsResizing: true,
       allowsSorting: true,
-      cell: (payment) => (
-        <span className={className}>{formatCurrency(payment[key])}</span>
-      ),
+      cell: (payment) => <span className={className}>{formatCurrency(payment[key])}</span>,
       header,
       id: key,
       minWidth,
@@ -269,11 +266,7 @@ const paymentColumns: DataGridColumn<Payment>[] = [
     accessorKey: "date",
     allowsResizing: true,
     allowsSorting: true,
-    cell: (payment) => (
-      <span className="text-muted tabular-nums">
-        {formatDate(payment.date)}
-      </span>
-    ),
+    cell: (payment) => <span className="text-muted tabular-nums">{formatDate(payment.date)}</span>,
     header: "Date",
     id: "date",
     minWidth: 120,

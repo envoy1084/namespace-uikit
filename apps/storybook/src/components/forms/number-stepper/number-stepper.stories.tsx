@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { ZoomInAreaIcon, ZoomOutAreaIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
@@ -43,12 +42,7 @@ function StepperContent({
 
 export const Default: Story = {
   render: () => (
-    <NumberStepper
-      aria-label="Quantity"
-      defaultValue={1}
-      maxValue={99}
-      minValue={0}
-    >
+    <NumberStepper aria-label="Quantity" defaultValue={1} maxValue={99} minValue={0}>
       <StepperContent />
     </NumberStepper>
   ),
@@ -60,11 +54,7 @@ export const Sizes: Story = {
       {(["sm", "md", "lg"] as const).map((size) => (
         <div className="flex flex-col items-center gap-2" key={size}>
           <span className="text-muted text-sm">{size}</span>
-          <NumberStepper
-            aria-label={`Quantity ${size}`}
-            defaultValue={1}
-            size={size}
-          >
+          <NumberStepper aria-label={`Quantity ${size}`} defaultValue={1} size={size}>
             <StepperContent
               decrementLabel={`Decrease Quantity ${size}`}
               incrementLabel={`Increase Quantity ${size}`}
@@ -127,26 +117,13 @@ export const MinMaxValues: Story = {
     <div className="flex gap-8">
       <div className="flex flex-col items-center gap-2">
         <span className="text-muted text-sm">Min: 0, Max: 5</span>
-        <NumberStepper
-          aria-label="Rating"
-          defaultValue={3}
-          maxValue={5}
-          minValue={0}
-        >
-          <StepperContent
-            decrementLabel="Decrease Rating"
-            incrementLabel="Increase Rating"
-          />
+        <NumberStepper aria-label="Rating" defaultValue={3} maxValue={5} minValue={0}>
+          <StepperContent decrementLabel="Decrease Rating" incrementLabel="Increase Rating" />
         </NumberStepper>
       </div>
       <div className="flex flex-col items-center gap-2">
         <span className="text-muted text-sm">Min: -10, Max: 10</span>
-        <NumberStepper
-          aria-label="Temperature"
-          defaultValue={0}
-          maxValue={10}
-          minValue={-10}
-        >
+        <NumberStepper aria-label="Temperature" defaultValue={0} maxValue={10} minValue={-10}>
           <StepperContent
             decrementLabel="Decrease Temperature"
             incrementLabel="Increase Temperature"
@@ -185,12 +162,7 @@ export const CustomValue: Story = {
 
 export const CustomIcons: Story = {
   render: () => (
-    <NumberStepper
-      aria-label="Zoom level"
-      defaultValue={100}
-      minValue={0}
-      step={10}
-    >
+    <NumberStepper aria-label="Zoom level" defaultValue={100} minValue={0} step={10}>
       <NumberStepper.Group>
         <NumberStepper.DecrementButton aria-label="Decrease Zoom level">
           <HugeiconsIcon icon={ZoomOutAreaIcon} />
@@ -210,8 +182,7 @@ export const WithCustomButtons: Story = {
   render: () => (
     <div className="flex max-w-xl flex-col items-center gap-5">
       <p className="text-muted text-sm">
-        Using Namespace Button (isIconOnly) as custom increment/decrement
-        buttons.
+        Using Namespace Button (isIconOnly) as custom increment/decrement buttons.
       </p>
       <div className="grid grid-cols-4 gap-5">
         {[false, true].flatMap((withoutBackground) =>
@@ -219,18 +190,10 @@ export const WithCustomButtons: Story = {
             const suffix = withoutBackground ? " no bg" : "";
 
             return (
-              <div
-                className="flex flex-col items-center gap-2"
-                key={`${variant}-${suffix}`}
-              >
+              <div className="flex flex-col items-center gap-2" key={`${variant}-${suffix}`}>
                 <span className="text-muted text-xs">{variant}</span>
-                <NumberStepper
-                  aria-label={`Quantity ${variant}${suffix}`}
-                  defaultValue={1}
-                >
-                  <NumberStepper.Group
-                    className={withoutBackground ? "bg-transparent" : undefined}
-                  >
+                <NumberStepper aria-label={`Quantity ${variant}${suffix}`} defaultValue={1}>
+                  <NumberStepper.Group className={withoutBackground ? "bg-transparent" : undefined}>
                     <Button
                       aria-label={`Decrease Quantity ${variant}${suffix}`}
                       className="rounded-full"
@@ -271,21 +234,14 @@ const guestTypes = [
 export const GuestPicker: Story = {
   render: () => (
     <div className="w-80 space-y-5">
-      <p className="text-muted text-sm">
-        Guest picker using the default NumberStepper look.
-      </p>
+      <p className="text-muted text-sm">Guest picker using the default NumberStepper look.</p>
       {guestTypes.map(({ description, label }) => (
         <div className="flex items-center justify-between gap-8" key={label}>
           <div>
             <p className="text-foreground font-medium">{label}</p>
             <p className="text-muted text-sm">{description}</p>
           </div>
-          <NumberStepper
-            aria-label={label}
-            defaultValue={0}
-            minValue={0}
-            size="sm"
-          >
+          <NumberStepper aria-label={label} defaultValue={0} minValue={0} size="sm">
             <StepperContent
               decrementLabel={`Decrease ${label}`}
               incrementLabel={`Increase ${label}`}
@@ -300,9 +256,7 @@ export const GuestPicker: Story = {
 export const ReversedLayout: Story = {
   render: () => (
     <div className="flex flex-col items-center gap-3">
-      <p className="text-muted text-sm">
-        Reversed order — plus on the left, minus on the right.
-      </p>
+      <p className="text-muted text-sm">Reversed order — plus on the left, minus on the right.</p>
       <NumberStepper aria-label="Quantity" defaultValue={1}>
         <NumberStepper.Group>
           <NumberStepper.IncrementButton aria-label="Increase Quantity" />
@@ -317,15 +271,10 @@ export const ReversedLayout: Story = {
 export const WithLabel: Story = {
   render: () => (
     <div className="flex flex-col items-center gap-3">
-      <p className="text-muted text-sm">
-        With Label and Description using OSS form primitives.
-      </p>
+      <p className="text-muted text-sm">With Label and Description using OSS form primitives.</p>
       <NumberStepper defaultValue={1} maxValue={10} minValue={1}>
         <Label>Guests</Label>
-        <StepperContent
-          decrementLabel="Decrease Guests"
-          incrementLabel="Increase Guests"
-        />
+        <StepperContent decrementLabel="Decrease Guests" incrementLabel="Increase Guests" />
         <Description>Maximum 10 guests per reservation</Description>
       </NumberStepper>
     </div>
@@ -335,9 +284,7 @@ export const WithLabel: Story = {
 export const WithFormatOptions: Story = {
   render: () => (
     <div className="flex flex-col items-center gap-5">
-      <p className="text-muted text-sm">
-        Currency and percentage formatting via formatOptions.
-      </p>
+      <p className="text-muted text-sm">Currency and percentage formatting via formatOptions.</p>
       <div className="flex gap-8">
         <div className="flex flex-col items-center gap-2">
           <span className="text-muted text-sm">Currency (USD)</span>
@@ -347,10 +294,7 @@ export const WithFormatOptions: Story = {
             formatOptions={{ currency: "USD", style: "currency" }}
             minValue={0}
           >
-            <StepperContent
-              decrementLabel="Decrease Price"
-              incrementLabel="Increase Price"
-            />
+            <StepperContent decrementLabel="Decrease Price" incrementLabel="Increase Price" />
           </NumberStepper>
         </div>
         <div className="flex flex-col items-center gap-2">
@@ -363,10 +307,7 @@ export const WithFormatOptions: Story = {
             minValue={0}
             step={0.1}
           >
-            <StepperContent
-              decrementLabel="Decrease Opacity"
-              incrementLabel="Increase Opacity"
-            />
+            <StepperContent decrementLabel="Decrease Opacity" incrementLabel="Increase Opacity" />
           </NumberStepper>
         </div>
       </div>

@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { Cancel01Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
@@ -70,9 +69,7 @@ export const WithCustomIndicator: Story = {
         <Checkbox.Content>
           <Checkbox.Control>
             <Checkbox.Indicator>
-              {({ isSelected }) =>
-                isSelected ? <HugeiconsIcon icon={Cancel01Icon} /> : null
-              }
+              {({ isSelected }) => (isSelected ? <HugeiconsIcon icon={Cancel01Icon} /> : null)}
             </Checkbox.Indicator>
           </Checkbox.Control>
           Email notifications
@@ -83,9 +80,7 @@ export const WithCustomIndicator: Story = {
         <Checkbox.Content>
           <Checkbox.Control>
             <Checkbox.Indicator>
-              {({ isSelected }) =>
-                isSelected ? <HugeiconsIcon icon={Cancel01Icon} /> : null
-              }
+              {({ isSelected }) => (isSelected ? <HugeiconsIcon icon={Cancel01Icon} /> : null)}
             </Checkbox.Indicator>
           </Checkbox.Control>
           Newsletter
@@ -104,9 +99,7 @@ export const Indeterminate: Story = {
     return (
       <div>
         <Checkbox
-          isIndeterminate={
-            selected.length > 0 && selected.length < allOptions.length
-          }
+          isIndeterminate={selected.length > 0 && selected.length < allOptions.length}
           isSelected={selected.length === allOptions.length}
           name="select-all"
           onChange={(isSelected: boolean) => {
@@ -194,9 +187,7 @@ export const Validation: Story = {
               Push notifications
             </Checkbox.Content>
           </Checkbox>
-          <FieldError>
-            Please select at least one notification method.
-          </FieldError>
+          <FieldError>Please select at least one notification method.</FieldError>
         </CheckboxGroup>
         <Button type="submit">Submit</Button>
       </Form>
@@ -240,9 +231,7 @@ export const Controlled: Story = {
             Writing
           </Checkbox.Content>
         </Checkbox>
-        <Label className="text-muted my-4 text-sm">
-          Selected: {selected.join(", ") || "None"}
-        </Label>
+        <Label className="text-muted my-4 text-sm">Selected: {selected.join(", ") || "None"}</Label>
       </CheckboxGroup>
     );
   },

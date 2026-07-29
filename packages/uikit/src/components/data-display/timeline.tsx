@@ -1,14 +1,7 @@
 "use client";
 
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
-import {
-  Children,
-  cloneElement,
-  createContext,
-  isValidElement,
-  useContext,
-  useMemo,
-} from "react";
+import { Children, cloneElement, createContext, isValidElement, useContext, useMemo } from "react";
 
 import { cn } from "@heroui/react";
 
@@ -18,13 +11,7 @@ export type TimelineDensity = "comfortable" | "compact";
 export type TimelinePlacement = "alternate" | TimelineSide;
 export type TimelineSide = "end" | "start";
 export type TimelineSize = "lg" | "md" | "sm";
-export type TimelineStatus =
-  | "current"
-  | "danger"
-  | "default"
-  | "muted"
-  | "success"
-  | "warning";
+export type TimelineStatus = "current" | "danger" | "default" | "muted" | "success" | "warning";
 
 interface TimelineContextValue {
   axis: TimelineAxis;
@@ -52,25 +39,18 @@ const ItemContext = createContext<TimelineItemContextValue>({
   side: "end",
   status: "default",
 });
-export const useTimelineItem = (): TimelineItemContextValue =>
-  useContext(ItemContext);
+export const useTimelineItem = (): TimelineItemContextValue => useContext(ItemContext);
 
-const isTimelineItem = (
-  node: ReactNode,
-): node is ReactElement<TimelineItemProps> =>
+const isTimelineItem = (node: ReactNode): node is ReactElement<TimelineItemProps> =>
   isValidElement(node) && node.type === TimelineItem;
 const resolveSide = (
   index: number,
   placement: TimelinePlacement,
   side?: TimelineSide,
 ): TimelineSide =>
-  side ??
-  (placement === "alternate" ? (index % 2 === 0 ? "end" : "start") : placement);
+  side ?? (placement === "alternate" ? (index % 2 === 0 ? "end" : "start") : placement);
 
-export interface TimelineRootProps extends Omit<
-  ComponentPropsWithRef<"ol">,
-  "children"
-> {
+export interface TimelineRootProps extends Omit<ComponentPropsWithRef<"ol">, "children"> {
   axis?: TimelineAxis;
   children: ReactNode;
   density?: TimelineDensity;
@@ -132,10 +112,7 @@ export function TimelineRoot({
   );
 }
 
-export interface TimelineItemProps extends Omit<
-  ComponentPropsWithRef<"li">,
-  "content"
-> {
+export interface TimelineItemProps extends Omit<ComponentPropsWithRef<"li">, "content"> {
   align?: TimelineAlign;
   children?: ReactNode;
   side?: TimelineSide;
@@ -195,11 +172,7 @@ export function TimelineItem({
     <ItemContext value={context}>
       <li
         aria-current={status === "current" ? "true" : undefined}
-        className={cn(
-          "timeline__item",
-          `timeline__item--align-${itemAlign}`,
-          className,
-        )}
+        className={cn("timeline__item", `timeline__item--align-${itemAlign}`, className)}
         data-align={itemAlign}
         data-index={index}
         data-last={isLast || undefined}
@@ -218,24 +191,14 @@ export function TimelineItem({
 export interface TimelineRailProps extends ComponentPropsWithRef<"span"> {
   children?: ReactNode;
 }
-export function TimelineRail({
-  children,
-  className,
-  ...props
-}: TimelineRailProps): ReactElement {
+export function TimelineRail({ children, className, ...props }: TimelineRailProps): ReactElement {
   const nodes = Children.toArray(children);
-  const hasMarker = nodes.some(
-    (node) => isValidElement(node) && node.type === TimelineMarker,
-  );
+  const hasMarker = nodes.some((node) => isValidElement(node) && node.type === TimelineMarker);
   const hasConnector = nodes.some(
     (node) => isValidElement(node) && node.type === TimelineConnector,
   );
   return (
-    <span
-      className={cn("timeline__rail", className)}
-      data-slot="timeline-rail"
-      {...props}
-    >
+    <span className={cn("timeline__rail", className)} data-slot="timeline-rail" {...props}>
       {!hasMarker ? <TimelineMarker /> : null}
       {children}
       {!hasConnector ? <TimelineConnector /> : null}

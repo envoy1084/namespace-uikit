@@ -1,20 +1,13 @@
 "use client";
 
-import type { EditorRecord } from "#/components/name-profile-editor/editor/types";
-import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
-
 import type { ReactNode } from "react";
 
-import {
-  Button,
-  FieldError,
-  InputGroup,
-  Label,
-  TextField,
-} from "@thenamespace/uikit";
+import { Button, FieldError, InputGroup, Label, TextField } from "@thenamespace/uikit";
 import { Cancel01Icon, Icon } from "@thenamespace/uikit/icons";
 import { Controller, type FieldPath, useFormContext } from "react-hook-form";
 
+import type { EditorRecord } from "#/components/name-profile-editor/editor/types";
+import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
 import { getRecordIcon } from "#/icons/get-record-icon";
 
 function formPath(value: string): FieldPath<NameProfileFormValues> {
@@ -87,25 +80,19 @@ function RecordInput({
             }
           }}
         >
-          <Label className="text-muted truncate text-[11px] font-medium">
-            {label}
-          </Label>
+          <Label className="text-muted truncate text-[11px] font-medium">{label}</Label>
           <InputGroup
             className="w-full min-w-0 outline-offset-[-1px] ring-inset"
             variant="secondary"
           >
-            {prefix === undefined ? null : (
-              <InputGroup.Prefix>{prefix}</InputGroup.Prefix>
-            )}
+            {prefix === undefined ? null : <InputGroup.Prefix>{prefix}</InputGroup.Prefix>}
             <InputGroup.Input
               ref={field.ref}
               className="w-full min-w-0 ring-inset"
               inputMode={inputMode}
               placeholder={placeholder}
             />
-            {suffix === undefined ? null : (
-              <InputGroup.Suffix>{suffix}</InputGroup.Suffix>
-            )}
+            {suffix === undefined ? null : <InputGroup.Suffix>{suffix}</InputGroup.Suffix>}
           </InputGroup>
           {fieldState.error?.message === undefined ? null : (
             <div role="alert">
@@ -150,13 +137,7 @@ function PairField({
       <RecordInput
         {...second}
         isDisabled={isDisabled}
-        suffix={
-          <RemoveButton
-            isDisabled={isDisabled}
-            label={removeLabel}
-            onRemove={onRemove}
-          />
-        }
+        suffix={<RemoveButton isDisabled={isDisabled} label={removeLabel} onRemove={onRemove} />}
       />
     </div>
   );
@@ -323,13 +304,7 @@ export function RecordField({
       name={name}
       placeholder={record.placeholder}
       prefix={<RecordIcon aria-hidden className="size-5 shrink-0" />}
-      suffix={
-        <RemoveButton
-          isDisabled={isDisabled}
-          label={removeLabel}
-          onRemove={onRemove}
-        />
-      }
+      suffix={<RemoveButton isDisabled={isDisabled} label={removeLabel} onRemove={onRemove} />}
     />
   );
 }

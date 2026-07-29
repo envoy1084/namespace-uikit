@@ -54,9 +54,7 @@ export function parseNameInput(
   }
 
   const isLabelInput = !normalizedInput.includes(".");
-  const normalizedName = isLabelInput
-    ? `${normalizedInput}.eth`
-    : normalizedInput;
+  const normalizedName = isLabelInput ? `${normalizedInput}.eth` : normalizedInput;
   const labels = normalizedName.split(".") as [string, ...string[]];
 
   for (const label of labels) {

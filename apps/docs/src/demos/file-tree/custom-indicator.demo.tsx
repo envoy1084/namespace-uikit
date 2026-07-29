@@ -22,34 +22,14 @@ export const DemoCustomIndicatorExample = () => (
       <FileTree.Indicator>
         <Icon icon="heroicons:play-16-solid" />
       </FileTree.Indicator>
-      <FileTree.Item
-        icon={FolderIcon}
-        id="components"
-        textValue="components"
-        title="components"
-      >
+      <FileTree.Item icon={FolderIcon} id="components" textValue="components" title="components">
         <FileTree.Indicator>
           <Icon icon="heroicons:play-16-solid" />
         </FileTree.Indicator>
-        <FileTree.Item
-          icon={<FileIcon />}
-          id="button"
-          textValue="button.tsx"
-          title="button.tsx"
-        />
-        <FileTree.Item
-          icon={<FileIcon />}
-          id="card"
-          textValue="card.tsx"
-          title="card.tsx"
-        />
+        <FileTree.Item icon={<FileIcon />} id="button" textValue="button.tsx" title="button.tsx" />
+        <FileTree.Item icon={<FileIcon />} id="card" textValue="card.tsx" title="card.tsx" />
       </FileTree.Item>
-      <FileTree.Item
-        icon={<FileIcon />}
-        id="index"
-        textValue="index.ts"
-        title="index.ts"
-      />
+      <FileTree.Item icon={<FileIcon />} id="index" textValue="index.ts" title="index.ts" />
     </FileTree.Item>
     <FileTree.Item
       icon={<Icon icon="lucide:braces" />}

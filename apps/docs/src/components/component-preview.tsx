@@ -22,11 +22,7 @@ export async function ComponentPreview({
   const demo = getDemo(name);
 
   if (!demo) {
-    return (
-      <p className="border-danger my-4 rounded-xl border p-4">
-        Unknown demo: {name}
-      </p>
-    );
+    return <p className="border-danger my-4 rounded-xl border p-4">Unknown demo: {name}</p>;
   }
 
   const Demo = await demo.loader();
@@ -38,13 +34,8 @@ export async function ComponentPreview({
   }[align];
 
   return (
-    <div
-      className="component-preview-container group relative my-4 w-full"
-      data-name={name}
-    >
-      {description ? (
-        <p className="text-muted-foreground mb-2 text-sm">{description}</p>
-      ) : null}
+    <div className="component-preview-container group relative my-4 w-full" data-name={name}>
+      {description ? <p className="text-muted-foreground mb-2 text-sm">{description}</p> : null}
       <div
         className={cn(
           "preview not-prose border-separator relative flex min-h-[350px] w-full overflow-hidden rounded-t-xl border-t border-r border-l p-4 sm:p-10",
@@ -52,10 +43,7 @@ export async function ComponentPreview({
           alignment,
         )}
       >
-        <div
-          className="flex w-full items-center justify-center"
-          style={{ minHeight }}
-        >
+        <div className="flex w-full items-center justify-center" style={{ minHeight }}>
           <Demo />
         </div>
       </div>

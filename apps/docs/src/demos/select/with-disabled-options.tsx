@@ -2,11 +2,7 @@ import { Label, ListBox, Select } from "@thenamespace/uikit";
 
 export function WithDisabledOptions() {
   return (
-    <Select
-      className="w-[256px]"
-      disabledKeys={["cat", "kangaroo"]}
-      placeholder="Select an animal"
-    >
+    <Select className="w-[256px]" disabledKeys={["cat", "kangaroo"]} placeholder="Select an animal">
       <Label>Animal</Label>
       <Select.Trigger>
         <Select.Value />

@@ -7,13 +7,8 @@ import { useCallback, useMemo, useState } from "react";
 import { CalendarDateTime } from "@internationalized/date";
 import { Agenda, type AgendaEventData, useAgenda } from "@thenamespace/uikit";
 
-const at = (
-  year: number,
-  month: number,
-  day: number,
-  hour: number,
-  minute = 0,
-) => new CalendarDateTime(year, month, day, hour, minute);
+const at = (year: number, month: number, day: number, hour: number, minute = 0) =>
+  new CalendarDateTime(year, month, day, hour, minute);
 
 function initialEvents(): AgendaEventData[] {
   const now = new Date();
@@ -152,15 +147,12 @@ function Demo() {
   const move = useCallback(
     (id: string, start: CalendarDateTime, end: CalendarDateTime) =>
       setEvents((current) =>
-        current.map((event) =>
-          event.id === id ? { ...event, end, start } : event,
-        ),
+        current.map((event) => (event.id === id ? { ...event, end, start } : event)),
       ),
     [],
   );
   const remove = useCallback(
-    (id: string) =>
-      setEvents((current) => current.filter((event) => event.id !== id)),
+    (id: string) => setEvents((current) => current.filter((event) => event.id !== id)),
     [],
   );
   const state = useAgenda({
@@ -210,10 +202,7 @@ function Demo() {
                 return (
                   <Agenda.MonthRow key={row} spanningRowCount={layout.rowCount}>
                     {layout.items.map((item) => (
-                      <Agenda.MonthSpanningEvent
-                        {...item}
-                        key={item.event.id}
-                      />
+                      <Agenda.MonthSpanningEvent {...item} key={item.event.id} />
                     ))}
                     {week.map((date, column) => (
                       <Agenda.MonthCell

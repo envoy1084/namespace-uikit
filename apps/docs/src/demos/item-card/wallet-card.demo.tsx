@@ -24,12 +24,7 @@ export const DemoWalletCardExample = () => (
             <p className="text-foreground text-sm font-semibold">$34.99</p>
             <p className="text-muted text-xs">0.021 ETH</p>
           </div>
-          <Button
-            aria-label="Wallet actions"
-            isIconOnly
-            size="sm"
-            variant="ghost"
-          >
+          <Button aria-label="Wallet actions" isIconOnly size="sm" variant="ghost">
             <Glyph icon="solar:menu-dots-bold" />
           </Button>
         </div>

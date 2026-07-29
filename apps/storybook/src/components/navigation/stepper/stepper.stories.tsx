@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@thenamespace/uikit";
 
 import { Icon } from "@/icon";
@@ -32,9 +31,7 @@ function steps({
   descriptions?: boolean;
   withIcons?: boolean;
 }) {
-  const data = descriptions
-    ? detailed
-    : basic.map((title) => [title, ""] as const);
+  const data = descriptions ? detailed : basic.map((title) => [title, ""] as const);
   return data.map(([title, description], index) => (
     <Stepper.Step key={title}>
       <Stepper.Indicator>
@@ -46,9 +43,7 @@ function steps({
       </Stepper.Indicator>
       <Stepper.Content>
         <Stepper.Title>{title}</Stepper.Title>
-        {description ? (
-          <Stepper.Description>{description}</Stepper.Description>
-        ) : null}
+        {description ? <Stepper.Description>{description}</Stepper.Description> : null}
       </Stepper.Content>
       <Stepper.Separator />
     </Stepper.Step>
@@ -68,12 +63,7 @@ function Demo({
   const [step, setStep] = useState(1);
   return (
     <div className={orientation === "horizontal" ? "w-[600px]" : "w-[280px]"}>
-      <Stepper
-        currentStep={step}
-        onStepChange={setStep}
-        orientation={orientation}
-        size={size}
-      >
+      <Stepper currentStep={step} onStepChange={setStep} orientation={orientation} size={size}>
         {steps({ descriptions, withIcons })}
       </Stepper>
     </div>
@@ -118,11 +108,7 @@ function ControlledDemo({
   return (
     <div className="flex flex-col gap-6">
       <div className={orientation === "horizontal" ? "w-[600px]" : "w-[280px]"}>
-        <Stepper
-          currentStep={step}
-          onStepChange={setStep}
-          orientation={orientation}
-        >
+        <Stepper currentStep={step} onStepChange={setStep} orientation={orientation}>
           {steps({ descriptions: orientation === "vertical" })}
         </Stepper>
       </div>
@@ -200,11 +186,7 @@ function BulletDemo() {
         </Stepper>
       </div>
       <div className="w-[280px]">
-        <Stepper
-          currentStep={step}
-          onStepChange={setStep}
-          orientation="vertical"
-        >
+        <Stepper currentStep={step} onStepChange={setStep} orientation="vertical">
           {steps({ descriptions: true })}
         </Stepper>
       </div>
@@ -237,22 +219,14 @@ export const CustomCompletedIcon: Story = {
     </div>
   ),
 };
-function RenderedStep({
-  description,
-  title,
-}: {
-  description: string;
-  title: string;
-}) {
+function RenderedStep({ description, title }: { description: string; title: string }) {
   const { status } = Stepper.useStep();
   return (
     <>
       <Stepper.Indicator />
       <Stepper.Content>
         <Stepper.Title>{title}</Stepper.Title>
-        <Stepper.Description>
-          {status === "active" ? description : status}
-        </Stepper.Description>
+        <Stepper.Description>{status === "active" ? description : status}</Stepper.Description>
       </Stepper.Content>
       <Stepper.Separator />
     </>
@@ -299,10 +273,7 @@ function Timeline({ kind }: { kind: "onboarding" | "package" | "trial" }) {
       <h3 className="mb-5 font-semibold capitalize">
         {kind === "package" ? "Package tracking" : kind}
       </h3>
-      <Stepper
-        currentStep={kind === "package" ? 1.5 : 1}
-        orientation="vertical"
-      >
+      <Stepper currentStep={kind === "package" ? 1.5 : 1} orientation="vertical">
         {data.map(([title, description]) => (
           <Stepper.Step key={title}>
             <Stepper.Indicator />

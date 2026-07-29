@@ -20,12 +20,7 @@ export const DemoFeatureAnnouncementExample = function Demo() {
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
             <span className="flex items-center gap-1 text-sm font-semibold">
               Try the new sidebar
-              <Chip
-                className="h-4 px-0.5 text-[10px]"
-                color="accent"
-                size="sm"
-                variant="soft"
-              >
+              <Chip className="h-4 px-0.5 text-[10px]" color="accent" size="sm" variant="soft">
                 <Chip.Label>New</Chip.Label>
               </Chip>
             </span>

@@ -30,10 +30,7 @@ function Timeline({ kind }: { kind: "onboarding" | "package" | "trial" }) {
       <h3 className="mb-5 font-semibold capitalize">
         {kind === "package" ? "Package tracking" : kind}
       </h3>
-      <Stepper
-        currentStep={kind === "package" ? 1.5 : 1}
-        orientation="vertical"
-      >
+      <Stepper currentStep={kind === "package" ? 1.5 : 1} orientation="vertical">
         {data.map(([title, description]) => (
           <Stepper.Step key={title}>
             <Stepper.Indicator />

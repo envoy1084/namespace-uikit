@@ -1,9 +1,8 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { getLocalTimeZone, isWeekend, today } from "@internationalized/date";
 import { Button, RangeCalendar } from "@thenamespace/uikit";
 import { useLocale } from "react-aria-components";
@@ -38,9 +37,7 @@ export function BookingCalendar() {
         </RangeCalendar.Header>
         <RangeCalendar.Grid>
           <RangeCalendar.GridHeader>
-            {(day) => (
-              <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-            )}
+            {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
           </RangeCalendar.GridHeader>
           <RangeCalendar.GridBody>
             {(date) => (
@@ -50,9 +47,7 @@ export function BookingCalendar() {
                     {formattedDate}
                     {!isUnavailable &&
                       !isWeekend(date, locale) &&
-                      blockedDates.includes(date.day) && (
-                        <RangeCalendar.CellIndicator />
-                      )}
+                      blockedDates.includes(date.day) && <RangeCalendar.CellIndicator />}
                   </>
                 )}
               </RangeCalendar.Cell>
@@ -66,14 +61,12 @@ export function BookingCalendar() {
             <span className="bg-muted size-2 rounded-full" /> Blocked dates
           </span>
           <span className="flex items-center gap-1">
-            <span className="bg-default size-2 rounded-full" />{" "}
-            Weekend/Unavailable
+            <span className="bg-default size-2 rounded-full" /> Weekend/Unavailable
           </span>
         </div>
         {selectedRange ? (
           <Button size="sm" variant="primary">
-            Book {selectedRange.start.toString()} -&gt;{" "}
-            {selectedRange.end.toString()}
+            Book {selectedRange.start.toString()} -&gt; {selectedRange.end.toString()}
           </Button>
         ) : null}
       </div>

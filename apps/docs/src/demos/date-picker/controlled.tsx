@@ -1,32 +1,20 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { getLocalTimeZone, today } from "@internationalized/date";
-import {
-  Button,
-  Calendar,
-  DateField,
-  DatePicker,
-  Description,
-  Label,
-} from "@thenamespace/uikit";
+import { Button, Calendar, DateField, DatePicker, Description, Label } from "@thenamespace/uikit";
 
 export function Controlled() {
-  const [value, setValue] = useState<DateValue | null>(
-    today(getLocalTimeZone()),
-  );
+  const [value, setValue] = useState<DateValue | null>(today(getLocalTimeZone()));
 
   return (
     <div className="flex w-72 flex-col gap-4">
       <DatePicker name="date" value={value} onChange={setValue}>
         <Label>Date</Label>
         <DateField.Group fullWidth>
-          <DateField.Input>
-            {(segment) => <DateField.Segment segment={segment} />}
-          </DateField.Input>
+          <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
           <DateField.Suffix>
             <DatePicker.Trigger>
               <DatePicker.TriggerIndicator />
@@ -47,9 +35,7 @@ export function Controlled() {
               <Calendar.GridHeader>
                 {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
               </Calendar.GridHeader>
-              <Calendar.GridBody>
-                {(date) => <Calendar.Cell date={date} />}
-              </Calendar.GridBody>
+              <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
             </Calendar.Grid>
             <Calendar.YearPickerGrid>
               <Calendar.YearPickerGridBody>
@@ -59,14 +45,9 @@ export function Controlled() {
           </Calendar>
         </DatePicker.Popover>
       </DatePicker>
-      <Description>
-        Current value: {value ? value.toString() : "(empty)"}
-      </Description>
+      <Description>Current value: {value ? value.toString() : "(empty)"}</Description>
       <div className="flex gap-2">
-        <Button
-          variant="tertiary"
-          onPress={() => setValue(today(getLocalTimeZone()))}
-        >
+        <Button variant="tertiary" onPress={() => setValue(today(getLocalTimeZone()))}>
           Set today
         </Button>
         <Button variant="tertiary" onPress={() => setValue(null)}>

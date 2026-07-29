@@ -60,9 +60,7 @@
   background-color: var(--color-default-hover);
 }
 
-.cell-switch
-  .cell-switch__trigger[data-hovered="true"]
-  .cell-switch__control--secondary {
+.cell-switch .cell-switch__trigger[data-hovered="true"] .cell-switch__control--secondary {
   background-color: color-mix(in oklab, var(--muted) 20%, transparent);
 }
 
@@ -86,8 +84,6 @@
   opacity: var(--disabled-opacity);
 }
 
-.cell-switch
-  .cell-switch__trigger[data-pressed="true"]
-  .cell-switch__control--secondary {
+.cell-switch .cell-switch__trigger[data-pressed="true"] .cell-switch__control--secondary {
   background-color: color-mix(in oklab, var(--muted) 30%, transparent);
 }

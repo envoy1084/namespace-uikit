@@ -32,11 +32,7 @@ export function WeekView() {
         <Select.Popover>
           <ListBox>
             {weekOptions.map((option) => (
-              <ListBox.Item
-                key={option.id}
-                id={option.id}
-                textValue={option.name}
-              >
+              <ListBox.Item key={option.id} id={option.id} textValue={option.name}>
                 {option.name}
                 <ListBox.ItemIndicator />
               </ListBox.Item>
@@ -55,9 +51,7 @@ export function WeekView() {
           <Calendar.GridHeader>
             {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
           </Calendar.GridHeader>
-          <Calendar.GridBody>
-            {(date) => <Calendar.Cell date={date} />}
-          </Calendar.GridBody>
+          <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
         </Calendar.Grid>
       </Calendar>
     </div>

@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   CodeSquareIcon,
   Calendar03Icon,
@@ -113,9 +112,7 @@ const article: JSONContent = {
               content: [
                 { text: "Add a link to ", type: "text" },
                 {
-                  marks: [
-                    { attrs: { href: "https://tiptap.dev" }, type: "link" },
-                  ],
+                  marks: [{ attrs: { href: "https://tiptap.dev" }, type: "link" }],
                   text: "tiptap.dev",
                   type: "text",
                 },
@@ -443,12 +440,7 @@ function Tool({
 }) {
   return (
     <RichTextEditor.ToggleButton command={command} tooltip={tooltip}>
-      <HugeiconsIcon
-        aria-hidden
-        className="size-4"
-        icon={icon}
-        strokeWidth={2}
-      />
+      <HugeiconsIcon aria-hidden className="size-4" icon={icon} strokeWidth={2} />
     </RichTextEditor.ToggleButton>
   );
 }
@@ -457,12 +449,7 @@ function LinkTool() {
   return (
     <RichTextEditor.LinkPopover>
       <RichTextEditor.LinkPopover.Trigger>
-        <HugeiconsIcon
-          aria-hidden
-          className="size-4"
-          icon={Link01Icon}
-          strokeWidth={2}
-        />
+        <HugeiconsIcon aria-hidden className="size-4" icon={Link01Icon} strokeWidth={2} />
       </RichTextEditor.LinkPopover.Trigger>
       <RichTextEditor.LinkPopover.Content>
         <RichTextEditor.LinkPopover.Input />
@@ -486,12 +473,7 @@ function Action({
 }) {
   return (
     <RichTextEditor.ActionButton action={action} tooltip={tooltip}>
-      <HugeiconsIcon
-        aria-hidden
-        className="size-4"
-        icon={icon}
-        strokeWidth={2}
-      />
+      <HugeiconsIcon aria-hidden className="size-4" icon={icon} strokeWidth={2} />
     </RichTextEditor.ActionButton>
   );
 }
@@ -507,16 +489,8 @@ function Toolbar() {
       <RichTextEditor.ToolbarGroup aria-label="Text style">
         <Tool command="bold" icon={TextBoldIcon} tooltip="Bold" />
         <Tool command="italic" icon={TextItalicIcon} tooltip="Italic" />
-        <Tool
-          command="underline"
-          icon={TextUnderlineIcon}
-          tooltip="Underline"
-        />
-        <Tool
-          command="strike"
-          icon={TextStrikethroughIcon}
-          tooltip="Strikethrough"
-        />
+        <Tool command="underline" icon={TextUnderlineIcon} tooltip="Underline" />
+        <Tool command="strike" icon={TextStrikethroughIcon} tooltip="Strikethrough" />
         <Tool command="code" icon={SourceCodeIcon} tooltip="Inline code" />
       </RichTextEditor.ToolbarGroup>
       <RichTextEditor.ToolbarSeparator />
@@ -529,30 +503,14 @@ function Toolbar() {
       </RichTextEditor.ToolbarGroup>
       <RichTextEditor.ToolbarSeparator />
       <RichTextEditor.ToolbarGroup aria-label="Lists and links">
-        <Tool
-          command="bulletList"
-          icon={LeftToRightListBulletIcon}
-          tooltip="Bulleted list"
-        />
-        <Tool
-          command="orderedList"
-          icon={LeftToRightListNumberIcon}
-          tooltip="Numbered list"
-        />
+        <Tool command="bulletList" icon={LeftToRightListBulletIcon} tooltip="Bulleted list" />
+        <Tool command="orderedList" icon={LeftToRightListNumberIcon} tooltip="Numbered list" />
         <LinkTool />
       </RichTextEditor.ToolbarGroup>
       <RichTextEditor.ToolbarSeparator />
       <RichTextEditor.ToolbarGroup aria-label="Clear">
-        <Action
-          action="clearFormatting"
-          icon={EraserIcon}
-          tooltip="Clear formatting"
-        />
-        <Action
-          action="clearContent"
-          icon={Delete02Icon}
-          tooltip="Clear content"
-        />
+        <Action action="clearFormatting" icon={EraserIcon} tooltip="Clear formatting" />
+        <Action action="clearContent" icon={Delete02Icon} tooltip="Clear content" />
       </RichTextEditor.ToolbarGroup>
     </RichTextEditor.Toolbar>
   );
@@ -563,11 +521,7 @@ function BubbleTools() {
       <Tool command="bold" icon={TextBoldIcon} tooltip="Bold" />
       <Tool command="italic" icon={TextItalicIcon} tooltip="Italic" />
       <Tool command="underline" icon={TextUnderlineIcon} tooltip="Underline" />
-      <Tool
-        command="strike"
-        icon={TextStrikethroughIcon}
-        tooltip="Strikethrough"
-      />
+      <Tool command="strike" icon={TextStrikethroughIcon} tooltip="Strikethrough" />
       <LinkTool />
     </RichTextEditor.BubbleMenu>
   );
@@ -613,18 +567,10 @@ export const Controlled: Story = {
     return (
       <div className="flex w-full max-w-[760px] flex-col gap-3">
         <div className="flex flex-wrap items-center gap-2">
-          <Button
-            size="sm"
-            variant="secondary"
-            onPress={() => setValue(controlledArticle)}
-          >
+          <Button size="sm" variant="secondary" onPress={() => setValue(controlledArticle)}>
             Load Guide
           </Button>
-          <Button
-            size="sm"
-            variant="secondary"
-            onPress={() => setValue(releaseNote)}
-          >
+          <Button size="sm" variant="secondary" onPress={() => setValue(releaseNote)}>
             Load Notes
           </Button>
           {stats ? (
@@ -654,11 +600,7 @@ export const Controlled: Story = {
 export const CharacterCount: Story = {
   render: () => (
     <div className="w-[680px]">
-      <Editor
-        defaultValue={countArticle}
-        footerLabel="240 character limit"
-        maxLength={240}
-      />
+      <Editor defaultValue={countArticle} footerLabel="240 character limit" maxLength={240} />
     </div>
   ),
 };
@@ -796,10 +738,7 @@ export const CustomComposition: Story = {
 export const Extensible: Story = {
   render: () => (
     <div className="w-[720px]">
-      <RichTextEditor
-        defaultValue={extensibleArticle}
-        placeholder="Write notes..."
-      >
+      <RichTextEditor defaultValue={extensibleArticle} placeholder="Write notes...">
         <RichTextEditor.Shell>
           <RichTextEditor.Toolbar>
             <RichTextEditor.ToolbarGroup aria-label="Custom commands">
@@ -831,19 +770,10 @@ export const Extensible: Story = {
                 aria-label="Insert launch checklist"
                 tooltip="Insert checklist"
                 onCommand={(editor) =>
-                  editor
-                    .chain()
-                    .focus()
-                    .insertContent("Preflight checklist")
-                    .run()
+                  editor.chain().focus().insertContent("Preflight checklist").run()
                 }
               >
-                <HugeiconsIcon
-                  aria-hidden
-                  className="size-4"
-                  icon={SparklesIcon}
-                  strokeWidth={2}
-                />
+                <HugeiconsIcon aria-hidden className="size-4" icon={SparklesIcon} strokeWidth={2} />
               </RichTextEditor.CommandButton>
             </RichTextEditor.ToolbarGroup>
           </RichTextEditor.Toolbar>
@@ -852,16 +782,9 @@ export const Extensible: Story = {
             <RichTextEditor.CommandButton
               aria-label="Add heading"
               tooltip="Add heading"
-              onCommand={(editor) =>
-                editor.chain().focus().toggleHeading({ level: 2 }).run()
-              }
+              onCommand={(editor) => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             >
-              <HugeiconsIcon
-                aria-hidden
-                className="size-4"
-                icon={AddCircleIcon}
-                strokeWidth={2}
-              />
+              <HugeiconsIcon aria-hidden className="size-4" icon={AddCircleIcon} strokeWidth={2} />
             </RichTextEditor.CommandButton>
           </RichTextEditor.FloatingMenu>
           <RichTextEditor.SuggestionMenu
@@ -879,12 +802,7 @@ export const Extensible: Story = {
                     />
                   ),
                   command: ({ editor, range }) =>
-                    editor
-                      .chain()
-                      .focus()
-                      .deleteRange(range)
-                      .setHeading({ level: 1 })
-                      .run(),
+                    editor.chain().focus().deleteRange(range).setHeading({ level: 1 }).run(),
                 },
                 {
                   title: "Bullet list",
@@ -897,12 +815,7 @@ export const Extensible: Story = {
                     />
                   ),
                   command: ({ editor, range }) =>
-                    editor
-                      .chain()
-                      .focus()
-                      .deleteRange(range)
-                      .toggleBulletList()
-                      .run(),
+                    editor.chain().focus().deleteRange(range).toggleBulletList().run(),
                 },
               ].filter((item) =>
                 `${item.title} ${item.keywords?.join(" ") ?? ""}`

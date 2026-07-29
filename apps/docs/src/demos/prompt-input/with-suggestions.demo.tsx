@@ -33,8 +33,7 @@ function WithSuggestionsDemo() {
           <TextShimmer className="text-muted">Namespace UIKit AI</TextShimmer>
         </h2>
         <p className="text-muted text-sm">
-          Start with a prompt, add files, or pick a suggestion to shape the
-          first response.
+          Start with a prompt, add files, or pick a suggestion to shape the first response.
         </p>
       </div>
       <PromptInput
@@ -53,23 +52,10 @@ function WithSuggestionsDemo() {
           <PromptInput.Toolbar>
             <PromptInput.ToolbarStart>
               <PromptInput.Action aria-label="Use voice" tooltip="Use voice">
-                <HugeiconsIcon
-                  aria-hidden
-                  className="size-4"
-                  icon={Mic01Icon}
-                  strokeWidth={2}
-                />
+                <HugeiconsIcon aria-hidden className="size-4" icon={Mic01Icon} strokeWidth={2} />
               </PromptInput.Action>
-              <PromptInput.Action
-                aria-label="Add context"
-                tooltip="Add context"
-              >
-                <HugeiconsIcon
-                  aria-hidden
-                  className="size-4"
-                  icon={Add01Icon}
-                  strokeWidth={2}
-                />
+              <PromptInput.Action aria-label="Add context" tooltip="Add context">
+                <HugeiconsIcon aria-hidden className="size-4" icon={Add01Icon} strokeWidth={2} />
               </PromptInput.Action>
             </PromptInput.ToolbarStart>
             <PromptInput.ToolbarEnd>

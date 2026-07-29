@@ -22,12 +22,7 @@ function StepperContent({
 }
 
 export const DemoDefaultExample = () => (
-  <NumberStepper
-    aria-label="Quantity"
-    defaultValue={1}
-    maxValue={99}
-    minValue={0}
-  >
+  <NumberStepper aria-label="Quantity" defaultValue={1} maxValue={99} minValue={0}>
     <StepperContent />
   </NumberStepper>
 );

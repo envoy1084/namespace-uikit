@@ -9,11 +9,7 @@ export function ControlledInputValue() {
 
   return (
     <div className="space-y-2">
-      <ComboBox
-        className="w-[256px]"
-        inputValue={inputValue}
-        onInputChange={setInputValue}
-      >
+      <ComboBox className="w-[256px]" inputValue={inputValue} onInputChange={setInputValue}>
         <Label>Search (controlled input)</Label>
         <ComboBox.InputGroup>
           <Input placeholder="Type to search..." />
@@ -48,9 +44,7 @@ export function ControlledInputValue() {
           </ListBox>
         </ComboBox.Popover>
       </ComboBox>
-      <p className="text-muted text-sm">
-        Input value: {inputValue || "(empty)"}
-      </p>
+      <p className="text-muted text-sm">Input value: {inputValue || "(empty)"}</p>
     </div>
   );
 }

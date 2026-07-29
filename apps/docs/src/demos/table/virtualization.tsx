@@ -74,8 +74,7 @@ export function Virtualization() {
 
     for (let i = 0; i < count; i++) {
       const firstName = firstNames[i % firstNames.length];
-      const lastName =
-        lastNames[Math.floor(i / firstNames.length) % lastNames.length];
+      const lastName = lastNames[Math.floor(i / firstNames.length) % lastNames.length];
       const name = `${firstName} ${lastName}`;
 
       users.push({

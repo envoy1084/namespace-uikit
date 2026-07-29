@@ -23,14 +23,12 @@ function BackdropVariantsDemo() {
                 <Sheet.CloseTrigger />
                 <Sheet.Header>
                   <Sheet.Heading>
-                    Backdrop:{" "}
-                    {variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    Backdrop: {variant.charAt(0).toUpperCase() + variant.slice(1)}
                   </Sheet.Heading>
                 </Sheet.Header>
                 <Sheet.Body>
                   <p className="text-muted text-sm">
-                    This sheet uses the{" "}
-                    <code className="text-foreground">{variant}</code> backdrop
+                    This sheet uses the <code className="text-foreground">{variant}</code> backdrop
                     variant.
                   </p>
                 </Sheet.Body>

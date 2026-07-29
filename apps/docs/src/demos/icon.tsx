@@ -283,23 +283,14 @@ const icons: Record<string, IconSvgElement> = {
   x: Cancel01Icon,
 };
 
-export interface IconProps extends Omit<
-  ComponentProps<typeof HugeiconsIcon>,
-  "icon" | "size"
-> {
+export interface IconProps extends Omit<ComponentProps<typeof HugeiconsIcon>, "icon" | "size"> {
   height?: number | string;
   icon: string;
   inline?: boolean;
   width?: number | string;
 }
 
-export function Icon({
-  height,
-  icon,
-  inline: _inline,
-  width,
-  ...props
-}: IconProps): ReactElement {
+export function Icon({ height, icon, inline: _inline, width, ...props }: IconProps): ReactElement {
   const name = icon.includes(":") ? icon.slice(icon.indexOf(":") + 1) : icon;
   const selected = icons[name] ?? File01Icon;
   const dimension = Number(width ?? height ?? 16);

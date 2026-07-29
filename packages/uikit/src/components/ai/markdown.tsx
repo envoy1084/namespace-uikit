@@ -1,7 +1,5 @@
 "use client";
 
-import type { Components, ExtraProps } from "react-markdown";
-
 import type {
   ComponentPropsWithRef,
   ComponentPropsWithoutRef,
@@ -12,14 +10,14 @@ import { memo, useId, useMemo } from "react";
 
 import { cn } from "@heroui/react";
 import { marked } from "marked";
+import type { Components, ExtraProps } from "react-markdown";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 
 import { CodeBlock } from "./code-block";
 
-const blocks = (content: string): string[] =>
-  marked.lexer(content).map((token) => token.raw);
+const blocks = (content: string): string[] => marked.lexer(content).map((token) => token.raw);
 const hash = (value: string): string => {
   let result = 0;
   for (let index = 0; index < value.length; index += 1)
@@ -38,15 +36,9 @@ const keyedBlocks = (values: string[], seed: string) => {
 const languageFromClass = (className?: string): string =>
   className?.match(/language-(\w+)/)?.[1] ?? "plaintext";
 type MarkdownCodeProps = ComponentPropsWithoutRef<"code"> & ExtraProps;
-function MarkdownCode({
-  children,
-  className,
-  node,
-  ...props
-}: MarkdownCodeProps): ReactElement {
+function MarkdownCode({ children, className, node, ...props }: MarkdownCodeProps): ReactElement {
   const isInline =
-    !node?.position?.start.line ||
-    node.position.start.line === node.position.end.line;
+    !node?.position?.start.line || node.position.start.line === node.position.end.line;
   if (isInline)
     return (
       <code
@@ -83,53 +75,34 @@ const MemoizedBlock = memo(function MemoizedBlock({
 }: MemoizedBlockProps): ReactElement {
   return (
     <div className="markdown__block" data-slot="markdown-block">
-      <ReactMarkdown
-        components={components}
-        remarkPlugins={[remarkGfm, remarkMath]}
-      >
+      <ReactMarkdown components={components} remarkPlugins={[remarkGfm, remarkMath]}>
         {content}
       </ReactMarkdown>
     </div>
   );
 });
-export interface MarkdownProps extends Omit<
-  ComponentPropsWithRef<"div">,
-  "children"
-> {
+export interface MarkdownProps extends Omit<ComponentPropsWithRef<"div">, "children"> {
   children: string;
   components?: Partial<Components>;
   id?: string;
 }
-export const Markdown: NamedExoticComponent<MarkdownProps> = memo(
-  function Markdown({
-    children,
-    className,
-    components,
-    id,
-    ...props
-  }: MarkdownProps): ReactElement {
-    const generatedId = useId();
-    const seed = id ?? generatedId;
-    const parsed = useMemo(() => blocks(children), [children]);
-    const keyed = useMemo(() => keyedBlocks(parsed, seed), [parsed, seed]);
-    const renderers = useMemo(
-      () => ({ ...defaultComponents, ...components }),
-      [components],
-    );
-    return (
-      <div
-        className={cn("markdown", className)}
-        data-slot="markdown"
-        {...props}
-      >
-        {keyed.map((block) => (
-          <MemoizedBlock
-            components={renderers}
-            content={block.content}
-            key={block.key}
-          />
-        ))}
-      </div>
-    );
-  },
-);
+export const Markdown: NamedExoticComponent<MarkdownProps> = memo(function Markdown({
+  children,
+  className,
+  components,
+  id,
+  ...props
+}: MarkdownProps): ReactElement {
+  const generatedId = useId();
+  const seed = id ?? generatedId;
+  const parsed = useMemo(() => blocks(children), [children]);
+  const keyed = useMemo(() => keyedBlocks(parsed, seed), [parsed, seed]);
+  const renderers = useMemo(() => ({ ...defaultComponents, ...components }), [components]);
+  return (
+    <div className={cn("markdown", className)} data-slot="markdown" {...props}>
+      {keyed.map((block) => (
+        <MemoizedBlock components={renderers} content={block.content} key={block.key} />
+      ))}
+    </div>
+  );
+});

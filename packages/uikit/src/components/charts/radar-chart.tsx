@@ -15,10 +15,7 @@ import {
 
 import { ChartTooltip } from "./chart-tooltip";
 
-export interface RadarChartRootProps extends Omit<
-  HTMLAttributes<HTMLDivElement>,
-  "children"
-> {
+export interface RadarChartRootProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
   children: ReactNode;
   data: Record<string, number | string>[];
   height?: number;
@@ -36,12 +33,7 @@ function RadarChartRoot({
   ...props
 }: RadarChartRootProps): ReactElement {
   return (
-    <div
-      ref={ref}
-      {...props}
-      className={cn("radar-chart", className)}
-      data-slot="radar-chart"
-    >
+    <div ref={ref} {...props} className={cn("radar-chart", className)} data-slot="radar-chart">
       <ResponsiveContainer height={height} width={width}>
         <RechartsRadarChart cx="50%" cy="50%" data={data}>
           {children}

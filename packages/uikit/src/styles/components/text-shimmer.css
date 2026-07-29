@@ -14,29 +14,19 @@
     --_gradient-width: calc(
       var(--_spread) + var(--shimmer-track-height) * tan(var(--shimmer-angle))
     );
-    --_active-distance: calc(
-      var(--shimmer-track-width, 200px) + var(--_gradient-width)
-    );
+    --_active-distance: calc(var(--shimmer-track-width, 200px) + var(--_gradient-width));
     --_duration: calc(var(--_active-distance) / var(--_speed) / 1px * 1000);
     --_repeat-delay: calc(20000 / var(--_speed));
-    --_repeat-delay-px: calc(
-      var(--_repeat-delay) * var(--_active-distance) / var(--_duration)
-    );
+    --_repeat-delay-px: calc(var(--_repeat-delay) * var(--_active-distance) / var(--_duration));
     --_xy-offset-px: calc(
-      (var(--shimmer-x, 0) + var(--shimmer-y, 0) * tan(var(--shimmer-angle))) *
-        1px
+      (var(--shimmer-x, 0) + var(--shimmer-y, 0) * tan(var(--shimmer-angle))) * 1px
     );
     --_bg-width: calc(
-      100% + var(--shimmer-track-width, 100%) + var(--_gradient-width) +
-        var(--_repeat-delay-px)
+      100% + var(--shimmer-track-width, 100%) + var(--_gradient-width) + var(--_repeat-delay-px)
     );
     --_position: calc(
-      var(
-          --shimmer-track-width,
-          (100% - var(--_gradient-width) - var(--_repeat-delay-px)) / 2
-        ) +
-        var(--_gradient-width) / 2 + var(--_repeat-delay-px) -
-        var(--_xy-offset-px)
+      var(--shimmer-track-width, (100% - var(--_gradient-width) - var(--_repeat-delay-px)) / 2) +
+        var(--_gradient-width) / 2 + var(--_repeat-delay-px) - var(--_xy-offset-px)
     );
     --_mix-96: color-mix(in oklch, var(--_fg), var(--_bg) 96%);
     --_mix-83: color-mix(in oklch, var(--_fg), var(--_bg) 83%);
@@ -79,9 +69,7 @@
 
   .dark .text-shimmer,
   [data-theme="dark"] .text-shimmer {
-    --_fg: oklch(
-      from currentColor max(0.8, calc(l + 0.4)) c h / calc(alpha + 0.4)
-    );
+    --_fg: oklch(from currentColor max(0.8, calc(l + 0.4)) c h / calc(alpha + 0.4));
   }
 
   @keyframes text-shimmer {

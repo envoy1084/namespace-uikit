@@ -11,8 +11,8 @@ export function Basic() {
         <Alert.Content>
           <Alert.Title>New features available</Alert.Title>
           <Alert.Description>
-            Check out our latest updates including dark mode support and
-            improved accessibility features.
+            Check out our latest updates including dark mode support and improved accessibility
+            features.
           </Alert.Description>
         </Alert.Content>
       </Alert>
@@ -23,8 +23,8 @@ export function Basic() {
         <Alert.Content>
           <Alert.Title>Update available</Alert.Title>
           <Alert.Description>
-            A new version of the application is available. Please refresh to get
-            the latest features and bug fixes.
+            A new version of the application is available. Please refresh to get the latest features
+            and bug fixes.
           </Alert.Description>
           <Button className="mt-2 sm:hidden" size="sm" variant="primary">
             Refresh
@@ -85,8 +85,8 @@ export function Basic() {
         <Alert.Content>
           <Alert.Title>Scheduled maintenance</Alert.Title>
           <Alert.Description>
-            Our services will be unavailable on Sunday, March 15th from 2:00 AM
-            to 6:00 AM UTC for scheduled maintenance.
+            Our services will be unavailable on Sunday, March 15th from 2:00 AM to 6:00 AM UTC for
+            scheduled maintenance.
           </Alert.Description>
         </Alert.Content>
       </Alert>

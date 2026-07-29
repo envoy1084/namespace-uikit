@@ -1,8 +1,5 @@
 "use client";
 
-// @demo-title Expandable Rows
-import type { Selection } from "react-aria-components";
-
 import { useState } from "react";
 
 import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
@@ -15,6 +12,8 @@ import {
   Image01Icon,
 } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
+// @demo-title Expandable Rows
+import type { Selection } from "react-aria-components";
 
 type TreeRow = {
   children?: TreeRow[];

@@ -17,13 +17,7 @@ const workspacePlans = [
     "For freelancers and solo makers shipping fast.",
     "solar:rocket-outline",
   ],
-  [
-    "growth",
-    "Growth",
-    29,
-    "For small teams scaling their product.",
-    "solar:graph-up-outline",
-  ],
+  ["growth", "Growth", 29, "For small teams scaling their product.", "solar:graph-up-outline"],
   [
     "business",
     "Business",
@@ -31,13 +25,7 @@ const workspacePlans = [
     "For companies with advanced compliance needs.",
     "solar:buildings-outline",
   ],
-  [
-    "scale",
-    "Scale",
-    149,
-    "Dedicated infra, SLA, and custom integrations.",
-    "solar:server-outline",
-  ],
+  ["scale", "Scale", 149, "Dedicated infra, SLA, and custom integrations.", "solar:server-outline"],
   [
     "enterprise",
     "Enterprise",

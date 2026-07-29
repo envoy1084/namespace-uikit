@@ -24,12 +24,7 @@ function PickerControls() {
       >
         <ColorArea.Thumb />
       </ColorArea>
-      <ColorSlider
-        aria-label="Hue"
-        channel="hue"
-        className="gap-1 px-1"
-        colorSpace="hsb"
-      >
+      <ColorSlider aria-label="Hue" channel="hue" className="gap-1 px-1" colorSpace="hsb">
         <Label>Hue</Label>
         <ColorSlider.Output className="text-muted" />
         <ColorSlider.Track>
@@ -56,11 +51,7 @@ export const DemoWithPresetsExample = function Demo() {
   const [color, setColor] = useState(parseColor("#3B82F6"));
   return (
     <div className="w-[252px]">
-      <CellColorPicker
-        aria-label="Brand Color"
-        value={color}
-        onChange={setColor}
-      >
+      <CellColorPicker aria-label="Brand Color" value={color} onChange={setColor}>
         <CellColorPicker.Trigger>
           <CellColorPicker.Label>Brand Color</CellColorPicker.Label>
           <CellColorPicker.ValueDisplay />

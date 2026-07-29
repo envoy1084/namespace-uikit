@@ -1,18 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useMemo, useState } from "react";
 
 import { useTreeData } from "@react-stately/data";
+import type { Meta, StoryObj } from "@storybook/react";
 import { Collection, type Selection } from "react-aria-components";
 
 import { Icon } from "@/icon";
 
-import {
-  FileTree,
-  useFileTree,
-  useFileTreeDrag,
-  type FileTreeItemRenderProps,
-} from "./index";
+import { FileTree, useFileTree, useFileTreeDrag, type FileTreeItemRenderProps } from "./index";
 
 const meta = {
   component: FileTree,
@@ -114,34 +108,19 @@ function MultipleSelectionDemo() {
         onSelectionChange={setSelectedKeys}
       >
         <FileTree.Item id="src" textValue="src" title="src">
-          <FileTree.Item
-            id="components"
-            textValue="components"
-            title="components"
-          >
-            <FileTree.Item
-              id="button"
-              textValue="button.tsx"
-              title="button.tsx"
-            />
+          <FileTree.Item id="components" textValue="components" title="components">
+            <FileTree.Item id="button" textValue="button.tsx" title="button.tsx" />
             <FileTree.Item id="card" textValue="card.tsx" title="card.tsx" />
             <FileTree.Item id="modal" textValue="modal.tsx" title="modal.tsx" />
           </FileTree.Item>
           <FileTree.Item id="utils" textValue="utils" title="utils">
-            <FileTree.Item
-              id="helpers"
-              textValue="helpers.ts"
-              title="helpers.ts"
-            />
+            <FileTree.Item id="helpers" textValue="helpers.ts" title="helpers.ts" />
           </FileTree.Item>
         </FileTree.Item>
         <FileTree.Item id="readme" textValue="README.md" title="README.md" />
       </FileTree>
       <p className="text-muted text-sm">
-        Selected:{" "}
-        {selectedKeys === "all"
-          ? "all"
-          : [...selectedKeys].join(", ") || "none"}
+        Selected: {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ") || "none"}
       </p>
     </div>
   );
@@ -164,9 +143,7 @@ export const Sizes: Story = {
 
 const renderDynamicNode = (node: ProjectNode): React.JSX.Element => (
   <FileTree.Item id={node.id} textValue={node.name} title={node.name}>
-    {node.children ? (
-      <Collection items={node.children}>{renderDynamicNode}</Collection>
-    ) : null}
+    {node.children ? <Collection items={node.children}>{renderDynamicNode}</Collection> : null}
   </FileTree.Item>
 );
 function DynamicCollectionDemo() {
@@ -195,12 +172,7 @@ export const CustomIndicator: Story = {
         <FileTree.Indicator>
           <Icon icon="heroicons:play-16-solid" />
         </FileTree.Indicator>
-        <FileTree.Item
-          icon={FolderIcon}
-          id="components"
-          textValue="components"
-          title="components"
-        >
+        <FileTree.Item icon={FolderIcon} id="components" textValue="components" title="components">
           <FileTree.Indicator>
             <Icon icon="heroicons:play-16-solid" />
           </FileTree.Indicator>
@@ -210,19 +182,9 @@ export const CustomIndicator: Story = {
             textValue="button.tsx"
             title="button.tsx"
           />
-          <FileTree.Item
-            icon={<FileIcon />}
-            id="card"
-            textValue="card.tsx"
-            title="card.tsx"
-          />
+          <FileTree.Item icon={<FileIcon />} id="card" textValue="card.tsx" title="card.tsx" />
         </FileTree.Item>
-        <FileTree.Item
-          icon={<FileIcon />}
-          id="index"
-          textValue="index.ts"
-          title="index.ts"
-        />
+        <FileTree.Item icon={<FileIcon />} id="index" textValue="index.ts" title="index.ts" />
       </FileTree.Item>
       <FileTree.Item
         icon={<Icon icon="lucide:braces" />}
@@ -297,8 +259,7 @@ function PRFileReviewDemo() {
     items: reviewTree,
   });
   const extensions = useMemo(
-    () =>
-      [...new Set(leaves.map((leaf) => leaf.ext).filter(Boolean))] as string[],
+    () => [...new Set(leaves.map((leaf) => leaf.ext).filter(Boolean))] as string[],
     [leaves],
   );
   const [query, setQuery] = useState("");
@@ -319,9 +280,7 @@ function PRFileReviewDemo() {
       textValue={node.name}
       title={node.name}
     >
-      {node.children ? (
-        <Collection items={node.children}>{renderNode}</Collection>
-      ) : null}
+      {node.children ? <Collection items={node.children}>{renderNode}</Collection> : null}
     </FileTree.Item>
   );
   return (
@@ -358,9 +317,7 @@ interface IncludedNode extends ProjectNode {
   included?: number;
 }
 function WithCheckboxesDemo() {
-  const [selectedKeys, setSelectedKeys] = useState<Selection>(
-    new Set(["root"]),
-  );
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(["root"]));
   const nodes: IncludedNode[] = [
     { id: "cursor-check", name: ".cursor", included: 5 },
     { id: "github-check", name: ".github" },
@@ -447,9 +404,7 @@ function DragAndDropDemo() {
         textValue={node.value.name}
         title={node.value.name}
       >
-        {hasChildren ? (
-          <Collection items={node.children}>{renderNode}</Collection>
-        ) : null}
+        {hasChildren ? <Collection items={node.children}>{renderNode}</Collection> : null}
       </FileTree.Item>
     );
   };

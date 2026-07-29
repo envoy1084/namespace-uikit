@@ -18,25 +18,11 @@ export const colorGroups = [
   },
   {
     label: "Chart palette",
-    tokens: [
-      "chart-base",
-      "chart-1",
-      "chart-2",
-      "chart-3",
-      "chart-4",
-      "chart-5",
-    ],
+    tokens: ["chart-base", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"],
   },
   {
     label: "Foundations",
-    tokens: [
-      "background",
-      "foreground",
-      "muted",
-      "border",
-      "separator",
-      "scrollbar",
-    ],
+    tokens: ["background", "foreground", "muted", "border", "separator", "scrollbar"],
   },
   {
     label: "Surfaces",
@@ -57,12 +43,7 @@ export const colorGroups = [
   },
   {
     label: "Fields",
-    tokens: [
-      "field-background",
-      "field-border",
-      "field-foreground",
-      "field-placeholder",
-    ],
+    tokens: ["field-background", "field-border", "field-foreground", "field-placeholder"],
   },
 ] as const;
 
@@ -171,8 +152,7 @@ export const defaultTheme: ThemeConfig = {
     family: '"Satoshi", ui-sans-serif, system-ui, sans-serif',
     id: "satoshi",
     label: "Satoshi",
-    source:
-      "https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,800,900&display=swap",
+    source: "https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,800,900&display=swap",
   },
   radius: 0.4,
 };
@@ -182,57 +162,49 @@ export const fontOptions: ThemeFont[] = [
     family: '"Satoshi", ui-sans-serif, system-ui, sans-serif',
     id: "satoshi",
     label: "Satoshi",
-    source:
-      "https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,800,900&display=swap",
+    source: "https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,800,900&display=swap",
   },
   {
     family: '"Inter", ui-sans-serif, system-ui, sans-serif',
     id: "inter",
     label: "Inter",
-    source:
-      "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap",
+    source: "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap",
   },
   {
     family: '"Figtree", ui-sans-serif, system-ui, sans-serif',
     id: "figtree",
     label: "Figtree",
-    source:
-      "https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&display=swap",
+    source: "https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&display=swap",
   },
   {
     family: '"Hanken Grotesk", ui-sans-serif, system-ui, sans-serif',
     id: "hanken-grotesk",
     label: "Hanken Grotesk",
-    source:
-      "https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&display=swap",
+    source: "https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&display=swap",
   },
   {
     family: '"Geist", ui-sans-serif, system-ui, sans-serif',
     id: "geist",
     label: "Geist",
-    source:
-      "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap",
+    source: "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap",
   },
   {
     family: '"DM Sans", ui-sans-serif, system-ui, sans-serif',
     id: "dm-sans",
     label: "DM Sans",
-    source:
-      "https://fonts.googleapis.com/css2?family=DM+Sans:wght@100..900&display=swap",
+    source: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@100..900&display=swap",
   },
   {
     family: '"Public Sans", ui-sans-serif, system-ui, sans-serif',
     id: "public-sans",
     label: "Public Sans",
-    source:
-      "https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&display=swap",
+    source: "https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&display=swap",
   },
   {
     family: '"Fraunces", ui-serif, Georgia, serif',
     id: "fraunces",
     label: "Fraunces",
-    source:
-      "https://fonts.googleapis.com/css2?family=Fraunces:wght@100..900&display=swap",
+    source: "https://fonts.googleapis.com/css2?family=Fraunces:wght@100..900&display=swap",
   },
   {
     family: '"IBM Plex Mono", ui-monospace, monospace',

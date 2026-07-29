@@ -1,9 +1,8 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import {
   Autocomplete,
   Avatar,
@@ -81,9 +80,7 @@ export function UserSelection() {
               return `${selectedItems.length} users selected`;
             }
 
-            const selectedItem = users.find(
-              (user) => user.id === selectedItems[0]?.key,
-            );
+            const selectedItem = users.find((user) => user.id === selectedItems[0]?.key);
 
             if (!selectedItem) {
               return defaultChildren;
@@ -112,9 +109,7 @@ export function UserSelection() {
               <SearchField.ClearButton />
             </SearchField.Group>
           </SearchField>
-          <ListBox
-            renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-          >
+          <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
             {users.map((user) => (
               <ListBox.Item key={user.id} id={user.id} textValue={user.name}>
                 <Avatar size="sm">

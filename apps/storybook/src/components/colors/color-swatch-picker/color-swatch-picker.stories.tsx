@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { parseColor } from "@/components/utilities/rac";
 import { Icon } from "@/icon";
@@ -31,15 +31,7 @@ export default {
 
 type Story = StoryObj<typeof ColorSwatchPicker>;
 
-const defaultColors = [
-  "#F43F5E",
-  "#D946EF",
-  "#8B5CF6",
-  "#3B82F6",
-  "#06B6D4",
-  "#10B981",
-  "#84CC16",
-];
+const defaultColors = ["#F43F5E", "#D946EF", "#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#84CC16"];
 
 const Template = (props: ColorSwatchPicker["RootProps"]) => (
   <ColorSwatchPicker {...props}>
@@ -68,9 +60,7 @@ const SizesTemplate = () => {
     <div className="flex flex-col gap-8">
       {sizes.map((size) => (
         <div key={size} className="flex flex-col gap-2">
-          <span className="text-muted text-sm font-medium capitalize">
-            {size}
-          </span>
+          <span className="text-muted text-sm font-medium capitalize">{size}</span>
           <ColorSwatchPicker size={size}>
             {defaultColors.map((color) => (
               <ColorSwatchPicker.Item key={color} color={color}>
@@ -96,9 +86,7 @@ const VariantsTemplate = () => {
     <div className="flex flex-col gap-8">
       {variants.map((variant) => (
         <div key={variant} className="flex flex-col gap-2">
-          <span className="text-muted text-sm font-medium capitalize">
-            {variant}
-          </span>
+          <span className="text-muted text-sm font-medium capitalize">{variant}</span>
           <ColorSwatchPicker variant={variant}>
             {defaultColors.map((color) => (
               <ColorSwatchPicker.Item key={color} color={color}>
@@ -124,9 +112,7 @@ const LayoutsTemplate = () => {
     <div className="flex flex-col gap-8">
       {layouts.map((layout) => (
         <div key={layout} className="flex flex-col gap-2">
-          <span className="text-muted text-sm font-medium capitalize">
-            {layout}
-          </span>
+          <span className="text-muted text-sm font-medium capitalize">{layout}</span>
           <ColorSwatchPicker layout={layout}>
             {defaultColors.map((color) => (
               <ColorSwatchPicker.Item key={color} color={color}>
@@ -153,9 +139,7 @@ const AllVariantsTemplate = () => {
     <div className="flex gap-16">
       {variants.map((variant) => (
         <div key={variant} className="flex flex-col gap-6">
-          <span className="text-muted text-sm font-semibold capitalize">
-            {variant}
-          </span>
+          <span className="text-muted text-sm font-semibold capitalize">{variant}</span>
           {sizes.map((size) => (
             <div key={size} className="flex items-center gap-4">
               <span className="text-muted w-8 text-sm">{size}</span>
@@ -203,15 +187,7 @@ export const Controlled: Story = {
 
 export const Disabled: Story = {
   render: () => {
-    const colors = [
-      "#F43F5E",
-      "#D946EF",
-      "#8B5CF6",
-      "#3B82F6",
-      "#06B6D4",
-      "#10B981",
-      "#84CC16",
-    ];
+    const colors = ["#F43F5E", "#D946EF", "#8B5CF6", "#3B82F6", "#06B6D4", "#10B981", "#84CC16"];
 
     return (
       <ColorSwatchPicker>

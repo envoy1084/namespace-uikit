@@ -1,26 +1,15 @@
 "use client";
 
-import type { Color } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
-import {
-  ColorField,
-  ColorSwatch,
-  Label,
-  parseColor,
-} from "@thenamespace/uikit";
+import type { Color } from "@thenamespace/uikit";
+import { ColorField, ColorSwatch, Label, parseColor } from "@thenamespace/uikit";
 
 export function Basic() {
   const [color, setColor] = useState<Color | null>(parseColor("#0485F7"));
 
   return (
-    <ColorField
-      className="w-[280px]"
-      name="color"
-      value={color}
-      onChange={setColor}
-    >
+    <ColorField className="w-[280px]" name="color" value={color} onChange={setColor}>
       <Label>Color</Label>
       <ColorField.Group>
         <ColorField.Prefix>

@@ -11,9 +11,9 @@ const snapPoints = ["148px", "355px", 1];
 const customFadePoints = ["150px", "300px", "450px", 1];
 
 function SnapPointsCustomFadeDemo() {
-  const [activeSnapPoint, setActiveSnapPoint] = useState<
-    number | string | null
-  >(customFadePoints[0]!);
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
+    customFadePoints[0]!,
+  );
 
   return (
     <Sheet
@@ -32,16 +32,14 @@ function SnapPointsCustomFadeDemo() {
             <Sheet.Header>
               <Sheet.Heading>Custom Fade</Sheet.Heading>
               <p className="text-muted text-sm">
-                Current:{" "}
-                {typeof activeSnapPoint === "number" ? "100%" : activeSnapPoint}
+                Current: {typeof activeSnapPoint === "number" ? "100%" : activeSnapPoint}
               </p>
             </Sheet.Header>
             <Sheet.Body>
               <p className="text-muted text-sm">
-                The <code className="text-foreground">fadeFromIndex</code> prop
-                controls when the overlay starts fading in. Here it&apos;s set
-                to index 1 (300px), so the overlay begins appearing at the
-                second snap point instead of the last.
+                The <code className="text-foreground">fadeFromIndex</code> prop controls when the
+                overlay starts fading in. Here it&apos;s set to index 1 (300px), so the overlay
+                begins appearing at the second snap point instead of the last.
               </p>
             </Sheet.Body>
           </Sheet.Dialog>
@@ -51,6 +49,4 @@ function SnapPointsCustomFadeDemo() {
   );
 }
 
-export const DemoSnapPointsCustomFadeExample = () => (
-  <SnapPointsCustomFadeDemo />
-);
+export const DemoSnapPointsCustomFadeExample = () => <SnapPointsCustomFadeDemo />;

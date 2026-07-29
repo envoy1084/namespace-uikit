@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@thenamespace/uikit/button";
 
 import { FloatingToc } from "./index";
@@ -119,14 +118,10 @@ function InPage() {
       <div className="h-full overflow-auto p-8 pr-16">
         {article.map((item) => (
           <div className="mb-10 last:mb-0" key={item.id}>
-            <h2
-              className={`text-base font-semibold ${item.id === active ? "text-accent" : ""}`}
-            >
+            <h2 className={`text-base font-semibold ${item.id === active ? "text-accent" : ""}`}>
               {item.label}
             </h2>
-            <p className="text-muted mt-2 text-sm leading-relaxed">
-              {item.text}
-            </p>
+            <p className="text-muted mt-2 text-sm leading-relaxed">{item.text}</p>
           </div>
         ))}
       </div>
@@ -161,11 +156,7 @@ function ControlledDemo() {
   return (
     <div className="px-10 py-24">
       <div className="mb-6 flex items-center gap-3">
-        <Button
-          onPress={() => setOpen((value) => !value)}
-          size="sm"
-          variant="outline"
-        >
+        <Button onPress={() => setOpen((value) => !value)} size="sm" variant="outline">
           {open ? "Close" : "Open"} TOC
         </Button>
         <span className="text-muted inline-block w-24 text-sm">
@@ -206,10 +197,7 @@ function Delays() {
       ].map((config) => (
         <div className="flex flex-col items-center gap-3" key={config.label}>
           <span className="text-muted text-xs">{config.label}</span>
-          <FloatingToc
-            closeDelay={config.closeDelay}
-            openDelay={config.openDelay}
-          >
+          <FloatingToc closeDelay={config.closeDelay} openDelay={config.openDelay}>
             <FloatingToc.Trigger aria-label="Table of contents">
               {sections.map((item) => (
                 <FloatingToc.Bar active={item.id === active} key={item.id} />
@@ -241,17 +229,10 @@ function HierarchicalDemo({ press = false }: { press?: boolean }) {
   const [active, setActive] = useState(press ? "s1" : "s3-2-1");
   return (
     <div className="px-10 py-10">
-      <FloatingToc
-        placement={press ? "left" : "right"}
-        triggerMode={press ? "press" : "hover"}
-      >
+      <FloatingToc placement={press ? "left" : "right"} triggerMode={press ? "press" : "hover"}>
         <FloatingToc.Trigger aria-label="Table of contents">
           {hierarchy.map((item) => (
-            <FloatingToc.Bar
-              active={item.id === active}
-              key={item.id}
-              level={item.level}
-            />
+            <FloatingToc.Bar active={item.id === active} key={item.id} level={item.level} />
           ))}
         </FloatingToc.Trigger>
         <FloatingToc.Content>
@@ -285,14 +266,12 @@ function PressInPage() {
           .filter((item) => item.level === 1)
           .map((item) => (
             <div className="mb-10 last:mb-0" key={item.id}>
-              <h2
-                className={`text-base font-semibold ${item.id === active ? "text-accent" : ""}`}
-              >
+              <h2 className={`text-base font-semibold ${item.id === active ? "text-accent" : ""}`}>
                 {item.label}
               </h2>
               <p className="text-muted mt-2 text-sm leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua.
               </p>
             </div>
           ))}
@@ -301,11 +280,7 @@ function PressInPage() {
         <FloatingToc placement="left" triggerMode="press">
           <FloatingToc.Trigger aria-label="Table of contents">
             {hierarchy.map((item) => (
-              <FloatingToc.Bar
-                active={item.id === active}
-                key={item.id}
-                level={item.level}
-              />
+              <FloatingToc.Bar active={item.id === active} key={item.id} level={item.level} />
             ))}
           </FloatingToc.Trigger>
           <FloatingToc.Content>
@@ -332,8 +307,7 @@ export const PressModeInPage: Story = { render: () => <PressInPage /> };
 
 const manyItems = Array.from({ length: 90 }, (_, index) => ({
   id: `v-${index}`,
-  label:
-    index % 4 === 0 ? `Section ${index / 4 + 1}` : "Implementation details",
+  label: index % 4 === 0 ? `Section ${index / 4 + 1}` : "Implementation details",
   level: index % 4 === 0 ? 1 : index % 3 === 0 ? 3 : 2,
 }));
 function LargeList() {

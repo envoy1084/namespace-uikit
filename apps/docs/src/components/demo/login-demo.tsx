@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Avatar,
-  Button,
-  Card,
-  CloseButton,
-  Separator,
-} from "@thenamespace/uikit";
+import { Avatar, Button, Card, CloseButton, Separator } from "@thenamespace/uikit";
 
 import { useDictionary } from "@/components/demo/dictionary";
 import { Iconify } from "@/components/iconify";
@@ -29,15 +23,11 @@ export function LoginDemo() {
         <CloseButton className="absolute top-3 right-3" />
       </Card.Header>
       <Card.Content className="w-full gap-2">
-        <p className="text-muted text-center text-sm font-medium text-balance">
-          {t.trialNote}
-        </p>
+        <p className="text-muted text-center text-sm font-medium text-balance">{t.trialNote}</p>
         <Button className="w-full">{t.getStarted}</Button>
         <div className="flex w-full items-center gap-2 py-2">
           <Separator className="flex-1" />
-          <p className="text-muted text-center text-xs font-medium uppercase">
-            {t.or}
-          </p>
+          <p className="text-muted text-center text-xs font-medium uppercase">{t.or}</p>
           <Separator className="flex-1" />
         </div>
         <Button className="w-full" variant="tertiary">

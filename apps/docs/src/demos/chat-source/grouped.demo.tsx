@@ -15,9 +15,7 @@ const Assistant = ({ children }: { children: React.ReactNode }) => (
 
 export const DemoGroupedExample = () => (
   <Assistant>
-    <ChatMessage.Content>
-      Answer synthesized from multiple sources.
-    </ChatMessage.Content>
+    <ChatMessage.Content>Answer synthesized from multiple sources.</ChatMessage.Content>
     <ChatSources defaultExpanded={false}>
       <ChatSources.Trigger>3 sources</ChatSources.Trigger>
       <ChatSources.Content>

@@ -9,9 +9,7 @@ export function OnSurface() {
       <TimeField className="w-full" name="time">
         <Label>Time</Label>
         <TimeField.Group variant="secondary">
-          <TimeField.Input>
-            {(segment) => <TimeField.Segment segment={segment} />}
-          </TimeField.Input>
+          <TimeField.Input>{(segment) => <TimeField.Segment segment={segment} />}</TimeField.Input>
         </TimeField.Group>
         <Description>Enter a time</Description>
       </TimeField>
@@ -21,9 +19,7 @@ export function OnSurface() {
           <TimeField.Prefix>
             <HugeiconsIcon icon={Clock01Icon} className="text-muted size-4" />
           </TimeField.Prefix>
-          <TimeField.Input>
-            {(segment) => <TimeField.Segment segment={segment} />}
-          </TimeField.Input>
+          <TimeField.Input>{(segment) => <TimeField.Segment segment={segment} />}</TimeField.Input>
         </TimeField.Group>
         <Description>Enter a time for your appointment</Description>
       </TimeField>

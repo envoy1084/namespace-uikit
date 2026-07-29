@@ -26,11 +26,7 @@ export const DemoSizesExample = () => (
     {(["sm", "md", "lg"] as const).map((size) => (
       <div className="flex flex-col items-center gap-2" key={size}>
         <span className="text-muted text-sm">{size}</span>
-        <NumberStepper
-          aria-label={`Quantity ${size}`}
-          defaultValue={1}
-          size={size}
-        >
+        <NumberStepper aria-label={`Quantity ${size}`} defaultValue={1} size={size}>
           <StepperContent
             decrementLabel={`Decrease Quantity ${size}`}
             incrementLabel={`Increase Quantity ${size}`}

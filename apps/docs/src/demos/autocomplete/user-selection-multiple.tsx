@@ -1,9 +1,8 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import {
   Autocomplete,
   Avatar,
@@ -82,17 +81,13 @@ export function UserSelectionMultiple() {
               return defaultChildren;
             }
 
-            const selectedItemsKeys = state.selectedItems.map(
-              (item) => item.key,
-            );
+            const selectedItemsKeys = state.selectedItems.map((item) => item.key);
 
             return (
               <TagGroup size="sm" onRemove={onRemoveTags}>
                 <TagGroup.List>
                   {selectedItemsKeys.map((selectedItemKey) => {
-                    const selectedItem = users.find(
-                      (user) => user.id === selectedItemKey,
-                    );
+                    const selectedItem = users.find((user) => user.id === selectedItemKey);
 
                     if (!selectedItem) {
                       return null;
@@ -102,9 +97,7 @@ export function UserSelectionMultiple() {
                       <Tag key={selectedItem.id} id={selectedItem.id}>
                         <Avatar className="size-4" size="sm">
                           <AvatarImage src={selectedItem.avatarUrl} />
-                          <AvatarFallback>
-                            {selectedItem.fallback}
-                          </AvatarFallback>
+                          <AvatarFallback>{selectedItem.fallback}</AvatarFallback>
                         </Avatar>
                         <span>{selectedItem.name}</span>
                       </Tag>
@@ -127,9 +120,7 @@ export function UserSelectionMultiple() {
               <SearchField.ClearButton />
             </SearchField.Group>
           </SearchField>
-          <ListBox
-            renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-          >
+          <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
             {users.map((user) => (
               <ListBox.Item key={user.id} id={user.id} textValue={user.name}>
                 <Avatar size="sm">

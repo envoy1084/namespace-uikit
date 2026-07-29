@@ -2,14 +2,7 @@
 
 import { useState } from "react";
 
-import {
-  Button,
-  InputGroup,
-  Kbd,
-  Spinner,
-  TextField,
-  Tooltip,
-} from "@thenamespace/uikit";
+import { Button, InputGroup, Kbd, Spinner, TextField, Tooltip } from "@thenamespace/uikit";
 import {
   ArrowUp01Icon,
   AtIcon,
@@ -57,12 +50,7 @@ export function WithTextArea() {
         />
         <InputGroup.Suffix className="flex w-full items-center gap-1.5 px-3 py-0">
           <Tooltip delay={0}>
-            <Button
-              isIconOnly
-              aria-label="Attach file"
-              size="sm"
-              variant="tertiary"
-            >
+            <Button isIconOnly aria-label="Attach file" size="sm" variant="tertiary">
               <HugeiconsIcon icon={Add01Icon} />
             </Button>
             <Tooltip.Content>
@@ -70,12 +58,7 @@ export function WithTextArea() {
             </Tooltip.Content>
           </Tooltip>
           <Tooltip delay={0}>
-            <Button
-              isIconOnly
-              aria-label="Connect Apps"
-              size="sm"
-              variant="tertiary"
-            >
+            <Button isIconOnly aria-label="Connect Apps" size="sm" variant="tertiary">
               <HugeiconsIcon icon={Plug01Icon} />
             </Button>
             <Tooltip.Content>
@@ -84,12 +67,7 @@ export function WithTextArea() {
           </Tooltip>
           <div className="ml-auto flex items-center gap-1.5">
             <Tooltip delay={0}>
-              <Button
-                isIconOnly
-                aria-label="Voice input"
-                size="sm"
-                variant="ghost"
-              >
+              <Button isIconOnly aria-label="Voice input" size="sm" variant="ghost">
                 <HugeiconsIcon icon={Mic01Icon} />
               </Button>
               <Tooltip.Content>

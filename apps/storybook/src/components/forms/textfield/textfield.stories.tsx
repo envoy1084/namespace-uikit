@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Description } from "@/components/forms/description";
 import { FieldError } from "@/components/forms/field-error";
@@ -60,11 +60,7 @@ export const WithTextArea: Story = {
       </TextField>
       <TextField name="detailedDescription">
         <Label>Detailed description</Label>
-        <TextArea
-          className="w-[280px]"
-          placeholder="Provide more details..."
-          rows={4}
-        />
+        <TextArea className="w-[280px]" placeholder="Provide more details..." rows={4} />
         <Description>Minimum 4 rows</Description>
       </TextField>
       <TextField name="review">
@@ -90,10 +86,7 @@ export const Required: Story = {
       </TextField>
       <TextField isRequired name="address">
         <Label>Delivery address</Label>
-        <TextArea
-          className="w-[280px]"
-          placeholder="123 Main St, Anytown, USA"
-        />
+        <TextArea className="w-[280px]" placeholder="123 Main St, Anytown, USA" />
         <Description>Make sure to include the zip code</Description>
       </TextField>
     </div>
@@ -110,10 +103,7 @@ export const WithDescription: Story = {
       </TextField>
       <TextField name="address">
         <Label>Delivery address</Label>
-        <TextArea
-          className="w-[280px]"
-          placeholder="123 Main St, Anytown, USA"
-        />
+        <TextArea className="w-[280px]" placeholder="123 Main St, Anytown, USA" />
         <Description>Make sure to include the zip code</Description>
       </TextField>
     </div>
@@ -130,10 +120,7 @@ export const Invalid: Story = {
       </TextField>
       <TextField isInvalid isRequired name="address">
         <Label>Delivery address</Label>
-        <TextArea
-          className="w-[280px]"
-          placeholder="123 Main St, Anytown, USA"
-        />
+        <TextArea className="w-[280px]" placeholder="123 Main St, Anytown, USA" />
         <FieldError>The address is invalid</FieldError>
       </TextField>
     </div>
@@ -150,10 +137,7 @@ export const Disabled: Story = {
       </TextField>
       <TextField isDisabled name="message">
         <Label>Your message</Label>
-        <TextArea
-          className="w-[280px]"
-          placeholder="Tell us more about yourself..."
-        />
+        <TextArea className="w-[280px]" placeholder="Tell us more about yourself..." />
         <Description>Min 50 characters</Description>
       </TextField>
     </div>
@@ -195,13 +179,8 @@ export const Controlled: Story = {
         </TextField>
         <TextField name="bio" value={TextAreaValue} onChange={setTextAreaValue}>
           <Label>Your bio</Label>
-          <TextArea
-            className="w-[280px]"
-            placeholder="Tell us about yourself..."
-          />
-          <Description>
-            Character count: {TextAreaValue.length} / 500
-          </Description>
+          <TextArea className="w-[280px]" placeholder="Tell us about yourself..." />
+          <Description>Character count: {TextAreaValue.length} / 500</Description>
         </TextField>
       </div>
     );
@@ -232,18 +211,9 @@ export const WithValidation: Story = {
             <Description>Choose a unique username</Description>
           )}
         </TextField>
-        <TextField
-          isRequired
-          isInvalid={isBioInvalid}
-          name="bio"
-          value={bio}
-          onChange={setBio}
-        >
+        <TextField isRequired isInvalid={isBioInvalid} name="bio" value={bio} onChange={setBio}>
           <Label>Bio</Label>
-          <TextArea
-            className="w-[280px]"
-            placeholder="Tell us about yourself..."
-          />
+          <TextArea className="w-[280px]" placeholder="Tell us about yourself..." />
           {isBioInvalid ? (
             <FieldError>Bio must be at least 20 characters</FieldError>
           ) : (

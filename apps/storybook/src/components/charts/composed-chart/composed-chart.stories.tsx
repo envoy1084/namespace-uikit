@@ -14,19 +14,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function Legend({
-  items,
-}: {
-  items: ReadonlyArray<{ color: string; label: string }>;
-}) {
+function Legend({ items }: { items: ReadonlyArray<{ color: string; label: string }> }) {
   return (
     <div className="flex items-center gap-3">
       {items.map(({ color, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
-          <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: color }}
-          />
+          <span className="size-3 rounded-full" style={{ backgroundColor: color }} />
           <span className="text-muted text-xs">{label}</span>
         </div>
       ))}
@@ -78,8 +71,7 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Bar + Line on dual Y-axes — revenue bars with an orders trend line overlay.",
+        story: "Bar + Line on dual Y-axes — revenue bars with an orders trend line overlay.",
       },
     },
   },
@@ -128,9 +120,7 @@ export const Default: Story = {
                   <ChartTooltip.Header>{label}</ChartTooltip.Header>
                   {payload.map((entry) => (
                     <ChartTooltip.Item key={String(entry.dataKey)}>
-                      <ChartTooltip.Indicator
-                        color={entry.color ?? entry.fill ?? entry.stroke}
-                      />
+                      <ChartTooltip.Indicator color={entry.color ?? entry.fill ?? entry.stroke} />
                       <ChartTooltip.Label>{entry.name}</ChartTooltip.Label>
                       <ChartTooltip.Value>
                         {entry.dataKey === "revenue"
@@ -242,9 +232,7 @@ export const StackedBarWithLine: Story = {
     return (
       <Card className="w-full max-w-[700px] rounded-2xl">
         <Card.Header className="flex-row items-center justify-between">
-          <Card.Title className="text-base">
-            AI Share of Committed Code
-          </Card.Title>
+          <Card.Title className="text-base">AI Share of Committed Code</Card.Title>
           <Legend items={[...bars, { color: "var(--muted)", label: "AI %" }]} />
         </Card.Header>
         <Card.Content>
@@ -286,9 +274,7 @@ export const StackedBarWithLine: Story = {
               type="monotone"
               yAxisId="right"
             />
-            <ComposedChart.Tooltip
-              content={<ComposedChart.TooltipContent indicator="line" />}
-            />
+            <ComposedChart.Tooltip content={<ComposedChart.TooltipContent indicator="line" />} />
           </ComposedChart>
         </Card.Content>
       </Card>
@@ -298,22 +284,19 @@ export const StackedBarWithLine: Story = {
 
 const sessions = defaultData.map((item, index) => ({
   month: item.month,
-  sessions: [
-    12000, 18000, 15000, 22000, 19000, 25000, 23000, 28000, 26000, 31000, 29000,
-    34000,
-  ][index]!,
-  target: [
-    15000, 16000, 17000, 18000, 19000, 20000, 21000, 22000, 23000, 24000, 25000,
-    26000,
-  ][index]!,
+  sessions: [12000, 18000, 15000, 22000, 19000, 25000, 23000, 28000, 26000, 31000, 29000, 34000][
+    index
+  ]!,
+  target: [15000, 16000, 17000, 18000, 19000, 20000, 21000, 22000, 23000, 24000, 25000, 26000][
+    index
+  ]!,
 }));
 
 export const AreaWithLine: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Area + dashed line — filled area for actual sessions with a dashed target line.",
+        story: "Area + dashed line — filled area for actual sessions with a dashed target line.",
       },
     },
   },
@@ -333,11 +316,7 @@ export const AreaWithLine: Story = {
           <defs>
             <linearGradient id="sessions-gradient" x1="0" x2="0" y1="0" y2="1">
               <stop offset="0%" stopColor="var(--chart-3)" stopOpacity={0.2} />
-              <stop
-                offset="100%"
-                stopColor="var(--chart-3)"
-                stopOpacity={0.02}
-              />
+              <stop offset="100%" stopColor="var(--chart-3)" stopOpacity={0.02} />
             </linearGradient>
           </defs>
           <Axes />
@@ -368,10 +347,9 @@ export const AreaWithLine: Story = {
 
 const impressions = defaultData.map((item, index) => ({
   ctr: [3.2, 3.8, 3.5, 4.2, 4, 4.8, 4.5, 5.1, 4.9, 5.5, 5.2, 5.8][index]!,
-  impressions: [
-    45000, 52000, 48000, 61000, 58000, 72000, 68000, 78000, 75000, 85000, 82000,
-    92000,
-  ][index]!,
+  impressions: [45000, 52000, 48000, 61000, 58000, 72000, 68000, 78000, 75000, 85000, 82000, 92000][
+    index
+  ]!,
   month: item.month,
 }));
 
@@ -379,8 +357,7 @@ export const BarWithArea: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Bar + Area — impressions bars with a CTR area on a secondary axis.",
+        story: "Bar + Area — impressions bars with a CTR area on a secondary axis.",
       },
     },
   },
@@ -400,11 +377,7 @@ export const BarWithArea: Story = {
           <defs>
             <linearGradient id="ctr-gradient" x1="0" x2="0" y1="0" y2="1">
               <stop offset="0%" stopColor="var(--chart-4)" stopOpacity={0.15} />
-              <stop
-                offset="100%"
-                stopColor="var(--chart-4)"
-                stopOpacity={0.02}
-              />
+              <stop offset="100%" stopColor="var(--chart-4)" stopOpacity={0.02} />
             </linearGradient>
           </defs>
           <ComposedChart.Grid vertical={false} />
@@ -460,13 +433,10 @@ export const BarWithArea: Story = {
 const analytics = defaultData.map((item, index) => ({
   bounceRate: [42, 38, 40, 35, 37, 32, 34, 30, 31, 28, 29, 26][index]!,
   month: item.month,
-  pageViews: [
-    8200, 11500, 9800, 14200, 12100, 16800, 15200, 18400, 17200, 20500, 19600,
-    23000,
-  ][index]!,
-  users: [
-    3200, 4500, 3800, 5600, 4800, 6600, 6000, 7200, 6800, 8100, 7700, 9100,
-  ][index]!,
+  pageViews: [8200, 11500, 9800, 14200, 12100, 16800, 15200, 18400, 17200, 20500, 19600, 23000][
+    index
+  ]!,
+  users: [3200, 4500, 3800, 5600, 4800, 6600, 6000, 7200, 6800, 8100, 7700, 9100][index]!,
 }));
 
 export const MultiType: Story = {
@@ -495,11 +465,7 @@ export const MultiType: Story = {
           <defs>
             <linearGradient id="pv-gradient" x1="0" x2="0" y1="0" y2="1">
               <stop offset="0%" stopColor="var(--chart-3)" stopOpacity={0.15} />
-              <stop
-                offset="100%"
-                stopColor="var(--chart-3)"
-                stopOpacity={0.02}
-              />
+              <stop offset="100%" stopColor="var(--chart-3)" stopOpacity={0.02} />
             </linearGradient>
           </defs>
           <Axes dual />
@@ -530,9 +496,7 @@ export const MultiType: Story = {
             type="monotone"
             yAxisId="right"
           />
-          <ComposedChart.Tooltip
-            content={<ComposedChart.TooltipContent indicator="line" />}
-          />
+          <ComposedChart.Tooltip content={<ComposedChart.TooltipContent indicator="line" />} />
         </ComposedChart>
       </Card.Content>
     </Card>

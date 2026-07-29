@@ -3,11 +3,7 @@
 // @demo-title Default
 import { Avatar } from "@thenamespace/uikit";
 import { Navbar } from "@thenamespace/uikit";
-import {
-  Icon,
-  Notification02Icon,
-  Search01Icon,
-} from "@thenamespace/uikit/icons";
+import { Icon, Notification02Icon, Search01Icon } from "@thenamespace/uikit/icons";
 
 const links = ["Features", "Customers", "Integrations", "Pricing"];
 

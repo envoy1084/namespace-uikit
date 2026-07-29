@@ -1,17 +1,5 @@
 "use client";
 
-import type {
-  EditorRecord,
-  EditorRecordFieldIds,
-  ProfileEditorSection,
-  RecordDefinition,
-} from "#/components/name-profile-editor/editor/types";
-import type {
-  NameProfileFormValues,
-  NameProfileImageRecord,
-  NameProfileTextRecord,
-} from "#/components/name-profile-editor/types";
-
 import { useEffect, useMemo, useState } from "react";
 
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
@@ -25,18 +13,25 @@ import {
   isRecordDefinitionActive,
 } from "#/components/name-profile-editor/editor/editor-records";
 import { profileFormResolver } from "#/components/name-profile-editor/editor/profile-form-resolver";
+import type {
+  EditorRecord,
+  EditorRecordFieldIds,
+  ProfileEditorSection,
+  RecordDefinition,
+} from "#/components/name-profile-editor/editor/types";
 import { normalizeProfileRecords } from "#/components/name-profile-editor/normalize-profile-records";
+import type {
+  NameProfileFormValues,
+  NameProfileImageRecord,
+  NameProfileTextRecord,
+} from "#/components/name-profile-editor/types";
 
-function normalizedInitialRecords(
-  records: NameProfileFormValues,
-): NameProfileFormValues {
+function normalizedInitialRecords(records: NameProfileFormValues): NameProfileFormValues {
   const normalized = normalizeProfileRecords(records);
   return normalized.isOk() ? normalized.value : records;
 }
 
-function mediaDefinition(
-  definition: RecordDefinition,
-): NameProfileImageRecord | undefined {
+function mediaDefinition(definition: RecordDefinition): NameProfileImageRecord | undefined {
   if (
     definition.type === "text" &&
     (definition.name === "avatar" || definition.name === "header")
@@ -53,14 +48,8 @@ function removeFromSet<T>(values: ReadonlySet<T>, value: T): Set<T> {
   return next;
 }
 
-export function useProfileEditorForm(
-  initialRecords: NameProfileFormValues,
-  resetVersion = 0,
-) {
-  const defaultValues = useMemo(
-    () => normalizedInitialRecords(initialRecords),
-    [initialRecords],
-  );
+export function useProfileEditorForm(initialRecords: NameProfileFormValues, resetVersion = 0) {
+  const defaultValues = useMemo(() => normalizedInitialRecords(initialRecords), [initialRecords]);
   const form = useForm<NameProfileFormValues>({
     defaultValues,
     mode: "onChange",
@@ -93,14 +82,11 @@ export function useProfileEditorForm(
     control,
     defaultValue: defaultValues,
   }) as NameProfileFormValues;
-  const [activeSection, setActiveSection] =
-    useState<ProfileEditorSection>("general");
+  const [activeSection, setActiveSection] = useState<ProfileEditorSection>("general");
   const [activeDefinitionIds, setActiveDefinitionIds] = useState(() =>
     createInitialActiveDefinitionIds(defaultValues),
   );
-  const [customAddressFieldIds, setCustomAddressFieldIds] = useState<
-    Set<string>
-  >(
+  const [customAddressFieldIds, setCustomAddressFieldIds] = useState<Set<string>>(
     () =>
       new Set(
         addressFields.fields
@@ -129,26 +115,16 @@ export function useProfileEditorForm(
 
   useEffect(() => {
     setCustomAddressFieldIds((current) => {
-      const currentFieldIds = new Set(
-        addressFields.fields.map((field) => field.fieldId),
-      );
-      const next = new Set(
-        [...current].filter((fieldId) => currentFieldIds.has(fieldId)),
-      );
+      const currentFieldIds = new Set(addressFields.fields.map((field) => field.fieldId));
+      const next = new Set([...current].filter((fieldId) => currentFieldIds.has(fieldId)));
 
       for (const field of addressFields.fields) {
-        if (
-          !current.has(field.fieldId) &&
-          isCustomAddressCoinType(field.coinType)
-        ) {
+        if (!current.has(field.fieldId) && isCustomAddressCoinType(field.coinType)) {
           next.add(field.fieldId);
         }
       }
 
-      if (
-        next.size === current.size &&
-        [...next].every((fieldId) => current.has(fieldId))
-      ) {
+      if (next.size === current.size && [...next].every((fieldId) => current.has(fieldId))) {
         return current;
       }
 
@@ -158,12 +134,8 @@ export function useProfileEditorForm(
 
   useEffect(() => {
     setCustomTextFieldIds((current) => {
-      const currentFieldIds = new Set(
-        textFields.fields.map((field) => field.fieldId),
-      );
-      const next = new Set(
-        [...current].filter((fieldId) => currentFieldIds.has(fieldId)),
-      );
+      const currentFieldIds = new Set(textFields.fields.map((field) => field.fieldId));
+      const next = new Set([...current].filter((fieldId) => currentFieldIds.has(fieldId)));
 
       for (const field of textFields.fields) {
         if (
@@ -175,10 +147,7 @@ export function useProfileEditorForm(
         }
       }
 
-      if (
-        next.size === current.size &&
-        [...next].every((fieldId) => current.has(fieldId))
-      ) {
+      if (next.size === current.size && [...next].every((fieldId) => current.has(fieldId))) {
         return current;
       }
 

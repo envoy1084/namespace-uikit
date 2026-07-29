@@ -5,12 +5,7 @@ import { PieChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 import { ChartTooltip } from "@thenamespace/uikit/chart-tooltip";
 
-const colors = [
-  "var(--chart-4)",
-  "var(--chart-3)",
-  "var(--chart-2)",
-  "var(--chart-1)",
-];
+const colors = ["var(--chart-4)", "var(--chart-3)", "var(--chart-2)", "var(--chart-1)"];
 
 interface PieTooltipProps {
   active?: boolean;
@@ -80,9 +75,7 @@ export const DemoDonutWithContentExample = () => {
             <PieChart.Tooltip content={<PieTooltip />} />
           </PieChart>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-foreground text-3xl font-bold">
-              {(total / 1000).toFixed(1)}K
-            </span>
+            <span className="text-foreground text-3xl font-bold">{(total / 1000).toFixed(1)}K</span>
             <span className="text-muted text-sm">Devices</span>
           </div>
         </div>

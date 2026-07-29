@@ -20,11 +20,4 @@ const commitScopes = [
 
 export default defineCommitlintConfig({
   scopes: commitScopes,
-  rules: {
-    "breaking-change-exclamation-mark": [2, "always"],
-    "header-trim": [2, "always"],
-    "subject-case": [2, "never", ["sentence-case", "start-case", "pascal-case", "upper-case"]],
-    "type-case": [2, "always", "lower-case"],
-    "type-empty": [2, "never"],
-  },
 });

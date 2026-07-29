@@ -2,14 +2,7 @@
 
 import { useState } from "react";
 
-import {
-  Label,
-  ListBox,
-  NumberField,
-  ProgressBar,
-  Select,
-  Separator,
-} from "@thenamespace/uikit";
+import { Label, ListBox, NumberField, ProgressBar, Select, Separator } from "@thenamespace/uikit";
 
 const formatStyleOptions: { label: string; value: string }[] = [
   { label: "Currency", value: "currency" },
@@ -107,11 +100,7 @@ export function CustomValue() {
           </NumberField.Group>
         </NumberField>
 
-        <Select
-          value={format}
-          variant="secondary"
-          onChange={(key) => setFormat(key as string)}
-        >
+        <Select value={format} variant="secondary" onChange={(key) => setFormat(key as string)}>
           <Label>Format</Label>
           <Select.Trigger>
             <Select.Value />
@@ -120,11 +109,7 @@ export function CustomValue() {
           <Select.Popover>
             <ListBox>
               {formatStyleOptions.map((option) => (
-                <ListBox.Item
-                  key={option.value}
-                  id={option.value}
-                  textValue={option.label}
-                >
+                <ListBox.Item key={option.value} id={option.value} textValue={option.label}>
                   {option.label}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>

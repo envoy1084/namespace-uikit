@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Chip } from "@/components/data-display/chip";
 
@@ -54,16 +54,10 @@ export const Controlled: Story = {
     const [selected, setSelected] = useState(true);
     return (
       <div className="flex w-[252px] flex-col gap-2">
-        <CellSwitch
-          aria-label="Animations"
-          isSelected={selected}
-          onChange={setSelected}
-        >
+        <CellSwitch aria-label="Animations" isSelected={selected} onChange={setSelected}>
           <SwitchContents label="Animations" />
         </CellSwitch>
-        <p className="text-muted px-1 text-sm">
-          Animations: {selected ? "On" : "Off"}
-        </p>
+        <p className="text-muted px-1 text-sm">Animations: {selected ? "On" : "Off"}</p>
       </div>
     );
   },
@@ -80,12 +74,7 @@ function ControlledSwitch({
 }) {
   const [selected, setSelected] = useState(defaultSelected);
   return (
-    <CellSwitch
-      aria-label={label}
-      isSelected={selected}
-      variant={variant}
-      onChange={setSelected}
-    >
+    <CellSwitch aria-label={label} isSelected={selected} variant={variant} onChange={setSelected}>
       <SwitchContents label={label} />
     </CellSwitch>
   );
@@ -104,16 +93,8 @@ export const SettingsGroup: Story = {
 export const SecondaryGroup: Story = {
   render: () => (
     <div className="flex w-[252px] flex-col gap-2">
-      <ControlledSwitch
-        defaultSelected
-        label="Notifications"
-        variant="secondary"
-      />
-      <ControlledSwitch
-        defaultSelected={false}
-        label="Marketing emails"
-        variant="secondary"
-      />
+      <ControlledSwitch defaultSelected label="Notifications" variant="secondary" />
+      <ControlledSwitch defaultSelected={false} label="Marketing emails" variant="secondary" />
     </div>
   ),
 };
@@ -146,12 +127,7 @@ export const FeatureAnnouncement: Story = {
             <div className="flex min-w-0 flex-1 flex-col gap-0.5">
               <span className="flex items-center gap-1 text-sm font-semibold">
                 Try the new sidebar
-                <Chip
-                  className="h-4 px-0.5 text-[10px]"
-                  color="accent"
-                  size="sm"
-                  variant="soft"
-                >
+                <Chip className="h-4 px-0.5 text-[10px]" color="accent" size="sm" variant="soft">
                   <Chip.Label>New</Chip.Label>
                 </Chip>
               </span>

@@ -70,10 +70,7 @@ export function OnSurface() {
                 }}
               >
                 <Label>Bio</Label>
-                <TextArea
-                  placeholder="Tell us about yourself..."
-                  variant="secondary"
-                />
+                <TextArea placeholder="Tell us about yourself..." variant="secondary" />
                 <Description>Minimum 10 characters</Description>
                 <FieldError />
               </TextField>

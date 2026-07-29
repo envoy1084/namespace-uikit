@@ -4,9 +4,7 @@ export function LinkUnderlineAndOffset() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <p className="text-muted text-sm font-medium">
-          Default hover underline
-        </p>
+        <p className="text-muted text-sm font-medium">Default hover underline</p>
         <Link href="#">
           Hover to see the underline
           <Link.Icon />
@@ -14,9 +12,7 @@ export function LinkUnderlineAndOffset() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <p className="text-muted text-sm font-medium">
-          Always visible underline
-        </p>
+        <p className="text-muted text-sm font-medium">Always visible underline</p>
         <Link className="underline" href="#">
           Underline always visible
           <Link.Icon />
@@ -32,9 +28,7 @@ export function LinkUnderlineAndOffset() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <p className="text-muted text-sm font-medium">
-          Changing the underline offset
-        </p>
+        <p className="text-muted text-sm font-medium">Changing the underline offset</p>
         <div className="flex flex-col gap-3">
           <Link className="underline-offset-1" href="#">
             Offset 1 (1px space)

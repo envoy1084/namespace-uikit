@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Description,
-  Label,
-  ListBox,
-  ListLayout,
-  Virtualizer,
-} from "@thenamespace/uikit";
+import { Description, Label, ListBox, ListLayout, Virtualizer } from "@thenamespace/uikit";
 
 interface User {
   id: number;
@@ -66,8 +60,7 @@ export function Virtualization() {
 
     for (let i = 0; i < n; i++) {
       const firstName = firstNames[i % firstNames.length];
-      const lastName =
-        lastNames[Math.floor(i / firstNames.length) % lastNames.length];
+      const lastName = lastNames[Math.floor(i / firstNames.length) % lastNames.length];
       const name = `${firstName} ${lastName}`;
 
       users.push({

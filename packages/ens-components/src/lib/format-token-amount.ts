@@ -11,10 +11,7 @@ export function formatTokenAmount(
   decimals: number,
   options: FormatTokenAmountOptions = {},
 ) {
-  const maximumFractionDigits = Math.max(
-    0,
-    Math.trunc(options.maximumFractionDigits ?? decimals),
-  );
+  const maximumFractionDigits = Math.max(0, Math.trunc(options.maximumFractionDigits ?? decimals));
   const minimumFractionDigits = Math.min(
     maximumFractionDigits,
     Math.max(0, Math.trunc(options.minimumFractionDigits ?? 0)),
@@ -39,9 +36,7 @@ export function formatTokenAmount(
   const scale = 10n ** BigInt(displayDecimals);
   const integer = displayAmount / scale;
   let fraction =
-    displayDecimals === 0
-      ? ""
-      : (displayAmount % scale).toString().padStart(displayDecimals, "0");
+    displayDecimals === 0 ? "" : (displayAmount % scale).toString().padStart(displayDecimals, "0");
 
   while (fraction.length > minimumFractionDigits && fraction.endsWith("0")) {
     fraction = fraction.slice(0, -1);

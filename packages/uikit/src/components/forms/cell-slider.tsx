@@ -1,11 +1,6 @@
 "use client";
 
-import type {
-  ComponentProps,
-  ComponentPropsWithRef,
-  ReactElement,
-  ReactNode,
-} from "react";
+import type { ComponentProps, ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 import { createContext, useContext } from "react";
 
 import { cn, Slider } from "@heroui/react";
@@ -33,12 +28,8 @@ function CellSliderRoot({
       <Slider
         {...props}
         className={(renderProps) =>
-          cn(
-            "cell-slider",
-            typeof className === "function"
-              ? className(renderProps)
-              : className,
-          ) ?? "cell-slider"
+          cn("cell-slider", typeof className === "function" ? className(renderProps) : className) ??
+          "cell-slider"
         }
         data-slot="cell-slider"
         orientation="horizontal"
@@ -51,11 +42,7 @@ function CellSliderRoot({
 
 export type CellSliderTrackProps = ComponentProps<typeof Slider.Track>;
 
-function CellSliderTrack({
-  children,
-  className,
-  ...props
-}: CellSliderTrackProps): ReactElement {
+function CellSliderTrack({ children, className, ...props }: CellSliderTrackProps): ReactElement {
   const variant = useContext(CellSliderVariantContext);
   return (
     <Slider.Track
@@ -76,10 +63,7 @@ function CellSliderTrack({
 
 export type CellSliderFillProps = ComponentProps<typeof Slider.Fill>;
 
-function CellSliderFill({
-  className,
-  ...props
-}: CellSliderFillProps): ReactElement {
+function CellSliderFill({ className, ...props }: CellSliderFillProps): ReactElement {
   return (
     <Slider.Fill
       {...props}
@@ -91,11 +75,7 @@ function CellSliderFill({
 
 export type CellSliderThumbProps = ComponentProps<typeof Slider.Thumb>;
 
-function CellSliderThumb({
-  children,
-  className,
-  ...props
-}: CellSliderThumbProps): ReactElement {
+function CellSliderThumb({ children, className, ...props }: CellSliderThumbProps): ReactElement {
   return (
     <Slider.Thumb
       {...props}
@@ -114,17 +94,9 @@ function CellSliderThumb({
 
 export type CellSliderLabelProps = ComponentPropsWithRef<"span">;
 
-function CellSliderLabel({
-  children,
-  className,
-  ...props
-}: CellSliderLabelProps): ReactElement {
+function CellSliderLabel({ children, className, ...props }: CellSliderLabelProps): ReactElement {
   return (
-    <span
-      {...props}
-      className={cn("cell-slider__label", className)}
-      data-slot="cell-slider-label"
-    >
+    <span {...props} className={cn("cell-slider__label", className)} data-slot="cell-slider-label">
       {children}
     </span>
   );
@@ -132,11 +104,7 @@ function CellSliderLabel({
 
 export type CellSliderOutputProps = ComponentProps<typeof Slider.Output>;
 
-function CellSliderOutput({
-  children,
-  className,
-  ...props
-}: CellSliderOutputProps): ReactElement {
+function CellSliderOutput({ children, className, ...props }: CellSliderOutputProps): ReactElement {
   return (
     <Slider.Output
       {...props}

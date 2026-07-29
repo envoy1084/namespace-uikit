@@ -39,11 +39,7 @@
   .list-view--primary .list-view__item {
     background-color: var(--surface);
     border-bottom: 1px solid
-      color-mix(
-        in oklab,
-        var(--separator-tertiary, var(--separator)) 50%,
-        transparent
-      );
+      color-mix(in oklab, var(--separator-tertiary, var(--separator)) 50%, transparent);
   }
   .list-view--primary .list-view__item:last-child,
   .list-view--secondary .list-view__item:last-child {
@@ -72,11 +68,7 @@
   .list-view--secondary .list-view__item {
     background-color: transparent;
     border-bottom: 1px solid
-      color-mix(
-        in oklab,
-        var(--separator-tertiary, var(--separator)) 50%,
-        transparent
-      );
+      color-mix(in oklab, var(--separator-tertiary, var(--separator)) 50%, transparent);
   }
   @media (hover: hover) {
     .list-view--secondary .list-view__item:hover,

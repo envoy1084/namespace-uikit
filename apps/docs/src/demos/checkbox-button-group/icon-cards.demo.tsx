@@ -44,11 +44,7 @@ export const DemoIconCardsExample = () => (
   >
     <Label>Security features</Label>
     {securityFeatures.map((feature) => (
-      <CheckboxButtonGroup.Item
-        className="bg-default"
-        key={feature.value}
-        value={feature.value}
-      >
+      <CheckboxButtonGroup.Item className="bg-default" key={feature.value} value={feature.value}>
         <CheckboxButtonGroup.Indicator>
           <Icon icon="solar:check-circle-bold" />
         </CheckboxButtonGroup.Indicator>

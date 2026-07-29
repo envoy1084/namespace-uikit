@@ -29,11 +29,7 @@ export const DemoCustomDelaysExample = () => (
       { closeDelay: 300, label: "Default (700 / 300)", openDelay: 700 },
       { closeDelay: 500, label: "Slow (1s / 500)", openDelay: 1000 },
     ].map((config) => (
-      <HoverCard
-        closeDelay={config.closeDelay}
-        key={config.label}
-        openDelay={config.openDelay}
-      >
+      <HoverCard closeDelay={config.closeDelay} key={config.label} openDelay={config.openDelay}>
         <HoverCard.Trigger>
           <Button variant="outline">{config.label}</Button>
         </HoverCard.Trigger>

@@ -19,9 +19,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => (
     <Assistant>
-      <ChatMessage.Content>
-        Here is an answer backed by a single web source.
-      </ChatMessage.Content>
+      <ChatMessage.Content>Here is an answer backed by a single web source.</ChatMessage.Content>
       <ChatSource
         description="Namespace UIKit ships presentation-only AI chat compounds for React."
         faviconUrl={favicon("https://namespace.ninja")}
@@ -34,9 +32,7 @@ export const Default: Story = {
 export const Document: Story = {
   render: () => (
     <Assistant>
-      <ChatMessage.Content>
-        Referenced an uploaded document.
-      </ChatMessage.Content>
+      <ChatMessage.Content>Referenced an uploaded document.</ChatMessage.Content>
       <ChatSource sourceType="document" title="Q3-launch-brief.pdf" />
     </Assistant>
   ),
@@ -44,9 +40,7 @@ export const Document: Story = {
 export const Grouped: Story = {
   render: () => (
     <Assistant>
-      <ChatMessage.Content>
-        Answer synthesized from multiple sources.
-      </ChatMessage.Content>
+      <ChatMessage.Content>Answer synthesized from multiple sources.</ChatMessage.Content>
       <ChatSources defaultExpanded={false}>
         <ChatSources.Trigger>3 sources</ChatSources.Trigger>
         <ChatSources.Content>
@@ -73,9 +67,8 @@ export const Composable: Story = {
   render: () => (
     <Assistant>
       <ChatMessage.Content>
-        React&apos;s documentation has a clear explanation of component
-        composition and state-driven rendering. The source chip below uses
-        custom trigger content with a fetched favicon.
+        React&apos;s documentation has a clear explanation of component composition and state-driven
+        rendering. The source chip below uses custom trigger content with a fetched favicon.
       </ChatMessage.Content>
       <ChatSource enablePreview href="https://react.dev">
         <ChatSource.Trigger>
@@ -86,9 +79,7 @@ export const Composable: Story = {
           <div className="flex max-w-72 flex-col gap-2">
             <div className="flex items-center gap-2">
               <ChatSource.Icon faviconUrl={favicon("https://react.dev")} />
-              <span className="text-foreground text-sm font-medium">
-                react.dev
-              </span>
+              <span className="text-foreground text-sm font-medium">react.dev</span>
             </div>
             <p className="text-muted text-sm">
               Official React documentation for learning modern React patterns.
@@ -110,9 +101,7 @@ export const StackedFavicons: Story = {
 
     return (
       <Assistant>
-        <ChatMessage.Content>
-          Answer synthesized from multiple sources.
-        </ChatMessage.Content>
+        <ChatMessage.Content>Answer synthesized from multiple sources.</ChatMessage.Content>
         <ChatSources defaultExpanded={false}>
           <ChatSources.Trigger>
             <span className="inline-flex -space-x-1.5">

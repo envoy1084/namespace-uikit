@@ -1,9 +1,8 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import {
   Autocomplete,
   EmptyState,
@@ -52,15 +51,9 @@ export function Controlled() {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               {states.map((state) => (
-                <ListBox.Item
-                  key={state.id}
-                  id={state.id}
-                  textValue={state.name}
-                >
+                <ListBox.Item key={state.id} id={state.id} textValue={state.name}>
                   {state.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
@@ -69,9 +62,7 @@ export function Controlled() {
           </Autocomplete.Filter>
         </Autocomplete.Popover>
       </Autocomplete>
-      <p className="text-muted text-sm">
-        Selected: {selectedState?.name || "None"}
-      </p>
+      <p className="text-muted text-sm">Selected: {selectedState?.name || "None"}</p>
     </div>
   );
 }

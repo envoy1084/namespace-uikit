@@ -8,12 +8,7 @@ export function Controlled() {
   const [selected, setSelected] = useState(["coding", "design"]);
 
   return (
-    <CheckboxGroup
-      className="min-w-[320px]"
-      name="skills"
-      value={selected}
-      onChange={setSelected}
-    >
+    <CheckboxGroup className="min-w-[320px]" name="skills" value={selected} onChange={setSelected}>
       <Label>Your skills</Label>
       <Checkbox value="coding">
         <Checkbox.Content>
@@ -39,9 +34,7 @@ export function Controlled() {
           Writing
         </Checkbox.Content>
       </Checkbox>
-      <Label className="text-muted my-4 text-sm">
-        Selected: {selected.join(", ") || "None"}
-      </Label>
+      <Label className="text-muted my-4 text-sm">Selected: {selected.join(", ") || "None"}</Label>
     </CheckboxGroup>
   );
 }

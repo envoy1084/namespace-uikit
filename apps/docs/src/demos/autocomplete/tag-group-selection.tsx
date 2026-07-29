@@ -1,9 +1,8 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import {
   Autocomplete,
   EmptyState,
@@ -50,9 +49,7 @@ export function TagGroupSelection() {
               return defaultChildren;
             }
 
-            const selectedItemsKeys = state.selectedItems.map(
-              (item) => item.key,
-            );
+            const selectedItemsKeys = state.selectedItems.map((item) => item.key);
 
             return (
               <TagGroup size="sm" onRemove={onRemoveTags}>
@@ -85,9 +82,7 @@ export function TagGroupSelection() {
               <SearchField.ClearButton />
             </SearchField.Group>
           </SearchField>
-          <ListBox
-            renderEmptyState={() => <EmptyState>No tags found</EmptyState>}
-          >
+          <ListBox renderEmptyState={() => <EmptyState>No tags found</EmptyState>}>
             {tags.map((tag) => (
               <ListBox.Item key={tag.id} id={tag.id} textValue={tag.name}>
                 {tag.name}

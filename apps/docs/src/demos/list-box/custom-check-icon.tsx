@@ -1,16 +1,7 @@
 "use client";
 
-import {
-  Avatar,
-  Description,
-  Label,
-  ListBox,
-  Surface,
-} from "@thenamespace/uikit";
-import {
-  CheckmarkSquare02Icon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import { Avatar, Description, Label, ListBox, Surface } from "@thenamespace/uikit";
+import { CheckmarkSquare02Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomCheckIcon() {
   return (

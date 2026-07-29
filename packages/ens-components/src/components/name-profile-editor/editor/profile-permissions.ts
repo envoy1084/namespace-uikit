@@ -1,26 +1,14 @@
-import type {
-  NameProfilePermissionRequest,
-  NameProfilePermissions,
-} from "#/actions";
+import type { NameProfilePermissionRequest, NameProfilePermissions } from "#/actions";
+import { canEditNameProfileRecord, getNameProfilePermissionId } from "#/actions";
+import { recordDefinitions } from "#/components/name-profile-editor/editor/record-definitions";
 import type { RecordDefinition } from "#/components/name-profile-editor/editor/types";
 import type {
   NameProfileFormValues,
   NameProfileRecordChange,
 } from "#/components/name-profile-editor/types";
 
-import {
-  canEditNameProfileRecord,
-  getNameProfilePermissionId,
-} from "#/actions";
-import { recordDefinitions } from "#/components/name-profile-editor/editor/record-definitions";
-
-function definitionPermission(
-  definition: RecordDefinition,
-): NameProfilePermissionRequest {
-  if (
-    (definition.type === "address" || definition.type === "text") &&
-    !definition.isCustom
-  ) {
+function definitionPermission(definition: RecordDefinition): NameProfilePermissionRequest {
+  if ((definition.type === "address" || definition.type === "text") && !definition.isCustom) {
     return { key: definition.name, type: definition.type };
   }
 
@@ -43,8 +31,7 @@ export function profileChangePermission(
 export function createEditorPermissionRequests(
   values: NameProfileFormValues,
 ): readonly NameProfilePermissionRequest[] {
-  const requests: NameProfilePermissionRequest[] =
-    recordDefinitions.map(definitionPermission);
+  const requests: NameProfilePermissionRequest[] = recordDefinitions.map(definitionPermission);
 
   requests.push(
     ...values.text.map(({ key }) => ({ key, type: "text" as const })),

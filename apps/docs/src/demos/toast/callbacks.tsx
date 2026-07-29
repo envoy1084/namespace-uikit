@@ -95,9 +95,7 @@ export function Callbacks() {
         </div>
         <div className="border-border bg-surface min-h-[120px] space-y-2 rounded-lg border p-4">
           {closedHistory.length === 0 ? (
-            <p className="text-muted text-sm">
-              No toasts closed yet. Try closing one above!
-            </p>
+            <p className="text-muted text-sm">No toasts closed yet. Try closing one above!</p>
           ) : (
             closedHistory.map((item, index) => (
               <div
@@ -119,11 +117,7 @@ export function Callbacks() {
                     strokeWidth="2"
                     viewBox="0 0 24 24"
                   >
-                    <path
-                      d="M5 13l4 4L19 7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
+                    <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               </div>

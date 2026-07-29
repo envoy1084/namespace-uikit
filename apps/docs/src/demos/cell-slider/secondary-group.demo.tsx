@@ -49,15 +49,7 @@ function ControlledCellSlider({
 
 export const DemoSecondaryGroupExample = () => (
   <div className="flex w-[252px] flex-col gap-2">
-    <ControlledCellSlider
-      defaultValue={0.5}
-      label="Spacing"
-      variant="secondary"
-    />
-    <ControlledCellSlider
-      defaultValue={0.3}
-      label="Font Size"
-      variant="secondary"
-    />
+    <ControlledCellSlider defaultValue={0.5} label="Spacing" variant="secondary" />
+    <ControlledCellSlider defaultValue={0.3} label="Font Size" variant="secondary" />
   </div>
 );

@@ -4,9 +4,7 @@ export function Disabled() {
   return (
     <RadioGroup isDisabled defaultValue="pro" name="plan-disabled">
       <Label>Subscription plan</Label>
-      <Description>
-        Plan changes are temporarily paused while we roll out updates.
-      </Description>
+      <Description>Plan changes are temporarily paused while we roll out updates.</Description>
       <Radio value="starter">
         <Radio.Content>
           <Radio.Control>

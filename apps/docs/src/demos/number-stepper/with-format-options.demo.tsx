@@ -23,9 +23,7 @@ function StepperContent({
 
 export const DemoWithFormatOptionsExample = () => (
   <div className="flex flex-col items-center gap-5">
-    <p className="text-muted text-sm">
-      Currency and percentage formatting via formatOptions.
-    </p>
+    <p className="text-muted text-sm">Currency and percentage formatting via formatOptions.</p>
     <div className="flex gap-8">
       <div className="flex flex-col items-center gap-2">
         <span className="text-muted text-sm">Currency (USD)</span>
@@ -35,10 +33,7 @@ export const DemoWithFormatOptionsExample = () => (
           formatOptions={{ currency: "USD", style: "currency" }}
           minValue={0}
         >
-          <StepperContent
-            decrementLabel="Decrease Price"
-            incrementLabel="Increase Price"
-          />
+          <StepperContent decrementLabel="Decrease Price" incrementLabel="Increase Price" />
         </NumberStepper>
       </div>
       <div className="flex flex-col items-center gap-2">
@@ -51,10 +46,7 @@ export const DemoWithFormatOptionsExample = () => (
           minValue={0}
           step={0.1}
         >
-          <StepperContent
-            decrementLabel="Decrease Opacity"
-            incrementLabel="Increase Opacity"
-          />
+          <StepperContent decrementLabel="Decrease Opacity" incrementLabel="Increase Opacity" />
         </NumberStepper>
       </div>
     </div>

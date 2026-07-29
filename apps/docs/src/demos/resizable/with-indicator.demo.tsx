@@ -3,13 +3,7 @@
 // @demo-title With Indicator
 import { Resizable } from "@thenamespace/uikit";
 
-const Content = ({
-  children,
-  className = "",
-}: {
-  children: string;
-  className?: string;
-}) => (
+const Content = ({ children, className = "" }: { children: string; className?: string }) => (
   <div className={`flex h-full items-center justify-center p-6 ${className}`}>
     <span className="text-sm font-medium">{children}</span>
   </div>

@@ -1,5 +1,9 @@
 "use client";
 
+import { useEffect, useId, useRef, useState } from "react";
+
+import { Accordion, Button, Surface, Typography } from "@thenamespace/uikit";
+import { ArrowLeft01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import type { Hex } from "viem";
 
 import type {
@@ -7,13 +11,6 @@ import type {
   NameProfileEditorPresentation,
   NameProfileEditorSlots,
 } from "#/components/name-profile-editor/customization";
-import type { NameProfileRecordChange } from "#/components/name-profile-editor/types";
-
-import { useEffect, useId, useRef, useState } from "react";
-
-import { Accordion, Button, Surface, Typography } from "@thenamespace/uikit";
-import { ArrowLeft01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
-
 import { createProfileDiffSections } from "#/components/name-profile-editor/diff/diff-records";
 import { ProfileDiffSection } from "#/components/name-profile-editor/diff/diff-section";
 import {
@@ -22,14 +19,12 @@ import {
   NameProfileEditorHeader,
   NameProfileEditorHeading,
 } from "#/components/name-profile-editor/layout";
+import type { NameProfileRecordChange } from "#/components/name-profile-editor/types";
 import { TransactionProgress } from "#/components/transaction-progress";
 import { formatError } from "#/lib";
 import { useEnsConfig } from "#/providers";
 
-const ReviewGraphic = new URL(
-  "../../../assets/register-ens-header.svg",
-  import.meta.url,
-);
+const ReviewGraphic = new URL("../../../assets/register-ens-header.svg", import.meta.url);
 
 export function ProfileDiffScreen({
   buttonLabel,
@@ -70,10 +65,7 @@ export function ProfileDiffScreen({
   const screenRef = useRef<HTMLDivElement>(null);
   const sections = createProfileDiffSections(changes);
   const [expandedKeys, setExpandedKeys] = useState(
-    () =>
-      new Set<string | number>(
-        sections[0] === undefined ? [] : [sections[0].id],
-      ),
+    () => new Set<string | number>(sections[0] === undefined ? [] : [sections[0].id]),
   );
 
   useEffect(() => {
@@ -118,9 +110,7 @@ export function ProfileDiffScreen({
           >
             {messages.reviewTitle}
           </NameProfileEditorHeading>
-          <p className="text-muted text-center text-sm">
-            {messages.reviewDescription}
-          </p>
+          <p className="text-muted text-center text-sm">{messages.reviewDescription}</p>
         </div>
       </NameProfileEditorHeader>
 
@@ -128,21 +118,14 @@ export function ProfileDiffScreen({
         className="mt-2 flex-none px-3 min-[420px]:px-6"
         presentation={presentation}
       >
-        <Surface
-          className="mt-2 rounded-2xl p-2 min-[420px]:p-3"
-          variant="secondary"
-        >
+        <Surface className="mt-2 rounded-2xl p-2 min-[420px]:p-3" variant="secondary">
           <Accordion
             className="flex flex-col gap-2"
             expandedKeys={expandedKeys}
             onExpandedChange={setExpandedKeys}
           >
             {sections.map((section) => (
-              <ProfileDiffSection
-                key={section.id}
-                messages={messages}
-                section={section}
-              />
+              <ProfileDiffSection key={section.id} messages={messages} section={section} />
             ))}
           </Accordion>
         </Surface>

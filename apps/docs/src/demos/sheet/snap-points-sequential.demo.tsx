@@ -11,9 +11,9 @@ const snapPoints = ["148px", "355px", 1];
 const sequentialPoints = ["148px", "355px", 1];
 
 function SnapPointsSequentialDemo() {
-  const [activeSnapPoint, setActiveSnapPoint] = useState<
-    number | string | null
-  >(sequentialPoints[0]!);
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
+    sequentialPoints[0]!,
+  );
 
   return (
     <Sheet
@@ -32,16 +32,15 @@ function SnapPointsSequentialDemo() {
             <Sheet.Header>
               <Sheet.Heading>Sequential</Sheet.Heading>
               <p className="text-muted text-sm">
-                Current:{" "}
-                {typeof activeSnapPoint === "number" ? "100%" : activeSnapPoint}
+                Current: {typeof activeSnapPoint === "number" ? "100%" : activeSnapPoint}
               </p>
             </Sheet.Header>
             <Sheet.Body>
               <p className="text-muted text-sm">
                 Velocity-based snapping is disabled with{" "}
-                <code className="text-foreground">snapToSequentialPoint</code>.
-                A snap point won&apos;t be skipped even if you flick quickly.
-                Useful when each level is equally important.
+                <code className="text-foreground">snapToSequentialPoint</code>. A snap point
+                won&apos;t be skipped even if you flick quickly. Useful when each level is equally
+                important.
               </p>
             </Sheet.Body>
           </Sheet.Dialog>
@@ -51,6 +50,4 @@ function SnapPointsSequentialDemo() {
   );
 }
 
-export const DemoSnapPointsSequentialExample = () => (
-  <SnapPointsSequentialDemo />
-);
+export const DemoSnapPointsSequentialExample = () => <SnapPointsSequentialDemo />;

@@ -1,10 +1,9 @@
 "use client";
 
-import type { Selection } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
 import { Icon } from "@iconify/react";
+import type { Selection } from "@thenamespace/uikit";
 import { Button, Table, cn } from "@thenamespace/uikit";
 
 export function ExpandableRows() {
@@ -71,9 +70,7 @@ export function ExpandableRows() {
     },
   ];
 
-  const [expandedKeys, setExpandedKeys] = useState<Selection>(
-    () => new Set(["1"]),
-  );
+  const [expandedKeys, setExpandedKeys] = useState<Selection>(() => new Set(["1"]));
 
   const renderExpandableRow = (item: Row) => {
     return (
@@ -106,9 +103,7 @@ export function ExpandableRows() {
         </Table.Cell>
         <Table.Cell>{item.type}</Table.Cell>
         <Table.Cell>{item.date}</Table.Cell>
-        <Table.Collection items={item.children}>
-          {renderExpandableRow}
-        </Table.Collection>
+        <Table.Collection items={item.children}>{renderExpandableRow}</Table.Collection>
       </Table.Row>
     );
   };

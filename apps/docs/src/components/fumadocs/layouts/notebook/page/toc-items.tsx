@@ -1,11 +1,10 @@
 // oxlint-disable eslint/no-shadow, jsdoc/check-tag-names, unicorn/consistent-function-scoping
 "use client";
 
-import type { TOCItemType } from "fumadocs-core/toc";
-
 import type { ComponentProps, RefObject } from "react";
 import { useCallback, useEffect, useRef } from "react";
 
+import type { TOCItemType } from "fumadocs-core/toc";
 import * as Primitive from "fumadocs-core/toc";
 import { useTOCItems } from "fumadocs-ui/components/toc";
 
@@ -21,9 +20,7 @@ function calc(container: HTMLElement, active: string[]): [number, number] {
   for (const id of active) {
     const element =
       container.querySelector<HTMLElement>(`a[href="#${id}"]`) ??
-      container.querySelector<HTMLElement>(
-        `a[href="#${encodeURIComponent(id)}"]`,
-      );
+      container.querySelector<HTMLElement>(`a[href="#${encodeURIComponent(id)}"]`);
 
     if (!element) continue;
 
@@ -32,9 +29,7 @@ function calc(container: HTMLElement, active: string[]): [number, number] {
     upper = Math.min(upper, element.offsetTop + parseFloat(styles.paddingTop));
     lower = Math.max(
       lower,
-      element.offsetTop +
-        element.clientHeight -
-        parseFloat(styles.paddingBottom),
+      element.offsetTop + element.clientHeight - parseFloat(styles.paddingBottom),
     );
   }
 
@@ -43,11 +38,7 @@ function calc(container: HTMLElement, active: string[]): [number, number] {
   return [upper, lower - upper];
 }
 
-function TocThumb({
-  containerRef,
-}: {
-  containerRef: RefObject<HTMLDivElement | null>;
-}) {
+function TocThumb({ containerRef }: { containerRef: RefObject<HTMLDivElement | null> }) {
   const thumbRef = useRef<HTMLDivElement>(null);
   const active = Primitive.useActiveAnchors();
 
@@ -116,10 +107,7 @@ export function TOCItems({ className, ref, ...props }: TOCItemsProps) {
       <TocThumb containerRef={containerRef} />
       <div
         ref={mergeRefs(ref, containerRef)}
-        className={cn(
-          "border-fd-foreground/10 flex flex-col border-s",
-          className,
-        )}
+        className={cn("border-fd-foreground/10 flex flex-col border-s", className)}
         {...props}
       >
         {items.map((item) => (

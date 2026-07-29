@@ -24,17 +24,10 @@ export const DemoCustomIndicatorExample = () => (
     ].map(([value, description, users]) => (
       <RadioButtonGroup.Item key={value} value={value as string}>
         <RadioButtonGroup.Indicator>
-          <HugeiconsIcon
-            aria-hidden
-            icon={CheckmarkCircle02Icon}
-            size={20}
-            strokeWidth={2}
-          />
+          <HugeiconsIcon aria-hidden icon={CheckmarkCircle02Icon} size={20} strokeWidth={2} />
         </RadioButtonGroup.Indicator>
         <RadioButtonGroup.ItemContent>
-          <Label className="capitalize">
-            {(value as string).replace(/-/g, " ")}
-          </Label>
+          <Label className="capitalize">{(value as string).replace(/-/g, " ")}</Label>
           <Description>{description}</Description>
           <NumberValue
             className="mt-3 text-sm font-semibold"

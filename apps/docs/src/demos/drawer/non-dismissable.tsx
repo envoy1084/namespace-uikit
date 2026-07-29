@@ -12,8 +12,8 @@ export function NonDismissable() {
             </Drawer.Header>
             <Drawer.Body>
               <p>
-                This drawer cannot be dismissed by clicking outside or dragging.
-                You must use one of the buttons below.
+                This drawer cannot be dismissed by clicking outside or dragging. You must use one of
+                the buttons below.
               </p>
             </Drawer.Body>
             <Drawer.Footer>

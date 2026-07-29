@@ -25,11 +25,7 @@ export const DemoWithProgressExample = () => (
           <KPI.Title>{card.title}</KPI.Title>
         </KPI.Header>
         <KPI.Content>
-          <KPI.Value
-            maximumFractionDigits={0}
-            style="percent"
-            value={card.value}
-          />
+          <KPI.Value maximumFractionDigits={0} style="percent" value={card.value} />
           <KPI.Progress
             status={card.status as "danger" | "success" | "warning"}
             value={card.progress}

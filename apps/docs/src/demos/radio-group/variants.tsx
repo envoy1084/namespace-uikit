@@ -5,11 +5,7 @@ export function Variants() {
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-2">
         <p className="text-muted text-sm font-medium">Primary variant</p>
-        <RadioGroup
-          defaultValue="option1"
-          name="primary-plan"
-          variant="primary"
-        >
+        <RadioGroup defaultValue="option1" name="primary-plan" variant="primary">
           <Radio value="option1">
             <Radio.Content>
               <Radio.Control>
@@ -32,11 +28,7 @@ export function Variants() {
       </div>
       <div className="flex flex-col gap-2">
         <p className="text-muted text-sm font-medium">Secondary variant</p>
-        <RadioGroup
-          defaultValue="option1"
-          name="secondary-plan"
-          variant="secondary"
-        >
+        <RadioGroup defaultValue="option1" name="secondary-plan" variant="secondary">
           <Radio value="option1">
             <Radio.Content>
               <Radio.Control>
@@ -44,9 +36,7 @@ export function Variants() {
               </Radio.Control>
               Option 1
             </Radio.Content>
-            <Description>
-              Lower emphasis variant for use in surfaces
-            </Description>
+            <Description>Lower emphasis variant for use in surfaces</Description>
           </Radio>
           <Radio value="option2">
             <Radio.Content>

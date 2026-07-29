@@ -1,38 +1,18 @@
 import React from "react";
 
-import {
-  Description,
-  Header,
-  Kbd,
-  Label,
-  ListBox,
-  Separator,
-  Surface,
-} from "@thenamespace/uikit";
-import {
-  AddSquareIcon,
-  Delete02Icon,
-  PencilEdit01Icon,
-} from "@thenamespace/uikit/icons";
+import { Description, Header, Kbd, Label, ListBox, Separator, Surface } from "@thenamespace/uikit";
+import { AddSquareIcon, Delete02Icon, PencilEdit01Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function ListBoxDemo() {
   return (
     <Surface className="shadow-surface w-[256px] rounded-3xl">
-      <ListBox
-        aria-label="File actions"
-        className="w-full p-2"
-        selectionMode="none"
-      >
+      <ListBox aria-label="File actions" className="w-full p-2" selectionMode="none">
         <ListBox.Section>
           <Header>Actions</Header>
           <ListBox.Item id="new-file" textValue="New file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <HugeiconsIcon
-                className="text-muted shrink-0"
-                icon={AddSquareIcon}
-                size={16}
-              />
+              <HugeiconsIcon className="text-muted shrink-0" icon={AddSquareIcon} size={16} />
             </div>
             <div className="flex flex-col">
               <Label>New file</Label>
@@ -45,11 +25,7 @@ export function ListBoxDemo() {
           </ListBox.Item>
           <ListBox.Item id="edit-file" textValue="Edit file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <HugeiconsIcon
-                className="text-muted shrink-0"
-                icon={PencilEdit01Icon}
-                size={16}
-              />
+              <HugeiconsIcon className="text-muted shrink-0" icon={PencilEdit01Icon} size={16} />
             </div>
             <div className="flex flex-col">
               <Label>Edit file</Label>
@@ -64,17 +40,9 @@ export function ListBoxDemo() {
         <Separator />
         <ListBox.Section>
           <Header>Danger zone</Header>
-          <ListBox.Item
-            id="delete-file"
-            textValue="Delete file"
-            variant="danger"
-          >
+          <ListBox.Item id="delete-file" textValue="Delete file" variant="danger">
             <div className="flex h-8 items-start justify-center pt-px">
-              <HugeiconsIcon
-                className="text-danger shrink-0"
-                icon={Delete02Icon}
-                size={16}
-              />
+              <HugeiconsIcon className="text-danger shrink-0" icon={Delete02Icon} size={16} />
             </div>
             <div className="flex flex-col">
               <Label>Delete file</Label>

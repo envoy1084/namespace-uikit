@@ -65,9 +65,7 @@ function TraceSection({
     <ChainOfThought defaultExpanded={defaultExpanded} isStreaming={isStreaming}>
       <ChainOfThought.Trigger>{title}</ChainOfThought.Trigger>
       <ChainOfThought.Content>
-        <ChainOfThought.Steps className="gap-2">
-          {children}
-        </ChainOfThought.Steps>
+        <ChainOfThought.Steps className="gap-2">{children}</ChainOfThought.Steps>
       </ChainOfThought.Content>
     </ChainOfThought>
   );
@@ -88,10 +86,9 @@ function AgentTraceDemo({ isStreaming = false }: { isStreaming?: boolean }) {
       <TraceSection isStreaming={isStreaming} title="Thought for 2s">
         <ChainOfThought.Step>
           <p>
-            The user wants a simple login page. This is a straightforward UI
-            task - I should create a clean login form. Let me generate some
-            design inspiration first to ensure it looks good, then build the
-            page.
+            The user wants a simple login page. This is a straightforward UI task - I should create
+            a clean login form. Let me generate some design inspiration first to ensure it looks
+            good, then build the page.
           </p>
         </ChainOfThought.Step>
       </TraceSection>
@@ -135,8 +132,8 @@ function AgentTraceDemo({ isStreaming = false }: { isStreaming?: boolean }) {
       <TraceSection isStreaming={isStreaming} title="Explore • 4 Files">
         <ChainOfThought.Step>
           <p>
-            I have all the components I need. Let me read the button, input,
-            card, and label components to understand their APIs:
+            I have all the components I need. Let me read the button, input, card, and label
+            components to understand their APIs:
           </p>
         </ChainOfThought.Step>
         {[
@@ -158,8 +155,8 @@ function AgentTraceDemo({ isStreaming = false }: { isStreaming?: boolean }) {
       <TraceSection isStreaming={isStreaming} title="Updated layout">
         <ChainOfThought.Step>
           <p>
-            Now I have all the information I need. Let me create a clean, simple
-            login page using the existing design system components:
+            Now I have all the information I need. Let me create a clean, simple login page using
+            the existing design system components:
           </p>
         </ChainOfThought.Step>
         <CollapsibleStep title="login-form.tsx">

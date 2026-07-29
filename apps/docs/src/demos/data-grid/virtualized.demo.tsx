@@ -1,23 +1,18 @@
 // @ts-nocheck -- Complex demo data intentionally uses heterogeneous shapes.
 "use client";
 
-// @demo-title Virtualized
-import type { Selection } from "react-aria-components";
-
 import { useMemo, useState } from "react";
 
 import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
 import { Chip } from "@thenamespace/uikit/chip";
-import {
-  CancelCircleIcon,
-  CheckmarkCircle02Icon,
-  Clock01Icon,
-} from "@thenamespace/uikit/icons";
+import { CancelCircleIcon, CheckmarkCircle02Icon, Clock01Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { Rating } from "@thenamespace/uikit/rating";
 import { SearchField } from "@thenamespace/uikit/search-field";
 import { Segment } from "@thenamespace/uikit/segment";
+// @demo-title Virtualized
+import type { Selection } from "react-aria-components";
 
 type Product = {
   cost: number;
@@ -86,18 +81,7 @@ const productBrands = [
   "NeonPulse",
 ] as const;
 
-const skuPrefixes = [
-  "AUD",
-  "KEY",
-  "MON",
-  "MSE",
-  "SPK",
-  "CAM",
-  "ACC",
-  "NET",
-  "FRN",
-  "LGT",
-] as const;
+const skuPrefixes = ["AUD", "KEY", "MON", "MSE", "SPK", "CAM", "ACC", "NET", "FRN", "LGT"] as const;
 
 const productSeeded = (seed: number) => {
   const value = Math.sin(seed) * 10_000;
@@ -106,18 +90,13 @@ const productSeeded = (seed: number) => {
 
 const products: Product[] = Array.from({ length: 1000 }, (_, index) => {
   const random = (offset: number) => productSeeded(index * 7 + offset);
-  const prefix =
-    productPrefixes[Math.floor(random(1) * productPrefixes.length)]!;
+  const prefix = productPrefixes[Math.floor(random(1) * productPrefixes.length)]!;
   const kind = productKinds[Math.floor(random(2) * productKinds.length)]!;
   const brand = productBrands[Math.floor(random(3) * productBrands.length)]!;
   const skuPrefix = skuPrefixes[Math.floor(random(4) * skuPrefixes.length)]!;
   const availability = random(5);
   const status =
-    availability > 0.7
-      ? "In Stock"
-      : availability > 0.25
-        ? "Low Stock"
-        : "Out of Stock";
+    availability > 0.7 ? "In Stock" : availability > 0.25 ? "Low Stock" : "Out of Stock";
   const price = Math.round(20 + random(6) * 2000);
   return {
     cost: Math.round(price * (0.3 + random(7) * 0.4)),
@@ -170,8 +149,7 @@ export const DemoVirtualizedExample = function Demo() {
     let current = products;
     if (status !== "all")
       current = current.filter(
-        (product) =>
-          product.status === statusNames[status as keyof typeof statusNames],
+        (product) => product.status === statusNames[status as keyof typeof statusNames],
       );
     if (query) {
       const normalized = query.toLowerCase();
@@ -185,11 +163,7 @@ export const DemoVirtualizedExample = function Demo() {
   }, [query, status]);
   const profit = useMemo(
     () =>
-      filtered.reduce(
-        (total, product) =>
-          total + (product.price - product.cost) * product.sold,
-        0,
-      ),
+      filtered.reduce((total, product) => total + (product.price - product.cost) * product.sold, 0),
     [filtered],
   );
   const sales = useMemo(
@@ -246,22 +220,14 @@ export const DemoVirtualizedExample = function Demo() {
     {
       accessorKey: "price",
       align: "end",
-      cell: (product) => (
-        <span className="tabular-nums">
-          {formatWholeCurrency(product.price)}
-        </span>
-      ),
+      cell: (product) => <span className="tabular-nums">{formatWholeCurrency(product.price)}</span>,
       header: "Price",
       id: "price",
     },
     {
       accessorKey: "cost",
       align: "end",
-      cell: (product) => (
-        <span className="tabular-nums">
-          {formatWholeCurrency(product.cost)}
-        </span>
-      ),
+      cell: (product) => <span className="tabular-nums">{formatWholeCurrency(product.cost)}</span>,
       cellClassName: "text-muted",
       header: "Cost",
       id: "cost",
@@ -269,12 +235,7 @@ export const DemoVirtualizedExample = function Demo() {
     {
       accessorKey: "rating",
       cell: (product) => (
-        <Rating
-          isReadOnly
-          aria-label={`${product.rating} stars`}
-          size="sm"
-          value={product.rating}
-        >
+        <Rating isReadOnly aria-label={`${product.rating} stars`} size="sm" value={product.rating}>
           {[1, 2, 3, 4, 5].map((value) => (
             <Rating.Item key={value} value={value} />
           ))}
@@ -286,9 +247,7 @@ export const DemoVirtualizedExample = function Demo() {
     {
       accessorKey: "sold",
       align: "end",
-      cell: (product) => (
-        <span className="tabular-nums">{product.sold.toLocaleString()}</span>
-      ),
+      cell: (product) => <span className="tabular-nums">{product.sold.toLocaleString()}</span>,
       header: "Sales",
       id: "sold",
     },
@@ -304,11 +263,7 @@ export const DemoVirtualizedExample = function Demo() {
           <Segment.Item id="out-of-stock">Out of Stock</Segment.Item>
           <Segment.Item id="low-stock">Low Stock</Segment.Item>
         </Segment>
-        <SearchField
-          aria-label="Search products"
-          value={query}
-          onChange={setQuery}
-        >
+        <SearchField aria-label="Search products" value={query} onChange={setQuery}>
           <SearchField.Group>
             <SearchField.SearchIcon />
             <SearchField.Input className="w-[180px]" placeholder="Search..." />
@@ -335,9 +290,7 @@ export const DemoVirtualizedExample = function Demo() {
       <div className="flex items-center justify-between px-4 text-sm">
         <span className="text-muted">
           {filtered.length.toLocaleString()} products
-          {selectedCount > 0
-            ? ` · ${selectedCount.toLocaleString()} selected`
-            : null}
+          {selectedCount > 0 ? ` · ${selectedCount.toLocaleString()} selected` : null}
         </span>
         <div className="flex gap-6">
           <span className="text-muted">

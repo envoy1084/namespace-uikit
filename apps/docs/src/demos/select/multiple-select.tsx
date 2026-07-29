@@ -2,11 +2,7 @@ import { Label, ListBox, Select } from "@thenamespace/uikit";
 
 export function MultipleSelect() {
   return (
-    <Select
-      className="w-[256px]"
-      placeholder="Select countries"
-      selectionMode="multiple"
-    >
+    <Select className="w-[256px]" placeholder="Select countries" selectionMode="multiple">
       <Label>Countries to Visit</Label>
       <Select.Trigger>
         <Select.Value />

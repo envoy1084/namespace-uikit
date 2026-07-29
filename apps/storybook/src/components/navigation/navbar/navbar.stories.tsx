@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useRef, useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   Avatar,
   Button,
@@ -106,8 +105,7 @@ function HideDemo() {
       <div className="space-y-6 p-6">
         {Array.from({ length: 20 }, (_, i) => (
           <div className="bg-surface text-muted rounded-lg p-4 text-sm" key={i}>
-            Scroll down to hide the navbar, scroll up to reveal it. This is
-            paragraph {i + 1}.
+            Scroll down to hide the navbar, scroll up to reveal it. This is paragraph {i + 1}.
           </div>
         ))}
       </div>
@@ -175,9 +173,7 @@ function WithMenuDemo() {
       <main className="min-h-[680px] p-6">
         <section className="border-border bg-surface rounded-lg border p-4">
           <h2 className="text-xl font-semibold">Team workspace</h2>
-          <p className="text-muted mt-2 text-sm">
-            Responsive mobile navigation overlay.
-          </p>
+          <p className="text-muted mt-2 text-sm">Responsive mobile navigation overlay.</p>
         </section>
       </main>
     </div>
@@ -293,12 +289,7 @@ export const WithDropdowns: Story = {
 };
 
 const dashboardWorkspaces = ["samlee", "acme-corp", "moonshot"];
-const dashboardProjects = [
-  "content-hub",
-  "marketing-site",
-  "api-gateway",
-  "design-tokens",
-];
+const dashboardProjects = ["content-hub", "marketing-site", "api-gateway", "design-tokens"];
 const dashboardTimezones = [
   ["utc", "UTC", "UTC+00:00"],
   ["pst", "PST", "UTC−08:00"],
@@ -311,8 +302,7 @@ function DashboardNavbar() {
   const [workspace, setWorkspace] = useState("samlee");
   const [project, setProject] = useState("content-hub");
   const [timezone, setTimezone] = useState("utc");
-  const timezoneLabel =
-    dashboardTimezones.find(([id]) => id === timezone)?.[1] ?? "UTC";
+  const timezoneLabel = dashboardTimezones.find(([id]) => id === timezone)?.[1] ?? "UTC";
 
   return (
     <Navbar position="static">
@@ -320,18 +310,12 @@ function DashboardNavbar() {
         <Navbar.Brand className="mr-1">
           <span className="font-semibold">Namespace</span>
         </Navbar.Brand>
-        <InlineSelect
-          aria-label="Workspace"
-          value={workspace}
-          onChange={setWorkspace}
-        >
+        <InlineSelect aria-label="Workspace" value={workspace} onChange={setWorkspace}>
           <InlineSelect.Trigger className="gap-2">
             <Avatar className="size-5">
               <Avatar.Image alt={workspace} src="/assets/avatars/purple.jpg" />
             </Avatar>
-            <span className="text-foreground text-sm font-medium">
-              {workspace}
-            </span>
+            <span className="text-foreground text-sm font-medium">{workspace}</span>
             <InlineSelect.Indicator />
           </InlineSelect.Trigger>
           <InlineSelect.Popover className="w-44">
@@ -345,15 +329,9 @@ function DashboardNavbar() {
             </ListBox>
           </InlineSelect.Popover>
         </InlineSelect>
-        <InlineSelect
-          aria-label="Project"
-          value={project}
-          onChange={setProject}
-        >
+        <InlineSelect aria-label="Project" value={project} onChange={setProject}>
           <InlineSelect.Trigger>
-            <span className="text-foreground text-sm font-medium">
-              {project}
-            </span>
+            <span className="text-foreground text-sm font-medium">{project}</span>
             <InlineSelect.Indicator />
           </InlineSelect.Trigger>
           <InlineSelect.Popover className="w-44">
@@ -368,27 +346,16 @@ function DashboardNavbar() {
           </InlineSelect.Popover>
         </InlineSelect>
         <Navbar.Spacer />
-        <div
-          aria-label="Estimated monthly costs"
-          className="hidden items-center gap-1.5 md:flex"
-        >
+        <div aria-label="Estimated monthly costs" className="hidden items-center gap-1.5 md:flex">
           <span className="text-muted text-[11px] font-medium tracking-wider uppercase">
             Est. costs
           </span>
-          <span className="text-foreground text-sm font-semibold tabular-nums">
-            $71.96
-          </span>
+          <span className="text-foreground text-sm font-semibold tabular-nums">$71.96</span>
         </div>
         <Navbar.Separator className="hidden h-4 md:block" />
-        <InlineSelect
-          aria-label="Timezone"
-          value={timezone}
-          onChange={setTimezone}
-        >
+        <InlineSelect aria-label="Timezone" value={timezone} onChange={setTimezone}>
           <InlineSelect.Trigger>
-            <span className="text-foreground text-sm font-medium">
-              {timezoneLabel}
-            </span>
+            <span className="text-foreground text-sm font-medium">{timezoneLabel}</span>
             <InlineSelect.Indicator />
           </InlineSelect.Trigger>
           <InlineSelect.Popover className="w-44">
@@ -409,9 +376,7 @@ function DashboardNavbar() {
           </Navbar.Item>
           <Button aria-label="Account menu" isIconOnly variant="ghost">
             <Avatar className="size-7" color="success" variant="soft">
-              <Avatar.Fallback className="text-xs font-semibold">
-                SM
-              </Avatar.Fallback>
+              <Avatar.Fallback className="text-xs font-semibold">SM</Avatar.Fallback>
             </Avatar>
           </Button>
         </Navbar.Content>

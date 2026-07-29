@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Description,
-  Header,
-  Kbd,
-  Label,
-  ListBox,
-  Separator,
-  Surface,
-} from "@thenamespace/uikit";
+import { Description, Header, Kbd, Label, ListBox, Separator, Surface } from "@thenamespace/uikit";
 import {
   PencilEdit01Icon,
   AddSquareIcon,
@@ -29,10 +21,7 @@ export function WithSections() {
           <Header>Actions</Header>
           <ListBox.Item id="new-file" textValue="New file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <HugeiconsIcon
-                icon={AddSquareIcon}
-                className="text-muted size-4 shrink-0"
-              />
+              <HugeiconsIcon icon={AddSquareIcon} className="text-muted size-4 shrink-0" />
             </div>
             <div className="flex flex-col">
               <Label>New file</Label>
@@ -45,10 +34,7 @@ export function WithSections() {
           </ListBox.Item>
           <ListBox.Item id="edit-file" textValue="Edit file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <HugeiconsIcon
-                icon={PencilEdit01Icon}
-                className="text-muted size-4 shrink-0"
-              />
+              <HugeiconsIcon icon={PencilEdit01Icon} className="text-muted size-4 shrink-0" />
             </div>
             <div className="flex flex-col">
               <Label>Edit file</Label>
@@ -63,16 +49,9 @@ export function WithSections() {
         <Separator />
         <ListBox.Section>
           <Header>Danger zone</Header>
-          <ListBox.Item
-            id="delete-file"
-            textValue="Delete file"
-            variant="danger"
-          >
+          <ListBox.Item id="delete-file" textValue="Delete file" variant="danger">
             <div className="flex h-8 items-start justify-center pt-px">
-              <HugeiconsIcon
-                icon={Delete02Icon}
-                className="text-danger size-4 shrink-0"
-              />
+              <HugeiconsIcon icon={Delete02Icon} className="text-danger size-4 shrink-0" />
             </div>
             <div className="flex flex-col">
               <Label>Delete file</Label>

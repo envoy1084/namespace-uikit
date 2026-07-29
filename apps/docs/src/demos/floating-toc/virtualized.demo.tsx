@@ -7,8 +7,7 @@ import { FloatingToc } from "@thenamespace/uikit";
 
 const manyItems = Array.from({ length: 90 }, (_, index) => ({
   id: `v-${index}`,
-  label:
-    index % 4 === 0 ? `Section ${index / 4 + 1}` : "Implementation details",
+  label: index % 4 === 0 ? `Section ${index / 4 + 1}` : "Implementation details",
   level: index % 4 === 0 ? 1 : index % 3 === 0 ? 3 : 2,
 }));
 

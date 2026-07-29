@@ -13,10 +13,7 @@ export function PaginationCustomIcons() {
     <Pagination className="justify-center">
       <Pagination.Content>
         <Pagination.Item>
-          <Pagination.Previous
-            isDisabled={page === 1}
-            onPress={() => setPage((p) => p - 1)}
-          >
+          <Pagination.Previous isDisabled={page === 1} onPress={() => setPage((p) => p - 1)}>
             <Pagination.PreviousIcon>
               <Icon icon="hugeicons:arrow-left" />
             </Pagination.PreviousIcon>
@@ -31,10 +28,7 @@ export function PaginationCustomIcons() {
           </Pagination.Item>
         ))}
         <Pagination.Item>
-          <Pagination.Next
-            isDisabled={page === totalPages}
-            onPress={() => setPage((p) => p + 1)}
-          >
+          <Pagination.Next isDisabled={page === totalPages} onPress={() => setPage((p) => p + 1)}>
             <span>Forward</span>
             <Pagination.NextIcon>
               <Icon icon="hugeicons:arrow-right" />

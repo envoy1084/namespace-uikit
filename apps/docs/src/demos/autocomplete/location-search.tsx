@@ -1,9 +1,8 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import {
   Autocomplete,
   Description,
@@ -71,17 +70,11 @@ export function LocationSearch() {
           </SearchField>
           <ListBox
             renderEmptyState={() => (
-              <EmptyState>
-                {isLoading ? "Searching..." : "No cities found"}
-              </EmptyState>
+              <EmptyState>{isLoading ? "Searching..." : "No cities found"}</EmptyState>
             )}
           >
             {allCities.map((city) => (
-              <ListBox.Item
-                key={city.name}
-                id={city.name}
-                textValue={city.name}
-              >
+              <ListBox.Item key={city.name} id={city.name} textValue={city.name}>
                 <div className="flex flex-col">
                   <Label>{city.name}</Label>
                   <Description>{city.country}</Description>

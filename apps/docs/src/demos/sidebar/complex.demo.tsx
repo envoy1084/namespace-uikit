@@ -2,15 +2,7 @@
 "use client";
 
 // @demo-title Complex
-import {
-  Breadcrumbs,
-  Button,
-  Chip,
-  Dropdown,
-  Kbd,
-  Label,
-  Segment,
-} from "@thenamespace/uikit";
+import { Breadcrumbs, Button, Chip, Dropdown, Kbd, Label, Segment } from "@thenamespace/uikit";
 import { Sidebar, useSidebar } from "@thenamespace/uikit";
 import {
   Analytics01Icon,
@@ -64,24 +56,15 @@ function MoreActions({ label }: { label: string }) {
       <Dropdown.Popover className="w-44" offset={6} placement="right top">
         <Dropdown.Menu aria-label={`${label} actions`}>
           <Dropdown.Item id="open" textValue="Open">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={FolderOpenIcon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={FolderOpenIcon} />
             <Label>Open</Label>
           </Dropdown.Item>
           <Dropdown.Item id="duplicate" textValue="Duplicate">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={Copy01Icon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={Copy01Icon} />
             <Label>Duplicate</Label>
           </Dropdown.Item>
           <Dropdown.Item id="delete" textValue="Delete" variant="danger">
-            <HugeiconsIcon
-              className="text-danger size-4 shrink-0"
-              icon={Delete02Icon}
-            />
+            <HugeiconsIcon className="text-danger size-4 shrink-0" icon={Delete02Icon} />
             <Label>Delete</Label>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -98,10 +81,7 @@ function Menu({
   nested?: boolean;
 }) {
   return (
-    <Sidebar.Menu
-      aria-label="Navigation"
-      defaultExpandedKeys={nested ? ["Analytics"] : []}
-    >
+    <Sidebar.Menu aria-label="Navigation" defaultExpandedKeys={nested ? ["Analytics"] : []}>
       {nav.map((item) => (
         <Sidebar.MenuItem
           href={item.items ? undefined : "#"}
@@ -130,21 +110,19 @@ function Menu({
           ) : null}
           {nested && item.items ? (
             <Sidebar.Submenu>
-              {(item.label === "Analytics" ? analyticsItems : item.items).map(
-                (child) => (
-                  <Sidebar.MenuItem
-                    href="#"
-                    id={`${item.label}-${child}`}
-                    key={child}
-                    textValue={child}
-                  >
-                    <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
-                    <Sidebar.MenuActions className="ml-auto">
-                      <MoreActions label={child} />
-                    </Sidebar.MenuActions>
-                  </Sidebar.MenuItem>
-                ),
-              )}
+              {(item.label === "Analytics" ? analyticsItems : item.items).map((child) => (
+                <Sidebar.MenuItem
+                  href="#"
+                  id={`${item.label}-${child}`}
+                  key={child}
+                  textValue={child}
+                >
+                  <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
+                  <Sidebar.MenuActions className="ml-auto">
+                    <MoreActions label={child} />
+                  </Sidebar.MenuActions>
+                </Sidebar.MenuItem>
+              ))}
             </Sidebar.Submenu>
           ) : null}
         </Sidebar.MenuItem>
@@ -192,10 +170,7 @@ function ComplexSidebarContent() {
             <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-amber-700">
               <span className="text-sm font-bold text-white">A</span>
             </span>
-            <span
-              className="text-foreground text-sm font-semibold"
-              data-sidebar="label"
-            >
+            <span className="text-foreground text-sm font-semibold" data-sidebar="label">
               Acme Labs
             </span>
           </div>
@@ -206,10 +181,7 @@ function ComplexSidebarContent() {
                 type="button"
               >
                 <HugeiconsIcon icon={AiBrain01Icon} size={16} />
-                <HugeiconsIcon
-                  className="text-muted size-3"
-                  icon={ArrowDown01Icon}
-                />
+                <HugeiconsIcon className="text-muted size-3" icon={ArrowDown01Icon} />
               </button>
             </div>
           ) : null}
@@ -226,11 +198,7 @@ function ComplexSidebarContent() {
               ["ai", AiBrain01Icon, "Acme AI"],
               ["inbox", Notification01Icon, "Inbox"],
             ].map(([id, icon, label]) => (
-              <Segment.Item
-                className="w-auto"
-                id={id as string}
-                key={id as string}
-              >
+              <Segment.Item className="w-auto" id={id as string} key={id as string}>
                 {({ isSelected }) => (
                   <>
                     <HugeiconsIcon icon={icon} size={16} />
@@ -252,17 +220,10 @@ function ComplexSidebarContent() {
       </Sidebar.Header>
       <Sidebar.Content>
         <Sidebar.Group>
-          <Sidebar.GroupLabel className="capitalize">
-            Recents
-          </Sidebar.GroupLabel>
+          <Sidebar.GroupLabel className="capitalize">Recents</Sidebar.GroupLabel>
           <Sidebar.Menu aria-label="Recents">
             {complexRecents.map((item) => (
-              <Sidebar.MenuItem
-                href="#"
-                id={`complex-${item}`}
-                key={item}
-                textValue={item}
-              >
+              <Sidebar.MenuItem href="#" id={`complex-${item}`} key={item} textValue={item}>
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={File01Icon} size={16} />
                 </Sidebar.MenuIcon>
@@ -302,11 +263,7 @@ function ComplexSidebarContent() {
             </span>
           </Sidebar.GroupLabel>
           <Sidebar.Menu aria-label="Agents">
-            <Sidebar.MenuItem
-              href="#"
-              id="complex-personal"
-              textValue="Personal"
-            >
+            <Sidebar.MenuItem href="#" id="complex-personal" textValue="Personal">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={UserMultipleIcon} size={16} />
               </Sidebar.MenuIcon>
@@ -316,9 +273,7 @@ function ComplexSidebarContent() {
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={Add01Icon} size={16} />
               </Sidebar.MenuIcon>
-              <Sidebar.MenuLabel className="text-muted">
-                Add new
-              </Sidebar.MenuLabel>
+              <Sidebar.MenuLabel className="text-muted">Add new</Sidebar.MenuLabel>
             </Sidebar.MenuItem>
           </Sidebar.Menu>
         </Sidebar.Group>
@@ -333,31 +288,20 @@ function ComplexSidebarContent() {
                 >
                   <HugeiconsIcon icon={MoreVerticalIcon} size={16} />
                 </Dropdown.Trigger>
-                <Dropdown.Popover
-                  className="w-48"
-                  offset={6}
-                  placement="right top"
-                >
+                <Dropdown.Popover className="w-48" offset={6} placement="right top">
                   <Dropdown.Menu aria-label="Teamspaces section actions">
                     <Dropdown.Item id="show">Show</Dropdown.Item>
                     <Dropdown.Item id="move-up">Move up</Dropdown.Item>
                     <Dropdown.Item id="move-down">Move down</Dropdown.Item>
                     <Dropdown.Item id="hide">Hide section</Dropdown.Item>
-                    <Dropdown.Item id="new-teamspace">
-                      New teamspace
-                    </Dropdown.Item>
-                    <Dropdown.Item id="open-library">
-                      Open in Library
-                    </Dropdown.Item>
+                    <Dropdown.Item id="new-teamspace">New teamspace</Dropdown.Item>
+                    <Dropdown.Item id="open-library">Open in Library</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown.Popover>
               </Dropdown>
             </span>
           </Sidebar.GroupLabel>
-          <Sidebar.Menu
-            aria-label="Teamspaces"
-            defaultExpandedKeys={["complex-acme-hq"]}
-          >
+          <Sidebar.Menu aria-label="Teamspaces" defaultExpandedKeys={["complex-acme-hq"]}>
             <Sidebar.MenuItem id="complex-acme-hq" textValue="Acme HQ">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={Home01Icon} size={16} />
@@ -423,11 +367,7 @@ function ComplexSidebarContent() {
         <Sidebar.Group>
           <Sidebar.GroupLabel>Shared</Sidebar.GroupLabel>
           <Sidebar.Menu aria-label="Shared">
-            <Sidebar.MenuItem
-              href="#"
-              id="complex-shared-sprints"
-              textValue="Sprints"
-            >
+            <Sidebar.MenuItem href="#" id="complex-shared-sprints" textValue="Sprints">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={Activity01Icon} size={16} />
               </Sidebar.MenuIcon>
@@ -444,11 +384,7 @@ function ComplexSidebarContent() {
               </Sidebar.MenuIcon>
               <Sidebar.MenuLabel>Acme Mail</Sidebar.MenuLabel>
             </Sidebar.MenuItem>
-            <Sidebar.MenuItem
-              href="#"
-              id="complex-calendar"
-              textValue="Acme Calendar"
-            >
+            <Sidebar.MenuItem href="#" id="complex-calendar" textValue="Acme Calendar">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={Activity01Icon} size={16} />
               </Sidebar.MenuIcon>
@@ -532,10 +468,7 @@ function ComplexDemo() {
         <div className="p-6">
           <p className="text-muted">
             Complex sidebar with compact spacing. All density is controlled via{" "}
-            <code className="bg-default rounded px-1 py-0.5 text-xs">
-              --spacing: 0.2rem
-            </code>
-            .
+            <code className="bg-default rounded px-1 py-0.5 text-xs">--spacing: 0.2rem</code>.
           </p>
         </div>
       </Sidebar.Main>

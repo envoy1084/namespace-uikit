@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React, { useState } from "react";
+
+import type { Meta } from "@storybook/react";
 
 import { Spinner } from "@/components/feedback/spinner";
 import { Icon } from "@/icon";
@@ -18,14 +18,7 @@ export default {
     },
     variant: {
       control: "select",
-      options: [
-        "primary",
-        "secondary",
-        "tertiary",
-        "outline",
-        "ghost",
-        "danger",
-      ],
+      options: ["primary", "secondary", "tertiary", "outline", "ghost", "danger"],
     },
   },
   component: Button,
@@ -65,11 +58,7 @@ const Template = ({ isDisabled, size }: Button["RootProps"]) => (
   </div>
 );
 
-const TemplateWithLinkButton = ({
-  isIconOnly,
-  size,
-  variant,
-}: Button["RootProps"]) => (
+const TemplateWithLinkButton = ({ isIconOnly, size, variant }: Button["RootProps"]) => (
   <div className="flex flex-col gap-3">
     <div className="flex gap-3">
       <a
@@ -109,18 +98,9 @@ const TemplateWithIcon = ({ isDisabled, size }: Button["RootProps"]) => (
   </div>
 );
 
-const TemplateWithIconOnly = ({
-  isDisabled,
-  size,
-  variant,
-}: Button["RootProps"]) => (
+const TemplateWithIconOnly = ({ isDisabled, size, variant }: Button["RootProps"]) => (
   <div className="flex gap-3">
-    <Button
-      isIconOnly
-      isDisabled={isDisabled}
-      size={size}
-      variant={variant ?? "tertiary"}
-    >
+    <Button isIconOnly isDisabled={isDisabled} size={size} variant={variant ?? "tertiary"}>
       <Icon icon="hugeicons:ellipsis" />
     </Button>
   </div>
@@ -146,19 +126,10 @@ const TemplateWithLoadingState = ({ size, variant }: Button["RootProps"]) => {
   };
 
   return (
-    <Button
-      isPending={isLoading}
-      size={size}
-      variant={variant ?? "tertiary"}
-      onPress={handlePress}
-    >
+    <Button isPending={isLoading} size={size} variant={variant ?? "tertiary"} onPress={handlePress}>
       {({ isPending }) => (
         <>
-          {isPending ? (
-            <Spinner color="current" size="sm" />
-          ) : (
-            <Icon icon="hugeicons:paperclip" />
-          )}
+          {isPending ? <Spinner color="current" size="sm" /> : <Icon icon="hugeicons:paperclip" />}
           {isLoading ? "Uploading..." : "Upload File"}
         </>
       )}

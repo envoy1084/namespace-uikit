@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React, { useState } from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 import { Chip } from "@/components/data-display/chip";
@@ -137,11 +137,7 @@ export const WithPrefixAndSuffix: Story = {
 
 export const WithTextPrefix: Story = {
   render: () => (
-    <TextField
-      className="w-[280px]"
-      defaultValue="namespace.ninja"
-      name="website"
-    >
+    <TextField className="w-[280px]" defaultValue="namespace.ninja" name="website">
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Prefix>https://</InputGroup.Prefix>
@@ -180,11 +176,7 @@ export const WithIconPrefixAndTextSuffix: Story = {
 
 export const WithCopySuffix: Story = {
   render: () => (
-    <TextField
-      className="w-[280px]"
-      defaultValue="namespace.ninja"
-      name="website"
-    >
+    <TextField className="w-[280px]" defaultValue="namespace.ninja" name="website">
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Input className="w-[280px]" />
@@ -200,11 +192,7 @@ export const WithCopySuffix: Story = {
 
 export const WithIconPrefixAndCopySuffix: Story = {
   render: () => (
-    <TextField
-      className="w-[280px]"
-      defaultValue="namespace.ninja"
-      name="website"
-    >
+    <TextField className="w-[280px]" defaultValue="namespace.ninja" name="website">
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Prefix>
@@ -242,10 +230,7 @@ export const PasswordWithToggle: Story = {
               variant="ghost"
               onPress={() => setIsVisible(!isVisible)}
             >
-              <Icon
-                className="size-4"
-                icon={isVisible ? "hugeicons:eye" : "hugeicons:eye-slash"}
-              />
+              <Icon className="size-4" icon={isVisible ? "hugeicons:eye" : "hugeicons:eye-slash"} />
             </Button>
           </InputGroup.Suffix>
         </InputGroup>
@@ -307,21 +292,14 @@ export const Required: Story = {
           <InputGroup.Prefix>
             <Icon className="text-muted size-4" icon="hugeicons:envelope" />
           </InputGroup.Prefix>
-          <InputGroup.Input
-            className="w-[280px]"
-            placeholder="name@email.com"
-          />
+          <InputGroup.Input className="w-[280px]" placeholder="name@email.com" />
         </InputGroup>
       </TextField>
       <TextField isRequired name="price">
         <Label>Set a price</Label>
         <InputGroup>
           <InputGroup.Prefix>$</InputGroup.Prefix>
-          <InputGroup.Input
-            className="w-[200px]"
-            placeholder="0"
-            type="number"
-          />
+          <InputGroup.Input className="w-[200px]" placeholder="0" type="number" />
           <InputGroup.Suffix>USD</InputGroup.Suffix>
         </InputGroup>
         <Description>What customers would pay</Description>
@@ -339,10 +317,7 @@ export const Invalid: Story = {
           <InputGroup.Prefix>
             <Icon className="text-muted size-4" icon="hugeicons:envelope" />
           </InputGroup.Prefix>
-          <InputGroup.Input
-            className="w-[280px]"
-            placeholder="name@email.com"
-          />
+          <InputGroup.Input className="w-[280px]" placeholder="name@email.com" />
         </InputGroup>
         <FieldError>Please enter a valid email address</FieldError>
       </TextField>
@@ -350,11 +325,7 @@ export const Invalid: Story = {
         <Label>Set a price</Label>
         <InputGroup>
           <InputGroup.Prefix>$</InputGroup.Prefix>
-          <InputGroup.Input
-            className="w-[200px]"
-            placeholder="0"
-            type="number"
-          />
+          <InputGroup.Input className="w-[200px]" placeholder="0" type="number" />
           <InputGroup.Suffix>USD</InputGroup.Suffix>
         </InputGroup>
         <FieldError>Price must be greater than 0</FieldError>
@@ -366,12 +337,7 @@ export const Invalid: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <TextField
-        isDisabled
-        className="w-[280px]"
-        defaultValue="name@email.com"
-        name="email"
-      >
+      <TextField isDisabled className="w-[280px]" defaultValue="name@email.com" name="email">
         <Label>Email address</Label>
         <InputGroup>
           <InputGroup.Prefix>
@@ -380,12 +346,7 @@ export const Disabled: Story = {
           <InputGroup.Input className="w-[280px]" />
         </InputGroup>
       </TextField>
-      <TextField
-        isDisabled
-        className="w-[280px]"
-        defaultValue="10"
-        name="price"
-      >
+      <TextField isDisabled className="w-[280px]" defaultValue="10" name="price">
         <Label>Set a price</Label>
         <InputGroup>
           <InputGroup.Prefix>$</InputGroup.Prefix>
@@ -436,12 +397,7 @@ export const WithTextArea: Story = {
           />
           <InputGroup.Suffix className="flex w-full items-center gap-1.5 px-3 py-0">
             <Tooltip delay={0}>
-              <Button
-                isIconOnly
-                aria-label="Attach file"
-                size="sm"
-                variant="tertiary"
-              >
+              <Button isIconOnly aria-label="Attach file" size="sm" variant="tertiary">
                 <Icon icon="hugeicons:plus" />
               </Button>
               <Tooltip.Content>
@@ -449,12 +405,7 @@ export const WithTextArea: Story = {
               </Tooltip.Content>
             </Tooltip>
             <Tooltip delay={0}>
-              <Button
-                isIconOnly
-                aria-label="Connect Apps"
-                size="sm"
-                variant="tertiary"
-              >
+              <Button isIconOnly aria-label="Connect Apps" size="sm" variant="tertiary">
                 <Icon icon="hugeicons:plug-connection" />
               </Button>
               <Tooltip.Content>
@@ -463,12 +414,7 @@ export const WithTextArea: Story = {
             </Tooltip>
             <div className="ml-auto flex items-center gap-1.5">
               <Tooltip delay={0}>
-                <Button
-                  isIconOnly
-                  aria-label="Voice input"
-                  size="sm"
-                  variant="ghost"
-                >
+                <Button isIconOnly aria-label="Voice input" size="sm" variant="ghost">
                   <Icon icon="hugeicons:microphone" />
                 </Button>
                 <Tooltip.Content>
@@ -516,10 +462,7 @@ export const AllVariations: Story = {
             <InputGroup.Prefix>
               <Icon className="text-muted size-4" icon="hugeicons:envelope" />
             </InputGroup.Prefix>
-            <InputGroup.Input
-              className="w-[280px]"
-              placeholder="name@email.com"
-            />
+            <InputGroup.Input className="w-[280px]" placeholder="name@email.com" />
           </InputGroup>
           <Description>We'll never share this with anyone else</Description>
         </TextField>
@@ -527,10 +470,7 @@ export const AllVariations: Story = {
         <TextField className="w-[280px]" name="email2">
           <Label>Email address *</Label>
           <InputGroup>
-            <InputGroup.Input
-              className="w-[280px]"
-              placeholder="name@email.com"
-            />
+            <InputGroup.Input className="w-[280px]" placeholder="name@email.com" />
             <InputGroup.Suffix>
               <Icon className="text-muted size-4" icon="hugeicons:envelope" />
             </InputGroup.Suffix>
@@ -548,11 +488,7 @@ export const AllVariations: Story = {
           <Description>What customers would pay</Description>
         </TextField>
 
-        <TextField
-          className="w-[280px]"
-          defaultValue="namespace.ninja"
-          name="website1"
-        >
+        <TextField className="w-[280px]" defaultValue="namespace.ninja" name="website1">
           <Label>Website</Label>
           <InputGroup>
             <InputGroup.Prefix>https://</InputGroup.Prefix>
@@ -560,11 +496,7 @@ export const AllVariations: Story = {
           </InputGroup>
         </TextField>
 
-        <TextField
-          className="w-[280px]"
-          defaultValue="namespace"
-          name="website2"
-        >
+        <TextField className="w-[280px]" defaultValue="namespace" name="website2">
           <Label>Website</Label>
           <InputGroup>
             <InputGroup.Input className="w-[280px]" />
@@ -572,11 +504,7 @@ export const AllVariations: Story = {
           </InputGroup>
         </TextField>
 
-        <TextField
-          className="w-[280px]"
-          defaultValue="namespace"
-          name="website3"
-        >
+        <TextField className="w-[280px]" defaultValue="namespace" name="website3">
           <Label>Website</Label>
           <InputGroup>
             <InputGroup.Prefix>
@@ -587,33 +515,19 @@ export const AllVariations: Story = {
           </InputGroup>
         </TextField>
 
-        <TextField
-          className="w-[280px]"
-          defaultValue="namespace.ninja"
-          name="website4"
-        >
+        <TextField className="w-[280px]" defaultValue="namespace.ninja" name="website4">
           <Label>Website</Label>
           <InputGroup>
             <InputGroup.Input className="w-[280px]" />
             <InputGroup.Suffix className="pr-0">
-              <Button
-                isIconOnly
-                aria-label="Copy"
-                className="h-auto p-0"
-                size="sm"
-                variant="ghost"
-              >
+              <Button isIconOnly aria-label="Copy" className="h-auto p-0" size="sm" variant="ghost">
                 <Icon className="size-4" icon="hugeicons:copy" />
               </Button>
             </InputGroup.Suffix>
           </InputGroup>
         </TextField>
 
-        <TextField
-          className="w-[280px]"
-          defaultValue="namespace.ninja"
-          name="website5"
-        >
+        <TextField className="w-[280px]" defaultValue="namespace.ninja" name="website5">
           <Label>Website</Label>
           <InputGroup>
             <InputGroup.Prefix>
@@ -621,13 +535,7 @@ export const AllVariations: Story = {
             </InputGroup.Prefix>
             <InputGroup.Input className="w-[280px]" />
             <InputGroup.Suffix className="pr-0">
-              <Button
-                isIconOnly
-                aria-label="Copy"
-                className="h-auto p-0"
-                size="sm"
-                variant="ghost"
-              >
+              <Button isIconOnly aria-label="Copy" className="h-auto p-0" size="sm" variant="ghost">
                 <Icon className="size-4" icon="hugeicons:copy" />
               </Button>
             </InputGroup.Suffix>

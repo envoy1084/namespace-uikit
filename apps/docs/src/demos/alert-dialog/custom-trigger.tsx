@@ -27,9 +27,9 @@ export function CustomTrigger() {
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                Use <code>AlertDialog.Trigger</code> to create custom trigger
-                elements beyond standard buttons. This example shows a
-                card-style trigger with icons and descriptive text.
+                Use <code>AlertDialog.Trigger</code> to create custom trigger elements beyond
+                standard buttons. This example shows a card-style trigger with icons and descriptive
+                text.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

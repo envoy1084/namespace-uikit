@@ -16,8 +16,7 @@
   .item-card--tertiary {
     background-color: var(--surface-tertiary);
   }
-  :is(.item-card--secondary, .item-card--tertiary)
-    > [data-slot="item-card-icon"] {
+  :is(.item-card--secondary, .item-card--tertiary) > [data-slot="item-card-icon"] {
     background-color: color-mix(in oklab, var(--surface) 50%, transparent);
   }
   .item-card--outline {

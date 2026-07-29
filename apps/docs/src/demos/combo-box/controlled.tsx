@@ -1,9 +1,8 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import { ComboBox, Input, Label, ListBox } from "@thenamespace/uikit";
 
 export function Controlled() {
@@ -49,11 +48,7 @@ export function Controlled() {
         <ComboBox.Popover>
           <ListBox>
             {animals.map((animal) => (
-              <ListBox.Item
-                key={animal.id}
-                id={animal.id}
-                textValue={animal.name}
-              >
+              <ListBox.Item key={animal.id} id={animal.id} textValue={animal.name}>
                 {animal.name}
                 <ListBox.ItemIndicator />
               </ListBox.Item>
@@ -61,9 +56,7 @@ export function Controlled() {
           </ListBox>
         </ComboBox.Popover>
       </ComboBox>
-      <p className="text-muted text-sm">
-        Selected: {selectedAnimal?.name || "None"}
-      </p>
+      <p className="text-muted text-sm">Selected: {selectedAnimal?.name || "None"}</p>
     </div>
   );
 }

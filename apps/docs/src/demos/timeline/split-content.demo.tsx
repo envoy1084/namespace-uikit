@@ -107,18 +107,14 @@ export const DemoSplitContentExample = () => (
   <div className="w-full max-w-[680px] min-w-0 py-4">
     <div className="mx-auto mb-5 max-w-[360px] text-center">
       <p className="text-muted m-0 text-xs font-medium">Launch review</p>
-      <h3 className="text-foreground m-0 text-base font-semibold">
-        Billing rollout
-      </h3>
+      <h3 className="text-foreground m-0 text-base font-semibold">Billing rollout</h3>
     </div>
     <Timeline axis="center" placement="end" size="sm">
       {split.map((item) => (
         <Timeline.Item key={item.title} status={item.status}>
           <Timeline.Content className="max-w-[180px] gap-1.5" side="start">
             <div className="flex flex-wrap items-center justify-end gap-2">
-              <time className="text-foreground text-xs leading-5 font-medium">
-                {item.time}
-              </time>
+              <time className="text-foreground text-xs leading-5 font-medium">{item.time}</time>
               <Chip color={item.laneColor} size="sm" variant="soft">
                 {item.lane}
               </Chip>
@@ -129,22 +125,13 @@ export const DemoSplitContentExample = () => (
             <TimelineGlyph icon={item.icon} />
           </Timeline.Marker>
           <Timeline.Content className="max-w-[320px] gap-2" side="end">
-            <h3 className="text-foreground m-0 text-sm leading-5 font-medium">
-              {item.title}
-            </h3>
-            <Card
-              className="!border-border w-full !border !border-solid p-3"
-              variant="transparent"
-            >
-              <p className="text-muted m-0 text-xs leading-5">
-                {item.description}
-              </p>
+            <h3 className="text-foreground m-0 text-sm leading-5 font-medium">{item.title}</h3>
+            <Card className="!border-border w-full !border !border-solid p-3" variant="transparent">
+              <p className="text-muted m-0 text-xs leading-5">{item.description}</p>
               <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {item.metrics.map((metric) => (
                   <div className="min-w-0" key={metric.label}>
-                    <span className="text-muted block text-[11px] leading-4">
-                      {metric.label}
-                    </span>
+                    <span className="text-muted block text-[11px] leading-4">{metric.label}</span>
                     <span className="text-foreground block truncate text-xs leading-5 font-medium">
                       {metric.value}
                     </span>

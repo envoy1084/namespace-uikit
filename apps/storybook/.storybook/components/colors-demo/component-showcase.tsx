@@ -128,9 +128,7 @@ export function ComponentShowcase() {
                 <span className="text-foreground text-sm">Border default</span>
               </div>
               <div className="border-border-secondary flex h-12 items-center justify-start rounded-xl border pl-3">
-                <span className="text-foreground text-sm">
-                  Border secondary
-                </span>
+                <span className="text-foreground text-sm">Border secondary</span>
               </div>
               <div className="border-border-tertiary flex h-12 items-center justify-start rounded-xl border pl-3">
                 <span className="text-foreground text-sm">Border tertiary</span>
@@ -146,14 +144,10 @@ export function ComponentShowcase() {
                 <span className="text-foreground text-sm">Surface default</span>
               </Surface>
               <Surface className="rounded-xl p-3" variant="secondary">
-                <span className="text-foreground text-sm">
-                  Surface secondary
-                </span>
+                <span className="text-foreground text-sm">Surface secondary</span>
               </Surface>
               <Surface className="rounded-xl p-3" variant="tertiary">
-                <span className="text-foreground text-sm">
-                  Surface tertiary
-                </span>
+                <span className="text-foreground text-sm">Surface tertiary</span>
               </Surface>
             </div>
           </div>
@@ -176,22 +170,14 @@ export function ComponentShowcase() {
                 </div>
                 <div className="flex flex-1 flex-col gap-3">
                   <Card.Header className="gap-1">
-                    <Card.Title className="pr-8">
-                      Become an ACME Creator!
-                    </Card.Title>
+                    <Card.Title className="pr-8">Become an ACME Creator!</Card.Title>
                     <Card.Description>
-                      Lorem ipsum dolor sit amet consectetur. Sed arcu donec id
-                      aliquam.
+                      Lorem ipsum dolor sit amet consectetur. Sed arcu donec id aliquam.
                     </Card.Description>
-                    <CloseButton
-                      aria-label="Close banner"
-                      className="absolute top-3 right-3"
-                    />
+                    <CloseButton aria-label="Close banner" className="absolute top-3 right-3" />
                   </Card.Header>
                   <Card.Footer className="mt-auto flex w-full items-center justify-between gap-3">
-                    <span className="text-foreground text-sm font-medium">
-                      Only 10 spots
-                    </span>
+                    <span className="text-foreground text-sm font-medium">Only 10 spots</span>
                     <Button className="w-full sm:w-auto">Apply Now</Button>
                   </Card.Footer>
                 </div>
@@ -214,9 +200,7 @@ export function ComponentShowcase() {
                         role="img"
                       />
                       <div className="flex flex-col gap-1">
-                        <span className="text-muted text-xs font-medium uppercase">
-                          PAYMENT
-                        </span>
+                        <span className="text-muted text-xs font-medium uppercase">PAYMENT</span>
                         <Card.Title className="pr-8 text-sm sm:text-base">
                           You can now withdraw on crypto
                         </Card.Title>
@@ -226,11 +210,7 @@ export function ComponentShowcase() {
                       </div>
                     </Card.Header>
                     <Card.Footer>
-                      <Link
-                        aria-label="Go to settings"
-                        href="#"
-                        rel="noopener noreferrer"
-                      >
+                      <Link aria-label="Go to settings" href="#" rel="noopener noreferrer">
                         Go to settings
                         <Link.Icon aria-hidden="true" />
                       </Link>
@@ -250,9 +230,7 @@ export function ComponentShowcase() {
                         </Avatar>
                       </Card.Header>
                       <Card.Content className="mt-1">
-                        <p className="text-sm leading-4 font-medium">
-                          Indie Hackers
-                        </p>
+                        <p className="text-sm leading-4 font-medium">Indie Hackers</p>
                         <p className="text-muted text-xs">148 members</p>
                       </Card.Content>
                       <Card.Footer className="flex items-center gap-2">
@@ -278,9 +256,7 @@ export function ComponentShowcase() {
                         </Avatar>
                       </Card.Header>
                       <Card.Content className="mt-1">
-                        <p className="text-sm leading-4 font-medium">
-                          AI Builders
-                        </p>
+                        <p className="text-sm leading-4 font-medium">AI Builders</p>
                         <p className="text-muted text-xs">362 members</p>
                       </Card.Content>
                       <Card.Footer className="flex items-center gap-2">
@@ -303,10 +279,7 @@ export function ComponentShowcase() {
                 {/* Right Column: Cards Stack */}
                 <div className="col-span-12 flex flex-col gap-2 md:col-span-12 md:justify-between md:gap-2">
                   {/* 1 */}
-                  <Card
-                    className="flex flex-row gap-3 p-1 shadow-none"
-                    variant="secondary"
-                  >
+                  <Card className="flex flex-row gap-3 p-1 shadow-none" variant="secondary">
                     <img
                       alt="Avocado"
                       className="aspect-square h-16 w-16 shrink-0 rounded-xl object-cover select-none sm:h-20 sm:w-20"
@@ -314,19 +287,12 @@ export function ComponentShowcase() {
                       src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/avocado.jpeg"
                     />
                     <div className="flex flex-1 flex-col justify-center gap-1">
-                      <Card.Title className="text-sm">
-                        Avocado Hackathon
-                      </Card.Title>
-                      <Card.Description className="text-xs">
-                        Wed, 4:30 PM
-                      </Card.Description>
+                      <Card.Title className="text-sm">Avocado Hackathon</Card.Title>
+                      <Card.Description className="text-xs">Wed, 4:30 PM</Card.Description>
                     </div>
                   </Card>
                   {/* 2 */}
-                  <Card
-                    className="flex flex-row gap-3 p-1 shadow-none"
-                    variant="tertiary"
-                  >
+                  <Card className="flex flex-row gap-3 p-1 shadow-none" variant="tertiary">
                     <img
                       alt="Sound Electro event"
                       className="aspect-square h-16 w-16 shrink-0 rounded-xl object-cover select-none sm:h-20 sm:w-20"
@@ -334,12 +300,8 @@ export function ComponentShowcase() {
                       src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/oranges.jpeg"
                     />
                     <div className="flex flex-1 flex-col justify-center gap-1">
-                      <Card.Title className="text-sm">
-                        Sound Electro | Beyond art
-                      </Card.Title>
-                      <Card.Description className="text-xs">
-                        Fri, 8:00 PM
-                      </Card.Description>
+                      <Card.Title className="text-sm">Sound Electro | Beyond art</Card.Title>
+                      <Card.Description className="text-xs">Fri, 8:00 PM</Card.Description>
                     </div>
                   </Card>
                 </div>
@@ -642,9 +604,8 @@ export function ComponentShowcase() {
                     </Modal.Header>
                     <Modal.Body>
                       <p className="text-muted text-sm">
-                        A beautiful, fast, and modern React UI library for
-                        building accessible and customizable web applications
-                        with ease.
+                        A beautiful, fast, and modern React UI library for building accessible and
+                        customizable web applications with ease.
                       </p>
                     </Modal.Body>
                     <Modal.Footer>
@@ -666,9 +627,7 @@ export function ComponentShowcase() {
                 <Popover.Dialog>
                   <Popover.Arrow />
                   <Popover.Heading>Popover Info</Popover.Heading>
-                  <p className="text-muted text-sm">
-                    This is a popover with helpful information.
-                  </p>
+                  <p className="text-muted text-sm">This is a popover with helpful information.</p>
                 </Popover.Dialog>
               </Popover.Content>
             </Popover>
@@ -684,14 +643,11 @@ export function ComponentShowcase() {
                     <AlertDialog.CloseTrigger />
                     <AlertDialog.Header>
                       <AlertDialog.Icon status="danger" />
-                      <AlertDialog.Heading>
-                        Delete item permanently?
-                      </AlertDialog.Heading>
+                      <AlertDialog.Heading>Delete item permanently?</AlertDialog.Heading>
                     </AlertDialog.Header>
                     <AlertDialog.Body>
                       <p className="text-muted text-sm">
-                        This action cannot be undone. All data will be
-                        permanently removed.
+                        This action cannot be undone. All data will be permanently removed.
                       </p>
                     </AlertDialog.Body>
                     <AlertDialog.Footer>
@@ -711,10 +667,7 @@ export function ComponentShowcase() {
           {/* Additional Alert Dialog variants */}
           <div className="flex flex-wrap gap-3">
             <AlertDialog>
-              <Button
-                className="bg-success-soft text-success-soft-foreground"
-                size="sm"
-              >
+              <Button className="bg-success-soft text-success-soft-foreground" size="sm">
                 Confirm
               </Button>
               <AlertDialog.Backdrop>
@@ -723,14 +676,11 @@ export function ComponentShowcase() {
                     <AlertDialog.CloseTrigger />
                     <AlertDialog.Header>
                       <AlertDialog.Icon status="success" />
-                      <AlertDialog.Heading>
-                        Complete this task?
-                      </AlertDialog.Heading>
+                      <AlertDialog.Heading>Complete this task?</AlertDialog.Heading>
                     </AlertDialog.Header>
                     <AlertDialog.Body>
                       <p className="text-muted text-sm">
-                        This will mark the task as complete and notify all team
-                        members.
+                        This will mark the task as complete and notify all team members.
                       </p>
                     </AlertDialog.Body>
                     <AlertDialog.Footer>
@@ -745,10 +695,7 @@ export function ComponentShowcase() {
             </AlertDialog>
 
             <AlertDialog>
-              <Button
-                className="bg-warning-soft text-warning-soft-foreground"
-                size="sm"
-              >
+              <Button className="bg-warning-soft text-warning-soft-foreground" size="sm">
                 Discard
               </Button>
               <AlertDialog.Backdrop>
@@ -757,9 +704,7 @@ export function ComponentShowcase() {
                     <AlertDialog.CloseTrigger />
                     <AlertDialog.Header>
                       <AlertDialog.Icon status="warning" />
-                      <AlertDialog.Heading>
-                        Discard unsaved changes?
-                      </AlertDialog.Heading>
+                      <AlertDialog.Heading>Discard unsaved changes?</AlertDialog.Heading>
                     </AlertDialog.Header>
                     <AlertDialog.Body>
                       <p className="text-muted text-sm">
@@ -779,10 +724,7 @@ export function ComponentShowcase() {
 
             {/* Popover with User Card */}
             <Popover>
-              <Popover.Trigger
-                aria-label="User info"
-                className="flex items-center"
-              >
+              <Popover.Trigger aria-label="User info" className="flex items-center">
                 <div className="flex cursor-pointer items-center gap-2">
                   <Avatar className="size-5" size="sm">
                     <Avatar.Image
@@ -812,9 +754,7 @@ export function ComponentShowcase() {
                     </div>
                     <Button size="sm">Follow</Button>
                   </div>
-                  <p className="text-muted text-sm">
-                    Design Engineer, @namespace lover 🎉
-                  </p>
+                  <p className="text-muted text-sm">Design Engineer, @namespace lover 🎉</p>
                   <div className="flex gap-3">
                     <div className="flex gap-1">
                       <span className="text-sm font-semibold">4</span>
@@ -858,11 +798,7 @@ export function ComponentShowcase() {
                         <div className="flex flex-col gap-4">
                           <div className="flex flex-col gap-1">
                             <Label className="text-sm">Name</Label>
-                            <Input
-                              fullWidth
-                              placeholder="Enter your name"
-                              variant="secondary"
-                            />
+                            <Input fullWidth placeholder="Enter your name" variant="secondary" />
                           </div>
                           <div className="flex flex-col gap-1">
                             <Label className="text-sm">Email</Label>
@@ -906,19 +842,15 @@ export function ComponentShowcase() {
                     </Modal.Header>
                     <Modal.Body>
                       <p className="text-muted text-center text-sm">
-                        This modal features a sophisticated gradient backdrop
-                        with blur effect that adapts to light and dark modes.
+                        This modal features a sophisticated gradient backdrop with blur effect that
+                        adapts to light and dark modes.
                       </p>
                     </Modal.Body>
                     <Modal.Footer className="flex-col-reverse">
                       <Button className="w-full" slot="close">
                         Amazing!
                       </Button>
-                      <Button
-                        className="w-full"
-                        slot="close"
-                        variant="secondary"
-                      >
+                      <Button className="w-full" slot="close" variant="secondary">
                         Close
                       </Button>
                     </Modal.Footer>
@@ -942,27 +874,17 @@ export function ComponentShowcase() {
                     <AlertDialog.CloseTrigger />
                     <AlertDialog.Header className="items-center text-center">
                       <AlertDialog.Icon status="danger">
-                        <Icon
-                          className="size-5"
-                          icon="hugeicons:triangle-exclamation"
-                        />
+                        <Icon className="size-5" icon="hugeicons:triangle-exclamation" />
                       </AlertDialog.Icon>
-                      <AlertDialog.Heading>
-                        Delete your account?
-                      </AlertDialog.Heading>
+                      <AlertDialog.Heading>Delete your account?</AlertDialog.Heading>
                     </AlertDialog.Header>
                     <AlertDialog.Body>
                       <p className="text-muted text-center text-sm">
-                        This action cannot be undone. All your data will be
-                        permanently removed.
+                        This action cannot be undone. All your data will be permanently removed.
                       </p>
                     </AlertDialog.Body>
                     <AlertDialog.Footer className="flex-col-reverse">
-                      <Button
-                        className="w-full"
-                        slot="close"
-                        variant="tertiary"
-                      >
+                      <Button className="w-full" slot="close" variant="tertiary">
                         Keep Account
                       </Button>
                       <Button className="w-full" slot="close" variant="danger">

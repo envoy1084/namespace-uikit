@@ -68,9 +68,7 @@ export const DemoWithChartInlineExample = () => (
             <KPI.Value
               className="text-3xl"
               maximumFractionDigits={card.title === "Bounce Rate" ? 1 : 0}
-              {...(card.title === "Bounce Rate"
-                ? { style: "percent" as const }
-                : {})}
+              {...(card.title === "Bounce Rate" ? { style: "percent" as const } : {})}
               value={card.value}
             />
             <div className="flex items-center gap-1.5">
@@ -80,12 +78,7 @@ export const DemoWithChartInlineExample = () => (
               </TrendChip>
             </div>
           </div>
-          <KPI.Chart
-            color={card.color}
-            data={card.data}
-            height={70}
-            strokeWidth={1.5}
-          />
+          <KPI.Chart color={card.color} data={card.data} height={70} strokeWidth={1.5} />
         </KPI.Content>
       </KPI>
     ))}

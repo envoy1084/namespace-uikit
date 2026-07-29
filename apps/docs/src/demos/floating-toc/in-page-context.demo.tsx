@@ -40,14 +40,10 @@ function InPage() {
       <div className="h-full overflow-auto p-8 pr-16">
         {article.map((item) => (
           <div className="mb-10 last:mb-0" key={item.id}>
-            <h2
-              className={`text-base font-semibold ${item.id === active ? "text-accent" : ""}`}
-            >
+            <h2 className={`text-base font-semibold ${item.id === active ? "text-accent" : ""}`}>
               {item.label}
             </h2>
-            <p className="text-muted mt-2 text-sm leading-relaxed">
-              {item.text}
-            </p>
+            <p className="text-muted mt-2 text-sm leading-relaxed">{item.text}</p>
           </div>
         ))}
       </div>

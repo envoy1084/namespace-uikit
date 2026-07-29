@@ -20,9 +20,9 @@ const snapPoints = ["148px", "355px", 1];
 
 function ProfessionsPickerDemo() {
   const occupationSnapPoints = ["355px", 1];
-  const [activeSnapPoint, setActiveSnapPoint] = useState<
-    number | string | null
-  >(occupationSnapPoints[0]!);
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
+    occupationSnapPoints[0]!,
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<string | null>(null);
@@ -33,9 +33,7 @@ function ProfessionsPickerDemo() {
 
     const normalizedQuery = query.toLowerCase();
 
-    return values.filter((occupation) =>
-      occupation.name.toLowerCase().includes(normalizedQuery),
-    );
+    return values.filter((occupation) => occupation.name.toLowerCase().includes(normalizedQuery));
   }, [query]);
 
   return (
@@ -74,18 +72,11 @@ function ProfessionsPickerDemo() {
                 </div>
                 {filtered.length === 0 ? (
                   <EmptyState className="flex min-h-32 flex-1 flex-col items-center justify-center gap-2">
-                    <HugeiconsIcon
-                      aria-hidden
-                      className="text-muted size-5"
-                      icon={SmileIcon}
-                    />
+                    <HugeiconsIcon aria-hidden className="text-muted size-5" icon={SmileIcon} />
                     <p className="text-muted text-sm">No occupations found.</p>
                   </EmptyState>
                 ) : (
-                  <Virtualizer
-                    layout={ListLayout}
-                    layoutOptions={{ padding: 12, rowHeight: 36 }}
-                  >
+                  <Virtualizer layout={ListLayout} layoutOptions={{ padding: 12, rowHeight: 36 }}>
                     <ListBox
                       aria-label="Occupations"
                       className="min-h-0 flex-1 overflow-y-auto p-0"
@@ -101,10 +92,7 @@ function ProfessionsPickerDemo() {
                       }}
                     >
                       {(occupation) => (
-                        <ListBox.Item
-                          id={occupation.id}
-                          textValue={occupation.name}
-                        >
+                        <ListBox.Item id={occupation.id} textValue={occupation.name}>
                           <Label>{occupation.name}</Label>
                         </ListBox.Item>
                       )}
@@ -117,8 +105,7 @@ function ProfessionsPickerDemo() {
         </Sheet.Backdrop>
       </Sheet>
       <p className="text-muted text-sm">
-        Selected:{" "}
-        <span className="text-foreground font-medium">{selected}</span>
+        Selected: <span className="text-foreground font-medium">{selected}</span>
       </p>
     </div>
   );

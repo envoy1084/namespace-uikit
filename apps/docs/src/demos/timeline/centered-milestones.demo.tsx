@@ -113,9 +113,7 @@ const MilestoneContent = ({
         </>
       )}
     </div>
-    <h3 className="text-foreground m-0 text-sm leading-5 font-medium">
-      {milestone.title}
-    </h3>
+    <h3 className="text-foreground m-0 text-sm leading-5 font-medium">{milestone.title}</h3>
     <p className="text-muted m-0 text-xs leading-5">{milestone.description}</p>
     <span className="text-muted text-xs leading-5">{milestone.metric}</span>
   </>
@@ -145,12 +143,7 @@ export const DemoCenteredMilestonesExample = () => (
       </Timeline>
     </div>
     <div className="hidden sm:block">
-      <Timeline
-        axis="center"
-        itemAlign="center"
-        placement="alternate"
-        size="sm"
-      >
+      <Timeline axis="center" itemAlign="center" placement="alternate" size="sm">
         {milestones.map((milestone, index) => (
           <Timeline.Item key={milestone.title}>
             <Timeline.Marker>

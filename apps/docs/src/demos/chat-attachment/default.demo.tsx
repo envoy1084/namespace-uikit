@@ -1,11 +1,7 @@
 "use client";
 
 // @demo-title Default
-import {
-  ChatAttachment,
-  ChatAttachmentGroup,
-  ChatMessage,
-} from "@thenamespace/uikit";
+import { ChatAttachment, ChatAttachmentGroup, ChatMessage } from "@thenamespace/uikit";
 
 const image = "/assets/images/egg.webp";
 

@@ -23,8 +23,7 @@ export function WithIndicators() {
               {({ formattedDate }) => (
                 <>
                   {formattedDate}
-                  {(isToday(date, getLocalTimeZone()) ||
-                    datesWithEvents.includes(date.day)) && (
+                  {(isToday(date, getLocalTimeZone()) || datesWithEvents.includes(date.day)) && (
                     <RangeCalendar.CellIndicator />
                   )}
                 </>

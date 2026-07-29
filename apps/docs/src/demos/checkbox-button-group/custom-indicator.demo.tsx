@@ -27,9 +27,7 @@ export const DemoCustomIndicatorExample = () => (
           <Icon icon="solar:check-circle-bold" />
         </CheckboxButtonGroup.Indicator>
         <CheckboxButtonGroup.ItemContent>
-          <Label className="capitalize">
-            {(value as string).replace(/-/g, " ")}
-          </Label>
+          <Label className="capitalize">{(value as string).replace(/-/g, " ")}</Label>
           <Description>{description}</Description>
           <NumberValue
             className="mt-3 text-sm font-semibold"
@@ -37,10 +35,7 @@ export const DemoCustomIndicatorExample = () => (
             value={subscribers as number}
           >
             <NumberValue.Suffix>
-              <span className="text-muted text-xs font-normal">
-                {" "}
-                subscribers
-              </span>
+              <span className="text-muted text-xs font-normal"> subscribers</span>
             </NumberValue.Suffix>
           </NumberValue>
         </CheckboxButtonGroup.ItemContent>

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Label } from "@/components/forms/label";
 
@@ -72,56 +72,31 @@ export const Colors: Story = {
   render: (args) => {
     return (
       <div className="flex items-center gap-6">
-        <ProgressCircle
-          aria-label="Loading"
-          color="default"
-          value={60}
-          {...args}
-        >
+        <ProgressCircle aria-label="Loading" color="default" value={60} {...args}>
           <ProgressCircle.Track>
             <ProgressCircle.TrackCircle />
             <ProgressCircle.FillCircle />
           </ProgressCircle.Track>
         </ProgressCircle>
-        <ProgressCircle
-          aria-label="Loading"
-          color="accent"
-          value={60}
-          {...args}
-        >
+        <ProgressCircle aria-label="Loading" color="accent" value={60} {...args}>
           <ProgressCircle.Track>
             <ProgressCircle.TrackCircle />
             <ProgressCircle.FillCircle />
           </ProgressCircle.Track>
         </ProgressCircle>
-        <ProgressCircle
-          aria-label="Loading"
-          color="success"
-          value={60}
-          {...args}
-        >
+        <ProgressCircle aria-label="Loading" color="success" value={60} {...args}>
           <ProgressCircle.Track>
             <ProgressCircle.TrackCircle />
             <ProgressCircle.FillCircle />
           </ProgressCircle.Track>
         </ProgressCircle>
-        <ProgressCircle
-          aria-label="Loading"
-          color="warning"
-          value={60}
-          {...args}
-        >
+        <ProgressCircle aria-label="Loading" color="warning" value={60} {...args}>
           <ProgressCircle.Track>
             <ProgressCircle.TrackCircle />
             <ProgressCircle.FillCircle />
           </ProgressCircle.Track>
         </ProgressCircle>
-        <ProgressCircle
-          aria-label="Loading"
-          color="danger"
-          value={60}
-          {...args}
-        >
+        <ProgressCircle aria-label="Loading" color="danger" value={60} {...args}>
           <ProgressCircle.Track>
             <ProgressCircle.TrackCircle />
             <ProgressCircle.FillCircle />

@@ -18,9 +18,7 @@ type Item = {
   title: string;
 };
 
-const Chevron = () => (
-  <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />
-);
+const Chevron = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
 
 function Row({
   action = <Chevron />,
@@ -49,22 +47,14 @@ function Row({
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>{title}</ItemCard.Title>
-        {description && (
-          <ItemCard.Description>{description}</ItemCard.Description>
-        )}
+        {description && <ItemCard.Description>{description}</ItemCard.Description>}
       </ItemCard.Content>
       <ItemCard.Action>{action}</ItemCard.Action>
     </ItemCard>
   );
 }
 
-function Rows({
-  items,
-  pressable = false,
-}: {
-  items: Item[];
-  pressable?: boolean;
-}) {
+function Rows({ items, pressable = false }: { items: Item[]; pressable?: boolean }) {
   return (
     <>
       {items.map((item, index) => (

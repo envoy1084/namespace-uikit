@@ -37,38 +37,30 @@ import emojiDataSource from "emojibase-data/en/compact.json";
 const snapPoints = ["148px", "355px", 1];
 
 const sheetEmojiData = emojiDataSource.filter(
-  (emoji) =>
-    typeof emoji.label === "string" &&
-    !emoji.label.startsWith("regional indicator"),
+  (emoji) => typeof emoji.label === "string" && !emoji.label.startsWith("regional indicator"),
 );
 
 function ActionIcon({ icon }: { icon: IconSvgElement }) {
   return (
-    <HugeiconsIcon
-      aria-hidden
-      className="text-muted size-5 shrink-0"
-      icon={icon}
-      strokeWidth={2}
-    />
+    <HugeiconsIcon aria-hidden className="text-muted size-5 shrink-0" icon={icon} strokeWidth={2} />
   );
 }
 
 function SlackMessageActionsDemo() {
   const sheetSnapPoints = ["355px", 1];
-  const [activeSnapPoint, setActiveSnapPoint] = useState<
-    number | string | null
-  >(sheetSnapPoints[0]!);
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
+    sheetSnapPoints[0]!,
+  );
   const [showMore, setShowMore] = useState(false);
-  const [reactions, setReactions] = useState<
-    Record<string, { count: number; selected: boolean }>
-  >({});
+  const [reactions, setReactions] = useState<Record<string, { count: number; selected: boolean }>>(
+    {},
+  );
   const quickReactions = ["🚀", "🙌", "👍", "🤔", "🙏"];
   const toggleReaction = (emoji: string) => {
     setReactions((current) => {
       const reaction = current[emoji];
 
-      if (!reaction)
-        return { ...current, [emoji]: { count: 1, selected: true } };
+      if (!reaction) return { ...current, [emoji]: { count: 1, selected: true } };
 
       const selected = !reaction.selected;
       const count = selected ? reaction.count + 1 : reaction.count - 1;
@@ -120,22 +112,14 @@ function SlackMessageActionsDemo() {
                       size="lg"
                       onChange={() => toggleReaction(emoji)}
                     >
-                      <EmojiReactionButton.Emoji>
-                        {emoji}
-                      </EmojiReactionButton.Emoji>
+                      <EmojiReactionButton.Emoji>{emoji}</EmojiReactionButton.Emoji>
                       {reaction && reaction.count > 0 ? (
-                        <EmojiReactionButton.Count>
-                          {reaction.count}
-                        </EmojiReactionButton.Count>
+                        <EmojiReactionButton.Count>{reaction.count}</EmojiReactionButton.Count>
                       ) : null}
                     </EmojiReactionButton>
                   );
                 })}
-                <EmojiPicker
-                  aria-label="Add reaction"
-                  size="md"
-                  onSelectionChange={addReaction}
-                >
+                <EmojiPicker aria-label="Add reaction" size="md" onSelectionChange={addReaction}>
                   <EmojiPicker.Trigger
                     aria-label="Add reaction"
                     className="emoji-reaction-button emoji-reaction-button--lg min-h-0 min-w-0"
@@ -144,11 +128,7 @@ function SlackMessageActionsDemo() {
                   </EmojiPicker.Trigger>
                   <EmojiPicker.Popover>
                     <EmojiPicker.Content>
-                      <SearchField
-                        autoFocus
-                        aria-label="Search emoji"
-                        variant="secondary"
-                      >
+                      <SearchField autoFocus aria-label="Search emoji" variant="secondary">
                         <SearchField.Group>
                           <SearchField.SearchIcon />
                           <SearchField.Input placeholder="Search emoji..." />
@@ -179,14 +159,8 @@ function SlackMessageActionsDemo() {
                     key={label as string}
                     variant="tertiary"
                   >
-                    <HugeiconsIcon
-                      aria-hidden
-                      icon={icon as IconSvgElement}
-                      size={20}
-                    />
-                    <span className="text-xs font-medium">
-                      {label as string}
-                    </span>
+                    <HugeiconsIcon aria-hidden icon={icon as IconSvgElement} size={20} />
+                    <span className="text-xs font-medium">{label as string}</span>
                   </Button>
                 ))}
               </div>
@@ -207,10 +181,7 @@ function SlackMessageActionsDemo() {
                     <ActionIcon icon={Clock01Icon} />
                     <Label>Remind Me</Label>
                   </ListBox.Item>
-                  <ListBox.Item
-                    id="get-reply-notifications"
-                    textValue="Get Reply Notifications"
-                  >
+                  <ListBox.Item id="get-reply-notifications" textValue="Get Reply Notifications">
                     <ActionIcon icon={Notification01Icon} />
                     <Label>Get Reply Notifications</Label>
                   </ListBox.Item>
@@ -243,10 +214,7 @@ function SlackMessageActionsDemo() {
                         <ActionIcon icon={Task01Icon} />
                         <Label>Add to List</Label>
                       </ListBox.Item>
-                      <ListBox.Item
-                        id="pin-to-channel"
-                        textValue="Pin to Channel"
-                      >
+                      <ListBox.Item id="pin-to-channel" textValue="Pin to Channel">
                         <ActionIcon icon={PinIcon} />
                         <Label>Pin to Channel</Label>
                       </ListBox.Item>
@@ -254,28 +222,18 @@ function SlackMessageActionsDemo() {
                         <ActionIcon icon={TextIcon} />
                         <Label>Select Text</Label>
                       </ListBox.Item>
-                      <ListBox.Item
-                        id="link-existing"
-                        textValue="Link existing..."
-                      >
+                      <ListBox.Item id="link-existing" textValue="Link existing...">
                         <ActionIcon icon={Link01Icon} />
                         <div className="flex flex-col">
                           <Label>Link existing...</Label>
-                          <Description>
-                            Links an existing issue or project in Linear
-                          </Description>
+                          <Description>Links an existing issue or project in Linear</Description>
                         </div>
                       </ListBox.Item>
-                      <ListBox.Item
-                        id="turn-into-poll"
-                        textValue="Turn question into poll"
-                      >
+                      <ListBox.Item id="turn-into-poll" textValue="Turn question into poll">
                         <ActionIcon icon={Task01Icon} />
                         <div className="flex flex-col">
                           <Label>Turn question into poll</Label>
-                          <Description>
-                            Turns a message into a Simple Poll question
-                          </Description>
+                          <Description>Turns a message into a Simple Poll question</Description>
                         </div>
                       </ListBox.Item>
                     </>

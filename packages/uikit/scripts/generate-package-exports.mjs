@@ -2,10 +2,7 @@ import { readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const packageRoot = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "..",
-);
+const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const componentsRoot = path.join(packageRoot, "src/components");
 const packageTemplatePath = path.join(packageRoot, "package.template.json");
 const packageJsonPath = path.join(packageRoot, "package.json");
@@ -46,9 +43,7 @@ const readComponents = async () => {
     names.set(component.name, component.group);
   }
 
-  return components.toSorted((left, right) =>
-    left.name.localeCompare(right.name),
-  );
+  return components.toSorted((left, right) => left.name.localeCompare(right.name));
 };
 
 const componentExport = ({ group, name }) => ({
@@ -62,12 +57,8 @@ const componentExport = ({ group, name }) => ({
 
 const packageTemplateSource = await readFile(packageTemplatePath, "utf8");
 const packageJson = JSON.parse(packageTemplateSource);
-const packageJsonSource = await readFile(packageJsonPath, "utf8").catch(
-  () => "",
-);
-const currentPackageJson = packageJsonSource
-  ? JSON.parse(packageJsonSource)
-  : undefined;
+const packageJsonSource = await readFile(packageJsonPath, "utf8").catch(() => "");
+const currentPackageJson = packageJsonSource ? JSON.parse(packageJsonSource) : undefined;
 
 // Changesets updates the publish manifest directly. Keep its release version
 // when reconstructing the rest of the generated manifest before a build.
@@ -77,14 +68,7 @@ if (currentPackageJson?.version) {
 
 const components = await readComponents();
 const fixedExports = packageJson.exports;
-const requiredFixedExports = [
-  ".",
-  "./icons",
-  "./hooks",
-  "./utils",
-  "./styles",
-  "./styles.css",
-];
+const requiredFixedExports = [".", "./icons", "./hooks", "./utils", "./styles", "./styles.css"];
 
 for (const exportPath of requiredFixedExports) {
   if (!fixedExports?.[exportPath]) {
@@ -98,10 +82,7 @@ packageJson.exports = {
   "./hooks": fixedExports["./hooks"],
   "./utils": fixedExports["./utils"],
   ...Object.fromEntries(
-    components.map((component) => [
-      `./${component.name}`,
-      componentExport(component),
-    ]),
+    components.map((component) => [`./${component.name}`, componentExport(component)]),
   ),
   "./*": {
     types: "./dist/components/*.d.mts",

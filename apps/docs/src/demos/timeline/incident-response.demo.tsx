@@ -162,9 +162,7 @@ export const DemoIncidentResponseExample = () => (
   <div className="mx-auto w-[calc(100%-2rem)] max-w-[720px] min-w-0 sm:w-full">
     <div className="mb-5">
       <p className="text-muted m-0 text-xs font-medium">Incident response</p>
-      <h3 className="text-foreground m-0 text-base font-semibold">
-        Export queue degradation
-      </h3>
+      <h3 className="text-foreground m-0 text-base font-semibold">Export queue degradation</h3>
     </div>
     <Timeline density="compact" size="sm">
       <Timeline.Item align="center">
@@ -206,24 +204,17 @@ export const DemoIncidentResponseExample = () => (
                 <Avatar.Image alt="Nora Vazquez" src={incidentAvatars.blue} />
                 <Avatar.Fallback>NV</Avatar.Fallback>
               </Avatar>
-              <h3 className="text-foreground m-0 text-xs leading-5 font-medium">
-                Nora Vazquez
-              </h3>
+              <h3 className="text-foreground m-0 text-xs leading-5 font-medium">Nora Vazquez</h3>
               <Chip size="sm" variant="soft">
                 On-call
               </Chip>
             </div>
-            <time className="text-muted shrink-0 text-xs leading-5">
-              2:28 AM
-            </time>
+            <time className="text-muted shrink-0 text-xs leading-5">2:28 AM</time>
           </div>
-          <Card
-            className="!border-border w-full !border !border-solid p-3"
-            variant="transparent"
-          >
+          <Card className="!border-border w-full !border !border-solid p-3" variant="transparent">
             <p className="text-foreground m-0 text-sm leading-relaxed">
-              Confirmed the delay is isolated to scheduled exports. API requests
-              and dashboard reads are healthy while the backlog drains.
+              Confirmed the delay is isolated to scheduled exports. API requests and dashboard reads
+              are healthy while the backlog drains.
             </p>
             <div className="mt-3 flex flex-wrap items-center gap-2">
               <Chip size="sm" variant="secondary">
@@ -264,9 +255,7 @@ export const DemoIncidentResponseExample = () => (
                               .join("")}
                           </Avatar.Fallback>
                         </Avatar>
-                        <span className="text-foreground font-medium">
-                          {item.actor}
-                        </span>
+                        <span className="text-foreground font-medium">{item.actor}</span>
                       </span>
                     </span>
                   </>
@@ -279,23 +268,16 @@ export const DemoIncidentResponseExample = () => (
                   </>
                 ) : "trailingText" in item ? (
                   <>
-                    <span className="text-foreground font-medium">
-                      {item.text}
-                    </span>{" "}
+                    <span className="text-foreground font-medium">{item.text}</span>{" "}
                     {item.trailingText}
                   </>
                 ) : "target" in item ? (
                   <>
-                    {item.text}{" "}
-                    <span className="text-foreground font-medium">
-                      {item.target}
-                    </span>
+                    {item.text} <span className="text-foreground font-medium">{item.target}</span>
                   </>
                 ) : null}
               </p>
-              <time className="text-muted shrink-0 text-xs leading-5">
-                {item.time}
-              </time>
+              <time className="text-muted shrink-0 text-xs leading-5">{item.time}</time>
             </div>
           </Timeline.Content>
         </Timeline.Item>

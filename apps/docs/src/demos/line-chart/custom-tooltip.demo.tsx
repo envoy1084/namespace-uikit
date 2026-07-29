@@ -30,11 +30,7 @@ function Legend({
       {items.map(({ color, dashed, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
           <span
-            className={
-              dashed
-                ? "h-0 w-3 border-t-2 border-dashed"
-                : "size-3 rounded-full"
-            }
+            className={dashed ? "h-0 w-3 border-t-2 border-dashed" : "size-3 rounded-full"}
             style={dashed ? { borderColor: color } : { backgroundColor: color }}
           />
           <span className="text-muted text-xs">{label}</span>
@@ -96,10 +92,7 @@ export const DemoCustomTooltipExample = () => (
         <LineChart.Tooltip
           content={({ active, label, payload }) => {
             if (!active || !payload?.length) return null;
-            const total = payload.reduce(
-              (sum, entry) => sum + Number(entry.value ?? 0),
-              0,
-            );
+            const total = payload.reduce((sum, entry) => sum + Number(entry.value ?? 0), 0);
             return (
               <ChartTooltip indicator="line">
                 <ChartTooltip.Header>{label}</ChartTooltip.Header>
@@ -107,9 +100,7 @@ export const DemoCustomTooltipExample = () => (
                   <ChartTooltip.Item key={index}>
                     <ChartTooltip.Indicator color={entry.stroke} />
                     <ChartTooltip.Label>{entry.name}</ChartTooltip.Label>
-                    <ChartTooltip.Value>
-                      {Number(entry.value).toLocaleString()}
-                    </ChartTooltip.Value>
+                    <ChartTooltip.Value>{Number(entry.value).toLocaleString()}</ChartTooltip.Value>
                   </ChartTooltip.Item>
                 ))}
                 <div className="border-separator mt-1 flex items-center justify-between border-t pt-1.5">

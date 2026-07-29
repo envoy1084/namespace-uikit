@@ -116,15 +116,11 @@
     top: var(--map-control-offset);
   }
   .map__controls--bottom-left {
-    bottom: calc(
-      var(--map-control-offset) + var(--map-control-attribution-clearance)
-    );
+    bottom: calc(var(--map-control-offset) + var(--map-control-attribution-clearance));
     left: var(--map-control-offset);
   }
   .map__controls--bottom-right {
-    bottom: calc(
-      var(--map-control-offset) + var(--map-control-attribution-clearance)
-    );
+    bottom: calc(var(--map-control-offset) + var(--map-control-attribution-clearance));
     right: var(--map-control-offset);
   }
   .map__control-button {

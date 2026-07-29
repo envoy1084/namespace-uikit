@@ -18,14 +18,9 @@ function compareStrings(left: string, right: string): number {
   return 0;
 }
 
-function sortKeys<K>(
-  keys: Iterable<K>,
-  compareKeys: (left: K, right: K) => number,
-): K[] {
+function sortKeys<K>(keys: Iterable<K>, compareKeys: (left: K, right: K) => number): K[] {
   return [...keys].reduce<K[]>((sorted, key) => {
-    const index = sorted.findIndex(
-      (existing) => compareKeys(key, existing) < 0,
-    );
+    const index = sorted.findIndex((existing) => compareKeys(key, existing) < 0);
 
     if (index === -1) return sorted.concat(key);
     return sorted.slice(0, index).concat(key, sorted.slice(index));
@@ -44,16 +39,9 @@ function diffMap<TChange extends NameProfileRecordChange>(
   baseline: ReadonlyMap<string, string>,
   draft: ReadonlyMap<string, string>,
   compareKeys: (left: string, right: string) => number,
-  createChange: (
-    key: string,
-    previousValue: string | null,
-    value: string | null,
-  ) => TChange,
+  createChange: (key: string, previousValue: string | null, value: string | null) => TChange,
 ): TChange[] {
-  const keys = sortKeys(
-    new Set([...baseline.keys(), ...draft.keys()]),
-    compareKeys,
-  );
+  const keys = sortKeys(new Set([...baseline.keys(), ...draft.keys()]), compareKeys);
   const changes: TChange[] = [];
 
   for (const key of keys) {
@@ -173,17 +161,12 @@ export function diffProfileRecords(
   );
 
   changes.push(
-    ...diffMap(
-      baselineData,
-      draftData,
-      compareStrings,
-      (key, previousValue, value) => ({
-        key,
-        previousValue,
-        type: "data",
-        value,
-      }),
-    ),
+    ...diffMap(baselineData, draftData, compareStrings, (key, previousValue, value) => ({
+      key,
+      previousValue,
+      type: "data",
+      value,
+    })),
     ...diffMap(
       baselineInterfaces,
       draftInterfaces,
@@ -227,17 +210,12 @@ export function diffProfileRecords(
   );
 
   changes.push(
-    ...diffMap(
-      baselineText,
-      draftText,
-      compareStrings,
-      (key, previousValue, value) => ({
-        key,
-        previousValue,
-        type: "text",
-        value,
-      }),
-    ),
+    ...diffMap(baselineText, draftText, compareStrings, (key, previousValue, value) => ({
+      key,
+      previousValue,
+      type: "text",
+      value,
+    })),
   );
 
   return changes;

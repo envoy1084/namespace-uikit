@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
-import type { Key } from "@/components/utilities/rac";
-
 import React, { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
+
 import { ToggleButton } from "@/components/buttons/toggle-button";
+import type { Key } from "@/components/utilities/rac";
 import { Icon } from "@/icon";
 
 import { ToggleButtonGroup } from "./";
@@ -84,11 +83,7 @@ export const Sizes: Story = {
             <ToggleButtonGroup.Separator />
             <Icon icon="hugeicons:underline" />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <ToggleButtonGroup.Separator />
             <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
@@ -108,11 +103,7 @@ export const Sizes: Story = {
             <ToggleButtonGroup.Separator />
             <Icon icon="hugeicons:underline" />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <ToggleButtonGroup.Separator />
             <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
@@ -132,11 +123,7 @@ export const Sizes: Story = {
             <ToggleButtonGroup.Separator />
             <Icon icon="hugeicons:underline" />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <ToggleButtonGroup.Separator />
             <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
@@ -202,11 +189,7 @@ export const AttachedVsDetached: Story = {
             <ToggleButtonGroup.Separator />
             <Icon icon="hugeicons:underline" />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <ToggleButtonGroup.Separator />
             <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
@@ -224,11 +207,7 @@ export const AttachedVsDetached: Story = {
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <Icon icon="hugeicons:underline" />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
         </ToggleButtonGroup>
@@ -282,10 +261,7 @@ export const SelectionMode: Story = {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
         <p className="text-muted text-sm">Single selection</p>
-        <ToggleButtonGroup
-          defaultSelectedKeys={["center"]}
-          selectionMode="single"
-        >
+        <ToggleButtonGroup defaultSelectedKeys={["center"]} selectionMode="single">
           <ToggleButton id="left">
             <Icon icon="hugeicons:text-align-left" />
             Left
@@ -304,10 +280,7 @@ export const SelectionMode: Story = {
       </div>
       <div className="flex flex-col gap-2">
         <p className="text-muted text-sm">Multiple selection</p>
-        <ToggleButtonGroup
-          defaultSelectedKeys={["bold", "underline"]}
-          selectionMode="multiple"
-        >
+        <ToggleButtonGroup defaultSelectedKeys={["bold", "underline"]} selectionMode="multiple">
           <ToggleButton isIconOnly aria-label="Bold" id="bold">
             <Icon icon="hugeicons:bold" />
           </ToggleButton>
@@ -319,11 +292,7 @@ export const SelectionMode: Story = {
             <ToggleButtonGroup.Separator />
             <Icon icon="hugeicons:underline" />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <ToggleButtonGroup.Separator />
             <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
@@ -355,11 +324,7 @@ export const Controlled: Story = {
             <ToggleButtonGroup.Separator />
             <Icon icon="hugeicons:underline" />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <ToggleButtonGroup.Separator />
             <Icon icon="hugeicons:strikethrough" />
           </ToggleButton>
@@ -436,10 +401,7 @@ export const WithoutSeparator: Story = {
 export const WithLabels: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
-      <ToggleButtonGroup
-        defaultSelectedKeys={["italic"]}
-        selectionMode="multiple"
-      >
+      <ToggleButtonGroup defaultSelectedKeys={["italic"]} selectionMode="multiple">
         <ToggleButton id="bold">
           <Icon icon="hugeicons:bold" />
           Bold
@@ -462,9 +424,7 @@ export const WithLabels: Story = {
 export const Examples: Story = {
   render: function ExamplesStory() {
     const [alignment, setAlignment] = useState(new Set<Key>(["left"]));
-    const [formatting, setFormatting] = useState(
-      new Set<Key>(["bold", "underline"]),
-    );
+    const [formatting, setFormatting] = useState(new Set<Key>(["bold", "underline"]));
 
     return (
       <div className="flex flex-col items-start gap-8">
@@ -488,11 +448,7 @@ export const Examples: Story = {
                 <ToggleButtonGroup.Separator />
                 <Icon icon="hugeicons:underline" />
               </ToggleButton>
-              <ToggleButton
-                isIconOnly
-                aria-label="Strikethrough"
-                id="strikethrough"
-              >
+              <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
                 <ToggleButtonGroup.Separator />
                 <Icon icon="hugeicons:strikethrough" />
               </ToggleButton>

@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Description,
-  InputGroup,
-  Label,
-  Surface,
-  TextField,
-} from "@thenamespace/uikit";
+import { Description, InputGroup, Label, Surface, TextField } from "@thenamespace/uikit";
 import { Mail01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function OnSurface() {
@@ -18,10 +12,7 @@ export function OnSurface() {
           <InputGroup.Prefix>
             <HugeiconsIcon icon={Mail01Icon} className="text-muted size-4" />
           </InputGroup.Prefix>
-          <InputGroup.Input
-            className="w-full max-w-[280px]"
-            placeholder="name@email.com"
-          />
+          <InputGroup.Input className="w-full max-w-[280px]" placeholder="name@email.com" />
         </InputGroup>
         <Description>We'll never share this with anyone else</Description>
       </TextField>

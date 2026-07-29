@@ -11,12 +11,7 @@ const browsers = [
   { name: "Edge", value: 9 },
 ];
 
-const colors = [
-  "var(--chart-4)",
-  "var(--chart-3)",
-  "var(--chart-2)",
-  "var(--chart-1)",
-];
+const colors = ["var(--chart-4)", "var(--chart-3)", "var(--chart-2)", "var(--chart-1)"];
 
 export const DemoWithPieChartExample = () => (
   <Widget className="w-full max-w-[360px]">

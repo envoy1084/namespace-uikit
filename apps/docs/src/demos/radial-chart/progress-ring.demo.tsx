@@ -56,30 +56,14 @@ export const DemoProgressRingExample = () => {
             outerRadius="100%"
             width={200}
           >
-            <RadialChart.AngleAxis
-              angleAxisId={0}
-              domain={[0, max]}
-              tick={false}
-              type="number"
-            />
-            <RadialChart.Bar
-              background
-              angleAxisId={0}
-              cornerRadius={12}
-              dataKey="value"
-            />
+            <RadialChart.AngleAxis angleAxisId={0} domain={[0, max]} tick={false} type="number" />
+            <RadialChart.Bar background angleAxisId={0} cornerRadius={12} dataKey="value" />
             <RadialChart.Tooltip
-              content={
-                <RadialTooltip
-                  valueFormatter={(item) => Number(item).toLocaleString()}
-                />
-              }
+              content={<RadialTooltip valueFormatter={(item) => Number(item).toLocaleString()} />}
             />
           </RadialChart>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-foreground text-3xl font-bold">
-              {percent}%
-            </span>
+            <span className="text-foreground text-3xl font-bold">{percent}%</span>
             <span className="text-muted text-xs">
               {value.toLocaleString()} / {max.toLocaleString()}
             </span>

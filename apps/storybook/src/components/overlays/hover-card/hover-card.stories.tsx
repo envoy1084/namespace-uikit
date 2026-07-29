@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { Avatar } from "@thenamespace/uikit/avatar";
 import { Button } from "@thenamespace/uikit/button";
 import { Link } from "@thenamespace/uikit/link";
@@ -22,17 +21,12 @@ function Profile() {
     <>
       <div className="flex items-center gap-3">
         <Avatar size="sm">
-          <Avatar.Image
-            alt="Namespace"
-            src="/assets/docs/namespace_isotipo.png"
-          />
+          <Avatar.Image alt="Namespace" src="/assets/docs/namespace_isotipo.png" />
           <Avatar.Fallback>H</Avatar.Fallback>
         </Avatar>
         <div className="flex flex-col items-start justify-center">
           <span className="text-sm leading-4 font-semibold">Namespace</span>
-          <span className="text-muted text-sm tracking-tight">
-            @thenamespace
-          </span>
+          <span className="text-muted text-sm tracking-tight">@thenamespace</span>
         </div>
       </div>
       <p className="mt-3 pl-px text-sm font-medium">
@@ -58,11 +52,7 @@ function Profile() {
 }
 function TriggerLink() {
   return (
-    <Link
-      className="underline"
-      href="https://x.com/thenamespace"
-      target="_blank"
-    >
+    <Link className="underline" href="https://x.com/thenamespace" target="_blank">
       @thenamespace
     </Link>
   );
@@ -111,11 +101,7 @@ function ControlledDemo() {
   return (
     <div className="px-10 py-24">
       <div className="mb-4 flex items-center gap-2">
-        <Button
-          onPress={() => setOpen((value) => !value)}
-          size="sm"
-          variant="outline"
-        >
+        <Button onPress={() => setOpen((value) => !value)} size="sm" variant="outline">
           {open ? "Close" : "Open"} HoverCard
         </Button>
         <span className="text-[13px] opacity-60">
@@ -185,11 +171,7 @@ export const WithImage: Story = {
         Learn more about the{" "}
         <HoverCard openDelay={0}>
           <HoverCard.Trigger>
-            <Link
-              className="underline"
-              href="https://namespace.ninja"
-              target="_blank"
-            >
+            <Link className="underline" href="https://namespace.ninja" target="_blank">
               Neo Brutalism
             </Link>
           </HoverCard.Trigger>
@@ -212,11 +194,7 @@ export const CustomDelays: Story = {
         { closeDelay: 300, label: "Default (700 / 300)", openDelay: 700 },
         { closeDelay: 500, label: "Slow (1s / 500)", openDelay: 1000 },
       ].map((config) => (
-        <HoverCard
-          closeDelay={config.closeDelay}
-          key={config.label}
-          openDelay={config.openDelay}
-        >
+        <HoverCard closeDelay={config.closeDelay} key={config.label} openDelay={config.openDelay}>
           <HoverCard.Trigger>
             <Button variant="outline">{config.label}</Button>
           </HoverCard.Trigger>

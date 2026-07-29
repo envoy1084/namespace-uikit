@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
+
+import type { Metadata } from "next";
 
 import { DocsProvider } from "@/components/docs-provider";
 import { site } from "@/lib/site";

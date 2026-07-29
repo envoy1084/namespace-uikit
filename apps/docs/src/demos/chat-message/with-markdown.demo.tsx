@@ -4,9 +4,7 @@
 import { ChatMessage, Markdown } from "@thenamespace/uikit";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
-  <div className="mx-auto flex w-full max-w-[714px] flex-col gap-8">
-    {children}
-  </div>
+  <div className="mx-auto flex w-full max-w-[714px] flex-col gap-8">{children}</div>
 );
 
 const markdown =
@@ -16,9 +14,7 @@ export const DemoWithMarkdownExample = () => (
   <Wrapper>
     <ChatMessage.User>
       <ChatMessage.Bubble>
-        <ChatMessage.Content>
-          Show me markdown inside assistant messages.
-        </ChatMessage.Content>
+        <ChatMessage.Content>Show me markdown inside assistant messages.</ChatMessage.Content>
       </ChatMessage.Bubble>
     </ChatMessage.User>
     <ChatMessage.Assistant>

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Description } from "@/components/forms/description";
 import { FieldError } from "@/components/forms/field-error";
@@ -84,9 +84,7 @@ export const Controlled: Story = {
             Enable notifications
           </Switch.Content>
         </Switch>
-        <p className="text-muted text-sm">
-          Switch is {isSelected ? "on" : "off"}
-        </p>
+        <p className="text-muted text-sm">Switch is {isSelected ? "on" : "off"}</p>
       </div>
     );
   },
@@ -123,9 +121,7 @@ export const Validation: Story = {
     <Switch
       isRequired
       name="terms-switch"
-      validate={(isSelected) =>
-        isSelected ? true : "You must accept to continue"
-      }
+      validate={(isSelected) => (isSelected ? true : "You must accept to continue")}
     >
       <Switch.Content>
         <Switch.Control>
@@ -264,9 +260,7 @@ export const WithIcons: Story = {
           <Switch key={key} defaultSelected aria-label={key} size="lg">
             {({ isSelected }) => (
               <Switch.Content>
-                <Switch.Control
-                  className={isSelected ? value.selectedControlClass : ""}
-                >
+                <Switch.Control className={isSelected ? value.selectedControlClass : ""}>
                   <Switch.Thumb>
                     <Switch.Icon>
                       <Icon

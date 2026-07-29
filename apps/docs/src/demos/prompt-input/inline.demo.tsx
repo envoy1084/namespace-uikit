@@ -48,9 +48,7 @@ function useAttachments() {
         id: attachmentId(file),
         mimeType: file.type,
         name: file.name,
-        src: file.type.startsWith("image/")
-          ? URL.createObjectURL(file)
-          : undefined,
+        src: file.type.startsWith("image/") ? URL.createObjectURL(file) : undefined,
       })),
     ]);
   }, []);
@@ -149,11 +147,7 @@ function ModelSelector({ variant }: { variant?: "secondary" }) {
               <ListBox.Section>
                 <Header>{group.provider}</Header>
                 {group.models.map((model) => (
-                  <ListBox.Item
-                    key={model.id}
-                    id={model.id}
-                    textValue={model.name}
-                  >
+                  <ListBox.Item key={model.id} id={model.id} textValue={model.name}>
                     {model.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -167,19 +161,8 @@ function ModelSelector({ variant }: { variant?: "secondary" }) {
   );
 }
 
-function Composer({
-  layout,
-  variant,
-}: {
-  layout?: "compact" | "inline";
-  variant?: "secondary";
-}) {
-  const {
-    attachments,
-    clearAttachments,
-    handleFilesSelected,
-    removeAttachment,
-  } = useAttachments();
+function Composer({ layout, variant }: { layout?: "compact" | "inline"; variant?: "secondary" }) {
+  const { attachments, clearAttachments, handleFilesSelected, removeAttachment } = useAttachments();
   const [value, setValue] = useState("");
   const submit = () => {
     setValue("");
@@ -200,16 +183,9 @@ function Composer({
             render={(dropzoneProps) => (
               <PromptInput.Shell {...dropzoneProps}>
                 <PromptInput.Content>
-                  <AttachmentPreviews
-                    attachments={attachments}
-                    onRemove={removeAttachment}
-                  />
+                  <AttachmentPreviews attachments={attachments} onRemove={removeAttachment} />
                   <PromptInput.TextArea
-                    placeholder={
-                      isFollowUp
-                        ? "Send follow-up"
-                        : "What do you want to know?"
-                    }
+                    placeholder={isFollowUp ? "Send follow-up" : "What do you want to know?"}
                   />
                 </PromptInput.Content>
                 <PromptInput.Toolbar>
@@ -232,9 +208,7 @@ function Composer({
                       )}
                     />
                     {!isFollowUp ? (
-                      <ModelSelector
-                        variant={variant ? undefined : "secondary"}
-                      />
+                      <ModelSelector variant={variant ? undefined : "secondary"} />
                     ) : null}
                   </PromptInput.ToolbarStart>
                   <PromptInput.ToolbarEnd>

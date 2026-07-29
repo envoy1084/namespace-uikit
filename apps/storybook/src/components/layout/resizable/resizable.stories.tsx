@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useRef, useState } from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 
@@ -16,13 +16,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const Content = ({
-  children,
-  className = "",
-}: {
-  children: string;
-  className?: string;
-}) => (
+const Content = ({ children, className = "" }: { children: string; className?: string }) => (
   <div className={`flex h-full items-center justify-center p-6 ${className}`}>
     <span className="text-sm font-medium">{children}</span>
   </div>
@@ -71,15 +65,11 @@ export const Types: Story = {
     <div className="flex w-full flex-col gap-6">
       {(["line", "drag", "pill", "handle"] as const).map((type) => (
         <div className="flex flex-col gap-2" key={type}>
-          <span className="text-muted text-xs font-medium tracking-wide uppercase">
-            {type}
-          </span>
+          <span className="text-muted text-xs font-medium tracking-wide uppercase">{type}</span>
           <div className="border-border bg-background h-[200px] w-full overflow-hidden rounded-xl border">
             <Resizable>
               <Resizable.Panel defaultSize={50} minSize={20}>
-                <Content className="bg-surface text-surface-foreground">
-                  Left
-                </Content>
+                <Content className="bg-surface text-surface-foreground">Left</Content>
               </Resizable.Panel>
               <Resizable.Handle type={type} />
               <Resizable.Panel defaultSize={50} minSize={20}>
@@ -127,9 +117,7 @@ export const Variants: Story = {
               <Resizable.Panel defaultSize={50}>
                 <Content className={item.fg}>Left</Content>
               </Resizable.Panel>
-              <Resizable.Handle
-                variant={item.variant as "primary" | "secondary" | "tertiary"}
-              />
+              <Resizable.Handle variant={item.variant as "primary" | "secondary" | "tertiary"} />
               <Resizable.Panel defaultSize={50}>
                 <Content className={item.fg}>Right</Content>
               </Resizable.Panel>
@@ -146,9 +134,7 @@ export const Nested: Story = {
     <div className="border-border bg-background h-[500px] w-full overflow-hidden rounded-xl border">
       <Resizable orientation="horizontal">
         <Resizable.Panel defaultSize={25} minSize={15}>
-          <Content className="bg-surface text-surface-foreground">
-            Sidebar
-          </Content>
+          <Content className="bg-surface text-surface-foreground">Sidebar</Content>
         </Resizable.Panel>
         <Resizable.Handle />
         <Resizable.Panel defaultSize={75}>
@@ -179,11 +165,7 @@ export const WithCollapse: Story = {
           <Button
             size="sm"
             variant="secondary"
-            onPress={() =>
-              collapsed
-                ? panelRef.current?.expand()
-                : panelRef.current?.collapse()
-            }
+            onPress={() => (collapsed ? panelRef.current?.expand() : panelRef.current?.collapse())}
           >
             {collapsed ? "Expand" : "Collapse"} sidebar
           </Button>
@@ -200,9 +182,7 @@ export const WithCollapse: Story = {
               onCollapse={() => setCollapsed(true)}
               onExpand={() => setCollapsed(false)}
             >
-              <Content className="bg-surface text-surface-foreground">
-                Sidebar
-              </Content>
+              <Content className="bg-surface text-surface-foreground">Sidebar</Content>
             </Resizable.Panel>
             <Resizable.Handle />
             <Resizable.Panel defaultSize={75} id="main">

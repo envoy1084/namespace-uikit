@@ -1,7 +1,6 @@
 "use client";
 
 import type { Key } from "@thenamespace/uikit";
-
 import {
   Avatar,
   Description,
@@ -78,9 +77,7 @@ export function TagGroupWithListData() {
         <Label>Team Members</Label>
         <TagGroup.List
           items={list.items}
-          renderEmptyState={() => (
-            <EmptyState className="p-1">No team members</EmptyState>
-          )}
+          renderEmptyState={() => <EmptyState className="p-1">No team members</EmptyState>}
         >
           {(user) => (
             <Tag key={user.id} id={user.id} textValue={user.name}>
@@ -94,32 +91,31 @@ export function TagGroupWithListData() {
         </TagGroup.List>
         <Description>Select team members for your project</Description>
       </TagGroup>
-      {list.selectedKeys !== "all" &&
-        Array.from(list.selectedKeys).length > 0 && (
-          <div className="mt-4 flex flex-col gap-2">
-            <p className="text-muted text-sm font-medium">Selected:</p>
-            <div className="flex flex-wrap gap-2">
-              {Array.from(list.selectedKeys).map((key) => {
-                const user = list.getItem(key);
+      {list.selectedKeys !== "all" && Array.from(list.selectedKeys).length > 0 && (
+        <div className="mt-4 flex flex-col gap-2">
+          <p className="text-muted text-sm font-medium">Selected:</p>
+          <div className="flex flex-wrap gap-2">
+            {Array.from(list.selectedKeys).map((key) => {
+              const user = list.getItem(key);
 
-                if (!user) return null;
+              if (!user) return null;
 
-                return (
-                  <div
-                    key={`${user.id}-selected`}
-                    className="bg-surface-tertiary flex items-center gap-2 rounded-lg px-2 py-1"
-                  >
-                    <Avatar className="size-4" size="sm">
-                      <Avatar.Image src={user.avatar} />
-                      <Avatar.Fallback>{user.fallback}</Avatar.Fallback>
-                    </Avatar>
-                    <span className="text-sm">{user.name}</span>
-                  </div>
-                );
-              })}
-            </div>
+              return (
+                <div
+                  key={`${user.id}-selected`}
+                  className="bg-surface-tertiary flex items-center gap-2 rounded-lg px-2 py-1"
+                >
+                  <Avatar className="size-4" size="sm">
+                    <Avatar.Image src={user.avatar} />
+                    <Avatar.Fallback>{user.fallback}</Avatar.Fallback>
+                  </Avatar>
+                  <span className="text-sm">{user.name}</span>
+                </div>
+              );
+            })}
           </div>
-        )}
+        </div>
+      )}
     </div>
   );
 }

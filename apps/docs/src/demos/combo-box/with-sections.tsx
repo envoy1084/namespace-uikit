@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  ComboBox,
-  Header,
-  Input,
-  Label,
-  ListBox,
-  Separator,
-} from "@thenamespace/uikit";
+import { ComboBox, Header, Input, Label, ListBox, Separator } from "@thenamespace/uikit";
 
 export function WithSections() {
   return (

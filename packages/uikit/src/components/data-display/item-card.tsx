@@ -5,23 +5,15 @@ import { createContext, useContext, useMemo } from "react";
 
 import { cn, dom, type DOMRenderProps } from "@heroui/react";
 
-export type ItemCardVariant =
-  | "default"
-  | "outline"
-  | "secondary"
-  | "tertiary"
-  | "transparent";
+export type ItemCardVariant = "default" | "outline" | "secondary" | "tertiary" | "transparent";
 interface ContextValue {
   variant: ItemCardVariant;
 }
 const Context = createContext<ContextValue | null>(null);
-const part = (name: string, className?: string) =>
-  cn(`item-card__${name}`, className);
+const part = (name: string, className?: string) => cn(`item-card__${name}`, className);
 
 export interface ItemCardRootProps
-  extends
-    Omit<ComponentPropsWithRef<"div">, "className">,
-    DOMRenderProps<"div", undefined> {
+  extends Omit<ComponentPropsWithRef<"div">, "className">, DOMRenderProps<"div", undefined> {
   children: ReactNode;
   className?: string;
   variant?: ItemCardVariant;
@@ -51,18 +43,10 @@ function usePart() {
 export interface ItemCardIconProps extends ComponentPropsWithRef<"div"> {
   children: ReactNode;
 }
-function ItemCardIcon({
-  children,
-  className,
-  ...props
-}: ItemCardIconProps): ReactElement {
+function ItemCardIcon({ children, className, ...props }: ItemCardIconProps): ReactElement {
   usePart();
   return (
-    <div
-      {...props}
-      className={part("icon", className)}
-      data-slot="item-card-icon"
-    >
+    <div {...props} className={part("icon", className)} data-slot="item-card-icon">
       {children}
     </div>
   );
@@ -70,18 +54,10 @@ function ItemCardIcon({
 export interface ItemCardContentProps extends ComponentPropsWithRef<"div"> {
   children: ReactNode;
 }
-function ItemCardContent({
-  children,
-  className,
-  ...props
-}: ItemCardContentProps): ReactElement {
+function ItemCardContent({ children, className, ...props }: ItemCardContentProps): ReactElement {
   usePart();
   return (
-    <div
-      {...props}
-      className={part("content", className)}
-      data-slot="item-card-content"
-    >
+    <div {...props} className={part("content", className)} data-slot="item-card-content">
       {children}
     </div>
   );
@@ -89,18 +65,10 @@ function ItemCardContent({
 export interface ItemCardTitleProps extends ComponentPropsWithRef<"span"> {
   children: ReactNode;
 }
-function ItemCardTitle({
-  children,
-  className,
-  ...props
-}: ItemCardTitleProps): ReactElement {
+function ItemCardTitle({ children, className, ...props }: ItemCardTitleProps): ReactElement {
   usePart();
   return (
-    <span
-      {...props}
-      className={part("title", className)}
-      data-slot="item-card-title"
-    >
+    <span {...props} className={part("title", className)} data-slot="item-card-title">
       {children}
     </span>
   );
@@ -115,11 +83,7 @@ function ItemCardDescription({
 }: ItemCardDescriptionProps): ReactElement {
   usePart();
   return (
-    <span
-      {...props}
-      className={part("description", className)}
-      data-slot="item-card-description"
-    >
+    <span {...props} className={part("description", className)} data-slot="item-card-description">
       {children}
     </span>
   );
@@ -127,18 +91,10 @@ function ItemCardDescription({
 export interface ItemCardActionProps extends ComponentPropsWithRef<"div"> {
   children: ReactNode;
 }
-function ItemCardAction({
-  children,
-  className,
-  ...props
-}: ItemCardActionProps): ReactElement {
+function ItemCardAction({ children, className, ...props }: ItemCardActionProps): ReactElement {
   usePart();
   return (
-    <div
-      {...props}
-      className={part("action", className)}
-      data-slot="item-card-action"
-    >
+    <div {...props} className={part("action", className)} data-slot="item-card-action">
       {children}
     </div>
   );

@@ -11,10 +11,7 @@ function WithBackgroundDemo() {
     <div className="w-[420px]">
       <EmptyState className="bg-surface-secondary rounded-2xl">
         <EmptyState.Header>
-          <EmptyState.Media
-            className="bg-surface-tertiary border"
-            variant="icon"
-          >
+          <EmptyState.Media className="bg-surface-tertiary border" variant="icon">
             <Icon icon="lucide:bell" />
           </EmptyState.Media>
           <EmptyState.Title>No Notifications</EmptyState.Title>

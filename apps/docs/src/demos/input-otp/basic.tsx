@@ -5,9 +5,7 @@ export function Basic() {
     <div className="flex w-[280px] flex-col gap-2">
       <div className="flex flex-col gap-1">
         <Label>Verify account</Label>
-        <p className="text-muted text-sm">
-          We&apos;ve sent a code to a****@gmail.com
-        </p>
+        <p className="text-muted text-sm">We&apos;ve sent a code to a****@gmail.com</p>
       </div>
       <InputOTP maxLength={6}>
         <InputOTP.Group>

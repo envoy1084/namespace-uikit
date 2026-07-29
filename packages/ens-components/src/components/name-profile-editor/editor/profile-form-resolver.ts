@@ -1,30 +1,22 @@
 import type { FieldErrors, Resolver } from "react-hook-form";
 
+import { findRecordDefinition } from "#/components/name-profile-editor/editor/record-definitions";
 import type { ProfileEditorSection } from "#/components/name-profile-editor/editor/types";
 import type { NormalizeProfileRecordsError } from "#/components/name-profile-editor/normalize-profile-records";
-import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
-
-import { findRecordDefinition } from "#/components/name-profile-editor/editor/record-definitions";
 import { normalizeProfileRecords } from "#/components/name-profile-editor/normalize-profile-records";
+import type { NameProfileFormValues } from "#/components/name-profile-editor/types";
 import { emptyNameProfileFormValues } from "#/components/name-profile-editor/types";
 import { formatError } from "#/lib/error";
 
 type ArrayErrorTarget = "abi" | "addresses" | "data" | "interfaces" | "text";
-type ErrorTarget =
-  | ArrayErrorTarget
-  | "contenthash"
-  | "name"
-  | "profile"
-  | "pubkey";
+type ErrorTarget = ArrayErrorTarget | "contenthash" | "name" | "profile" | "pubkey";
 
 interface ErrorLocation {
   field?: string;
   target: ErrorTarget;
 }
 
-const ERROR_LOCATIONS: Readonly<
-  Record<NormalizeProfileRecordsError, ErrorLocation>
-> = {
+const ERROR_LOCATIONS: Readonly<Record<NormalizeProfileRecordsError, ErrorLocation>> = {
   DUPLICATE_ABI_CONTENT_TYPE: { field: "contentType", target: "abi" },
   DUPLICATE_ADDRESS_COIN_TYPE: { field: "coinType", target: "addresses" },
   DUPLICATE_DATA_KEY: { field: "key", target: "data" },
@@ -95,20 +87,14 @@ function createErrors(
   const errors: FieldErrors<NameProfileFormValues> = {};
   const createFieldError = (index?: number) => {
     const coinType =
-      target === "addresses" && index !== undefined
-        ? values.addresses[index]?.coinType
-        : undefined;
+      target === "addresses" && index !== undefined ? values.addresses[index]?.coinType : undefined;
     const network =
       coinType === undefined
         ? undefined
-        : (findRecordDefinition("address", coinType)?.label ??
-          `coin type ${coinType}`);
+        : (findRecordDefinition("address", coinType)?.label ?? `coin type ${coinType}`);
 
     return {
-      message: formatError(
-        error,
-        network === undefined ? undefined : { network },
-      ),
+      message: formatError(error, network === undefined ? undefined : { network }),
       type: error,
     };
   };
@@ -125,8 +111,7 @@ function createErrors(
       length: Math.max(values[target].length, index + 1),
     });
     const fieldError = createFieldError(index);
-    arrayErrors[index] =
-      field === undefined ? { root: fieldError } : { [field]: fieldError };
+    arrayErrors[index] = field === undefined ? { root: fieldError } : { [field]: fieldError };
     (errors as Record<string, unknown>)[target] = arrayErrors;
   } else {
     (errors as Record<string, unknown>)[target] = {
@@ -140,11 +125,7 @@ function createErrors(
 function errorMessage(value: unknown): string | undefined {
   if (typeof value !== "object" || value === null) return undefined;
 
-  if (
-    "message" in value &&
-    typeof value.message === "string" &&
-    value.message.length > 0
-  ) {
+  if ("message" in value && typeof value.message === "string" && value.message.length > 0) {
     return value.message;
   }
 
@@ -181,21 +162,13 @@ export function getProfileSectionError(
   }
 
   if (section === "advanced") {
-    return firstErrorMessage(errors, [
-      "abi",
-      "data",
-      "interfaces",
-      "name",
-      "pubkey",
-    ]);
+    return firstErrorMessage(errors, ["abi", "data", "interfaces", "name", "pubkey"]);
   }
 
   return firstErrorMessage(errors, ["text"]);
 }
 
-export const profileFormResolver: Resolver<NameProfileFormValues> = async (
-  values,
-) => {
+export const profileFormResolver: Resolver<NameProfileFormValues> = async (values) => {
   const normalized = normalizeProfileRecords(values);
 
   if (normalized.isErr()) {

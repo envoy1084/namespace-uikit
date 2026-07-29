@@ -1,7 +1,7 @@
+import { useState } from "react";
+
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Key } from "react-aria-components";
-
-import { useState } from "react";
 
 import { Icon } from "@/icon";
 
@@ -81,8 +81,7 @@ function ControlledDemo() {
         <BasicItems />
       </Segment>
       <span className="text-muted text-sm">
-        Selected:{" "}
-        <strong className="text-foreground">{String(selected)}</strong>
+        Selected: <strong className="text-foreground">{String(selected)}</strong>
       </span>
     </div>
   );
@@ -150,12 +149,7 @@ export const IconExpand: Story = {
         { icon: "lucide:video", id: "meetings", label: "Meetings" },
         { icon: "lucide:inbox", id: "inbox", label: "Inbox" },
       ].map((item) => (
-        <Segment.Item
-          className="w-auto"
-          id={item.id}
-          key={item.id}
-          style={{ gap: 0 }}
-        >
+        <Segment.Item className="w-auto" id={item.id} key={item.id} style={{ gap: 0 }}>
           {({ isSelected }) => (
             <>
               <Icon icon={item.icon} />

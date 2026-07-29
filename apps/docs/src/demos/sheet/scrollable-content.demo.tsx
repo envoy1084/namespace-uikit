@@ -21,10 +21,9 @@ function ScrollableContentDemo() {
             <Sheet.Body>
               {Array.from({ length: 20 }).map((_, index) => (
                 <p className="text-muted mb-3 text-sm" key={index}>
-                  Paragraph {index + 1}: Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Nullam pulvinar risus non risus hendrerit
-                  venenatis. Pellentesque sit amet hendrerit risus, sed
-                  porttitor quam. Donec nec vestibulum libero.
+                  Paragraph {index + 1}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nullam pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
+                  hendrerit risus, sed porttitor quam. Donec nec vestibulum libero.
                 </p>
               ))}
             </Sheet.Body>

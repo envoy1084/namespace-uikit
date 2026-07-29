@@ -5,11 +5,7 @@ import { useRef } from "react";
 
 import { Avatar } from "@thenamespace/uikit";
 import { Navbar } from "@thenamespace/uikit";
-import {
-  Icon,
-  Notification02Icon,
-  Search01Icon,
-} from "@thenamespace/uikit/icons";
+import { Icon, Notification02Icon, Search01Icon } from "@thenamespace/uikit/icons";
 
 const links = ["Features", "Customers", "Integrations", "Pricing"];
 
@@ -77,8 +73,7 @@ function HideDemo() {
       <div className="space-y-6 p-6">
         {Array.from({ length: 20 }, (_, i) => (
           <div className="bg-surface text-muted rounded-lg p-4 text-sm" key={i}>
-            Scroll down to hide the navbar, scroll up to reveal it. This is
-            paragraph {i + 1}.
+            Scroll down to hide the navbar, scroll up to reveal it. This is paragraph {i + 1}.
           </div>
         ))}
       </div>

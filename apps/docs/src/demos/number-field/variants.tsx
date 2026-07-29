@@ -3,12 +3,7 @@ import { Label, NumberField } from "@thenamespace/uikit";
 export function Variants() {
   return (
     <div className="flex flex-col gap-4">
-      <NumberField
-        defaultValue={100}
-        minValue={0}
-        name="primary-width"
-        variant="primary"
-      >
+      <NumberField defaultValue={100} minValue={0} name="primary-width" variant="primary">
         <Label>Primary variant</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -16,12 +11,7 @@ export function Variants() {
           <NumberField.IncrementButton />
         </NumberField.Group>
       </NumberField>
-      <NumberField
-        defaultValue={100}
-        minValue={0}
-        name="secondary-width"
-        variant="secondary"
-      >
+      <NumberField defaultValue={100} minValue={0} name="secondary-width" variant="secondary">
         <Label>Secondary variant</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />

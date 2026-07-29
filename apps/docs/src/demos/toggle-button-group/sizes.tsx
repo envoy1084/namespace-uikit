@@ -24,11 +24,7 @@ export function Sizes() {
             <ToggleButtonGroup.Separator />
             <HugeiconsIcon icon={TextUnderlineIcon} />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <ToggleButtonGroup.Separator />
             <HugeiconsIcon icon={TextStrikethroughIcon} />
           </ToggleButton>
@@ -48,11 +44,7 @@ export function Sizes() {
             <ToggleButtonGroup.Separator />
             <HugeiconsIcon icon={TextUnderlineIcon} />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <ToggleButtonGroup.Separator />
             <HugeiconsIcon icon={TextStrikethroughIcon} />
           </ToggleButton>
@@ -72,11 +64,7 @@ export function Sizes() {
             <ToggleButtonGroup.Separator />
             <HugeiconsIcon icon={TextUnderlineIcon} />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <ToggleButtonGroup.Separator />
             <HugeiconsIcon icon={TextStrikethroughIcon} />
           </ToggleButton>

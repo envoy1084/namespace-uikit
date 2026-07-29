@@ -1,11 +1,6 @@
 "use client";
 
-import type {
-  ComponentPropsWithRef,
-  CSSProperties,
-  ReactElement,
-  RefObject,
-} from "react";
+import type { ComponentPropsWithRef, CSSProperties, ReactElement, RefObject } from "react";
 import {
   createContext,
   useCallback,
@@ -155,10 +150,7 @@ export function NavbarRoot({
   );
 }
 export type NavbarHeaderProps = ComponentPropsWithRef<"header">;
-export function NavbarHeader({
-  className,
-  ...props
-}: NavbarHeaderProps): ReactElement {
+export function NavbarHeader({ className, ...props }: NavbarHeaderProps): ReactElement {
   const { maxWidth, size } = useNavbar();
   return (
     <header
@@ -174,35 +166,14 @@ export function NavbarHeader({
   );
 }
 export type NavbarBrandProps = ComponentPropsWithRef<"div">;
-export function NavbarBrand({
-  className,
-  ...props
-}: NavbarBrandProps): ReactElement {
-  return (
-    <div
-      {...props}
-      className={cn("navbar__brand", className)}
-      data-slot="navbar-brand"
-    />
-  );
+export function NavbarBrand({ className, ...props }: NavbarBrandProps): ReactElement {
+  return <div {...props} className={cn("navbar__brand", className)} data-slot="navbar-brand" />;
 }
 export type NavbarContentProps = ComponentPropsWithRef<"div">;
-export function NavbarContent({
-  className,
-  ...props
-}: NavbarContentProps): ReactElement {
-  return (
-    <div
-      {...props}
-      className={cn("navbar__content", className)}
-      data-slot="navbar-content"
-    />
-  );
+export function NavbarContent({ className, ...props }: NavbarContentProps): ReactElement {
+  return <div {...props} className={cn("navbar__content", className)} data-slot="navbar-content" />;
 }
-export interface NavbarItemProps extends Omit<
-  ComponentPropsWithRef<"a">,
-  "href"
-> {
+export interface NavbarItemProps extends Omit<ComponentPropsWithRef<"a">, "href"> {
   forceReload?: boolean;
   href?: string;
   isCurrent?: boolean;
@@ -219,9 +190,7 @@ function NavItem({
   ...props
 }: NavbarItemProps & { menu?: boolean }): ReactElement {
   const { navigate, setMenuOpen, size } = useNavbar();
-  const handle = (
-    event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
-  ) => {
+  const handle = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
     if (href) {
       if (/^https?:\/\//.test(href)) {
         event.preventDefault();
@@ -260,31 +229,17 @@ export function NavbarItem(props: NavbarItemProps): ReactElement {
   return <NavItem {...props} />;
 }
 export type NavbarLabelProps = ComponentPropsWithRef<"span">;
-export function NavbarLabel({
-  className,
-  ...props
-}: NavbarLabelProps): ReactElement {
-  return (
-    <span
-      {...props}
-      className={cn("navbar__label", className)}
-      data-slot="navbar-label"
-    />
-  );
+export function NavbarLabel({ className, ...props }: NavbarLabelProps): ReactElement {
+  return <span {...props} className={cn("navbar__label", className)} data-slot="navbar-label" />;
 }
 export type NavbarSeparatorProps = ComponentPropsWithRef<typeof Separator>;
-export function NavbarSeparator({
-  className,
-  ...props
-}: NavbarSeparatorProps): ReactElement {
+export function NavbarSeparator({ className, ...props }: NavbarSeparatorProps): ReactElement {
   return (
     <Separator
       {...props}
       className={
-        cn(
-          "navbar__separator",
-          typeof className === "string" ? className : undefined,
-        ) ?? "navbar__separator"
+        cn("navbar__separator", typeof className === "string" ? className : undefined) ??
+        "navbar__separator"
       }
       data-slot="navbar-separator"
       orientation="vertical"
@@ -292,10 +247,7 @@ export function NavbarSeparator({
   );
 }
 export type NavbarSpacerProps = ComponentPropsWithRef<"div">;
-export function NavbarSpacer({
-  className,
-  ...props
-}: NavbarSpacerProps): ReactElement {
+export function NavbarSpacer({ className, ...props }: NavbarSpacerProps): ReactElement {
   return (
     <div
       {...props}
@@ -334,26 +286,16 @@ export function NavbarMenuToggle({
       onChange={setMenuOpen}
     >
       {children ?? (
-        <span
-          className="navbar__menu-toggle-icon"
-          data-slot="navbar-menu-toggle-icon"
-        />
+        <span className="navbar__menu-toggle-icon" data-slot="navbar-menu-toggle-icon" />
       )}
     </ToggleButton>
   );
 }
 export type NavbarMenuProps = ComponentPropsWithRef<"div">;
-export function NavbarMenu({
-  className,
-  ...props
-}: NavbarMenuProps): ReactElement | null {
+export function NavbarMenu({ className, ...props }: NavbarMenuProps): ReactElement | null {
   const { isMenuOpen } = useNavbar();
   return isMenuOpen ? (
-    <div
-      {...props}
-      className={cn("navbar__menu", className)}
-      data-slot="navbar-menu"
-    />
+    <div {...props} className={cn("navbar__menu", className)} data-slot="navbar-menu" />
   ) : null;
 }
 export function NavbarMenuItem(props: NavbarItemProps): ReactElement {

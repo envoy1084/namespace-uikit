@@ -1,22 +1,14 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import {
-  Calendar,
-  DateField,
-  DatePicker,
-  Description,
-  Label,
-} from "@thenamespace/uikit";
+import { Calendar, DateField, DatePicker, Description, Label } from "@thenamespace/uikit";
 
 export function WithCustomIndicator() {
   return (
     <DatePicker className="w-72" name="date">
       <Label>Date</Label>
       <DateField.Group fullWidth>
-        <DateField.Input>
-          {(segment) => <DateField.Segment segment={segment} />}
-        </DateField.Input>
+        <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
         <DateField.Suffix>
           <DatePicker.Trigger>
             <DatePicker.TriggerIndicator>
@@ -25,9 +17,7 @@ export function WithCustomIndicator() {
           </DatePicker.Trigger>
         </DateField.Suffix>
       </DateField.Group>
-      <Description>
-        Replace the default calendar icon by passing custom children.
-      </Description>
+      <Description>Replace the default calendar icon by passing custom children.</Description>
       <DatePicker.Popover>
         <Calendar aria-label="Event date">
           <Calendar.Header>
@@ -42,9 +32,7 @@ export function WithCustomIndicator() {
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
+            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
           </Calendar.Grid>
           <Calendar.YearPickerGrid>
             <Calendar.YearPickerGridBody>

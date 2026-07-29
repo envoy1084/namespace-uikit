@@ -130,9 +130,7 @@
 }
 
 @media (hover: hover) {
-  .cell-slider
-    .cell-slider__track:hover
-    .cell-slider__thumb:not([data-dragging="true"])::after,
+  .cell-slider .cell-slider__track:hover .cell-slider__thumb:not([data-dragging="true"])::after,
   .cell-slider
     .cell-slider__track[data-hovered="true"]
     .cell-slider__thumb:not([data-dragging="true"])::after {

@@ -10,11 +10,7 @@ export function WithDescription() {
         </ColorField.Group>
         <Description>Enter your brand's primary color</Description>
       </ColorField>
-      <ColorField
-        className="w-[280px]"
-        defaultValue="#F59E0B"
-        name="accent-color"
-      >
+      <ColorField className="w-[280px]" defaultValue="#F59E0B" name="accent-color">
         <Label>Accent Color</Label>
         <ColorField.Group>
           <ColorField.Input />

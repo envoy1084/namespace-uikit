@@ -35,8 +35,7 @@ const eventStations = [
   {
     Icon: StreetFoodIcon,
     color: "#f97316",
-    details:
-      "North row is above forecast; two vendors are opening overflow lines.",
+    details: "North row is above forecast; two vendors are opening overflow lines.",
     id: "food",
     label: "Food row",
     latitude: 37.7672,
@@ -91,17 +90,12 @@ const eventStations = [
 ];
 
 function EventOperationsDemo() {
-  const [selected, setSelected] = useState<
-    (typeof eventStations)[number] | null
-  >(eventStations[0]!);
+  const [selected, setSelected] = useState<(typeof eventStations)[number] | null>(
+    eventStations[0]!,
+  );
   return (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
-      <Map
-        center={[-122.4817, 37.7689]}
-        pitch={20}
-        styles={styles}
-        zoom={14.35}
-      >
+      <Map center={[-122.4817, 37.7689]} pitch={20} styles={styles} zoom={14.35}>
         {eventStations.map((station) => {
           const isSelected = selected?.id === station.id;
           return (
@@ -117,11 +111,7 @@ function EventOperationsDemo() {
                   data-selected={isSelected || undefined}
                   style={{ backgroundColor: station.color }}
                 >
-                  <HugeiconsIcon
-                    aria-hidden
-                    className="size-4"
-                    icon={station.Icon}
-                  />
+                  <HugeiconsIcon aria-hidden className="size-4" icon={station.Icon} />
                 </span>
                 <Map.MarkerLabel>{station.label}</Map.MarkerLabel>
               </Map.MarkerContent>
@@ -189,11 +179,7 @@ function EventOperationsDemo() {
                     className="flex size-5 items-center justify-center rounded-full text-white"
                     style={{ backgroundColor: station.color }}
                   >
-                    <HugeiconsIcon
-                      aria-hidden
-                      className="size-3"
-                      icon={station.Icon}
-                    />
+                    <HugeiconsIcon aria-hidden className="size-3" icon={station.Icon} />
                   </span>
                   <span className="text-xs font-medium">{station.label}</span>
                 </span>

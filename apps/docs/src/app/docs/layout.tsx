@@ -3,11 +3,7 @@ import type { ReactNode } from "react";
 import { DocsLayout } from "@/components/fumadocs/layouts/notebook";
 import { source } from "@/lib/source";
 
-export default function DocumentationLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function DocumentationLayout({ children }: { children: ReactNode }) {
   return (
     <DocsLayout
       nav={{

@@ -12,9 +12,7 @@ export interface LoaderProps extends ComponentPropsWithRef<"span"> {
   size?: ChatLoaderSize;
 }
 const aria = (label?: string) =>
-  label
-    ? { "aria-label": label, role: "status" as const }
-    : { "aria-hidden": true as const };
+  label ? { "aria-label": label, role: "status" as const } : { "aria-hidden": true as const };
 export function ChatLoaderDots({
   className,
   label,
@@ -43,10 +41,7 @@ export function ChatLoaderPulse({
 }: LoaderProps): ReactElement {
   return (
     <span
-      className={cls(
-        `chat-loader__pulse chat-loader__pulse--${size}`,
-        className,
-      )}
+      className={cls(`chat-loader__pulse chat-loader__pulse--${size}`, className)}
       data-slot="chat-loader-pulse"
       {...aria(label)}
       {...props}
@@ -130,10 +125,7 @@ export function ChatLoaderSkeletonBlock({
 }: ComponentPropsWithRef<"div">): ReactElement {
   return (
     <div
-      className={cls(
-        "chat-loader__content chat-loader__skeleton-block",
-        className,
-      )}
+      className={cls("chat-loader__content chat-loader__skeleton-block", className)}
       data-slot="chat-loader-skeleton-block"
       {...props}
     />

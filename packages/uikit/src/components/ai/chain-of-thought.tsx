@@ -52,9 +52,7 @@ export function ChainOfThoughtRoot({
       <Disclosure
         className={cls(
           `${classes.base} ${
-            isStreaming
-              ? "chain-of-thought--streaming"
-              : "chain-of-thought--complete"
+            isStreaming ? "chain-of-thought--streaming" : "chain-of-thought--complete"
           }`,
           className,
         )}
@@ -131,11 +129,7 @@ export function ChainOfThoughtSteps({
   ...props
 }: ChainOfThoughtStepsProps): ReactElement {
   return (
-    <div
-      className={cls(classes.steps, className)}
-      data-slot="chain-of-thought-steps"
-      {...props}
-    >
+    <div className={cls(classes.steps, className)} data-slot="chain-of-thought-steps" {...props}>
       {children}
     </div>
   );
@@ -153,11 +147,7 @@ export function ChainOfThoughtStep({
   ...props
 }: ChainOfThoughtStepProps): ReactElement {
   return (
-    <div
-      className={cls(classes.step, className)}
-      data-slot="chain-of-thought-step"
-      {...props}
-    >
+    <div className={cls(classes.step, className)} data-slot="chain-of-thought-step" {...props}>
       {label ? (
         <div className={classes.stepHeader}>
           <span aria-hidden="true" className={classes.stepIndicator} />

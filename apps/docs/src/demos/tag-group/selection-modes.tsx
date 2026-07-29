@@ -1,15 +1,12 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import { Description, Label, Tag, TagGroup } from "@thenamespace/uikit";
 
 export function TagGroupSelectionModes() {
-  const [singleSelected, setSingleSelected] = useState<Iterable<Key>>(
-    new Set(["news"]),
-  );
+  const [singleSelected, setSingleSelected] = useState<Iterable<Key>>(new Set(["news"]));
   const [multipleSelected, setMultipleSelected] = useState<Iterable<Key>>(
     new Set(["news", "travel"]),
   );

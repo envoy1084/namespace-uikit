@@ -48,9 +48,7 @@ export const DemoWithIconExample = () => (
             maximumFractionDigits={0}
             value={card.value}
           />
-          <KPI.Trend trend={card.trend as "down" | "neutral" | "up"}>
-            {card.change}
-          </KPI.Trend>
+          <KPI.Trend trend={card.trend as "down" | "neutral" | "up"}>{card.change}</KPI.Trend>
         </KPI.Content>
       </KPI>
     ))}

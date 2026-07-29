@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Button,
-  ComboBox,
-  FieldError,
-  Form,
-  Input,
-  Label,
-  ListBox,
-} from "@thenamespace/uikit";
+import { Button, ComboBox, FieldError, Form, Input, Label, ListBox } from "@thenamespace/uikit";
 
 export function Required() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {

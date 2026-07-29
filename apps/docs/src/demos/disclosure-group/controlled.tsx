@@ -19,17 +19,14 @@ import {
 import { cn } from "tailwind-variants";
 
 export function Controlled() {
-  const [expandedKeys, setExpandedKeys] = React.useState(
-    new Set<string | number>(["preview"]),
-  );
+  const [expandedKeys, setExpandedKeys] = React.useState(new Set<string | number>(["preview"]));
   const itemIds = ["preview", "download"]; // Track our disclosure items
 
-  const { isNextDisabled, isPrevDisabled, onNext, onPrevious } =
-    useDisclosureGroupNavigation({
-      expandedKeys,
-      itemIds,
-      onExpandedChange: setExpandedKeys,
-    });
+  const { isNextDisabled, isPrevDisabled, onNext, onPrevious } = useDisclosureGroupNavigation({
+    expandedKeys,
+    itemIds,
+    onExpandedChange: setExpandedKeys,
+  });
 
   return (
     <div className="w-full max-w-md">
@@ -57,10 +54,7 @@ export function Controlled() {
             </Button>
           </div>
         </div>
-        <DisclosureGroup
-          expandedKeys={expandedKeys}
-          onExpandedChange={setExpandedKeys}
-        >
+        <DisclosureGroup expandedKeys={expandedKeys} onExpandedChange={setExpandedKeys}>
           <Disclosure aria-label="Preview Namespace UIKit Native" id="preview">
             <Disclosure.Heading>
               <Button
@@ -80,22 +74,17 @@ export function Controlled() {
             <Disclosure.Content>
               <Disclosure.Body className="mx-2 flex flex-col items-center gap-2 p-4 text-center">
                 <p className="text-muted text-sm">
-                  Scan this QR code with your camera app to preview the
-                  Namespace UIKit native components.
+                  Scan this QR code with your camera app to preview the Namespace UIKit native
+                  components.
                 </p>
                 <img
                   alt="Expo Go QR Code"
                   className="aspect-square w-full max-w-54 object-cover"
                   src="/assets/images/qr-code-native.png"
                 />
-                <p className="text-muted text-sm">
-                  Expo must be installed on your device.
-                </p>
+                <p className="text-muted text-sm">Expo must be installed on your device.</p>
                 <Button className="mt-4" variant="primary">
-                  <Icon
-                    className="[&_path]:fill-accent-foreground"
-                    icon="logos:expo-icon"
-                  />
+                  <Icon className="[&_path]:fill-accent-foreground" icon="logos:expo-icon" />
                   Preview on Expo Go
                 </Button>
               </Disclosure.Body>
@@ -106,9 +95,7 @@ export function Controlled() {
             <Disclosure.Heading aria-label="Download Namespace UIKit Native">
               <Button
                 slot="trigger"
-                variant={
-                  expandedKeys.has("download") ? "secondary" : "tertiary"
-                }
+                variant={expandedKeys.has("download") ? "secondary" : "tertiary"}
                 className={cn("w-full border-none", {
                   "bg-transparent": !expandedKeys.has("download"),
                 })}
@@ -123,17 +110,15 @@ export function Controlled() {
             <Disclosure.Content>
               <Disclosure.Body className="mx-2 flex flex-col items-center gap-2 p-4 text-center">
                 <p className="text-muted text-sm">
-                  Scan this QR code with your camera app to preview the
-                  Namespace UIKit native components.
+                  Scan this QR code with your camera app to preview the Namespace UIKit native
+                  components.
                 </p>
                 <img
                   alt="Expo Go QR Code"
                   className="aspect-square w-full max-w-54 object-cover"
                   src="/assets/images/qr-code-native.png"
                 />
-                <p className="text-muted text-sm">
-                  Expo must be installed on your device.
-                </p>
+                <p className="text-muted text-sm">Expo must be installed on your device.</p>
                 <Button className="mt-4" variant="primary">
                   <Icon icon="tabler:brand-apple-filled" />
                   Download on App Store

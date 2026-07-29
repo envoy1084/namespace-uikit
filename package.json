@@ -12,7 +12,6 @@
     "ci:version": "changeset version",
     "commitlint:edit": "commitlint --strict --edit",
     "commitlint:last": "commitlint --strict --last",
-    "commitlint:range": "node scripts/commitlint-range.mjs",
     "dev": "turbo run dev",
     "format": "oxfmt . --write --no-error-on-unmatched-pattern",
     "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",

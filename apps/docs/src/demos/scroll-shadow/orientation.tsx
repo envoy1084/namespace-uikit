@@ -20,10 +20,9 @@ export default function Orientation() {
             <div className="space-y-4">
               {Array.from({ length: 10 }).map((_, idx) => (
                 <p key={`scroll-shadow-lorem-content-${idx}`}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                  Morbi accumsan cursus enim, sed ultricies sapien.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus non
+                  risus hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed porttitor
+                  quam. Morbi accumsan cursus enim, sed ultricies sapien.
                 </p>
               ))}
             </div>
@@ -49,12 +48,8 @@ export default function Orientation() {
                     src={getRandomImage(idx)}
                   />
                   <div className="flex flex-1 flex-col justify-center gap-1">
-                    <Card.Title className="text-sm">
-                      Bridging the Future
-                    </Card.Title>
-                    <Card.Description className="text-xs">
-                      Today, 6:30 PM
-                    </Card.Description>
+                    <Card.Title className="text-sm">Bridging the Future</Card.Title>
+                    <Card.Description className="text-xs">Today, 6:30 PM</Card.Description>
                   </div>
                 </Card>
               ))}

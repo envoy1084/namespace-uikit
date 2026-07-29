@@ -1,17 +1,10 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { getLocalTimeZone, today } from "@internationalized/date";
-import {
-  DateField,
-  DateRangePicker,
-  FieldError,
-  Label,
-  RangeCalendar,
-} from "@thenamespace/uikit";
+import { DateField, DateRangePicker, FieldError, Label, RangeCalendar } from "@thenamespace/uikit";
 
 type DateRange = {
   start: DateValue;
@@ -22,9 +15,7 @@ export function WithValidation() {
   const [value, setValue] = useState<DateRange | null>(null);
   const currentDate = today(getLocalTimeZone());
   const isInvalid =
-    value != null &&
-    (value.start.compare(currentDate) < 0 ||
-      value.end.compare(value.start) < 0);
+    value != null && (value.start.compare(currentDate) < 0 || value.end.compare(value.start) < 0);
 
   return (
     <DateRangePicker
@@ -65,9 +56,7 @@ export function WithValidation() {
           </RangeCalendar.Header>
           <RangeCalendar.Grid>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}

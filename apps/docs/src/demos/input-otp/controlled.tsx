@@ -27,10 +27,7 @@ export function Controlled() {
         {value.length > 0 ? (
           <>
             Value: {value} ({value.length}/6) •{" "}
-            <button
-              className="text-foreground font-medium underline"
-              onClick={() => setValue("")}
-            >
+            <button className="text-foreground font-medium underline" onClick={() => setValue("")}>
               Clear
             </button>
           </>

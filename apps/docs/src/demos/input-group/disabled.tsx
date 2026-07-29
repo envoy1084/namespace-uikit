@@ -20,12 +20,7 @@ export function Disabled() {
           <InputGroup.Input className="w-full max-w-[280px]" />
         </InputGroup>
       </TextField>
-      <TextField
-        isDisabled
-        className="w-full max-w-[280px]"
-        defaultValue="10"
-        name="price"
-      >
+      <TextField isDisabled className="w-full max-w-[280px]" defaultValue="10" name="price">
         <Label>Set a price</Label>
         <InputGroup>
           <InputGroup.Prefix>$</InputGroup.Prefix>

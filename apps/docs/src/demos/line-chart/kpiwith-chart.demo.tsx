@@ -4,13 +4,9 @@
 import { LineChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 
-const sparkUp = [30, 35, 28, 42, 38, 45, 50, 48, 55, 60, 58, 65].map(
-  (value) => ({ value }),
-);
+const sparkUp = [30, 35, 28, 42, 38, 45, 50, 48, 55, 60, 58, 65].map((value) => ({ value }));
 
-const sparkDown = [65, 60, 62, 55, 58, 52, 50, 48, 45, 42, 44, 40].map(
-  (value) => ({ value }),
-);
+const sparkDown = [65, 60, 62, 55, 58, 52, 50, 48, 45, 42, 44, 40].map((value) => ({ value }));
 
 const kpis = [
   {
@@ -51,9 +47,7 @@ export const DemoKPIWithChartExample = () => (
         </Card.Header>
         <Card.Content className="grid grid-cols-[1fr_1fr] items-end">
           <div className="flex flex-col gap-1">
-            <span className="text-foreground text-3xl font-semibold">
-              {kpi.value}
-            </span>
+            <span className="text-foreground text-3xl font-semibold">{kpi.value}</span>
             <span
               className={
                 kpi.direction === "up"

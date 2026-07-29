@@ -63,15 +63,9 @@ export interface SheetRootProps {
   onActiveSnapPointChange?: (point: SheetSnapPoint | null) => void;
   onAnimationEnd?: (open: boolean) => void;
   onClose?: () => void;
-  onDrag?: (
-    event: React.PointerEvent<HTMLDivElement>,
-    percentage: number,
-  ) => void;
+  onDrag?: (event: React.PointerEvent<HTMLDivElement>, percentage: number) => void;
   onOpenChange?: (open: boolean) => void;
-  onRelease?: (
-    event: React.PointerEvent<HTMLDivElement>,
-    open: boolean,
-  ) => void;
+  onRelease?: (event: React.PointerEvent<HTMLDivElement>, open: boolean) => void;
   placement?: SheetPlacement;
   preventScrollRestoration?: boolean;
   repositionInputs?: boolean;
@@ -203,181 +197,141 @@ export function SheetClose({ children }: SheetCloseProps): ReactElement {
   return cloneElement(children, { onPress: close });
 }
 
-export interface SheetBackdropProps extends ComponentPropsWithRef<
-  typeof Vaul.Overlay
-> {
+export interface SheetBackdropProps extends ComponentPropsWithRef<typeof Vaul.Overlay> {
   variant?: "blur" | "opaque" | "transparent";
 }
 
-export const SheetBackdrop: ForwardRefExoticComponent<SheetBackdropProps> =
-  forwardRef<HTMLDivElement, SheetBackdropProps>(function SheetBackdrop(
-    { children, className, variant = "opaque", ...props },
-    ref,
-  ) {
-    return (
-      <Vaul.Portal>
-        <Vaul.Overlay
-          {...props}
-          className={cn(
-            "sheet__backdrop",
-            `sheet__backdrop--${variant}`,
-            className,
-          )}
-          data-sheet-overlay=""
-          data-slot="sheet-backdrop"
-          data-variant={variant}
-          ref={ref}
-        >
-          {children}
-        </Vaul.Overlay>
-      </Vaul.Portal>
-    );
-  });
+export const SheetBackdrop: ForwardRefExoticComponent<SheetBackdropProps> = forwardRef<
+  HTMLDivElement,
+  SheetBackdropProps
+>(function SheetBackdrop({ children, className, variant = "opaque", ...props }, ref) {
+  return (
+    <Vaul.Portal>
+      <Vaul.Overlay
+        {...props}
+        className={cn("sheet__backdrop", `sheet__backdrop--${variant}`, className)}
+        data-sheet-overlay=""
+        data-slot="sheet-backdrop"
+        data-variant={variant}
+        ref={ref}
+      >
+        {children}
+      </Vaul.Overlay>
+    </Vaul.Portal>
+  );
+});
 
 export type SheetContentProps = ComponentPropsWithRef<typeof Vaul.Content>;
-export const SheetContent: ForwardRefExoticComponent<SheetContentProps> =
-  forwardRef<HTMLDivElement, SheetContentProps>(function SheetContent(
-    { children, className, style, ...props },
-    ref,
-  ) {
-    const { close, isDetached, isDismissable, placement, snapPoints } =
-      useSheetContext();
+export const SheetContent: ForwardRefExoticComponent<SheetContentProps> = forwardRef<
+  HTMLDivElement,
+  SheetContentProps
+>(function SheetContent({ children, className, style, ...props }, ref) {
+  const { close, isDetached, isDismissable, placement, snapPoints } = useSheetContext();
 
-    return (
-      <Vaul.Content
-        {...props}
-        className={cn(
-          "sheet__content",
-          `sheet__content--${placement}`,
-          className,
-        )}
-        data-sheet-detached={isDetached || undefined}
-        data-sheet-drawer=""
-        data-sheet-drawer-direction={placement}
-        data-sheet-snap-points={snapPoints?.length ? "true" : "false"}
-        data-slot="sheet-content"
-        ref={ref}
-        role="presentation"
-        style={style as CSSProperties}
-      >
-        {isDismissable ? (
-          <button aria-label="Dismiss" className="sr-only" onClick={close} />
-        ) : null}
-        {children}
-      </Vaul.Content>
-    );
-  });
+  return (
+    <Vaul.Content
+      {...props}
+      className={cn("sheet__content", `sheet__content--${placement}`, className)}
+      data-sheet-detached={isDetached || undefined}
+      data-sheet-drawer=""
+      data-sheet-drawer-direction={placement}
+      data-sheet-snap-points={snapPoints?.length ? "true" : "false"}
+      data-slot="sheet-content"
+      ref={ref}
+      role="presentation"
+      style={style as CSSProperties}
+    >
+      {isDismissable ? <button aria-label="Dismiss" className="sr-only" onClick={close} /> : null}
+      {children}
+    </Vaul.Content>
+  );
+});
 
 export type SheetDialogProps = ComponentPropsWithRef<typeof Dialog>;
-export const SheetDialog: ForwardRefExoticComponent<SheetDialogProps> =
-  forwardRef<HTMLElement, SheetDialogProps>(function SheetDialog(
-    { className, ...props },
-    ref,
-  ) {
-    const { placement } = useSheetContext();
+export const SheetDialog: ForwardRefExoticComponent<SheetDialogProps> = forwardRef<
+  HTMLElement,
+  SheetDialogProps
+>(function SheetDialog({ className, ...props }, ref) {
+  const { placement } = useSheetContext();
 
-    return (
-      <Dialog
-        {...props}
-        className={
-          cn("sheet__dialog", `sheet__dialog--${placement}`, className) ??
-          "sheet__dialog"
-        }
-        data-placement={placement}
-        data-slot="sheet-dialog"
-        ref={ref}
-      />
-    );
-  });
+  return (
+    <Dialog
+      {...props}
+      className={cn("sheet__dialog", `sheet__dialog--${placement}`, className) ?? "sheet__dialog"}
+      data-placement={placement}
+      data-slot="sheet-dialog"
+      ref={ref}
+    />
+  );
+});
 
 type SheetDivPart = ForwardRefExoticComponent<ComponentPropsWithRef<"div">>;
 
 function createDivPart(slot: string, base: string): SheetDivPart {
-  return forwardRef<HTMLDivElement, ComponentPropsWithRef<"div">>(
-    function SheetPart({ className, ...props }, ref) {
-      return (
-        <div
-          {...props}
-          className={cn(base, className)}
-          data-slot={slot}
-          ref={ref}
-        />
-      );
-    },
-  );
-}
-
-export const SheetHeader: SheetDivPart = createDivPart(
-  "sheet-header",
-  "sheet__header",
-);
-export const SheetBody: SheetDivPart = createDivPart(
-  "sheet-body",
-  "sheet__body",
-);
-export const SheetFooter: SheetDivPart = createDivPart(
-  "sheet-footer",
-  "sheet__footer",
-);
-
-export type SheetHeadingProps = ComponentPropsWithRef<typeof Heading>;
-export const SheetHeading: ForwardRefExoticComponent<SheetHeadingProps> =
-  forwardRef<HTMLHeadingElement, SheetHeadingProps>(function SheetHeading(
+  return forwardRef<HTMLDivElement, ComponentPropsWithRef<"div">>(function SheetPart(
     { className, ...props },
     ref,
   ) {
-    return (
-      <Heading
-        {...props}
-        className={cn("sheet__heading", className) ?? "sheet__heading"}
-        data-slot="sheet-heading"
-        level={2}
-        ref={ref}
-        slot="title"
-      />
-    );
+    return <div {...props} className={cn(base, className)} data-slot={slot} ref={ref} />;
   });
+}
+
+export const SheetHeader: SheetDivPart = createDivPart("sheet-header", "sheet__header");
+export const SheetBody: SheetDivPart = createDivPart("sheet-body", "sheet__body");
+export const SheetFooter: SheetDivPart = createDivPart("sheet-footer", "sheet__footer");
+
+export type SheetHeadingProps = ComponentPropsWithRef<typeof Heading>;
+export const SheetHeading: ForwardRefExoticComponent<SheetHeadingProps> = forwardRef<
+  HTMLHeadingElement,
+  SheetHeadingProps
+>(function SheetHeading({ className, ...props }, ref) {
+  return (
+    <Heading
+      {...props}
+      className={cn("sheet__heading", className) ?? "sheet__heading"}
+      data-slot="sheet-heading"
+      level={2}
+      ref={ref}
+      slot="title"
+    />
+  );
+});
 
 export type SheetHandleProps = ComponentPropsWithRef<typeof Vaul.Handle>;
-export const SheetHandle: ForwardRefExoticComponent<SheetHandleProps> =
-  forwardRef<HTMLDivElement, SheetHandleProps>(function SheetHandle(
-    { children, className, ...props },
-    ref,
-  ) {
-    return (
-      <Vaul.Handle
-        {...props}
-        className={cn("sheet__handle", className)}
-        data-sheet-handle=""
-        data-slot="sheet-handle"
-        ref={ref}
-      >
-        {children ?? (
-          <span className="sheet__handle-bar" data-slot="sheet-handle-bar" />
-        )}
-      </Vaul.Handle>
-    );
-  });
+export const SheetHandle: ForwardRefExoticComponent<SheetHandleProps> = forwardRef<
+  HTMLDivElement,
+  SheetHandleProps
+>(function SheetHandle({ children, className, ...props }, ref) {
+  return (
+    <Vaul.Handle
+      {...props}
+      className={cn("sheet__handle", className)}
+      data-sheet-handle=""
+      data-slot="sheet-handle"
+      ref={ref}
+    >
+      {children ?? <span className="sheet__handle-bar" data-slot="sheet-handle-bar" />}
+    </Vaul.Handle>
+  );
+});
 
 export type SheetCloseTriggerProps = ComponentPropsWithRef<typeof CloseButton>;
-export const SheetCloseTrigger: ForwardRefExoticComponent<SheetCloseTriggerProps> =
-  forwardRef<HTMLButtonElement, SheetCloseTriggerProps>(
-    function SheetCloseTrigger({ className, ...props }, ref) {
-      const { close } = useSheetContext();
+export const SheetCloseTrigger: ForwardRefExoticComponent<SheetCloseTriggerProps> = forwardRef<
+  HTMLButtonElement,
+  SheetCloseTriggerProps
+>(function SheetCloseTrigger({ className, ...props }, ref) {
+  const { close } = useSheetContext();
 
-      return (
-        <CloseButton
-          {...props}
-          className={
-            cn("sheet__close-trigger", className) ?? "sheet__close-trigger"
-          }
-          data-slot="sheet-close-trigger"
-          ref={ref}
-          onPress={close}
-        />
-      );
-    },
+  return (
+    <CloseButton
+      {...props}
+      className={cn("sheet__close-trigger", className) ?? "sheet__close-trigger"}
+      data-slot="sheet-close-trigger"
+      ref={ref}
+      onPress={close}
+    />
   );
+});
 
 type SheetComponent = typeof SheetRoot & {
   Backdrop: typeof SheetBackdrop;

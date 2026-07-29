@@ -8,30 +8,10 @@ import { Label } from "@thenamespace/uikit/label";
 import { Icon } from "@/demos/icon";
 
 const permissions = [
-  [
-    "content",
-    "Content Management",
-    "Create, edit, and delete content",
-    "solar:cloud-outline",
-  ],
-  [
-    "users",
-    "User Administration",
-    "Manage team members and roles",
-    "solar:shield-keyhole-outline",
-  ],
-  [
-    "analytics",
-    "Analytics Access",
-    "View and export reports",
-    "solar:database-outline",
-  ],
-  [
-    "settings",
-    "Settings",
-    "Configure system preferences",
-    "solar:lock-outline",
-  ],
+  ["content", "Content Management", "Create, edit, and delete content", "solar:cloud-outline"],
+  ["users", "User Administration", "Manage team members and roles", "solar:shield-keyhole-outline"],
+  ["analytics", "Analytics Access", "View and export reports", "solar:database-outline"],
+  ["settings", "Settings", "Configure system preferences", "solar:lock-outline"],
 ];
 
 export const DemoWithIconsExample = () => (

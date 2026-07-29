@@ -15,18 +15,12 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "action-bar",
     demo: "action-bar-default",
-    loader: () =>
-      import("./action-bar/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./action-bar/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "agenda",
     demo: "agenda-default",
-    loader: () =>
-      import("./agenda/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./agenda/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "alert",
@@ -36,8 +30,7 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "alert-dialog",
     demo: "alert-dialog-default",
-    loader: () =>
-      import("./alert-dialog/default").then((module) => module.Default),
+    loader: () => import("./alert-dialog/default").then((module) => module.Default),
   },
   {
     component: "app-layout",
@@ -50,16 +43,12 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "area-chart",
     demo: "area-chart-default",
-    loader: () =>
-      import("./area-chart/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./area-chart/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "autocomplete",
     demo: "autocomplete-default",
-    loader: () =>
-      import("./autocomplete/default").then((module) => module.default),
+    loader: () => import("./autocomplete/default").then((module) => module.default),
   },
   {
     component: "avatar",
@@ -74,16 +63,12 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "bar-chart",
     demo: "bar-chart-default",
-    loader: () =>
-      import("./bar-chart/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./bar-chart/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "breadcrumbs",
     demo: "breadcrumbs-basic",
-    loader: () =>
-      import("./breadcrumbs/basic").then((module) => module.default),
+    loader: () => import("./breadcrumbs/basic").then((module) => module.default),
   },
   {
     component: "button",
@@ -98,10 +83,7 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "calendar",
     demo: "calendar-booking-calendar",
-    loader: () =>
-      import("./calendar/booking-calendar").then(
-        (module) => module.BookingCalendar,
-      ),
+    loader: () => import("./calendar/booking-calendar").then((module) => module.BookingCalendar),
   },
   {
     component: "card",
@@ -111,122 +93,84 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "carousel",
     demo: "carousel-default",
-    loader: () =>
-      import("./carousel/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./carousel/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "cell-color-picker",
     demo: "cell-color-picker-default",
     loader: () =>
-      import("./cell-color-picker/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./cell-color-picker/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "cell-select",
     demo: "cell-select-default",
-    loader: () =>
-      import("./cell-select/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./cell-select/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "cell-slider",
     demo: "cell-slider-default",
-    loader: () =>
-      import("./cell-slider/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./cell-slider/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "cell-switch",
     demo: "cell-switch-default",
-    loader: () =>
-      import("./cell-switch/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./cell-switch/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "chain-of-thought",
     demo: "chain-of-thought-default",
     loader: () =>
-      import("./chain-of-thought/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./chain-of-thought/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "chart-tooltip",
     demo: "chart-tooltip-default",
     loader: () =>
-      import("./chart-tooltip/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./chart-tooltip/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "chat-attachment",
     demo: "chat-attachment-default",
     loader: () =>
-      import("./chat-attachment/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./chat-attachment/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "chat-conversation",
     demo: "chat-conversation-full-chat",
     loader: () =>
-      import("./chat-conversation/full-chat.demo").then(
-        (module) => module.DemoFullChatExample,
-      ),
+      import("./chat-conversation/full-chat.demo").then((module) => module.DemoFullChatExample),
   },
   {
     component: "chat-list-view",
     demo: "chat-list-view-default",
     loader: () =>
-      import("./chat-list-view/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./chat-list-view/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "chat-loader",
     demo: "chat-loader-default",
-    loader: () =>
-      import("./chat-loader/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./chat-loader/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "chat-message",
     demo: "chat-message-default",
-    loader: () =>
-      import("./chat-message/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./chat-message/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "chat-message-actions",
     demo: "chat-message-actions-default",
     loader: () =>
-      import("./chat-message-actions/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./chat-message-actions/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "chat-source",
     demo: "chat-source-default",
-    loader: () =>
-      import("./chat-source/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./chat-source/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "chat-tool",
     demo: "chat-tool-default",
-    loader: () =>
-      import("./chat-tool/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./chat-tool/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "checkbox",
@@ -237,15 +181,12 @@ export const galleryDemos: GalleryDemo[] = [
     component: "checkbox-button-group",
     demo: "checkbox-button-group-default",
     loader: () =>
-      import("./checkbox-button-group/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./checkbox-button-group/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "checkbox-group",
     demo: "checkbox-group-basic",
-    loader: () =>
-      import("./checkbox-group/basic").then((module) => module.Basic),
+    loader: () => import("./checkbox-group/basic").then((module) => module.Basic),
   },
   {
     component: "chip",
@@ -255,22 +196,17 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "close-button",
     demo: "close-button-default",
-    loader: () =>
-      import("./close-button/default").then((module) => module.Default),
+    loader: () => import("./close-button/default").then((module) => module.Default),
   },
   {
     component: "code-block",
     demo: "code-block-default",
-    loader: () =>
-      import("./code-block/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./code-block/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "color-area",
     demo: "color-area-basic",
-    loader: () =>
-      import("./color-area/basic").then((module) => module.ColorAreaBasic),
+    loader: () => import("./color-area/basic").then((module) => module.ColorAreaBasic),
   },
   {
     component: "color-field",
@@ -290,52 +226,38 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "color-swatch",
     demo: "color-swatch-basic",
-    loader: () =>
-      import("./color-swatch/basic").then((module) => module.ColorSwatchBasic),
+    loader: () => import("./color-swatch/basic").then((module) => module.ColorSwatchBasic),
   },
   {
     component: "color-swatch-picker",
     demo: "color-swatch-picker-basic",
-    loader: () =>
-      import("./color-swatch-picker/basic").then((module) => module.Basic),
+    loader: () => import("./color-swatch-picker/basic").then((module) => module.Basic),
   },
   {
     component: "combo-box",
     demo: "combo-box-default",
-    loader: () =>
-      import("./combo-box/default").then((module) => module.Default),
+    loader: () => import("./combo-box/default").then((module) => module.Default),
   },
   {
     component: "command",
     demo: "command-default",
-    loader: () =>
-      import("./command/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./command/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "composed-chart",
     demo: "composed-chart-default",
     loader: () =>
-      import("./composed-chart/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./composed-chart/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "context-menu",
     demo: "context-menu-default",
-    loader: () =>
-      import("./context-menu/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./context-menu/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "data-grid",
     demo: "data-grid-complex",
-    loader: () =>
-      import("./data-grid/complex.demo").then(
-        (module) => module.DemoComplexExample,
-      ),
+    loader: () => import("./data-grid/complex.demo").then((module) => module.DemoComplexExample),
   },
   {
     component: "date-field",
@@ -350,8 +272,7 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "date-range-picker",
     demo: "date-range-picker-basic",
-    loader: () =>
-      import("./date-range-picker/basic").then((module) => module.Basic),
+    loader: () => import("./date-range-picker/basic").then((module) => module.Basic),
   },
   {
     component: "description",
@@ -366,8 +287,7 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "disclosure-group",
     demo: "disclosure-group-basic",
-    loader: () =>
-      import("./disclosure-group/basic").then((module) => module.Basic),
+    loader: () => import("./disclosure-group/basic").then((module) => module.Basic),
   },
   {
     component: "drawer",
@@ -377,10 +297,7 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "drop-zone",
     demo: "drop-zone-default",
-    loader: () =>
-      import("./drop-zone/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./drop-zone/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "dropdown",
@@ -390,34 +307,23 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "emoji-picker",
     demo: "emoji-picker-default",
-    loader: () =>
-      import("./emoji-picker/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./emoji-picker/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "emoji-reaction-button",
     demo: "emoji-reaction-button-default",
     loader: () =>
-      import("./emoji-reaction-button/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./emoji-reaction-button/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "empty-state",
     demo: "empty-state-default",
-    loader: () =>
-      import("./empty-state/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./empty-state/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "error-message",
     demo: "error-message-basic",
-    loader: () =>
-      import("./error-message/basic").then(
-        (module) => module.ErrorMessageBasic,
-      ),
+    loader: () => import("./error-message/basic").then((module) => module.ErrorMessageBasic),
   },
   {
     component: "field-error",
@@ -432,18 +338,12 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "file-tree",
     demo: "file-tree-default",
-    loader: () =>
-      import("./file-tree/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./file-tree/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "floating-toc",
     demo: "floating-toc-default",
-    loader: () =>
-      import("./floating-toc/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./floating-toc/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "form",
@@ -453,18 +353,13 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "hover-card",
     demo: "hover-card-default",
-    loader: () =>
-      import("./hover-card/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./hover-card/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "inline-select",
     demo: "inline-select-default",
     loader: () =>
-      import("./inline-select/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./inline-select/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "input",
@@ -474,8 +369,7 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "input-group",
     demo: "input-group-default",
-    loader: () =>
-      import("./input-group/default").then((module) => module.Default),
+    loader: () => import("./input-group/default").then((module) => module.Default),
   },
   {
     component: "input-otp",
@@ -485,10 +379,7 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "item-card",
     demo: "item-card-default",
-    loader: () =>
-      import("./item-card/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./item-card/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "item-card-group",
@@ -502,9 +393,7 @@ export const galleryDemos: GalleryDemo[] = [
     component: "kanban",
     demo: "kanban-project-board",
     loader: () =>
-      import("./kanban/project-board.demo").then(
-        (module) => module.DemoProjectBoardExample,
-      ),
+      import("./kanban/project-board.demo").then((module) => module.DemoProjectBoardExample),
   },
   {
     component: "kbd",
@@ -514,16 +403,13 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "kpi",
     demo: "kpi-default",
-    loader: () =>
-      import("./kpi/default.demo").then((module) => module.DemoDefaultExample),
+    loader: () => import("./kpi/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "kpi-group",
     demo: "kpi-group-horizontal",
     loader: () =>
-      import("./kpi-group/horizontal.demo").then(
-        (module) => module.DemoHorizontalExample,
-      ),
+      import("./kpi-group/horizontal.demo").then((module) => module.DemoHorizontalExample),
   },
   {
     component: "label",
@@ -534,9 +420,7 @@ export const galleryDemos: GalleryDemo[] = [
     component: "line-chart",
     demo: "line-chart-portfolio",
     loader: () =>
-      import("./line-chart/portfolio.demo").then(
-        (module) => module.DemoPortfolioExample,
-      ),
+      import("./line-chart/portfolio.demo").then((module) => module.DemoPortfolioExample),
   },
   {
     component: "link",
@@ -551,26 +435,18 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "list-view",
     demo: "list-view-default",
-    loader: () =>
-      import("./list-view/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./list-view/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "map",
     demo: "map-global-newsroom",
     loader: () =>
-      import("./map/global-newsroom.demo").then(
-        (module) => module.DemoGlobalNewsroomExample,
-      ),
+      import("./map/global-newsroom.demo").then((module) => module.DemoGlobalNewsroomExample),
   },
   {
     component: "markdown",
     demo: "markdown-default",
-    loader: () =>
-      import("./markdown/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./markdown/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "meter",
@@ -586,17 +462,12 @@ export const galleryDemos: GalleryDemo[] = [
     component: "native-select",
     demo: "native-select-default",
     loader: () =>
-      import("./native-select/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./native-select/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "navbar",
     demo: "navbar-dashboard",
-    loader: () =>
-      import("./navbar/dashboard.demo").then(
-        (module) => module.DemoDashboardExample,
-      ),
+    loader: () => import("./navbar/dashboard.demo").then((module) => module.DemoDashboardExample),
   },
   {
     component: "number-field",
@@ -607,45 +478,33 @@ export const galleryDemos: GalleryDemo[] = [
     component: "number-stepper",
     demo: "number-stepper-default",
     loader: () =>
-      import("./number-stepper/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./number-stepper/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "number-value",
     demo: "number-value-compact",
-    loader: () =>
-      import("./number-value/compact.demo").then(
-        (module) => module.DemoCompactExample,
-      ),
+    loader: () => import("./number-value/compact.demo").then((module) => module.DemoCompactExample),
   },
   {
     component: "pagination",
     demo: "pagination-basic",
-    loader: () =>
-      import("./pagination/basic").then((module) => module.PaginationBasic),
+    loader: () => import("./pagination/basic").then((module) => module.PaginationBasic),
   },
   {
     component: "pie-chart",
     demo: "pie-chart-default",
-    loader: () =>
-      import("./pie-chart/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./pie-chart/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "popover",
     demo: "popover-basic",
-    loader: () =>
-      import("./popover/basic").then((module) => module.PopoverBasic),
+    loader: () => import("./popover/basic").then((module) => module.PopoverBasic),
   },
   {
     component: "pressable-feedback",
     demo: "pressable-feedback-comparison",
     loader: () =>
-      import("./pressable-feedback/comparison.demo").then(
-        (module) => module.DemoComparisonExample,
-      ),
+      import("./pressable-feedback/comparison.demo").then((module) => module.DemoComparisonExample),
   },
   {
     component: "progress-bar",
@@ -655,8 +514,7 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "progress-circle",
     demo: "progress-circle-basic",
-    loader: () =>
-      import("./progress-circle/basic").then((module) => module.Basic),
+    loader: () => import("./progress-circle/basic").then((module) => module.Basic),
   },
   {
     component: "prompt-input",
@@ -670,33 +528,23 @@ export const galleryDemos: GalleryDemo[] = [
     component: "prompt-suggestion",
     demo: "prompt-suggestion-default",
     loader: () =>
-      import("./prompt-suggestion/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./prompt-suggestion/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "radar-chart",
     demo: "radar-chart-default",
-    loader: () =>
-      import("./radar-chart/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./radar-chart/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "radial-chart",
     demo: "radial-chart-default",
-    loader: () =>
-      import("./radial-chart/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./radial-chart/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "radio-button-group",
     demo: "radio-button-group-default",
     loader: () =>
-      import("./radio-button-group/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./radio-button-group/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "radio-group",
@@ -706,38 +554,28 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "range-calendar",
     demo: "range-calendar-basic",
-    loader: () =>
-      import("./range-calendar/basic").then((module) => module.Basic),
+    loader: () => import("./range-calendar/basic").then((module) => module.Basic),
   },
   {
     component: "rating",
     demo: "rating-default",
-    loader: () =>
-      import("./rating/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./rating/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "resizable",
     demo: "resizable-default",
-    loader: () =>
-      import("./resizable/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./resizable/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "rich-text-editor",
     demo: "rich-text-editor-default",
     loader: () =>
-      import("./rich-text-editor/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+      import("./rich-text-editor/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "scroll-shadow",
     demo: "scroll-shadow-default",
-    loader: () =>
-      import("./scroll-shadow/default").then((module) => module.default),
+    loader: () => import("./scroll-shadow/default").then((module) => module.default),
   },
   {
     component: "search-field",
@@ -747,10 +585,7 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "segment",
     demo: "segment-default",
-    loader: () =>
-      import("./segment/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./segment/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "select",
@@ -765,18 +600,13 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "sheet",
     demo: "sheet-detached",
-    loader: () =>
-      import("./sheet/detached.demo").then(
-        (module) => module.DemoDetachedExample,
-      ),
+    loader: () => import("./sheet/detached.demo").then((module) => module.DemoDetachedExample),
   },
   {
     component: "sidebar",
     demo: "sidebar-agent-workspace",
     loader: () =>
-      import("./sidebar/agent-workspace.demo").then(
-        (module) => module.DemoAgentWorkspaceExample,
-      ),
+      import("./sidebar/agent-workspace.demo").then((module) => module.DemoAgentWorkspaceExample),
   },
   {
     component: "skeleton",
@@ -791,22 +621,17 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "spinner",
     demo: "spinner-basic",
-    loader: () =>
-      import("./spinner/basic").then((module) => module.SpinnerBasic),
+    loader: () => import("./spinner/basic").then((module) => module.SpinnerBasic),
   },
   {
     component: "stepper",
     demo: "stepper-default",
-    loader: () =>
-      import("./stepper/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./stepper/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "surface",
     demo: "surface-variants",
-    loader: () =>
-      import("./surface/variants").then((module) => module.Variants),
+    loader: () => import("./surface/variants").then((module) => module.Variants),
   },
   {
     component: "switch",
@@ -816,22 +641,18 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "table",
     demo: "table-custom-cells",
-    loader: () =>
-      import("./table/custom-cells").then((module) => module.CustomCells),
+    loader: () => import("./table/custom-cells").then((module) => module.CustomCells),
   },
   {
     component: "tabs",
     demo: "tabs-custom-render-function",
     loader: () =>
-      import("./tabs/custom-render-function").then(
-        (module) => module.CustomRenderFunction,
-      ),
+      import("./tabs/custom-render-function").then((module) => module.CustomRenderFunction),
   },
   {
     component: "tag-group",
     demo: "tag-group-basic",
-    loader: () =>
-      import("./tag-group/basic").then((module) => module.TagGroupBasic),
+    loader: () => import("./tag-group/basic").then((module) => module.TagGroupBasic),
   },
   {
     component: "text-area",
@@ -846,10 +667,7 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "text-shimmer",
     demo: "text-shimmer-default",
-    loader: () =>
-      import("./text-shimmer/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./text-shimmer/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "time-field",
@@ -872,14 +690,12 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "toggle-button",
     demo: "toggle-button-basic",
-    loader: () =>
-      import("./toggle-button/basic").then((module) => module.Basic),
+    loader: () => import("./toggle-button/basic").then((module) => module.Basic),
   },
   {
     component: "toggle-button-group",
     demo: "toggle-button-group-basic",
-    loader: () =>
-      import("./toggle-button-group/basic").then((module) => module.Basic),
+    loader: () => import("./toggle-button-group/basic").then((module) => module.Basic),
   },
   {
     component: "toolbar",
@@ -889,29 +705,22 @@ export const galleryDemos: GalleryDemo[] = [
   {
     component: "tooltip",
     demo: "tooltip-basic",
-    loader: () =>
-      import("./tooltip/basic").then((module) => module.TooltipBasic),
+    loader: () => import("./tooltip/basic").then((module) => module.TooltipBasic),
   },
   {
     component: "trend-chip",
     demo: "trend-chip-default",
-    loader: () =>
-      import("./trend-chip/default.demo").then(
-        (module) => module.DemoDefaultExample,
-      ),
+    loader: () => import("./trend-chip/default.demo").then((module) => module.DemoDefaultExample),
   },
   {
     component: "typography",
     demo: "typography-primitives",
-    loader: () =>
-      import("./typography/primitives").then((module) => module.Primitives),
+    loader: () => import("./typography/primitives").then((module) => module.Primitives),
   },
   {
     component: "widget",
     demo: "widget-dashboard-grid",
     loader: () =>
-      import("./widget/dashboard-grid.demo").then(
-        (module) => module.DemoDashboardGridExample,
-      ),
+      import("./widget/dashboard-grid.demo").then((module) => module.DemoDashboardGridExample),
   },
 ];

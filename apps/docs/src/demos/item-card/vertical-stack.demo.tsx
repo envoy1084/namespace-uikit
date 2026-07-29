@@ -7,9 +7,7 @@ import { Icon } from "@/demos/icon";
 
 const Glyph = ({ icon }: { icon: string }) => <Icon icon={icon} />;
 
-const Arrow = () => (
-  <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />
-);
+const Arrow = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
 
 function Card({
   action = <Arrow />,
@@ -31,9 +29,7 @@ function Card({
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>{title}</ItemCard.Title>
-        {description && (
-          <ItemCard.Description>{description}</ItemCard.Description>
-        )}
+        {description && <ItemCard.Description>{description}</ItemCard.Description>}
       </ItemCard.Content>
       <ItemCard.Action>{action}</ItemCard.Action>
     </ItemCard>

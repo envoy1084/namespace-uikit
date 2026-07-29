@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useEffect, useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { Streamdown } from "streamdown";
 
 // oxlint-disable-next-line import/no-unassigned-import
@@ -82,15 +81,12 @@ function StreamingDemo({ streamdown = false }: { streamdown?: boolean }) {
         caret="block"
         components={{
           code: ({ children, className }) => {
-            const language =
-              className?.match(/language-(\w+)/)?.[1] ?? "plaintext";
+            const language = className?.match(/language-(\w+)/)?.[1] ?? "plaintext";
             const code = String(children ?? "").replace(/\n$/, "");
             return (
               <CodeBlock>
                 <CodeBlock.Header>
-                  <span className="text-muted text-xs uppercase">
-                    {language}
-                  </span>
+                  <span className="text-muted text-xs uppercase">{language}</span>
                   <CodeBlock.CopyButton code={code} />
                 </CodeBlock.Header>
                 <CodeBlock.Code code={code} language={language} />

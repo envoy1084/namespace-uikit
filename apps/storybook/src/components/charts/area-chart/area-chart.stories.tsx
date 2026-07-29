@@ -45,12 +45,8 @@ const revenueData = [
   { month: "Dec", revenue: 11500 },
 ];
 
-const sparkUp = [30, 35, 28, 42, 38, 45, 50, 48, 55, 60, 58, 65].map(
-  (value) => ({ value }),
-);
-const sparkDown = [65, 60, 62, 55, 58, 52, 50, 48, 45, 42, 44, 40].map(
-  (value) => ({ value }),
-);
+const sparkUp = [30, 35, 28, 42, 38, 45, 50, 48, 55, 60, 58, 65].map((value) => ({ value }));
+const sparkDown = [65, 60, 62, 55, 58, 52, 50, 48, 45, 42, 44, 40].map((value) => ({ value }));
 
 function AxisSet() {
   return (
@@ -67,19 +63,12 @@ function AxisSet() {
   );
 }
 
-function Legend({
-  items,
-}: {
-  items: ReadonlyArray<{ color: string; label: string }>;
-}) {
+function Legend({ items }: { items: ReadonlyArray<{ color: string; label: string }> }) {
   return (
     <div className="flex items-center gap-3">
       {items.map(({ color, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
-          <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: color }}
-          />
+          <span className="size-3 rounded-full" style={{ backgroundColor: color }} />
           <span className="text-muted text-xs">{label}</span>
         </div>
       ))}
@@ -106,11 +95,7 @@ export const Default: Story = {
           <defs>
             <linearGradient id="revenue-fill" x1="0" x2="0" y1="0" y2="1">
               <stop offset="0%" stopColor="var(--chart-3)" stopOpacity={0.2} />
-              <stop
-                offset="100%"
-                stopColor="var(--chart-3)"
-                stopOpacity={0.02}
-              />
+              <stop offset="100%" stopColor="var(--chart-3)" stopOpacity={0.02} />
             </linearGradient>
           </defs>
           <AreaChart.Grid vertical={false} />
@@ -135,9 +120,7 @@ export const Default: Story = {
                   <ChartTooltip.Header>{label}</ChartTooltip.Header>
                   {payload.map((entry) => (
                     <ChartTooltip.Item key={String(entry.dataKey)}>
-                      <ChartTooltip.Indicator
-                        color={entry.color ?? entry.stroke}
-                      />
+                      <ChartTooltip.Indicator color={entry.color ?? entry.stroke} />
                       <ChartTooltip.Label>{entry.name}</ChartTooltip.Label>
                       <ChartTooltip.Value>
                         ${Number(entry.value).toLocaleString()}
@@ -218,12 +201,8 @@ export const MultiArea: Story = {
 
 const stackedData = trafficData.map((item, index) => ({
   ...item,
-  direct: [
-    800, 1500, 2200, 1800, 2600, 2000, 3100, 2800, 3500, 3200, 4000, 3700,
-  ][index]!,
-  referral: [
-    500, 1200, 2100, 2800, 3200, 2600, 4100, 3800, 4500, 5200, 5800, 5100,
-  ][index]!,
+  direct: [800, 1500, 2200, 1800, 2600, 2000, 3100, 2800, 3500, 3200, 4000, 3700][index]!,
+  referral: [500, 1200, 2100, 2800, 3200, 2600, 4100, 3800, 4500, 5200, 5800, 5100][index]!,
 }));
 
 export const Stacked: Story = {
@@ -253,14 +232,7 @@ export const Stacked: Story = {
           <AreaChart data={stackedData} height={240}>
             <defs>
               {series.map(({ color, key }) => (
-                <linearGradient
-                  id={`stacked-${key}`}
-                  key={key}
-                  x1="0"
-                  x2="0"
-                  y1="0"
-                  y2="1"
-                >
+                <linearGradient id={`stacked-${key}`} key={key} x1="0" x2="0" y1="0" y2="1">
                   <stop offset="0%" stopColor={color} stopOpacity={0.4} />
                   <stop offset="100%" stopColor={color} stopOpacity={0.1} />
                 </linearGradient>
@@ -280,9 +252,7 @@ export const Stacked: Story = {
                 type="monotone"
               />
             ))}
-            <AreaChart.Tooltip
-              content={<AreaChart.TooltipContent indicator="line" />}
-            />
+            <AreaChart.Tooltip content={<AreaChart.TooltipContent indicator="line" />} />
           </AreaChart>
         </Card.Content>
       </Card>
@@ -304,11 +274,7 @@ function SparkArea({
   return (
     <div className="flex min-w-0 flex-1 flex-col gap-1">
       <span className="text-muted text-xs">{label}</span>
-      <AreaChart
-        data={data}
-        height={48}
-        margin={{ bottom: 0, left: 0, right: 0, top: 2 }}
-      >
+      <AreaChart data={data} height={48} margin={{ bottom: 0, left: 0, right: 0, top: 2 }}>
         <defs>
           <linearGradient id={id} x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stopColor={color} stopOpacity={0.2} />
@@ -339,24 +305,9 @@ export const Sparkline: Story = {
   },
   render: () => (
     <div className="flex w-full items-center gap-6">
-      <SparkArea
-        color="var(--color-success)"
-        data={sparkUp}
-        id="spark-up"
-        label="Revenue"
-      />
-      <SparkArea
-        color="var(--color-danger)"
-        data={sparkDown}
-        id="spark-down"
-        label="Churn"
-      />
-      <SparkArea
-        color="var(--chart-3)"
-        data={sparkUp}
-        id="spark-accent"
-        label="Users"
-      />
+      <SparkArea color="var(--color-success)" data={sparkUp} id="spark-up" label="Revenue" />
+      <SparkArea color="var(--color-danger)" data={sparkDown} id="spark-down" label="Churn" />
+      <SparkArea color="var(--chart-3)" data={sparkUp} id="spark-accent" label="Users" />
     </div>
   ),
 };
@@ -412,9 +363,7 @@ export const KPIWithAreaChart: Story = {
           </Card.Header>
           <Card.Content className="grid grid-cols-[1fr_1fr] items-end">
             <div className="flex flex-col gap-1">
-              <span className="text-foreground text-3xl font-semibold">
-                {kpi.value}
-              </span>
+              <span className="text-foreground text-3xl font-semibold">{kpi.value}</span>
               <span
                 className={
                   kpi.direction === "up"
@@ -436,11 +385,7 @@ export const KPIWithAreaChart: Story = {
                 <defs>
                   <linearGradient id={kpi.id} x1="0" x2="0" y1="0" y2="1">
                     <stop offset="0%" stopColor={kpi.color} stopOpacity={0.2} />
-                    <stop
-                      offset="100%"
-                      stopColor={kpi.color}
-                      stopOpacity={0.02}
-                    />
+                    <stop offset="100%" stopColor={kpi.color} stopOpacity={0.02} />
                   </linearGradient>
                 </defs>
                 <AreaChart.Area
@@ -515,10 +460,7 @@ export const CustomTooltip: Story = {
                 !payload.every((entry) => typeof entry.value === "number")
               )
                 return null;
-              const total = payload.reduce(
-                (sum, entry) => sum + Number(entry.value ?? 0),
-                0,
-              );
+              const total = payload.reduce((sum, entry) => sum + Number(entry.value ?? 0), 0);
               return (
                 <ChartTooltip indicator="line">
                   <ChartTooltip.Header>{label}</ChartTooltip.Header>
@@ -532,9 +474,7 @@ export const CustomTooltip: Story = {
                     </ChartTooltip.Item>
                   ))}
                   <div className="border-separator mt-1 flex items-center justify-between border-t pt-1.5">
-                    <span className="text-muted text-xs font-medium">
-                      Total
-                    </span>
+                    <span className="text-muted text-xs font-medium">Total</span>
                     <span className="text-foreground text-xs font-semibold">
                       {total.toLocaleString()}
                     </span>

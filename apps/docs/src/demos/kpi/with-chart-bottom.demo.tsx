@@ -42,12 +42,7 @@ export const DemoWithChartBottomExample = () => (
         <KPI.Title>Total Revenue</KPI.Title>
       </KPI.Header>
       <KPI.Content>
-        <KPI.Value
-          currency="USD"
-          maximumFractionDigits={0}
-          style="currency"
-          value={228451}
-        />
+        <KPI.Value currency="USD" maximumFractionDigits={0} style="currency" value={228451} />
         <KPI.Trend trend="up">+3.3%</KPI.Trend>
       </KPI.Content>
       <KPI.Chart color="var(--color-success)" data={up} />

@@ -23,10 +23,7 @@ export function Controlled() {
         )}
       </ToggleButton>
       <p className="text-muted text-sm">
-        Status:{" "}
-        <span className="font-medium">
-          {isSelected ? "Selected" : "Not selected"}
-        </span>
+        Status: <span className="font-medium">{isSelected ? "Selected" : "Not selected"}</span>
       </p>
     </div>
   );

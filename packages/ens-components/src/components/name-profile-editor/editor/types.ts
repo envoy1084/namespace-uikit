@@ -1,11 +1,6 @@
 import type { NameProfileRecordType } from "#/components/name-profile-editor/types";
 
-export type ProfileEditorSection =
-  | "addresses"
-  | "advanced"
-  | "general"
-  | "social"
-  | "website";
+export type ProfileEditorSection = "addresses" | "advanced" | "general" | "social" | "website";
 
 export interface RecordDefinition {
   id: string;

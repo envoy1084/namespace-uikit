@@ -17,8 +17,7 @@ export function Default() {
               onPress: () => toast.clear(),
               variant: "tertiary",
             },
-            description:
-              "Bob sent you an invitation to join Namespace UIKit team",
+            description: "Bob sent you an invitation to join Namespace UIKit team",
             indicator: <HugeiconsIcon icon={UserGroupIcon} />,
             variant: "default",
           });

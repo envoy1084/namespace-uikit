@@ -1,17 +1,10 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { parseDate, parseZonedDateTime } from "@internationalized/date";
-import {
-  DateField,
-  Label,
-  ListBox,
-  Select,
-  Tooltip,
-} from "@thenamespace/uikit";
+import { DateField, Label, ListBox, Select, Tooltip } from "@thenamespace/uikit";
 import { HelpCircleIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Granularity() {
@@ -22,9 +15,7 @@ export function Granularity() {
     { id: "second", label: "Second" },
   ] as const;
 
-  const [granularity, setGranularity] = useState<
-    "day" | "hour" | "minute" | "second"
-  >("day");
+  const [granularity, setGranularity] = useState<"day" | "hour" | "minute" | "second">("day");
 
   // Determine appropriate default value based on granularity
   let defaultValue: DateValue;
@@ -33,9 +24,7 @@ export function Granularity() {
     defaultValue = parseDate("2025-02-03");
   } else {
     // hour, minute, second
-    defaultValue = parseZonedDateTime(
-      "2025-02-03T08:45:00[America/Los_Angeles]",
-    );
+    defaultValue = parseZonedDateTime("2025-02-03T08:45:00[America/Los_Angeles]");
   }
 
   return (
@@ -48,9 +37,7 @@ export function Granularity() {
       >
         <Label>Appointment Date</Label>
         <DateField.Group>
-          <DateField.Input>
-            {(segment) => <DateField.Segment segment={segment} />}
-          </DateField.Input>
+          <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
         </DateField.Group>
       </DateField>
       <div className="flex flex-col gap-1">
@@ -58,15 +45,12 @@ export function Granularity() {
           <Label>Granularity</Label>
           <Tooltip delay={0}>
             <Tooltip.Trigger aria-label="Granularity information">
-              <HugeiconsIcon
-                icon={HelpCircleIcon}
-                className="text-muted size-4"
-              />
+              <HugeiconsIcon icon={HelpCircleIcon} className="text-muted size-4" />
             </Tooltip.Trigger>
             <Tooltip.Content placement="bottom start">
               <p>
-                Determines the smallest unit displayed in the date picker. By
-                default, this is "day" for dates, and "minute" for times.
+                Determines the smallest unit displayed in the date picker. By default, this is "day"
+                for dates, and "minute" for times.
               </p>
             </Tooltip.Content>
           </Tooltip>
@@ -85,11 +69,7 @@ export function Granularity() {
           <Select.Popover>
             <ListBox>
               {granularityOptions.map((option) => (
-                <ListBox.Item
-                  key={option.id}
-                  id={option.id}
-                  textValue={option.label}
-                >
+                <ListBox.Item key={option.id} id={option.id} textValue={option.label}>
                   {option.label}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>

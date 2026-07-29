@@ -33,23 +33,13 @@ export interface LucideProps extends ComponentProps<"svg"> {
   size?: string | number;
 }
 
-export type IconNode = [
-  elementName: SVGElementType,
-  attrs: Record<string, string>,
-][];
+export type IconNode = [elementName: SVGElementType, attrs: Record<string, string>][];
 
 const createLucideIcon = (iconName: string, iconNode: IconNode) => {
   const Component = forwardRef<SVGSVGElement, LucideProps>(
     ({ children, color = "currentColor", size = 24, ...props }, ref) => {
       return (
-        <svg
-          ref={ref}
-          {...defaultAttributes}
-          height={size}
-          stroke={color}
-          width={size}
-          {...props}
-        >
+        <svg ref={ref} {...defaultAttributes} height={size} stroke={color} width={size} {...props}>
           {iconNode.map(([tag, attr]) => createElement(tag, attr))}
           {children}
         </svg>
@@ -76,10 +66,7 @@ export const Languages = createLucideIcon("languages", [
 ]);
 
 export const Sidebar = createLucideIcon("panel-left", [
-  [
-    "rect",
-    { height: "18", key: "afitv7", rx: "2", width: "18", x: "3", y: "3" },
-  ],
+  ["rect", { height: "18", key: "afitv7", rx: "2", width: "18", x: "3", y: "3" }],
   ["path", { d: "M9 3v18", key: "fh3hqa" }],
 ]);
 
@@ -158,9 +145,7 @@ export const CircleX = createLucideIcon("circle-x", [
   ["path", { d: "m9 9 6 6", key: "z0biqf" }],
 ]);
 
-export const Check = createLucideIcon("check", [
-  ["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }],
-]);
+export const Check = createLucideIcon("check", [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]]);
 
 export const TriangleAlert = createLucideIcon("triangle-alert", [
   [

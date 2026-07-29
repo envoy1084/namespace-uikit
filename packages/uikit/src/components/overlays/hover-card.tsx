@@ -32,8 +32,7 @@ interface ContextValue {
 const Context = createContext<ContextValue | null>(null);
 const useHoverCard = () => {
   const context = useContext(Context);
-  if (!context)
-    throw new Error("HoverCard parts must be used inside HoverCard.Root");
+  if (!context) throw new Error("HoverCard parts must be used inside HoverCard.Root");
   return context;
 };
 const setRefs =
@@ -65,9 +64,7 @@ function HoverCardRoot({
   const isOpen = controlledOpen ?? uncontrolledOpen;
   const triggerRef = useRef<HTMLElement | null>(null),
     isPointerInsideRef = useRef(false);
-  const openTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
-      undefined,
-    ),
+  const openTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined),
     closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const setOpen = useCallback(
     (value: boolean) => {
@@ -183,10 +180,8 @@ function HoverCardContent({
     <RacPopover
       {...props}
       className={
-        cn(
-          "hover-card__content",
-          typeof className === "string" ? className : undefined,
-        ) ?? "hover-card__content"
+        cn("hover-card__content", typeof className === "string" ? className : undefined) ??
+        "hover-card__content"
       }
       data-slot="hover-card-content"
       isNonModal
@@ -212,22 +207,14 @@ function HoverCardContent({
   );
 }
 
-export interface HoverCardArrowProps extends ComponentPropsWithRef<
-  typeof OverlayArrow
-> {}
-function HoverCardArrow({
-  children,
-  className,
-  ...props
-}: HoverCardArrowProps): ReactElement {
+export interface HoverCardArrowProps extends ComponentPropsWithRef<typeof OverlayArrow> {}
+function HoverCardArrow({ children, className, ...props }: HoverCardArrowProps): ReactElement {
   return (
     <OverlayArrow
       {...props}
       className={
-        cn(
-          "hover-card__arrow",
-          typeof className === "string" ? className : undefined,
-        ) ?? "hover-card__arrow"
+        cn("hover-card__arrow", typeof className === "string" ? className : undefined) ??
+        "hover-card__arrow"
       }
       data-slot="hover-card-arrow"
     >

@@ -1,7 +1,6 @@
 "use client";
 
 import type { DateValue } from "@internationalized/date";
-
 import { getLocalTimeZone, today } from "@internationalized/date";
 import { Description, RangeCalendar } from "@thenamespace/uikit";
 
@@ -13,9 +12,7 @@ export function UnavailableDates() {
   ] as const;
 
   const isDateUnavailable = (date: DateValue) => {
-    return blockedRanges.some(
-      ([start, end]) => date.compare(start) >= 0 && date.compare(end) <= 0,
-    );
+    return blockedRanges.some(([start, end]) => date.compare(start) >= 0 && date.compare(end) <= 0);
   };
 
   return (
@@ -36,18 +33,14 @@ export function UnavailableDates() {
         </RangeCalendar.Header>
         <RangeCalendar.Grid>
           <RangeCalendar.GridHeader>
-            {(day) => (
-              <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-            )}
+            {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
           </RangeCalendar.GridHeader>
           <RangeCalendar.GridBody>
             {(date) => <RangeCalendar.Cell date={date} />}
           </RangeCalendar.GridBody>
         </RangeCalendar.Grid>
       </RangeCalendar>
-      <Description className="text-center">
-        Some days are unavailable
-      </Description>
+      <Description className="text-center">Some days are unavailable</Description>
     </div>
   );
 }

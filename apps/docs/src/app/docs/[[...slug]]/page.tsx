@@ -17,11 +17,7 @@ import { absoluteSiteUrl, site } from "@/lib/site";
 import { source } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug?: string[] }>;
-}) {
+export default async function Page({ params }: { params: Promise<{ slug?: string[] }> }) {
   const { slug } = await params;
 
   if (!slug?.length) redirect("/docs/getting-started");
@@ -37,21 +33,13 @@ export default async function Page({
       : undefined;
 
   return (
-    <DocsPage
-      full={page.data.full}
-      tableOfContent={{ style: "normal" }}
-      toc={page.data.toc}
-    >
+    <DocsPage full={page.data.full} tableOfContent={{ style: "normal" }} toc={page.data.toc}>
       <section className="flex flex-col gap-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <DocsTitle>{page.data.title}</DocsTitle>
-          <PageActions
-            markdownUrl={absoluteSiteUrl(`/docs/${slug.join("/")}.mdx`)}
-          />
+          <PageActions markdownUrl={absoluteSiteUrl(`/docs/${slug.join("/")}.mdx`)} />
         </div>
-        <DocsDescription className="text-md mt-2 mb-4">
-          {page.data.description}
-        </DocsDescription>
+        <DocsDescription className="text-md mt-2 mb-4">{page.data.description}</DocsDescription>
         {componentLinks ? <ComponentLinks links={componentLinks} /> : null}
       </section>
       <DocsBody className="prose-sm">

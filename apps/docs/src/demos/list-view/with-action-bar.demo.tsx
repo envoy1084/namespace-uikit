@@ -1,8 +1,5 @@
 "use client";
 
-// @demo-title With Action Bar
-import type { Selection } from "react-aria-components";
-
 import { useState } from "react";
 
 import { ListView } from "@thenamespace/uikit";
@@ -10,6 +7,8 @@ import { ActionBar } from "@thenamespace/uikit/action-bar";
 import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
 import { Separator } from "@thenamespace/uikit/separator";
+// @demo-title With Action Bar
+import type { Selection } from "react-aria-components";
 
 import { Icon } from "@/demos/icon";
 
@@ -29,9 +28,7 @@ function FileRows({ compact = false }: { compact?: boolean }) {
         <Icon icon={item.icon === "folder" ? "lucide:folder" : "lucide:file"} />
         <div className="flex min-w-0 flex-col">
           <ListView.Title>{item.name}</ListView.Title>
-          {compact ? null : (
-            <ListView.Description>Updated {item.updated}</ListView.Description>
-          )}
+          {compact ? null : <ListView.Description>Updated {item.updated}</ListView.Description>}
         </div>
       </ListView.ItemContent>
     </ListView.Item>
@@ -59,25 +56,14 @@ function Actions({ count, clear }: { clear: () => void; count: number }) {
           </Button>
         ))}
         <Separator orientation="vertical" />
-        <Button
-          aria-label="Delete"
-          className="bg-danger/10 text-danger"
-          size="sm"
-          variant="ghost"
-        >
+        <Button aria-label="Delete" className="bg-danger/10 text-danger" size="sm" variant="ghost">
           <Icon icon="lucide:trash-2" />
           <span className="action-bar__label">Delete</span>
         </Button>
       </ActionBar.Content>
       <Separator />
       <ActionBar.Suffix>
-        <Button
-          isIconOnly
-          aria-label="Clear selection"
-          size="sm"
-          variant="ghost"
-          onPress={clear}
-        >
+        <Button isIconOnly aria-label="Clear selection" size="sm" variant="ghost" onPress={clear}>
           <Icon icon="lucide:x" />
         </Button>
       </ActionBar.Suffix>

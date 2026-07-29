@@ -9,9 +9,7 @@ export function BackdropVariants() {
     <div className="flex flex-wrap gap-4">
       {variants.map((variant) => (
         <AlertDialog key={variant}>
-          <Button variant="secondary">
-            {variant.charAt(0).toUpperCase() + variant.slice(1)}
-          </Button>
+          <Button variant="secondary">{variant.charAt(0).toUpperCase() + variant.slice(1)}</Button>
           <AlertDialog.Backdrop variant={variant}>
             <AlertDialog.Container>
               <AlertDialog.Dialog className="sm:max-w-[400px]">
@@ -19,8 +17,7 @@ export function BackdropVariants() {
                 <AlertDialog.Header>
                   <AlertDialog.Icon status="accent" />
                   <AlertDialog.Heading>
-                    Backdrop:{" "}
-                    {variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    Backdrop: {variant.charAt(0).toUpperCase() + variant.slice(1)}
                   </AlertDialog.Heading>
                 </AlertDialog.Header>
                 <AlertDialog.Body>

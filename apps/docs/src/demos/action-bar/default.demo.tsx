@@ -1,8 +1,5 @@
 "use client";
 
-// @demo-title Default
-import type { Selection } from "react-aria-components";
-
 import { useState } from "react";
 
 import { ActionBar } from "@thenamespace/uikit";
@@ -10,6 +7,8 @@ import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
 import { ListView } from "@thenamespace/uikit/list-view";
 import { Separator } from "@thenamespace/uikit/separator";
+// @demo-title Default
+import type { Selection } from "react-aria-components";
 
 import { Icon } from "@/demos/icon";
 
@@ -43,25 +42,14 @@ function Bar({ clear, count }: { clear: () => void; count: number }) {
           </Button>
         ))}
         <Separator orientation="vertical" />
-        <Button
-          aria-label="Delete"
-          className="bg-danger/10 text-danger"
-          size="sm"
-          variant="ghost"
-        >
+        <Button aria-label="Delete" className="bg-danger/10 text-danger" size="sm" variant="ghost">
           <Icon icon="lucide:trash-2" />
           <span className="action-bar__label">Delete</span>
         </Button>
       </ActionBar.Content>
       <Separator />
       <ActionBar.Suffix>
-        <Button
-          isIconOnly
-          aria-label="Clear selection"
-          size="sm"
-          variant="ghost"
-          onPress={clear}
-        >
+        <Button isIconOnly aria-label="Clear selection" size="sm" variant="ghost" onPress={clear}>
           <Icon icon="lucide:x" />
         </Button>
       </ActionBar.Suffix>

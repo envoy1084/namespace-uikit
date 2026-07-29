@@ -50,9 +50,7 @@ export function WithIcons() {
         <Switch key={key} defaultSelected aria-label={key} size="lg">
           {({ isSelected }) => (
             <Switch.Content>
-              <Switch.Control
-                className={isSelected ? value.selectedControlClass : ""}
-              >
+              <Switch.Control className={isSelected ? value.selectedControlClass : ""}>
                 <Switch.Thumb>
                   <Switch.Icon>
                     <HugeiconsIcon

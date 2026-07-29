@@ -1,9 +1,8 @@
 "use client";
 
-import type { Selection } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Selection } from "@thenamespace/uikit";
 import { Button, Dropdown, Label } from "@thenamespace/uikit";
 
 export function Controlled() {

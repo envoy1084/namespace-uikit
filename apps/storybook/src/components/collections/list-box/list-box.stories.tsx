@@ -1,15 +1,10 @@
-import type { Selection } from "@react-types/shared";
-import type { Meta, StoryObj } from "@storybook/react";
-
 import * as React from "react";
 
+import type { Selection } from "@react-types/shared";
+import type { Meta, StoryObj } from "@storybook/react";
 import { ListLayout, Virtualizer } from "react-aria-components/Virtualizer";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/data-display/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/data-display/avatar";
 import { Description } from "@/components/forms/description";
 import { Label } from "@/components/forms/label";
 import { Separator } from "@/components/layout/separator";
@@ -84,10 +79,7 @@ export const WithSections: Story = {
           <Header>Actions</Header>
           <ListBox.Item id="new-file" textValue="New file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon
-                className="text-muted size-4 shrink-0"
-                icon="hugeicons:square-plus"
-              />
+              <Icon className="text-muted size-4 shrink-0" icon="hugeicons:square-plus" />
             </div>
             <div className="flex flex-col">
               <Label>New file</Label>
@@ -100,10 +92,7 @@ export const WithSections: Story = {
           </ListBox.Item>
           <ListBox.Item id="edit-file" textValue="Edit file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon
-                className="text-muted size-4 shrink-0"
-                icon="hugeicons:pencil"
-              />
+              <Icon className="text-muted size-4 shrink-0" icon="hugeicons:pencil" />
             </div>
             <div className="flex flex-col">
               <Label>Edit file</Label>
@@ -118,16 +107,9 @@ export const WithSections: Story = {
         <Separator />
         <ListBox.Section>
           <Header>Danger zone</Header>
-          <ListBox.Item
-            id="delete-file"
-            textValue="Delete file"
-            variant="danger"
-          >
+          <ListBox.Item id="delete-file" textValue="Delete file" variant="danger">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon
-                className="text-danger size-4 shrink-0"
-                icon="hugeicons:trash-bin"
-              />
+              <Icon className="text-danger size-4 shrink-0" icon="hugeicons:trash-bin" />
             </div>
             <div className="flex flex-col">
               <Label>Delete file</Label>
@@ -159,10 +141,7 @@ export const WithDisabledItems: Story = {
           <Header>Actions</Header>
           <ListBox.Item id="new-file" textValue="New file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon
-                className="text-muted size-4 shrink-0"
-                icon="hugeicons:square-plus"
-              />
+              <Icon className="text-muted size-4 shrink-0" icon="hugeicons:square-plus" />
             </div>
             <div className="flex flex-col">
               <Label>New file</Label>
@@ -175,10 +154,7 @@ export const WithDisabledItems: Story = {
           </ListBox.Item>
           <ListBox.Item id="edit-file" textValue="Edit file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon
-                className="text-muted size-4 shrink-0"
-                icon="hugeicons:pencil"
-              />
+              <Icon className="text-muted size-4 shrink-0" icon="hugeicons:pencil" />
             </div>
             <div className="flex flex-col">
               <Label>Edit file</Label>
@@ -193,16 +169,9 @@ export const WithDisabledItems: Story = {
         <Separator />
         <ListBox.Section>
           <Header>Danger zone</Header>
-          <ListBox.Item
-            id="delete-file"
-            textValue="Delete file"
-            variant="danger"
-          >
+          <ListBox.Item id="delete-file" textValue="Delete file" variant="danger">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Icon
-                className="text-danger size-4 shrink-0"
-                icon="hugeicons:trash-bin"
-              />
+              <Icon className="text-danger size-4 shrink-0" icon="hugeicons:trash-bin" />
             </div>
             <div className="flex flex-col">
               <Label>Delete file</Label>
@@ -277,9 +246,7 @@ export const CustomCheckIcon: Story = {
           </div>
           <ListBox.ItemIndicator>
             {({ isSelected }) =>
-              isSelected ? (
-                <Icon className="text-accent size-4" icon="hugeicons:check" />
-              ) : null
+              isSelected ? <Icon className="text-accent size-4" icon="hugeicons:check" /> : null
             }
           </ListBox.ItemIndicator>
         </ListBox.Item>
@@ -294,9 +261,7 @@ export const CustomCheckIcon: Story = {
           </div>
           <ListBox.ItemIndicator>
             {({ isSelected }) =>
-              isSelected ? (
-                <Icon className="text-accent size-4" icon="hugeicons:check" />
-              ) : null
+              isSelected ? <Icon className="text-accent size-4" icon="hugeicons:check" /> : null
             }
           </ListBox.ItemIndicator>
         </ListBox.Item>
@@ -311,9 +276,7 @@ export const CustomCheckIcon: Story = {
           </div>
           <ListBox.ItemIndicator>
             {({ isSelected }) =>
-              isSelected ? (
-                <Icon className="text-accent size-4" icon="hugeicons:check" />
-              ) : null
+              isSelected ? <Icon className="text-accent size-4" icon="hugeicons:check" /> : null
             }
           </ListBox.ItemIndicator>
         </ListBox.Item>
@@ -348,12 +311,7 @@ export const Controlled: Story = {
               </div>
               <ListBox.ItemIndicator>
                 {({ isSelected }) =>
-                  isSelected ? (
-                    <Icon
-                      className="text-accent size-4"
-                      icon="hugeicons:check"
-                    />
-                  ) : null
+                  isSelected ? <Icon className="text-accent size-4" icon="hugeicons:check" /> : null
                 }
               </ListBox.ItemIndicator>
             </ListBox.Item>
@@ -368,12 +326,7 @@ export const Controlled: Story = {
               </div>
               <ListBox.ItemIndicator>
                 {({ isSelected }) =>
-                  isSelected ? (
-                    <Icon
-                      className="text-accent size-4"
-                      icon="hugeicons:check"
-                    />
-                  ) : null
+                  isSelected ? <Icon className="text-accent size-4" icon="hugeicons:check" /> : null
                 }
               </ListBox.ItemIndicator>
             </ListBox.Item>
@@ -388,20 +341,14 @@ export const Controlled: Story = {
               </div>
               <ListBox.ItemIndicator>
                 {({ isSelected }) =>
-                  isSelected ? (
-                    <Icon
-                      className="text-accent size-4"
-                      icon="hugeicons:check"
-                    />
-                  ) : null
+                  isSelected ? <Icon className="text-accent size-4" icon="hugeicons:check" /> : null
                 }
               </ListBox.ItemIndicator>
             </ListBox.Item>
           </ListBox>
         </Surface>
         <p className="text-muted text-sm">
-          Selected:{" "}
-          {selectedItems.length > 0 ? selectedItems.join(", ") : "None"}
+          Selected: {selectedItems.length > 0 ? selectedItems.join(", ") : "None"}
         </p>
       </div>
     );
@@ -467,8 +414,7 @@ export const Virtualization: Story = {
 
       for (let i = 0; i < n; i++) {
         const firstName = firstNames[i % firstNames.length];
-        const lastName =
-          lastNames[Math.floor(i / firstNames.length) % lastNames.length];
+        const lastName = lastNames[Math.floor(i / firstNames.length) % lastNames.length];
         const name = `${firstName} ${lastName}`;
 
         users.push({

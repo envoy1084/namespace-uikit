@@ -1,25 +1,11 @@
 "use client";
 
-import type { ColorSpace, Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
-import {
-  ColorArea,
-  Label,
-  ListBox,
-  Select,
-  parseColor,
-} from "@thenamespace/uikit";
+import type { ColorSpace, Key } from "@thenamespace/uikit";
+import { ColorArea, Label, ListBox, Select, parseColor } from "@thenamespace/uikit";
 
-type ColorChannel =
-  | "hue"
-  | "saturation"
-  | "brightness"
-  | "lightness"
-  | "red"
-  | "green"
-  | "blue";
+type ColorChannel = "hue" | "saturation" | "brightness" | "lightness" | "red" | "green" | "blue";
 
 interface ChannelOption {
   id: ColorChannel;
@@ -57,11 +43,7 @@ export function ColorAreaSpaceAndChannels() {
   const channels = channelsBySpace[colorSpace];
   const defaultX = colorSpace === "rgb" ? "blue" : "saturation";
   const defaultY =
-    colorSpace === "rgb"
-      ? "green"
-      : colorSpace === "hsl"
-        ? "lightness"
-        : "brightness";
+    colorSpace === "rgb" ? "green" : colorSpace === "hsl" ? "lightness" : "brightness";
 
   const [xChannel, setXChannel] = useState<ColorChannel>(defaultX);
   const [yChannel, setYChannel] = useState<ColorChannel>(defaultY);
@@ -93,11 +75,7 @@ export function ColorAreaSpaceAndChannels() {
       {/* Controls */}
       <div className="flex gap-4">
         {/* Color Space Select */}
-        <Select
-          className="w-32"
-          value={colorSpace}
-          onChange={handleColorSpaceChange}
-        >
+        <Select className="w-32" value={colorSpace} onChange={handleColorSpaceChange}>
           <Label>Color Space</Label>
           <Select.Trigger>
             <Select.Value />
@@ -106,11 +84,7 @@ export function ColorAreaSpaceAndChannels() {
           <Select.Popover>
             <ListBox>
               {colorSpaces.map((space) => (
-                <ListBox.Item
-                  key={space.id}
-                  id={space.id}
-                  textValue={space.name}
-                >
+                <ListBox.Item key={space.id} id={space.id} textValue={space.name}>
                   {space.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
@@ -133,11 +107,7 @@ export function ColorAreaSpaceAndChannels() {
           <Select.Popover>
             <ListBox>
               {xChannelOptions.map((channel) => (
-                <ListBox.Item
-                  key={channel.id}
-                  id={channel.id}
-                  textValue={channel.name}
-                >
+                <ListBox.Item key={channel.id} id={channel.id} textValue={channel.name}>
                   {channel.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
@@ -160,11 +130,7 @@ export function ColorAreaSpaceAndChannels() {
           <Select.Popover>
             <ListBox>
               {yChannelOptions.map((channel) => (
-                <ListBox.Item
-                  key={channel.id}
-                  id={channel.id}
-                  textValue={channel.name}
-                >
+                <ListBox.Item key={channel.id} id={channel.id} textValue={channel.name}>
                   {channel.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>

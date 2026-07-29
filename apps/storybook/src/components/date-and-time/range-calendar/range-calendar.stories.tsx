@@ -1,8 +1,6 @@
-import type { CalendarDate, DateValue } from "@internationalized/date";
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React, { useState } from "react";
 
+import type { CalendarDate, DateValue } from "@internationalized/date";
 import {
   getLocalTimeZone,
   isToday,
@@ -12,6 +10,7 @@ import {
   startOfWeek,
   today,
 } from "@internationalized/date";
+import type { Meta, StoryObj } from "@storybook/react";
 import { I18nProvider, useLocale } from "react-aria-components/I18nProvider";
 
 import { Button } from "@/components/buttons/button";
@@ -54,10 +53,7 @@ type DateRange = {
   end: DateValue;
 };
 
-const isAnchorDateUnavailable = (
-  date: DateValue,
-  anchorDate: CalendarDate | null,
-) => {
+const isAnchorDateUnavailable = (date: DateValue, anchorDate: CalendarDate | null) => {
   return anchorDate != null && Math.abs(date.compare(anchorDate)) > 7;
 };
 
@@ -123,9 +119,7 @@ export const Default: Story = {
 };
 
 export const WithYearPicker: Story = {
-  render: (args) => (
-    <RangeCalendarTemplateWithYearPicker {...args} aria-label="Trip dates" />
-  ),
+  render: (args) => <RangeCalendarTemplateWithYearPicker {...args} aria-label="Trip dates" />,
 };
 
 export const DefaultValue: Story = {
@@ -144,9 +138,7 @@ export const DefaultValue: Story = {
 export const Controlled: Story = {
   render: (args) => {
     const [value, setValue] = useState<DateRange | null>(null);
-    const [focusedDate, setFocusedDate] = useState<DateValue>(
-      parseDate("2025-12-25"),
-    );
+    const [focusedDate, setFocusedDate] = useState<DateValue>(parseDate("2025-12-25"));
     const { locale } = useLocale();
 
     return (
@@ -180,9 +172,7 @@ export const Controlled: Story = {
           </Button>
           <Button
             onPress={() => {
-              const nextMonthStart = startOfMonth(
-                today(getLocalTimeZone()).add({ months: 1 }),
-              );
+              const nextMonthStart = startOfMonth(today(getLocalTimeZone()).add({ months: 1 }));
 
               setValue({
                 end: nextMonthStart.add({ days: 9 }),
@@ -204,9 +194,7 @@ export const Controlled: Story = {
         />
         <Description className="text-center">
           Selected range:{" "}
-          {value
-            ? `${value.start.toString()} -> ${value.end.toString()}`
-            : "(none)"}
+          {value ? `${value.start.toString()} -> ${value.end.toString()}` : "(none)"}
         </Description>
         <div className="flex gap-2">
           <Button
@@ -270,9 +258,7 @@ export const MinMaxDates: Story = {
           </RangeCalendar.Header>
           <RangeCalendar.Grid>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}
@@ -317,9 +303,7 @@ export const UnavailableDates: Story = {
           }}
           isDateUnavailable={isDateUnavailable}
         />
-        <Description className="text-center">
-          Some days are unavailable
-        </Description>
+        <Description className="text-center">Some days are unavailable</Description>
       </div>
     );
   },
@@ -328,11 +312,7 @@ export const UnavailableDates: Story = {
 export const WeeksInMonth: Story = {
   render: (args) => (
     <div className="flex flex-col items-center gap-4">
-      <RangeCalendarTemplate
-        {...args}
-        aria-label="Trip dates"
-        weeksInMonth={6}
-      />
+      <RangeCalendarTemplate {...args} aria-label="Trip dates" weeksInMonth={6} />
       <Description className="text-center">
         Fixed to 6 weeks per month to avoid layout shift
       </Description>
@@ -406,9 +386,7 @@ export const Disabled: Story = {
           start: today(getLocalTimeZone()),
         }}
       />
-      <Description className="text-center">
-        Range calendar is disabled
-      </Description>
+      <Description className="text-center">Range calendar is disabled</Description>
     </div>
   ),
 };
@@ -425,9 +403,7 @@ export const ReadOnly: Story = {
           start: today(getLocalTimeZone()),
         }}
       />
-      <Description className="text-center">
-        Range calendar is read-only
-      </Description>
+      <Description className="text-center">Range calendar is read-only</Description>
     </div>
   ),
 };
@@ -453,9 +429,7 @@ export const Invalid: Story = {
         {isInvalid ? (
           <p className="text-danger text-sm">Maximum stay duration is 1 week</p>
         ) : (
-          <Description className="text-center">
-            Select a stay of up to 7 days
-          </Description>
+          <Description className="text-center">Select a stay of up to 7 days</Description>
         )}
       </div>
     );
@@ -464,9 +438,7 @@ export const Invalid: Story = {
 
 export const FocusedValue: Story = {
   render: (args) => {
-    const [focusedDate, setFocusedDate] = useState<DateValue>(
-      parseDate("2025-06-15"),
-    );
+    const [focusedDate, setFocusedDate] = useState<DateValue>(parseDate("2025-06-15"));
 
     return (
       <div className="flex flex-col items-center gap-4">
@@ -476,9 +448,7 @@ export const FocusedValue: Story = {
           focusedValue={focusedDate}
           onFocusChange={setFocusedDate}
         />
-        <Description className="text-center">
-          Focused: {focusedDate.toString()}
-        </Description>
+        <Description className="text-center">Focused: {focusedDate.toString()}</Description>
         <div className="flex flex-wrap justify-center gap-2">
           <Button
             size="sm"
@@ -528,8 +498,7 @@ export const WithIndicators: Story = {
               {({ formattedDate }) => (
                 <>
                   {formattedDate}
-                  {(isToday(date, getLocalTimeZone()) ||
-                    datesWithEvents.has(date.day)) && (
+                  {(isToday(date, getLocalTimeZone()) || datesWithEvents.has(date.day)) && (
                     <RangeCalendar.CellIndicator />
                   )}
                 </>
@@ -559,9 +528,7 @@ export const MultipleMonths: Story = {
           </RangeCalendar.Header>
           <RangeCalendar.Grid>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}
@@ -571,17 +538,12 @@ export const MultipleMonths: Story = {
         <div className="w-64">
           <RangeCalendar.Header>
             <div className="size-6" />
-            <RangeCalendar.Heading
-              className="flex-none"
-              offset={{ months: 1 }}
-            />
+            <RangeCalendar.Heading className="flex-none" offset={{ months: 1 }} />
             <RangeCalendar.NavButton slot="next" />
           </RangeCalendar.Header>
           <RangeCalendar.Grid offset={{ months: 1 }}>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}
@@ -610,9 +572,7 @@ export const ThreeMonths: Story = {
           </RangeCalendar.Header>
           <RangeCalendar.Grid>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}
@@ -627,9 +587,7 @@ export const ThreeMonths: Story = {
           </RangeCalendar.Header>
           <RangeCalendar.Grid offset={{ months: 1 }}>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}
@@ -644,9 +602,7 @@ export const ThreeMonths: Story = {
           </RangeCalendar.Header>
           <RangeCalendar.Grid offset={{ months: 2 }}>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}
@@ -687,11 +643,7 @@ export const DayView: Story = {
           <Select.Popover>
             <ListBox>
               {dayViewOptions.map((option) => (
-                <ListBox.Item
-                  key={option.id}
-                  id={option.id}
-                  textValue={option.name}
-                >
+                <ListBox.Item key={option.id} id={option.id} textValue={option.name}>
                   {option.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
@@ -700,12 +652,7 @@ export const DayView: Story = {
           </Select.Popover>
         </Select>
 
-        <RangeCalendar
-          key={days}
-          {...args}
-          aria-label="Trip dates"
-          visibleDuration={{ days }}
-        >
+        <RangeCalendar key={days} {...args} aria-label="Trip dates" visibleDuration={{ days }}>
           <RangeCalendar.Header>
             <RangeCalendar.Heading />
             <RangeCalendar.NavButton slot="previous" />
@@ -713,9 +660,7 @@ export const DayView: Story = {
           </RangeCalendar.Header>
           <RangeCalendar.Grid>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}
@@ -756,11 +701,7 @@ export const WeekView: Story = {
           <Select.Popover>
             <ListBox>
               {weekViewOptions.map((option) => (
-                <ListBox.Item
-                  key={option.id}
-                  id={option.id}
-                  textValue={option.name}
-                >
+                <ListBox.Item key={option.id} id={option.id} textValue={option.name}>
                   {option.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
@@ -769,12 +710,7 @@ export const WeekView: Story = {
           </Select.Popover>
         </Select>
 
-        <RangeCalendar
-          key={weeks}
-          {...args}
-          aria-label="Trip dates"
-          visibleDuration={{ weeks }}
-        >
+        <RangeCalendar key={weeks} {...args} aria-label="Trip dates" visibleDuration={{ weeks }}>
           <RangeCalendar.Header>
             <RangeCalendar.Heading />
             <RangeCalendar.NavButton slot="previous" />
@@ -782,9 +718,7 @@ export const WeekView: Story = {
           </RangeCalendar.Header>
           <RangeCalendar.Grid>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}
@@ -841,9 +775,7 @@ export const BookingCalendar: Story = {
           </RangeCalendar.Header>
           <RangeCalendar.Grid>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => (
@@ -851,11 +783,9 @@ export const BookingCalendar: Story = {
                   {({ formattedDate, isUnavailable }) => (
                     <>
                       {formattedDate}
-                      {!isUnavailable &&
-                        !isWeekend(date, locale) &&
-                        blockedDates.has(date.day) && (
-                          <RangeCalendar.CellIndicator />
-                        )}
+                      {!isUnavailable && !isWeekend(date, locale) && blockedDates.has(date.day) && (
+                        <RangeCalendar.CellIndicator />
+                      )}
                     </>
                   )}
                 </RangeCalendar.Cell>
@@ -869,14 +799,12 @@ export const BookingCalendar: Story = {
               <span className="bg-muted size-2 rounded-full" /> Blocked dates
             </span>
             <span className="flex items-center gap-1">
-              <span className="bg-default size-2 rounded-full" />{" "}
-              Weekend/Unavailable
+              <span className="bg-default size-2 rounded-full" /> Weekend/Unavailable
             </span>
           </div>
           {selectedRange ? (
             <Button size="sm" variant="primary">
-              Book {selectedRange.start.toString()} -&gt;{" "}
-              {selectedRange.end.toString()}
+              Book {selectedRange.start.toString()} -&gt; {selectedRange.end.toString()}
             </Button>
           ) : null}
         </div>

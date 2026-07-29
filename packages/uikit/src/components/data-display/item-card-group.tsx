@@ -1,11 +1,6 @@
 "use client";
 
-import type {
-  ComponentPropsWithRef,
-  CSSProperties,
-  ReactElement,
-  ReactNode,
-} from "react";
+import type { ComponentPropsWithRef, CSSProperties, ReactElement, ReactNode } from "react";
 import { createContext, useContext, useMemo } from "react";
 
 import { cn } from "@heroui/react";
@@ -20,10 +15,7 @@ interface ContextValue {
 const Context = createContext<ContextValue | null>(null);
 const useGroup = () => {
   const value = useContext(Context);
-  if (!value)
-    throw new Error(
-      "ItemCardGroup parts must be used inside ItemCardGroup.Root",
-    );
+  if (!value) throw new Error("ItemCardGroup parts must be used inside ItemCardGroup.Root");
   return value;
 };
 
@@ -130,18 +122,10 @@ type ItemCardGroupComponent = typeof ItemCardGroupRoot & {
   Root: typeof ItemCardGroupRoot;
   Title: typeof ItemCardGroupTitle;
 };
-export const ItemCardGroup: ItemCardGroupComponent = Object.assign(
-  ItemCardGroupRoot,
-  {
-    Description: ItemCardGroupDescription,
-    Header: ItemCardGroupHeader,
-    Root: ItemCardGroupRoot,
-    Title: ItemCardGroupTitle,
-  },
-);
-export {
-  ItemCardGroupDescription,
-  ItemCardGroupHeader,
-  ItemCardGroupRoot,
-  ItemCardGroupTitle,
-};
+export const ItemCardGroup: ItemCardGroupComponent = Object.assign(ItemCardGroupRoot, {
+  Description: ItemCardGroupDescription,
+  Header: ItemCardGroupHeader,
+  Root: ItemCardGroupRoot,
+  Title: ItemCardGroupTitle,
+});
+export { ItemCardGroupDescription, ItemCardGroupHeader, ItemCardGroupRoot, ItemCardGroupTitle };

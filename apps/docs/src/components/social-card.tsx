@@ -50,9 +50,7 @@ export function SocialCard({ eyebrow }: { eyebrow: string }) {
           <span style={{ fontWeight: 700 }}>Namespace</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <span style={{ color: "#a1a1aa", fontSize: 22, marginBottom: 16 }}>
-            {eyebrow}
-          </span>
+          <span style={{ color: "#a1a1aa", fontSize: 22, marginBottom: 16 }}>{eyebrow}</span>
           <span
             style={{
               fontSize: 68,

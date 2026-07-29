@@ -31,18 +31,10 @@ export async function highlightCode(
 export interface CodeBlockRootProps extends ComponentPropsWithRef<"div"> {
   children: ReactNode;
 }
-export function CodeBlockRoot({
-  children,
-  className,
-  ...props
-}: CodeBlockRootProps): ReactElement {
+export function CodeBlockRoot({ children, className, ...props }: CodeBlockRootProps): ReactElement {
   return (
     <Context value>
-      <div
-        className={part("code-block", className)}
-        data-slot="code-block"
-        {...props}
-      >
+      <div className={part("code-block", className)} data-slot="code-block" {...props}>
         {children}
       </div>
     </Context>
@@ -58,11 +50,7 @@ export function CodeBlockHeader({
 }: CodeBlockHeaderProps): ReactElement {
   useContext(Context);
   return (
-    <div
-      className={part("code-block__header", className)}
-      data-slot="code-block-header"
-      {...props}
-    >
+    <div className={part("code-block__header", className)} data-slot="code-block-header" {...props}>
       {children}
     </div>
   );
@@ -102,8 +90,7 @@ export function CodeBlockCode({
     let cancelled = false;
     async function highlight() {
       if (!code) {
-        if (!cancelled)
-          setHighlighted({ html: "<pre><code></code></pre>", key });
+        if (!cancelled) setHighlighted({ html: "<pre><code></code></pre>", key });
         return;
       }
       try {
@@ -148,15 +135,7 @@ export function CodeBlockCode({
 }
 const CopyIcon = (): ReactElement => (
   <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
-    <rect
-      height="13"
-      rx="2"
-      stroke="currentColor"
-      strokeWidth="2"
-      width="13"
-      x="8"
-      y="8"
-    />
+    <rect height="13" rx="2" stroke="currentColor" strokeWidth="2" width="13" x="8" y="8" />
     <path
       d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"
       stroke="currentColor"
@@ -218,10 +197,7 @@ export function CodeBlockCopyButton({
       variant="ghost"
       onPress={copy}
     >
-      <span
-        className="code-block__copy-button-icon"
-        data-slot="code-block-copy-button-icon-motion"
-      >
+      <span className="code-block__copy-button-icon" data-slot="code-block-copy-button-icon-motion">
         {copied ? <CheckIcon /> : <CopyIcon />}
       </span>
     </Button>

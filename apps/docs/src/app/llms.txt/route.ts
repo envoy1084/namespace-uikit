@@ -16,9 +16,7 @@ export function GET() {
     "## Documentation",
     "",
     ...pages.map((page) => {
-      const description = page.data.description
-        ? `: ${page.data.description}`
-        : "";
+      const description = page.data.description ? `: ${page.data.description}` : "";
 
       return `- [${page.data.title}](${absoluteSiteUrl(`${page.url}.mdx`)})${description}`;
     }),

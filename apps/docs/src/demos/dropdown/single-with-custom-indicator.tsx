@@ -1,21 +1,15 @@
 "use client";
 
-import type { Selection } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Selection } from "@thenamespace/uikit";
 import { Button, Dropdown, Header, Label } from "@thenamespace/uikit";
 
 export function SingleWithCustomIndicator() {
   const [selected, setSelected] = useState<Selection>(new Set(["apple"]));
 
   const CustomCheckmarkIcon = (
-    <svg
-      height="16"
-      viewBox="0 0 16 16"
-      width="16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
       <path
         className="text-accent-soft-foreground"
         clipRule="evenodd"

@@ -1,9 +1,8 @@
 "use client";
 
-import type { Color } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Color } from "@thenamespace/uikit";
 import { ColorArea, ColorSwatch, parseColor } from "@thenamespace/uikit";
 
 export function ColorAreaControlled() {
@@ -11,22 +10,14 @@ export function ColorAreaControlled() {
 
   return (
     <div className="flex flex-col gap-4">
-      <ColorArea
-        colorSpace="rgb"
-        value={color}
-        xChannel="red"
-        yChannel="green"
-        onChange={setColor}
-      >
+      <ColorArea colorSpace="rgb" value={color} xChannel="red" yChannel="green" onChange={setColor}>
         <ColorArea.Thumb />
       </ColorArea>
       <div className="flex w-[300px] items-center gap-3">
         <ColorSwatch color={color} size="md" />
         <p className="text-muted text-sm">
           Current color:{" "}
-          <span className="font-medium">
-            {color ? color.toString("hex") : "(empty)"}
-          </span>
+          <span className="font-medium">{color ? color.toString("hex") : "(empty)"}</span>
         </p>
       </div>
     </div>

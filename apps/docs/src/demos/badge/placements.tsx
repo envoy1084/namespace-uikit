@@ -3,12 +3,7 @@ import { Avatar, Badge } from "@thenamespace/uikit";
 const AVATAR_URL = "/assets/avatars/green.jpg";
 
 export function BadgePlacements() {
-  const placements = [
-    "top-right",
-    "top-left",
-    "bottom-right",
-    "bottom-left",
-  ] as const;
+  const placements = ["top-right", "top-left", "bottom-right", "bottom-left"] as const;
 
   return (
     <div className="flex items-center gap-8">

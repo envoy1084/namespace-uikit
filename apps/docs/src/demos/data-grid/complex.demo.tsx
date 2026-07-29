@@ -1,9 +1,6 @@
 // @ts-nocheck -- Complex demo data intentionally uses heterogeneous shapes.
 "use client";
 
-// @demo-title Complex
-import type { Selection, SortDescriptor } from "react-aria-components";
-
 import { useMemo, useState } from "react";
 
 import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
@@ -30,6 +27,8 @@ import { SearchField } from "@thenamespace/uikit/search-field";
 import { Select } from "@thenamespace/uikit/select";
 import { Separator } from "@thenamespace/uikit/separator";
 import { Tooltip } from "@thenamespace/uikit/tooltip";
+// @demo-title Complex
+import type { Selection, SortDescriptor } from "react-aria-components";
 
 function StoryIcon({ icon }: { icon: typeof MoreVerticalIcon }) {
   return <HugeiconsIcon className="size-4" icon={icon} strokeWidth={2} />;
@@ -194,35 +193,28 @@ const workerSeeded = (seed: number) => {
 const randomDate = (seed: number) => {
   const start = new Date(2025, 0, 1).getTime();
   const range = 500 * 24 * 60 * 60 * 1000;
-  return new Date(start + workerSeeded(seed) * range)
-    .toISOString()
-    .split("T")[0]!;
+  return new Date(start + workerSeeded(seed) * range).toISOString().split("T")[0]!;
 };
 
 const randomTeams = (seed: number) => {
   const count = Math.floor(workerSeeded(seed) * 5) + 1;
-  return [...teamNames]
-    .toSorted(() => workerSeeded(seed + 99) - 0.5)
-    .slice(0, count);
+  return [...teamNames].toSorted(() => workerSeeded(seed + 99) - 0.5).slice(0, count);
 };
 
-const workerId = (seed: number) =>
-  `WRK-${Math.floor(workerSeeded(seed) * 9_000_000) + 1_000_000}`;
+const workerId = (seed: number) => `WRK-${Math.floor(workerSeeded(seed) * 9_000_000) + 1_000_000}`;
 
 const externalId = (seed: number) => {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let value = "EXT-";
   for (let index = 0; index < 8; index++)
-    value +=
-      alphabet[Math.floor(workerSeeded(seed + index * 3) * alphabet.length)];
+    value += alphabet[Math.floor(workerSeeded(seed + index * 3) * alphabet.length)];
   return value;
 };
 
 const workers: Worker[] = Array.from({ length: 100 }, (_, index) => {
   const random = (offset: number) => workerSeeded(index * 7 + offset);
   const name = workerNames[Math.floor(random(1) * workerNames.length)]!;
-  const statusIndex =
-    (index * 3 + Math.floor(random(5) * 7)) % workerStatuses.length;
+  const statusIndex = (index * 3 + Math.floor(random(5) * 7)) % workerStatuses.length;
   return {
     avatar: `/assets/generated/avatar-${(index % 26) + 1}.jpg`,
     country: countries[Math.floor(random(3) * countries.length)]!,
@@ -322,30 +314,21 @@ export const DemoComplexExample = function Demo() {
   });
   const [status, setStatus] = useState("all");
   const [type, setType] = useState("all");
-  const [visibleColumns, setVisibleColumns] = useState<Selection>(
-    new Set(workerColumnIds),
-  );
+  const [visibleColumns, setVisibleColumns] = useState<Selection>(new Set(workerColumnIds));
   const filtered = useMemo(() => {
     let result = workers;
     if (query) {
       const normalized = query.toLowerCase();
       result = result.filter((worker) =>
-        [
-          worker.name,
-          worker.email,
-          worker.workerId,
-          worker.externalWorkerId,
-        ].some((value) => value.toLowerCase().includes(normalized)),
+        [worker.name, worker.email, worker.workerId, worker.externalWorkerId].some((value) =>
+          value.toLowerCase().includes(normalized),
+        ),
       );
     }
     if (status !== "all")
-      result = result.filter(
-        (worker) => worker.status.toLowerCase() === status,
-      );
+      result = result.filter((worker) => worker.status.toLowerCase() === status);
     if (type !== "all")
-      result = result.filter(
-        (worker) => worker.workerType.toLowerCase() === type,
-      );
+      result = result.filter((worker) => worker.workerType.toLowerCase() === type);
     return result;
   }, [query, status, type]);
   const sorted = useMemo(
@@ -375,14 +358,8 @@ export const DemoComplexExample = function Demo() {
     pageCount <= 5
       ? Array.from({ length: pageCount }, (_, index) => index + 1)
       : [1, 2, "ellipsis", pageCount];
-  const pageData = sorted.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize,
-  );
-  const visible =
-    visibleColumns === "all"
-      ? new Set<string>(workerColumnIds)
-      : visibleColumns;
+  const pageData = sorted.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const visible = visibleColumns === "all" ? new Set<string>(workerColumnIds) : visibleColumns;
   const selectedCount = selected === "all" ? sorted.length : selected.size;
   const allColumns: DataGridColumn<Worker>[] = [
     {
@@ -467,11 +444,7 @@ export const DemoComplexExample = function Demo() {
       allowsSorting: true,
       cell: (worker) => (
         <span className="inline-flex items-center gap-1.5 text-sm whitespace-nowrap">
-          <HugeiconsIcon
-            className="text-muted size-3.5"
-            icon={Calendar03Icon}
-            strokeWidth={2}
-          />
+          <HugeiconsIcon className="text-muted size-3.5" icon={Calendar03Icon} strokeWidth={2} />
           {new Date(worker.startDate).toLocaleDateString("en-US", {
             day: "numeric",
             month: "long",
@@ -590,8 +563,7 @@ export const DemoComplexExample = function Demo() {
                   setSort((current) => ({
                     column,
                     direction:
-                      current.column === column &&
-                      current.direction === "ascending"
+                      current.column === column && current.direction === "ascending"
                         ? "descending"
                         : "ascending",
                   }));
@@ -600,11 +572,7 @@ export const DemoComplexExample = function Demo() {
               {allColumns
                 .filter((column) => column.allowsSorting)
                 .map((column) => (
-                  <Dropdown.Item
-                    id={column.id}
-                    key={column.id}
-                    textValue={String(column.header)}
-                  >
+                  <Dropdown.Item id={column.id} key={column.id} textValue={String(column.header)}>
                     <span>{column.header}</span>
                     <Dropdown.ItemIndicator />
                   </Dropdown.Item>
@@ -626,11 +594,7 @@ export const DemoComplexExample = function Demo() {
               {allColumns
                 .filter((column) => column.id !== "actions")
                 .map((column) => (
-                  <Dropdown.Item
-                    id={column.id}
-                    key={column.id}
-                    textValue={String(column.header)}
-                  >
+                  <Dropdown.Item id={column.id} key={column.id} textValue={String(column.header)}>
                     <span>{column.header}</span>
                     <Dropdown.ItemIndicator />
                   </Dropdown.Item>
@@ -641,9 +605,7 @@ export const DemoComplexExample = function Demo() {
         {selectedCount > 0 ? (
           <>
             <Separator className="!h-5 self-center" orientation="vertical" />
-            <span className="text-muted text-sm whitespace-nowrap">
-              {selectedCount} Selected
-            </span>
+            <span className="text-muted text-sm whitespace-nowrap">{selectedCount} Selected</span>
           </>
         ) : null}
       </div>
@@ -742,10 +704,7 @@ export const DemoComplexExample = function Demo() {
                 </Pagination.Item>
               ) : (
                 <Pagination.Item key={value}>
-                  <Pagination.Link
-                    isActive={currentPage === value}
-                    onPress={() => setPage(value)}
-                  >
+                  <Pagination.Link isActive={currentPage === value} onPress={() => setPage(value)}>
                     {value}
                   </Pagination.Link>
                 </Pagination.Item>
@@ -754,9 +713,7 @@ export const DemoComplexExample = function Demo() {
             <Pagination.Item>
               <Pagination.Next
                 isDisabled={currentPage === pageCount}
-                onPress={() =>
-                  setPage((value) => Math.min(pageCount, value + 1))
-                }
+                onPress={() => setPage((value) => Math.min(pageCount, value + 1))}
               >
                 <Pagination.NextIcon />
               </Pagination.Next>
@@ -782,11 +739,7 @@ export const DemoComplexExample = function Demo() {
             <Select.Popover className="w-[80px]">
               <ListBox>
                 {[10, 25, 50, 100].map((value) => (
-                  <ListBox.Item
-                    id={String(value)}
-                    key={value}
-                    textValue={String(value)}
-                  >
+                  <ListBox.Item id={String(value)} key={value} textValue={String(value)}>
                     {value}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>

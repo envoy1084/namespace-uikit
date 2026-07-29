@@ -1,17 +1,9 @@
 "use client";
 
-import type { Color } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
-import {
-  Button,
-  ColorField,
-  ColorSwatch,
-  Description,
-  Form,
-  Label,
-} from "@thenamespace/uikit";
+import type { Color } from "@thenamespace/uikit";
+import { Button, ColorField, ColorSwatch, Description, Form, Label } from "@thenamespace/uikit";
 
 export function FormExample() {
   const [value, setValue] = useState<Color | null>(null);

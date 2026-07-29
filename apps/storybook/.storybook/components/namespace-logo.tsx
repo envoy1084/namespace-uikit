@@ -7,12 +7,7 @@ interface NamespaceLogoProps {
   width?: number;
 }
 
-export function NamespaceLogo({
-  className,
-  height,
-  size = 26,
-  width,
-}: NamespaceLogoProps) {
+export function NamespaceLogo({ className, height, size = 26, width }: NamespaceLogoProps) {
   // Calculate dimensions based on original aspect ratio (140:44)
   const aspectRatio = 140 / 44;
   const svgHeight = height || size;

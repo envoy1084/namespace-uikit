@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   ArrowDown01Icon,
   ArrowUp01Icon,
@@ -47,12 +46,7 @@ export const Default: Story = {
 export const Variants: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <NumberField
-        defaultValue={100}
-        minValue={0}
-        name="primary-width"
-        variant="primary"
-      >
+      <NumberField defaultValue={100} minValue={0} name="primary-width" variant="primary">
         <Label>Primary variant</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -60,12 +54,7 @@ export const Variants: Story = {
           <NumberField.IncrementButton />
         </NumberField.Group>
       </NumberField>
-      <NumberField
-        defaultValue={100}
-        minValue={0}
-        name="secondary-width"
-        variant="secondary"
-      >
+      <NumberField defaultValue={100} minValue={0} name="secondary-width" variant="secondary">
         <Label>Secondary variant</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -135,13 +124,7 @@ export const Required: Story = {
           <NumberField.IncrementButton />
         </NumberField.Group>
       </NumberField>
-      <NumberField
-        isRequired
-        defaultValue={1}
-        maxValue={10}
-        minValue={1}
-        name="rating"
-      >
+      <NumberField isRequired defaultValue={1} maxValue={10} minValue={1} name="rating">
         <Label>Rating</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -226,12 +209,7 @@ export const Controlled: Story = {
 
     return (
       <div className="flex flex-col gap-4">
-        <NumberField
-          minValue={0}
-          name="width"
-          value={value}
-          onChange={setValue}
-        >
+        <NumberField minValue={0} name="width" value={value} onChange={setValue}>
           <Label>Width</Label>
           <NumberField.Group>
             <NumberField.DecrementButton />
@@ -291,13 +269,7 @@ export const WithValidation: Story = {
 export const WithStep: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <NumberField
-        defaultValue={0}
-        maxValue={100}
-        minValue={0}
-        name="step1"
-        step={1}
-      >
+      <NumberField defaultValue={0} maxValue={100} minValue={0} name="step1" step={1}>
         <Label>Step: 1</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -306,13 +278,7 @@ export const WithStep: Story = {
         </NumberField.Group>
         <Description>Increments by 1</Description>
       </NumberField>
-      <NumberField
-        defaultValue={0}
-        maxValue={100}
-        minValue={0}
-        name="step5"
-        step={5}
-      >
+      <NumberField defaultValue={0} maxValue={100} minValue={0} name="step5" step={5}>
         <Label>Step: 5</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -321,13 +287,7 @@ export const WithStep: Story = {
         </NumberField.Group>
         <Description>Increments by 5</Description>
       </NumberField>
-      <NumberField
-        defaultValue={0}
-        maxValue={100}
-        minValue={0}
-        name="step10"
-        step={10}
-      >
+      <NumberField defaultValue={0} maxValue={100} minValue={0} name="step10" step={10}>
         <Label>Step: 10</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />
@@ -492,12 +452,7 @@ export const FormExample: Story = {
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
 
-      if (
-        value === undefined ||
-        value === null ||
-        value < 1 ||
-        value > STOCK_AVAILABLE
-      ) {
+      if (value === undefined || value === null || value < 1 || value > STOCK_AVAILABLE) {
         return;
       }
 
@@ -538,9 +493,7 @@ export const FormExample: Story = {
         </NumberField>
         <Button
           className="w-full"
-          isDisabled={
-            value === undefined || value < 1 || value > STOCK_AVAILABLE
-          }
+          isDisabled={value === undefined || value < 1 || value > STOCK_AVAILABLE}
           isPending={isSubmitting}
           type="submit"
           variant="primary"

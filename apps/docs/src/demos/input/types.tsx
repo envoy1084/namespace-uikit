@@ -5,11 +5,7 @@ export function Types() {
     <div className="flex w-80 flex-col gap-4">
       <div className="flex flex-col gap-1">
         <Label htmlFor="input-type-email">Email</Label>
-        <Input
-          id="input-type-email"
-          placeholder="jane@example.com"
-          type="email"
-        />
+        <Input id="input-type-email" placeholder="jane@example.com" type="email" />
       </div>
       <div className="flex flex-col gap-1">
         <Label htmlFor="input-type-number">Age</Label>
@@ -17,11 +13,7 @@ export function Types() {
       </div>
       <div className="flex flex-col gap-1">
         <Label htmlFor="input-type-password">Password</Label>
-        <Input
-          id="input-type-password"
-          placeholder="••••••••"
-          type="password"
-        />
+        <Input id="input-type-password" placeholder="••••••••" type="password" />
       </div>
     </div>
   );

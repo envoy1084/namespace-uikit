@@ -1,11 +1,6 @@
 "use client";
 
-import type {
-  ComponentProps,
-  ComponentPropsWithRef,
-  ReactElement,
-  ReactNode,
-} from "react";
+import type { ComponentProps, ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 import { createContext, useContext } from "react";
 
 import { cn, Toolbar } from "@heroui/react";
@@ -13,10 +8,7 @@ import { AnimatePresence, domAnimation, LazyMotion, m } from "motion/react";
 
 const ActionBarContext = createContext(true);
 
-export interface ActionBarRootProps extends Omit<
-  ComponentProps<typeof Toolbar>,
-  "children"
-> {
+export interface ActionBarRootProps extends Omit<ComponentProps<typeof Toolbar>, "children"> {
   children: ReactNode;
   /** Controls visibility with animated enter/exit. */
   isOpen: boolean;
@@ -51,9 +43,7 @@ function ActionBarRoot({
                 className={(state) =>
                   cn(
                     "action-bar__wrapper",
-                    typeof className === "function"
-                      ? className(state)
-                      : className,
+                    typeof className === "function" ? className(state) : className,
                   ) ?? "action-bar__wrapper"
                 }
                 isAttached={isAttached}
@@ -75,11 +65,7 @@ function ActionBarPrefix({
 }: ComponentPropsWithRef<"div">): ReactElement {
   useContext(ActionBarContext);
   return (
-    <div
-      {...props}
-      className={cn("action-bar__prefix", className)}
-      data-slot="action-bar-prefix"
-    >
+    <div {...props} className={cn("action-bar__prefix", className)} data-slot="action-bar-prefix">
       {children}
     </div>
   );
@@ -91,11 +77,7 @@ function ActionBarContent({
 }: ComponentPropsWithRef<"div">): ReactElement {
   useContext(ActionBarContext);
   return (
-    <div
-      {...props}
-      className={cn("action-bar__content", className)}
-      data-slot="action-bar-content"
-    >
+    <div {...props} className={cn("action-bar__content", className)} data-slot="action-bar-content">
       {children}
     </div>
   );
@@ -107,11 +89,7 @@ function ActionBarSuffix({
 }: ComponentPropsWithRef<"div">): ReactElement {
   useContext(ActionBarContext);
   return (
-    <div
-      {...props}
-      className={cn("action-bar__suffix", className)}
-      data-slot="action-bar-suffix"
-    >
+    <div {...props} className={cn("action-bar__suffix", className)} data-slot="action-bar-suffix">
       {children}
     </div>
   );

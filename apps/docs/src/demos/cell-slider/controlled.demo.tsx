@@ -28,12 +28,7 @@ export const DemoControlledExample = function Demo() {
   const [value, setValue] = useState(0.5);
   return (
     <div className="flex w-[252px] flex-col gap-2">
-      <CellSlider
-        {...decimalProps}
-        aria-label="Spacing"
-        value={value}
-        onChange={setValue}
-      >
+      <CellSlider {...decimalProps} aria-label="Spacing" value={value} onChange={setValue}>
         <SliderContents label="Spacing" />
       </CellSlider>
       <p className="text-muted px-1 text-sm">Value: {value.toFixed(2)}</p>

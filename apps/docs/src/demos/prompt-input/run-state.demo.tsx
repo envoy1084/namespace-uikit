@@ -7,9 +7,7 @@ import { PromptInput } from "@thenamespace/uikit";
 
 function RunStateDemo() {
   const [value, setValue] = useState("");
-  const [status, setStatus] = useState<"ready" | "streaming" | "submitted">(
-    "ready",
-  );
+  const [status, setStatus] = useState<"ready" | "streaming" | "submitted">("ready");
   const timers = useRef<number[]>([]);
   const clearTimers = useCallback(() => {
     timers.current.forEach(window.clearTimeout);

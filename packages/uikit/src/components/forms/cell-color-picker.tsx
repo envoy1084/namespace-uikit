@@ -1,11 +1,6 @@
 "use client";
 
-import type {
-  ComponentProps,
-  ComponentPropsWithRef,
-  ReactElement,
-  ReactNode,
-} from "react";
+import type { ComponentProps, ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 import { createContext, useContext } from "react";
 
 import { ColorPicker, ColorSwatch, cn } from "@heroui/react";
@@ -29,23 +24,15 @@ function CellColorPickerRoot({
   ...props
 }: CellColorPickerRootProps): ReactElement {
   return (
-    <ColorPicker
-      {...props}
-      className={cn("cell-color-picker", className) ?? "cell-color-picker"}
-    >
-      <CellColorPickerVariantContext value={variant}>
-        {children}
-      </CellColorPickerVariantContext>
+    <ColorPicker {...props} className={cn("cell-color-picker", className) ?? "cell-color-picker"}>
+      <CellColorPickerVariantContext value={variant}>{children}</CellColorPickerVariantContext>
     </ColorPicker>
   );
 }
 
-const CellColorPickerVariantContext =
-  createContext<CellColorPickerVariant>("default");
+const CellColorPickerVariantContext = createContext<CellColorPickerVariant>("default");
 
-export type CellColorPickerTriggerProps = ComponentPropsWithRef<
-  typeof ColorPicker.Trigger
->;
+export type CellColorPickerTriggerProps = ComponentPropsWithRef<typeof ColorPicker.Trigger>;
 
 function CellColorPickerTrigger({
   children,
@@ -110,10 +97,7 @@ function CellColorPickerValueDisplay({
 
 export type CellColorPickerSwatchProps = ComponentProps<typeof ColorSwatch>;
 
-function CellColorPickerSwatch({
-  className,
-  ...props
-}: CellColorPickerSwatchProps): ReactElement {
+function CellColorPickerSwatch({ className, ...props }: CellColorPickerSwatchProps): ReactElement {
   return (
     <ColorSwatch
       {...props}
@@ -128,9 +112,7 @@ function CellColorPickerSwatch({
   );
 }
 
-export type CellColorPickerPopoverProps = ComponentPropsWithRef<
-  typeof ColorPicker.Popover
->;
+export type CellColorPickerPopoverProps = ComponentPropsWithRef<typeof ColorPicker.Popover>;
 
 function CellColorPickerPopover({
   children,
@@ -164,14 +146,11 @@ type CellColorPickerComponent = typeof CellColorPickerRoot & {
   ValueDisplay: typeof CellColorPickerValueDisplay;
 };
 
-export const CellColorPicker: CellColorPickerComponent = Object.assign(
-  CellColorPickerRoot,
-  {
-    Label: CellColorPickerLabel,
-    Popover: CellColorPickerPopover,
-    Root: CellColorPickerRoot,
-    Swatch: CellColorPickerSwatch,
-    Trigger: CellColorPickerTrigger,
-    ValueDisplay: CellColorPickerValueDisplay,
-  },
-);
+export const CellColorPicker: CellColorPickerComponent = Object.assign(CellColorPickerRoot, {
+  Label: CellColorPickerLabel,
+  Popover: CellColorPickerPopover,
+  Root: CellColorPickerRoot,
+  Swatch: CellColorPickerSwatch,
+  Trigger: CellColorPickerTrigger,
+  ValueDisplay: CellColorPickerValueDisplay,
+});

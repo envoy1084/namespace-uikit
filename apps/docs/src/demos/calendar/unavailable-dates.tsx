@@ -1,7 +1,6 @@
 "use client";
 
 import type { DateValue } from "@internationalized/date";
-
 import { isWeekend } from "@internationalized/date";
 import { Calendar, Description } from "@thenamespace/uikit";
 import { useLocale } from "react-aria-components";
@@ -12,10 +11,7 @@ export function UnavailableDates() {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <Calendar
-        aria-label="Appointment date"
-        isDateUnavailable={isDateUnavailable}
-      >
+      <Calendar aria-label="Appointment date" isDateUnavailable={isDateUnavailable}>
         <Calendar.Header>
           <Calendar.Heading />
           <Calendar.NavButton slot="previous" />
@@ -25,14 +21,10 @@ export function UnavailableDates() {
           <Calendar.GridHeader>
             {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
           </Calendar.GridHeader>
-          <Calendar.GridBody>
-            {(date) => <Calendar.Cell date={date} />}
-          </Calendar.GridBody>
+          <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
         </Calendar.Grid>
       </Calendar>
-      <Description className="text-center">
-        Weekends are unavailable
-      </Description>
+      <Description className="text-center">Weekends are unavailable</Description>
     </div>
   );
 }

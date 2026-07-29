@@ -12,9 +12,7 @@ const Gear = () => <Icon icon="solar:settings-linear" />;
 
 export const DemoWithHoldConfirmExample = () => (
   <div className="flex flex-col gap-6">
-    <p className="text-muted text-xs">
-      Press and hold buttons to see the clip-path reveal.
-    </p>
+    <p className="text-muted text-xs">Press and hold buttons to see the clip-path reveal.</p>
     <div className="flex flex-wrap gap-3">
       <Button variant="danger-soft">
         <PressableFeedback.HoldConfirm className="bg-danger text-danger-foreground">

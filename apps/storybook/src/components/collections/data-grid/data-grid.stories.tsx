@@ -1,8 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import type { Selection, SortDescriptor } from "react-aria-components";
-
 import { useMemo, useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { ActionBar } from "@thenamespace/uikit/action-bar";
 import { AreaChart } from "@thenamespace/uikit/area-chart";
 import { Avatar } from "@thenamespace/uikit/avatar";
@@ -49,6 +47,7 @@ import { Spinner } from "@thenamespace/uikit/spinner";
 import { Switch } from "@thenamespace/uikit/switch";
 import { TextField } from "@thenamespace/uikit/textfield";
 import { Tooltip } from "@thenamespace/uikit/tooltip";
+import type { Selection, SortDescriptor } from "react-aria-components";
 
 import { Button } from "@/components/buttons/button";
 import { Chip } from "@/components/data-display/chip";
@@ -302,9 +301,7 @@ const paymentColumns: DataGridColumn<Payment>[] = [
       align: "end",
       allowsResizing: true,
       allowsSorting: true,
-      cell: (payment) => (
-        <span className={className}>{formatCurrency(payment[key])}</span>
-      ),
+      cell: (payment) => <span className={className}>{formatCurrency(payment[key])}</span>,
       header,
       id: key,
       minWidth,
@@ -337,11 +334,7 @@ const paymentColumns: DataGridColumn<Payment>[] = [
     accessorKey: "date",
     allowsResizing: true,
     allowsSorting: true,
-    cell: (payment) => (
-      <span className="text-muted tabular-nums">
-        {formatDate(payment.date)}
-      </span>
-    ),
+    cell: (payment) => <span className="text-muted tabular-nums">{formatDate(payment.date)}</span>,
     header: "Date",
     id: "date",
     minWidth: 120,
@@ -466,8 +459,7 @@ export const Simple: Story = {
         <div className="flex flex-col gap-1">
           <h2 className="text-xl font-bold">Users</h2>
           <p className="text-muted text-sm">
-            A list of all the users in your account including their name, title,
-            email and role.
+            A list of all the users in your account including their name, title, email and role.
           </p>
         </div>
         <Button size="sm" variant="secondary">
@@ -599,8 +591,7 @@ export const DragAndDropReorder: Story = {
     return (
       <div className="flex w-full max-w-3xl flex-col gap-3">
         <p className="text-muted text-sm">
-          Drag rows to reorder. Use keyboard (Enter to grab, arrows to move,
-          Enter to drop).
+          Drag rows to reorder. Use keyboard (Enter to grab, arrows to move, Enter to drop).
         </p>
         <DataGrid
           aria-label="Task backlog"
@@ -682,11 +673,7 @@ function ClusterId({ value }: { value: string }) {
           variant="ghost"
           onPress={() => void navigator.clipboard.writeText(value)}
         >
-          <HugeiconsIcon
-            className="text-muted size-4"
-            icon={Copy01Icon}
-            strokeWidth={2}
-          />
+          <HugeiconsIcon className="text-muted size-4" icon={Copy01Icon} strokeWidth={2} />
         </Button>
         <Tooltip.Content>Copy</Tooltip.Content>
       </Tooltip>
@@ -696,23 +683,11 @@ function ClusterId({ value }: { value: string }) {
 
 function Capacity({ value }: { value: number }) {
   const color =
-    value >= 90
-      ? "danger"
-      : value >= 60
-        ? "warning"
-        : value >= 20
-          ? "accent"
-          : "default";
-  const textColor =
-    value >= 90 ? "text-danger" : value >= 60 ? "text-warning" : "";
+    value >= 90 ? "danger" : value >= 60 ? "warning" : value >= 20 ? "accent" : "default";
+  const textColor = value >= 90 ? "text-danger" : value >= 60 ? "text-warning" : "";
   return (
     <div className="flex items-center gap-2">
-      <ProgressCircle
-        aria-label={`${value}% capacity`}
-        color={color}
-        size="sm"
-        value={value}
-      >
+      <ProgressCircle aria-label={`${value}% capacity`} color={color} size="sm" value={value}>
         <ProgressCircle.Track>
           <ProgressCircle.TrackCircle />
           <ProgressCircle.FillCircle />
@@ -736,23 +711,11 @@ function RequestsSparkline({ data }: { data: { value: number }[] }) {
           "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
       }}
     >
-      <AreaChart
-        data={data}
-        height={36}
-        margin={{ bottom: 0, left: 0, right: 0, top: 2 }}
-      >
+      <AreaChart data={data} height={36} margin={{ bottom: 0, left: 0, right: 0, top: 2 }}>
         <defs>
           <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
-            <stop
-              offset="0%"
-              stopColor="var(--color-accent)"
-              stopOpacity={0.2}
-            />
-            <stop
-              offset="100%"
-              stopColor="var(--color-accent)"
-              stopOpacity={0.02}
-            />
+            <stop offset="0%" stopColor="var(--color-accent)" stopOpacity={0.2} />
+            <stop offset="100%" stopColor="var(--color-accent)" stopOpacity={0.02} />
           </linearGradient>
         </defs>
         <AreaChart.Area
@@ -778,9 +741,7 @@ export const WithCharts: Story = {
       direction: "ascending",
     });
     const [status, setStatus] = useState("all");
-    const [visibleColumns, setVisibleColumns] = useState<Selection>(
-      new Set(serverColumnIds),
-    );
+    const [visibleColumns, setVisibleColumns] = useState<Selection>(new Set(serverColumnIds));
     const filtered = useMemo(() => {
       let result = servers;
       if (query) {
@@ -792,9 +753,7 @@ export const WithCharts: Story = {
         );
       }
       if (status !== "all")
-        result = result.filter(
-          (server) => server.status.toLowerCase() === status,
-        );
+        result = result.filter((server) => server.status.toLowerCase() === status);
       return result.toSorted((left, right) => {
         const key = sort.column as keyof Server;
         const leftValue = left[key];
@@ -806,10 +765,7 @@ export const WithCharts: Story = {
         return sort.direction === "descending" ? -comparison : comparison;
       });
     }, [query, sort, status]);
-    const visible =
-      visibleColumns === "all"
-        ? new Set<string>(serverColumnIds)
-        : visibleColumns;
+    const visible = visibleColumns === "all" ? new Set<string>(serverColumnIds) : visibleColumns;
     const allColumns: DataGridColumn<Server>[] = [
       {
         accessorKey: "clusterId",
@@ -830,11 +786,7 @@ export const WithCharts: Story = {
         accessorKey: "status",
         allowsSorting: true,
         cell: (server) => (
-          <Chip
-            color={server.status === "Active" ? "success" : "default"}
-            size="sm"
-            variant="soft"
-          >
+          <Chip color={server.status === "Active" ? "success" : "default"} size="sm" variant="soft">
             <span aria-hidden className="size-1.5 rounded-full bg-current" />
             <Chip.Label>{server.status}</Chip.Label>
           </Chip>
@@ -860,9 +812,7 @@ export const WithCharts: Story = {
         align: "end",
         allowsSorting: true,
         cell: (server) => (
-          <span className="font-medium tabular-nums">
-            {formatCurrency(server.cost)}
-          </span>
+          <span className="font-medium tabular-nums">{formatCurrency(server.cost)}</span>
         ),
         header: "Cost",
         id: "cost",
@@ -893,9 +843,7 @@ export const WithCharts: Story = {
                 <Dropdown.Menu
                   selectedKeys={new Set([status])}
                   selectionMode="single"
-                  onSelectionChange={(keys) =>
-                    setStatus(String([...keys][0] ?? "all"))
-                  }
+                  onSelectionChange={(keys) => setStatus(String([...keys][0] ?? "all"))}
                 >
                   {[
                     ["all", "All"],
@@ -924,8 +872,7 @@ export const WithCharts: Story = {
                     setSort((current) => ({
                       column,
                       direction:
-                        current.column === column &&
-                        current.direction === "ascending"
+                        current.column === column && current.direction === "ascending"
                           ? "descending"
                           : "ascending",
                     }));
@@ -958,11 +905,7 @@ export const WithCharts: Story = {
                   onSelectionChange={setVisibleColumns}
                 >
                   {allColumns.map((column) => (
-                    <Dropdown.Item
-                      id={column.id}
-                      key={column.id}
-                      textValue={String(column.header)}
-                    >
+                    <Dropdown.Item id={column.id} key={column.id} textValue={String(column.header)}>
                       <span>{column.header}</span>
                       <Dropdown.ItemIndicator />
                     </Dropdown.Item>
@@ -970,17 +913,10 @@ export const WithCharts: Story = {
                 </Dropdown.Menu>
               </Dropdown.Popover>
             </Dropdown>
-            <SearchField
-              aria-label="Search servers"
-              value={query}
-              onChange={setQuery}
-            >
+            <SearchField aria-label="Search servers" value={query} onChange={setQuery}>
               <SearchField.Group>
                 <SearchField.SearchIcon />
-                <SearchField.Input
-                  className="w-[160px]"
-                  placeholder="Search..."
-                />
+                <SearchField.Input className="w-[160px]" placeholder="Search..." />
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
@@ -1066,36 +1002,20 @@ const productBrands = [
   "SwiftEdge",
   "NeonPulse",
 ] as const;
-const skuPrefixes = [
-  "AUD",
-  "KEY",
-  "MON",
-  "MSE",
-  "SPK",
-  "CAM",
-  "ACC",
-  "NET",
-  "FRN",
-  "LGT",
-] as const;
+const skuPrefixes = ["AUD", "KEY", "MON", "MSE", "SPK", "CAM", "ACC", "NET", "FRN", "LGT"] as const;
 const productSeeded = (seed: number) => {
   const value = Math.sin(seed) * 10_000;
   return value - Math.floor(value);
 };
 const products: Product[] = Array.from({ length: 1000 }, (_, index) => {
   const random = (offset: number) => productSeeded(index * 7 + offset);
-  const prefix =
-    productPrefixes[Math.floor(random(1) * productPrefixes.length)]!;
+  const prefix = productPrefixes[Math.floor(random(1) * productPrefixes.length)]!;
   const kind = productKinds[Math.floor(random(2) * productKinds.length)]!;
   const brand = productBrands[Math.floor(random(3) * productBrands.length)]!;
   const skuPrefix = skuPrefixes[Math.floor(random(4) * skuPrefixes.length)]!;
   const availability = random(5);
   const status =
-    availability > 0.7
-      ? "In Stock"
-      : availability > 0.25
-        ? "Low Stock"
-        : "Out of Stock";
+    availability > 0.7 ? "In Stock" : availability > 0.25 ? "Low Stock" : "Out of Stock";
   const price = Math.round(20 + random(6) * 2000);
   return {
     cost: Math.round(price * (0.3 + random(7) * 0.4)),
@@ -1146,8 +1066,7 @@ export const Virtualized: Story = {
       let current = products;
       if (status !== "all")
         current = current.filter(
-          (product) =>
-            product.status === statusNames[status as keyof typeof statusNames],
+          (product) => product.status === statusNames[status as keyof typeof statusNames],
         );
       if (query) {
         const normalized = query.toLowerCase();
@@ -1162,8 +1081,7 @@ export const Virtualized: Story = {
     const profit = useMemo(
       () =>
         filtered.reduce(
-          (total, product) =>
-            total + (product.price - product.cost) * product.sold,
+          (total, product) => total + (product.price - product.cost) * product.sold,
           0,
         ),
       [filtered],
@@ -1223,9 +1141,7 @@ export const Virtualized: Story = {
         accessorKey: "price",
         align: "end",
         cell: (product) => (
-          <span className="tabular-nums">
-            {formatWholeCurrency(product.price)}
-          </span>
+          <span className="tabular-nums">{formatWholeCurrency(product.price)}</span>
         ),
         header: "Price",
         id: "price",
@@ -1234,9 +1150,7 @@ export const Virtualized: Story = {
         accessorKey: "cost",
         align: "end",
         cell: (product) => (
-          <span className="tabular-nums">
-            {formatWholeCurrency(product.cost)}
-          </span>
+          <span className="tabular-nums">{formatWholeCurrency(product.cost)}</span>
         ),
         cellClassName: "text-muted",
         header: "Cost",
@@ -1262,9 +1176,7 @@ export const Virtualized: Story = {
       {
         accessorKey: "sold",
         align: "end",
-        cell: (product) => (
-          <span className="tabular-nums">{product.sold.toLocaleString()}</span>
-        ),
+        cell: (product) => <span className="tabular-nums">{product.sold.toLocaleString()}</span>,
         header: "Sales",
         id: "sold",
       },
@@ -1280,17 +1192,10 @@ export const Virtualized: Story = {
             <Segment.Item id="out-of-stock">Out of Stock</Segment.Item>
             <Segment.Item id="low-stock">Low Stock</Segment.Item>
           </Segment>
-          <SearchField
-            aria-label="Search products"
-            value={query}
-            onChange={setQuery}
-          >
+          <SearchField aria-label="Search products" value={query} onChange={setQuery}>
             <SearchField.Group>
               <SearchField.SearchIcon />
-              <SearchField.Input
-                className="w-[180px]"
-                placeholder="Search..."
-              />
+              <SearchField.Input className="w-[180px]" placeholder="Search..." />
               <SearchField.ClearButton />
             </SearchField.Group>
           </SearchField>
@@ -1314,9 +1219,7 @@ export const Virtualized: Story = {
         <div className="flex items-center justify-between px-4 text-sm">
           <span className="text-muted">
             {filtered.length.toLocaleString()} products
-            {selectedCount > 0
-              ? ` · ${selectedCount.toLocaleString()} selected`
-              : null}
+            {selectedCount > 0 ? ` · ${selectedCount.toLocaleString()} selected` : null}
           </span>
           <div className="flex gap-6">
             <span className="text-muted">
@@ -1464,31 +1367,24 @@ const workerSeeded = (seed: number) => {
 const randomDate = (seed: number) => {
   const start = new Date(2025, 0, 1).getTime();
   const range = 500 * 24 * 60 * 60 * 1000;
-  return new Date(start + workerSeeded(seed) * range)
-    .toISOString()
-    .split("T")[0]!;
+  return new Date(start + workerSeeded(seed) * range).toISOString().split("T")[0]!;
 };
 const randomTeams = (seed: number) => {
   const count = Math.floor(workerSeeded(seed) * 5) + 1;
-  return [...teamNames]
-    .toSorted(() => workerSeeded(seed + 99) - 0.5)
-    .slice(0, count);
+  return [...teamNames].toSorted(() => workerSeeded(seed + 99) - 0.5).slice(0, count);
 };
-const workerId = (seed: number) =>
-  `WRK-${Math.floor(workerSeeded(seed) * 9_000_000) + 1_000_000}`;
+const workerId = (seed: number) => `WRK-${Math.floor(workerSeeded(seed) * 9_000_000) + 1_000_000}`;
 const externalId = (seed: number) => {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let value = "EXT-";
   for (let index = 0; index < 8; index++)
-    value +=
-      alphabet[Math.floor(workerSeeded(seed + index * 3) * alphabet.length)];
+    value += alphabet[Math.floor(workerSeeded(seed + index * 3) * alphabet.length)];
   return value;
 };
 const workers: Worker[] = Array.from({ length: 100 }, (_, index) => {
   const random = (offset: number) => workerSeeded(index * 7 + offset);
   const name = workerNames[Math.floor(random(1) * workerNames.length)]!;
-  const statusIndex =
-    (index * 3 + Math.floor(random(5) * 7)) % workerStatuses.length;
+  const statusIndex = (index * 3 + Math.floor(random(5) * 7)) % workerStatuses.length;
   return {
     avatar: `/assets/generated/avatar-${(index % 26) + 1}.jpg`,
     country: countries[Math.floor(random(3) * countries.length)]!,
@@ -1585,30 +1481,21 @@ export const Complex: Story = {
     });
     const [status, setStatus] = useState("all");
     const [type, setType] = useState("all");
-    const [visibleColumns, setVisibleColumns] = useState<Selection>(
-      new Set(workerColumnIds),
-    );
+    const [visibleColumns, setVisibleColumns] = useState<Selection>(new Set(workerColumnIds));
     const filtered = useMemo(() => {
       let result = workers;
       if (query) {
         const normalized = query.toLowerCase();
         result = result.filter((worker) =>
-          [
-            worker.name,
-            worker.email,
-            worker.workerId,
-            worker.externalWorkerId,
-          ].some((value) => value.toLowerCase().includes(normalized)),
+          [worker.name, worker.email, worker.workerId, worker.externalWorkerId].some((value) =>
+            value.toLowerCase().includes(normalized),
+          ),
         );
       }
       if (status !== "all")
-        result = result.filter(
-          (worker) => worker.status.toLowerCase() === status,
-        );
+        result = result.filter((worker) => worker.status.toLowerCase() === status);
       if (type !== "all")
-        result = result.filter(
-          (worker) => worker.workerType.toLowerCase() === type,
-        );
+        result = result.filter((worker) => worker.workerType.toLowerCase() === type);
       return result;
     }, [query, status, type]);
     const sorted = useMemo(
@@ -1638,14 +1525,8 @@ export const Complex: Story = {
       pageCount <= 5
         ? Array.from({ length: pageCount }, (_, index) => index + 1)
         : [1, 2, "ellipsis", pageCount];
-    const pageData = sorted.slice(
-      (currentPage - 1) * pageSize,
-      currentPage * pageSize,
-    );
-    const visible =
-      visibleColumns === "all"
-        ? new Set<string>(workerColumnIds)
-        : visibleColumns;
+    const pageData = sorted.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    const visible = visibleColumns === "all" ? new Set<string>(workerColumnIds) : visibleColumns;
     const selectedCount = selected === "all" ? sorted.length : selected.size;
     const allColumns: DataGridColumn<Worker>[] = [
       {
@@ -1716,11 +1597,7 @@ export const Complex: Story = {
         accessorKey: "status",
         allowsSorting: true,
         cell: (worker) => (
-          <Chip
-            color={workerStatusColor[worker.status]}
-            size="sm"
-            variant="soft"
-          >
+          <Chip color={workerStatusColor[worker.status]} size="sm" variant="soft">
             <span aria-hidden className="size-1.5 rounded-full bg-current" />
             <Chip.Label>{worker.status}</Chip.Label>
           </Chip>
@@ -1734,11 +1611,7 @@ export const Complex: Story = {
         allowsSorting: true,
         cell: (worker) => (
           <span className="inline-flex items-center gap-1.5 text-sm whitespace-nowrap">
-            <HugeiconsIcon
-              className="text-muted size-3.5"
-              icon={Calendar03Icon}
-              strokeWidth={2}
-            />
+            <HugeiconsIcon className="text-muted size-3.5" icon={Calendar03Icon} strokeWidth={2} />
             {new Date(worker.startDate).toLocaleDateString("en-US", {
               day: "numeric",
               month: "long",
@@ -1767,9 +1640,7 @@ export const Complex: Story = {
         width: 50,
       },
     ];
-    const displayedColumns = allColumns.filter((column) =>
-      visible.has(column.id),
-    );
+    const displayedColumns = allColumns.filter((column) => visible.has(column.id));
     const filterMenu = (
       value: string,
       setValue: (value: string) => void,
@@ -1817,10 +1688,7 @@ export const Complex: Story = {
           >
             <SearchField.Group>
               <SearchField.SearchIcon />
-              <SearchField.Input
-                className="w-[200px]"
-                placeholder="Search..."
-              />
+              <SearchField.Input className="w-[200px]" placeholder="Search..." />
               <SearchField.ClearButton />
             </SearchField.Group>
           </SearchField>
@@ -1859,8 +1727,7 @@ export const Complex: Story = {
                     setSort((current) => ({
                       column,
                       direction:
-                        current.column === column &&
-                        current.direction === "ascending"
+                        current.column === column && current.direction === "ascending"
                           ? "descending"
                           : "ascending",
                     }));
@@ -1869,11 +1736,7 @@ export const Complex: Story = {
                 {allColumns
                   .filter((column) => column.allowsSorting)
                   .map((column) => (
-                    <Dropdown.Item
-                      id={column.id}
-                      key={column.id}
-                      textValue={String(column.header)}
-                    >
+                    <Dropdown.Item id={column.id} key={column.id} textValue={String(column.header)}>
                       <span>{column.header}</span>
                       <Dropdown.ItemIndicator />
                     </Dropdown.Item>
@@ -1895,11 +1758,7 @@ export const Complex: Story = {
                 {allColumns
                   .filter((column) => column.id !== "actions")
                   .map((column) => (
-                    <Dropdown.Item
-                      id={column.id}
-                      key={column.id}
-                      textValue={String(column.header)}
-                    >
+                    <Dropdown.Item id={column.id} key={column.id} textValue={String(column.header)}>
                       <span>{column.header}</span>
                       <Dropdown.ItemIndicator />
                     </Dropdown.Item>
@@ -1910,9 +1769,7 @@ export const Complex: Story = {
           {selectedCount > 0 ? (
             <>
               <Separator className="!h-5 self-center" orientation="vertical" />
-              <span className="text-muted text-sm whitespace-nowrap">
-                {selectedCount} Selected
-              </span>
+              <span className="text-muted text-sm whitespace-nowrap">{selectedCount} Selected</span>
             </>
           ) : null}
         </div>
@@ -2023,9 +1880,7 @@ export const Complex: Story = {
               <Pagination.Item>
                 <Pagination.Next
                   isDisabled={currentPage === pageCount}
-                  onPress={() =>
-                    setPage((value) => Math.min(pageCount, value + 1))
-                  }
+                  onPress={() => setPage((value) => Math.min(pageCount, value + 1))}
                 >
                   <Pagination.NextIcon />
                 </Pagination.Next>
@@ -2051,11 +1906,7 @@ export const Complex: Story = {
               <Select.Popover className="w-[80px]">
                 <ListBox>
                   {[10, 25, 50, 100].map((value) => (
-                    <ListBox.Item
-                      id={String(value)}
-                      key={value}
-                      textValue={String(value)}
-                    >
+                    <ListBox.Item id={String(value)} key={value} textValue={String(value)}>
                       {value}
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
@@ -2080,9 +1931,7 @@ export const Complex: Story = {
                 isDisabled={currentPage === pageCount}
                 size="sm"
                 variant="secondary"
-                onPress={() =>
-                  setPage((value) => Math.min(pageCount, value + 1))
-                }
+                onPress={() => setPage((value) => Math.min(pageCount, value + 1))}
               >
                 Next
               </Button>
@@ -2181,9 +2030,7 @@ const invoiceColumns: DataGridColumn<Invoice>[] = [
   {
     accessorKey: "issuedAt",
     cell: (invoice) => (
-      <span className="text-muted tabular-nums">
-        {formatDate(invoice.issuedAt)}
-      </span>
+      <span className="text-muted tabular-nums">{formatDate(invoice.issuedAt)}</span>
     ),
     header: "Issued",
     id: "issuedAt",
@@ -2193,9 +2040,7 @@ const invoicePageSize = 8;
 const invoiceTotal = 50;
 export const AsyncLoading: Story = {
   render: function Demo() {
-    const [data, setData] = useState(() =>
-      generateInvoices(0, invoicePageSize),
-    );
+    const [data, setData] = useState(() => generateInvoices(0, invoicePageSize));
     const [isLoading, setLoading] = useState(false);
     const hasMore = data.length < invoiceTotal;
 
@@ -2238,9 +2083,7 @@ export const AsyncLoading: Story = {
           }
         />
         {!hasMore && data.length > 0 ? (
-          <span className="text-muted text-center text-sm">
-            All {invoiceTotal} invoices loaded
-          </span>
+          <span className="text-muted text-center text-sm">All {invoiceTotal} invoices loaded</span>
         ) : null}
       </div>
     );
@@ -2317,13 +2160,7 @@ const featurePriorities = [
   { id: "low", label: "Low" },
 ] as const;
 
-function EditableTitle({
-  onSave,
-  value,
-}: {
-  onSave: (value: string) => void;
-  value: string;
-}) {
+function EditableTitle({ onSave, value }: { onSave: (value: string) => void; value: string }) {
   const [isEditing, setEditing] = useState(false);
   const [draft, setDraft] = useState(value);
   const save = () => {
@@ -2349,22 +2186,10 @@ function EditableTitle({
       >
         <Input className="h-7 w-[180px] text-sm" />
       </TextField>
-      <Button
-        isIconOnly
-        aria-label="Save"
-        size="sm"
-        variant="ghost"
-        onPress={save}
-      >
+      <Button isIconOnly aria-label="Save" size="sm" variant="ghost" onPress={save}>
         <HugeiconsIcon className="size-3" icon={Tick02Icon} strokeWidth={2} />
       </Button>
-      <Button
-        isIconOnly
-        aria-label="Cancel"
-        size="sm"
-        variant="ghost"
-        onPress={cancel}
-      >
+      <Button isIconOnly aria-label="Cancel" size="sm" variant="ghost" onPress={cancel}>
         <HugeiconsIcon className="size-3" icon={Cancel01Icon} strokeWidth={2} />
       </Button>
     </div>
@@ -2379,11 +2204,7 @@ function EditableTitle({
         variant="ghost"
         onPress={() => setEditing(true)}
       >
-        <HugeiconsIcon
-          className="size-3"
-          icon={PencilEdit01Icon}
-          strokeWidth={2}
-        />
+        <HugeiconsIcon className="size-3" icon={PencilEdit01Icon} strokeWidth={2} />
       </Button>
     </div>
   );
@@ -2394,17 +2215,12 @@ export const EditableCells: Story = {
     const [data, setData] = useState(features);
     const update = (id: string, values: Partial<Feature>) =>
       setData((current) =>
-        current.map((feature) =>
-          feature.id === id ? { ...feature, ...values } : feature,
-        ),
+        current.map((feature) => (feature.id === id ? { ...feature, ...values } : feature)),
       );
     const editableColumns: DataGridColumn<Feature>[] = [
       {
         cell: (feature) => (
-          <EditableTitle
-            value={feature.title}
-            onSave={(title) => update(feature.id, { title })}
-          />
+          <EditableTitle value={feature.title} onSave={(title) => update(feature.id, { title })} />
         ),
         header: "Feature",
         id: "title",
@@ -2426,14 +2242,8 @@ export const EditableCells: Story = {
           >
             <Select.Trigger>
               <Select.Value>
-                <Chip
-                  color={priorityColor[feature.priority]}
-                  size="sm"
-                  variant="soft"
-                >
-                  <Chip.Label className="capitalize">
-                    {feature.priority}
-                  </Chip.Label>
+                <Chip color={priorityColor[feature.priority]} size="sm" variant="soft">
+                  <Chip.Label className="capitalize">{feature.priority}</Chip.Label>
                 </Chip>
               </Select.Value>
               <Select.Indicator />
@@ -2441,16 +2251,8 @@ export const EditableCells: Story = {
             <Select.Popover>
               <ListBox>
                 {featurePriorities.map((priority) => (
-                  <ListBox.Item
-                    id={priority.id}
-                    key={priority.id}
-                    textValue={priority.label}
-                  >
-                    <Chip
-                      color={priorityColor[priority.id]}
-                      size="sm"
-                      variant="soft"
-                    >
+                  <ListBox.Item id={priority.id} key={priority.id} textValue={priority.label}>
+                    <Chip color={priorityColor[priority.id]} size="sm" variant="soft">
                       <Chip.Label>{priority.label}</Chip.Label>
                     </Chip>
                     <ListBox.ItemIndicator />
@@ -2516,8 +2318,7 @@ export const EditableCells: Story = {
         <div className="flex flex-col gap-1">
           <h2 className="text-xl font-bold">Feature Flags</h2>
           <p className="text-muted text-sm">
-            Edit titles, change priorities, adjust story points, and toggle
-            features inline.
+            Edit titles, change priorities, adjust story points, and toggle features inline.
           </p>
         </div>
         <DataGrid
@@ -2661,9 +2462,7 @@ const bulkColumns: DataGridColumn<BulkEmployee>[] = [
     accessorKey: "joinDate",
     allowsSorting: true,
     cell: (employee) => (
-      <span className="text-muted text-sm tabular-nums">
-        {formatDate(employee.joinDate)}
-      </span>
+      <span className="text-muted text-sm tabular-nums">{formatDate(employee.joinDate)}</span>
     ),
     header: "Joined",
     id: "joinDate",
@@ -2675,8 +2474,7 @@ export const BulkActions: Story = {
     const [data, setData] = useState(bulkEmployees);
     const [selected, setSelected] = useState<Selection>(new Set());
     const count = selected === "all" ? data.length : selected.size;
-    const selectedIds =
-      selected === "all" ? new Set(data.map((item) => item.id)) : selected;
+    const selectedIds = selected === "all" ? new Set(data.map((item) => item.id)) : selected;
 
     return (
       <>
@@ -2719,9 +2517,7 @@ export const BulkActions: Story = {
               size="sm"
               variant="ghost"
               onPress={() => {
-                setData((current) =>
-                  current.filter((item) => !selectedIds.has(item.id)),
-                );
+                setData((current) => current.filter((item) => !selectedIds.has(item.id)));
                 setSelected(new Set());
               }}
             >
@@ -2790,12 +2586,10 @@ export const EmptyState: Story = {
                 <EmptyStateComponent.Media className="border" variant="icon">
                   <StoryIcon icon={FolderOpenIcon} />
                 </EmptyStateComponent.Media>
-                <EmptyStateComponent.Title>
-                  No Projects Yet
-                </EmptyStateComponent.Title>
+                <EmptyStateComponent.Title>No Projects Yet</EmptyStateComponent.Title>
                 <EmptyStateComponent.Description>
-                  Get started by creating your first project. You can always
-                  import existing projects later.
+                  Get started by creating your first project. You can always import existing
+                  projects later.
                 </EmptyStateComponent.Description>
               </EmptyStateComponent.Header>
               <EmptyStateComponent.Content className="flex-row gap-2">
@@ -2814,12 +2608,7 @@ export const EmptyState: Story = {
 
 type Company = {
   categories: string[];
-  connectionStrength:
-    | "No communication"
-    | "Strong"
-    | "Very strong"
-    | "Very weak"
-    | "Weak";
+  connectionStrength: "No communication" | "Strong" | "Very strong" | "Very weak" | "Weak";
   country: string;
   dotColor: string;
   id: number;
@@ -2832,38 +2621,26 @@ type Company = {
 
 const categoryClasses: Record<string, string> = {
   Airlines: "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-400",
-  Automation:
-    "bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400",
+  Automation: "bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400",
   B2B: "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-400",
   B2C: "bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-400",
   Broadcasting: "bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-400",
-  "Consumer Discretionary":
-    "bg-pink-100 text-pink-700 dark:bg-pink-500/15 dark:text-pink-400",
-  "Consumer Electronics":
-    "bg-pink-100 text-pink-700 dark:bg-pink-500/15 dark:text-pink-400",
-  "E-commerce":
-    "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
-  Enterprise:
-    "bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400",
+  "Consumer Discretionary": "bg-pink-100 text-pink-700 dark:bg-pink-500/15 dark:text-pink-400",
+  "Consumer Electronics": "bg-pink-100 text-pink-700 dark:bg-pink-500/15 dark:text-pink-400",
+  "E-commerce": "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
+  Enterprise: "bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400",
   Finance: "bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-400",
-  "Financial Services":
-    "bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-400",
+  "Financial Services": "bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-400",
   Food: "bg-yellow-100 text-yellow-700 dark:bg-yellow-500/15 dark:text-yellow-400",
   ISP: "bg-slate-100 text-slate-700 dark:bg-slate-500/15 dark:text-slate-400",
-  "Information Technology":
-    "bg-gray-100 text-gray-700 dark:bg-gray-500/15 dark:text-gray-400",
+  "Information Technology": "bg-gray-100 text-gray-700 dark:bg-gray-500/15 dark:text-gray-400",
   Internet: "bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-400",
-  Marketplace:
-    "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
-  Mobile:
-    "bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-500/15 dark:text-fuchsia-400",
-  Performance:
-    "bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-400",
-  Publishing:
-    "bg-lime-100 text-lime-700 dark:bg-lime-500/15 dark:text-lime-400",
+  Marketplace: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
+  Mobile: "bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-500/15 dark:text-fuchsia-400",
+  Performance: "bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-400",
+  Publishing: "bg-lime-100 text-lime-700 dark:bg-lime-500/15 dark:text-lime-400",
   SaaS: "bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-400",
-  Transportation:
-    "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-400",
+  Transportation: "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-400",
 };
 
 const companies: Company[] = [
@@ -2892,12 +2669,7 @@ const companies: Company[] = [
     twitterHandle: "Disney",
   },
   {
-    categories: [
-      "B2C",
-      "Finance",
-      "Financial Services",
-      "Information Technology",
-    ],
+    categories: ["B2C", "Finance", "Financial Services", "Information Technology"],
     connectionStrength: "No communication",
     country: "US",
     dotColor: "bg-blue-500",
@@ -3005,13 +2777,7 @@ const companies: Company[] = [
     twitterHandle: "attio",
   },
   {
-    categories: [
-      "B2B",
-      "B2C",
-      "Information Technology",
-      "Mobile",
-      "Performance",
-    ],
+    categories: ["B2B", "B2C", "Information Technology", "Mobile", "Performance"],
     connectionStrength: "Very weak",
     country: "DE",
     dotColor: "bg-red-600",
@@ -3043,10 +2809,7 @@ const strengthRank: Record<Company["connectionStrength"], number> = {
   Strong: 3,
   "Very strong": 4,
 };
-const strengthClasses: Record<
-  Company["connectionStrength"],
-  { color: string; dot: string }
-> = {
+const strengthClasses: Record<Company["connectionStrength"], { color: string; dot: string }> = {
   "No communication": { color: "text-muted", dot: "text-muted" },
   Strong: {
     color: "text-emerald-600 dark:text-emerald-400",
@@ -3073,23 +2836,15 @@ function CompanyCategories({ categories }: { categories: string[] }) {
           {category.length > 14 ? `${category.slice(0, 12)}…` : category}
         </span>
       ))}
-      {remaining > 0 ? (
-        <span className="text-muted text-[11px]">+{remaining}</span>
-      ) : null}
+      {remaining > 0 ? <span className="text-muted text-[11px]">+{remaining}</span> : null}
     </span>
   );
 }
 
-function ConnectionStrength({
-  strength,
-}: {
-  strength: Company["connectionStrength"];
-}) {
+function ConnectionStrength({ strength }: { strength: Company["connectionStrength"] }) {
   const classes = strengthClasses[strength];
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 text-xs ${classes.color}`}
-    >
+    <span className={`inline-flex items-center gap-1.5 text-xs ${classes.color}`}>
       <HugeiconsIcon
         className={`size-2 ${classes.dot}`}
         icon={CircleIcon}
@@ -3109,17 +2864,12 @@ export const PinnedColumnsCompact: Story = {
     const [strength, setStrength] = useState("all");
     const filtered = useMemo(() => {
       let result = companies;
-      if (region === "us")
-        result = result.filter((company) => company.country === "US");
+      if (region === "us") result = result.filter((company) => company.country === "US");
       else if (region === "europe")
-        result = result.filter((company) =>
-          ["UK", "DE", "FR"].includes(company.country),
-        );
+        result = result.filter((company) => ["UK", "DE", "FR"].includes(company.country));
       if (strength !== "all")
         result = result.filter(
-          (company) =>
-            company.connectionStrength.toLowerCase().replace(/\s+/g, "-") ===
-            strength,
+          (company) => company.connectionStrength.toLowerCase().replace(/\s+/g, "-") === strength,
         );
       if (query) {
         const normalized = query.toLowerCase();
@@ -3127,9 +2877,7 @@ export const PinnedColumnsCompact: Story = {
           (company) =>
             company.name.toLowerCase().includes(normalized) ||
             company.linkedin.toLowerCase().includes(normalized) ||
-            company.categories.some((category) =>
-              category.toLowerCase().includes(normalized),
-            ),
+            company.categories.some((category) => category.toLowerCase().includes(normalized)),
         );
       }
       return result;
@@ -3140,9 +2888,7 @@ export const PinnedColumnsCompact: Story = {
         allowsSorting: true,
         cell: (company) => (
           <span className="inline-flex items-center gap-2">
-            <span
-              className={`size-2.5 shrink-0 rounded-full ${company.dotColor}`}
-            />
+            <span className={`size-2.5 shrink-0 rounded-full ${company.dotColor}`} />
             <span className="text-xs font-medium">{company.name}</span>
           </span>
         ),
@@ -3153,9 +2899,7 @@ export const PinnedColumnsCompact: Story = {
         pinned: "start",
       },
       {
-        cell: (company) => (
-          <CompanyCategories categories={company.categories} />
-        ),
+        cell: (company) => <CompanyCategories categories={company.categories} />,
         header: "Categories",
         id: "categories",
         minWidth: 240,
@@ -3181,9 +2925,7 @@ export const PinnedColumnsCompact: Story = {
         accessorKey: "lastInteraction",
         allowsSorting: true,
         cell: (company) => (
-          <span className="text-muted text-xs">
-            {company.lastInteraction ?? "No contact"}
-          </span>
+          <span className="text-muted text-xs">{company.lastInteraction ?? "No contact"}</span>
         ),
         header: "Last interaction",
         id: "lastInteraction",
@@ -3191,33 +2933,26 @@ export const PinnedColumnsCompact: Story = {
       },
       {
         allowsSorting: true,
-        cell: (company) => (
-          <ConnectionStrength strength={company.connectionStrength} />
-        ),
+        cell: (company) => <ConnectionStrength strength={company.connectionStrength} />,
         header: "Connection strength",
         id: "connectionStrength",
         minWidth: 160,
         sortFn: (left, right) =>
-          strengthRank[left.connectionStrength] -
-          strengthRank[right.connectionStrength],
+          strengthRank[left.connectionStrength] - strengthRank[right.connectionStrength],
       },
       {
         accessorKey: "twitterFollowers",
         align: "end",
         allowsSorting: true,
         cell: (company) => (
-          <span className="text-xs tabular-nums">
-            {company.twitterFollowers.toLocaleString()}
-          </span>
+          <span className="text-xs tabular-nums">{company.twitterFollowers.toLocaleString()}</span>
         ),
         header: "Twitter followers",
         id: "twitterFollowers",
         minWidth: 120,
       },
       {
-        cell: (company) => (
-          <span className="text-accent text-xs">{company.twitterHandle}</span>
-        ),
+        cell: (company) => <span className="text-accent text-xs">{company.twitterHandle}</span>,
         header: "Twitter",
         id: "twitter",
         minWidth: 100,
@@ -3275,29 +3010,19 @@ export const PinnedColumnsCompact: Story = {
           </div>
           <div className="flex items-center gap-2">
             <Button size="sm" variant="ghost">
-              <HugeiconsIcon
-                className="size-3.5"
-                icon={SlidersHorizontalIcon}
-                strokeWidth={2}
-              />
+              <HugeiconsIcon className="size-3.5" icon={SlidersHorizontalIcon} strokeWidth={2} />
               Sort
             </Button>
             <Dropdown>
               <Button size="sm" variant="ghost">
-                <HugeiconsIcon
-                  className="size-3.5"
-                  icon={FilterIcon}
-                  strokeWidth={2}
-                />
+                <HugeiconsIcon className="size-3.5" icon={FilterIcon} strokeWidth={2} />
                 Filter
               </Button>
               <Dropdown.Popover>
                 <Dropdown.Menu
                   selectedKeys={new Set([strength])}
                   selectionMode="single"
-                  onSelectionChange={(keys) =>
-                    setStrength(String([...keys][0] ?? "all"))
-                  }
+                  onSelectionChange={(keys) => setStrength(String([...keys][0] ?? "all"))}
                 >
                   {[
                     ["all", "All"],
@@ -3316,17 +3041,10 @@ export const PinnedColumnsCompact: Story = {
               </Dropdown.Popover>
             </Dropdown>
             <Separator className="!h-4 self-center" orientation="vertical" />
-            <SearchField
-              aria-label="Search companies"
-              value={query}
-              onChange={setQuery}
-            >
+            <SearchField aria-label="Search companies" value={query} onChange={setQuery}>
               <SearchField.Group>
                 <SearchField.SearchIcon />
-                <SearchField.Input
-                  className="w-[140px] text-xs"
-                  placeholder="Search..."
-                />
+                <SearchField.Input className="w-[140px] text-xs" placeholder="Search..." />
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>

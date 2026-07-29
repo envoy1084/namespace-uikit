@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { Fragment } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   Avatar,
   Breadcrumbs,
@@ -78,24 +77,15 @@ function MoreActions({ label }: { label: string }) {
       <Dropdown.Popover className="w-44" offset={6} placement="right top">
         <Dropdown.Menu aria-label={`${label} actions`}>
           <Dropdown.Item id="open" textValue="Open">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={FolderOpenIcon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={FolderOpenIcon} />
             <Label>Open</Label>
           </Dropdown.Item>
           <Dropdown.Item id="duplicate" textValue="Duplicate">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={Copy01Icon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={Copy01Icon} />
             <Label>Duplicate</Label>
           </Dropdown.Item>
           <Dropdown.Item id="delete" textValue="Delete" variant="danger">
-            <HugeiconsIcon
-              className="text-danger size-4 shrink-0"
-              icon={Delete02Icon}
-            />
+            <HugeiconsIcon className="text-danger size-4 shrink-0" icon={Delete02Icon} />
             <Label>Delete</Label>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -112,10 +102,7 @@ function Menu({
   nested?: boolean;
 }) {
   return (
-    <Sidebar.Menu
-      aria-label="Navigation"
-      defaultExpandedKeys={nested ? ["Analytics"] : []}
-    >
+    <Sidebar.Menu aria-label="Navigation" defaultExpandedKeys={nested ? ["Analytics"] : []}>
       {nav.map((item) => (
         <Sidebar.MenuItem
           href={item.items ? undefined : "#"}
@@ -144,21 +131,19 @@ function Menu({
           ) : null}
           {nested && item.items ? (
             <Sidebar.Submenu>
-              {(item.label === "Analytics" ? analyticsItems : item.items).map(
-                (child) => (
-                  <Sidebar.MenuItem
-                    href="#"
-                    id={`${item.label}-${child}`}
-                    key={child}
-                    textValue={child}
-                  >
-                    <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
-                    <Sidebar.MenuActions className="ml-auto">
-                      <MoreActions label={child} />
-                    </Sidebar.MenuActions>
-                  </Sidebar.MenuItem>
-                ),
-              )}
+              {(item.label === "Analytics" ? analyticsItems : item.items).map((child) => (
+                <Sidebar.MenuItem
+                  href="#"
+                  id={`${item.label}-${child}`}
+                  key={child}
+                  textValue={child}
+                >
+                  <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
+                  <Sidebar.MenuActions className="ml-auto">
+                    <MoreActions label={child} />
+                  </Sidebar.MenuActions>
+                </Sidebar.MenuItem>
+              ))}
             </Sidebar.Submenu>
           ) : null}
         </Sidebar.MenuItem>
@@ -215,10 +200,7 @@ function Demo({
           <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
             <span className="text-sm font-bold text-white">H</span>
           </span>
-          <span
-            className="text-foreground text-sm font-semibold"
-            data-sidebar="label"
-          >
+          <span className="text-foreground text-sm font-semibold" data-sidebar="label">
             {title}
           </span>
         </div>
@@ -308,10 +290,7 @@ function CollapsibleDemo() {
             <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
               <span className="text-sm font-bold text-white">H</span>
             </span>
-            <span
-              className="text-foreground text-sm font-semibold"
-              data-sidebar="label"
-            >
+            <span className="text-foreground text-sm font-semibold" data-sidebar="label">
               Namespace
             </span>
           </div>
@@ -374,19 +353,13 @@ function IconOnlyDemo() {
       <Sidebar className="[--sidebar-width:56px]">
         <Sidebar.Header className="items-center justify-center p-0 py-4">
           <Avatar className="size-8 shrink-0">
-            <Avatar.Image
-              alt="Kate Moore"
-              src="/assets/avatars/blue-light.jpg"
-            />
+            <Avatar.Image alt="Kate Moore" src="/assets/avatars/blue-light.jpg" />
             <Avatar.Fallback>KM</Avatar.Fallback>
           </Avatar>
         </Sidebar.Header>
         <Sidebar.Content className="items-center justify-center px-1.5">
           <Sidebar.Group>
-            <Sidebar.Menu
-              aria-label="Navigation"
-              className="items-center gap-1"
-            >
+            <Sidebar.Menu aria-label="Navigation" className="items-center gap-1">
               {collapsibleNav.map((item) => (
                 <Sidebar.MenuItem
                   id={item.label}
@@ -405,10 +378,7 @@ function IconOnlyDemo() {
           </Sidebar.Group>
         </Sidebar.Content>
         <Sidebar.Footer className="items-center justify-center p-0 py-4">
-          <Sidebar.Menu
-            aria-label="Footer actions"
-            className="items-center gap-1"
-          >
+          <Sidebar.Menu aria-label="Footer actions" className="items-center gap-1">
             <Sidebar.MenuItem
               id="support"
               textValue="Help & Support"
@@ -426,9 +396,7 @@ function IconOnlyDemo() {
       <Sidebar.Main>
         <div className="flex flex-col px-10 py-6">
           <h1 className="text-foreground text-lg font-semibold">Dashboard</h1>
-          <p className="text-muted">
-            Icon-only sidebar that is always collapsed.
-          </p>
+          <p className="text-muted">Icon-only sidebar that is always collapsed.</p>
         </div>
       </Sidebar.Main>
     </Sidebar.Provider>
@@ -463,10 +431,7 @@ function WithGroupsDemo() {
             <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
               <span className="text-sm font-bold text-white">H</span>
             </span>
-            <span
-              className="text-foreground text-sm font-semibold"
-              data-sidebar="label"
-            >
+            <span className="text-foreground text-sm font-semibold" data-sidebar="label">
               Namespace
             </span>
           </div>
@@ -519,14 +484,7 @@ function WithGroupsDemo() {
 const documentationSections = [
   { items: ["Installation", "Project Structure"], label: "Getting Started" },
   {
-    items: [
-      "Routing",
-      "Data Fetching",
-      "Rendering",
-      "Caching",
-      "Styling",
-      "Testing",
-    ],
+    items: ["Routing", "Data Fetching", "Rendering", "Caching", "Styling", "Testing"],
     label: "Build Your Application",
   },
   {
@@ -611,8 +569,7 @@ function CollapsibleGroupsDemo() {
         </div>
         <div className="p-6">
           <p className="text-muted">
-            Documentation content area. Toggle the sidebar with the trigger
-            button.
+            Documentation content area. Toggle the sidebar with the trigger button.
           </p>
         </div>
       </Sidebar.Main>
@@ -629,10 +586,7 @@ function ReducedMotionDemo() {
             <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
               <span className="text-sm font-bold text-white">H</span>
             </span>
-            <span
-              className="text-foreground text-sm font-semibold"
-              data-sidebar="label"
-            >
+            <span className="text-foreground text-sm font-semibold" data-sidebar="label">
               Namespace
             </span>
           </div>
@@ -662,8 +616,7 @@ function ReducedMotionDemo() {
         </div>
         <div className="p-6">
           <p className="text-muted">
-            reduceMotion is enabled, so nested sections open and close
-            instantly.
+            reduceMotion is enabled, so nested sections open and close instantly.
           </p>
         </div>
       </Sidebar.Main>
@@ -713,10 +666,7 @@ function FloatingVariantDemo() {
             <span className="bg-accent flex size-6 shrink-0 items-center justify-center rounded-md">
               <span className="text-sm font-bold text-white">H</span>
             </span>
-            <span
-              className="text-foreground text-sm font-semibold"
-              data-sidebar="label"
-            >
+            <span className="text-foreground text-sm font-semibold" data-sidebar="label">
               Namespace
             </span>
           </div>
@@ -741,9 +691,7 @@ function FloatingVariantDemo() {
           </Breadcrumbs>
         </div>
         <div className="p-6">
-          <p className="text-muted">
-            Floating sidebar with rounded corners and shadow
-          </p>
+          <p className="text-muted">Floating sidebar with rounded corners and shadow</p>
         </div>
       </Sidebar.Main>
     </Sidebar.Provider>
@@ -757,22 +705,15 @@ function WithAvatarDemo() {
         <Sidebar.Header>
           <div className="flex items-center gap-3 px-1 py-2">
             <Avatar className="size-8 shrink-0">
-              <Avatar.Image
-                alt="Kate Moore"
-                src="/assets/avatars/blue-light.jpg"
-              />
+              <Avatar.Image alt="Kate Moore" src="/assets/avatars/blue-light.jpg" />
               <Avatar.Fallback>KM</Avatar.Fallback>
             </Avatar>
             <div
               className="flex min-w-0 flex-col group-data-[state=collapsed]:hidden"
               data-sidebar="label"
             >
-              <span className="text-foreground text-sm leading-tight font-medium">
-                Kate Moore
-              </span>
-              <span className="text-muted text-xs leading-tight">
-                kate@acme.com
-              </span>
+              <span className="text-foreground text-sm leading-tight font-medium">Kate Moore</span>
+              <span className="text-muted text-xs leading-tight">kate@acme.com</span>
             </div>
           </div>
         </Sidebar.Header>
@@ -848,18 +789,13 @@ function InsetVariantDemo() {
         <Sidebar.Header>
           <div className="flex items-center gap-3 px-1 py-2">
             <span className="bg-foreground flex size-8 shrink-0 items-center justify-center rounded-lg">
-              <HugeiconsIcon
-                className="text-background size-4"
-                icon={AiBrain01Icon}
-              />
+              <HugeiconsIcon className="text-background size-4" icon={AiBrain01Icon} />
             </span>
             <span className="flex flex-col">
               <span className="text-foreground text-sm leading-tight font-semibold">
                 Namespace Inc.
               </span>
-              <span className="text-muted text-xs leading-tight">
-                Enterprise
-              </span>
+              <span className="text-muted text-xs leading-tight">Enterprise</span>
             </span>
           </div>
         </Sidebar.Header>
@@ -933,10 +869,7 @@ function CompactWithUserMenuDemo() {
             <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-green-600">
               <span className="text-sm font-bold text-white">H</span>
             </span>
-            <span
-              className="text-foreground text-sm font-semibold"
-              data-sidebar="label"
-            >
+            <span className="text-foreground text-sm font-semibold" data-sidebar="label">
               Namespace Labs
             </span>
           </div>
@@ -974,10 +907,7 @@ function CompactWithUserMenuDemo() {
               aria-label="Spaces"
               defaultExpandedKeys={["compact-user-menu-my-library"]}
             >
-              <Sidebar.MenuItem
-                id="compact-user-menu-my-library"
-                textValue="My library"
-              >
+              <Sidebar.MenuItem id="compact-user-menu-my-library" textValue="My library">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={LibraryIcon} size={16} />
                 </Sidebar.MenuIcon>
@@ -1003,26 +933,17 @@ function CompactWithUserMenuDemo() {
                   ))}
                 </Sidebar.Submenu>
               </Sidebar.MenuItem>
-              <Sidebar.MenuItem
-                href="#"
-                id="compact-user-menu-design-team"
-                textValue="Design team"
-              >
+              <Sidebar.MenuItem href="#" id="compact-user-menu-design-team" textValue="Design team">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={UserMultipleIcon} size={16} />
                 </Sidebar.MenuIcon>
                 <Sidebar.MenuLabel>Design team</Sidebar.MenuLabel>
               </Sidebar.MenuItem>
-              <Sidebar.MenuItem
-                id="compact-user-menu-add-space"
-                textValue="Add space"
-              >
+              <Sidebar.MenuItem id="compact-user-menu-add-space" textValue="Add space">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={Add01Icon} size={16} />
                 </Sidebar.MenuIcon>
-                <Sidebar.MenuLabel className="text-muted">
-                  Add space
-                </Sidebar.MenuLabel>
+                <Sidebar.MenuLabel className="text-muted">Add space</Sidebar.MenuLabel>
               </Sidebar.MenuItem>
             </Sidebar.Menu>
           </Sidebar.Group>
@@ -1032,16 +953,10 @@ function CompactWithUserMenuDemo() {
           <Dropdown>
             <Dropdown.Trigger className="hover:bg-default flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left outline-none">
               <Avatar size="sm">
-                <Avatar.Image
-                  alt="Junior Garcia"
-                  src="/assets/avatars/orange.jpg"
-                />
+                <Avatar.Image alt="Junior Garcia" src="/assets/avatars/orange.jpg" />
                 <Avatar.Fallback delayMs={600}>JG</Avatar.Fallback>
               </Avatar>
-              <span
-                className="text-foreground text-sm font-medium"
-                data-sidebar="label"
-              >
+              <span className="text-foreground text-sm font-medium" data-sidebar="label">
                 Junior
               </span>
               <HugeiconsIcon
@@ -1054,19 +969,12 @@ function CompactWithUserMenuDemo() {
               <div className="px-3 pt-3 pb-1">
                 <div className="flex items-center gap-2">
                   <Avatar size="sm">
-                    <Avatar.Image
-                      alt="Junior Garcia"
-                      src="/assets/avatars/orange.jpg"
-                    />
+                    <Avatar.Image alt="Junior Garcia" src="/assets/avatars/orange.jpg" />
                     <Avatar.Fallback delayMs={600}>JG</Avatar.Fallback>
                   </Avatar>
                   <div className="flex flex-col gap-0">
-                    <p className="text-sm leading-5 font-medium">
-                      Junior Garcia
-                    </p>
-                    <p className="text-muted text-xs leading-none">
-                      junior@namespace.ninja
-                    </p>
+                    <p className="text-sm leading-5 font-medium">Junior Garcia</p>
+                    <p className="text-muted text-xs leading-none">junior@namespace.ninja</p>
                   </div>
                 </div>
               </div>
@@ -1083,10 +991,7 @@ function CompactWithUserMenuDemo() {
                 <Dropdown.Item id="compact-user-menu-dd-create-team">
                   <Label>Create Team</Label>
                 </Dropdown.Item>
-                <Dropdown.Item
-                  id="compact-user-menu-dd-logout"
-                  variant="danger"
-                >
+                <Dropdown.Item id="compact-user-menu-dd-logout" variant="danger">
                   <Label>Log Out</Label>
                 </Dropdown.Item>
               </Dropdown.Menu>
@@ -1110,10 +1015,8 @@ function CompactWithUserMenuDemo() {
         <div className="p-6">
           <p className="text-muted">
             Compact sidebar with user dropdown menu. Uses{" "}
-            <code className="bg-default rounded px-1 py-0.5 text-xs">
-              --spacing: 0.2rem
-            </code>{" "}
-            for dense layout.
+            <code className="bg-default rounded px-1 py-0.5 text-xs">--spacing: 0.2rem</code> for
+            dense layout.
           </p>
         </div>
       </Sidebar.Main>
@@ -1159,10 +1062,7 @@ function ComplexSidebarContent() {
             <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-amber-700">
               <span className="text-sm font-bold text-white">A</span>
             </span>
-            <span
-              className="text-foreground text-sm font-semibold"
-              data-sidebar="label"
-            >
+            <span className="text-foreground text-sm font-semibold" data-sidebar="label">
               Acme Labs
             </span>
           </div>
@@ -1173,10 +1073,7 @@ function ComplexSidebarContent() {
                 type="button"
               >
                 <HugeiconsIcon icon={AiBrain01Icon} size={16} />
-                <HugeiconsIcon
-                  className="text-muted size-3"
-                  icon={ArrowDown01Icon}
-                />
+                <HugeiconsIcon className="text-muted size-3" icon={ArrowDown01Icon} />
               </button>
             </div>
           ) : null}
@@ -1193,11 +1090,7 @@ function ComplexSidebarContent() {
               ["ai", AiBrain01Icon, "Acme AI"],
               ["inbox", Notification01Icon, "Inbox"],
             ].map(([id, icon, label]) => (
-              <Segment.Item
-                className="w-auto"
-                id={id as string}
-                key={id as string}
-              >
+              <Segment.Item className="w-auto" id={id as string} key={id as string}>
                 {({ isSelected }) => (
                   <>
                     <HugeiconsIcon icon={icon} size={16} />
@@ -1219,17 +1112,10 @@ function ComplexSidebarContent() {
       </Sidebar.Header>
       <Sidebar.Content>
         <Sidebar.Group>
-          <Sidebar.GroupLabel className="capitalize">
-            Recents
-          </Sidebar.GroupLabel>
+          <Sidebar.GroupLabel className="capitalize">Recents</Sidebar.GroupLabel>
           <Sidebar.Menu aria-label="Recents">
             {complexRecents.map((item) => (
-              <Sidebar.MenuItem
-                href="#"
-                id={`complex-${item}`}
-                key={item}
-                textValue={item}
-              >
+              <Sidebar.MenuItem href="#" id={`complex-${item}`} key={item} textValue={item}>
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={File01Icon} size={16} />
                 </Sidebar.MenuIcon>
@@ -1269,11 +1155,7 @@ function ComplexSidebarContent() {
             </span>
           </Sidebar.GroupLabel>
           <Sidebar.Menu aria-label="Agents">
-            <Sidebar.MenuItem
-              href="#"
-              id="complex-personal"
-              textValue="Personal"
-            >
+            <Sidebar.MenuItem href="#" id="complex-personal" textValue="Personal">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={UserMultipleIcon} size={16} />
               </Sidebar.MenuIcon>
@@ -1283,9 +1165,7 @@ function ComplexSidebarContent() {
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={Add01Icon} size={16} />
               </Sidebar.MenuIcon>
-              <Sidebar.MenuLabel className="text-muted">
-                Add new
-              </Sidebar.MenuLabel>
+              <Sidebar.MenuLabel className="text-muted">Add new</Sidebar.MenuLabel>
             </Sidebar.MenuItem>
           </Sidebar.Menu>
         </Sidebar.Group>
@@ -1300,31 +1180,20 @@ function ComplexSidebarContent() {
                 >
                   <HugeiconsIcon icon={MoreVerticalIcon} size={16} />
                 </Dropdown.Trigger>
-                <Dropdown.Popover
-                  className="w-48"
-                  offset={6}
-                  placement="right top"
-                >
+                <Dropdown.Popover className="w-48" offset={6} placement="right top">
                   <Dropdown.Menu aria-label="Teamspaces section actions">
                     <Dropdown.Item id="show">Show</Dropdown.Item>
                     <Dropdown.Item id="move-up">Move up</Dropdown.Item>
                     <Dropdown.Item id="move-down">Move down</Dropdown.Item>
                     <Dropdown.Item id="hide">Hide section</Dropdown.Item>
-                    <Dropdown.Item id="new-teamspace">
-                      New teamspace
-                    </Dropdown.Item>
-                    <Dropdown.Item id="open-library">
-                      Open in Library
-                    </Dropdown.Item>
+                    <Dropdown.Item id="new-teamspace">New teamspace</Dropdown.Item>
+                    <Dropdown.Item id="open-library">Open in Library</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown.Popover>
               </Dropdown>
             </span>
           </Sidebar.GroupLabel>
-          <Sidebar.Menu
-            aria-label="Teamspaces"
-            defaultExpandedKeys={["complex-acme-hq"]}
-          >
+          <Sidebar.Menu aria-label="Teamspaces" defaultExpandedKeys={["complex-acme-hq"]}>
             <Sidebar.MenuItem id="complex-acme-hq" textValue="Acme HQ">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={Home01Icon} size={16} />
@@ -1390,11 +1259,7 @@ function ComplexSidebarContent() {
         <Sidebar.Group>
           <Sidebar.GroupLabel>Shared</Sidebar.GroupLabel>
           <Sidebar.Menu aria-label="Shared">
-            <Sidebar.MenuItem
-              href="#"
-              id="complex-shared-sprints"
-              textValue="Sprints"
-            >
+            <Sidebar.MenuItem href="#" id="complex-shared-sprints" textValue="Sprints">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={Activity01Icon} size={16} />
               </Sidebar.MenuIcon>
@@ -1411,11 +1276,7 @@ function ComplexSidebarContent() {
               </Sidebar.MenuIcon>
               <Sidebar.MenuLabel>Acme Mail</Sidebar.MenuLabel>
             </Sidebar.MenuItem>
-            <Sidebar.MenuItem
-              href="#"
-              id="complex-calendar"
-              textValue="Acme Calendar"
-            >
+            <Sidebar.MenuItem href="#" id="complex-calendar" textValue="Acme Calendar">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={Activity01Icon} size={16} />
               </Sidebar.MenuIcon>
@@ -1499,10 +1360,7 @@ function ComplexDemo() {
         <div className="p-6">
           <p className="text-muted">
             Complex sidebar with compact spacing. All density is controlled via{" "}
-            <code className="bg-default rounded px-1 py-0.5 text-xs">
-              --spacing: 0.2rem
-            </code>
-            .
+            <code className="bg-default rounded px-1 py-0.5 text-xs">--spacing: 0.2rem</code>.
           </p>
         </div>
       </Sidebar.Main>
@@ -1533,21 +1391,14 @@ function MeetingNotesDemo() {
         </Sidebar.Header>
         <Sidebar.Content>
           <Sidebar.Group>
-            <Sidebar.Menu
-              aria-label="Main navigation"
-              defaultExpandedKeys={["meeting-chat"]}
-            >
+            <Sidebar.Menu aria-label="Main navigation" defaultExpandedKeys={["meeting-chat"]}>
               <Sidebar.MenuItem href="#" id="meeting-home" textValue="Home">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={Home01Icon} size={16} />
                 </Sidebar.MenuIcon>
                 <Sidebar.MenuLabel>Home</Sidebar.MenuLabel>
               </Sidebar.MenuItem>
-              <Sidebar.MenuItem
-                href="#"
-                id="meeting-shared"
-                textValue="Shared with me"
-              >
+              <Sidebar.MenuItem href="#" id="meeting-shared" textValue="Shared with me">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={UserMultipleIcon} size={16} />
                 </Sidebar.MenuIcon>
@@ -1581,10 +1432,7 @@ function MeetingNotesDemo() {
           </Sidebar.Group>
           <Sidebar.Group>
             <Sidebar.GroupLabel>Spaces</Sidebar.GroupLabel>
-            <Sidebar.Menu
-              aria-label="Spaces"
-              defaultExpandedKeys={["meeting-my-notes"]}
-            >
+            <Sidebar.Menu aria-label="Spaces" defaultExpandedKeys={["meeting-my-notes"]}>
               <Sidebar.MenuItem id="meeting-my-notes" textValue="My notes">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={LibraryIcon} size={16} />
@@ -1596,20 +1444,12 @@ function MeetingNotesDemo() {
                   </Sidebar.MenuTrigger>
                 </Sidebar.MenuLabel>
                 <Sidebar.Submenu>
-                  <Sidebar.MenuItem
-                    href="#"
-                    id="meeting-personal"
-                    textValue="Personal"
-                  >
+                  <Sidebar.MenuItem href="#" id="meeting-personal" textValue="Personal">
                     <Sidebar.MenuLabel>Personal</Sidebar.MenuLabel>
                   </Sidebar.MenuItem>
                 </Sidebar.Submenu>
               </Sidebar.MenuItem>
-              <Sidebar.MenuItem
-                href="#"
-                id="meeting-design-team"
-                textValue="Design team"
-              >
+              <Sidebar.MenuItem href="#" id="meeting-design-team" textValue="Design team">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={UserMultipleIcon} size={16} />
                 </Sidebar.MenuIcon>
@@ -1619,9 +1459,7 @@ function MeetingNotesDemo() {
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={Add01Icon} size={16} />
                 </Sidebar.MenuIcon>
-                <Sidebar.MenuLabel className="text-muted">
-                  Add folder
-                </Sidebar.MenuLabel>
+                <Sidebar.MenuLabel className="text-muted">Add folder</Sidebar.MenuLabel>
               </Sidebar.MenuItem>
             </Sidebar.Menu>
           </Sidebar.Group>
@@ -1640,10 +1478,7 @@ function MeetingNotesDemo() {
           </div>
           <Sidebar.Separator />
           <Dropdown>
-            <Dropdown.Trigger
-              aria-label="Sarah"
-              className="w-full justify-start"
-            >
+            <Dropdown.Trigger aria-label="Sarah" className="w-full justify-start">
               <Avatar className="size-7">
                 <Avatar.Fallback>Sarah</Avatar.Fallback>
               </Avatar>
@@ -1673,8 +1508,8 @@ function MeetingNotesDemo() {
         </div>
         <div className="p-6">
           <p className="text-muted">
-            Meeting notes sidebar with search, spaces, and user menu. Uses
-            offcanvas collapsible mode.
+            Meeting notes sidebar with search, spaces, and user menu. Uses offcanvas collapsible
+            mode.
           </p>
         </div>
       </Sidebar.Main>
@@ -1707,15 +1542,9 @@ function AgentHubContent() {
         <div className="flex items-center justify-between px-1 py-2">
           <div className="flex items-center gap-3">
             <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-violet-600">
-              <HugeiconsIcon
-                className="size-3.5 text-white"
-                icon={AiBrain01Icon}
-              />
+              <HugeiconsIcon className="size-3.5 text-white" icon={AiBrain01Icon} />
             </span>
-            <span
-              className="text-foreground text-sm font-semibold"
-              data-sidebar="label"
-            >
+            <span className="text-foreground text-sm font-semibold" data-sidebar="label">
               AgentHub
             </span>
           </div>
@@ -1768,12 +1597,7 @@ function AgentHubContent() {
           <Sidebar.GroupLabel>Recent chats</Sidebar.GroupLabel>
           <Sidebar.Menu aria-label="Recent chats">
             {agentHubChats.map((item) => (
-              <Sidebar.MenuItem
-                href="#"
-                id={`agent-hub-chat-${item}`}
-                key={item}
-                textValue={item}
-              >
+              <Sidebar.MenuItem href="#" id={`agent-hub-chat-${item}`} key={item} textValue={item}>
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={AiBrain01Icon} size={16} />
                 </Sidebar.MenuIcon>
@@ -1810,9 +1634,7 @@ function AgentHubContent() {
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={icon} size={16} />
                 </Sidebar.MenuIcon>
-                <Sidebar.MenuLabel
-                  className={label === "Add agent" ? "text-muted" : undefined}
-                >
+                <Sidebar.MenuLabel className={label === "Add agent" ? "text-muted" : undefined}>
                   {label as string}
                 </Sidebar.MenuLabel>
               </Sidebar.MenuItem>
@@ -1830,28 +1652,17 @@ function AgentHubContent() {
                 >
                   <HugeiconsIcon icon={MoreVerticalIcon} size={16} />
                 </Dropdown.Trigger>
-                <Dropdown.Popover
-                  className="w-48"
-                  offset={6}
-                  placement="right top"
-                >
+                <Dropdown.Popover className="w-48" offset={6} placement="right top">
                   <Dropdown.Menu aria-label="Workspaces section actions">
                     <Dropdown.Item id="show">Show</Dropdown.Item>
-                    <Dropdown.Item id="new-workspace">
-                      New workspace
-                    </Dropdown.Item>
-                    <Dropdown.Item id="open-library">
-                      Open in Library
-                    </Dropdown.Item>
+                    <Dropdown.Item id="new-workspace">New workspace</Dropdown.Item>
+                    <Dropdown.Item id="open-library">Open in Library</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown.Popover>
               </Dropdown>
             </span>
           </Sidebar.GroupLabel>
-          <Sidebar.Menu
-            aria-label="Workspaces"
-            defaultExpandedKeys={["agent-hub-ws-personal"]}
-          >
+          <Sidebar.Menu aria-label="Workspaces" defaultExpandedKeys={["agent-hub-ws-personal"]}>
             <Sidebar.MenuItem id="agent-hub-ws-personal" textValue="Personal">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={UserMultipleIcon} size={16} />
@@ -1900,11 +1711,7 @@ function AgentHubContent() {
               </Sidebar.MenuIcon>
               <Sidebar.MenuLabel>Docs</Sidebar.MenuLabel>
             </Sidebar.MenuItem>
-            <Sidebar.MenuItem
-              href="#"
-              id="agent-hub-app-calendar"
-              textValue="Calendar"
-            >
+            <Sidebar.MenuItem href="#" id="agent-hub-app-calendar" textValue="Calendar">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={Activity01Icon} size={16} />
               </Sidebar.MenuIcon>
@@ -1940,16 +1747,10 @@ function AgentHubContent() {
           <Dropdown>
             <Dropdown.Trigger className="hover:bg-default flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left outline-none">
               <Avatar size="sm">
-                <Avatar.Image
-                  alt="Junior Garcia"
-                  src="/assets/avatars/orange.jpg"
-                />
+                <Avatar.Image alt="Junior Garcia" src="/assets/avatars/orange.jpg" />
                 <Avatar.Fallback delayMs={600}>JG</Avatar.Fallback>
               </Avatar>
-              <span
-                className="text-foreground text-sm font-medium"
-                data-sidebar="label"
-              >
+              <span className="text-foreground text-sm font-medium" data-sidebar="label">
                 Junior
               </span>
               <HugeiconsIcon
@@ -1995,8 +1796,8 @@ function AgentHubDemo() {
         </div>
         <div className="p-6">
           <p className="text-muted">
-            Agent-focused sidebar for AI startups. Combines compact spacing,
-            workspaces, recent chats, and a user dropdown menu.
+            Agent-focused sidebar for AI startups. Combines compact spacing, workspaces, recent
+            chats, and a user dropdown menu.
           </p>
         </div>
       </Sidebar.Main>
@@ -2066,12 +1867,7 @@ function AgentWorkspaceDemo() {
                 </Kbd>
               </Sidebar.MenuChip>
             </Sidebar.MenuItem>
-            <Sidebar.MenuItem
-              href="#"
-              id="aw-marketplace"
-              isCurrent
-              textValue="Marketplace"
-            >
+            <Sidebar.MenuItem href="#" id="aw-marketplace" isCurrent textValue="Marketplace">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={Globe02Icon} size={16} />
               </Sidebar.MenuIcon>
@@ -2126,9 +1922,7 @@ function AgentWorkspaceDemo() {
                     <Sidebar.MenuLabel>{label}</Sidebar.MenuLabel>
                     {timeAgo ? (
                       <Sidebar.MenuChip>
-                        <span className="text-muted text-[10px] leading-none">
-                          {timeAgo}
-                        </span>
+                        <span className="text-muted text-[10px] leading-none">{timeAgo}</span>
                       </Sidebar.MenuChip>
                     ) : null}
                     <Sidebar.MenuActions className="ml-auto">
@@ -2150,15 +1944,9 @@ function AgentWorkspaceDemo() {
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={MoreVerticalIcon} size={16} />
                 </Sidebar.MenuIcon>
-                <Sidebar.MenuLabel className="text-muted">
-                  More
-                </Sidebar.MenuLabel>
+                <Sidebar.MenuLabel className="text-muted">More</Sidebar.MenuLabel>
               </Sidebar.MenuItem>
-              <Sidebar.MenuItem
-                href="#"
-                id="aw-open-workspace"
-                textValue="Open Workspace"
-              >
+              <Sidebar.MenuItem href="#" id="aw-open-workspace" textValue="Open Workspace">
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={FolderOpenIcon} size={16} />
                 </Sidebar.MenuIcon>
@@ -2171,19 +1959,14 @@ function AgentWorkspaceDemo() {
           <Dropdown>
             <Dropdown.Trigger className="hover:bg-default flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left outline-none">
               <Avatar size="sm">
-                <Avatar.Image
-                  alt="Alex Chen"
-                  src="/assets/avatars/blue-light.jpg"
-                />
+                <Avatar.Image alt="Alex Chen" src="/assets/avatars/blue-light.jpg" />
                 <Avatar.Fallback delayMs={600}>AC</Avatar.Fallback>
               </Avatar>
               <div className="flex min-w-0 flex-col" data-sidebar="label">
                 <span className="text-foreground truncate text-sm leading-tight font-medium">
                   Alex Chen
                 </span>
-                <span className="text-muted truncate text-xs leading-tight">
-                  Hero Labs
-                </span>
+                <span className="text-muted truncate text-xs leading-tight">Hero Labs</span>
               </div>
             </Dropdown.Trigger>
             <Dropdown.Popover placement="top start">
@@ -2214,8 +1997,8 @@ function AgentWorkspaceDemo() {
         </div>
         <div className="p-6">
           <p className="text-muted">
-            Workspace sidebar with agent tasks grouped by repository. Mirrors
-            the pattern used by AI coding tools.
+            Workspace sidebar with agent tasks grouped by repository. Mirrors the pattern used by AI
+            coding tools.
           </p>
         </div>
       </Sidebar.Main>

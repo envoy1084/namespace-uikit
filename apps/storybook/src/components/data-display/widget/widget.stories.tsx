@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
 import { AreaChart } from "@thenamespace/uikit/area-chart";
 import { BarChart } from "@thenamespace/uikit/bar-chart";
 import { KPI } from "@thenamespace/uikit/kpi";
@@ -20,43 +19,21 @@ const meta = {
 } satisfies Meta<typeof Widget>;
 export default meta;
 type Story = StoryObj<typeof meta>;
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const revenue = months.map((month, index) => ({
   month,
-  revenue: [
-    4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500,
-  ][index],
+  revenue: [4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500][index],
 }));
 const traffic = months.map((month, index) => ({
   month,
-  organic: [
-    2000, 15000, 8000, 14000, 15000, 8000, 18000, 18000, 20000, 17000, 22000,
-    15000,
-  ][index],
-  paidAds: [
-    1000, 10000, 12000, 14000, 8000, 9000, 12000, 10000, 5000, 12000, 18000,
-    9000,
-  ][index],
+  organic: [2000, 15000, 8000, 14000, 15000, 8000, 18000, 18000, 20000, 17000, 22000, 15000][index],
+  paidAds: [1000, 10000, 12000, 14000, 8000, 9000, 12000, 10000, 5000, 12000, 18000, 9000][index],
 }));
 const requests = Array.from({ length: 30 }, (_, index) => ({
   date: `2025-09-${String(index + 1).padStart(2, "0")}`,
   requests: [
-    680, 1150, 1470, 1130, 560, 470, 960, 1200, 1120, 1060, 780, 930, 950, 1050,
-    1740, 940, 1570, 1250, 930, 1280, 1180, 1320, 950, 980, 680, 510, 960, 860,
-    630, 380,
+    680, 1150, 1470, 1130, 560, 470, 960, 1200, 1120, 1060, 780, 930, 950, 1050, 1740, 940, 1570,
+    1250, 930, 1280, 1180, 1320, 950, 980, 680, 510, 960, 860, 630, 380,
   ][index],
 }));
 const sparksUp = [
@@ -157,11 +134,7 @@ export const WithBarChart: Story = {
           />
           <BarChart.YAxis width={40} />
           <BarChart.Tooltip content={<BarChart.TooltipContent />} />
-          <BarChart.Bar
-            dataKey="requests"
-            fill="var(--chart-3)"
-            radius={[2, 2, 0, 0]}
-          />
+          <BarChart.Bar dataKey="requests" fill="var(--chart-3)" radius={[2, 2, 0, 0]} />
         </BarChart>
       </Widget.Content>
     </Widget>
@@ -215,12 +188,7 @@ const browsers = [
   { name: "Firefox", value: 10 },
   { name: "Edge", value: 9 },
 ];
-const colors = [
-  "var(--chart-4)",
-  "var(--chart-3)",
-  "var(--chart-2)",
-  "var(--chart-1)",
-];
+const colors = ["var(--chart-4)", "var(--chart-3)", "var(--chart-2)", "var(--chart-1)"];
 export const WithPieChart: Story = {
   render: () => (
     <Widget className="w-full max-w-[360px]">
@@ -278,9 +246,7 @@ function SparkMetric({
           {value}
           <TrendChip trend={trend} variant="tertiary">
             {trend === "up" ? "3.3%" : "5.9%"}
-            <TrendChip.Suffix>
-              {trend === "up" ? "last 30d" : "vs last 7d"}
-            </TrendChip.Suffix>
+            <TrendChip.Suffix>{trend === "up" ? "last 30d" : "vs last 7d"}</TrendChip.Suffix>
           </TrendChip>
         </div>
         <KPI.Chart color={color} data={data} height={60} strokeWidth={1.5} />
@@ -295,9 +261,7 @@ export const WithKPIs: Story = {
       <Widget.Header>
         <div>
           <Widget.Title>Key Metrics</Widget.Title>
-          <Widget.Description className="block">
-            Last 30 days
-          </Widget.Description>
+          <Widget.Description className="block">Last 30 days</Widget.Description>
         </div>
       </Widget.Header>
       <Widget.Content>
@@ -390,9 +354,7 @@ export const WithTable: Story = {
               <Table.Body>
                 {members.map((member, index) => (
                   <Table.Row
-                    className={
-                      index === members.length - 1 ? "[&_td]:border-b-0" : ""
-                    }
+                    className={index === members.length - 1 ? "[&_td]:border-b-0" : ""}
                     key={member.email}
                   >
                     <Table.Cell>{member.name}</Table.Cell>
@@ -438,9 +400,7 @@ export const UsageSummary: Story = {
               <Table.Body>
                 {usage.map((item, index) => (
                   <Table.Row
-                    className={
-                      index === usage.length - 1 ? "[&_td]:border-b-0" : ""
-                    }
+                    className={index === usage.length - 1 ? "[&_td]:border-b-0" : ""}
                     key={item.label}
                   >
                     <Table.Cell>
@@ -456,15 +416,11 @@ export const UsageSummary: Story = {
                             <ProgressCircle.FillCircle />
                           </ProgressCircle.Track>
                         </ProgressCircle>
-                        <span className="text-foreground text-sm font-medium">
-                          {item.label}
-                        </span>
+                        <span className="text-foreground text-sm font-medium">{item.label}</span>
                       </div>
                     </Table.Cell>
                     <Table.Cell>
-                      <span className="text-foreground text-sm font-semibold">
-                        {item.amount}
-                      </span>
+                      <span className="text-foreground text-sm font-semibold">{item.amount}</span>
                     </Table.Cell>
                   </Table.Row>
                 ))}
@@ -498,9 +454,7 @@ export const DashboardGrid: Story = {
             <div className="flex flex-col gap-1" key={item.title}>
               <span className="text-muted text-xs">{item.title}</span>
               <div className="flex items-center gap-2">
-                <span className="text-foreground text-xl font-semibold">
-                  {item.value}
-                </span>
+                <span className="text-foreground text-xl font-semibold">{item.value}</span>
                 <TrendChip trend={item.trend as "down" | "up"} variant="soft">
                   {item.change}
                 </TrendChip>
@@ -534,9 +488,7 @@ export const DashboardGrid: Story = {
         <Widget.Header>
           <Widget.Title>Traffic</Widget.Title>
           <Widget.Legend>
-            <Widget.LegendItem color="var(--chart-3)">
-              Organic
-            </Widget.LegendItem>
+            <Widget.LegendItem color="var(--chart-3)">Organic</Widget.LegendItem>
             <Widget.LegendItem color="var(--chart-1)">Paid</Widget.LegendItem>
           </Widget.Legend>
         </Widget.Header>
@@ -545,16 +497,8 @@ export const DashboardGrid: Story = {
             <LineChart.Grid vertical={false} />
             <LineChart.XAxis dataKey="month" />
             <LineChart.YAxis width={30} />
-            <LineChart.Line
-              dataKey="organic"
-              dot={false}
-              stroke="var(--chart-3)"
-            />
-            <LineChart.Line
-              dataKey="paidAds"
-              dot={false}
-              stroke="var(--chart-1)"
-            />
+            <LineChart.Line dataKey="organic" dot={false} stroke="var(--chart-3)" />
+            <LineChart.Line dataKey="paidAds" dot={false} stroke="var(--chart-1)" />
           </LineChart>
         </Widget.Content>
       </Widget>

@@ -28,9 +28,7 @@ export function LanguageToggle(props: LanguageSelectProps): React.ReactElement {
       </Button>
       <Dropdown.Popover>
         <Dropdown.Menu
-          selectedKeys={
-            context.locale ? new Set([context.locale]) : new Set<string>()
-          }
+          selectedKeys={context.locale ? new Set([context.locale]) : new Set<string>()}
           selectionMode="single"
           onSelectionChange={(keys) => {
             if (keys === "all") return;
@@ -44,11 +42,7 @@ export function LanguageToggle(props: LanguageSelectProps): React.ReactElement {
           <Dropdown.Section>
             <Header>{context.text.chooseLanguage}</Header>
             {context.locales.map((item) => (
-              <Dropdown.Item
-                key={item.locale}
-                id={item.locale}
-                textValue={item.name}
-              >
+              <Dropdown.Item key={item.locale} id={item.locale} textValue={item.name}>
                 <Dropdown.ItemIndicator />
                 <Label>{item.name}</Label>
               </Dropdown.Item>
@@ -62,9 +56,7 @@ export function LanguageToggle(props: LanguageSelectProps): React.ReactElement {
 
 export function LanguageToggleText(props: ComponentProps<"span">) {
   const context = useI18n();
-  const text = context.locales?.find(
-    (item) => item.locale === context.locale,
-  )?.name;
+  const text = context.locales?.find((item) => item.locale === context.locale)?.name;
 
   return <span {...props}>{text}</span>;
 }

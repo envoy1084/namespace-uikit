@@ -33,9 +33,7 @@ function Contents({ minimal = false }: { minimal?: boolean }) {
           <Icon icon="lucide:search" />
         </Command.InputGroup.Prefix>
         <Command.InputGroup.Input
-          placeholder={
-            minimal ? "What do you need?" : "Type a command or search..."
-          }
+          placeholder={minimal ? "What do you need?" : "Type a command or search..."}
         />
         <Command.InputGroup.ClearButton />
         <Command.InputGroup.Suffix>
@@ -76,9 +74,7 @@ function Contents({ minimal = false }: { minimal?: boolean }) {
 }
 
 function Backdrops() {
-  const [variant, setVariant] = useState<"transparent" | "opaque" | "blur">(
-    "opaque",
-  );
+  const [variant, setVariant] = useState<"transparent" | "opaque" | "blur">("opaque");
   const [open, setOpen] = useState(false);
   return (
     <div className="flex gap-2">
@@ -95,11 +91,7 @@ function Backdrops() {
         </Button>
       ))}
       <Command>
-        <Command.Backdrop
-          isOpen={open}
-          variant={variant}
-          onOpenChange={setOpen}
-        >
+        <Command.Backdrop isOpen={open} variant={variant} onOpenChange={setOpen}>
           <Command.Container>
             <Command.Dialog>
               <Contents />

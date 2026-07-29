@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useCallback, useEffect, useRef, useState } from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import {
   ChainOfThought,
@@ -79,8 +79,7 @@ function MessageView({
             <ChainOfThought.Content>
               <ChainOfThought.Steps>
                 <ChainOfThought.Step label="Check scroll behavior">
-                  Verified the viewport remains pinned while the assistant
-                  streams.
+                  Verified the viewport remains pinned while the assistant streams.
                 </ChainOfThought.Step>
                 <ChainOfThought.Step label="Compose response">
                   Added reasoning UI inline with the assistant message body.
@@ -92,10 +91,7 @@ function MessageView({
         {showActions ? (
           <ChatMessageActions>
             <ChatMessageActions.Copy aria-label="Copy" tooltip="Copy" />
-            <ChatMessageActions.Regenerate
-              aria-label="Regenerate"
-              tooltip="Regenerate"
-            />
+            <ChatMessageActions.Regenerate aria-label="Regenerate" tooltip="Regenerate" />
           </ChatMessageActions>
         ) : null}
       </ChatMessage.Body>
@@ -148,9 +144,7 @@ const initialFullChatMessages: Message[] = [
 function FullChatDemo() {
   const [currentMessages, setMessages] = useState(initialFullChatMessages);
   const [value, setValue] = useState("");
-  const [status, setStatus] = useState<"ready" | "streaming" | "submitted">(
-    "ready",
-  );
+  const [status, setStatus] = useState<"ready" | "streaming" | "submitted">("ready");
   const timers = useRef<number[]>([]);
   const clearTimers = useCallback(() => {
     timers.current.forEach((timer) => window.clearTimeout(timer));
@@ -166,10 +160,7 @@ function FullChatDemo() {
   const submit = () => {
     const text = value.trim();
     if (!text || status !== "ready") return;
-    setMessages((current) => [
-      ...current,
-      { id: String(Date.now()), role: "user", text },
-    ]);
+    setMessages((current) => [...current, { id: String(Date.now()), role: "user", text }]);
     setValue("");
     setStatus("submitted");
     clearTimers();
@@ -220,9 +211,7 @@ function FullChatDemo() {
               </PromptInput.ToolbarEnd>
             </PromptInput.Toolbar>
           </PromptInput.Shell>
-          <PromptInput.Footer>
-            AI can make mistakes. Check important info.
-          </PromptInput.Footer>
+          <PromptInput.Footer>AI can make mistakes. Check important info.</PromptInput.Footer>
         </PromptInput>
       </div>
     </div>
@@ -278,10 +267,7 @@ function WithScrollButtonDemo() {
       const conversation = conversationRef.current;
       conversation?.scrollTo({
         behavior: "auto",
-        top: Math.max(
-          0,
-          conversation.scrollHeight - conversation.clientHeight - 160,
-        ),
+        top: Math.max(0, conversation.scrollHeight - conversation.clientHeight - 160),
       });
     });
     return () => window.cancelAnimationFrame(frame);
@@ -289,20 +275,13 @@ function WithScrollButtonDemo() {
 
   return (
     <div className="flex h-[520px] w-[640px] flex-col overflow-hidden">
-      <ChatConversation
-        ref={conversationRef}
-        className="flex-1"
-        initial="instant"
-      >
+      <ChatConversation ref={conversationRef} className="flex-1" initial="instant">
         <ChatConversation.Content className="max-w-[714px] flex-col gap-8 px-4 pt-8 pb-8">
           {scrollMessages.map((message) => (
             <MessageView key={message.id} message={message} />
           ))}
         </ChatConversation.Content>
-        <ChatConversation.ScrollButton
-          aria-label="Scroll to bottom"
-          tooltip="Scroll to bottom"
-        />
+        <ChatConversation.ScrollButton aria-label="Scroll to bottom" tooltip="Scroll to bottom" />
       </ChatConversation>
     </div>
   );

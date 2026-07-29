@@ -22,18 +22,9 @@ export const Default: Story = {
       </ChatMessage.Content>
       <ChatMessageActions>
         <ChatMessageActions.Copy aria-label="Copy" tooltip="Copy" />
-        <ChatMessageActions.ThumbsUp
-          aria-label="Good response"
-          tooltip="Good response"
-        />
-        <ChatMessageActions.ThumbsDown
-          aria-label="Bad response"
-          tooltip="Bad response"
-        />
-        <ChatMessageActions.Regenerate
-          aria-label="Regenerate"
-          tooltip="Regenerate"
-        />
+        <ChatMessageActions.ThumbsUp aria-label="Good response" tooltip="Good response" />
+        <ChatMessageActions.ThumbsDown aria-label="Bad response" tooltip="Bad response" />
+        <ChatMessageActions.Regenerate aria-label="Regenerate" tooltip="Regenerate" />
         <ChatMessageActions.Menu aria-label="More actions" tooltip="More" />
       </ChatMessageActions>
     </Assistant>
@@ -42,9 +33,7 @@ export const Default: Story = {
 export const Minimal: Story = {
   render: () => (
     <Assistant>
-      <ChatMessage.Content>
-        Minimal action set for compact layouts.
-      </ChatMessage.Content>
+      <ChatMessage.Content>Minimal action set for compact layouts.</ChatMessage.Content>
       <ChatMessageActions>
         <ChatMessageActions.Copy aria-label="Copy" tooltip="Copy" />
         <ChatMessageActions.Menu aria-label="More actions" tooltip="More" />
@@ -56,19 +45,14 @@ export const CustomIcons: Story = {
   name: "Custom Icons",
   render: () => (
     <Assistant>
-      <ChatMessage.Content>
-        Swap preset icons via the Icon subcomponents.
-      </ChatMessage.Content>
+      <ChatMessage.Content>Swap preset icons via the Icon subcomponents.</ChatMessage.Content>
       <ChatMessageActions>
         <ChatMessageActions.Copy aria-label="Copy" tooltip="Copy">
           <ChatMessageActions.CopyIcon>
             <span className="text-accent size-4">C</span>
           </ChatMessageActions.CopyIcon>
         </ChatMessageActions.Copy>
-        <ChatMessageActions.ThumbsUp
-          aria-label="Good response"
-          tooltip="Good response"
-        >
+        <ChatMessageActions.ThumbsUp aria-label="Good response" tooltip="Good response">
           <ChatMessageActions.ThumbsUpIcon>
             <span className="text-success size-4">★</span>
           </ChatMessageActions.ThumbsUpIcon>

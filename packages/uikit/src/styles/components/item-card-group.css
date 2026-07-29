@@ -18,8 +18,7 @@
   .item-card-group--tertiary {
     background-color: var(--surface-tertiary);
   }
-  :is(.item-card-group--secondary, .item-card-group--tertiary)
-    [data-slot="separator"] {
+  :is(.item-card-group--secondary, .item-card-group--tertiary) [data-slot="separator"] {
     background-color: color-mix(in oklab, var(--muted) 10%, transparent);
   }
   :is(.item-card-group--secondary, .item-card-group--tertiary)
@@ -62,10 +61,7 @@
     box-shadow: none;
     display: grid;
     gap: 0.75rem;
-    grid-template-columns: repeat(
-      var(--item-card-group-columns),
-      minmax(0, 1fr)
-    );
+    grid-template-columns: repeat(var(--item-card-group-columns), minmax(0, 1fr));
   }
   .item-card-group--grid .item-card-group__header {
     padding: 0;

@@ -4,19 +4,12 @@
 import { ComposedChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 
-function Legend({
-  items,
-}: {
-  items: ReadonlyArray<{ color: string; label: string }>;
-}) {
+function Legend({ items }: { items: ReadonlyArray<{ color: string; label: string }> }) {
   return (
     <div className="flex items-center gap-3">
       {items.map(({ color, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
-          <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: color }}
-          />
+          <span className="size-3 rounded-full" style={{ backgroundColor: color }} />
           <span className="text-muted text-xs">{label}</span>
         </div>
       ))}
@@ -41,10 +34,9 @@ const defaultData = [
 
 const impressions = defaultData.map((item, index) => ({
   ctr: [3.2, 3.8, 3.5, 4.2, 4, 4.8, 4.5, 5.1, 4.9, 5.5, 5.2, 5.8][index]!,
-  impressions: [
-    45000, 52000, 48000, 61000, 58000, 72000, 68000, 78000, 75000, 85000, 82000,
-    92000,
-  ][index]!,
+  impressions: [45000, 52000, 48000, 61000, 58000, 72000, 68000, 78000, 75000, 85000, 82000, 92000][
+    index
+  ]!,
   month: item.month,
 }));
 

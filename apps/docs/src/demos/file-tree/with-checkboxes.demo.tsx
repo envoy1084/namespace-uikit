@@ -52,9 +52,7 @@ interface IncludedNode extends ProjectNode {
 }
 
 function WithCheckboxesDemo() {
-  const [selectedKeys, setSelectedKeys] = useState<Selection>(
-    new Set(["root"]),
-  );
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(["root"]));
   const nodes: IncludedNode[] = [
     { id: "cursor-check", name: ".cursor", included: 5 },
     { id: "github-check", name: ".github" },

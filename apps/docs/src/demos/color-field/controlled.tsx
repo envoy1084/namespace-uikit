@@ -1,9 +1,8 @@
 "use client";
 
-import type { Color } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Color } from "@thenamespace/uikit";
 import {
   Button,
   ColorField,
@@ -18,12 +17,7 @@ export function Controlled() {
 
   return (
     <div className="flex flex-col gap-4">
-      <ColorField
-        className="w-[280px]"
-        name="color"
-        value={value}
-        onChange={setValue}
-      >
+      <ColorField className="w-[280px]" name="color" value={value} onChange={setValue}>
         <Label>Color</Label>
         <ColorField.Group>
           <ColorField.Prefix>
@@ -31,21 +25,13 @@ export function Controlled() {
           </ColorField.Prefix>
           <ColorField.Input />
         </ColorField.Group>
-        <Description>
-          Current value: {value ? value.toString("hex") : "(empty)"}
-        </Description>
+        <Description>Current value: {value ? value.toString("hex") : "(empty)"}</Description>
       </ColorField>
       <div className="flex gap-2">
-        <Button
-          variant="tertiary"
-          onPress={() => setValue(parseColor("#EF4444"))}
-        >
+        <Button variant="tertiary" onPress={() => setValue(parseColor("#EF4444"))}>
           Set Red
         </Button>
-        <Button
-          variant="tertiary"
-          onPress={() => setValue(parseColor("#10B981"))}
-        >
+        <Button variant="tertiary" onPress={() => setValue(parseColor("#10B981"))}>
           Set Green
         </Button>
         <Button variant="tertiary" onPress={() => setValue(null)}>

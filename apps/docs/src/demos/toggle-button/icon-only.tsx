@@ -1,9 +1,5 @@
 import { ToggleButton } from "@thenamespace/uikit";
-import {
-  Bookmark01Icon,
-  FavouriteIcon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import { Bookmark01Icon, FavouriteIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function IconOnly() {
   return (

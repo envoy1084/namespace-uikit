@@ -338,13 +338,7 @@
     ". header header header ."
     ". sidebar toc-popover toc-popover ."
     ". sidebar main toc ." 1fr / minmax(min-content, 1fr) var(--fd-sidebar-col)
-    minmax(
-      0,
-      calc(
-        var(--fd-layout-width, 97rem) - var(--fd-sidebar-col) -
-          var(--fd-toc-width)
-      )
-    )
+    minmax(0, calc(var(--fd-layout-width, 97rem) - var(--fd-sidebar-col) - var(--fd-toc-width)))
     var(--fd-toc-width) minmax(min-content, 1fr) !important;
 }
 
@@ -678,12 +672,7 @@ code {
 }
 
 @utility mask-to-t {
-  mask: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.8) 50%,
-    rgba(0, 0, 0, 1) 100%
-  );
+  mask: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 1) 100%);
 }
 
 @utility mask-to-bottom {

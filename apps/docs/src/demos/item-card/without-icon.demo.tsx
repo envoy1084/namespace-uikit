@@ -9,9 +9,7 @@ export const DemoWithoutIconExample = () => (
     <ItemCard>
       <ItemCard.Content>
         <ItemCard.Title>Delete account</ItemCard.Title>
-        <ItemCard.Description>
-          Permanently remove your account and all data
-        </ItemCard.Description>
+        <ItemCard.Description>Permanently remove your account and all data</ItemCard.Description>
       </ItemCard.Content>
       <ItemCard.Action>
         <Button size="sm" variant="danger-soft">

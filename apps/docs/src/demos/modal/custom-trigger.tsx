@@ -27,9 +27,8 @@ export function CustomTrigger() {
             </Modal.Header>
             <Modal.Body>
               <p>
-                Use <code>Modal.Trigger</code> to create custom trigger elements
-                beyond standard buttons. This example shows a card-style trigger
-                with icons and descriptive text.
+                Use <code>Modal.Trigger</code> to create custom trigger elements beyond standard
+                buttons. This example shows a card-style trigger with icons and descriptive text.
               </p>
             </Modal.Body>
             <Modal.Footer>

@@ -1,11 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
-import {
-  CheckmarkCircle02Icon,
-  Loading03Icon,
-} from "@thenamespace/uikit/icons";
+import type { Meta, StoryObj } from "@storybook/react";
+import { CheckmarkCircle02Icon, Loading03Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Button } from "@/components/buttons/button";
@@ -37,8 +33,7 @@ const formatSize = (size: number) =>
     : size < 1024 * 1024
       ? `${(size / 1024).toFixed(0)} KB`
       : `${(size / (1024 * 1024)).toFixed(1)} MB`;
-const extension = (name: string) =>
-  name.split(".").pop()?.toUpperCase() ?? "FILE";
+const extension = (name: string) => name.split(".").pop()?.toUpperCase() ?? "FILE";
 const colorFor = (format: string) =>
   ({
     PDF: "red",
@@ -65,15 +60,7 @@ function FileList({
         return (
           <DropZone.FileItem key={file.id} status={file.status}>
             <DropZone.FileFormatIcon
-              color={
-                colorFor(format) as
-                  | "blue"
-                  | "gray"
-                  | "green"
-                  | "orange"
-                  | "purple"
-                  | "red"
-              }
+              color={colorFor(format) as "blue" | "gray" | "green" | "orange" | "purple" | "red"}
               format={format}
             />
             <DropZone.FileInfo>
@@ -90,11 +77,7 @@ function FileList({
                         ? "text-success inline size-3 align-[-1px]"
                         : "inline size-3 animate-spin align-[-1px]"
                     }
-                    icon={
-                      file.status === "complete"
-                        ? CheckmarkCircle02Icon
-                        : Loading03Icon
-                    }
+                    icon={file.status === "complete" ? CheckmarkCircle02Icon : Loading03Icon}
                     size={12}
                   />{" "}
                   {file.status === "uploading" ? file.progress : 100}%
@@ -108,9 +91,7 @@ function FileList({
                 </DropZone.FileProgress>
               ) : (
                 <>
-                  <DropZone.FileMeta>
-                    Something went wrong, please retry
-                  </DropZone.FileMeta>
+                  <DropZone.FileMeta>Something went wrong, please retry</DropZone.FileMeta>
                   <Button
                     className="mt-2 -ml-1"
                     size="sm"
@@ -159,26 +140,18 @@ function UploadDemo({
       <DropZone.Area>
         <DropZone.Icon />
         <DropZone.Label>{label}</DropZone.Label>
-        <DropZone.Description>
-          Supports JPEG, PNG, PDF, and MP4 up to 50 MB.
-        </DropZone.Description>
-        <DropZone.Trigger>
-          {multiple ? "Choose Files" : "Select File"}
-        </DropZone.Trigger>
+        <DropZone.Description>Supports JPEG, PNG, PDF, and MP4 up to 50 MB.</DropZone.Description>
+        <DropZone.Trigger>{multiple ? "Choose Files" : "Select File"}</DropZone.Trigger>
       </DropZone.Area>
       <DropZone.Input accept={accept} multiple={multiple} onSelect={add} />
       {files.length ? (
         <FileList
           files={files}
-          onRemove={(id) =>
-            setFiles((all) => all.filter((file) => file.id !== id))
-          }
+          onRemove={(id) => setFiles((all) => all.filter((file) => file.id !== id))}
           onRetry={(id) =>
             setFiles((all) =>
               all.map((file) =>
-                file.id === id
-                  ? { ...file, progress: 0, status: "uploading" }
-                  : file,
+                file.id === id ? { ...file, progress: 0, status: "uploading" } : file,
               ),
             )
           }
@@ -230,15 +203,11 @@ export const WithFileList: Story = {
         <DropZone.Input multiple />
         <FileList
           files={files}
-          onRemove={(id) =>
-            setFiles((all) => all.filter((file) => file.id !== id))
-          }
+          onRemove={(id) => setFiles((all) => all.filter((file) => file.id !== id))}
           onRetry={(id) =>
             setFiles((all) =>
               all.map((file) =>
-                file.id === id
-                  ? { ...file, progress: 0, status: "uploading" }
-                  : file,
+                file.id === id ? { ...file, progress: 0, status: "uploading" } : file,
               ),
             )
           }
@@ -253,13 +222,9 @@ export const ImageOnly: Story = {
     <DropZone className="w-[420px]">
       <DropZone.Area
         getDropOperation={(types) =>
-          [
-            "image/jpeg",
-            "image/png",
-            "image/gif",
-            "image/webp",
-            "image/svg+xml",
-          ].some((type) => types.has(type))
+          ["image/jpeg", "image/png", "image/gif", "image/webp", "image/svg+xml"].some((type) =>
+            types.has(type),
+          )
             ? "copy"
             : "cancel"
         }
@@ -268,9 +233,7 @@ export const ImageOnly: Story = {
           <Icon icon="solar:gallery-outline" />
         </DropZone.Icon>
         <DropZone.Label>Drop your images here</DropZone.Label>
-        <DropZone.Description>
-          Accepts PNG, JPG, GIF, WebP, and SVG.
-        </DropZone.Description>
+        <DropZone.Description>Accepts PNG, JPG, GIF, WebP, and SVG.</DropZone.Description>
         <DropZone.Trigger>Select Images</DropZone.Trigger>
       </DropZone.Area>
       <DropZone.Input accept="image/*" />
@@ -294,9 +257,7 @@ export const MaxSizeLimit: Story = {
         <DropZone.Input
           multiple
           onSelect={(files) => {
-            const rejected = Array.from(files).filter(
-              (file) => file.size > 5 * 1024 * 1024,
-            );
+            const rejected = Array.from(files).filter((file) => file.size > 5 * 1024 * 1024);
             setError(
               rejected.length
                 ? `Rejected (over 5 MB): ${rejected.map((file) => file.name).join(", ")}`
@@ -316,9 +277,7 @@ export const Disabled: Story = {
       <DropZone.Area isDisabled>
         <DropZone.Icon />
         <DropZone.Label>File upload unavailable</DropZone.Label>
-        <DropZone.Description>
-          Uploads are temporarily disabled.
-        </DropZone.Description>
+        <DropZone.Description>Uploads are temporarily disabled.</DropZone.Description>
         <DropZone.Trigger isDisabled>Select File</DropZone.Trigger>
       </DropZone.Area>
       <DropZone.Input />
@@ -337,9 +296,7 @@ export const CompactFileList: Story = {
       <DropZone className="w-[480px]">
         <FileList
           files={files}
-          onRemove={(id) =>
-            setFiles((all) => all.filter((file) => file.id !== id))
-          }
+          onRemove={(id) => setFiles((all) => all.filter((file) => file.id !== id))}
         />
       </DropZone>
     );
@@ -354,9 +311,7 @@ export const CustomIcon: Story = {
           <Icon icon="solar:gallery-outline" />
         </DropZone.Icon>
         <DropZone.Label>Set your profile photo</DropZone.Label>
-        <DropZone.Description>
-          PNG or JPG under 2 MB. Best at 400 x 400 px.
-        </DropZone.Description>
+        <DropZone.Description>PNG or JPG under 2 MB. Best at 400 x 400 px.</DropZone.Description>
         <DropZone.Trigger>Pick Image</DropZone.Trigger>
       </DropZone.Area>
       <DropZone.Input accept="image/png,image/jpeg" />
@@ -384,9 +339,7 @@ export const CustomTriggers: Story = {
       <DropZone.Area>
         <DropZone.Icon />
         <DropZone.Label>Drag files here to get started</DropZone.Label>
-        <DropZone.Description>
-          PDF, DOCX, or TXT up to 25 MB.
-        </DropZone.Description>
+        <DropZone.Description>PDF, DOCX, or TXT up to 25 MB.</DropZone.Description>
         <CustomButtons />
       </DropZone.Area>
       <DropZone.Input multiple />

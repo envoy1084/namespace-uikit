@@ -22,8 +22,8 @@ function NestedDemo() {
             </Sheet.Header>
             <Sheet.Body className="flex flex-col justify-between pb-4">
               <p className="text-muted mb-4 text-sm">
-                This is the parent sheet. Open a nested sheet from here — the
-                parent will scale down and the child slides on top.
+                This is the parent sheet. Open a nested sheet from here — the parent will scale down
+                and the child slides on top.
               </p>
               <Sheet.NestedRoot>
                 <Sheet.Trigger>
@@ -41,9 +41,8 @@ function NestedDemo() {
                       </Sheet.Header>
                       <Sheet.Body>
                         <p className="text-muted mb-4 text-sm">
-                          This is a nested sheet that sits on top of the parent.
-                          Drag it down to dismiss and return to the parent
-                          sheet.
+                          This is a nested sheet that sits on top of the parent. Drag it down to
+                          dismiss and return to the parent sheet.
                         </p>
                         <Sheet.NestedRoot>
                           <Sheet.Trigger>
@@ -61,9 +60,8 @@ function NestedDemo() {
                                 </Sheet.Header>
                                 <Sheet.Body>
                                   <p className="text-muted text-sm">
-                                    Three levels deep! Each parent sheet scales
-                                    down as the next one opens, creating a
-                                    stacking effect.
+                                    Three levels deep! Each parent sheet scales down as the next one
+                                    opens, creating a stacking effect.
                                   </p>
                                 </Sheet.Body>
                                 <Sheet.Footer>

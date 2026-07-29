@@ -83,9 +83,7 @@ export function CustomAnimations() {
                   <AlertDialog.CloseTrigger />
                   <AlertDialog.Header>
                     <AlertDialog.Icon status="accent">
-                      {iconData ? (
-                        <HugeiconsIcon className="size-5" icon={iconData} />
-                      ) : null}
+                      {iconData ? <HugeiconsIcon className="size-5" icon={iconData} /> : null}
                     </AlertDialog.Icon>
                     <AlertDialog.Heading>{name} Animation</AlertDialog.Heading>
                   </AlertDialog.Header>

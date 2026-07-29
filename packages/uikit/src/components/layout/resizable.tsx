@@ -1,5 +1,9 @@
 "use client";
 
+import type { ReactElement, ReactNode, Ref } from "react";
+import { createContext, useCallback, useContext, useRef } from "react";
+
+import { cn } from "@heroui/react";
 import type {
   GroupImperativeHandle,
   GroupProps,
@@ -8,17 +12,7 @@ import type {
   PanelProps,
   SeparatorProps,
 } from "react-resizable-panels";
-
-import type { ReactElement, ReactNode, Ref } from "react";
-import { createContext, useCallback, useContext, useRef } from "react";
-
-import { cn } from "@heroui/react";
-import {
-  Group,
-  Panel,
-  Separator,
-  useDefaultLayout,
-} from "react-resizable-panels";
+import { Group, Panel, Separator, useDefaultLayout } from "react-resizable-panels";
 
 type Orientation = "horizontal" | "vertical";
 type HandleType = "drag" | "handle" | "line" | "pill";
@@ -27,10 +21,7 @@ type Variant = "primary" | "secondary" | "tertiary";
 const Context = createContext<Orientation | null>(null);
 function useOrientation(): Orientation {
   const value = useContext(Context);
-  if (!value)
-    throw new Error(
-      "Resizable subcomponents must be rendered inside <Resizable>.",
-    );
+  if (!value) throw new Error("Resizable subcomponents must be rendered inside <Resizable>.");
   return value;
 }
 
@@ -86,9 +77,7 @@ function ResizableRoot({
     <Context value={orientation}>
       <Group
         {...props}
-        className={
-          cn("resizable", `resizable--${orientation}`, className) ?? ""
-        }
+        className={cn("resizable", `resizable--${orientation}`, className) ?? ""}
         data-slot="resizable"
         groupRef={handleRef}
         id={id}
@@ -98,9 +87,7 @@ function ResizableRoot({
           ? { defaultLayout: persistence.defaultLayout }
           : {})}
         {...(onLayoutChange ? { onLayoutChange } : {})}
-        {...(autoSaveId
-          ? { onLayoutChanged: persistence.onLayoutChanged }
-          : {})}
+        {...(autoSaveId ? { onLayoutChanged: persistence.onLayoutChanged } : {})}
       >
         {children}
       </Group>
@@ -109,11 +96,7 @@ function ResizableRoot({
 }
 
 function toSize(value: number | string | undefined): string | undefined {
-  return value == null
-    ? undefined
-    : typeof value === "number"
-      ? `${value}%`
-      : value;
+  return value == null ? undefined : typeof value === "number" ? `${value}%` : value;
 }
 
 export interface ResizablePanelProps extends Omit<
@@ -175,12 +158,8 @@ function ResizablePanel({
       className={cn("resizable__panel", className) ?? ""}
       collapsible={collapsible}
       data-slot="resizable-panel"
-      {...(collapsedSize !== undefined
-        ? { collapsedSize: toSize(collapsedSize) }
-        : {})}
-      {...(defaultSize !== undefined
-        ? { defaultSize: toSize(defaultSize) }
-        : {})}
+      {...(collapsedSize !== undefined ? { collapsedSize: toSize(collapsedSize) } : {})}
+      {...(defaultSize !== undefined ? { defaultSize: toSize(defaultSize) } : {})}
       {...(maxSize !== undefined ? { maxSize: toSize(maxSize) } : {})}
       {...(minSize !== undefined ? { minSize: toSize(minSize) } : {})}
       {...(watchCollapse
@@ -281,9 +260,7 @@ function ResizableHandle({
       data-variant={variant}
     >
       {children}
-      {showIndicator ? (
-        <ResizableIndicator type={type === "drag" ? "drag" : "pill"} />
-      ) : null}
+      {showIndicator ? <ResizableIndicator type={type === "drag" ? "drag" : "pill"} /> : null}
     </Separator>
   );
 }

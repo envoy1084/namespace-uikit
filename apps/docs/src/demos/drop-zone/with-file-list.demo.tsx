@@ -5,10 +5,7 @@ import { useState } from "react";
 
 import { DropZone } from "@thenamespace/uikit";
 import { Button } from "@thenamespace/uikit/button";
-import {
-  CheckmarkCircle02Icon,
-  Loading03Icon,
-} from "@thenamespace/uikit/icons";
+import { CheckmarkCircle02Icon, Loading03Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 import { Icon } from "@/demos/icon";
@@ -28,8 +25,7 @@ const formatSize = (size: number) =>
       ? `${(size / 1024).toFixed(0)} KB`
       : `${(size / (1024 * 1024)).toFixed(1)} MB`;
 
-const extension = (name: string) =>
-  name.split(".").pop()?.toUpperCase() ?? "FILE";
+const extension = (name: string) => name.split(".").pop()?.toUpperCase() ?? "FILE";
 
 const colorFor = (format: string) =>
   ({
@@ -57,15 +53,7 @@ function FileList({
         return (
           <DropZone.FileItem key={file.id} status={file.status}>
             <DropZone.FileFormatIcon
-              color={
-                colorFor(format) as
-                  | "blue"
-                  | "gray"
-                  | "green"
-                  | "orange"
-                  | "purple"
-                  | "red"
-              }
+              color={colorFor(format) as "blue" | "gray" | "green" | "orange" | "purple" | "red"}
               format={format}
             />
             <DropZone.FileInfo>
@@ -82,11 +70,7 @@ function FileList({
                         ? "text-success inline size-3 align-[-1px]"
                         : "inline size-3 animate-spin align-[-1px]"
                     }
-                    icon={
-                      file.status === "complete"
-                        ? CheckmarkCircle02Icon
-                        : Loading03Icon
-                    }
+                    icon={file.status === "complete" ? CheckmarkCircle02Icon : Loading03Icon}
                     size={12}
                   />{" "}
                   {file.status === "uploading" ? file.progress : 100}%
@@ -100,9 +84,7 @@ function FileList({
                 </DropZone.FileProgress>
               ) : (
                 <>
-                  <DropZone.FileMeta>
-                    Something went wrong, please retry
-                  </DropZone.FileMeta>
+                  <DropZone.FileMeta>Something went wrong, please retry</DropZone.FileMeta>
                   <Button
                     className="mt-2 -ml-1"
                     size="sm"
@@ -156,23 +138,17 @@ export const DemoWithFileListExample = function Demo() {
       <DropZone.Area>
         <DropZone.Icon />
         <DropZone.Label>Upload project assets</DropZone.Label>
-        <DropZone.Description>
-          Documents, images, or videos up to 10 MB each.
-        </DropZone.Description>
+        <DropZone.Description>Documents, images, or videos up to 10 MB each.</DropZone.Description>
         <DropZone.Trigger>Add Files</DropZone.Trigger>
       </DropZone.Area>
       <DropZone.Input multiple />
       <FileList
         files={files}
-        onRemove={(id) =>
-          setFiles((all) => all.filter((file) => file.id !== id))
-        }
+        onRemove={(id) => setFiles((all) => all.filter((file) => file.id !== id))}
         onRetry={(id) =>
           setFiles((all) =>
             all.map((file) =>
-              file.id === id
-                ? { ...file, progress: 0, status: "uploading" }
-                : file,
+              file.id === id ? { ...file, progress: 0, status: "uploading" } : file,
             ),
           )
         }

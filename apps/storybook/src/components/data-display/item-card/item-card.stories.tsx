@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
 import { InlineSelect } from "@thenamespace/uikit/inline-select";
@@ -21,9 +20,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 const Glyph = ({ icon }: { icon: string }) => <Icon icon={icon} />;
-const Arrow = () => (
-  <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />
-);
+const Arrow = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
 function Card({
   action = <Arrow />,
   description,
@@ -44,9 +41,7 @@ function Card({
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>{title}</ItemCard.Title>
-        {description && (
-          <ItemCard.Description>{description}</ItemCard.Description>
-        )}
+        {description && <ItemCard.Description>{description}</ItemCard.Description>}
       </ItemCard.Content>
       <ItemCard.Action>{action}</ItemCard.Action>
     </ItemCard>
@@ -71,9 +66,7 @@ export const Default: Story = {
 export const Variants: Story = {
   render: () => (
     <div className="w-[500px] space-y-3 p-6">
-      {(
-        ["default", "secondary", "tertiary", "outline", "transparent"] as const
-      ).map((variant) => (
+      {(["default", "secondary", "tertiary", "outline", "transparent"] as const).map((variant) => (
         <Card
           description={
             {
@@ -107,9 +100,7 @@ export const WithoutIcon: Story = {
       <ItemCard>
         <ItemCard.Content>
           <ItemCard.Title>Delete account</ItemCard.Title>
-          <ItemCard.Description>
-            Permanently remove your account and all data
-          </ItemCard.Description>
+          <ItemCard.Description>Permanently remove your account and all data</ItemCard.Description>
         </ItemCard.Content>
         <ItemCard.Action>
           <Button size="sm" variant="danger-soft">
@@ -126,11 +117,7 @@ function SwitchCard() {
     <div className="w-[500px] rounded-2xl p-6">
       <Card
         action={
-          <Switch
-            aria-label="Switch Dark mode"
-            isSelected={selected}
-            onChange={setSelected}
-          >
+          <Switch aria-label="Switch Dark mode" isSelected={selected} onChange={setSelected}>
             <Switch.Content>
               <Switch.Control>
                 <Switch.Thumb />
@@ -194,17 +181,9 @@ export const DeviceList: Story = {
   render: () => (
     <div className="w-[500px] space-y-2 rounded-2xl p-6">
       {[
-        [
-          "MacBook Pro",
-          "Last active: 2 minutes ago",
-          "solar:smartphone-linear",
-        ],
+        ["MacBook Pro", "Last active: 2 minutes ago", "solar:smartphone-linear"],
         ["iMac", "Last active: 3 days ago", "solar:monitor-linear"],
-        [
-          "iPhone 15 Pro",
-          "Last active: 1 hour ago",
-          "solar:shield-check-linear",
-        ],
+        ["iPhone 15 Pro", "Last active: 1 hour ago", "solar:shield-check-linear"],
       ].map(([title, description, icon], index) => (
         <Card
           action={
@@ -231,16 +210,8 @@ export const Pressable: Story = {
   render: () => (
     <div className="w-[500px] space-y-4 rounded-2xl p-6">
       {[
-        [
-          "Account settings",
-          "Manage your account preferences",
-          "solar:user-linear",
-        ],
-        [
-          "Security",
-          "Passwords and two-factor authentication",
-          "solar:key-linear",
-        ],
+        ["Account settings", "Manage your account preferences", "solar:user-linear"],
+        ["Security", "Passwords and two-factor authentication", "solar:key-linear"],
       ].map(([title, description, icon]) => (
         <ItemCard
           className="relative w-full cursor-pointer overflow-hidden"
@@ -263,9 +234,7 @@ export const Pressable: Story = {
   ),
 };
 function SelectCard({ multiple = false }: { multiple?: boolean }) {
-  const [value, setValue] = useState<string | string[]>(
-    multiple ? ["email", "push"] : "en",
-  );
+  const [value, setValue] = useState<string | string[]>(multiple ? ["email", "push"] : "en");
   const options = multiple
     ? [
         ["email", "Email"],
@@ -305,9 +274,7 @@ function SelectCard({ multiple = false }: { multiple?: boolean }) {
           </InlineSelect>
         }
         description={
-          multiple
-            ? "Choose how you receive invitations"
-            : "Choose your preferred language"
+          multiple ? "Choose how you receive invitations" : "Choose your preferred language"
         }
         icon={multiple ? "solar:bell-linear" : "solar:global-linear"}
         title={multiple ? "Event Invites" : "Language"}
@@ -333,12 +300,7 @@ export const WalletCard: Story = {
               <p className="text-foreground text-sm font-semibold">$34.99</p>
               <p className="text-muted text-xs">0.021 ETH</p>
             </div>
-            <Button
-              aria-label="Wallet actions"
-              isIconOnly
-              size="sm"
-              variant="ghost"
-            >
+            <Button aria-label="Wallet actions" isIconOnly size="sm" variant="ghost">
               <Glyph icon="solar:menu-dots-bold" />
             </Button>
           </div>

@@ -1,8 +1,5 @@
 "use client";
 
-// @demo-title With Data Grid
-import type { Selection } from "react-aria-components";
-
 import { useState } from "react";
 
 import { ActionBar } from "@thenamespace/uikit";
@@ -10,6 +7,8 @@ import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
 import { DataGrid, type DataGridColumn } from "@thenamespace/uikit/data-grid";
 import { Separator } from "@thenamespace/uikit/separator";
+// @demo-title With Data Grid
+import type { Selection } from "react-aria-components";
 
 import { Icon } from "@/demos/icon";
 
@@ -49,8 +48,7 @@ function WithDataGridDemo() {
   const [selected, setSelected] = useState<Selection>(new Set());
   const count = selected === "all" ? data.length : selected.size;
   const remove = () => {
-    const keys =
-      selected === "all" ? new Set(data.map((item) => item.id)) : selected;
+    const keys = selected === "all" ? new Set(data.map((item) => item.id)) : selected;
     setData((current) => current.filter((item) => !keys.has(item.id)));
     setSelected(new Set());
   };

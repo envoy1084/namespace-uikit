@@ -1,9 +1,4 @@
-import {
-  Checkbox,
-  CheckboxGroup,
-  Description,
-  Label,
-} from "@thenamespace/uikit";
+import { Checkbox, CheckboxGroup, Description, Label } from "@thenamespace/uikit";
 
 export function Basic() {
   return (

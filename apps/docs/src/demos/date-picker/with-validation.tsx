@@ -1,17 +1,10 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { getLocalTimeZone, today } from "@internationalized/date";
-import {
-  Calendar,
-  DateField,
-  DatePicker,
-  FieldError,
-  Label,
-} from "@thenamespace/uikit";
+import { Calendar, DateField, DatePicker, FieldError, Label } from "@thenamespace/uikit";
 
 export function WithValidation() {
   const [value, setValue] = useState<DateValue | null>(null);
@@ -30,9 +23,7 @@ export function WithValidation() {
     >
       <Label>Appointment date</Label>
       <DateField.Group fullWidth>
-        <DateField.Input>
-          {(segment) => <DateField.Segment segment={segment} />}
-        </DateField.Input>
+        <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
         <DateField.Suffix>
           <DatePicker.Trigger>
             <DatePicker.TriggerIndicator />
@@ -54,9 +45,7 @@ export function WithValidation() {
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
+            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
           </Calendar.Grid>
           <Calendar.YearPickerGrid>
             <Calendar.YearPickerGridBody>

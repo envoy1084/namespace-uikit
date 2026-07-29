@@ -1,10 +1,4 @@
-import {
-  Checkbox,
-  CheckboxGroup,
-  Description,
-  Label,
-  Surface,
-} from "@thenamespace/uikit";
+import { Checkbox, CheckboxGroup, Description, Label, Surface } from "@thenamespace/uikit";
 
 export function OnSurface() {
   return (

@@ -1,12 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
-import {
-  Globe02Icon,
-  PaintBoardIcon,
-  SmileIcon,
-} from "@thenamespace/uikit/icons";
+import type { Meta, StoryObj } from "@storybook/react";
+import { Globe02Icon, PaintBoardIcon, SmileIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
 
 import { ListBox } from "@/components/collections/list-box";
@@ -37,19 +32,10 @@ function ThemeItems() {
   ));
 }
 
-function ThemeSelect({
-  variant = "default",
-}: {
-  variant?: "default" | "secondary";
-}) {
+function ThemeSelect({ variant = "default" }: { variant?: "default" | "secondary" }) {
   const [value, setValue] = useState("default");
   return (
-    <CellSelect
-      aria-label="Theme"
-      value={value}
-      variant={variant}
-      onChange={setValue}
-    >
+    <CellSelect aria-label="Theme" value={value} variant={variant} onChange={setValue}>
       <CellSelect.Trigger>
         <CellSelect.Label>Theme</CellSelect.Label>
         <CellSelect.Value />
@@ -103,9 +89,7 @@ export const Controlled: Story = {
             </ListBox>
           </CellSelect.Popover>
         </CellSelect>
-        <p className="text-muted px-1 text-sm">
-          Selected: {selected?.name ?? "None"}
-        </p>
+        <p className="text-muted px-1 text-sm">Selected: {selected?.name ?? "None"}</p>
       </div>
     );
   },
@@ -186,11 +170,8 @@ export const CustomValue: Story = {
             <CellSelect.Label>Icons</CellSelect.Label>
             <CellSelect.Value>
               {({ defaultChildren, isPlaceholder, state }) => {
-                if (isPlaceholder || state.selectedItems.length === 0)
-                  return defaultChildren;
-                const item = iconSets.find(
-                  (option) => option.id === state.selectedItems[0]?.key,
-                );
+                if (isPlaceholder || state.selectedItems.length === 0) return defaultChildren;
+                const item = iconSets.find((option) => option.id === state.selectedItems[0]?.key);
                 return item ? (
                   <span className="flex items-center justify-end gap-1.5 text-end">
                     {item.name}
@@ -237,21 +218,13 @@ function FontSelect({
 }) {
   const [value, setValue] = useState("inter");
   return (
-    <CellSelect
-      aria-label={`${label} font`}
-      value={value}
-      variant={variant}
-      onChange={setValue}
-    >
+    <CellSelect aria-label={`${label} font`} value={value} variant={variant} onChange={setValue}>
       <CellSelect.Trigger>
         <CellSelect.Label>{label}</CellSelect.Label>
         <CellSelect.Value>
           {({ defaultChildren, isPlaceholder, state }) => {
-            if (isPlaceholder || state.selectedItems.length === 0)
-              return defaultChildren;
-            const item = fonts.find(
-              (option) => option.id === state.selectedItems[0]?.key,
-            );
+            if (isPlaceholder || state.selectedItems.length === 0) return defaultChildren;
+            const item = fonts.find((option) => option.id === state.selectedItems[0]?.key);
             return item ? (
               <span className="flex items-center justify-end gap-1.5 text-end">
                 {item.name}

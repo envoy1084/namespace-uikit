@@ -1,10 +1,9 @@
 "use client";
 
-import type { Selection, SortDescriptor } from "@thenamespace/uikit";
-
 import { useMemo, useState } from "react";
 
 import { Icon } from "@iconify/react";
+import type { Selection, SortDescriptor } from "@thenamespace/uikit";
 import { Avatar, Button, Checkbox, Chip, Table } from "@thenamespace/uikit";
 
 interface User {
@@ -109,12 +108,7 @@ export function CustomCells() {
                 </Checkbox.Content>
               </Checkbox>
             </Table.Column>
-            <Table.Column
-              allowsSorting
-              isRowHeader
-              className="after:hidden"
-              id="id"
-            >
+            <Table.Column allowsSorting isRowHeader className="after:hidden" id="id">
               {({ sortDirection }) => (
                 <Table.SortableColumnHeader sortDirection={sortDirection}>
                   Worker ID
@@ -148,11 +142,7 @@ export function CustomCells() {
             {sortedUsers.map((user) => (
               <Table.Row key={user.id} id={user.id}>
                 <Table.Cell className="pr-0">
-                  <Checkbox
-                    aria-label={`Select ${user.name}`}
-                    slot="selection"
-                    variant="secondary"
-                  >
+                  <Checkbox aria-label={`Select ${user.name}`} slot="selection" variant="secondary">
                     <Checkbox.Content>
                       <Checkbox.Control>
                         <Checkbox.Indicator />
@@ -164,10 +154,7 @@ export function CustomCells() {
                   <div className="flex items-center gap-2">
                     #{user.id.toString()}{" "}
                     <Button isIconOnly size="sm" variant="ghost">
-                      <Icon
-                        className="text-muted size-4"
-                        icon="hugeicons:copy"
-                      />
+                      <Icon className="text-muted size-4" icon="hugeicons:copy" />
                     </Button>
                   </div>
                 </Table.Cell>
@@ -190,11 +177,7 @@ export function CustomCells() {
                 </Table.Cell>
                 <Table.Cell className="min-w-52">{user.role}</Table.Cell>
                 <Table.Cell className="min-w-25">
-                  <Chip
-                    color={statusColorMap[user.status]}
-                    size="sm"
-                    variant="soft"
-                  >
+                  <Chip color={statusColorMap[user.status]} size="sm" variant="soft">
                     {user.status}
                   </Chip>
                 </Table.Cell>

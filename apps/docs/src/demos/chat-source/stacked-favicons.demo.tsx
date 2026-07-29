@@ -22,9 +22,7 @@ export const DemoStackedFaviconsExample = () => {
 
   return (
     <Assistant>
-      <ChatMessage.Content>
-        Answer synthesized from multiple sources.
-      </ChatMessage.Content>
+      <ChatMessage.Content>Answer synthesized from multiple sources.</ChatMessage.Content>
       <ChatSources defaultExpanded={false}>
         <ChatSources.Trigger>
           <span className="inline-flex -space-x-1.5">

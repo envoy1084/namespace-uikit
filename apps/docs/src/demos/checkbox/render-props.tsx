@@ -14,9 +14,7 @@ export function RenderProps() {
             {isSelected ? "Terms accepted" : "Accept terms"}
           </Checkbox.Content>
           <Description>
-            {isSelected
-              ? "Thank you for accepting"
-              : "Please read and accept the terms"}
+            {isSelected ? "Thank you for accepting" : "Please read and accept the terms"}
           </Description>
         </>
       )}

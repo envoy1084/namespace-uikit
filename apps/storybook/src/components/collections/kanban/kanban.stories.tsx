@@ -1,8 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import type { FormEvent, ReactNode } from "react";
 import { createContext, useContext, useRef, useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { Avatar } from "@thenamespace/uikit/avatar";
 import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
@@ -56,8 +55,7 @@ const people: Record<string, string> = {
   Maria: "red",
   Sam: "purple",
 };
-const avatar = (name: string) =>
-  `/assets/avatars/${people[name] ?? "blue"}.jpg`;
+const avatar = (name: string) => `/assets/avatars/${people[name] ?? "blue"}.jpg`;
 
 interface Ticket {
   assignees?: { avatar: string; name: string }[];
@@ -226,22 +224,14 @@ function AddTaskProvider({
                 <Modal.Heading>Add task to {column}</Modal.Heading>
               </Modal.Header>
               <Modal.Body className="flex flex-col gap-4 overflow-visible">
-                <form
-                  className="flex flex-col gap-4"
-                  id="add-task-form"
-                  onSubmit={submit}
-                >
+                <form className="flex flex-col gap-4" id="add-task-form" onSubmit={submit}>
                   <TextField autoFocus name="title" variant="secondary">
                     <Label>Title</Label>
                     <Input ref={titleRef} placeholder="Task title" />
                   </TextField>
                   <TextField name="description" variant="secondary">
                     <Label>Description</Label>
-                    <TextArea
-                      ref={descriptionRef}
-                      placeholder="Brief description"
-                      rows={3}
-                    />
+                    <TextArea ref={descriptionRef} placeholder="Brief description" rows={3} />
                   </TextField>
                 </form>
               </Modal.Body>
@@ -270,9 +260,7 @@ function ColumnOptions({
   kanban: UseKanbanReturn<Ticket>;
 }) {
   const otherColumns = ticketColumns.filter((value) => value !== column);
-  const columnItems = kanban.list.items.filter(
-    (ticket) => ticket.status === column,
-  );
+  const columnItems = kanban.list.items.filter((ticket) => ticket.status === column);
   return (
     <Dropdown>
       <Button isIconOnly aria-label="More options" size="sm" variant="ghost">
@@ -300,8 +288,7 @@ function ColumnOptions({
                 key={destination}
                 textValue={`Move all to ${destination}`}
                 onAction={() => {
-                  for (const ticket of columnItems)
-                    kanban.moveItem(ticket.id, destination);
+                  for (const ticket of columnItems) kanban.moveItem(ticket.id, destination);
                 }}
               >
                 <HugeiconsIcon icon={ArrowRight01Icon} />
@@ -327,12 +314,8 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
         />
       ) : null}
       <div className="flex flex-col gap-2">
-        <span className="text-foreground leading-snug font-semibold">
-          {ticket.title}
-        </span>
-        <span className="text-muted line-clamp-2 text-sm">
-          {ticket.description}
-        </span>
+        <span className="text-foreground leading-snug font-semibold">{ticket.title}</span>
+        <span className="text-muted line-clamp-2 text-sm">{ticket.description}</span>
         {ticket.tags?.length ? (
           <div className="flex flex-wrap gap-1.5">
             {ticket.tags.map((tag) => (
@@ -355,9 +338,7 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
                 <ProgressBar.Fill />
               </ProgressBar.Track>
             </ProgressBar>
-            <span className="text-muted text-xs tabular-nums">
-              {ticket.progress}%
-            </span>
+            <span className="text-muted text-xs tabular-nums">{ticket.progress}%</span>
           </div>
         ) : null}
         {ticket.assignees || ticket.comments || ticket.attachments ? (
@@ -365,11 +346,7 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
             {ticket.assignees?.length ? (
               <div className="flex -space-x-2">
                 {ticket.assignees.slice(0, 3).map((person) => (
-                  <Avatar
-                    className="ring-background size-5 ring-2"
-                    key={person.name}
-                    size="sm"
-                  >
+                  <Avatar className="ring-background size-5 ring-2" key={person.name} size="sm">
                     <Avatar.Image alt={person.name} src={person.avatar} />
                     <Avatar.Fallback>{person.name[0]}</Avatar.Fallback>
                   </Avatar>
@@ -382,21 +359,13 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
               <div className="text-muted flex items-center gap-2.5 text-xs">
                 {ticket.comments ? (
                   <span className="flex items-center gap-1">
-                    <HugeiconsIcon
-                      aria-hidden
-                      className="size-3.5"
-                      icon={Comment01Icon}
-                    />
+                    <HugeiconsIcon aria-hidden className="size-3.5" icon={Comment01Icon} />
                     {ticket.comments}
                   </span>
                 ) : null}
                 {ticket.attachments ? (
                   <span className="flex items-center gap-1">
-                    <HugeiconsIcon
-                      aria-hidden
-                      className="size-3.5"
-                      icon={Attachment01Icon}
-                    />
+                    <HugeiconsIcon aria-hidden className="size-3.5" icon={Attachment01Icon} />
                     {ticket.attachments}
                   </span>
                 ) : null}
@@ -437,13 +406,7 @@ function TicketColumn({
         <Kanban.ColumnTitle>{column}</Kanban.ColumnTitle>
         <Kanban.ColumnCount>{items.length}</Kanban.ColumnCount>
         <Kanban.ColumnActions>
-          <Button
-            isIconOnly
-            aria-label="Add task"
-            size="sm"
-            variant="ghost"
-            onPress={open}
-          >
+          <Button isIconOnly aria-label="Add task" size="sm" variant="ghost" onPress={open}>
             <HugeiconsIcon icon={Add01Icon} />
           </Button>
           <ColumnOptions column={column} kanban={kanban} />
@@ -451,11 +414,7 @@ function TicketColumn({
       </Kanban.ColumnHeader>
       <Kanban.ColumnBody>
         <Kanban.ScrollShadow className="max-h-[600px]">
-          <Kanban.CardList
-            aria-label={column}
-            dragAndDropHooks={dragAndDropHooks}
-            items={items}
-          >
+          <Kanban.CardList aria-label={column} dragAndDropHooks={dragAndDropHooks} items={items}>
             {(ticket) => (
               <Kanban.Card
                 className="[&>[data-slot=kanban-card-content]]:gap-0 [&>[data-slot=kanban-card-content]]:p-0"
@@ -510,9 +469,10 @@ interface NotionTask {
   status: NotionStatus;
   title: string;
 }
-const notionAssignee = (
-  name: "Alex" | "Diego" | "Emily" | "Jake" | "Maria" | "Sam",
-) => ({ avatar: avatar(name), name });
+const notionAssignee = (name: "Alex" | "Diego" | "Emily" | "Jake" | "Maria" | "Sam") => ({
+  avatar: avatar(name),
+  name,
+});
 const notionTasks: NotionTask[] = [
   {
     assignees: [notionAssignee("Diego")],
@@ -766,20 +726,14 @@ const notionColumnStyles: Record<
 
 function NotionTaskCard({ task }: { task: NotionTask }) {
   const priorityColor =
-    task.priority === "High"
-      ? "danger"
-      : task.priority === "Medium"
-        ? "warning"
-        : "success";
+    task.priority === "High" ? "danger" : task.priority === "Medium" ? "warning" : "success";
   return (
     <>
       <div className="flex items-start gap-2">
         <span
           className={`mt-1 size-2.5 shrink-0 rounded-sm ${task.priority === "High" ? "bg-danger" : task.priority === "Medium" ? "bg-warning" : "bg-success"}`}
         />
-        <span className="text-foreground leading-snug font-semibold">
-          {task.title}
-        </span>
+        <span className="text-foreground leading-snug font-semibold">{task.title}</span>
       </div>
       <div className="flex flex-wrap items-center gap-1.5">
         <Chip color={priorityColor} size="sm" variant="soft">
@@ -789,11 +743,7 @@ function NotionTaskCard({ task }: { task: NotionTask }) {
           {task.size}
         </Chip>
         {task.assignees.map((person) => (
-          <Avatar
-            className="ring-background size-5 ring-2"
-            key={person.name}
-            size="sm"
-          >
+          <Avatar className="ring-background size-5 ring-2" key={person.name} size="sm">
             <Avatar.Image alt={person.name} src={person.avatar} />
             <Avatar.Fallback>{person.name[0]}</Avatar.Fallback>
           </Avatar>
@@ -801,20 +751,12 @@ function NotionTaskCard({ task }: { task: NotionTask }) {
       </div>
       <div className="flex items-center justify-between gap-2">
         <span className="text-muted flex items-center gap-1 text-xs">
-          <HugeiconsIcon
-            aria-hidden
-            className="text-warning size-3"
-            icon={FlashIcon}
-          />
+          <HugeiconsIcon aria-hidden className="text-warning size-3" icon={FlashIcon} />
           {task.epic}
         </span>
         {task.dueDate ? (
           <span className="text-muted flex shrink-0 items-center gap-1 text-xs">
-            <HugeiconsIcon
-              aria-hidden
-              className="size-3"
-              icon={Calendar03Icon}
-            />
+            <HugeiconsIcon aria-hidden className="size-3" icon={Calendar03Icon} />
             {task.dueDate}
           </span>
         ) : null}
@@ -858,9 +800,7 @@ function NotionColumn({
             <Kanban.ColumnIndicator className={styles.indicator} />
             <Kanban.ColumnTitle>{column}</Kanban.ColumnTitle>
           </span>
-          <Kanban.ColumnCount className={styles.count}>
-            {items.length}
-          </Kanban.ColumnCount>
+          <Kanban.ColumnCount className={styles.count}>{items.length}</Kanban.ColumnCount>
           <Kanban.ColumnActions>
             <Button
               isIconOnly
@@ -916,16 +856,10 @@ function NotionBoardDemo() {
   });
   return (
     <div className="w-full pr-3">
-      <Kanban
-        className="items-start overflow-visible"
-        hideScrollBar
-        isEnabled={false}
-      >
-        {(["Todo", "In Progress", "To Document", "Done"] as const).map(
-          (column) => (
-            <NotionColumn column={column} kanban={kanban} key={column} />
-          ),
-        )}
+      <Kanban className="items-start overflow-visible" hideScrollBar isEnabled={false}>
+        {(["Todo", "In Progress", "To Document", "Done"] as const).map((column) => (
+          <NotionColumn column={column} kanban={kanban} key={column} />
+        ))}
       </Kanban>
     </div>
   );
@@ -1029,11 +963,7 @@ const projectTasks: ProjectTask[] = [
     title: "Push notification permission flow",
   },
   {
-    assignees: [
-      projectAssignee("Jake"),
-      projectAssignee("Alex"),
-      projectAssignee("Maria"),
-    ],
+    assignees: [projectAssignee("Jake"), projectAssignee("Alex"), projectAssignee("Maria")],
     category: "Engineering",
     categoryColor: "#3b82f6",
     id: "p9",
@@ -1099,12 +1029,7 @@ function ProjectColumn({
           <Button isIconOnly aria-label="Add task" size="sm" variant="ghost">
             <HugeiconsIcon icon={Add01Icon} />
           </Button>
-          <Button
-            isIconOnly
-            aria-label="More options"
-            size="sm"
-            variant="ghost"
-          >
+          <Button isIconOnly aria-label="More options" size="sm" variant="ghost">
             <HugeiconsIcon icon={MoreHorizontalIcon} />
           </Button>
         </Kanban.ColumnActions>
@@ -1138,9 +1063,7 @@ function ProjectColumn({
                       className="flex-1"
                       color="accent"
                       size="sm"
-                      value={
-                        (task.subtasksCompleted! / task.subtasksTotal) * 100
-                      }
+                      value={(task.subtasksCompleted! / task.subtasksTotal) * 100}
                     >
                       <ProgressBar.Track>
                         <ProgressBar.Fill />
@@ -1154,19 +1077,13 @@ function ProjectColumn({
                 <div className="mt-0.5 flex items-center justify-between">
                   <div className="flex -space-x-2">
                     {task.assignees.slice(0, 3).map((person) => (
-                      <Avatar
-                        className="ring-background size-5 ring-2"
-                        key={person.name}
-                        size="sm"
-                      >
+                      <Avatar className="ring-background size-5 ring-2" key={person.name} size="sm">
                         <Avatar.Image alt={person.name} src={person.avatar} />
                         <Avatar.Fallback>{person.name[0]}</Avatar.Fallback>
                       </Avatar>
                     ))}
                   </div>
-                  {task.dueDate ? (
-                    <span className="text-muted text-xs">{task.dueDate}</span>
-                  ) : null}
+                  {task.dueDate ? <span className="text-muted text-xs">{task.dueDate}</span> : null}
                 </div>
               </Kanban.Card>
             )}
@@ -1185,11 +1102,9 @@ function ProjectBoardDemo() {
   });
   return (
     <Kanban>
-      {(["Backlog", "To Do", "In Progress", "In Review", "Done"] as const).map(
-        (column) => (
-          <ProjectColumn column={column} kanban={kanban} key={column} />
-        ),
-      )}
+      {(["Backlog", "To Do", "In Progress", "In Review", "Done"] as const).map((column) => (
+        <ProjectColumn column={column} kanban={kanban} key={column} />
+      ))}
     </Kanban>
   );
 }
@@ -1212,19 +1127,11 @@ function SizedTicketColumn({
   return (
     <Kanban.Column>
       <Kanban.ColumnHeader>
-        <Kanban.ColumnIndicator
-          className={column === "Open" ? "bg-success" : "bg-warning"}
-        />
+        <Kanban.ColumnIndicator className={column === "Open" ? "bg-success" : "bg-warning"} />
         <Kanban.ColumnTitle>{column}</Kanban.ColumnTitle>
         <Kanban.ColumnCount>{items.length}</Kanban.ColumnCount>
         <Kanban.ColumnActions>
-          <Button
-            isIconOnly
-            aria-label="Add task"
-            size="sm"
-            variant="ghost"
-            onPress={open}
-          >
+          <Button isIconOnly aria-label="Add task" size="sm" variant="ghost" onPress={open}>
             <HugeiconsIcon icon={Add01Icon} />
           </Button>
           <ColumnOptions column={column} kanban={kanban} />
@@ -1232,11 +1139,7 @@ function SizedTicketColumn({
       </Kanban.ColumnHeader>
       <Kanban.ColumnBody>
         <Kanban.ScrollShadow className="max-h-[600px]">
-          <Kanban.CardList
-            aria-label={column}
-            dragAndDropHooks={dragAndDropHooks}
-            items={items}
-          >
+          <Kanban.CardList aria-label={column} dragAndDropHooks={dragAndDropHooks} items={items}>
             {(ticket) => (
               <Kanban.Card
                 className="[&>[data-slot=kanban-card-content]]:gap-0 [&>[data-slot=kanban-card-content]]:p-0"

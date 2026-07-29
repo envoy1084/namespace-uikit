@@ -108,9 +108,7 @@ const invoiceColumns: DataGridColumn<Invoice>[] = [
   {
     accessorKey: "issuedAt",
     cell: (invoice) => (
-      <span className="text-muted tabular-nums">
-        {formatDate(invoice.issuedAt)}
-      </span>
+      <span className="text-muted tabular-nums">{formatDate(invoice.issuedAt)}</span>
     ),
     header: "Issued",
     id: "issuedAt",
@@ -165,9 +163,7 @@ export const DemoAsyncLoadingExample = function Demo() {
         }
       />
       {!hasMore && data.length > 0 ? (
-        <span className="text-muted text-center text-sm">
-          All {invoiceTotal} invoices loaded
-        </span>
+        <span className="text-muted text-center text-sm">All {invoiceTotal} invoices loaded</span>
       ) : null}
     </div>
   );

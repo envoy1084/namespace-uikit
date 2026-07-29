@@ -29,11 +29,7 @@ function Legend({
       {items.map(({ color, dashed, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
           <span
-            className={
-              dashed
-                ? "h-0 w-3 border-t-2 border-dashed"
-                : "size-3 rounded-full"
-            }
+            className={dashed ? "h-0 w-3 border-t-2 border-dashed" : "size-3 rounded-full"}
             style={dashed ? { borderColor: color } : { backgroundColor: color }}
           />
           <span className="text-muted text-xs">{label}</span>

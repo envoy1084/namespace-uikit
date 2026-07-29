@@ -4,19 +4,12 @@
 import { ComposedChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 
-function Legend({
-  items,
-}: {
-  items: ReadonlyArray<{ color: string; label: string }>;
-}) {
+function Legend({ items }: { items: ReadonlyArray<{ color: string; label: string }> }) {
   return (
     <div className="flex items-center gap-3">
       {items.map(({ color, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
-          <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: color }}
-          />
+          <span className="size-3 rounded-full" style={{ backgroundColor: color }} />
           <span className="text-muted text-xs">{label}</span>
         </div>
       ))}
@@ -66,14 +59,12 @@ const defaultData = [
 
 const sessions = defaultData.map((item, index) => ({
   month: item.month,
-  sessions: [
-    12000, 18000, 15000, 22000, 19000, 25000, 23000, 28000, 26000, 31000, 29000,
-    34000,
-  ][index]!,
-  target: [
-    15000, 16000, 17000, 18000, 19000, 20000, 21000, 22000, 23000, 24000, 25000,
-    26000,
-  ][index]!,
+  sessions: [12000, 18000, 15000, 22000, 19000, 25000, 23000, 28000, 26000, 31000, 29000, 34000][
+    index
+  ]!,
+  target: [15000, 16000, 17000, 18000, 19000, 20000, 21000, 22000, 23000, 24000, 25000, 26000][
+    index
+  ]!,
 }));
 
 export const DemoAreaWithLineExample = () => (

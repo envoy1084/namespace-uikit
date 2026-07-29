@@ -19,11 +19,7 @@ export const DemoWithLabelExample = function Demo() {
   return (
     <div className="flex flex-col gap-1.5">
       <Label>How would you rate this product?</Label>
-      <Rating
-        aria-label="Product rating"
-        value={value}
-        onValueChange={setValue}
-      >
+      <Rating aria-label="Product rating" value={value} onValueChange={setValue}>
         <Items />
       </Rating>
       {value > 0 ? (

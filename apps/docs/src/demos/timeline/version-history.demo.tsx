@@ -61,9 +61,7 @@ const revisionAvatars: Record<string, string> = {
 export const DemoVersionHistoryExample = () => (
   <Card className="w-full max-w-[420px] gap-0 overflow-hidden p-0">
     <Card.Header className="border-border flex-row items-center justify-between border-b px-5 py-4">
-      <h3 className="text-foreground m-0 text-base font-semibold">
-        Version history
-      </h3>
+      <h3 className="text-foreground m-0 text-base font-semibold">Version history</h3>
       <CloseButton aria-label="Close revision history" />
     </Card.Header>
     <Card.Content className="px-5 py-4">
@@ -73,9 +71,7 @@ export const DemoVersionHistoryExample = () => (
             <Timeline.Marker />
             <Timeline.Content className="gap-1.5">
               <div className="flex min-h-5 min-w-0 items-center gap-2">
-                <h4 className="text-foreground m-0 text-xs font-medium">
-                  {item[0]}
-                </h4>
+                <h4 className="text-foreground m-0 text-xs font-medium">{item[0]}</h4>
                 {item[0] === "v8" ? (
                   <Chip color="accent" size="sm" variant="soft">
                     Draft

@@ -12,9 +12,8 @@ export function Multiple() {
         </Accordion.Heading>
         <Accordion.Panel>
           <Accordion.Body>
-            Learn the basics of Namespace UIKit and how to integrate it into
-            your React project. This section covers installation, setup, and
-            your first component.
+            Learn the basics of Namespace UIKit and how to integrate it into your React project.
+            This section covers installation, setup, and your first component.
           </Accordion.Body>
         </Accordion.Panel>
       </Accordion.Item>
@@ -28,9 +27,8 @@ export function Multiple() {
         </Accordion.Heading>
         <Accordion.Panel>
           <Accordion.Body>
-            Understand the fundamental concepts behind Namespace UIKit,
-            including the compound component pattern, styling with Tailwind CSS,
-            and accessibility features.
+            Understand the fundamental concepts behind Namespace UIKit, including the compound
+            component pattern, styling with Tailwind CSS, and accessibility features.
           </Accordion.Body>
         </Accordion.Panel>
       </Accordion.Item>
@@ -44,8 +42,8 @@ export function Multiple() {
         </Accordion.Heading>
         <Accordion.Panel>
           <Accordion.Body>
-            Explore advanced features like custom variants, theme customization,
-            and integration with other libraries in your React ecosystem.
+            Explore advanced features like custom variants, theme customization, and integration
+            with other libraries in your React ecosystem.
           </Accordion.Body>
         </Accordion.Panel>
       </Accordion.Item>
@@ -59,9 +57,8 @@ export function Multiple() {
         </Accordion.Heading>
         <Accordion.Panel>
           <Accordion.Body>
-            Follow our recommended best practices for building performant,
-            accessible, and maintainable applications with Namespace UIKit
-            components.
+            Follow our recommended best practices for building performant, accessible, and
+            maintainable applications with Namespace UIKit components.
           </Accordion.Body>
         </Accordion.Panel>
       </Accordion.Item>

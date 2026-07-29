@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  Label,
-  Link,
-  TextField,
-} from "@thenamespace/uikit";
+import { Button, Card, Form, Input, Label, Link, TextField } from "@thenamespace/uikit";
 
 export function WithForm() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,9 +20,7 @@ export function WithForm() {
     <Card className="w-full max-w-md">
       <Card.Header>
         <Card.Title>Login</Card.Title>
-        <Card.Description>
-          Enter your credentials to access your account
-        </Card.Description>
+        <Card.Description>Enter your credentials to access your account</Card.Description>
       </Card.Header>
       <Form onSubmit={onSubmit}>
         <Card.Content>

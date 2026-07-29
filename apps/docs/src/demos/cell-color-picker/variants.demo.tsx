@@ -18,12 +18,7 @@ function PickerControls() {
       >
         <ColorArea.Thumb />
       </ColorArea>
-      <ColorSlider
-        aria-label="Hue"
-        channel="hue"
-        className="gap-1 px-1"
-        colorSpace="hsb"
-      >
+      <ColorSlider aria-label="Hue" channel="hue" className="gap-1 px-1" colorSpace="hsb">
         <Label>Hue</Label>
         <ColorSlider.Output className="text-muted" />
         <ColorSlider.Track>
@@ -42,11 +37,7 @@ function Picker({
   variant?: "default" | "secondary";
 }) {
   return (
-    <CellColorPicker
-      aria-label={label}
-      defaultValue="#3B82F6"
-      variant={variant}
-    >
+    <CellColorPicker aria-label={label} defaultValue="#3B82F6" variant={variant}>
       <CellColorPicker.Trigger>
         <CellColorPicker.Label>{label}</CellColorPicker.Label>
         <CellColorPicker.ValueDisplay />

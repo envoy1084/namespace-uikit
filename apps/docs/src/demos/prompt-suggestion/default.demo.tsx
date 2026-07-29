@@ -16,9 +16,7 @@ export const DemoDefaultExample = () => (
   <div className="mx-auto w-full max-w-[714px]">
     <PromptSuggestion>
       <PromptSuggestion.Header>
-        <PromptSuggestion.Title>
-          What do you want to work on?
-        </PromptSuggestion.Title>
+        <PromptSuggestion.Title>What do you want to work on?</PromptSuggestion.Title>
         <PromptSuggestion.Description>
           Ask a question or start from one of the suggestions below.
         </PromptSuggestion.Description>

@@ -1,7 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React from "react";
 
+import type { Meta } from "@storybook/react";
 import { InformationCircleIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 

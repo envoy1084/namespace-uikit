@@ -2,16 +2,8 @@
 
 import React from "react";
 
-import {
-  Accordion,
-  Button,
-  useDisclosureGroupNavigation,
-} from "@thenamespace/uikit";
-import {
-  ArrowDown01Icon,
-  ArrowUp01Icon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import { Accordion, Button, useDisclosureGroupNavigation } from "@thenamespace/uikit";
+import { ArrowDown01Icon, ArrowUp01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 const items = [
   {
@@ -40,12 +32,11 @@ export function Controlled() {
   );
   const itemIds = items.map((item) => item.id);
 
-  const { isNextDisabled, isPrevDisabled, onNext, onPrevious } =
-    useDisclosureGroupNavigation({
-      expandedKeys,
-      itemIds,
-      onExpandedChange: setExpandedKeys,
-    });
+  const { isNextDisabled, isPrevDisabled, onNext, onPrevious } = useDisclosureGroupNavigation({
+    expandedKeys,
+    itemIds,
+    onExpandedChange: setExpandedKeys,
+  });
 
   return (
     <div className="w-full max-w-md">

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Label } from "@/components/forms/label";
 import { Icon } from "@/icon";
@@ -69,11 +69,7 @@ function FractionalRatings() {
     <div className="flex flex-col gap-4">
       {fractionalValues.map((value) => (
         <div className="flex items-center gap-3" key={value}>
-          <Rating
-            isReadOnly
-            aria-label={`${value} out of 5 stars`}
-            value={value}
-          >
+          <Rating isReadOnly aria-label={`${value} out of 5 stars`} value={value}>
             <Items />
           </Rating>
           <span className="text-muted text-sm">{value}</span>
@@ -127,9 +123,7 @@ export const RenderFunction: Story = {
                 <span
                   className="flex size-5"
                   style={{
-                    color: isActive
-                      ? "var(--color-warning)"
-                      : "var(--color-muted)",
+                    color: isActive ? "var(--color-warning)" : "var(--color-muted)",
                   }}
                 >
                   {isActive ? <StarIcon /> : <Icon icon="solar:star-linear" />}
@@ -139,9 +133,7 @@ export const RenderFunction: Story = {
           ))}
         </Rating>
         <span className="text-muted text-sm">
-          {value === 0
-            ? "No rating"
-            : `${value} ${value === 1 ? "star" : "stars"}`}
+          {value === 0 ? "No rating" : `${value} ${value === 1 ? "star" : "stars"}`}
         </span>
       </div>
     );
@@ -169,9 +161,7 @@ export const CustomColor: Story = {
           <Rating
             aria-label={`Rating ${item.label.toLowerCase()}`}
             defaultValue={4}
-            style={
-              { "--rating-active-color": item.color } as React.CSSProperties
-            }
+            style={{ "--rating-active-color": item.color } as React.CSSProperties}
           >
             <Items />
           </Rating>
@@ -187,11 +177,7 @@ export const WithLabel: Story = {
     return (
       <div className="flex flex-col gap-1.5">
         <Label>How would you rate this product?</Label>
-        <Rating
-          aria-label="Product rating"
-          value={value}
-          onValueChange={setValue}
-        >
+        <Rating aria-label="Product rating" value={value} onValueChange={setValue}>
           <Items />
         </Rating>
         {value > 0 ? (
@@ -224,9 +210,7 @@ export const ProductReview: Story = {
             >
               <Items />
             </Rating>
-            <span className="text-muted w-7 text-right text-xs">
-              {item.rating}
-            </span>
+            <span className="text-muted w-7 text-right text-xs">{item.rating}</span>
           </div>
         </div>
       ))}

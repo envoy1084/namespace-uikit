@@ -2,15 +2,7 @@
 "use client";
 
 // @demo-title Agent Hub
-import {
-  Avatar,
-  Breadcrumbs,
-  Button,
-  Chip,
-  Dropdown,
-  Kbd,
-  Label,
-} from "@thenamespace/uikit";
+import { Avatar, Breadcrumbs, Button, Chip, Dropdown, Kbd, Label } from "@thenamespace/uikit";
 import { Sidebar, useSidebar } from "@thenamespace/uikit";
 import {
   Analytics01Icon,
@@ -62,24 +54,15 @@ function MoreActions({ label }: { label: string }) {
       <Dropdown.Popover className="w-44" offset={6} placement="right top">
         <Dropdown.Menu aria-label={`${label} actions`}>
           <Dropdown.Item id="open" textValue="Open">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={FolderOpenIcon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={FolderOpenIcon} />
             <Label>Open</Label>
           </Dropdown.Item>
           <Dropdown.Item id="duplicate" textValue="Duplicate">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={Copy01Icon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={Copy01Icon} />
             <Label>Duplicate</Label>
           </Dropdown.Item>
           <Dropdown.Item id="delete" textValue="Delete" variant="danger">
-            <HugeiconsIcon
-              className="text-danger size-4 shrink-0"
-              icon={Delete02Icon}
-            />
+            <HugeiconsIcon className="text-danger size-4 shrink-0" icon={Delete02Icon} />
             <Label>Delete</Label>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -96,10 +79,7 @@ function Menu({
   nested?: boolean;
 }) {
   return (
-    <Sidebar.Menu
-      aria-label="Navigation"
-      defaultExpandedKeys={nested ? ["Analytics"] : []}
-    >
+    <Sidebar.Menu aria-label="Navigation" defaultExpandedKeys={nested ? ["Analytics"] : []}>
       {nav.map((item) => (
         <Sidebar.MenuItem
           href={item.items ? undefined : "#"}
@@ -128,21 +108,19 @@ function Menu({
           ) : null}
           {nested && item.items ? (
             <Sidebar.Submenu>
-              {(item.label === "Analytics" ? analyticsItems : item.items).map(
-                (child) => (
-                  <Sidebar.MenuItem
-                    href="#"
-                    id={`${item.label}-${child}`}
-                    key={child}
-                    textValue={child}
-                  >
-                    <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
-                    <Sidebar.MenuActions className="ml-auto">
-                      <MoreActions label={child} />
-                    </Sidebar.MenuActions>
-                  </Sidebar.MenuItem>
-                ),
-              )}
+              {(item.label === "Analytics" ? analyticsItems : item.items).map((child) => (
+                <Sidebar.MenuItem
+                  href="#"
+                  id={`${item.label}-${child}`}
+                  key={child}
+                  textValue={child}
+                >
+                  <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
+                  <Sidebar.MenuActions className="ml-auto">
+                    <MoreActions label={child} />
+                  </Sidebar.MenuActions>
+                </Sidebar.MenuItem>
+              ))}
             </Sidebar.Submenu>
           ) : null}
         </Sidebar.MenuItem>
@@ -177,15 +155,9 @@ function AgentHubContent() {
         <div className="flex items-center justify-between px-1 py-2">
           <div className="flex items-center gap-3">
             <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-violet-600">
-              <HugeiconsIcon
-                className="size-3.5 text-white"
-                icon={AiBrain01Icon}
-              />
+              <HugeiconsIcon className="size-3.5 text-white" icon={AiBrain01Icon} />
             </span>
-            <span
-              className="text-foreground text-sm font-semibold"
-              data-sidebar="label"
-            >
+            <span className="text-foreground text-sm font-semibold" data-sidebar="label">
               AgentHub
             </span>
           </div>
@@ -238,12 +210,7 @@ function AgentHubContent() {
           <Sidebar.GroupLabel>Recent chats</Sidebar.GroupLabel>
           <Sidebar.Menu aria-label="Recent chats">
             {agentHubChats.map((item) => (
-              <Sidebar.MenuItem
-                href="#"
-                id={`agent-hub-chat-${item}`}
-                key={item}
-                textValue={item}
-              >
+              <Sidebar.MenuItem href="#" id={`agent-hub-chat-${item}`} key={item} textValue={item}>
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={AiBrain01Icon} size={16} />
                 </Sidebar.MenuIcon>
@@ -280,9 +247,7 @@ function AgentHubContent() {
                 <Sidebar.MenuIcon>
                   <HugeiconsIcon icon={icon} size={16} />
                 </Sidebar.MenuIcon>
-                <Sidebar.MenuLabel
-                  className={label === "Add agent" ? "text-muted" : undefined}
-                >
+                <Sidebar.MenuLabel className={label === "Add agent" ? "text-muted" : undefined}>
                   {label as string}
                 </Sidebar.MenuLabel>
               </Sidebar.MenuItem>
@@ -300,28 +265,17 @@ function AgentHubContent() {
                 >
                   <HugeiconsIcon icon={MoreVerticalIcon} size={16} />
                 </Dropdown.Trigger>
-                <Dropdown.Popover
-                  className="w-48"
-                  offset={6}
-                  placement="right top"
-                >
+                <Dropdown.Popover className="w-48" offset={6} placement="right top">
                   <Dropdown.Menu aria-label="Workspaces section actions">
                     <Dropdown.Item id="show">Show</Dropdown.Item>
-                    <Dropdown.Item id="new-workspace">
-                      New workspace
-                    </Dropdown.Item>
-                    <Dropdown.Item id="open-library">
-                      Open in Library
-                    </Dropdown.Item>
+                    <Dropdown.Item id="new-workspace">New workspace</Dropdown.Item>
+                    <Dropdown.Item id="open-library">Open in Library</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown.Popover>
               </Dropdown>
             </span>
           </Sidebar.GroupLabel>
-          <Sidebar.Menu
-            aria-label="Workspaces"
-            defaultExpandedKeys={["agent-hub-ws-personal"]}
-          >
+          <Sidebar.Menu aria-label="Workspaces" defaultExpandedKeys={["agent-hub-ws-personal"]}>
             <Sidebar.MenuItem id="agent-hub-ws-personal" textValue="Personal">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={UserMultipleIcon} size={16} />
@@ -370,11 +324,7 @@ function AgentHubContent() {
               </Sidebar.MenuIcon>
               <Sidebar.MenuLabel>Docs</Sidebar.MenuLabel>
             </Sidebar.MenuItem>
-            <Sidebar.MenuItem
-              href="#"
-              id="agent-hub-app-calendar"
-              textValue="Calendar"
-            >
+            <Sidebar.MenuItem href="#" id="agent-hub-app-calendar" textValue="Calendar">
               <Sidebar.MenuIcon>
                 <HugeiconsIcon icon={Activity01Icon} size={16} />
               </Sidebar.MenuIcon>
@@ -410,16 +360,10 @@ function AgentHubContent() {
           <Dropdown>
             <Dropdown.Trigger className="hover:bg-default flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left outline-none">
               <Avatar size="sm">
-                <Avatar.Image
-                  alt="Junior Garcia"
-                  src="/assets/avatars/orange.jpg"
-                />
+                <Avatar.Image alt="Junior Garcia" src="/assets/avatars/orange.jpg" />
                 <Avatar.Fallback delayMs={600}>JG</Avatar.Fallback>
               </Avatar>
-              <span
-                className="text-foreground text-sm font-medium"
-                data-sidebar="label"
-              >
+              <span className="text-foreground text-sm font-medium" data-sidebar="label">
                 Junior
               </span>
               <HugeiconsIcon
@@ -465,8 +409,8 @@ function AgentHubDemo() {
         </div>
         <div className="p-6">
           <p className="text-muted">
-            Agent-focused sidebar for AI startups. Combines compact spacing,
-            workspaces, recent chats, and a user dropdown menu.
+            Agent-focused sidebar for AI startups. Combines compact spacing, workspaces, recent
+            chats, and a user dropdown menu.
           </p>
         </div>
       </Sidebar.Main>

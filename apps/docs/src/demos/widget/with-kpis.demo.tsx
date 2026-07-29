@@ -46,9 +46,7 @@ function SparkMetric({
           {value}
           <TrendChip trend={trend} variant="tertiary">
             {trend === "up" ? "3.3%" : "5.9%"}
-            <TrendChip.Suffix>
-              {trend === "up" ? "last 30d" : "vs last 7d"}
-            </TrendChip.Suffix>
+            <TrendChip.Suffix>{trend === "up" ? "last 30d" : "vs last 7d"}</TrendChip.Suffix>
           </TrendChip>
         </div>
         <KPI.Chart color={color} data={data} height={60} strokeWidth={1.5} />

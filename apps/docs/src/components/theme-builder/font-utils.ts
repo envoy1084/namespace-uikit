@@ -20,11 +20,9 @@ export function isValidFontSource(source: string) {
 
     if (url.protocol !== "https:") return false;
     if (url.hostname === "cdn.jsdelivr.net") {
-      return [
-        "/fontsource/fonts/",
-        "/npm/@fontsource/",
-        "/npm/@fontsource-variable/",
-      ].some((prefix) => url.pathname.startsWith(prefix));
+      return ["/fontsource/fonts/", "/npm/@fontsource/", "/npm/@fontsource-variable/"].some(
+        (prefix) => url.pathname.startsWith(prefix),
+      );
     }
 
     return allowedFontHosts.some(
@@ -48,10 +46,7 @@ export function isFontFileSource(source: string) {
 export function extractFontFamily(source: string): string | null {
   try {
     const url = new URL(source);
-    const googleFamily = url.searchParams
-      .get("family")
-      ?.split("|")[0]
-      ?.split(":")[0];
+    const googleFamily = url.searchParams.get("family")?.split("|")[0]?.split(":")[0];
 
     if (googleFamily) return googleFamily.replaceAll("+", " ");
 
@@ -59,21 +54,16 @@ export function extractFontFamily(source: string): string | null {
 
     if (fontshareFamily) return titleCase(fontshareFamily);
 
-    const fontsourceNpm = url.pathname.match(
-      /\/npm\/@fontsource(?:-variable)?\/([^@/]+)/,
-    )?.[1];
+    const fontsourceNpm = url.pathname.match(/\/npm\/@fontsource(?:-variable)?\/([^@/]+)/)?.[1];
 
     if (fontsourceNpm) return titleCase(fontsourceNpm);
 
-    const fontsourceDirect = url.pathname.match(
-      /\/fontsource\/fonts\/([^@/:]+)/,
-    )?.[1];
+    const fontsourceDirect = url.pathname.match(/\/fontsource\/fonts\/([^@/:]+)/)?.[1];
 
     if (fontsourceDirect) return titleCase(fontsourceDirect);
 
     const cdnFonts =
-      url.pathname.match(/\/css\/([^/?]+)/)?.[1] ??
-      url.pathname.match(/\/([^/]+)\.font$/)?.[1];
+      url.pathname.match(/\/css\/([^/?]+)/)?.[1] ?? url.pathname.match(/\/([^/]+)\.font$/)?.[1];
 
     if (cdnFonts) return titleCase(cdnFonts);
 
@@ -86,9 +76,7 @@ export function extractFontFamily(source: string): string | null {
 }
 
 function titleCase(value: string) {
-  return value
-    .replaceAll("-", " ")
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+  return value.replaceAll("-", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
 export function createThemeFont(source: string): ThemeFont | null {

@@ -47,24 +47,15 @@ function MoreActions({ label }: { label: string }) {
       <Dropdown.Popover className="w-44" offset={6} placement="right top">
         <Dropdown.Menu aria-label={`${label} actions`}>
           <Dropdown.Item id="open" textValue="Open">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={FolderOpenIcon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={FolderOpenIcon} />
             <Label>Open</Label>
           </Dropdown.Item>
           <Dropdown.Item id="duplicate" textValue="Duplicate">
-            <HugeiconsIcon
-              className="text-muted size-4 shrink-0"
-              icon={Copy01Icon}
-            />
+            <HugeiconsIcon className="text-muted size-4 shrink-0" icon={Copy01Icon} />
             <Label>Duplicate</Label>
           </Dropdown.Item>
           <Dropdown.Item id="delete" textValue="Delete" variant="danger">
-            <HugeiconsIcon
-              className="text-danger size-4 shrink-0"
-              icon={Delete02Icon}
-            />
+            <HugeiconsIcon className="text-danger size-4 shrink-0" icon={Delete02Icon} />
             <Label>Delete</Label>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -81,10 +72,7 @@ function Menu({
   nested?: boolean;
 }) {
   return (
-    <Sidebar.Menu
-      aria-label="Navigation"
-      defaultExpandedKeys={nested ? ["Analytics"] : []}
-    >
+    <Sidebar.Menu aria-label="Navigation" defaultExpandedKeys={nested ? ["Analytics"] : []}>
       {nav.map((item) => (
         <Sidebar.MenuItem
           href={item.items ? undefined : "#"}
@@ -113,21 +101,19 @@ function Menu({
           ) : null}
           {nested && item.items ? (
             <Sidebar.Submenu>
-              {(item.label === "Analytics" ? analyticsItems : item.items).map(
-                (child) => (
-                  <Sidebar.MenuItem
-                    href="#"
-                    id={`${item.label}-${child}`}
-                    key={child}
-                    textValue={child}
-                  >
-                    <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
-                    <Sidebar.MenuActions className="ml-auto">
-                      <MoreActions label={child} />
-                    </Sidebar.MenuActions>
-                  </Sidebar.MenuItem>
-                ),
-              )}
+              {(item.label === "Analytics" ? analyticsItems : item.items).map((child) => (
+                <Sidebar.MenuItem
+                  href="#"
+                  id={`${item.label}-${child}`}
+                  key={child}
+                  textValue={child}
+                >
+                  <Sidebar.MenuLabel>{child}</Sidebar.MenuLabel>
+                  <Sidebar.MenuActions className="ml-auto">
+                    <MoreActions label={child} />
+                  </Sidebar.MenuActions>
+                </Sidebar.MenuItem>
+              ))}
             </Sidebar.Submenu>
           ) : null}
         </Sidebar.MenuItem>
@@ -151,19 +137,13 @@ function IconOnlyDemo() {
       <Sidebar className="[--sidebar-width:56px]">
         <Sidebar.Header className="items-center justify-center p-0 py-4">
           <Avatar className="size-8 shrink-0">
-            <Avatar.Image
-              alt="Kate Moore"
-              src="/assets/avatars/blue-light.jpg"
-            />
+            <Avatar.Image alt="Kate Moore" src="/assets/avatars/blue-light.jpg" />
             <Avatar.Fallback>KM</Avatar.Fallback>
           </Avatar>
         </Sidebar.Header>
         <Sidebar.Content className="items-center justify-center px-1.5">
           <Sidebar.Group>
-            <Sidebar.Menu
-              aria-label="Navigation"
-              className="items-center gap-1"
-            >
+            <Sidebar.Menu aria-label="Navigation" className="items-center gap-1">
               {collapsibleNav.map((item) => (
                 <Sidebar.MenuItem
                   id={item.label}
@@ -182,10 +162,7 @@ function IconOnlyDemo() {
           </Sidebar.Group>
         </Sidebar.Content>
         <Sidebar.Footer className="items-center justify-center p-0 py-4">
-          <Sidebar.Menu
-            aria-label="Footer actions"
-            className="items-center gap-1"
-          >
+          <Sidebar.Menu aria-label="Footer actions" className="items-center gap-1">
             <Sidebar.MenuItem
               id="support"
               textValue="Help & Support"
@@ -203,9 +180,7 @@ function IconOnlyDemo() {
       <Sidebar.Main>
         <div className="flex flex-col px-10 py-6">
           <h1 className="text-foreground text-lg font-semibold">Dashboard</h1>
-          <p className="text-muted">
-            Icon-only sidebar that is always collapsed.
-          </p>
+          <p className="text-muted">Icon-only sidebar that is always collapsed.</p>
         </div>
       </Sidebar.Main>
     </Sidebar.Provider>

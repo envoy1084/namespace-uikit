@@ -28,18 +28,14 @@ function DisabledItemsDemo() {
     <div className="w-full max-w-md">
       <ListView
         aria-label="Files"
-        disabledKeys={disabledFiles
-          .filter((item) => item.locked)
-          .map((item) => item.id)}
+        disabledKeys={disabledFiles.filter((item) => item.locked).map((item) => item.id)}
         items={disabledFiles}
         selectionMode="multiple"
       >
         {(item) => (
           <ListView.Item id={item.id} textValue={item.name}>
             <ListView.ItemContent>
-              <Icon
-                icon={item.icon === "folder" ? "lucide:folder" : "lucide:file"}
-              />
+              <Icon icon={item.icon === "folder" ? "lucide:folder" : "lucide:file"} />
               <div className="flex min-w-0 flex-col">
                 <ListView.Title>{item.name}</ListView.Title>
               </div>

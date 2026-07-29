@@ -1,13 +1,8 @@
-import type { Meta } from "@storybook/react";
-import type { ButtonProps } from "@thenamespace/uikit";
-
 import React from "react";
 
-import {
-  AddCircleIcon,
-  ArrowDown01Icon,
-  ArrowUp01Icon,
-} from "@thenamespace/uikit/icons";
+import type { Meta } from "@storybook/react";
+import type { ButtonProps } from "@thenamespace/uikit";
+import { AddCircleIcon, ArrowDown01Icon, ArrowUp01Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { cn } from "tailwind-variants";
 
@@ -45,18 +40,12 @@ const defaultArgs: DisclosureGroupProps = {
 };
 
 const Template = (props: DisclosureGroupProps) => {
-  const [expandedKeys, setExpandedKeys] = React.useState(
-    new Set<string | number>(["preview"]),
-  );
+  const [expandedKeys, setExpandedKeys] = React.useState(new Set<string | number>(["preview"]));
 
   return (
     <div className="w-full max-w-md">
       <div className="bg-surface shadow-surface flex flex-col gap-4 rounded-3xl p-4">
-        <DisclosureGroup
-          {...props}
-          expandedKeys={expandedKeys}
-          onExpandedChange={setExpandedKeys}
-        >
+        <DisclosureGroup {...props} expandedKeys={expandedKeys} onExpandedChange={setExpandedKeys}>
           <Disclosure aria-label="Preview Namespace Native" id="preview">
             <Disclosure.Heading>
               <Button
@@ -76,22 +65,16 @@ const Template = (props: DisclosureGroupProps) => {
             <Disclosure.Content>
               <Disclosure.Body className="mx-2 flex flex-col items-center gap-2 p-4 text-center">
                 <p className="text-muted text-sm">
-                  Scan this QR code with your camera app to preview the
-                  Namespace native components.
+                  Scan this QR code with your camera app to preview the Namespace native components.
                 </p>
                 <img
                   alt="Expo Go QR Code"
                   className="aspect-square w-full max-w-54 object-cover"
                   src="/assets/images/qr-code-native.png"
                 />
-                <p className="text-muted text-sm">
-                  Expo must be installed on your device.
-                </p>
+                <p className="text-muted text-sm">Expo must be installed on your device.</p>
                 <Button className="mt-4" variant="primary">
-                  <Icon
-                    className="[&_path]:fill-accent-foreground"
-                    icon="logos:expo-icon"
-                  />
+                  <Icon className="[&_path]:fill-accent-foreground" icon="logos:expo-icon" />
                   Preview on Expo Go
                 </Button>
               </Disclosure.Body>
@@ -102,9 +85,7 @@ const Template = (props: DisclosureGroupProps) => {
             <Disclosure.Heading aria-label="Download Namespace Native">
               <Button
                 slot="trigger"
-                variant={
-                  expandedKeys.has("download") ? "secondary" : "tertiary"
-                }
+                variant={expandedKeys.has("download") ? "secondary" : "tertiary"}
                 className={cn("w-full border-none", {
                   "bg-transparent": !expandedKeys.has("download"),
                 })}
@@ -119,17 +100,14 @@ const Template = (props: DisclosureGroupProps) => {
             <Disclosure.Content>
               <Disclosure.Body className="mx-2 flex flex-col items-center gap-2 p-4 text-center">
                 <p className="text-muted text-sm">
-                  Scan this QR code with your camera app to preview the
-                  Namespace native components.
+                  Scan this QR code with your camera app to preview the Namespace native components.
                 </p>
                 <img
                   alt="Expo Go QR Code"
                   className="aspect-square w-full max-w-54 object-cover"
                   src="/assets/images/qr-code-native.png"
                 />
-                <p className="text-muted text-sm">
-                  Expo must be installed on your device.
-                </p>
+                <p className="text-muted text-sm">Expo must be installed on your device.</p>
                 <Button className="mt-4" variant="primary">
                   <Icon icon="tabler:brand-apple-filled" />
                   Download on App Store
@@ -144,17 +122,14 @@ const Template = (props: DisclosureGroupProps) => {
 };
 
 const ControlledTemplate = (props: DisclosureGroupProps) => {
-  const [expandedKeys, setExpandedKeys] = React.useState(
-    new Set<string | number>(["preview"]),
-  );
+  const [expandedKeys, setExpandedKeys] = React.useState(new Set<string | number>(["preview"]));
   const itemIds = ["preview", "download"]; // Track our disclosure items
 
-  const { isNextDisabled, isPrevDisabled, onNext, onPrevious } =
-    useDisclosureGroupNavigation({
-      expandedKeys,
-      itemIds,
-      onExpandedChange: setExpandedKeys,
-    });
+  const { isNextDisabled, isPrevDisabled, onNext, onPrevious } = useDisclosureGroupNavigation({
+    expandedKeys,
+    itemIds,
+    onExpandedChange: setExpandedKeys,
+  });
 
   return (
     <div className="w-full max-w-md">
@@ -182,11 +157,7 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
             </Button>
           </div>
         </div>
-        <DisclosureGroup
-          {...props}
-          expandedKeys={expandedKeys}
-          onExpandedChange={setExpandedKeys}
-        >
+        <DisclosureGroup {...props} expandedKeys={expandedKeys} onExpandedChange={setExpandedKeys}>
           <Disclosure aria-label="Preview Namespace Native" id="preview">
             <Disclosure.Heading>
               <Button
@@ -206,22 +177,16 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
             <Disclosure.Content>
               <Disclosure.Body className="mx-2 flex flex-col items-center gap-2 p-4 text-center">
                 <p className="text-muted text-sm">
-                  Scan this QR code with your camera app to preview the
-                  Namespace native components.
+                  Scan this QR code with your camera app to preview the Namespace native components.
                 </p>
                 <img
                   alt="Expo Go QR Code"
                   className="aspect-square w-full max-w-54 object-cover"
                   src="/assets/images/qr-code-native.png"
                 />
-                <p className="text-muted text-sm">
-                  Expo must be installed on your device.
-                </p>
+                <p className="text-muted text-sm">Expo must be installed on your device.</p>
                 <Button className="mt-4" variant="primary">
-                  <Icon
-                    className="[&_path]:fill-accent-foreground"
-                    icon="logos:expo-icon"
-                  />
+                  <Icon className="[&_path]:fill-accent-foreground" icon="logos:expo-icon" />
                   Preview on Expo Go
                 </Button>
               </Disclosure.Body>
@@ -232,9 +197,7 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
             <Disclosure.Heading aria-label="Download Namespace Native">
               <Button
                 slot="trigger"
-                variant={
-                  expandedKeys.has("download") ? "secondary" : "tertiary"
-                }
+                variant={expandedKeys.has("download") ? "secondary" : "tertiary"}
                 className={cn("w-full border-none", {
                   "bg-transparent": !expandedKeys.has("download"),
                 })}
@@ -249,17 +212,14 @@ const ControlledTemplate = (props: DisclosureGroupProps) => {
             <Disclosure.Content>
               <Disclosure.Body className="mx-2 flex flex-col items-center gap-2 p-4 text-center">
                 <p className="text-muted text-sm">
-                  Scan this QR code with your camera app to preview the
-                  Namespace native components.
+                  Scan this QR code with your camera app to preview the Namespace native components.
                 </p>
                 <img
                   alt="Expo Go QR Code"
                   className="aspect-square w-full max-w-54 object-cover"
                   src="/assets/images/qr-code-native.png"
                 />
-                <p className="text-muted text-sm">
-                  Expo must be installed on your device.
-                </p>
+                <p className="text-muted text-sm">Expo must be installed on your device.</p>
                 <Button className="mt-4" variant="primary">
                   <Icon icon="tabler:brand-apple-filled" />
                   Download on App Store
@@ -293,13 +253,7 @@ function AppleShowcaseButton({
   );
 }
 
-function SelectedIphoneColorSwatch({
-  color,
-  name,
-}: {
-  color: string;
-  name: string;
-}) {
+function SelectedIphoneColorSwatch({ color, name }: { color: string; name: string }) {
   return (
     <span
       className="group relative size-6 rounded-lg shadow-[inset_0px_-1px_0px_0px_rgba(255,255,255,.5)]"
@@ -316,34 +270,29 @@ const showcase1Items = [
   {
     id: "colors",
     label: "Colors",
-    content:
-      "Choose from three bold finishes. iPhone 17 Pro shown in Cosmic Orange.",
-    imgSrc:
-      "/assets/apple/product-viewer/colors_orange__f2ug4x6ry8uq_large_2x.jpg",
+    content: "Choose from three bold finishes. iPhone 17 Pro shown in Cosmic Orange.",
+    imgSrc: "/assets/apple/product-viewer/colors_orange__f2ug4x6ry8uq_large_2x.jpg",
   },
   {
     id: "aluminum",
     label: "Aluminum unibody",
     content:
       "Optimized for performance and battery. Aluminum alloy is remarkably light and has exceptional thermal conductivity.",
-    imgSrc:
-      "/assets/apple/product-viewer/viewer_aluminum_endframe__fypyvk9kkg2m_large_2x.jpg",
+    imgSrc: "/assets/apple/product-viewer/viewer_aluminum_endframe__fypyvk9kkg2m_large_2x.jpg",
   },
   {
     id: "vapor-chamber",
     label: "Vapor chamber",
     content:
       "Deionized water sealed inside moves heat away from the A19 Pro chip, allowing for even higher sustained performance.",
-    imgSrc:
-      "/assets/apple/product-viewer/viewer_vapor_chamber_endframe__dst8qkmuys4m_large_2x.jpg",
+    imgSrc: "/assets/apple/product-viewer/viewer_vapor_chamber_endframe__dst8qkmuys4m_large_2x.jpg",
   },
   {
     id: "ceramic-shield",
     label: "Ceramic shield",
     content:
       "Protects the back of iPhone 17 Pro, making it 4x more resistant to cracks. New Ceramic Shield 2 on the front has 3x better scratch resistance.",
-    imgSrc:
-      "/assets/apple/product-viewer/ceramic_shield__de0653vp43cm_large_2x.jpg",
+    imgSrc: "/assets/apple/product-viewer/ceramic_shield__de0653vp43cm_large_2x.jpg",
   },
   {
     id: "immersive-pro-display",
@@ -357,8 +306,7 @@ const showcase1Items = [
     label: "Camera control",
     content:
       "Instantly take a photo, record video, adjust settings, and more. So you never miss a moment.",
-    imgSrc:
-      "/assets/apple/product-viewer/camera_control__cy5kilwa0kwi_large_2x.jpg",
+    imgSrc: "/assets/apple/product-viewer/camera_control__cy5kilwa0kwi_large_2x.jpg",
   },
   {
     id: "action-button",
@@ -371,18 +319,15 @@ const showcase1Items = [
 ];
 
 const Showcase1Template = (props: DisclosureGroupProps) => {
-  const [expandedKeys, setExpandedKeys] = React.useState(
-    new Set<string | number>(["colors"]),
-  );
+  const [expandedKeys, setExpandedKeys] = React.useState(new Set<string | number>(["colors"]));
   const itemIds = showcase1Items.map((item) => item.id);
   const isAnyItemExpanded = expandedKeys.size > 0;
 
-  const { isNextDisabled, isPrevDisabled, onNext, onPrevious } =
-    useDisclosureGroupNavigation({
-      expandedKeys,
-      itemIds,
-      onExpandedChange: setExpandedKeys,
-    });
+  const { isNextDisabled, isPrevDisabled, onNext, onPrevious } = useDisclosureGroupNavigation({
+    expandedKeys,
+    itemIds,
+    onExpandedChange: setExpandedKeys,
+  });
 
   return (
     <section className="bg-surface w-full overflow-hidden">
@@ -430,21 +375,12 @@ const Showcase1Template = (props: DisclosureGroupProps) => {
             {showcase1Items.map((item) => (
               <Disclosure key={item.id} aria-label={item.label} id={item.id}>
                 <Disclosure.Heading>
-                  <AppleShowcaseButton
-                    isSelected={expandedKeys.has(item.id)}
-                    slot="trigger"
-                  >
+                  <AppleShowcaseButton isSelected={expandedKeys.has(item.id)} slot="trigger">
                     <div className="flex w-full items-center justify-start gap-3">
                       {item.id === "colors" ? (
-                        <SelectedIphoneColorSwatch
-                          color="#f77314"
-                          name="Cosmic Orange"
-                        />
+                        <SelectedIphoneColorSwatch color="#f77314" name="Cosmic Orange" />
                       ) : (
-                        <HugeiconsIcon
-                          className="size-6 flex-none"
-                          icon={AddCircleIcon}
-                        />
+                        <HugeiconsIcon className="size-6 flex-none" icon={AddCircleIcon} />
                       )}
                       {item.label}
                     </div>

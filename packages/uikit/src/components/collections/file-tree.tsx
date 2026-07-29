@@ -28,9 +28,7 @@ import {
 } from "react-aria-components";
 
 export type FileTreeSize = "lg" | "md" | "sm";
-export interface FileTreeRootProps<
-  T extends object = object,
-> extends TreeProps<T> {
+export interface FileTreeRootProps<T extends object = object> extends TreeProps<T> {
   reduceMotion?: boolean;
   showGuideLines?: boolean | "hover";
   size?: FileTreeSize;
@@ -74,8 +72,7 @@ export function FileTreeRoot<T extends object = object>({
         {...props}
         className={
           typeof className === "function"
-            ? (renderProps) =>
-                cn(`file-tree file-tree--${size}`, className(renderProps)) ?? ""
+            ? (renderProps) => cn(`file-tree file-tree--${size}`, className(renderProps)) ?? ""
             : (cn(`file-tree file-tree--${size}`, className) ?? "")
         }
         data-reduce-motion={reduceMotion || undefined}
@@ -111,8 +108,7 @@ export function FileTreeItem<T extends object = object>({
   const childItems: ReactNode[] = [];
 
   Children.forEach(children, (child) => {
-    if (isValidElement(child) && child.type === FileTreeIndicator)
-      indicator = child;
+    if (isValidElement(child) && child.type === FileTreeIndicator) indicator = child;
     else childItems.push(child);
   });
 
@@ -121,24 +117,13 @@ export function FileTreeItem<T extends object = object>({
       {...props}
       className={
         typeof className === "function"
-          ? (renderProps) =>
-              cn(
-                "file-tree__item",
-                context.itemClass,
-                className(renderProps),
-              ) ?? ""
+          ? (renderProps) => cn("file-tree__item", context.itemClass, className(renderProps)) ?? ""
           : (cn("file-tree__item", context.itemClass, className) ?? "")
       }
       data-slot="file-tree-item"
     >
       <TreeItemContent>
-        {({
-          allowsDragging,
-          hasChildItems,
-          isExpanded,
-          level,
-          selectionMode,
-        }) => {
+        {({ allowsDragging, hasChildItems, isExpanded, level, selectionMode }) => {
           const renderedIcon =
             typeof icon === "function"
               ? icon({
@@ -150,17 +135,11 @@ export function FileTreeItem<T extends object = object>({
           const showCheckbox = selectionMode === "multiple";
 
           return (
-            <div
-              className="file-tree__item-content"
-              data-slot="file-tree-item-content"
-            >
+            <div className="file-tree__item-content" data-slot="file-tree-item-content">
               {Array.from({ length: level - 1 }, (_, index) => (
                 <div
                   aria-hidden="true"
-                  className={cn(
-                    "file-tree__guide-line",
-                    context.guideLineClass,
-                  )}
+                  className={cn("file-tree__guide-line", context.guideLineClass)}
                   data-slot="file-tree-guide-line"
                   key={index}
                   style={{
@@ -178,10 +157,7 @@ export function FileTreeItem<T extends object = object>({
                 </Button>
               ) : null}
               {showCheckbox ? (
-                <span
-                  className="file-tree__checkbox"
-                  data-slot="file-tree-checkbox"
-                >
+                <span className="file-tree__checkbox" data-slot="file-tree-checkbox">
                   <Checkbox aria-label="Select" slot="selection">
                     <Checkbox.Content>
                       <Checkbox.Control>
@@ -191,11 +167,7 @@ export function FileTreeItem<T extends object = object>({
                   </Checkbox>
                 </span>
               ) : null}
-              <Button
-                className="file-tree__chevron"
-                data-slot="file-tree-chevron"
-                slot="chevron"
-              >
+              <Button className="file-tree__chevron" data-slot="file-tree-chevron" slot="chevron">
                 {indicator ?? <FileTreeIndicator />}
               </Button>
               {hasChildItems || renderedIcon ? (
@@ -223,14 +195,10 @@ export function FileTreeIndicator({
   className,
   ...props
 }: FileTreeIndicatorProps): ReactElement {
-  if (
-    children &&
-    isValidElement<FileTreeIndicatorProps & { "data-slot"?: string }>(children)
-  )
+  if (children && isValidElement<FileTreeIndicatorProps & { "data-slot"?: string }>(children))
     return cloneElement(children, {
       ...props,
-      className:
-        cn("file-tree__indicator", children.props.className, className) ?? "",
+      className: cn("file-tree__indicator", children.props.className, className) ?? "",
       "data-slot": "file-tree-indicator",
     });
 
@@ -255,8 +223,9 @@ export function FileTreeIndicator({
   );
 }
 
-export type FileTreeSectionProps<T extends object = object> =
-  ComponentPropsWithRef<typeof TreeSection<T>>;
+export type FileTreeSectionProps<T extends object = object> = ComponentPropsWithRef<
+  typeof TreeSection<T>
+>;
 export function FileTreeSection<T extends object = object>({
   className,
   ...props
@@ -270,10 +239,7 @@ export function FileTreeSection<T extends object = object>({
   );
 }
 export type FileTreeHeaderProps = ComponentPropsWithRef<typeof TreeHeader>;
-export function FileTreeHeader({
-  className,
-  ...props
-}: FileTreeHeaderProps): ReactNode {
+export function FileTreeHeader({ className, ...props }: FileTreeHeaderProps): ReactNode {
   return (
     <TreeHeader
       {...props}
@@ -297,9 +263,7 @@ function GripIcon(): ReactElement {
       width="16"
     >
       {[5, 12, 19].flatMap((cy) =>
-        [9, 15].map((cx) => (
-          <circle cx={cx} cy={cy} key={`${cx}-${cy}`} r="1" />
-        )),
+        [9, 15].map((cx) => <circle cx={cx} cy={cy} key={`${cx}-${cy}`} r="1" />),
       )}
     </svg>
   );
@@ -379,20 +343,14 @@ export function useFileTreeDrag({
   tree,
 }: UseFileTreeDragOptions): UseFileTreeDragResult {
   const { dragAndDropHooks } = useDragAndDrop({
-    getItems:
-      getItems ??
-      ((keys) => [...keys].map((key) => ({ "text/plain": String(key) }))),
+    getItems: getItems ?? ((keys) => [...keys].map((key) => ({ "text/plain": String(key) }))),
     onMove(event) {
-      if (event.target.dropPosition === "before")
-        tree.moveBefore(event.target.key, event.keys);
-      else if (event.target.dropPosition === "after")
-        tree.moveAfter(event.target.key, event.keys);
+      if (event.target.dropPosition === "before") tree.moveBefore(event.target.key, event.keys);
+      else if (event.target.dropPosition === "after") tree.moveAfter(event.target.key, event.keys);
       else if (event.target.dropPosition === "on") {
         const target = tree.getItem(event.target.key);
         const index = target?.children?.length ?? 0;
-        [...event.keys].forEach((key, offset) =>
-          tree.move(key, event.target.key, index + offset),
-        );
+        [...event.keys].forEach((key, offset) => tree.move(key, event.target.key, index + offset));
       }
       onMove?.(event.keys, event.target);
     },

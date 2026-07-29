@@ -15,10 +15,9 @@ export function ScrollableContent() {
             <Drawer.Body>
               {Array.from({ length: 20 }).map((_, i) => (
                 <p key={i} className="mb-3">
-                  Paragraph {i + 1}: Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Nullam pulvinar risus non risus hendrerit
-                  venenatis. Pellentesque sit amet hendrerit risus, sed
-                  porttitor quam.
+                  Paragraph {i + 1}: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+                  pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet hendrerit
+                  risus, sed porttitor quam.
                 </p>
               ))}
             </Drawer.Body>

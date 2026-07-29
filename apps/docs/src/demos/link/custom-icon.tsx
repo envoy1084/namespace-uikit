@@ -1,9 +1,5 @@
 import { Link } from "@thenamespace/uikit";
-import {
-  ArrowUpRight01Icon,
-  Link01Icon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import { ArrowUpRight01Icon, Link01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function LinkCustomIcon() {
   return (

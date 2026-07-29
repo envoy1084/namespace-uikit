@@ -122,17 +122,10 @@ const defaultStops: DefaultStop[] = [
 ];
 
 function DefaultMapDemo() {
-  const [selected, setSelected] = useState<DefaultStop | null>(
-    defaultStops[1]!,
-  );
+  const [selected, setSelected] = useState<DefaultStop | null>(defaultStops[1]!);
   return (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
-      <Map
-        center={[-122.3927, 37.7816]}
-        pitch={26}
-        styles={styles}
-        zoom={13.25}
-      >
+      <Map center={[-122.3927, 37.7816]} pitch={26} styles={styles} zoom={13.25}>
         <Map.Route coordinates={defaultRoute} />
         {defaultStops.map((stop) => (
           <Map.Marker
@@ -146,9 +139,7 @@ function DefaultMapDemo() {
                 color={stop.kind === "start" ? "#22c55e" : undefined}
                 ringColor={stop.kind === "start" ? "#bbf7d0" : undefined}
               />
-              <Map.MarkerLabel>
-                {stop.kind === "start" ? "Start" : stop.label}
-              </Map.MarkerLabel>
+              <Map.MarkerLabel>{stop.kind === "start" ? "Start" : stop.label}</Map.MarkerLabel>
             </Map.MarkerContent>
             <Map.MarkerTooltip>
               <span className="font-medium">{stop.label}</span>

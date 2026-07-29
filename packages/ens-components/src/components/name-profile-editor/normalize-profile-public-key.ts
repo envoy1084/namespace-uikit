@@ -1,7 +1,7 @@
-import type { NameProfilePublicKeyRecord } from "#/components/name-profile-editor/types";
-
 import { err, ok, type Result } from "neverthrow";
 import { isHex, size, zeroHash } from "viem";
+
+import type { NameProfilePublicKeyRecord } from "#/components/name-profile-editor/types";
 
 export type NormalizeProfilePublicKeyError =
   | "INVALID_PUBLIC_KEY_X"

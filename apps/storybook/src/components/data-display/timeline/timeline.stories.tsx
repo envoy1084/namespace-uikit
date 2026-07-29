@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
 import { Avatar } from "@thenamespace/uikit/avatar";
 import { Button } from "@thenamespace/uikit/button";
 import { Card } from "@thenamespace/uikit/card";
@@ -51,14 +50,7 @@ const icons = [
 const TimelineGlyph = ({ icon }: { icon: IconSvgElement }) => (
   <HugeiconsIcon aria-hidden icon={icon} strokeWidth={2} />
 );
-const statuses: TimelineStatus[] = [
-  "default",
-  "current",
-  "warning",
-  "default",
-  "muted",
-  "success",
-];
+const statuses: TimelineStatus[] = ["default", "current", "warning", "default", "muted", "success"];
 const rollout = [
   [
     "Feature flag created",
@@ -102,9 +94,7 @@ export const Default: Story = {
     <div className="w-full max-w-[560px] min-w-0">
       <div className="mb-4">
         <p className="text-muted m-0 text-xs font-medium">Rollout audit</p>
-        <h3 className="text-foreground m-0 text-base font-semibold">
-          Checkout redesign
-        </h3>
+        <h3 className="text-foreground m-0 text-base font-semibold">Checkout redesign</h3>
       </div>
       <Timeline density="compact" size="sm">
         {rollout.map(([title, description, label, time], index) => (
@@ -116,9 +106,7 @@ export const Default: Story = {
               <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                 <div className="min-w-0">
                   <div className="flex min-w-0 flex-wrap items-center gap-2">
-                    <h3 className="text-foreground m-0 text-xs leading-5 font-medium">
-                      {title}
-                    </h3>
+                    <h3 className="text-foreground m-0 text-xs leading-5 font-medium">{title}</h3>
                     <Chip
                       color={
                         index === 1
@@ -135,13 +123,9 @@ export const Default: Story = {
                       {label}
                     </Chip>
                   </div>
-                  <p className="text-muted m-0 mt-1 text-xs leading-5">
-                    {description}
-                  </p>
+                  <p className="text-muted m-0 mt-1 text-xs leading-5">{description}</p>
                 </div>
-                <time className="text-muted shrink-0 text-xs leading-5">
-                  {time}
-                </time>
+                <time className="text-muted shrink-0 text-xs leading-5">{time}</time>
               </div>
             </Timeline.Content>
           </Timeline.Item>
@@ -245,9 +229,7 @@ const MilestoneContent = ({
         </>
       )}
     </div>
-    <h3 className="text-foreground m-0 text-sm leading-5 font-medium">
-      {milestone.title}
-    </h3>
+    <h3 className="text-foreground m-0 text-sm leading-5 font-medium">{milestone.title}</h3>
     <p className="text-muted m-0 text-xs leading-5">{milestone.description}</p>
     <span className="text-muted text-xs leading-5">{milestone.metric}</span>
   </>
@@ -277,12 +259,7 @@ export const CenteredMilestones: Story = {
         </Timeline>
       </div>
       <div className="hidden sm:block">
-        <Timeline
-          axis="center"
-          itemAlign="center"
-          placement="alternate"
-          size="sm"
-        >
+        <Timeline axis="center" itemAlign="center" placement="alternate" size="sm">
           {milestones.map((milestone, index) => (
             <Timeline.Item key={milestone.title}>
               <Timeline.Marker>
@@ -332,23 +309,14 @@ export const StudioReview: Story = {
     <div className="w-full max-w-[620px] min-w-0">
       <div className="mb-4">
         <p className="text-muted m-0 text-xs font-medium">Studio review</p>
-        <h3 className="text-foreground m-0 text-base font-semibold">
-          Runner launch assets
-        </h3>
+        <h3 className="text-foreground m-0 text-base font-semibold">Runner launch assets</h3>
       </div>
       <Timeline density="compact" size="sm">
         {studio.map((item, index) => (
-          <Timeline.Item
-            align="center"
-            key={item[0]}
-            status={item[3] as TimelineStatus}
-          >
+          <Timeline.Item align="center" key={item[0]} status={item[3] as TimelineStatus}>
             <Timeline.Marker className="size-6 overflow-hidden border-0 p-0 shadow-none">
               <Avatar className="size-full" size="sm">
-                <Avatar.Image
-                  alt=""
-                  src={`/assets/avatars/${avatars[index]}.jpg`}
-                />
+                <Avatar.Image alt="" src={`/assets/avatars/${avatars[index]}.jpg`} />
                 <Avatar.Fallback>
                   {item[1]
                     .split(" ")
@@ -360,9 +328,7 @@ export const StudioReview: Story = {
             <Timeline.Content className="gap-2">
               <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                 <div className="flex min-w-0 flex-wrap items-center gap-2">
-                  <h3 className="text-foreground m-0 text-xs leading-5 font-medium">
-                    {item[0]}
-                  </h3>
+                  <h3 className="text-foreground m-0 text-xs leading-5 font-medium">{item[0]}</h3>
                   {item[4] === "asset" ? (
                     <Chip color="accent" size="sm" variant="soft">
                       Review
@@ -388,9 +354,8 @@ export const StudioReview: Story = {
                     />
                     <div className="flex min-w-0 flex-col gap-3 p-3">
                       <p className="text-muted m-0 text-xs leading-5">
-                        Final hero crop is ready for retouch review with the
-                        side profile, lace detail, and marketplace thumbnail
-                        queued.
+                        Final hero crop is ready for retouch review with the side profile, lace
+                        detail, and marketplace thumbnail queued.
                       </p>
                       <div className="flex flex-wrap items-center gap-2">
                         <Chip size="sm" variant="secondary">
@@ -442,25 +407,18 @@ export const CompactLog: Story = {
             <Timeline.Marker>
               <TimelineGlyph
                 icon={
-                  [
-                    SecurityWarningIcon,
-                    CreditCardIcon,
-                    CheckmarkCircle02Icon,
-                    ReceiptTextIcon,
-                  ][index]!
+                  [SecurityWarningIcon, CreditCardIcon, CheckmarkCircle02Icon, ReceiptTextIcon][
+                    index
+                  ]!
                 }
               />
             </Timeline.Marker>
             <Timeline.Content className="gap-1">
               <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:justify-between">
-                <h3 className="text-foreground m-0 text-xs font-medium">
-                  {item[0]}
-                </h3>
+                <h3 className="text-foreground m-0 text-xs font-medium">{item[0]}</h3>
                 <time className="text-muted shrink-0 text-xs">{item[1]}</time>
               </div>
-              {item[3] ? (
-                <p className="text-muted m-0 text-xs leading-snug">{item[3]}</p>
-              ) : null}
+              {item[3] ? <p className="text-muted m-0 text-xs leading-snug">{item[3]}</p> : null}
             </Timeline.Content>
           </Timeline.Item>
         ))}
@@ -518,9 +476,7 @@ export const IncidentResponse: Story = {
     <div className="mx-auto w-[calc(100%-2rem)] max-w-[720px] min-w-0 sm:w-full">
       <div className="mb-5">
         <p className="text-muted m-0 text-xs font-medium">Incident response</p>
-        <h3 className="text-foreground m-0 text-base font-semibold">
-          Export queue degradation
-        </h3>
+        <h3 className="text-foreground m-0 text-base font-semibold">Export queue degradation</h3>
       </div>
       <Timeline density="compact" size="sm">
         <Timeline.Item align="center">
@@ -557,40 +513,26 @@ export const IncidentResponse: Story = {
           <Timeline.Content className="gap-2.5">
             <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
               <div className="flex min-w-0 flex-wrap items-center gap-2">
-                <span className="text-muted text-xs leading-5">
-                  Update from
-                </span>
+                <span className="text-muted text-xs leading-5">Update from</span>
                 <Avatar className="size-4" size="sm">
                   <Avatar.Image alt="Nora Vazquez" src={incidentAvatars.blue} />
                   <Avatar.Fallback>NV</Avatar.Fallback>
                 </Avatar>
-                <h3 className="text-foreground m-0 text-xs leading-5 font-medium">
-                  Nora Vazquez
-                </h3>
+                <h3 className="text-foreground m-0 text-xs leading-5 font-medium">Nora Vazquez</h3>
                 <Chip size="sm" variant="soft">
                   On-call
                 </Chip>
               </div>
-              <time className="text-muted shrink-0 text-xs leading-5">
-                2:28 AM
-              </time>
+              <time className="text-muted shrink-0 text-xs leading-5">2:28 AM</time>
             </div>
-            <Card
-              className="!border-border w-full !border !border-solid p-3"
-              variant="transparent"
-            >
+            <Card className="!border-border w-full !border !border-solid p-3" variant="transparent">
               <p className="text-foreground m-0 text-sm leading-relaxed">
-                Confirmed the delay is isolated to scheduled exports. API
-                requests and dashboard reads are healthy while the backlog
-                drains.
+                Confirmed the delay is isolated to scheduled exports. API requests and dashboard
+                reads are healthy while the backlog drains.
               </p>
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 <Chip size="sm" variant="secondary">
-                  <HugeiconsIcon
-                    aria-hidden
-                    icon={Attachment01Icon}
-                    width={12}
-                  />
+                  <HugeiconsIcon aria-hidden icon={Attachment01Icon} width={12} />
                   <Chip.Label>worker-trace.har - 42 KB</Chip.Label>
                 </Chip>
                 <Link className="text-xs" href="#">
@@ -627,9 +569,7 @@ export const IncidentResponse: Story = {
                                 .join("")}
                             </Avatar.Fallback>
                           </Avatar>
-                          <span className="text-foreground font-medium">
-                            {item.actor}
-                          </span>
+                          <span className="text-foreground font-medium">{item.actor}</span>
                         </span>
                       </span>
                     </>
@@ -642,23 +582,16 @@ export const IncidentResponse: Story = {
                     </>
                   ) : "trailingText" in item ? (
                     <>
-                      <span className="text-foreground font-medium">
-                        {item.text}
-                      </span>{" "}
+                      <span className="text-foreground font-medium">{item.text}</span>{" "}
                       {item.trailingText}
                     </>
                   ) : "target" in item ? (
                     <>
-                      {item.text}{" "}
-                      <span className="text-foreground font-medium">
-                        {item.target}
-                      </span>
+                      {item.text} <span className="text-foreground font-medium">{item.target}</span>
                     </>
                   ) : null}
                 </p>
-                <time className="text-muted shrink-0 text-xs leading-5">
-                  {item.time}
-                </time>
+                <time className="text-muted shrink-0 text-xs leading-5">{item.time}</time>
               </div>
             </Timeline.Content>
           </Timeline.Item>
@@ -721,9 +654,7 @@ export const VersionHistory: Story = {
   render: () => (
     <Card className="w-full max-w-[420px] gap-0 overflow-hidden p-0">
       <Card.Header className="border-border flex-row items-center justify-between border-b px-5 py-4">
-        <h3 className="text-foreground m-0 text-base font-semibold">
-          Version history
-        </h3>
+        <h3 className="text-foreground m-0 text-base font-semibold">Version history</h3>
         <CloseButton aria-label="Close revision history" />
       </Card.Header>
       <Card.Content className="px-5 py-4">
@@ -733,9 +664,7 @@ export const VersionHistory: Story = {
               <Timeline.Marker />
               <Timeline.Content className="gap-1.5">
                 <div className="flex min-h-5 min-w-0 items-center gap-2">
-                  <h4 className="text-foreground m-0 text-xs font-medium">
-                    {item[0]}
-                  </h4>
+                  <h4 className="text-foreground m-0 text-xs font-medium">{item[0]}</h4>
                   {item[0] === "v8" ? (
                     <Chip color="accent" size="sm" variant="soft">
                       Draft
@@ -749,19 +678,12 @@ export const VersionHistory: Story = {
                 <p className="text-muted m-0 text-xs leading-5">{item[1]}</p>
                 <div className="flex items-center gap-2">
                   <Avatar className="size-4" size="sm">
-                    <Avatar.Image
-                      alt={item[2]}
-                      src={revisionAvatars[item[2]]}
-                    />
+                    <Avatar.Image alt={item[2]} src={revisionAvatars[item[2]]} />
                     <Avatar.Fallback>{item[2][0]}</Avatar.Fallback>
                   </Avatar>
-                  <span className="text-muted text-xs leading-5">
-                    {item[2]}
-                  </span>
+                  <span className="text-muted text-xs leading-5">{item[2]}</span>
                   <span className="text-muted text-xs leading-5">-</span>
-                  <time className="text-muted text-xs leading-5">
-                    {item[3]}
-                  </time>
+                  <time className="text-muted text-xs leading-5">{item[3]}</time>
                 </div>
               </Timeline.Content>
             </Timeline.Item>
@@ -842,14 +764,10 @@ export const RepositoryActivity: Story = {
                   <h3 className="text-foreground m-0 text-sm leading-5 font-medium">
                     {item.title}
                   </h3>
-                  <p className="text-muted m-0 text-xs leading-5">
-                    {item.actor}
-                  </p>
+                  <p className="text-muted m-0 text-xs leading-5">{item.actor}</p>
                 </div>
                 {"date" in item ? (
-                  <time className="text-muted shrink-0 text-xs leading-5">
-                    {item.date}
-                  </time>
+                  <time className="text-muted shrink-0 text-xs leading-5">{item.date}</time>
                 ) : null}
               </div>
               {"repositories" in item ? (
@@ -898,9 +816,7 @@ export const RepositoryActivity: Story = {
                       <span className="bg-danger size-2" />
                       <span className="bg-separator size-2" />
                     </div>
-                    <span className="text-muted text-xs">
-                      - {item.pullRequest.comments}
-                    </span>
+                    <span className="text-muted text-xs">- {item.pullRequest.comments}</span>
                   </Card.Footer>
                 </Card>
               ) : null}
@@ -1014,18 +930,14 @@ export const SplitContent: Story = {
     <div className="w-full max-w-[680px] min-w-0 py-4">
       <div className="mx-auto mb-5 max-w-[360px] text-center">
         <p className="text-muted m-0 text-xs font-medium">Launch review</p>
-        <h3 className="text-foreground m-0 text-base font-semibold">
-          Billing rollout
-        </h3>
+        <h3 className="text-foreground m-0 text-base font-semibold">Billing rollout</h3>
       </div>
       <Timeline axis="center" placement="end" size="sm">
         {split.map((item) => (
           <Timeline.Item key={item.title} status={item.status}>
             <Timeline.Content className="max-w-[180px] gap-1.5" side="start">
               <div className="flex flex-wrap items-center justify-end gap-2">
-                <time className="text-foreground text-xs leading-5 font-medium">
-                  {item.time}
-                </time>
+                <time className="text-foreground text-xs leading-5 font-medium">{item.time}</time>
                 <Chip color={item.laneColor} size="sm" variant="soft">
                   {item.lane}
                 </Chip>
@@ -1036,22 +948,16 @@ export const SplitContent: Story = {
               <TimelineGlyph icon={item.icon} />
             </Timeline.Marker>
             <Timeline.Content className="max-w-[320px] gap-2" side="end">
-              <h3 className="text-foreground m-0 text-sm leading-5 font-medium">
-                {item.title}
-              </h3>
+              <h3 className="text-foreground m-0 text-sm leading-5 font-medium">{item.title}</h3>
               <Card
                 className="!border-border w-full !border !border-solid p-3"
                 variant="transparent"
               >
-                <p className="text-muted m-0 text-xs leading-5">
-                  {item.description}
-                </p>
+                <p className="text-muted m-0 text-xs leading-5">{item.description}</p>
                 <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {item.metrics.map((metric) => (
                     <div className="min-w-0" key={metric.label}>
-                      <span className="text-muted block text-[11px] leading-4">
-                        {metric.label}
-                      </span>
+                      <span className="text-muted block text-[11px] leading-4">{metric.label}</span>
                       <span className="text-foreground block truncate text-xs leading-5 font-medium">
                         {metric.value}
                       </span>

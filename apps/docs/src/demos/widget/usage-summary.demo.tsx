@@ -34,9 +34,7 @@ export const DemoUsageSummaryExample = () => (
             <Table.Body>
               {usage.map((item, index) => (
                 <Table.Row
-                  className={
-                    index === usage.length - 1 ? "[&_td]:border-b-0" : ""
-                  }
+                  className={index === usage.length - 1 ? "[&_td]:border-b-0" : ""}
                   key={item.label}
                 >
                   <Table.Cell>
@@ -52,15 +50,11 @@ export const DemoUsageSummaryExample = () => (
                           <ProgressCircle.FillCircle />
                         </ProgressCircle.Track>
                       </ProgressCircle>
-                      <span className="text-foreground text-sm font-medium">
-                        {item.label}
-                      </span>
+                      <span className="text-foreground text-sm font-medium">{item.label}</span>
                     </div>
                   </Table.Cell>
                   <Table.Cell>
-                    <span className="text-foreground text-sm font-semibold">
-                      {item.amount}
-                    </span>
+                    <span className="text-foreground text-sm font-semibold">{item.amount}</span>
                   </Table.Cell>
                 </Table.Row>
               ))}

@@ -1,11 +1,6 @@
 "use client";
 
-import type {
-  ComponentProps,
-  ComponentPropsWithRef,
-  ReactElement,
-  ReactNode,
-} from "react";
+import type { ComponentProps, ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 
 import { Checkbox, CheckboxGroup, cn } from "@heroui/react";
 
@@ -54,15 +49,11 @@ function CheckboxButtonGroupItem({
         className={(renderProps) =>
           cn(
             "checkbox-button-group__item",
-            typeof className === "function"
-              ? className(renderProps)
-              : className,
+            typeof className === "function" ? className(renderProps) : className,
           ) ?? "checkbox-button-group__item"
         }
       >
-        {(renderProps) =>
-          typeof children === "function" ? children(renderProps) : children
-        }
+        {(renderProps) => (typeof children === "function" ? children(renderProps) : children)}
       </Checkbox.Content>
     </Checkbox>
   );
@@ -80,8 +71,7 @@ function CheckboxButtonGroupIndicator({
       <Checkbox.Control
         {...props}
         className={
-          cn("checkbox-button-group__indicator", className) ??
-          "checkbox-button-group__indicator"
+          cn("checkbox-button-group__indicator", className) ?? "checkbox-button-group__indicator"
         }
         data-slot="checkbox-button-group-indicator"
       >

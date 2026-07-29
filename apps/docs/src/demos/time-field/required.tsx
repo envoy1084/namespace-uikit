@@ -8,17 +8,13 @@ export function Required() {
       <TimeField isRequired className="w-[256px]" name="time">
         <Label>Time</Label>
         <TimeField.Group>
-          <TimeField.Input>
-            {(segment) => <TimeField.Segment segment={segment} />}
-          </TimeField.Input>
+          <TimeField.Input>{(segment) => <TimeField.Segment segment={segment} />}</TimeField.Input>
         </TimeField.Group>
       </TimeField>
       <TimeField isRequired className="w-[256px]" name="appointment-time">
         <Label>Appointment time</Label>
         <TimeField.Group>
-          <TimeField.Input>
-            {(segment) => <TimeField.Segment segment={segment} />}
-          </TimeField.Input>
+          <TimeField.Input>{(segment) => <TimeField.Segment segment={segment} />}</TimeField.Input>
         </TimeField.Group>
         <Description>Required field</Description>
       </TimeField>

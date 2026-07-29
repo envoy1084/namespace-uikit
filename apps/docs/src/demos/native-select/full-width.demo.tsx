@@ -29,9 +29,7 @@ function LabeledStatus({ description = false }: { description?: boolean }) {
         <StatusOptions />
         <NativeSelect.Indicator />
       </NativeSelect.Trigger>
-      {description ? (
-        <Description>Choose the current task status</Description>
-      ) : null}
+      {description ? <Description>Choose the current task status</Description> : null}
     </NativeSelect>
   );
 }

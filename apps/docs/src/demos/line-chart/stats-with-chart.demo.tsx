@@ -4,25 +4,14 @@
 import { LineChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 
-const revenueData = [
-  4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500,
-].map((revenue, index) => ({
-  month: [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ][index]!,
-  revenue,
-}));
+const revenueData = [4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500].map(
+  (revenue, index) => ({
+    month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][
+      index
+    ]!,
+    revenue,
+  }),
+);
 
 function Legend({
   items,
@@ -34,11 +23,7 @@ function Legend({
       {items.map(({ color, dashed, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
           <span
-            className={
-              dashed
-                ? "h-0 w-3 border-t-2 border-dashed"
-                : "size-3 rounded-full"
-            }
+            className={dashed ? "h-0 w-3 border-t-2 border-dashed" : "size-3 rounded-full"}
             style={dashed ? { borderColor: color } : { backgroundColor: color }}
           />
           <span className="text-muted text-xs">{label}</span>
@@ -79,14 +64,10 @@ export const DemoStatsWithChartExample = () => {
         {stats.map((stat) => (
           <Card className="gap-1 rounded-2xl" key={stat.label}>
             <Card.Header>
-              <Card.Description className="text-sm font-medium">
-                {stat.label}
-              </Card.Description>
+              <Card.Description className="text-sm font-medium">{stat.label}</Card.Description>
             </Card.Header>
             <Card.Content className="flex flex-row items-center gap-2">
-              <span className="text-foreground flex-1 text-2xl font-semibold">
-                {stat.value}
-              </span>
+              <span className="text-foreground flex-1 text-2xl font-semibold">{stat.value}</span>
               <span
                 className={
                   stat.trend === "up"
@@ -119,9 +100,7 @@ export const DemoStatsWithChartExample = () => {
             <LineChart.Tooltip
               content={
                 <LineChart.TooltipContent
-                  valueFormatter={(value) =>
-                    `$${Number(value).toLocaleString()}`
-                  }
+                  valueFormatter={(value) => `$${Number(value).toLocaleString()}`}
                 />
               }
             />

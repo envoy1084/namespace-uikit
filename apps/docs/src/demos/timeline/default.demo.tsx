@@ -26,14 +26,7 @@ const TimelineGlyph = ({ icon }: { icon: IconSvgElement }) => (
   <HugeiconsIcon aria-hidden icon={icon} strokeWidth={2} />
 );
 
-const statuses: TimelineStatus[] = [
-  "default",
-  "current",
-  "warning",
-  "default",
-  "muted",
-  "success",
-];
+const statuses: TimelineStatus[] = ["default", "current", "warning", "default", "muted", "success"];
 
 const rollout = [
   [
@@ -78,9 +71,7 @@ export const DemoDefaultExample = () => (
   <div className="w-full max-w-[560px] min-w-0">
     <div className="mb-4">
       <p className="text-muted m-0 text-xs font-medium">Rollout audit</p>
-      <h3 className="text-foreground m-0 text-base font-semibold">
-        Checkout redesign
-      </h3>
+      <h3 className="text-foreground m-0 text-base font-semibold">Checkout redesign</h3>
     </div>
     <Timeline density="compact" size="sm">
       {rollout.map(([title, description, label, time], index) => (
@@ -92,9 +83,7 @@ export const DemoDefaultExample = () => (
             <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
               <div className="min-w-0">
                 <div className="flex min-w-0 flex-wrap items-center gap-2">
-                  <h3 className="text-foreground m-0 text-xs leading-5 font-medium">
-                    {title}
-                  </h3>
+                  <h3 className="text-foreground m-0 text-xs leading-5 font-medium">{title}</h3>
                   <Chip
                     color={
                       index === 1
@@ -111,13 +100,9 @@ export const DemoDefaultExample = () => (
                     {label}
                   </Chip>
                 </div>
-                <p className="text-muted m-0 mt-1 text-xs leading-5">
-                  {description}
-                </p>
+                <p className="text-muted m-0 mt-1 text-xs leading-5">{description}</p>
               </div>
-              <time className="text-muted shrink-0 text-xs leading-5">
-                {time}
-              </time>
+              <time className="text-muted shrink-0 text-xs leading-5">{time}</time>
             </div>
           </Timeline.Content>
         </Timeline.Item>

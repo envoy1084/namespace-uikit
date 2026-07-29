@@ -1,19 +1,9 @@
-import {
-  Description,
-  Label,
-  Radio,
-  RadioGroup,
-  Surface,
-} from "@thenamespace/uikit";
+import { Description, Label, Radio, RadioGroup, Surface } from "@thenamespace/uikit";
 
 export function OnSurface() {
   return (
     <Surface className="w-full rounded-3xl p-6">
-      <RadioGroup
-        defaultValue="premium"
-        name="plan-on-surface"
-        variant="secondary"
-      >
+      <RadioGroup defaultValue="premium" name="plan-on-surface" variant="secondary">
         <Label>Plan selection</Label>
         <Description>Choose the plan that suits you best</Description>
         <Radio value="basic">

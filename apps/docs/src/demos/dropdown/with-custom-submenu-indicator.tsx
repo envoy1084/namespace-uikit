@@ -21,10 +21,7 @@ export function WithCustomSubmenuIndicator() {
             <Dropdown.Item id="share" textValue="Share">
               <Label>More options</Label>
               <Dropdown.SubmenuIndicator>
-                <HugeiconsIcon
-                  icon={ArrowRight01Icon}
-                  className="text-muted size-3.5"
-                />
+                <HugeiconsIcon icon={ArrowRight01Icon} className="text-muted size-3.5" />
               </Dropdown.SubmenuIndicator>
             </Dropdown.Item>
             <Dropdown.Popover>

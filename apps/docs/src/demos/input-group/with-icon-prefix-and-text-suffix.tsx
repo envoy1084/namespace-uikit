@@ -5,11 +5,7 @@ import { Globe02Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function WithIconPrefixAndTextSuffix() {
   return (
-    <TextField
-      className="w-full max-w-[280px]"
-      defaultValue="namespace"
-      name="website"
-    >
+    <TextField className="w-full max-w-[280px]" defaultValue="namespace" name="website">
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Prefix>

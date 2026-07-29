@@ -1,7 +1,6 @@
 "use client";
 
 import type { ToastContentValue } from "@thenamespace/uikit";
-
 import {
   Button,
   Toast,

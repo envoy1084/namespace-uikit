@@ -5,11 +5,7 @@ import { Copy01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function WithCopySuffix() {
   return (
-    <TextField
-      className="w-full max-w-[280px]"
-      defaultValue="namespace.ninja"
-      name="website"
-    >
+    <TextField className="w-full max-w-[280px]" defaultValue="namespace.ninja" name="website">
       <Label>Website</Label>
       <InputGroup>
         <InputGroup.Input className="w-full max-w-[280px]" />

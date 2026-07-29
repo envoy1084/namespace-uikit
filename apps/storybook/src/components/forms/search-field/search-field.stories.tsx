@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { CancelCircleIcon, FilterIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
@@ -85,10 +84,7 @@ export const WithDescription: Story = {
         <Label>Search products</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input
-            className="w-[280px]"
-            placeholder="Search products..."
-          />
+          <SearchField.Input className="w-[280px]" placeholder="Search products..." />
           <SearchField.ClearButton />
         </SearchField.Group>
         <Description>Enter keywords to search for products</Description>
@@ -97,10 +93,7 @@ export const WithDescription: Story = {
         <Label>Search users</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input
-            className="w-[280px]"
-            placeholder="Search users..."
-          />
+          <SearchField.Input className="w-[280px]" placeholder="Search users..." />
           <SearchField.ClearButton />
         </SearchField.Group>
         <Description>Search by name, email, or username</Description>
@@ -124,10 +117,7 @@ export const Required: Story = {
         <Label>Search query</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input
-            className="w-[280px]"
-            placeholder="Enter search query..."
-          />
+          <SearchField.Input className="w-[280px]" placeholder="Enter search query..." />
           <SearchField.ClearButton />
         </SearchField.Group>
         <Description>Minimum 3 characters required</Description>
@@ -152,11 +142,7 @@ export const Invalid: Story = {
         <Label>Search</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input
-            className="w-[280px]"
-            placeholder="Search..."
-            value="invalid@query"
-          />
+          <SearchField.Input className="w-[280px]" placeholder="Search..." value="invalid@query" />
           <SearchField.ClearButton />
         </SearchField.Group>
         <FieldError>Invalid characters in search query</FieldError>
@@ -306,20 +292,13 @@ export const FormExample: Story = {
           <Label>Search products</Label>
           <SearchField.Group>
             <SearchField.SearchIcon />
-            <SearchField.Input
-              className="w-full"
-              placeholder="Search products..."
-            />
+            <SearchField.Input className="w-full" placeholder="Search products..." />
             <SearchField.ClearButton />
           </SearchField.Group>
           {isInvalid ? (
-            <FieldError>
-              Search query must be at least {MIN_LENGTH} characters
-            </FieldError>
+            <FieldError>Search query must be at least {MIN_LENGTH} characters</FieldError>
           ) : (
-            <Description>
-              Enter at least {MIN_LENGTH} characters to search
-            </Description>
+            <Description>Enter at least {MIN_LENGTH} characters to search</Description>
           )}
         </SearchField>
         <Button
@@ -377,16 +356,10 @@ export const WithKeyboardShortcut: Story = {
             <Label>Search</Label>
             <SearchField.Group>
               <SearchField.SearchIcon />
-              <SearchField.Input
-                ref={inputRef}
-                className="w-[280px]"
-                placeholder="Search..."
-              />
+              <SearchField.Input ref={inputRef} className="w-[280px]" placeholder="Search..." />
               <SearchField.ClearButton />
             </SearchField.Group>
-            <Description>
-              Use keyboard shortcut to quickly focus this field
-            </Description>
+            <Description>Use keyboard shortcut to quickly focus this field</Description>
           </SearchField>
         </div>
         <div className="text-default-500 flex items-center gap-2 text-sm">

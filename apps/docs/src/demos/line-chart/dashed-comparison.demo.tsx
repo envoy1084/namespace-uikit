@@ -4,25 +4,14 @@
 import { LineChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 
-const revenueData = [
-  4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500,
-].map((revenue, index) => ({
-  month: [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ][index]!,
-  revenue,
-}));
+const revenueData = [4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500].map(
+  (revenue, index) => ({
+    month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][
+      index
+    ]!,
+    revenue,
+  }),
+);
 
 function Legend({
   items,
@@ -34,11 +23,7 @@ function Legend({
       {items.map(({ color, dashed, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
           <span
-            className={
-              dashed
-                ? "h-0 w-3 border-t-2 border-dashed"
-                : "size-3 rounded-full"
-            }
+            className={dashed ? "h-0 w-3 border-t-2 border-dashed" : "size-3 rounded-full"}
             style={dashed ? { borderColor: color } : { backgroundColor: color }}
           />
           <span className="text-muted text-xs">{label}</span>
@@ -71,9 +56,7 @@ export const DemoDashedComparisonExample = () => {
   const data = revenueData.map((item, index) => ({
     actual: item.revenue,
     month: item.month,
-    target: [
-      5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000, 10500,
-    ][index]!,
+    target: [5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000, 10500][index]!,
   }));
   return (
     <Card className="w-[520px] rounded-2xl">

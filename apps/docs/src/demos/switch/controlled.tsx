@@ -17,9 +17,7 @@ export function Controlled() {
           Enable notifications
         </Switch.Content>
       </Switch>
-      <p className="text-muted text-sm">
-        Switch is {isSelected ? "on" : "off"}
-      </p>
+      <p className="text-muted text-sm">Switch is {isSelected ? "on" : "off"}</p>
     </div>
   );
 }

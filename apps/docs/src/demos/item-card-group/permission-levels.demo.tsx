@@ -18,9 +18,7 @@ type Item = {
   title: string;
 };
 
-const Chevron = () => (
-  <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />
-);
+const Chevron = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
 
 function Row({
   action = <Chevron />,
@@ -49,25 +47,15 @@ function Row({
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>{title}</ItemCard.Title>
-        {description && (
-          <ItemCard.Description>{description}</ItemCard.Description>
-        )}
+        {description && <ItemCard.Description>{description}</ItemCard.Description>}
       </ItemCard.Content>
       <ItemCard.Action>{action}</ItemCard.Action>
     </ItemCard>
   );
 }
 
-function SelectAction({
-  label,
-  multiple = false,
-}: {
-  label: string;
-  multiple?: boolean;
-}) {
-  const [value, setValue] = useState<string | string[]>(
-    multiple ? ["email", "push"] : "view",
-  );
+function SelectAction({ label, multiple = false }: { label: string; multiple?: boolean }) {
+  const [value, setValue] = useState<string | string[]>(multiple ? ["email", "push"] : "view");
   const options = multiple
     ? [
         ["email", "Email"],
@@ -110,9 +98,7 @@ export const DemoPermissionLevelsExample = () => (
     <ItemCardGroup variant="transparent">
       <ItemCardGroup.Header>
         <ItemCardGroup.Title>Permissions</ItemCardGroup.Title>
-        <ItemCardGroup.Description>
-          Control access levels for your team
-        </ItemCardGroup.Description>
+        <ItemCardGroup.Description>Control access levels for your team</ItemCardGroup.Description>
       </ItemCardGroup.Header>
       {[
         ["Documents", "Access to shared files", "solar:folder-open-linear"],

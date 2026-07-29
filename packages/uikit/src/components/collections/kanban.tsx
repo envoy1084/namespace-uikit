@@ -1,18 +1,7 @@
 "use client";
 
-import type {
-  ComponentPropsWithRef,
-  CSSProperties,
-  ReactElement,
-  ReactNode,
-} from "react";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-} from "react";
+import type { ComponentPropsWithRef, CSSProperties, ReactElement, ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo } from "react";
 
 import { cn, ScrollShadow } from "@heroui/react";
 import { useListData, type ListData } from "@react-stately/data";
@@ -41,10 +30,7 @@ const Context = createContext<KanbanContextValue>({
   cardContentClass: "kanban__card-content--md",
   cardListClass: "kanban__card-list--md",
 });
-const mergeClassName = <T,>(
-  className: ((props: T) => string) | string | undefined,
-  base: string,
-) =>
+const mergeClassName = <T,>(className: ((props: T) => string) | string | undefined, base: string) =>
   typeof className === "function"
     ? (props: T) => cn(base, className(props)) ?? ""
     : (cn(base, className) ?? "");
@@ -84,17 +70,9 @@ export function KanbanRoot({
 }
 
 export type KanbanColumnProps = ComponentPropsWithRef<"section">;
-export function KanbanColumn({
-  children,
-  className,
-  ...props
-}: KanbanColumnProps): ReactElement {
+export function KanbanColumn({ children, className, ...props }: KanbanColumnProps): ReactElement {
   return (
-    <section
-      {...props}
-      className={cn("kanban__column", className)}
-      data-slot="kanban-column"
-    >
+    <section {...props} className={cn("kanban__column", className)} data-slot="kanban-column">
       {children}
     </section>
   );
@@ -106,11 +84,7 @@ export function KanbanColumnBody({
   ...props
 }: KanbanColumnBodyProps): ReactElement {
   return (
-    <div
-      {...props}
-      className={cn("kanban__column-body", className)}
-      data-slot="kanban-column-body"
-    >
+    <div {...props} className={cn("kanban__column-body", className)} data-slot="kanban-column-body">
       {children}
     </div>
   );
@@ -196,9 +170,7 @@ export function KanbanColumnCount({
   );
 }
 
-export interface KanbanCardListProps<
-  T extends object = object,
-> extends GridListProps<T> {}
+export interface KanbanCardListProps<T extends object = object> extends GridListProps<T> {}
 export function KanbanCardList<T extends object = object>({
   children,
   className,
@@ -219,10 +191,7 @@ export function KanbanCardList<T extends object = object>({
             ),
           }
         : {})}
-      className={mergeClassName(
-        className,
-        cn("kanban__card-list", context.cardListClass) ?? "",
-      )}
+      className={mergeClassName(className, cn("kanban__card-list", context.cardListClass) ?? "")}
       data-slot="kanban-card-list"
       selectionMode={selectionMode}
     >
@@ -231,9 +200,7 @@ export function KanbanCardList<T extends object = object>({
   );
 }
 
-export interface KanbanCardProps<
-  T extends object = object,
-> extends GridListItemProps<T> {}
+export interface KanbanCardProps<T extends object = object> extends GridListItemProps<T> {}
 export function KanbanCard<T extends object = object>({
   children,
   className,
@@ -243,10 +210,7 @@ export function KanbanCard<T extends object = object>({
   return (
     <GridListItem
       {...props}
-      className={mergeClassName(
-        className,
-        cn("kanban__card", context.cardClass) ?? "kanban__card",
-      )}
+      className={mergeClassName(className, cn("kanban__card", context.cardClass) ?? "kanban__card")}
       data-slot="kanban-card"
     >
       {(renderProps) => (
@@ -293,9 +257,7 @@ export function KanbanDropIndicator({
     />
   );
 }
-export type KanbanScrollShadowProps = ComponentPropsWithRef<
-  typeof ScrollShadow
->;
+export type KanbanScrollShadowProps = ComponentPropsWithRef<typeof ScrollShadow>;
 export function KanbanScrollShadow({
   children,
   className,
@@ -401,30 +363,22 @@ export function useKanbanColumn<T extends object>(
     },
     async onInsert(event) {
       const keys = await Promise.all(
-        event.items
-          .filter((item) => item.kind === "text")
-          .map((item) => item.getText(dragType)),
+        event.items.filter((item) => item.kind === "text").map((item) => item.getText(dragType)),
       );
       for (const key of keys) {
         const item = list.getItem(key);
         if (item) list.update(key, setColumn(item, column));
       }
-      if (event.target.dropPosition === "before")
-        list.moveBefore(event.target.key, keys);
-      else if (event.target.dropPosition === "after")
-        list.moveAfter(event.target.key, keys);
+      if (event.target.dropPosition === "before") list.moveBefore(event.target.key, keys);
+      else if (event.target.dropPosition === "after") list.moveAfter(event.target.key, keys);
     },
     onReorder(event) {
-      if (event.target.dropPosition === "before")
-        list.moveBefore(event.target.key, event.keys);
-      else if (event.target.dropPosition === "after")
-        list.moveAfter(event.target.key, event.keys);
+      if (event.target.dropPosition === "before") list.moveBefore(event.target.key, event.keys);
+      else if (event.target.dropPosition === "after") list.moveAfter(event.target.key, event.keys);
     },
     async onRootDrop(event) {
       const keys = await Promise.all(
-        event.items
-          .filter((item) => item.kind === "text")
-          .map((item) => item.getText(dragType)),
+        event.items.filter((item) => item.kind === "text").map((item) => item.getText(dragType)),
       );
       for (const key of keys) {
         const item = list.getItem(key);
@@ -456,12 +410,8 @@ export function useKanbanDropIndicator({
       if (dragging) {
         const height = dragging.getBoundingClientRect().height;
         if (height > 0)
-          document.documentElement.style.setProperty(
-            "--kanban-drop-height",
-            `${height}px`,
-          );
-      } else
-        document.documentElement.style.removeProperty("--kanban-drop-height");
+          document.documentElement.style.setProperty("--kanban-drop-height", `${height}px`);
+      } else document.documentElement.style.removeProperty("--kanban-drop-height");
     };
     const observer = new MutationObserver(updateHeight);
     observer.observe(document.body, {

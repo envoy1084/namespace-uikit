@@ -1,9 +1,4 @@
-import {
-  Description,
-  InputOTP,
-  Label,
-  REGEXP_ONLY_CHARS,
-} from "@thenamespace/uikit";
+import { Description, InputOTP, Label, REGEXP_ONLY_CHARS } from "@thenamespace/uikit";
 
 export function WithPattern() {
   return (

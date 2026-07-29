@@ -3,13 +3,7 @@
 // @demo-title Review Composer
 import { useState } from "react";
 
-import {
-  Button,
-  ListBox,
-  ProgressCircle,
-  Select,
-  Tooltip,
-} from "@thenamespace/uikit";
+import { Button, ListBox, ProgressCircle, Select, Tooltip } from "@thenamespace/uikit";
 import { PromptInput } from "@thenamespace/uikit";
 import {
   Add01Icon,
@@ -34,16 +28,13 @@ const reviewModels = [
 function ReviewComposerDemo() {
   const [value, setValue] = useState("");
   const [model, setModel] = useState("composer-2.5");
-  const selected =
-    reviewModels.find((item) => item.id === model) ?? reviewModels[0]!;
+  const selected = reviewModels.find((item) => item.id === model) ?? reviewModels[0]!;
   return (
     <div className="flex w-full max-w-[800px] min-w-0 flex-col gap-3 p-4 sm:p-5">
       <div className="flex flex-wrap items-center gap-1.5">
         <Button size="sm" variant="outline">
           <span>Review</span>
-          <span className="text-success-soft-foreground font-semibold">
-            +469
-          </span>
+          <span className="text-success-soft-foreground font-semibold">+469</span>
           <span className="text-danger-soft-foreground font-semibold">-34</span>
         </Button>
         <Button className="hidden sm:inline-flex" size="sm" variant="outline">
@@ -51,18 +42,8 @@ function ReviewComposerDemo() {
         </Button>
         <Tooltip delay={0}>
           <Tooltip.Trigger>
-            <Button
-              isIconOnly
-              aria-label="More actions"
-              size="sm"
-              variant="outline"
-            >
-              <HugeiconsIcon
-                aria-hidden
-                icon={MoreHorizontalIcon}
-                size={16}
-                strokeWidth={2}
-              />
+            <Button isIconOnly aria-label="More actions" size="sm" variant="outline">
+              <HugeiconsIcon aria-hidden icon={MoreHorizontalIcon} size={16} strokeWidth={2} />
             </Button>
           </Tooltip.Trigger>
           <Tooltip.Content>More actions</Tooltip.Content>
@@ -77,23 +58,12 @@ function ReviewComposerDemo() {
       >
         <PromptInput.Shell>
           <PromptInput.Content>
-            <PromptInput.TextArea
-              className="min-w-0"
-              placeholder="Send follow-up"
-            />
+            <PromptInput.TextArea className="min-w-0" placeholder="Send follow-up" />
           </PromptInput.Content>
           <PromptInput.Toolbar>
             <PromptInput.ToolbarStart>
-              <PromptInput.Action
-                aria-label="Add context"
-                tooltip="Add context"
-              >
-                <HugeiconsIcon
-                  aria-hidden
-                  icon={Add01Icon}
-                  size={16}
-                  strokeWidth={2}
-                />
+              <PromptInput.Action aria-label="Add context" tooltip="Add context">
+                <HugeiconsIcon aria-hidden icon={Add01Icon} size={16} strokeWidth={2} />
               </PromptInput.Action>
               <Select
                 aria-label="Model"
@@ -106,9 +76,7 @@ function ReviewComposerDemo() {
                     <span className="flex min-w-0 items-center gap-1">
                       <span className="truncate">{selected.label}</span>
                       {selected.meta ? (
-                        <span className="text-muted shrink-0">
-                          {selected.meta}
-                        </span>
+                        <span className="text-muted shrink-0">{selected.meta}</span>
                       ) : null}
                     </span>
                   </Select.Value>
@@ -117,16 +85,10 @@ function ReviewComposerDemo() {
                 <Select.Popover className="w-[min(320px,calc(100vw-2rem))]">
                   <ListBox>
                     {reviewModels.map((item) => (
-                      <ListBox.Item
-                        key={item.id}
-                        id={item.id}
-                        textValue={item.label}
-                      >
+                      <ListBox.Item key={item.id} id={item.id} textValue={item.label}>
                         <span className="flex min-w-0 items-center gap-1">
                           <span>{item.label}</span>
-                          {item.meta ? (
-                            <span className="text-muted">{item.meta}</span>
-                          ) : null}
+                          {item.meta ? <span className="text-muted">{item.meta}</span> : null}
                         </span>
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
@@ -138,37 +100,16 @@ function ReviewComposerDemo() {
             <PromptInput.ToolbarEnd>
               {value.trim() ? (
                 <>
-                  <PromptInput.Action
-                    aria-label="Voice input"
-                    tooltip="Voice input"
-                  >
-                    <HugeiconsIcon
-                      aria-hidden
-                      icon={Mic01Icon}
-                      size={16}
-                      strokeWidth={2}
-                    />
+                  <PromptInput.Action aria-label="Voice input" tooltip="Voice input">
+                    <HugeiconsIcon aria-hidden icon={Mic01Icon} size={16} strokeWidth={2} />
                   </PromptInput.Action>
                   <PromptInput.Send>
-                    <HugeiconsIcon
-                      aria-hidden
-                      icon={ArrowUp01Icon}
-                      size={16}
-                      strokeWidth={2}
-                    />
+                    <HugeiconsIcon aria-hidden icon={ArrowUp01Icon} size={16} strokeWidth={2} />
                   </PromptInput.Send>
                 </>
               ) : (
-                <PromptInput.Action
-                  aria-label="Voice input"
-                  tooltip="Voice input"
-                >
-                  <HugeiconsIcon
-                    aria-hidden
-                    icon={Mic01Icon}
-                    size={16}
-                    strokeWidth={2}
-                  />
+                <PromptInput.Action aria-label="Voice input" tooltip="Voice input">
+                  <HugeiconsIcon aria-hidden icon={Mic01Icon} size={16} strokeWidth={2} />
                 </PromptInput.Action>
               )}
             </PromptInput.ToolbarEnd>
@@ -178,31 +119,16 @@ function ReviewComposerDemo() {
       <div className="text-muted flex items-center justify-between gap-3 px-2 text-xs sm:px-4 sm:text-sm">
         <div className="flex items-center gap-3 sm:gap-4">
           <span className="flex items-center gap-1.5">
-            <HugeiconsIcon
-              aria-hidden
-              icon={GitBranchIcon}
-              size={16}
-              strokeWidth={2}
-            />
+            <HugeiconsIcon aria-hidden icon={GitBranchIcon} size={16} strokeWidth={2} />
             develop
           </span>
           <span className="flex items-center gap-1.5">
-            <HugeiconsIcon
-              aria-hidden
-              icon={ComputerIcon}
-              size={16}
-              strokeWidth={2}
-            />
+            <HugeiconsIcon aria-hidden icon={ComputerIcon} size={16} strokeWidth={2} />
             Local
           </span>
         </div>
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-          <ProgressCircle
-            aria-label="Task progress"
-            color="default"
-            size="sm"
-            value={32}
-          >
+          <ProgressCircle aria-label="Task progress" color="default" size="sm" value={32}>
             <ProgressCircle.Track>
               <ProgressCircle.TrackCircle />
               <ProgressCircle.FillCircle />

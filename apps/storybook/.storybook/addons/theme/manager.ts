@@ -56,16 +56,11 @@ addons.register("namespace-theme-manager", (api) => {
     });
 
     // Listen for globals updates
-    channel.on(
-      "GLOBALS_UPDATED",
-      (payload: { globals?: Record<string, unknown> }) => {
-        const theme = payload?.globals?.[THEME_GLOBAL_TYPE_ID] as
-          | string
-          | undefined;
+    channel.on("GLOBALS_UPDATED", (payload: { globals?: Record<string, unknown> }) => {
+      const theme = payload?.globals?.[THEME_GLOBAL_TYPE_ID] as string | undefined;
 
-        if (theme) applyTheme(theme);
-      },
-    );
+      if (theme) applyTheme(theme);
+    });
 
     // Replay on lifecycle events to override defaults
     const replayEvents = [

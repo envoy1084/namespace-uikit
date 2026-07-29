@@ -32,12 +32,7 @@ import {
   type ThemeConfig,
   type ThemeMode,
 } from "./theme-config";
-import {
-  colorInputValue,
-  colorToOklch,
-  generateThemeCss,
-  themeStyles,
-} from "./theme-utils";
+import { colorInputValue, colorToOklch, generateThemeCss, themeStyles } from "./theme-utils";
 
 const storageKey = "namespace-theme-builder";
 
@@ -56,9 +51,7 @@ function restoreConfig(value: string): ThemeConfig {
     customFonts: saved.customFonts ?? [],
     font:
       saved.font ??
-      (saved.fontFamily
-        ? { ...defaultTheme.font, family: saved.fontFamily }
-        : defaultTheme.font),
+      (saved.fontFamily ? { ...defaultTheme.font, family: saved.fontFamily } : defaultTheme.font),
   };
 }
 
@@ -84,9 +77,7 @@ function ColorControl({
       >
         <ColorPicker.Trigger className="w-full justify-start gap-2">
           <ColorSwatch className="size-6" size="sm" />
-          <Label className="grow capitalize">
-            {token.replaceAll("-", " ")}
-          </Label>
+          <Label className="grow capitalize">{token.replaceAll("-", " ")}</Label>
           <span className="text-muted font-mono text-xs">
             {colorInputValue(value).toUpperCase()}
           </span>
@@ -101,12 +92,7 @@ function ColorControl({
           >
             <ColorArea.Thumb />
           </ColorArea>
-          <ColorSlider
-            aria-label={`${token} hue`}
-            channel="hue"
-            className="px-1"
-            colorSpace="hsb"
-          >
+          <ColorSlider aria-label={`${token} hue`} channel="hue" className="px-1" colorSpace="hsb">
             <ColorSlider.Track>
               <ColorSlider.Thumb />
             </ColorSlider.Track>
@@ -121,28 +107,14 @@ function ColorControl({
           </ColorField>
         </ColorPicker.Popover>
       </ColorPicker>
-      <TextField
-        aria-label={`${token} CSS value`}
-        value={value}
-        onChange={onChange}
-      >
-        <Input
-          id={id}
-          className="h-8 px-2 font-mono text-[11px]"
-          spellCheck={false}
-        />
+      <TextField aria-label={`${token} CSS value`} value={value} onChange={onChange}>
+        <Input id={id} className="h-8 px-2 font-mono text-[11px]" spellCheck={false} />
       </TextField>
     </div>
   );
 }
 
-function ModeSwitch({
-  mode,
-  onChange,
-}: {
-  mode: ThemeMode;
-  onChange: (mode: ThemeMode) => void;
-}) {
+function ModeSwitch({ mode, onChange }: { mode: ThemeMode; onChange: (mode: ThemeMode) => void }) {
   return (
     <Segment
       aria-label="Preview theme"
@@ -196,22 +168,14 @@ function ThemeControlsDrawer({
             <Drawer.Header>
               <Drawer.Heading>Customize theme</Drawer.Heading>
               <p className="text-muted text-sm">
-                Editing the {mode} theme ·{" "}
-                {Object.keys(config.colors[mode]).length} color tokens
+                Editing the {mode} theme · {Object.keys(config.colors[mode]).length} color tokens
               </p>
             </Drawer.Header>
             <Drawer.Body className="min-h-0 space-y-7 overflow-y-auto px-4 pb-6">
-              <SearchField
-                aria-label="Find a token"
-                value={query}
-                onChange={onQueryChange}
-              >
+              <SearchField aria-label="Find a token" value={query} onChange={onQueryChange}>
                 <SearchField.Group>
                   <SearchField.SearchIcon />
-                  <SearchField.Input
-                    className="min-w-0 flex-1"
-                    placeholder="Find a color token…"
-                  />
+                  <SearchField.Input className="min-w-0 flex-1" placeholder="Find a color token…" />
                   <SearchField.ClearButton />
                 </SearchField.Group>
               </SearchField>
@@ -294,16 +258,12 @@ function ThemeCodeDrawer({
             <Drawer.CloseTrigger />
             <Drawer.Header>
               <Drawer.Heading>Theme CSS</Drawer.Heading>
-              <p className="text-muted text-sm">
-                Paste this into your globals.css file.
-              </p>
+              <p className="text-muted text-sm">Paste this into your globals.css file.</p>
             </Drawer.Header>
             <Drawer.Body className="min-h-0 p-3 sm:p-5">
               <CodeBlock className="m-0 min-h-full">
                 <CodeBlock.Header>
-                  <span className="text-muted font-mono text-xs">
-                    globals.css
-                  </span>
+                  <span className="text-muted font-mono text-xs">globals.css</span>
                   <CodeBlock.CopyButton aria-label="Copy CSS" code={code} />
                 </CodeBlock.Header>
                 <CodeBlock.Code
@@ -349,10 +309,7 @@ export function ThemeBuilder() {
   }, [config, ready]);
 
   const code = useMemo(() => generateThemeCss(config), [config]);
-  const previewStyles = useMemo(
-    () => themeStyles(config, mode),
-    [config, mode],
-  );
+  const previewStyles = useMemo(() => themeStyles(config, mode), [config, mode]);
 
   useEffect(() => {
     let cancelled = false;
@@ -467,9 +424,7 @@ export function ThemeBuilder() {
         mode={mode}
         query={query}
         onColorChange={updateColor}
-        onCustomFontsChange={(customFonts) =>
-          setConfig((current) => ({ ...current, customFonts }))
-        }
+        onCustomFontsChange={(customFonts) => setConfig((current) => ({ ...current, customFonts }))}
         onFontChange={(font) => setConfig((current) => ({ ...current, font }))}
         onNumberChange={updateNumber}
         onOpenChange={setShowCustomize}

@@ -100,9 +100,7 @@ export const universalResolverV2Abi = [
   {
     inputs: [],
     name: "CONTRACT_NAMER",
-    outputs: [
-      { internalType: "contract IContractNamer", name: "", type: "address" },
-    ],
+    outputs: [{ internalType: "contract IContractNamer", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -122,9 +120,7 @@ export const universalResolverV2Abi = [
   {
     inputs: [],
     name: "batchGatewayProvider",
-    outputs: [
-      { internalType: "contract IGatewayProvider", name: "", type: "address" },
-    ],
+    outputs: [{ internalType: "contract IGatewayProvider", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -216,9 +212,7 @@ export const universalResolverV2Abi = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "contract IRegistry", name: "registry", type: "address" },
-    ],
+    inputs: [{ internalType: "contract IRegistry", name: "registry", type: "address" }],
     name: "findCanonicalName",
     outputs: [{ internalType: "bytes", name: "", type: "bytes" }],
     stateMutability: "view",
@@ -227,18 +221,14 @@ export const universalResolverV2Abi = [
   {
     inputs: [{ internalType: "bytes", name: "name", type: "bytes" }],
     name: "findCanonicalRegistry",
-    outputs: [
-      { internalType: "contract IRegistry", name: "", type: "address" },
-    ],
+    outputs: [{ internalType: "contract IRegistry", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [{ internalType: "bytes", name: "name", type: "bytes" }],
     name: "findExactRegistry",
-    outputs: [
-      { internalType: "contract IRegistry", name: "", type: "address" },
-    ],
+    outputs: [{ internalType: "contract IRegistry", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -252,18 +242,14 @@ export const universalResolverV2Abi = [
   {
     inputs: [{ internalType: "bytes", name: "name", type: "bytes" }],
     name: "findParentRegistry",
-    outputs: [
-      { internalType: "contract IRegistry", name: "", type: "address" },
-    ],
+    outputs: [{ internalType: "contract IRegistry", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [{ internalType: "bytes", name: "name", type: "bytes" }],
     name: "findRegistries",
-    outputs: [
-      { internalType: "contract IRegistry[]", name: "", type: "address[]" },
-    ],
+    outputs: [{ internalType: "contract IRegistry[]", name: "", type: "address[]" }],
     stateMutability: "view",
     type: "function",
   },

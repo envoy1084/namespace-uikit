@@ -9,9 +9,7 @@ export function WithDescription() {
         </Checkbox.Control>
         Email notifications
       </Checkbox.Content>
-      <Description>
-        Get notified when someone mentions you in a comment
-      </Description>
+      <Description>Get notified when someone mentions you in a comment</Description>
     </Checkbox>
   );
 }

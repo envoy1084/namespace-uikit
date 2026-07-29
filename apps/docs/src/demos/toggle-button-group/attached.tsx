@@ -24,11 +24,7 @@ export function Attached() {
             <ToggleButtonGroup.Separator />
             <HugeiconsIcon icon={TextUnderlineIcon} />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <ToggleButtonGroup.Separator />
             <HugeiconsIcon icon={TextStrikethroughIcon} />
           </ToggleButton>
@@ -46,11 +42,7 @@ export function Attached() {
           <ToggleButton isIconOnly aria-label="Underline" id="underline">
             <HugeiconsIcon icon={TextUnderlineIcon} />
           </ToggleButton>
-          <ToggleButton
-            isIconOnly
-            aria-label="Strikethrough"
-            id="strikethrough"
-          >
+          <ToggleButton isIconOnly aria-label="Strikethrough" id="strikethrough">
             <HugeiconsIcon icon={TextStrikethroughIcon} />
           </ToggleButton>
         </ToggleButtonGroup>

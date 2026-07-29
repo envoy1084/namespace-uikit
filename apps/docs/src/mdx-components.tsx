@@ -1,10 +1,9 @@
-import type { MDXComponents } from "mdx/types";
-
 import type { ReactNode } from "react";
 
 import { Pre } from "fumadocs-ui/components/codeblock";
 import * as TabsComponents from "fumadocs-ui/components/tabs";
 import defaultComponents from "fumadocs-ui/mdx";
+import type { MDXComponents } from "mdx/types";
 
 import { CollapsibleCode } from "@/components/collapsible-code";
 import {
@@ -54,9 +53,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
       const lineCount = extractText(children).split("\n").length;
       const className = cn(
         "mdx-code-block",
-        lineCount > MAX_LINES_FOR_LINE_NUMBERS
-          ? "docs-code-block-line-numbers"
-          : undefined,
+        lineCount > MAX_LINES_FOR_LINE_NUMBERS ? "docs-code-block-line-numbers" : undefined,
         props.className,
       );
 

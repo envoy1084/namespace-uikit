@@ -1,27 +1,19 @@
 "use client";
 
 import type { CalendarDate, DateValue } from "@internationalized/date";
-
 import { getLocalTimeZone, today } from "@internationalized/date";
 import { Description, RangeCalendar } from "@thenamespace/uikit";
 
 export function AnchorUnavailableDates() {
   const now = today(getLocalTimeZone());
 
-  const isDateUnavailable = (
-    date: DateValue,
-    anchorDate: CalendarDate | null,
-  ) => {
+  const isDateUnavailable = (date: DateValue, anchorDate: CalendarDate | null) => {
     return anchorDate != null && Math.abs(date.compare(anchorDate)) > 7;
   };
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <RangeCalendar
-        aria-label="Trip dates"
-        isDateUnavailable={isDateUnavailable}
-        minValue={now}
-      >
+      <RangeCalendar aria-label="Trip dates" isDateUnavailable={isDateUnavailable} minValue={now}>
         <RangeCalendar.Header>
           <RangeCalendar.Heading />
           <RangeCalendar.NavButton slot="previous" />
@@ -29,9 +21,7 @@ export function AnchorUnavailableDates() {
         </RangeCalendar.Header>
         <RangeCalendar.Grid>
           <RangeCalendar.GridHeader>
-            {(day) => (
-              <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-            )}
+            {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
           </RangeCalendar.GridHeader>
           <RangeCalendar.GridBody>
             {(date) => <RangeCalendar.Cell date={date} />}

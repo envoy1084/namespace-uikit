@@ -30,9 +30,7 @@ export const DemoProductReviewExample = () => (
           >
             <Items />
           </Rating>
-          <span className="text-muted w-7 text-right text-xs">
-            {item.rating}
-          </span>
+          <span className="text-muted w-7 text-right text-xs">{item.rating}</span>
         </div>
       </div>
     ))}

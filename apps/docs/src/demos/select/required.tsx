@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Button,
-  FieldError,
-  Form,
-  Label,
-  ListBox,
-  Select,
-} from "@thenamespace/uikit";
+import { Button, FieldError, Form, Label, ListBox, Select } from "@thenamespace/uikit";
 
 export function Required() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,12 +18,7 @@ export function Required() {
 
   return (
     <Form className="flex w-[256px] flex-col gap-4" onSubmit={onSubmit}>
-      <Select
-        isRequired
-        className="w-full"
-        name="state"
-        placeholder="Select one"
-      >
+      <Select isRequired className="w-full" name="state" placeholder="Select one">
         <Label>State</Label>
         <Select.Trigger>
           <Select.Value />
@@ -66,12 +54,7 @@ export function Required() {
         </Select.Popover>
         <FieldError />
       </Select>
-      <Select
-        isRequired
-        className="w-full"
-        name="country"
-        placeholder="Select a country"
-      >
+      <Select isRequired className="w-full" name="country" placeholder="Select a country">
         <Label>Country</Label>
         <Select.Trigger>
           <Select.Value />

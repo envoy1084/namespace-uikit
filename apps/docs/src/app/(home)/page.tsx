@@ -35,9 +35,8 @@ export default function HomePage() {
             <div className="text-muted/70">Built for Namespace.</div>
           </h1>
           <p className="text-muted text-balance md:text-lg">
-            Namespace UIKit is a modern React component library for building
-            accessible, consistent, and delightful products for the
-            decentralized web.
+            Namespace UIKit is a modern React component library for building accessible, consistent,
+            and delightful products for the decentralized web.
           </p>
           <div className="mt-4 flex gap-3">
             <LinkRoot
@@ -46,10 +45,7 @@ export default function HomePage() {
             >
               Get started
             </LinkRoot>
-            <LinkRoot
-              className={buttonVariants({ variant: "outline" })}
-              href="/docs/components"
-            >
+            <LinkRoot className={buttonVariants({ variant: "outline" })} href="/docs/components">
               View components
             </LinkRoot>
           </div>
@@ -66,9 +62,7 @@ export default function HomePage() {
         <DemoShowcase />
       </section>
       <footer className="text-muted mt-auto flex w-full flex-row flex-wrap items-center justify-center gap-2 py-3">
-        <p className="text-sm">
-          &copy; {new Date().getFullYear()} Namespace. All rights reserved.
-        </p>
+        <p className="text-sm">&copy; {new Date().getFullYear()} Namespace. All rights reserved.</p>
       </footer>
     </main>
   );

@@ -83,8 +83,7 @@ export const DemoSimpleExample = () => (
       <div className="flex flex-col gap-1">
         <h2 className="text-xl font-bold">Users</h2>
         <p className="text-muted text-sm">
-          A list of all the users in your account including their name, title,
-          email and role.
+          A list of all the users in your account including their name, title, email and role.
         </p>
       </div>
       <Button size="sm" variant="secondary">

@@ -10,9 +10,7 @@ const Gear = () => <Icon icon="solar:settings-linear" />;
 
 export const DemoWithProgressFeedbackExample = () => (
   <div className="flex flex-col gap-6">
-    <p className="text-muted text-xs">
-      Click once — the overlay sweeps in automatically.
-    </p>
+    <p className="text-muted text-xs">Click once — the overlay sweeps in automatically.</p>
     <div className="flex gap-3">
       <Button variant="secondary">
         <PressableFeedback.ProgressFeedback className="bg-accent text-accent-foreground">

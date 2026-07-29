@@ -3,11 +3,7 @@
 // @demo-title PR File Review
 import { useMemo, useState } from "react";
 
-import {
-  FileTree,
-  useFileTree,
-  type FileTreeItemRenderProps,
-} from "@thenamespace/uikit";
+import { FileTree, useFileTree, type FileTreeItemRenderProps } from "@thenamespace/uikit";
 import { Collection } from "react-aria-components";
 
 import { Icon } from "@/demos/icon";
@@ -63,8 +59,7 @@ function PRFileReviewDemo() {
     items: reviewTree,
   });
   const extensions = useMemo(
-    () =>
-      [...new Set(leaves.map((leaf) => leaf.ext).filter(Boolean))] as string[],
+    () => [...new Set(leaves.map((leaf) => leaf.ext).filter(Boolean))] as string[],
     [leaves],
   );
   const [query, setQuery] = useState("");
@@ -85,9 +80,7 @@ function PRFileReviewDemo() {
       textValue={node.name}
       title={node.name}
     >
-      {node.children ? (
-        <Collection items={node.children}>{renderNode}</Collection>
-      ) : null}
+      {node.children ? <Collection items={node.children}>{renderNode}</Collection> : null}
     </FileTree.Item>
   );
   return (

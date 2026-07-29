@@ -39,16 +39,10 @@ const trackingDestination = trackingRoute[trackingRoute.length - 1]!;
 const trackingSegments = trackingRoute
   .slice(1)
   .map((point, index) =>
-    Math.hypot(
-      point[0] - trackingRoute[index]![0],
-      point[1] - trackingRoute[index]![1],
-    ),
+    Math.hypot(point[0] - trackingRoute[index]![0], point[1] - trackingRoute[index]![1]),
   );
 
-const trackingDistance = trackingSegments.reduce(
-  (total, distance) => total + distance,
-  0,
-);
+const trackingDistance = trackingSegments.reduce((total, distance) => total + distance, 0);
 
 const trackingPosition = (progress: number) => {
   let remaining = progress * trackingDistance;
@@ -60,10 +54,10 @@ const trackingPosition = (progress: number) => {
       const to = trackingRoute[index + 1]!;
       return {
         index,
-        point: [
-          from[0] + (to[0] - from[0]) * ratio,
-          from[1] + (to[1] - from[1]) * ratio,
-        ] as [number, number],
+        point: [from[0] + (to[0] - from[0]) * ratio, from[1] + (to[1] - from[1]) * ratio] as [
+          number,
+          number,
+        ],
       };
     }
     remaining -= distance;
@@ -97,22 +91,14 @@ function TrackingDemo() {
           opacity={0.6}
           width={3}
         />
-        <Map.Route
-          color="#4285f4"
-          coordinates={completedRoute}
-          opacity={0.9}
-          width={4}
-        />
+        <Map.Route color="#4285f4" coordinates={completedRoute} opacity={0.9} width={4} />
         <Map.Marker latitude={point[1]} longitude={point[0]}>
           <Map.MarkerContent>
             <Map.MarkerDot color="#4285f4" />
             <Map.MarkerLabel>Courier</Map.MarkerLabel>
           </Map.MarkerContent>
         </Map.Marker>
-        <Map.Marker
-          latitude={trackingDestination[1]}
-          longitude={trackingDestination[0]}
-        >
+        <Map.Marker latitude={trackingDestination[1]} longitude={trackingDestination[0]}>
           <Map.MarkerContent>
             <Map.MarkerDot color="#22c55e" />
             <Map.MarkerLabel>Drop-off</Map.MarkerLabel>
@@ -126,10 +112,7 @@ function TrackingDemo() {
       <Card className="bg-overlay shadow-overlay absolute top-3 left-3 z-10 w-[250px] gap-3 p-4">
         <Card.Header className="flex-row items-center gap-3">
           <Avatar size="sm">
-            <Avatar.Image
-              alt="Noah the courier"
-              src={`${avatarRoot}/green.jpg`}
-            />
+            <Avatar.Image alt="Noah the courier" src={`${avatarRoot}/green.jpg`} />
             <Avatar.Fallback>NO</Avatar.Fallback>
           </Avatar>
           <div className="min-w-0">

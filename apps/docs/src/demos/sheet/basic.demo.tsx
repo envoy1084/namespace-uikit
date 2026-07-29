@@ -20,9 +20,8 @@ function BasicDemo() {
             </Sheet.Header>
             <Sheet.Body>
               <p className="text-muted text-sm">
-                This is a bottom sheet built with smooth drag-to-dismiss
-                animations. Try dragging it down to close, or use the close
-                button.
+                This is a bottom sheet built with smooth drag-to-dismiss animations. Try dragging it
+                down to close, or use the close button.
               </p>
             </Sheet.Body>
             <Sheet.Footer>

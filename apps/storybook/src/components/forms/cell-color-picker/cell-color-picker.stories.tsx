@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { parseColor } from "react-aria-components";
 
 import { ColorArea } from "@/components/colors/color-area";
@@ -33,12 +32,7 @@ function PickerControls() {
       >
         <ColorArea.Thumb />
       </ColorArea>
-      <ColorSlider
-        aria-label="Hue"
-        channel="hue"
-        className="gap-1 px-1"
-        colorSpace="hsb"
-      >
+      <ColorSlider aria-label="Hue" channel="hue" className="gap-1 px-1" colorSpace="hsb">
         <Label>Hue</Label>
         <ColorSlider.Output className="text-muted" />
         <ColorSlider.Track>
@@ -57,11 +51,7 @@ function Picker({
   variant?: "default" | "secondary";
 }) {
   return (
-    <CellColorPicker
-      aria-label={label}
-      defaultValue="#3B82F6"
-      variant={variant}
-    >
+    <CellColorPicker aria-label={label} defaultValue="#3B82F6" variant={variant}>
       <CellColorPicker.Trigger>
         <CellColorPicker.Label>{label}</CellColorPicker.Label>
         <CellColorPicker.ValueDisplay />
@@ -110,9 +100,7 @@ export const Controlled: Story = {
             <PickerControls />
           </CellColorPicker.Popover>
         </CellColorPicker>
-        <p className="text-muted px-1 text-sm">
-          Selected: {color.toString("hex").toUpperCase()}
-        </p>
+        <p className="text-muted px-1 text-sm">Selected: {color.toString("hex").toUpperCase()}</p>
       </div>
     );
   },
@@ -135,11 +123,7 @@ export const WithPresets: Story = {
     const [color, setColor] = useState(parseColor("#3B82F6"));
     return (
       <div className="w-[252px]">
-        <CellColorPicker
-          aria-label="Brand Color"
-          value={color}
-          onChange={setColor}
-        >
+        <CellColorPicker aria-label="Brand Color" value={color} onChange={setColor}>
           <CellColorPicker.Trigger>
             <CellColorPicker.Label>Brand Color</CellColorPicker.Label>
             <CellColorPicker.ValueDisplay />

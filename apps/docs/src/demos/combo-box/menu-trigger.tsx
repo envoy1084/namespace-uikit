@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ComboBox,
-  Description,
-  Input,
-  Label,
-  ListBox,
-} from "@thenamespace/uikit";
+import { ComboBox, Description, Input, Label, ListBox } from "@thenamespace/uikit";
 
 export function MenuTrigger() {
   return (
@@ -87,9 +81,7 @@ export function MenuTrigger() {
               </ListBox.Item>
             </ListBox>
           </ComboBox.Popover>
-          <Description>
-            Popover opens when the user edits the input text
-          </Description>
+          <Description>Popover opens when the user edits the input text</Description>
         </ComboBox>
       </div>
 
@@ -130,8 +122,7 @@ export function MenuTrigger() {
             </ListBox>
           </ComboBox.Popover>
           <Description>
-            Popover only opens when the trigger button is pressed or arrow keys
-            are used
+            Popover only opens when the trigger button is pressed or arrow keys are used
           </Description>
         </ComboBox>
       </div>

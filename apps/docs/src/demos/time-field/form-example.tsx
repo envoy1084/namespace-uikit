@@ -1,18 +1,10 @@
 "use client";
 
-import type { Time } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { Time } from "@internationalized/date";
 import { parseTime } from "@internationalized/date";
-import {
-  Button,
-  Description,
-  FieldError,
-  Form,
-  Label,
-  TimeField,
-} from "@thenamespace/uikit";
+import { Button, Description, FieldError, Form, Label, TimeField } from "@thenamespace/uikit";
 import { Clock01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function FormExample() {
@@ -20,9 +12,7 @@ export function FormExample() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const minTime = parseTime("09:00");
   const maxTime = parseTime("17:00");
-  const isInvalid =
-    value !== null &&
-    (value.compare(minTime) < 0 || value.compare(maxTime) > 0);
+  const isInvalid = value !== null && (value.compare(minTime) < 0 || value.compare(maxTime) > 0);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,9 +48,7 @@ export function FormExample() {
           <TimeField.Prefix>
             <HugeiconsIcon icon={Clock01Icon} className="text-muted size-4" />
           </TimeField.Prefix>
-          <TimeField.Input>
-            {(segment) => <TimeField.Segment segment={segment} />}
-          </TimeField.Input>
+          <TimeField.Input>{(segment) => <TimeField.Segment segment={segment} />}</TimeField.Input>
         </TimeField.Group>
         {isInvalid ? (
           <FieldError>Time must be between 9:00 AM and 5:00 PM</FieldError>

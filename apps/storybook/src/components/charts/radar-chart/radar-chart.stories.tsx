@@ -46,10 +46,7 @@ function Legend({ items }: { items: Array<{ color: string; label: string }> }) {
     <div className="flex items-center gap-3">
       {items.map((item) => (
         <div className="flex items-center gap-1.5" key={item.label}>
-          <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: item.color }}
-          />
+          <span className="size-3 rounded-full" style={{ backgroundColor: item.color }} />
           <span className="text-muted text-xs">{item.label}</span>
         </div>
       ))}
@@ -65,9 +62,7 @@ function DefaultTooltip({ active, payload }: any) {
       {category ? <ChartTooltip.Header>{category}</ChartTooltip.Header> : null}
       {payload.map((item: any) => (
         <ChartTooltip.Item key={String(item.dataKey)}>
-          <ChartTooltip.Indicator
-            color={item.color ?? item.stroke ?? item.fill}
-          />
+          <ChartTooltip.Indicator color={item.color ?? item.stroke ?? item.fill} />
           <ChartTooltip.Label>{item.name}</ChartTooltip.Label>
           <ChartTooltip.Value>{item.value}</ChartTooltip.Value>
         </ChartTooltip.Item>

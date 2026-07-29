@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   Button,
   Dropdown,
@@ -83,9 +82,7 @@ function useAttachments() {
         id: attachmentId(file),
         mimeType: file.type,
         name: file.name,
-        src: file.type.startsWith("image/")
-          ? URL.createObjectURL(file)
-          : undefined,
+        src: file.type.startsWith("image/") ? URL.createObjectURL(file) : undefined,
       })),
     ]);
   }, []);
@@ -184,11 +181,7 @@ function ModelSelector({ variant }: { variant?: "secondary" }) {
               <ListBox.Section>
                 <Header>{group.provider}</Header>
                 {group.models.map((model) => (
-                  <ListBox.Item
-                    key={model.id}
-                    id={model.id}
-                    textValue={model.name}
-                  >
+                  <ListBox.Item key={model.id} id={model.id} textValue={model.name}>
                     {model.name}
                     <ListBox.ItemIndicator />
                   </ListBox.Item>
@@ -202,19 +195,8 @@ function ModelSelector({ variant }: { variant?: "secondary" }) {
   );
 }
 
-function Composer({
-  layout,
-  variant,
-}: {
-  layout?: "compact" | "inline";
-  variant?: "secondary";
-}) {
-  const {
-    attachments,
-    clearAttachments,
-    handleFilesSelected,
-    removeAttachment,
-  } = useAttachments();
+function Composer({ layout, variant }: { layout?: "compact" | "inline"; variant?: "secondary" }) {
+  const { attachments, clearAttachments, handleFilesSelected, removeAttachment } = useAttachments();
   const [value, setValue] = useState("");
   const submit = () => {
     setValue("");
@@ -235,16 +217,9 @@ function Composer({
             render={(dropzoneProps) => (
               <PromptInput.Shell {...dropzoneProps}>
                 <PromptInput.Content>
-                  <AttachmentPreviews
-                    attachments={attachments}
-                    onRemove={removeAttachment}
-                  />
+                  <AttachmentPreviews attachments={attachments} onRemove={removeAttachment} />
                   <PromptInput.TextArea
-                    placeholder={
-                      isFollowUp
-                        ? "Send follow-up"
-                        : "What do you want to know?"
-                    }
+                    placeholder={isFollowUp ? "Send follow-up" : "What do you want to know?"}
                   />
                 </PromptInput.Content>
                 <PromptInput.Toolbar>
@@ -267,9 +242,7 @@ function Composer({
                       )}
                     />
                     {!isFollowUp ? (
-                      <ModelSelector
-                        variant={variant ? undefined : "secondary"}
-                      />
+                      <ModelSelector variant={variant ? undefined : "secondary"} />
                     ) : null}
                   </PromptInput.ToolbarStart>
                   <PromptInput.ToolbarEnd>
@@ -306,9 +279,7 @@ export const Compact: Story = { render: () => <Composer layout="compact" /> };
 
 function RunStateDemo() {
   const [value, setValue] = useState("");
-  const [status, setStatus] = useState<"ready" | "streaming" | "submitted">(
-    "ready",
-  );
+  const [status, setStatus] = useState<"ready" | "streaming" | "submitted">("ready");
   const timers = useRef<number[]>([]);
   const clearTimers = useCallback(() => {
     timers.current.forEach(window.clearTimeout);
@@ -465,11 +436,7 @@ function QueueItemMenu({
             />
             <Label>Duplicate</Label>
           </Dropdown.Item>
-          <Dropdown.Item
-            id="remove"
-            textValue="Remove from queue"
-            variant="danger"
-          >
+          <Dropdown.Item id="remove" textValue="Remove from queue" variant="danger">
             <HugeiconsIcon
               aria-hidden
               className="text-danger size-4 shrink-0"
@@ -496,9 +463,7 @@ function QueueDemo() {
     setQueue((current) => [
       ...current,
       {
-        attachments: attachments.length
-          ? attachments.map(cloneAttachment)
-          : undefined,
+        attachments: attachments.length ? attachments.map(cloneAttachment) : undefined,
         id: crypto.randomUUID(),
         text,
       },
@@ -506,19 +471,14 @@ function QueueDemo() {
     setValue("");
     clearAttachments();
   };
-  const remove = (id: string) =>
-    setQueue((current) => current.filter((item) => item.id !== id));
+  const remove = (id: string) => setQueue((current) => current.filter((item) => item.id !== id));
   const duplicate = (id: string) =>
     setQueue((current) => {
       const index = current.findIndex((item) => item.id === id);
       const item = current[index];
       if (!item) return current;
       const copy = cloneQueueItem(item, crypto.randomUUID());
-      return [
-        ...current.slice(0, index + 1),
-        copy,
-        ...current.slice(index + 1),
-      ];
+      return [...current.slice(0, index + 1), copy, ...current.slice(index + 1)];
     });
   const edit = (id: string) => {
     const item = queue.find((queued) => queued.id === id);
@@ -560,18 +520,12 @@ function QueueDemo() {
         ) : null}
         <PromptInput.Shell>
           <PromptInput.Content>
-            <AttachmentPreviews
-              attachments={attachments}
-              onRemove={removeAttachment}
-            />
+            <AttachmentPreviews attachments={attachments} onRemove={removeAttachment} />
             <PromptInput.TextArea placeholder="Ask for follow-up changes" />
           </PromptInput.Content>
           <PromptInput.Toolbar>
             <PromptInput.ToolbarStart>
-              <PromptInput.Action
-                aria-label="Add attachment"
-                tooltip="Add attachment"
-              >
+              <PromptInput.Action aria-label="Add attachment" tooltip="Add attachment">
                 <HugeiconsIcon
                   aria-hidden
                   className="size-4"
@@ -605,16 +559,13 @@ const reviewModels = [
 function ReviewComposerDemo() {
   const [value, setValue] = useState("");
   const [model, setModel] = useState("composer-2.5");
-  const selected =
-    reviewModels.find((item) => item.id === model) ?? reviewModels[0]!;
+  const selected = reviewModels.find((item) => item.id === model) ?? reviewModels[0]!;
   return (
     <div className="flex w-full max-w-[800px] min-w-0 flex-col gap-3 p-4 sm:p-5">
       <div className="flex flex-wrap items-center gap-1.5">
         <Button size="sm" variant="outline">
           <span>Review</span>
-          <span className="text-success-soft-foreground font-semibold">
-            +469
-          </span>
+          <span className="text-success-soft-foreground font-semibold">+469</span>
           <span className="text-danger-soft-foreground font-semibold">-34</span>
         </Button>
         <Button className="hidden sm:inline-flex" size="sm" variant="outline">
@@ -622,18 +573,8 @@ function ReviewComposerDemo() {
         </Button>
         <Tooltip delay={0}>
           <Tooltip.Trigger>
-            <Button
-              isIconOnly
-              aria-label="More actions"
-              size="sm"
-              variant="outline"
-            >
-              <HugeiconsIcon
-                aria-hidden
-                icon={MoreHorizontalIcon}
-                size={16}
-                strokeWidth={2}
-              />
+            <Button isIconOnly aria-label="More actions" size="sm" variant="outline">
+              <HugeiconsIcon aria-hidden icon={MoreHorizontalIcon} size={16} strokeWidth={2} />
             </Button>
           </Tooltip.Trigger>
           <Tooltip.Content>More actions</Tooltip.Content>
@@ -648,23 +589,12 @@ function ReviewComposerDemo() {
       >
         <PromptInput.Shell>
           <PromptInput.Content>
-            <PromptInput.TextArea
-              className="min-w-0"
-              placeholder="Send follow-up"
-            />
+            <PromptInput.TextArea className="min-w-0" placeholder="Send follow-up" />
           </PromptInput.Content>
           <PromptInput.Toolbar>
             <PromptInput.ToolbarStart>
-              <PromptInput.Action
-                aria-label="Add context"
-                tooltip="Add context"
-              >
-                <HugeiconsIcon
-                  aria-hidden
-                  icon={Add01Icon}
-                  size={16}
-                  strokeWidth={2}
-                />
+              <PromptInput.Action aria-label="Add context" tooltip="Add context">
+                <HugeiconsIcon aria-hidden icon={Add01Icon} size={16} strokeWidth={2} />
               </PromptInput.Action>
               <Select
                 aria-label="Model"
@@ -677,9 +607,7 @@ function ReviewComposerDemo() {
                     <span className="flex min-w-0 items-center gap-1">
                       <span className="truncate">{selected.label}</span>
                       {selected.meta ? (
-                        <span className="text-muted shrink-0">
-                          {selected.meta}
-                        </span>
+                        <span className="text-muted shrink-0">{selected.meta}</span>
                       ) : null}
                     </span>
                   </Select.Value>
@@ -688,16 +616,10 @@ function ReviewComposerDemo() {
                 <Select.Popover className="w-[min(320px,calc(100vw-2rem))]">
                   <ListBox>
                     {reviewModels.map((item) => (
-                      <ListBox.Item
-                        key={item.id}
-                        id={item.id}
-                        textValue={item.label}
-                      >
+                      <ListBox.Item key={item.id} id={item.id} textValue={item.label}>
                         <span className="flex min-w-0 items-center gap-1">
                           <span>{item.label}</span>
-                          {item.meta ? (
-                            <span className="text-muted">{item.meta}</span>
-                          ) : null}
+                          {item.meta ? <span className="text-muted">{item.meta}</span> : null}
                         </span>
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
@@ -709,37 +631,16 @@ function ReviewComposerDemo() {
             <PromptInput.ToolbarEnd>
               {value.trim() ? (
                 <>
-                  <PromptInput.Action
-                    aria-label="Voice input"
-                    tooltip="Voice input"
-                  >
-                    <HugeiconsIcon
-                      aria-hidden
-                      icon={Mic01Icon}
-                      size={16}
-                      strokeWidth={2}
-                    />
+                  <PromptInput.Action aria-label="Voice input" tooltip="Voice input">
+                    <HugeiconsIcon aria-hidden icon={Mic01Icon} size={16} strokeWidth={2} />
                   </PromptInput.Action>
                   <PromptInput.Send>
-                    <HugeiconsIcon
-                      aria-hidden
-                      icon={ArrowUp01Icon}
-                      size={16}
-                      strokeWidth={2}
-                    />
+                    <HugeiconsIcon aria-hidden icon={ArrowUp01Icon} size={16} strokeWidth={2} />
                   </PromptInput.Send>
                 </>
               ) : (
-                <PromptInput.Action
-                  aria-label="Voice input"
-                  tooltip="Voice input"
-                >
-                  <HugeiconsIcon
-                    aria-hidden
-                    icon={Mic01Icon}
-                    size={16}
-                    strokeWidth={2}
-                  />
+                <PromptInput.Action aria-label="Voice input" tooltip="Voice input">
+                  <HugeiconsIcon aria-hidden icon={Mic01Icon} size={16} strokeWidth={2} />
                 </PromptInput.Action>
               )}
             </PromptInput.ToolbarEnd>
@@ -749,31 +650,16 @@ function ReviewComposerDemo() {
       <div className="text-muted flex items-center justify-between gap-3 px-2 text-xs sm:px-4 sm:text-sm">
         <div className="flex items-center gap-3 sm:gap-4">
           <span className="flex items-center gap-1.5">
-            <HugeiconsIcon
-              aria-hidden
-              icon={GitBranchIcon}
-              size={16}
-              strokeWidth={2}
-            />
+            <HugeiconsIcon aria-hidden icon={GitBranchIcon} size={16} strokeWidth={2} />
             develop
           </span>
           <span className="flex items-center gap-1.5">
-            <HugeiconsIcon
-              aria-hidden
-              icon={ComputerIcon}
-              size={16}
-              strokeWidth={2}
-            />
+            <HugeiconsIcon aria-hidden icon={ComputerIcon} size={16} strokeWidth={2} />
             Local
           </span>
         </div>
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-          <ProgressCircle
-            aria-label="Task progress"
-            color="default"
-            size="sm"
-            value={32}
-          >
+          <ProgressCircle aria-label="Task progress" color="default" size="sm" value={32}>
             <ProgressCircle.Track>
               <ProgressCircle.TrackCircle />
               <ProgressCircle.FillCircle />
@@ -808,8 +694,7 @@ function WithSuggestionsDemo() {
           <TextShimmer className="text-muted">Namespace UIKit AI</TextShimmer>
         </h2>
         <p className="text-muted text-sm">
-          Start with a prompt, add files, or pick a suggestion to shape the
-          first response.
+          Start with a prompt, add files, or pick a suggestion to shape the first response.
         </p>
       </div>
       <PromptInput
@@ -828,23 +713,10 @@ function WithSuggestionsDemo() {
           <PromptInput.Toolbar>
             <PromptInput.ToolbarStart>
               <PromptInput.Action aria-label="Use voice" tooltip="Use voice">
-                <HugeiconsIcon
-                  aria-hidden
-                  className="size-4"
-                  icon={Mic01Icon}
-                  strokeWidth={2}
-                />
+                <HugeiconsIcon aria-hidden className="size-4" icon={Mic01Icon} strokeWidth={2} />
               </PromptInput.Action>
-              <PromptInput.Action
-                aria-label="Add context"
-                tooltip="Add context"
-              >
-                <HugeiconsIcon
-                  aria-hidden
-                  className="size-4"
-                  icon={Add01Icon}
-                  strokeWidth={2}
-                />
+              <PromptInput.Action aria-label="Add context" tooltip="Add context">
+                <HugeiconsIcon aria-hidden className="size-4" icon={Add01Icon} strokeWidth={2} />
               </PromptInput.Action>
             </PromptInput.ToolbarStart>
             <PromptInput.ToolbarEnd>

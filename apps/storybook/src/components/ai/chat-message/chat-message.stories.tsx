@@ -11,9 +11,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
-  <div className="mx-auto flex w-full max-w-[714px] flex-col gap-8">
-    {children}
-  </div>
+  <div className="mx-auto flex w-full max-w-[714px] flex-col gap-8">{children}</div>
 );
 export const Default: Story = {
   render: () => (
@@ -21,8 +19,7 @@ export const Default: Story = {
       <ChatMessage.User>
         <ChatMessage.Bubble>
           <ChatMessage.Content>
-            Can you explain how compound components help AI chat UIs stay
-            SDK-agnostic?
+            Can you explain how compound components help AI chat UIs stay SDK-agnostic?
           </ChatMessage.Content>
         </ChatMessage.Bubble>
       </ChatMessage.User>
@@ -30,23 +27,17 @@ export const Default: Story = {
         <ChatMessage.Avatar alt="Assistant" fallback="AI" show />
         <ChatMessage.Body>
           <ChatMessage.Content>
-            Compound components let you compose message layout explicitly while
-            keeping state in your app layer.
+            Compound components let you compose message layout explicitly while keeping state in
+            your app layer.
           </ChatMessage.Content>
           <ChatMessage.Actions>
             <ChatMessage.Action aria-label="Copy" tooltip="Copy">
               <Icon icon="hugeicons:copy" />
             </ChatMessage.Action>
-            <ChatMessage.Action
-              aria-label="Good response"
-              tooltip="Good response"
-            >
+            <ChatMessage.Action aria-label="Good response" tooltip="Good response">
               <Icon icon="hugeicons:thumbs-up" />
             </ChatMessage.Action>
-            <ChatMessage.Action
-              aria-label="Bad response"
-              tooltip="Bad response"
-            >
+            <ChatMessage.Action aria-label="Bad response" tooltip="Bad response">
               <Icon icon="hugeicons:thumbs-down" />
             </ChatMessage.Action>
             <ChatMessage.Action aria-label="Regenerate" tooltip="Regenerate">
@@ -66,9 +57,7 @@ export const WithMarkdown: Story = {
     <Wrapper>
       <ChatMessage.User>
         <ChatMessage.Bubble>
-          <ChatMessage.Content>
-            Show me markdown inside assistant messages.
-          </ChatMessage.Content>
+          <ChatMessage.Content>Show me markdown inside assistant messages.</ChatMessage.Content>
         </ChatMessage.Bubble>
       </ChatMessage.User>
       <ChatMessage.Assistant>
@@ -87,9 +76,7 @@ export const Loading: Story = {
     <Wrapper>
       <ChatMessage.User>
         <ChatMessage.Bubble>
-          <ChatMessage.Content>
-            What is the weather in San Francisco?
-          </ChatMessage.Content>
+          <ChatMessage.Content>What is the weather in San Francisco?</ChatMessage.Content>
         </ChatMessage.Bubble>
       </ChatMessage.User>
       <ChatMessage.Assistant>

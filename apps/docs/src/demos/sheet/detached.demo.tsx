@@ -25,18 +25,13 @@ function DetachedDemo() {
               }
             >
               <Sheet.Dialog
-                className={
-                  placement === "left" || placement === "right"
-                    ? "h-full"
-                    : undefined
-                }
+                className={placement === "left" || placement === "right" ? "h-full" : undefined}
               >
                 {placement === "bottom" ? <Sheet.Handle /> : null}
                 <Sheet.Body className="flex flex-col gap-4 py-5">
                   <Sheet.Heading>Detached {placement}</Sheet.Heading>
                   <p className="text-muted text-sm">
-                    The sheet floats away from the viewport edge with rounded
-                    corners on all sides.
+                    The sheet floats away from the viewport edge with rounded corners on all sides.
                   </p>
                 </Sheet.Body>
                 {placement === "top" ? <Sheet.Handle /> : null}

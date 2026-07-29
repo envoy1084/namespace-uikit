@@ -1,6 +1,5 @@
-import type { ComponentResourceLinks } from "@/lib/component-resources";
-
 import { GitHubIcon } from "@/icons/github";
+import type { ComponentResourceLinks } from "@/lib/component-resources";
 
 function StorybookIcon() {
   return (
@@ -61,17 +60,11 @@ export function ComponentLinks({ links }: { links: ComponentResourceLinks }) {
           React Aria
         </ResourceLink>
       ) : null}
-      <ResourceLink
-        href={links.source}
-        icon={<GitHubIcon className="size-4" />}
-      >
+      <ResourceLink href={links.source} icon={<GitHubIcon className="size-4" />}>
         Source
       </ResourceLink>
       {links.styles ? (
-        <ResourceLink
-          href={links.styles}
-          icon={<GitHubIcon className="size-4" />}
-        >
+        <ResourceLink href={links.styles} icon={<GitHubIcon className="size-4" />}>
           Styles source
         </ResourceLink>
       ) : null}

@@ -81,18 +81,14 @@ const properties = [
 ];
 
 function PropertyListingsDemo() {
-  const [selectedId, setSelectedId] = useState<string | null>(
-    properties[1]!.id,
-  );
+  const [selectedId, setSelectedId] = useState<string | null>(properties[1]!.id);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const selected =
-    properties.find((property) => property.id === selectedId) ?? null;
+  const selected = properties.find((property) => property.id === selectedId) ?? null;
   return (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
       <Map center={[-122.431, 37.773]} styles={styles} zoom={12}>
         {properties.map((property) => {
-          const active =
-            property.id === selectedId || property.id === hoveredId;
+          const active = property.id === selectedId || property.id === hoveredId;
           return (
             <Map.Marker
               key={property.id}
@@ -137,9 +133,7 @@ function PropertyListingsDemo() {
       <Card className="bg-overlay shadow-overlay absolute top-3 left-3 z-10 w-[250px] gap-3 p-4">
         <Card.Header>
           <Card.Title className="text-sm">For sale</Card.Title>
-          <Card.Description>
-            {properties.length} homes in San Francisco
-          </Card.Description>
+          <Card.Description>{properties.length} homes in San Francisco</Card.Description>
         </Card.Header>
         <Card.Content className="gap-1">
           {properties.map((property) => (
@@ -152,9 +146,7 @@ function PropertyListingsDemo() {
               onMouseLeave={() => setHoveredId(null)}
             >
               <span className="min-w-0">
-                <span className="block truncate text-xs font-medium">
-                  {property.name}
-                </span>
+                <span className="block truncate text-xs font-medium">{property.name}</span>
                 <span className="text-muted block text-xs">
                   {property.beds} bd · {property.baths} ba
                 </span>

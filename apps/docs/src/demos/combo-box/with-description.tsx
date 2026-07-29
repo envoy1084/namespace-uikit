@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ComboBox,
-  Description,
-  Input,
-  Label,
-  ListBox,
-} from "@thenamespace/uikit";
+import { ComboBox, Description, Input, Label, ListBox } from "@thenamespace/uikit";
 
 export function WithDescription() {
   return (

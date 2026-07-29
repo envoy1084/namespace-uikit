@@ -68,8 +68,7 @@ function MessageView({
             <ChainOfThought.Content>
               <ChainOfThought.Steps>
                 <ChainOfThought.Step label="Check scroll behavior">
-                  Verified the viewport remains pinned while the assistant
-                  streams.
+                  Verified the viewport remains pinned while the assistant streams.
                 </ChainOfThought.Step>
                 <ChainOfThought.Step label="Compose response">
                   Added reasoning UI inline with the assistant message body.
@@ -81,10 +80,7 @@ function MessageView({
         {showActions ? (
           <ChatMessageActions>
             <ChatMessageActions.Copy aria-label="Copy" tooltip="Copy" />
-            <ChatMessageActions.Regenerate
-              aria-label="Regenerate"
-              tooltip="Regenerate"
-            />
+            <ChatMessageActions.Regenerate aria-label="Regenerate" tooltip="Regenerate" />
           </ChatMessageActions>
         ) : null}
       </ChatMessage.Body>

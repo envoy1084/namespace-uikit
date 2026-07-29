@@ -10,9 +10,7 @@ export function Sizes() {
     <div className="flex flex-wrap gap-4">
       {sizes.map((size) => (
         <AlertDialog key={size}>
-          <Button variant="secondary">
-            {size.charAt(0).toUpperCase() + size.slice(1)}
-          </Button>
+          <Button variant="secondary">{size.charAt(0).toUpperCase() + size.slice(1)}</Button>
           <AlertDialog.Backdrop>
             <AlertDialog.Container size={size}>
               <AlertDialog.Dialog>
@@ -29,20 +27,16 @@ export function Sizes() {
                   <p>
                     {size === "cover" ? (
                       <>
-                        This alert dialog uses the <code>cover</code> size
-                        variant. It spans the full screen with margins: 16px on
-                        mobile and 40px on desktop. Maintains rounded corners
-                        and standard padding. Perfect for critical confirmations
-                        that need maximum width while preserving alert dialog
-                        aesthetics.
+                        This alert dialog uses the <code>cover</code> size variant. It spans the
+                        full screen with margins: 16px on mobile and 40px on desktop. Maintains
+                        rounded corners and standard padding. Perfect for critical confirmations
+                        that need maximum width while preserving alert dialog aesthetics.
                       </>
                     ) : (
                       <>
-                        This alert dialog uses the <code>{size}</code> size
-                        variant. On mobile devices, all sizes adapt to near
-                        full-width for optimal viewing. On desktop, each size
-                        provides a different maximum width to suit various
-                        content needs.
+                        This alert dialog uses the <code>{size}</code> size variant. On mobile
+                        devices, all sizes adapt to near full-width for optimal viewing. On desktop,
+                        each size provides a different maximum width to suit various content needs.
                       </>
                     )}
                   </p>

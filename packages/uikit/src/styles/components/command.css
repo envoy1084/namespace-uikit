@@ -99,12 +99,10 @@
   .command__input-group-input::-webkit-search-decoration {
     appearance: none;
   }
-  .command__input-group:has(.command__input-group-prefix)
-    .command__input-group-input {
+  .command__input-group:has(.command__input-group-prefix) .command__input-group-input {
     padding-inline-start: 0;
   }
-  .command__input-group:has(.command__input-group-suffix)
-    .command__input-group-input {
+  .command__input-group:has(.command__input-group-suffix) .command__input-group-input {
     padding-inline-end: 0;
   }
   .command__input-group[data-empty="true"] .command__input-group-clear-button {

@@ -27,9 +27,7 @@ const teams = [
 
 function TeamIcon({ color, letter }: { color: string; letter: string }) {
   return (
-    <div
-      className={`${color} flex size-5 shrink-0 items-center justify-center rounded`}
-    >
+    <div className={`${color} flex size-5 shrink-0 items-center justify-center rounded`}>
       <span className="text-[10px] font-bold text-white">{letter}</span>
     </div>
   );

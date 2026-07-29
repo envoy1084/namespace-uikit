@@ -1,6 +1,6 @@
-import type { EnsPaymentToken, EnsPaymentTokens } from "#/data";
-
 import { isAddress, isAddressEqual } from "viem";
+
+import type { EnsPaymentToken, EnsPaymentTokens } from "#/data";
 
 export function findPaymentToken(
   paymentTokens: EnsPaymentTokens,

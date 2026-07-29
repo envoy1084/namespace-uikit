@@ -1,9 +1,8 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import {
   getLocalTimeZone,
   parseDate,
@@ -11,12 +10,7 @@ import {
   startOfWeek,
   today,
 } from "@internationalized/date";
-import {
-  Button,
-  ButtonGroup,
-  Description,
-  RangeCalendar,
-} from "@thenamespace/uikit";
+import { Button, ButtonGroup, Description, RangeCalendar } from "@thenamespace/uikit";
 import { useLocale } from "react-aria-components";
 
 type DateRange = {
@@ -26,9 +20,7 @@ type DateRange = {
 
 export function Controlled() {
   const [value, setValue] = useState<DateRange | null>(null);
-  const [focusedDate, setFocusedDate] = useState<DateValue>(
-    parseDate("2025-12-25"),
-  );
+  const [focusedDate, setFocusedDate] = useState<DateValue>(parseDate("2025-12-25"));
   const { locale } = useLocale();
 
   return (
@@ -45,10 +37,7 @@ export function Controlled() {
         </Button>
         <Button
           onPress={() => {
-            const nextWeekStart = startOfWeek(
-              today(getLocalTimeZone()).add({ weeks: 1 }),
-              locale,
-            );
+            const nextWeekStart = startOfWeek(today(getLocalTimeZone()).add({ weeks: 1 }), locale);
 
             setFocusedDate(nextWeekStart);
           }}
@@ -57,9 +46,7 @@ export function Controlled() {
         </Button>
         <Button
           onPress={() => {
-            const nextMonthStart = startOfMonth(
-              today(getLocalTimeZone()).add({ months: 1 }),
-            );
+            const nextMonthStart = startOfMonth(today(getLocalTimeZone()).add({ months: 1 }));
 
             setFocusedDate(nextMonthStart);
           }}
@@ -83,9 +70,7 @@ export function Controlled() {
         </RangeCalendar.Header>
         <RangeCalendar.Grid>
           <RangeCalendar.GridHeader>
-            {(day) => (
-              <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-            )}
+            {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
           </RangeCalendar.GridHeader>
           <RangeCalendar.GridBody>
             {(date) => <RangeCalendar.Cell date={date} />}
@@ -94,10 +79,7 @@ export function Controlled() {
       </RangeCalendar>
 
       <Description className="text-center">
-        Selected range:{" "}
-        {value
-          ? `${value.start.toString()} -> ${value.end.toString()}`
-          : "(none)"}
+        Selected range: {value ? `${value.start.toString()} -> ${value.end.toString()}` : "(none)"}
       </Description>
 
       <div className="flex gap-2">

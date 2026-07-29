@@ -43,8 +43,7 @@ const people: Record<string, string> = {
   Sam: "purple",
 };
 
-const avatar = (name: string) =>
-  `/assets/avatars/${people[name] ?? "blue"}.jpg`;
+const avatar = (name: string) => `/assets/avatars/${people[name] ?? "blue"}.jpg`;
 
 interface Ticket {
   assignees?: { avatar: string; name: string }[];
@@ -216,22 +215,14 @@ function AddTaskProvider({
                 <Modal.Heading>Add task to {column}</Modal.Heading>
               </Modal.Header>
               <Modal.Body className="flex flex-col gap-4 overflow-visible">
-                <form
-                  className="flex flex-col gap-4"
-                  id="add-task-form"
-                  onSubmit={submit}
-                >
+                <form className="flex flex-col gap-4" id="add-task-form" onSubmit={submit}>
                   <TextField autoFocus name="title" variant="secondary">
                     <Label>Title</Label>
                     <Input ref={titleRef} placeholder="Task title" />
                   </TextField>
                   <TextField name="description" variant="secondary">
                     <Label>Description</Label>
-                    <TextArea
-                      ref={descriptionRef}
-                      placeholder="Brief description"
-                      rows={3}
-                    />
+                    <TextArea ref={descriptionRef} placeholder="Brief description" rows={3} />
                   </TextField>
                 </form>
               </Modal.Body>
@@ -261,9 +252,7 @@ function ColumnOptions({
   kanban: UseKanbanReturn<Ticket>;
 }) {
   const otherColumns = ticketColumns.filter((value) => value !== column);
-  const columnItems = kanban.list.items.filter(
-    (ticket) => ticket.status === column,
-  );
+  const columnItems = kanban.list.items.filter((ticket) => ticket.status === column);
   return (
     <Dropdown>
       <Button isIconOnly aria-label="More options" size="sm" variant="ghost">
@@ -291,8 +280,7 @@ function ColumnOptions({
                 key={destination}
                 textValue={`Move all to ${destination}`}
                 onAction={() => {
-                  for (const ticket of columnItems)
-                    kanban.moveItem(ticket.id, destination);
+                  for (const ticket of columnItems) kanban.moveItem(ticket.id, destination);
                 }}
               >
                 <HugeiconsIcon icon={ArrowRight01Icon} />
@@ -318,12 +306,8 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
         />
       ) : null}
       <div className="flex flex-col gap-2">
-        <span className="text-foreground leading-snug font-semibold">
-          {ticket.title}
-        </span>
-        <span className="text-muted line-clamp-2 text-sm">
-          {ticket.description}
-        </span>
+        <span className="text-foreground leading-snug font-semibold">{ticket.title}</span>
+        <span className="text-muted line-clamp-2 text-sm">{ticket.description}</span>
         {ticket.tags?.length ? (
           <div className="flex flex-wrap gap-1.5">
             {ticket.tags.map((tag) => (
@@ -346,9 +330,7 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
                 <ProgressBar.Fill />
               </ProgressBar.Track>
             </ProgressBar>
-            <span className="text-muted text-xs tabular-nums">
-              {ticket.progress}%
-            </span>
+            <span className="text-muted text-xs tabular-nums">{ticket.progress}%</span>
           </div>
         ) : null}
         {ticket.assignees || ticket.comments || ticket.attachments ? (
@@ -356,11 +338,7 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
             {ticket.assignees?.length ? (
               <div className="flex -space-x-2">
                 {ticket.assignees.slice(0, 3).map((person) => (
-                  <Avatar
-                    className="ring-background size-5 ring-2"
-                    key={person.name}
-                    size="sm"
-                  >
+                  <Avatar className="ring-background size-5 ring-2" key={person.name} size="sm">
                     <Avatar.Image alt={person.name} src={person.avatar} />
                     <Avatar.Fallback>{person.name[0]}</Avatar.Fallback>
                   </Avatar>
@@ -373,21 +351,13 @@ function TicketCard({ ticket }: { ticket: Ticket }) {
               <div className="text-muted flex items-center gap-2.5 text-xs">
                 {ticket.comments ? (
                   <span className="flex items-center gap-1">
-                    <HugeiconsIcon
-                      aria-hidden
-                      className="size-3.5"
-                      icon={Comment01Icon}
-                    />
+                    <HugeiconsIcon aria-hidden className="size-3.5" icon={Comment01Icon} />
                     {ticket.comments}
                   </span>
                 ) : null}
                 {ticket.attachments ? (
                   <span className="flex items-center gap-1">
-                    <HugeiconsIcon
-                      aria-hidden
-                      className="size-3.5"
-                      icon={Attachment01Icon}
-                    />
+                    <HugeiconsIcon aria-hidden className="size-3.5" icon={Attachment01Icon} />
                     {ticket.attachments}
                   </span>
                 ) : null}
@@ -417,19 +387,11 @@ function SizedTicketColumn({
   return (
     <Kanban.Column>
       <Kanban.ColumnHeader>
-        <Kanban.ColumnIndicator
-          className={column === "Open" ? "bg-success" : "bg-warning"}
-        />
+        <Kanban.ColumnIndicator className={column === "Open" ? "bg-success" : "bg-warning"} />
         <Kanban.ColumnTitle>{column}</Kanban.ColumnTitle>
         <Kanban.ColumnCount>{items.length}</Kanban.ColumnCount>
         <Kanban.ColumnActions>
-          <Button
-            isIconOnly
-            aria-label="Add task"
-            size="sm"
-            variant="ghost"
-            onPress={open}
-          >
+          <Button isIconOnly aria-label="Add task" size="sm" variant="ghost" onPress={open}>
             <HugeiconsIcon icon={Add01Icon} />
           </Button>
           <ColumnOptions column={column} kanban={kanban} />
@@ -437,11 +399,7 @@ function SizedTicketColumn({
       </Kanban.ColumnHeader>
       <Kanban.ColumnBody>
         <Kanban.ScrollShadow className="max-h-[600px]">
-          <Kanban.CardList
-            aria-label={column}
-            dragAndDropHooks={dragAndDropHooks}
-            items={items}
-          >
+          <Kanban.CardList aria-label={column} dragAndDropHooks={dragAndDropHooks} items={items}>
             {(ticket) => (
               <Kanban.Card
                 className="[&>[data-slot=kanban-card-content]]:gap-0 [&>[data-slot=kanban-card-content]]:p-0"

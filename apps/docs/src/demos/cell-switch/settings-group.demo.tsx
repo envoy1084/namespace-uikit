@@ -25,12 +25,7 @@ function ControlledSwitch({
 }) {
   const [selected, setSelected] = useState(defaultSelected);
   return (
-    <CellSwitch
-      aria-label={label}
-      isSelected={selected}
-      variant={variant}
-      onChange={setSelected}
-    >
+    <CellSwitch aria-label={label} isSelected={selected} variant={variant} onChange={setSelected}>
       <SwitchContents label={label} />
     </CellSwitch>
   );

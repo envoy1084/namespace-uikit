@@ -16,9 +16,7 @@ type Item = {
   title: string;
 };
 
-const Chevron = () => (
-  <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />
-);
+const Chevron = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
 
 function Row({
   action = <Chevron />,
@@ -47,9 +45,7 @@ function Row({
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>{title}</ItemCard.Title>
-        {description && (
-          <ItemCard.Description>{description}</ItemCard.Description>
-        )}
+        {description && <ItemCard.Description>{description}</ItemCard.Description>}
       </ItemCard.Content>
       <ItemCard.Action>{action}</ItemCard.Action>
     </ItemCard>
@@ -95,10 +91,7 @@ export const DemoLinkedAccountsExample = () => (
       <Row
         action={
           account.connected ? (
-            <Icon
-              className="text-success size-5"
-              icon="solar:check-circle-bold"
-            />
+            <Icon className="text-success size-5" icon="solar:check-circle-bold" />
           ) : (
             <Tooltip delay={0}>
               <Tooltip.Trigger>

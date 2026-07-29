@@ -51,9 +51,7 @@ export const DemoWalletListExample = () => (
       <Fragment key={wallet.address}>
         {index > 0 && <Separator />}
         <ItemCard>
-          <ItemCard.Icon
-            className={`size-10 rounded-full ${wallet.bg} text-lg`}
-          >
+          <ItemCard.Icon className={`size-10 rounded-full ${wallet.bg} text-lg`}>
             <Icon icon={wallet.icon} width={20} />
           </ItemCard.Icon>
           <ItemCard.Content>
@@ -63,17 +61,10 @@ export const DemoWalletListExample = () => (
           <ItemCard.Action>
             <div className="flex items-center gap-2">
               <div className="text-right">
-                <p className="text-foreground text-sm font-semibold">
-                  {wallet.usd}
-                </p>
+                <p className="text-foreground text-sm font-semibold">{wallet.usd}</p>
                 <p className="text-muted text-xs">{wallet.eth}</p>
               </div>
-              <Button
-                aria-label="Wallet actions"
-                isIconOnly
-                size="sm"
-                variant="ghost"
-              >
+              <Button aria-label="Wallet actions" isIconOnly size="sm" variant="ghost">
                 <Icon icon="solar:menu-dots-bold" />
               </Button>
             </div>

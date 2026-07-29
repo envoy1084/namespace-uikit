@@ -19,8 +19,8 @@ export function Default() {
             </Modal.Header>
             <Modal.Body>
               <p>
-                A beautiful, fast, and modern React UI library for building
-                accessible and customizable web applications with ease.
+                A beautiful, fast, and modern React UI library for building accessible and
+                customizable web applications with ease.
               </p>
             </Modal.Body>
             <Modal.Footer>

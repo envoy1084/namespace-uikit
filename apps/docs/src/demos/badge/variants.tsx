@@ -13,9 +13,7 @@ export function BadgeVariants() {
       {variants.map((variant, index) => (
         <React.Fragment key={variant}>
           <div className="flex flex-col gap-4">
-            <h3 className="text-muted text-sm font-semibold capitalize">
-              {variant}
-            </h3>
+            <h3 className="text-muted text-sm font-semibold capitalize">{variant}</h3>
             <div className="flex items-center gap-6">
               {colors.map((color) => (
                 <Badge.Anchor key={color}>

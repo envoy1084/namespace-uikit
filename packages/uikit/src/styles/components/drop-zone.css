@@ -201,14 +201,10 @@
     width: 100%;
     margin-top: calc(var(--spacing) * 1);
   }
-  .drop-zone__file-item[data-status="complete"]
-    .drop-zone__file-progress
-    .progress-bar__fill {
+  .drop-zone__file-item[data-status="complete"] .drop-zone__file-progress .progress-bar__fill {
     --progress-bar-fill: var(--success);
   }
-  .drop-zone__file-item[data-status="failed"]
-    .drop-zone__file-progress
-    .progress-bar__fill {
+  .drop-zone__file-item[data-status="failed"] .drop-zone__file-progress .progress-bar__fill {
     --progress-bar-fill: var(--danger);
   }
   .drop-zone__file-retry-trigger {

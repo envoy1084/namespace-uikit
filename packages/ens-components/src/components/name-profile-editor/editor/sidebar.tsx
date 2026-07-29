@@ -1,13 +1,12 @@
 "use client";
 
-import type { ProfileEditorSection } from "#/components/name-profile-editor/editor/types";
-
 import { Button } from "@thenamespace/uikit";
 
 import {
   sectionLabels,
   sectionOrder,
 } from "#/components/name-profile-editor/editor/record-definitions";
+import type { ProfileEditorSection } from "#/components/name-profile-editor/editor/types";
 
 export function EditorSidebar({
   label,

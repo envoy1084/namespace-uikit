@@ -4,25 +4,14 @@
 import { LineChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 
-const revenueData = [
-  4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500,
-].map((revenue, index) => ({
-  month: [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ][index]!,
-  revenue,
-}));
+const revenueData = [4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500].map(
+  (revenue, index) => ({
+    month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][
+      index
+    ]!,
+    revenue,
+  }),
+);
 
 function TrafficAxes({ currency = false }: { currency?: boolean }) {
   return (

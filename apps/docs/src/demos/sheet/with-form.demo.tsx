@@ -32,10 +32,7 @@ function WithFormDemo() {
                 </TextField>
                 <TextField className="w-full" name="bio">
                   <Label>Bio</Label>
-                  <Input
-                    placeholder="Tell us about yourself"
-                    variant="secondary"
-                  />
+                  <Input placeholder="Tell us about yourself" variant="secondary" />
                 </TextField>
               </form>
             </Sheet.Body>

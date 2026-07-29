@@ -12,9 +12,7 @@ const Assistant = ({ children }: { children: React.ReactNode }) => (
 
 export const DemoMinimalExample = () => (
   <Assistant>
-    <ChatMessage.Content>
-      Minimal action set for compact layouts.
-    </ChatMessage.Content>
+    <ChatMessage.Content>Minimal action set for compact layouts.</ChatMessage.Content>
     <ChatMessageActions>
       <ChatMessageActions.Copy aria-label="Copy" tooltip="Copy" />
       <ChatMessageActions.Menu aria-label="More actions" tooltip="More" />

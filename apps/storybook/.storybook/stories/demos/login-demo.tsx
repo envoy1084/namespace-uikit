@@ -1,12 +1,6 @@
 import React from "react";
 
-import {
-  Avatar,
-  Button,
-  Card,
-  CloseButton,
-  Separator,
-} from "@thenamespace/uikit";
+import { Avatar, Button, Card, CloseButton, Separator } from "@thenamespace/uikit";
 import { UserIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
@@ -31,9 +25,7 @@ export function LoginDemo() {
         <Button className="w-full">Get Started</Button>
         <div className="flex w-full items-center gap-2 py-2">
           <Separator className="flex-1" />
-          <p className="text-muted text-center text-xs font-medium uppercase">
-            Or
-          </p>
+          <p className="text-muted text-center text-xs font-medium uppercase">Or</p>
           <Separator className="flex-1" />
         </div>
         <Button className="w-full" variant="tertiary">

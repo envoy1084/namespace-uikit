@@ -25,10 +25,7 @@ function Delays() {
       ].map((config) => (
         <div className="flex flex-col items-center gap-3" key={config.label}>
           <span className="text-muted text-xs">{config.label}</span>
-          <FloatingToc
-            closeDelay={config.closeDelay}
-            openDelay={config.openDelay}
-          >
+          <FloatingToc closeDelay={config.closeDelay} openDelay={config.openDelay}>
             <FloatingToc.Trigger aria-label="Table of contents">
               {sections.map((item) => (
                 <FloatingToc.Bar active={item.id === active} key={item.id} />

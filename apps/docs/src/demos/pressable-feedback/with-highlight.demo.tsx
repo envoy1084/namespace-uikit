@@ -6,14 +6,7 @@ import { Button } from "@thenamespace/uikit/button";
 
 import { Icon } from "@/demos/icon";
 
-const variants = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "outline",
-  "ghost",
-  "danger",
-] as const;
+const variants = ["primary", "secondary", "tertiary", "outline", "ghost", "danger"] as const;
 
 const Trash = () => <Icon icon="solar:trash-bin-trash-linear" />;
 
@@ -25,9 +18,7 @@ export const DemoWithHighlightExample = () => (
       {variants.map((variant) => (
         <Button key={variant} variant={variant}>
           <PressableFeedback.Highlight />
-          {variant === "primary"
-            ? "Primary"
-            : variant[0].toUpperCase() + variant.slice(1)}
+          {variant === "primary" ? "Primary" : variant[0].toUpperCase() + variant.slice(1)}
         </Button>
       ))}
     </div>

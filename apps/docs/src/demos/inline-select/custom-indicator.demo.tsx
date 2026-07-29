@@ -16,12 +16,7 @@ export const DemoCustomIndicatorExample = function Demo() {
       <InlineSelect.Trigger>
         <InlineSelect.Value />
         <InlineSelect.Indicator>
-          <HugeiconsIcon
-            aria-hidden
-            icon={ArrowRight01Icon}
-            size={12}
-            strokeWidth={2}
-          />
+          <HugeiconsIcon aria-hidden icon={ArrowRight01Icon} size={12} strokeWidth={2} />
         </InlineSelect.Indicator>
       </InlineSelect.Trigger>
       <InlineSelect.Popover className="w-[124px]">

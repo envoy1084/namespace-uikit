@@ -5,12 +5,7 @@ import { PieChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 import { ChartTooltip } from "@thenamespace/uikit/chart-tooltip";
 
-const colors = [
-  "var(--chart-4)",
-  "var(--chart-3)",
-  "var(--chart-2)",
-  "var(--chart-1)",
-];
+const colors = ["var(--chart-4)", "var(--chart-3)", "var(--chart-2)", "var(--chart-1)"];
 
 interface PieTooltipProps {
   active?: boolean;
@@ -65,9 +60,7 @@ function Legend({
           />
           <span className="text-muted text-xs">
             {item.name}
-            {suffix !== undefined
-              ? ` (${item.value.toLocaleString()}${suffix})`
-              : ""}
+            {suffix !== undefined ? ` (${item.value.toLocaleString()}${suffix})` : ""}
           </span>
         </div>
       ))}
@@ -125,11 +118,7 @@ export const DemoNestedDonutExample = () => (
           <Cells data={thisYear} />
         </PieChart.Pie>
         <PieChart.Tooltip
-          content={
-            <PieTooltip
-              valueFormatter={(value) => `$${Number(value).toLocaleString()}`}
-            />
-          }
+          content={<PieTooltip valueFormatter={(value) => `$${Number(value).toLocaleString()}`} />}
         />
       </PieChart>
       <div className="flex items-center gap-6">

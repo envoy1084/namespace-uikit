@@ -505,18 +505,14 @@ export const ethRegistryAbi = [
   {
     inputs: [],
     name: "HCA_FACTORY",
-    outputs: [
-      { internalType: "contract IHCAFactoryBasic", name: "", type: "address" },
-    ],
+    outputs: [{ internalType: "contract IHCAFactoryBasic", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "LABEL_STORE",
-    outputs: [
-      { internalType: "contract ILabelStore", name: "", type: "address" },
-    ],
+    outputs: [{ internalType: "contract ILabelStore", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -652,9 +648,7 @@ export const ethRegistryAbi = [
   {
     inputs: [{ internalType: "string", name: "label", type: "string" }],
     name: "getSubregistry",
-    outputs: [
-      { internalType: "contract IRegistry", name: "", type: "address" },
-    ],
+    outputs: [{ internalType: "contract IRegistry", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },

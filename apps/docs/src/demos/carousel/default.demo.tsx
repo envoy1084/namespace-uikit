@@ -5,8 +5,7 @@ import { Carousel } from "@thenamespace/uikit";
 
 const images = Array.from(
   { length: 6 },
-  (_, index) =>
-    `/assets/components-images/shoes/product-view/${index + 1}.jpeg`,
+  (_, index) => `/assets/components-images/shoes/product-view/${index + 1}.jpeg`,
 );
 
 const imageAlts = [
@@ -42,12 +41,7 @@ export const DemoDefaultExample = () => (
     <Carousel.Dots />
     <Carousel.Thumbnails>
       {images.map((src, index) => (
-        <Carousel.Thumbnail
-          alt={imageAlts[index]}
-          index={index}
-          key={src}
-          src={src}
-        />
+        <Carousel.Thumbnail alt={imageAlts[index]} index={index} key={src} src={src} />
       ))}
     </Carousel.Thumbnails>
   </Carousel>

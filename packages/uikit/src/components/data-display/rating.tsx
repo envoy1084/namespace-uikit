@@ -1,22 +1,10 @@
 "use client";
 
-import type {
-  RadioGroupProps,
-  RadioGroupRenderProps,
-  RadioProps,
-} from "react-aria-components";
-
 import type { ReactElement, ReactNode } from "react";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 
 import { cn } from "@heroui/react";
+import type { RadioGroupProps, RadioGroupRenderProps, RadioProps } from "react-aria-components";
 import { Radio, RadioGroup } from "react-aria-components";
 
 export function StarIcon(props: React.SVGProps<SVGSVGElement>): ReactElement {
@@ -108,15 +96,7 @@ function RatingRoot({
       size,
       value: resolvedValue,
     }),
-    [
-      hoveredValue,
-      icon,
-      isReadOnly,
-      onItemHoverEnd,
-      onItemHoverStart,
-      resolvedValue,
-      size,
-    ],
+    [hoveredValue, icon, isReadOnly, onItemHoverEnd, onItemHoverStart, resolvedValue, size],
   );
   return (
     <RatingContext value={context}>
@@ -126,36 +106,22 @@ function RatingRoot({
         data-slot="rating"
         orientation="horizontal"
         {...(isReadOnly ? { "data-readonly": true, isReadOnly: true } : {})}
-        {...(defaultValue != null
-          ? { defaultValue: String(defaultValue) }
-          : {})}
+        {...(defaultValue != null ? { defaultValue: String(defaultValue) } : {})}
         {...(value != null ? { value: String(Math.floor(value)) } : {})}
         onChange={onChange}
       >
-        {(renderProps) => (
-          <>
-            {typeof children === "function" ? children(renderProps) : children}
-          </>
-        )}
+        {(renderProps) => <>{typeof children === "function" ? children(renderProps) : children}</>}
       </RadioGroup>
     </RatingContext>
   );
 }
 
-export interface RatingItemProps extends Omit<
-  RadioProps,
-  "children" | "value"
-> {
+export interface RatingItemProps extends Omit<RadioProps, "children" | "value"> {
   children?: ReactNode | ((props: RatingItemRenderProps) => ReactNode);
   value: number;
 }
 
-function RatingItem({
-  children,
-  className,
-  value,
-  ...props
-}: RatingItemProps): ReactElement {
+function RatingItem({ children, className, value, ...props }: RatingItemProps): ReactElement {
   const context = useContext(RatingContext);
   const isActive =
     context.hoveredValue !== null
@@ -173,21 +139,16 @@ function RatingItem({
   const common = {
     ...props,
     "aria-label": `${value} star${value !== 1 ? "s" : ""}`,
-    className:
-      cn("rating__item", `rating__item--${context.size}`, className) ?? "",
+    className: cn("rating__item", `rating__item--${context.size}`, className) ?? "",
     "data-active": isActive || undefined,
     "data-readonly": context.isReadOnly || undefined,
     "data-slot": "rating-item",
     value: String(value),
-    onHoverEnd: (
-      event: Parameters<NonNullable<RadioProps["onHoverEnd"]>>[0],
-    ) => {
+    onHoverEnd: (event: Parameters<NonNullable<RadioProps["onHoverEnd"]>>[0]) => {
       context.onItemHoverEnd();
       props.onHoverEnd?.(event);
     },
-    onHoverStart: (
-      event: Parameters<NonNullable<RadioProps["onHoverStart"]>>[0],
-    ) => {
+    onHoverStart: (event: Parameters<NonNullable<RadioProps["onHoverStart"]>>[0]) => {
       context.onItemHoverStart(value);
       props.onHoverStart?.(event);
     },
@@ -213,9 +174,7 @@ function RatingItem({
         <span
           className="rating__icon-partial"
           data-slot="rating-icon-partial"
-          style={
-            { "--rating-partial": `${partialPercent}%` } as React.CSSProperties
-          }
+          style={{ "--rating-partial": `${partialPercent}%` } as React.CSSProperties}
         >
           {renderedIcon}
         </span>

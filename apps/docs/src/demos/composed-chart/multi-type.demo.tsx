@@ -4,19 +4,12 @@
 import { ComposedChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 
-function Legend({
-  items,
-}: {
-  items: ReadonlyArray<{ color: string; label: string }>;
-}) {
+function Legend({ items }: { items: ReadonlyArray<{ color: string; label: string }> }) {
   return (
     <div className="flex items-center gap-3">
       {items.map(({ color, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
-          <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: color }}
-          />
+          <span className="size-3 rounded-full" style={{ backgroundColor: color }} />
           <span className="text-muted text-xs">{label}</span>
         </div>
       ))}
@@ -67,13 +60,10 @@ const defaultData = [
 const analytics = defaultData.map((item, index) => ({
   bounceRate: [42, 38, 40, 35, 37, 32, 34, 30, 31, 28, 29, 26][index]!,
   month: item.month,
-  pageViews: [
-    8200, 11500, 9800, 14200, 12100, 16800, 15200, 18400, 17200, 20500, 19600,
-    23000,
-  ][index]!,
-  users: [
-    3200, 4500, 3800, 5600, 4800, 6600, 6000, 7200, 6800, 8100, 7700, 9100,
-  ][index]!,
+  pageViews: [8200, 11500, 9800, 14200, 12100, 16800, 15200, 18400, 17200, 20500, 19600, 23000][
+    index
+  ]!,
+  users: [3200, 4500, 3800, 5600, 4800, 6600, 6000, 7200, 6800, 8100, 7700, 9100][index]!,
 }));
 
 export const DemoMultiTypeExample = () => (
@@ -124,9 +114,7 @@ export const DemoMultiTypeExample = () => (
           type="monotone"
           yAxisId="right"
         />
-        <ComposedChart.Tooltip
-          content={<ComposedChart.TooltipContent indicator="line" />}
-        />
+        <ComposedChart.Tooltip content={<ComposedChart.TooltipContent indicator="line" />} />
       </ComposedChart>
     </Card.Content>
   </Card>

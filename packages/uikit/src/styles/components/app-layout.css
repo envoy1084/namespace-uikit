@@ -52,8 +52,7 @@
     scrollbar-gutter: var(--scrollbar-gutter);
     scrollbar-width: var(--scrollbar-width);
   }
-  [data-app-layout][data-scroll-mode="content"]
-    .app-layout__main:focus-visible {
+  [data-app-layout][data-scroll-mode="content"] .app-layout__main:focus-visible {
     outline: none;
   }
   .app-layout__aside {
@@ -153,9 +152,7 @@
     border-right-color: transparent;
   }
   [data-app-layout][data-resizable] .app-layout__aside-panel > aside,
-  [data-app-layout][data-resizable]
-    .app-layout__aside-panel
-    > [data-slot="aside"],
+  [data-app-layout][data-resizable] .app-layout__aside-panel > [data-slot="aside"],
   [data-app-layout][data-resizable] .app-layout__aside-panel > div {
     height: 100%;
     overflow-y: auto;

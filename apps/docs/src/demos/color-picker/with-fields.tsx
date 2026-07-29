@@ -1,9 +1,8 @@
 "use client";
 
-import type { ColorChannel, ColorSpace } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { ColorChannel, ColorSpace } from "@thenamespace/uikit";
 import {
   ColorArea,
   ColorField,
@@ -59,12 +58,7 @@ export function WithFields() {
           <Select.Popover>
             <ListBox>
               {Object.keys(colorChannelsByColorSpace).map((space) => (
-                <ListBox.Item
-                  key={space}
-                  className="uppercase"
-                  id={space}
-                  textValue={space}
-                >
+                <ListBox.Item key={space} className="uppercase" id={space} textValue={space}>
                   {space}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>

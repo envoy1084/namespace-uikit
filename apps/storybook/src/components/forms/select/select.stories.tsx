@@ -1,18 +1,11 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
-import type { Key } from "@/components/utilities/rac";
-
 import React from "react";
 
 import { useAsyncList } from "@react-stately/data";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 import { ListBox } from "@/components/collections/list-box";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/data-display/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/data-display/avatar";
 import { Chip } from "@/components/data-display/chip";
 import { Spinner } from "@/components/feedback/spinner";
 import { Description } from "@/components/forms/description";
@@ -21,6 +14,7 @@ import { Form } from "@/components/forms/form";
 import { Label } from "@/components/forms/label";
 import { Separator } from "@/components/layout/separator";
 import { Header } from "@/components/typography/header";
+import type { Key } from "@/components/utilities/rac";
 import { Collection, ListBoxLoadMoreItem } from "@/components/utilities/rac";
 import { Icon } from "@/icon";
 
@@ -113,11 +107,7 @@ export const Variants: Story = {
           </ListBox>
         </Select.Popover>
       </Select>
-      <Select
-        className="w-[256px]"
-        placeholder="Select one"
-        variant="secondary"
-      >
+      <Select className="w-[256px]" placeholder="Select one" variant="secondary">
         <Label>Secondary variant</Label>
         <Select.Trigger>
           <Select.Value />
@@ -213,11 +203,7 @@ export const WithDescription: Story = {
 
 export const MultipleSelect: Story = {
   render: () => (
-    <Select
-      className="w-[256px]"
-      placeholder="Select countries"
-      selectionMode="multiple"
-    >
+    <Select className="w-[256px]" placeholder="Select countries" selectionMode="multiple">
       <Label>Countries to Visit</Label>
       <Select.Trigger>
         <Select.Value />
@@ -344,11 +330,7 @@ export const WithSections: Story = {
 
 export const WithDisabledOptions: Story = {
   render: () => (
-    <Select
-      className="w-[256px]"
-      disabledKeys={["cat", "kangaroo"]}
-      placeholder="Select an animal"
-    >
+    <Select className="w-[256px]" disabledKeys={["cat", "kangaroo"]} placeholder="Select an animal">
       <Label>Animal</Label>
       <Select.Trigger>
         <Select.Value />
@@ -431,16 +413,8 @@ export const CustomIndicator: Story = {
 export const Required: Story = {
   render: () => {
     return (
-      <Form
-        className="flex w-[256px] flex-col gap-4"
-        onSubmit={handleSelectRequiredSubmit}
-      >
-        <Select
-          isRequired
-          className="w-full"
-          name="state"
-          placeholder="Select one"
-        >
+      <Form className="flex w-[256px] flex-col gap-4" onSubmit={handleSelectRequiredSubmit}>
+        <Select isRequired className="w-full" name="state" placeholder="Select one">
           <Label>State</Label>
           <Select.Trigger>
             <Select.Value />
@@ -476,12 +450,7 @@ export const Required: Story = {
           </Select.Popover>
           <FieldError />
         </Select>
-        <Select
-          isRequired
-          className="w-full"
-          name="country"
-          placeholder="Select a country"
-        >
+        <Select isRequired className="w-full" name="country" placeholder="Select a country">
           <Label>Country</Label>
           <Select.Trigger>
             <Select.Value />
@@ -579,9 +548,7 @@ export const CustomValue: Story = {
                 return `${selectedItems.length} users selected`;
               }
 
-              const selectedItem = users.find(
-                (user) => user.id === selectedItems[0].key,
-              );
+              const selectedItem = users.find((user) => user.id === selectedItems[0].key);
 
               if (!selectedItem) {
                 return defaultChildren;
@@ -677,14 +644,10 @@ export const CustomValueMultiple: Story = {
                 return defaultChildren;
               }
 
-              const selectedItemsKeys = state.selectedItems.map(
-                (item) => item.key,
-              );
+              const selectedItemsKeys = state.selectedItems.map((item) => item.key);
 
               return selectedItemsKeys.map((selectedItemKey) => {
-                const selectedItem = users.find(
-                  (user) => user.id === selectedItemKey,
-                );
+                const selectedItem = users.find((user) => user.id === selectedItemKey);
 
                 if (!selectedItem) {
                   return null;
@@ -775,11 +738,7 @@ export const Controlled: Story = {
           <Select.Popover>
             <ListBox>
               {states.map((stateItem) => (
-                <ListBox.Item
-                  key={stateItem.id}
-                  id={stateItem.id}
-                  textValue={stateItem.name}
-                >
+                <ListBox.Item key={stateItem.id} id={stateItem.id} textValue={stateItem.name}>
                   {stateItem.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
@@ -787,9 +746,7 @@ export const Controlled: Story = {
             </ListBox>
           </Select.Popover>
         </Select>
-        <p className="text-muted text-sm">
-          Selected: {selectedState?.name || "None"}
-        </p>
+        <p className="text-muted text-sm">Selected: {selectedState?.name || "None"}</p>
       </div>
     );
   },
@@ -797,10 +754,7 @@ export const Controlled: Story = {
 
 export const ControlledMultiple: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState<Key[]>([
-      "california",
-      "texas",
-    ]);
+    const [selected, setSelected] = React.useState<Key[]>(["california", "texas"]);
 
     return (
       <div className="space-y-4">
@@ -899,12 +853,8 @@ export const ControlledOpenState: Story = {
             </ListBox>
           </Select.Popover>
         </Select>
-        <Button onPress={() => setIsOpen(!isOpen)}>
-          {isOpen ? "Close" : "Open"} Select
-        </Button>
-        <p className="text-muted text-sm">
-          Select is {isOpen ? "open" : "closed"}
-        </p>
+        <Button onPress={() => setIsOpen(!isOpen)}>{isOpen ? "Close" : "Open"} Select</Button>
+        <p className="text-muted text-sm">Select is {isOpen ? "open" : "closed"}</p>
       </div>
     );
   },
@@ -966,12 +916,7 @@ export const AsynchronousLoading: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <Select
-        isDisabled
-        className="w-[256px]"
-        defaultValue="california"
-        placeholder="Select one"
-      >
+      <Select isDisabled className="w-[256px]" defaultValue="california" placeholder="Select one">
         <Label>State</Label>
         <Select.Trigger>
           <Select.Value />

@@ -3,10 +3,7 @@ import React, { forwardRef, memo, useId } from "react";
 
 import { cn } from "tailwind-variants";
 
-const AppleIconRender = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>,
-) => {
+const AppleIconRender = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => {
   const { className, ...restProps } = props;
 
   return (
@@ -30,10 +27,7 @@ const AppleIconRender = (
 
 export const AppleIcon = memo(forwardRef(AppleIconRender));
 
-const GoogleIconRender = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>,
-) => {
+const GoogleIconRender = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => {
   const { className, ...restProps } = props;
 
   return (
@@ -72,10 +66,7 @@ const GoogleIconRender = (
 
 export const GoogleIcon = memo(forwardRef(GoogleIconRender));
 
-const VerifiedBadgeIconRender = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>,
-) => {
+const VerifiedBadgeIconRender = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => {
   const { className, ...restProps } = props;
 
   const uid = useId();
@@ -135,11 +126,7 @@ const VerifiedBadgeIconRender = (
             type="matrix"
             values="0 0 0 0 0.785986 0 0 0 0 0.532335 0 0 0 0 0.21662 0 0 0 1 0"
           />
-          <feBlend
-            in2="BackgroundImageFix"
-            mode="normal"
-            result="effect1_dropShadow_1_1856"
-          />
+          <feBlend in2="BackgroundImageFix" mode="normal" result="effect1_dropShadow_1_1856" />
           <feColorMatrix
             in="SourceAlpha"
             result="hardAlpha"

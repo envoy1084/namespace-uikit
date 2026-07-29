@@ -255,30 +255,18 @@ const newsroomPointColor = [
 ];
 
 function GlobalNewsroomDemo() {
-  const [selected, setSelected] = useState(
-    newsroomData.features[5]!.properties,
-  );
+  const [selected, setSelected] = useState(newsroomData.features[5]!.properties);
   const pointPaint = useMemo(
     () => ({
       "circle-radius": ["case", ["==", ["get", "id"], selected.id], 8, 6],
-      "circle-stroke-color": [
-        "case",
-        ["==", ["get", "id"], selected.id],
-        "#111827",
-        "#ffffff",
-      ],
+      "circle-stroke-color": ["case", ["==", ["get", "id"], selected.id], "#111827", "#ffffff"],
       "circle-stroke-width": 2,
     }),
     [selected.id],
   );
   return (
     <div className="relative h-[500px] w-full overflow-hidden rounded-lg border">
-      <Map
-        center={[-58, 13]}
-        projection={{ type: "globe" }}
-        styles={styles}
-        zoom={2.1}
-      >
+      <Map center={[-58, 13]} projection={{ type: "globe" }} styles={styles} zoom={2.1}>
         <Map.ClusterLayer
           clusterColors={["#4285f4", "#8b5cf6", "#f97316"]}
           clusterRadius={58}
@@ -286,9 +274,7 @@ function GlobalNewsroomDemo() {
           data={newsroomData}
           pointColor={newsroomPointColor}
           pointPaint={pointPaint}
-          onPointClick={(feature) =>
-            setSelected(feature.properties as typeof selected)
-          }
+          onPointClick={(feature) => setSelected(feature.properties as typeof selected)}
         />
       </Map>
       <Card className="bg-overlay shadow-overlay absolute bottom-3 left-1/2 z-10 w-[calc(100%-24px)] max-w-[380px] -translate-x-1/2 gap-3 p-4">
@@ -300,27 +286,19 @@ function GlobalNewsroomDemo() {
         </Card.Header>
         <Card.Content className="grid grid-cols-2 gap-3 text-xs">
           <span>
-            <strong className="text-foreground block text-base">
-              {selected.status}
-            </strong>
+            <strong className="text-foreground block text-base">{selected.status}</strong>
             Status
           </span>
           <span>
-            <strong className="text-foreground block text-base">
-              {selected.audience}
-            </strong>
+            <strong className="text-foreground block text-base">{selected.audience}</strong>
             Reach
           </span>
           <span>
-            <strong className="text-foreground block text-base">
-              {selected.updated}
-            </strong>
+            <strong className="text-foreground block text-base">{selected.updated}</strong>
             Updated
           </span>
           <span>
-            <strong className="text-foreground block text-base">
-              {selected.reporter}
-            </strong>
+            <strong className="text-foreground block text-base">{selected.reporter}</strong>
             Reporter
           </span>
         </Card.Content>

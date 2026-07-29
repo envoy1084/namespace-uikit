@@ -1,10 +1,6 @@
-import type {
-  ButtonProps,
-  ToastContentValue,
-  ToastQueueOptions,
-} from "@thenamespace/uikit";
-
 import type { ReactNode } from "react";
+
+import type { ButtonProps, ToastContentValue, ToastQueueOptions } from "@thenamespace/uikit";
 
 export { ToastQueue, toast, toastQueue } from "@thenamespace/uikit";
 export type { ToastContentValue, ToastQueueOptions };

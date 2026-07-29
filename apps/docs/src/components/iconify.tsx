@@ -1,8 +1,7 @@
-import type { IconProps } from "@iconify/react";
-
 import type { ComponentProps } from "react";
 import { forwardRef, useId, useMemo } from "react";
 
+import type { IconProps } from "@iconify/react";
 import { Icon } from "@iconify/react";
 import * as UIKitIcons from "@thenamespace/uikit/icons";
 
@@ -21,18 +20,10 @@ function SVGFromIconData({
   iconData: { body: string; width?: number; height?: number };
   ref?: React.Ref<SVGSVGElement>;
 } & Omit<IconProps, "icon">) {
-  const {
-    className,
-    height = "1em",
-    style,
-    width = "1em",
-    ...restProps
-  } = props;
+  const { className, height = "1em", style, width = "1em", ...restProps } = props;
 
   const viewBox =
-    iconData.width && iconData.height
-      ? `0 0 ${iconData.width} ${iconData.height}`
-      : "0 0 16 16";
+    iconData.width && iconData.height ? `0 0 ${iconData.width} ${iconData.height}` : "0 0 16 16";
 
   const uniqueId = useId().replace(/:/g, "");
 
@@ -43,8 +34,7 @@ function SVGFromIconData({
       return body;
     }
 
-    const regex =
-      /\bid=["']([^"']+)["']|url\(#([^)]+)\)|(?:href|xlink:href)=["']#([^"']+)["']/g;
+    const regex = /\bid=["']([^"']+)["']|url\(#([^)]+)\)|(?:href|xlink:href)=["']#([^"']+)["']/g;
 
     return body.replace(regex, (match, g1, g2, g3) => {
       const id = g1 || g2 || g3;
@@ -158,48 +148,37 @@ const nativeIconAliases: Record<string, keyof typeof UIKitIcons> = {
 function toComponentName(name: string): string {
   return (
     iconAliases[name] ??
-    name.replace(/(^|-)([a-z0-9])/g, (_, _separator, character: string) =>
-      character.toUpperCase(),
-    )
+    name.replace(/(^|-)([a-z0-9])/g, (_, _separator, character: string) => character.toUpperCase())
   );
 }
 
-const Iconify = forwardRef<SVGSVGElement, IconifyProps>(
-  ({ icon: iconProp, ...props }, ref) => {
-    if (typeof iconProp === "string") {
-      const iconName = iconProp.replace(/^hugeicons:/, "");
-      const customIcon = customIcons[iconName as keyof typeof customIcons];
+const Iconify = forwardRef<SVGSVGElement, IconifyProps>(({ icon: iconProp, ...props }, ref) => {
+  if (typeof iconProp === "string") {
+    const iconName = iconProp.replace(/^hugeicons:/, "");
+    const customIcon = customIcons[iconName as keyof typeof customIcons];
 
-      if (customIcon) {
-        return <SVGFromIconData ref={ref} iconData={customIcon} {...props} />;
-      }
-
-      const componentName = toComponentName(iconName);
-      const nativeIconName =
-        nativeIconAliases[componentName] ??
-        (componentName as keyof typeof UIKitIcons);
-      const iconData = UIKitIcons[nativeIconName];
-
-      if (
-        (iconProp.startsWith("hugeicons:") || !iconProp.includes(":")) &&
-        Array.isArray(iconData)
-      ) {
-        return (
-          <UIKitIcons.HugeiconsIcon
-            ref={ref}
-            icon={iconData as UIKitIcons.IconSvgElement}
-            {...(props as Omit<
-              ComponentProps<typeof UIKitIcons.HugeiconsIcon>,
-              "icon"
-            >)}
-          />
-        );
-      }
+    if (customIcon) {
+      return <SVGFromIconData ref={ref} iconData={customIcon} {...props} />;
     }
 
-    return <Icon {...props} ref={ref} icon={iconProp} />;
-  },
-);
+    const componentName = toComponentName(iconName);
+    const nativeIconName =
+      nativeIconAliases[componentName] ?? (componentName as keyof typeof UIKitIcons);
+    const iconData = UIKitIcons[nativeIconName];
+
+    if ((iconProp.startsWith("hugeicons:") || !iconProp.includes(":")) && Array.isArray(iconData)) {
+      return (
+        <UIKitIcons.HugeiconsIcon
+          ref={ref}
+          icon={iconData as UIKitIcons.IconSvgElement}
+          {...(props as Omit<ComponentProps<typeof UIKitIcons.HugeiconsIcon>, "icon">)}
+        />
+      );
+    }
+  }
+
+  return <Icon {...props} ref={ref} icon={iconProp} />;
+});
 
 Iconify.displayName = "HeroUI.Iconify";
 

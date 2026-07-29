@@ -45,10 +45,7 @@ export function Navigation() {
                     className="text-foreground hover:bg-default flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors"
                     type="button"
                   >
-                    <HugeiconsIcon
-                      className="text-muted size-5"
-                      icon={item.icon}
-                    />
+                    <HugeiconsIcon className="text-muted size-5" icon={item.icon} />
                     {item.label}
                   </button>
                 ))}

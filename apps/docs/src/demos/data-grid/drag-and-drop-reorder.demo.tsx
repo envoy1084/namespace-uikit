@@ -126,8 +126,7 @@ export const DemoDragAndDropReorderExample = function Demo() {
   return (
     <div className="flex w-full max-w-3xl flex-col gap-3">
       <p className="text-muted text-sm">
-        Drag rows to reorder. Use keyboard (Enter to grab, arrows to move, Enter
-        to drop).
+        Drag rows to reorder. Use keyboard (Enter to grab, arrows to move, Enter to drop).
       </p>
       <DataGrid
         aria-label="Task backlog"

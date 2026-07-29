@@ -26,8 +26,7 @@ const items = [
     title: "Can I modify or cancel my order?",
   },
   {
-    content:
-      "We accept all major credit cards, including Visa, Mastercard, and American Express.",
+    content: "We accept all major credit cards, including Visa, Mastercard, and American Express.",
     icon: <HugeiconsIcon icon={CreditCardIcon} />,
     title: "What payment methods do you accept?",
   },
@@ -58,20 +57,11 @@ export function CustomRenderFunction() {
       render={(props) => <div data-custom="accordion" {...props} />}
     >
       {items.map((item, index) => (
-        <Accordion.Item
-          key={index}
-          render={(props) => <div data-custom="item" {...props} />}
-        >
-          <Accordion.Heading
-            render={(props) => <div data-custom="heading" {...props} />}
-          >
-            <Accordion.Trigger
-              render={(props) => <button data-custom="trigger" {...props} />}
-            >
+        <Accordion.Item key={index} render={(props) => <div data-custom="item" {...props} />}>
+          <Accordion.Heading render={(props) => <div data-custom="heading" {...props} />}>
+            <Accordion.Trigger render={(props) => <button data-custom="trigger" {...props} />}>
               {item.icon ? (
-                <span className="text-muted mr-3 size-4 shrink-0">
-                  {item.icon}
-                </span>
+                <span className="text-muted mr-3 size-4 shrink-0">{item.icon}</span>
               ) : null}
               {item.title}
               <Accordion.Indicator>
@@ -79,9 +69,7 @@ export function CustomRenderFunction() {
               </Accordion.Indicator>
             </Accordion.Trigger>
           </Accordion.Heading>
-          <Accordion.Panel
-            render={(props) => <div data-custom="panel" {...props} />}
-          >
+          <Accordion.Panel render={(props) => <div data-custom="panel" {...props} />}>
             <Accordion.Body>{item.content}</Accordion.Body>
           </Accordion.Panel>
         </Accordion.Item>

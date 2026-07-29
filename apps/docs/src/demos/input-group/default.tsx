@@ -11,10 +11,7 @@ export function Default() {
         <InputGroup.Prefix>
           <HugeiconsIcon icon={Mail01Icon} className="text-muted size-4" />
         </InputGroup.Prefix>
-        <InputGroup.Input
-          className="w-full max-w-[280px]"
-          placeholder="name@email.com"
-        />
+        <InputGroup.Input className="w-full max-w-[280px]" placeholder="name@email.com" />
       </InputGroup>
     </TextField>
   );

@@ -12,24 +12,13 @@ function StandaloneRow({ mode }: { mode: "highlight" | "ripple" }) {
         className="border-separator bg-surface relative flex w-full cursor-pointer items-center gap-4 overflow-hidden rounded-2xl border p-4 text-left"
         type="button"
       >
-        {mode === "ripple" ? (
-          <PressableFeedback.Ripple />
-        ) : (
-          <PressableFeedback.Highlight />
-        )}
+        {mode === "ripple" ? <PressableFeedback.Ripple /> : <PressableFeedback.Highlight />}
         <span className="bg-default flex size-10 items-center justify-center rounded-xl">
-          <HugeiconsIcon
-            aria-hidden
-            icon={UserIcon}
-            size={16}
-            strokeWidth={2}
-          />
+          <HugeiconsIcon aria-hidden icon={UserIcon} size={16} strokeWidth={2} />
         </span>
         <span className="flex flex-1 flex-col">
           <strong>Profile</strong>
-          <span className="text-muted text-sm">
-            Update your personal information
-          </span>
+          <span className="text-muted text-sm">Update your personal information</span>
         </span>
         <span>
           <HugeiconsIcon
@@ -44,6 +33,4 @@ function StandaloneRow({ mode }: { mode: "highlight" | "ripple" }) {
   );
 }
 
-export const DemoStandaloneHighlightExample = () => (
-  <StandaloneRow mode="highlight" />
-);
+export const DemoStandaloneHighlightExample = () => <StandaloneRow mode="highlight" />;

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Input } from "@/components/forms/input";
 import { Label } from "@/components/forms/label";
@@ -29,9 +29,7 @@ export const Variants: Story = {
           className="flex min-w-[320px] flex-col gap-3 rounded-3xl border p-6"
           variant="transparent"
         >
-          <h3 className="text-foreground text-base font-semibold">
-            Surface Content
-          </h3>
+          <h3 className="text-foreground text-base font-semibold">Surface Content</h3>
           <TextField isRequired name="email" type="email">
             <Label>Email</Label>
             <Input className="w-[280px]" placeholder="john@example.com" />
@@ -43,19 +41,11 @@ export const Variants: Story = {
       </div>
       <div className="flex flex-col gap-2">
         <p className="text-muted text-sm font-medium">Default</p>
-        <Surface
-          className="flex min-w-[320px] flex-col gap-3 rounded-3xl p-6"
-          variant="default"
-        >
-          <h3 className="text-foreground text-base font-semibold">
-            Surface Content
-          </h3>
+        <Surface className="flex min-w-[320px] flex-col gap-3 rounded-3xl p-6" variant="default">
+          <h3 className="text-foreground text-base font-semibold">Surface Content</h3>
           <TextField isRequired name="email" type="email" variant="secondary">
             <Label>Email</Label>
-            <Input
-              className="border-border/20 w-[280px] border"
-              placeholder="john@example.com"
-            />
+            <Input className="border-border/20 w-[280px] border" placeholder="john@example.com" />
           </TextField>
           <p className="text-muted text-sm">
             This is a default surface variant. It uses bg-surface styling.
@@ -64,40 +54,28 @@ export const Variants: Story = {
       </div>
       <div className="flex flex-col gap-2">
         <p className="text-muted text-sm font-medium">Secondary</p>
-        <Surface
-          className="flex min-w-[320px] flex-col gap-3 rounded-3xl p-6"
-          variant="secondary"
-        >
-          <h3 className="text-foreground text-base font-semibold">
-            Surface Content
-          </h3>
+        <Surface className="flex min-w-[320px] flex-col gap-3 rounded-3xl p-6" variant="secondary">
+          <h3 className="text-foreground text-base font-semibold">Surface Content</h3>
           <TextField isRequired name="email" type="email">
             <Label>Email</Label>
             <Input className="w-[280px]" placeholder="john@example.com" />
           </TextField>
           <p className="text-muted text-sm">
-            This is a secondary surface variant. It uses bg-surface-secondary
-            styling.
+            This is a secondary surface variant. It uses bg-surface-secondary styling.
           </p>
         </Surface>
       </div>
 
       <div className="flex flex-col gap-2">
         <p className="text-muted text-sm font-medium">Tertiary</p>
-        <Surface
-          className="flex min-w-[320px] flex-col gap-3 rounded-3xl p-6"
-          variant="tertiary"
-        >
-          <h3 className="text-foreground text-base font-semibold">
-            Surface Content
-          </h3>
+        <Surface className="flex min-w-[320px] flex-col gap-3 rounded-3xl p-6" variant="tertiary">
+          <h3 className="text-foreground text-base font-semibold">Surface Content</h3>
           <TextField isRequired name="email" type="email">
             <Label>Email</Label>
             <Input className="w-[280px]" placeholder="john@example.com" />
           </TextField>
           <p className="text-muted text-sm">
-            This is a tertiary surface variant. It uses bg-surface-tertiary
-            styling.
+            This is a tertiary surface variant. It uses bg-surface-tertiary styling.
           </p>
         </Surface>
       </div>

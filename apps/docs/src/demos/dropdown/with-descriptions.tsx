@@ -19,10 +19,7 @@ export function WithDescriptions() {
         <Dropdown.Menu onAction={(key) => console.log(`Selected: ${key}`)}>
           <Dropdown.Item id="new-file" textValue="New file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <HugeiconsIcon
-                icon={AddSquareIcon}
-                className="text-muted size-4 shrink-0"
-              />
+              <HugeiconsIcon icon={AddSquareIcon} className="text-muted size-4 shrink-0" />
             </div>
             <div className="flex flex-col">
               <Label>New file</Label>
@@ -35,10 +32,7 @@ export function WithDescriptions() {
           </Dropdown.Item>
           <Dropdown.Item id="open-file" textValue="Open file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <HugeiconsIcon
-                icon={FolderOpenIcon}
-                className="text-muted size-4 shrink-0"
-              />
+              <HugeiconsIcon icon={FolderOpenIcon} className="text-muted size-4 shrink-0" />
             </div>
             <div className="flex flex-col">
               <Label>Open file</Label>
@@ -51,10 +45,7 @@ export function WithDescriptions() {
           </Dropdown.Item>
           <Dropdown.Item id="save-file" textValue="Save file">
             <div className="flex h-8 items-start justify-center pt-px">
-              <HugeiconsIcon
-                icon={FloppyDiskIcon}
-                className="text-muted size-4 shrink-0"
-              />
+              <HugeiconsIcon icon={FloppyDiskIcon} className="text-muted size-4 shrink-0" />
             </div>
             <div className="flex flex-col">
               <Label>Save file</Label>
@@ -65,16 +56,9 @@ export function WithDescriptions() {
               <Kbd.Content>S</Kbd.Content>
             </Kbd>
           </Dropdown.Item>
-          <Dropdown.Item
-            id="delete-file"
-            textValue="Delete file"
-            variant="danger"
-          >
+          <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
             <div className="flex h-8 items-start justify-center pt-px">
-              <HugeiconsIcon
-                icon={Delete02Icon}
-                className="text-danger size-4 shrink-0"
-              />
+              <HugeiconsIcon icon={Delete02Icon} className="text-danger size-4 shrink-0" />
             </div>
             <div className="flex flex-col">
               <Label>Delete file</Label>

@@ -52,21 +52,13 @@
   }
   .resizable__handle--horizontal::before {
     inset-block: 0;
-    left: calc(
-      (var(--resizable-handle-size) - var(--resizable-handle-hit-area)) / 2
-    );
-    right: calc(
-      (var(--resizable-handle-size) - var(--resizable-handle-hit-area)) / 2
-    );
+    left: calc((var(--resizable-handle-size) - var(--resizable-handle-hit-area)) / 2);
+    right: calc((var(--resizable-handle-size) - var(--resizable-handle-hit-area)) / 2);
   }
   .resizable__handle--vertical::before {
     inset-inline: 0;
-    top: calc(
-      (var(--resizable-handle-size) - var(--resizable-handle-hit-area)) / 2
-    );
-    bottom: calc(
-      (var(--resizable-handle-size) - var(--resizable-handle-hit-area)) / 2
-    );
+    top: calc((var(--resizable-handle-size) - var(--resizable-handle-hit-area)) / 2);
+    bottom: calc((var(--resizable-handle-size) - var(--resizable-handle-hit-area)) / 2);
   }
   .resizable__handle--primary {
     --resizable-handle-color: var(--color-separator);

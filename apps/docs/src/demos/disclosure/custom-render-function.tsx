@@ -23,22 +23,18 @@ export function CustomRenderFunction() {
             <Disclosure.Indicator />
           </Button>
         </Disclosure.Heading>
-        <Disclosure.Content
-          render={(props) => <div data-custom="bar" {...props} />}
-        >
+        <Disclosure.Content render={(props) => <div data-custom="bar" {...props} />}>
           <Disclosure.Body className="shadow-panel bg-surface flex flex-col items-center rounded-3xl p-4 text-center">
             <p className="text-muted text-sm">
-              Scan this QR code with your camera app to preview the Namespace
-              UIKit native components.
+              Scan this QR code with your camera app to preview the Namespace UIKit native
+              components.
             </p>
             <img
               alt="Expo Go QR Code"
               className="aspect-square w-full max-w-54 object-cover"
               src="/assets/images/qr-code-native.png"
             />
-            <p className="text-muted text-sm">
-              Expo must be installed on your device.
-            </p>
+            <p className="text-muted text-sm">Expo must be installed on your device.</p>
             <Button className="mt-4" variant="primary">
               <Icon icon="tabler:brand-apple-filled" />
               Download on App Store

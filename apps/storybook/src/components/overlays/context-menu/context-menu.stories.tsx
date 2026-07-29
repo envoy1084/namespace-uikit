@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { Header, Kbd } from "@thenamespace/uikit";
 
 import { Icon } from "@/icon";

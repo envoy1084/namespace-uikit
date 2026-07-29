@@ -5,12 +5,7 @@ import { ColorField, Description, Label } from "@thenamespace/uikit";
 export function Disabled() {
   return (
     <div className="flex flex-col gap-4">
-      <ColorField
-        isDisabled
-        className="w-[280px]"
-        defaultValue="#0485F7"
-        name="color"
-      >
+      <ColorField isDisabled className="w-[280px]" defaultValue="#0485F7" name="color">
         <Label>Color</Label>
         <ColorField.Group>
           <ColorField.Input />

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 import { Dropdown } from "@/components/collections/dropdown";
@@ -229,9 +229,7 @@ export const Disabled: Story = {
         </ButtonGroup>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-muted text-sm">
-          Group disabled, but one button overrides
-        </p>
+        <p className="text-muted text-sm">Group disabled, but one button overrides</p>
         <ButtonGroup isDisabled>
           <Button>First</Button>
           <Button>
@@ -322,8 +320,7 @@ export const Examples: Story = {
                 >
                   <Label>Create a merge commit</Label>
                   <Description>
-                    All commits from this branch will be added to the base
-                    branch
+                    All commits from this branch will be added to the base branch
                   </Description>
                 </Dropdown.Item>
                 <Dropdown.Item
@@ -333,8 +330,8 @@ export const Examples: Story = {
                 >
                   <Label>Squash and merge</Label>
                   <Description>
-                    The 14 commits from this branch will be combined into one
-                    commit in the base branch
+                    The 14 commits from this branch will be combined into one commit in the base
+                    branch
                   </Description>
                 </Dropdown.Item>
                 <Dropdown.Item
@@ -344,8 +341,7 @@ export const Examples: Story = {
                 >
                   <Label>Rebase and merge</Label>
                   <Description>
-                    The 14 commits from this branch will be rebased and added to
-                    the base branch
+                    The 14 commits from this branch will be rebased and added to the base branch
                   </Description>
                 </Dropdown.Item>
               </Dropdown.Menu>

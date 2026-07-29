@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { CheckmarkCircle02Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
@@ -164,17 +163,10 @@ export const CustomIndicator: Story = {
       ].map(([value, description, users]) => (
         <RadioButtonGroup.Item key={value} value={value as string}>
           <RadioButtonGroup.Indicator>
-            <HugeiconsIcon
-              aria-hidden
-              icon={CheckmarkCircle02Icon}
-              size={20}
-              strokeWidth={2}
-            />
+            <HugeiconsIcon aria-hidden icon={CheckmarkCircle02Icon} size={20} strokeWidth={2} />
           </RadioButtonGroup.Indicator>
           <RadioButtonGroup.ItemContent>
-            <Label className="capitalize">
-              {(value as string).replace(/-/g, " ")}
-            </Label>
+            <Label className="capitalize">{(value as string).replace(/-/g, " ")}</Label>
             <Description>{description}</Description>
             <NumberValue
               className="mt-3 text-sm font-semibold"
@@ -200,13 +192,7 @@ const workspacePlans = [
     "For freelancers and solo makers shipping fast.",
     "solar:rocket-outline",
   ],
-  [
-    "growth",
-    "Growth",
-    29,
-    "For small teams scaling their product.",
-    "solar:graph-up-outline",
-  ],
+  ["growth", "Growth", 29, "For small teams scaling their product.", "solar:graph-up-outline"],
   [
     "business",
     "Business",
@@ -214,13 +200,7 @@ const workspacePlans = [
     "For companies with advanced compliance needs.",
     "solar:buildings-outline",
   ],
-  [
-    "scale",
-    "Scale",
-    149,
-    "Dedicated infra, SLA, and custom integrations.",
-    "solar:server-outline",
-  ],
+  ["scale", "Scale", 149, "Dedicated infra, SLA, and custom integrations.", "solar:server-outline"],
   [
     "enterprise",
     "Enterprise",
@@ -265,10 +245,7 @@ export const IconCards: Story = {
               value={price}
             >
               <NumberValue.Suffix>
-                <span className="text-muted text-sm font-normal">
-                  {" "}
-                  per month
-                </span>
+                <span className="text-muted text-sm font-normal"> per month</span>
               </NumberValue.Suffix>
             </NumberValue>
             <Description className="mt-1">{description}</Description>
@@ -449,11 +426,7 @@ export const SubscriptionPlans: Story = {
     >
       {[
         ["annual", "Annual", "Billed at USD 99.99/year (US$ 8.33/month)"],
-        [
-          "annual-toolkit",
-          "Annual + Toolkit",
-          "Billed at USD 149.99/year (US$ 12.50/month)",
-        ],
+        ["annual-toolkit", "Annual + Toolkit", "Billed at USD 149.99/year (US$ 12.50/month)"],
       ].map(([value, title, billing], index) => (
         <RadioButtonGroup.Item
           key={value}
@@ -481,14 +454,10 @@ export const SubscriptionPlans: Story = {
                     <Chip.Label>Save up to 50%</Chip.Label>
                   </Chip>
                 ) : null}
-                <Label
-                  className={`text-xl font-bold ${isSelected ? "text-background" : ""}`}
-                >
+                <Label className={`text-xl font-bold ${isSelected ? "text-background" : ""}`}>
                   {title}
                 </Label>
-                <Description
-                  className={`mt-1 ${isSelected ? "text-background/70" : ""}`}
-                >
+                <Description className={`mt-1 ${isSelected ? "text-background/70" : ""}`}>
                   {billing}
                 </Description>
               </RadioButtonGroup.ItemContent>

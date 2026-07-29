@@ -88,9 +88,7 @@ function WithMenuDemo() {
       <main className="min-h-[680px] p-6">
         <section className="border-border bg-surface rounded-lg border p-4">
           <h2 className="text-xl font-semibold">Team workspace</h2>
-          <p className="text-muted mt-2 text-sm">
-            Responsive mobile navigation overlay.
-          </p>
+          <p className="text-muted mt-2 text-sm">Responsive mobile navigation overlay.</p>
         </section>
       </main>
     </div>

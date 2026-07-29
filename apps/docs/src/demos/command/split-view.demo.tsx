@@ -33,9 +33,7 @@ function Contents({ minimal = false }: { minimal?: boolean }) {
           <Icon icon="lucide:search" />
         </Command.InputGroup.Prefix>
         <Command.InputGroup.Input
-          placeholder={
-            minimal ? "What do you need?" : "Type a command or search..."
-          }
+          placeholder={minimal ? "What do you need?" : "Type a command or search..."}
         />
         <Command.InputGroup.ClearButton />
         <Command.InputGroup.Suffix>
@@ -93,11 +91,7 @@ function Palette({
         {label} <Kbd>⌘ K</Kbd>
       </Button>
       <Command>
-        <Command.Backdrop
-          isOpen={open}
-          variant={variant}
-          onOpenChange={setOpen}
-        >
+        <Command.Backdrop isOpen={open} variant={variant} onOpenChange={setOpen}>
           <Command.Container size={size}>
             <Command.Dialog>{children ?? <Contents />}</Command.Dialog>
           </Command.Container>
@@ -109,15 +103,7 @@ function Palette({
 
 function Split() {
   const [selected, setSelected] = useState("Button");
-  const items = [
-    "Button",
-    "Input",
-    "Radio",
-    "Chip",
-    "Slider",
-    "Avatar",
-    "Switch",
-  ];
+  const items = ["Button", "Input", "Radio", "Chip", "Slider", "Avatar", "Switch"];
   return (
     <Palette label="Split View" size="lg">
       <Command.InputGroup>
@@ -128,10 +114,7 @@ function Split() {
         <Command.InputGroup.ClearButton />
       </Command.InputGroup>
       <div className="flex min-h-[308px]">
-        <Command.List
-          className="!w-2/5 !flex-none"
-          onAction={(key) => setSelected(String(key))}
-        >
+        <Command.List className="!w-2/5 !flex-none" onAction={(key) => setSelected(String(key))}>
           <Command.Group heading="Components">
             {items.map((x) => (
               <Command.Item id={x} key={x} textValue={x}>

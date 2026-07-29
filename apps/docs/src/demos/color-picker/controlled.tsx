@@ -35,11 +35,7 @@ export function Controlled() {
     const randomSaturation = 50 + Math.floor(Math.random() * 50); // 50-100%
     const randomLightness = 40 + Math.floor(Math.random() * 30); // 40-70%
 
-    setColor(
-      parseColor(
-        `hsl(${randomHue}, ${randomSaturation}%, ${randomLightness}%)`,
-      ),
-    );
+    setColor(parseColor(`hsl(${randomHue}, ${randomSaturation}%, ${randomLightness}%)`));
   };
 
   return (
@@ -67,12 +63,7 @@ export function Controlled() {
             <ColorArea.Thumb />
           </ColorArea>
           <div className="flex items-center gap-2 px-1">
-            <ColorSlider
-              aria-label="Hue slider"
-              channel="hue"
-              className="flex-1"
-              colorSpace="hsb"
-            >
+            <ColorSlider aria-label="Hue slider" channel="hue" className="flex-1" colorSpace="hsb">
               <ColorSlider.Track>
                 <ColorSlider.Thumb />
               </ColorSlider.Track>

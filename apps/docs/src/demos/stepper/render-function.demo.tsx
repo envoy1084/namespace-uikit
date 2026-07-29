@@ -10,22 +10,14 @@ const detailed = [
   ["Review", "Review and confirm"],
 ] as const;
 
-function RenderedStep({
-  description,
-  title,
-}: {
-  description: string;
-  title: string;
-}) {
+function RenderedStep({ description, title }: { description: string; title: string }) {
   const { status } = Stepper.useStep();
   return (
     <>
       <Stepper.Indicator />
       <Stepper.Content>
         <Stepper.Title>{title}</Stepper.Title>
-        <Stepper.Description>
-          {status === "active" ? description : status}
-        </Stepper.Description>
+        <Stepper.Description>{status === "active" ? description : status}</Stepper.Description>
       </Stepper.Content>
       <Stepper.Separator />
     </>

@@ -8,8 +8,7 @@ const rewriteAssetUrls = () => ({
   enforce: "pre" as const,
   name: "namespace-rewrite-asset-urls",
   transform(code: string, id: string) {
-    if (!cdnUrl || !/\.[cm]?[jt]sx?$/.test(id) || !code.includes("/assets/"))
-      return;
+    if (!cdnUrl || !/\.[cm]?[jt]sx?$/.test(id) || !code.includes("/assets/")) return;
 
     const assetBase = `${cdnUrl}/`;
 

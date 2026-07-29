@@ -1,21 +1,13 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import React from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import { Accordion } from "@thenamespace/uikit";
-import {
-  ArrowDown01Icon,
-  Remove01Icon,
-  Add01Icon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import { ArrowDown01Icon, Remove01Icon, Add01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomIndicator() {
-  const [expandedKeys, setExpandedKeys] = React.useState<Set<Key>>(
-    new Set([""]),
-  );
+  const [expandedKeys, setExpandedKeys] = React.useState<Set<Key>>(new Set([""]));
 
   return (
     <Accordion
@@ -39,8 +31,8 @@ export function CustomIndicator() {
         </Accordion.Heading>
         <Accordion.Panel>
           <Accordion.Body>
-            This accordion uses a plus icon that transforms when expanded. The
-            icon automatically rotates 45 degrees to form an X.
+            This accordion uses a plus icon that transforms when expanded. The icon automatically
+            rotates 45 degrees to form an X.
           </Accordion.Body>
         </Accordion.Panel>
       </Accordion.Item>
@@ -56,8 +48,8 @@ export function CustomIndicator() {
         </Accordion.Heading>
         <Accordion.Panel>
           <Accordion.Body>
-            This item uses a caret icon for the indicator. The rotation
-            animation is applied automatically.
+            This item uses a caret icon for the indicator. The rotation animation is applied
+            automatically.
           </Accordion.Body>
         </Accordion.Panel>
       </Accordion.Item>
@@ -73,8 +65,8 @@ export function CustomIndicator() {
         </Accordion.Heading>
         <Accordion.Panel>
           <Accordion.Body>
-            This item uses an arrow icon. Any icon you pass will receive the
-            rotation animation when the item expands.
+            This item uses an arrow icon. Any icon you pass will receive the rotation animation when
+            the item expands.
           </Accordion.Body>
         </Accordion.Panel>
       </Accordion.Item>

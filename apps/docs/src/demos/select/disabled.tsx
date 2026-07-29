@@ -3,12 +3,7 @@ import { Label, ListBox, Select } from "@thenamespace/uikit";
 export function Disabled() {
   return (
     <div className="flex flex-col gap-4">
-      <Select
-        isDisabled
-        className="w-[256px]"
-        defaultValue="california"
-        placeholder="Select one"
-      >
+      <Select isDisabled className="w-[256px]" defaultValue="california" placeholder="Select one">
         <Label>State</Label>
         <Select.Trigger>
           <Select.Value />

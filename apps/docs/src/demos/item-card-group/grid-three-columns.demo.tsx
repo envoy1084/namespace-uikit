@@ -14,9 +14,7 @@ type Item = {
   title: string;
 };
 
-const Chevron = () => (
-  <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />
-);
+const Chevron = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
 
 function Row({
   action = <Chevron />,
@@ -45,9 +43,7 @@ function Row({
       </ItemCard.Icon>
       <ItemCard.Content>
         <ItemCard.Title>{title}</ItemCard.Title>
-        {description && (
-          <ItemCard.Description>{description}</ItemCard.Description>
-        )}
+        {description && <ItemCard.Description>{description}</ItemCard.Description>}
       </ItemCard.Content>
       <ItemCard.Action>{action}</ItemCard.Action>
     </ItemCard>
@@ -59,9 +55,7 @@ export const DemoGridThreeColumnsExample = () => (
     <ItemCardGroup columns={3} layout="grid">
       <ItemCardGroup.Header>
         <ItemCardGroup.Title>Devices</ItemCardGroup.Title>
-        <ItemCardGroup.Description>
-          Manage your connected devices
-        </ItemCardGroup.Description>
+        <ItemCardGroup.Description>Manage your connected devices</ItemCardGroup.Description>
       </ItemCardGroup.Header>
       {[
         ["MacBook Pro", "Active now", "solar:laptop-linear"],

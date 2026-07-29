@@ -60,9 +60,7 @@ export function Group() {
           </Avatar>
         ))}
         <Avatar className="ring-background ring-2">
-          <Avatar.Fallback className="text-xs">
-            +{users.length - 3}
-          </Avatar.Fallback>
+          <Avatar.Fallback className="text-xs">+{users.length - 3}</Avatar.Fallback>
         </Avatar>
       </div>
     </div>

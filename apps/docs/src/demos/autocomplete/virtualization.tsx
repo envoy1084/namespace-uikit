@@ -1,9 +1,8 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useMemo, useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import {
   Autocomplete,
   Description,
@@ -71,8 +70,7 @@ function generateUsers(n: number): User[] {
 
   for (let i = 0; i < n; i++) {
     const firstName = firstNames[i % firstNames.length]!;
-    const lastName =
-      lastNames[Math.floor(i / firstNames.length) % lastNames.length]!;
+    const lastName = lastNames[Math.floor(i / firstNames.length) % lastNames.length]!;
     const name = `${firstName} ${lastName}`;
 
     users.push({
@@ -96,8 +94,7 @@ export function Virtualization() {
     if (!searchQuery) return allUsers;
 
     return allUsers.filter(
-      (user) =>
-        contains(user.name, searchQuery) || contains(user.email, searchQuery),
+      (user) => contains(user.name, searchQuery) || contains(user.email, searchQuery),
     );
   }, [allUsers, contains, searchQuery]);
 
@@ -117,16 +114,8 @@ export function Virtualization() {
         <Autocomplete.Indicator />
       </Autocomplete.Trigger>
       <Autocomplete.Popover>
-        <Autocomplete.Filter
-          inputValue={searchQuery}
-          onInputChange={setSearchQuery}
-        >
-          <SearchField
-            autoFocus
-            className="sticky top-0 z-10"
-            name="search"
-            variant="secondary"
-          >
+        <Autocomplete.Filter inputValue={searchQuery} onInputChange={setSearchQuery}>
+          <SearchField autoFocus className="sticky top-0 z-10" name="search" variant="secondary">
             <SearchField.Group>
               <SearchField.SearchIcon />
               <SearchField.Input placeholder="Search users..." />

@@ -119,9 +119,7 @@ function CoverageLayer() {
     if (!isLoaded || !map) return;
     const addLayers = () => {
       if (map.getSource(coverageSourceId)) return;
-      const beforeId = map
-        .getStyle()
-        .layers?.find((layer) => layer.type === "symbol")?.id;
+      const beforeId = map.getStyle().layers?.find((layer) => layer.type === "symbol")?.id;
       map.addSource(coverageSourceId, { data: coverageData, type: "geojson" });
       map.addLayer(
         {
@@ -232,20 +230,14 @@ export const DemoCoverageZonesExample = () => (
     <Map center={[-97.748, 30.254]} pitch={18} styles={styles} zoom={10.9}>
       <CoverageLayer />
       {coverageZones.map((zone) => (
-        <Map.Marker
-          key={zone.name}
-          latitude={zone.latitude}
-          longitude={zone.longitude}
-        >
+        <Map.Marker key={zone.name} latitude={zone.latitude} longitude={zone.longitude}>
           <Map.MarkerContent>
             <Map.MarkerDot color={zone.color} />
             <Map.MarkerLabel>{zone.volume}</Map.MarkerLabel>
           </Map.MarkerContent>
           <Map.MarkerTooltip>
             <span className="font-medium">{zone.name}</span>
-            <span className="text-background/70 ml-1">
-              {zone.volume} covered
-            </span>
+            <span className="text-background/70 ml-1">{zone.volume} covered</span>
           </Map.MarkerTooltip>
         </Map.Marker>
       ))}
@@ -261,15 +253,9 @@ export const DemoCoverageZonesExample = () => (
       </Card.Header>
       <Card.Content className="gap-2">
         {coverageZones.map((zone) => (
-          <div
-            className="flex items-center justify-between text-xs"
-            key={zone.name}
-          >
+          <div className="flex items-center justify-between text-xs" key={zone.name}>
             <span className="flex items-center gap-2">
-              <span
-                className="size-2 rounded-full"
-                style={{ backgroundColor: zone.color }}
-              />
+              <span className="size-2 rounded-full" style={{ backgroundColor: zone.color }} />
               {zone.name}
             </span>
             <span className="text-muted">{zone.volume}</span>

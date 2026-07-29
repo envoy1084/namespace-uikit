@@ -4,11 +4,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Dropdown, Label } from "@thenamespace/uikit";
-import {
-  ChatAttachment,
-  ChatAttachmentGroup,
-  PromptInput,
-} from "@thenamespace/uikit";
+import { ChatAttachment, ChatAttachmentGroup, PromptInput } from "@thenamespace/uikit";
 import {
   Attachment01Icon,
   Copy01Icon,
@@ -52,9 +48,7 @@ function useAttachments() {
         id: attachmentId(file),
         mimeType: file.type,
         name: file.name,
-        src: file.type.startsWith("image/")
-          ? URL.createObjectURL(file)
-          : undefined,
+        src: file.type.startsWith("image/") ? URL.createObjectURL(file) : undefined,
       })),
     ]);
   }, []);
@@ -207,11 +201,7 @@ function QueueItemMenu({
             />
             <Label>Duplicate</Label>
           </Dropdown.Item>
-          <Dropdown.Item
-            id="remove"
-            textValue="Remove from queue"
-            variant="danger"
-          >
+          <Dropdown.Item id="remove" textValue="Remove from queue" variant="danger">
             <HugeiconsIcon
               aria-hidden
               className="text-danger size-4 shrink-0"
@@ -238,9 +228,7 @@ function QueueDemo() {
     setQueue((current) => [
       ...current,
       {
-        attachments: attachments.length
-          ? attachments.map(cloneAttachment)
-          : undefined,
+        attachments: attachments.length ? attachments.map(cloneAttachment) : undefined,
         id: crypto.randomUUID(),
         text,
       },
@@ -248,19 +236,14 @@ function QueueDemo() {
     setValue("");
     clearAttachments();
   };
-  const remove = (id: string) =>
-    setQueue((current) => current.filter((item) => item.id !== id));
+  const remove = (id: string) => setQueue((current) => current.filter((item) => item.id !== id));
   const duplicate = (id: string) =>
     setQueue((current) => {
       const index = current.findIndex((item) => item.id === id);
       const item = current[index];
       if (!item) return current;
       const copy = cloneQueueItem(item, crypto.randomUUID());
-      return [
-        ...current.slice(0, index + 1),
-        copy,
-        ...current.slice(index + 1),
-      ];
+      return [...current.slice(0, index + 1), copy, ...current.slice(index + 1)];
     });
   const edit = (id: string) => {
     const item = queue.find((queued) => queued.id === id);
@@ -302,18 +285,12 @@ function QueueDemo() {
         ) : null}
         <PromptInput.Shell>
           <PromptInput.Content>
-            <AttachmentPreviews
-              attachments={attachments}
-              onRemove={removeAttachment}
-            />
+            <AttachmentPreviews attachments={attachments} onRemove={removeAttachment} />
             <PromptInput.TextArea placeholder="Ask for follow-up changes" />
           </PromptInput.Content>
           <PromptInput.Toolbar>
             <PromptInput.ToolbarStart>
-              <PromptInput.Action
-                aria-label="Add attachment"
-                tooltip="Add attachment"
-              >
+              <PromptInput.Action aria-label="Add attachment" tooltip="Add attachment">
                 <HugeiconsIcon
                   aria-hidden
                   className="size-4"

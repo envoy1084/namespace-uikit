@@ -33,9 +33,7 @@ function ColorVariableRow({ variable }: ColorVariableRowProps) {
     <div className="flex items-start gap-2 py-1">
       <div className="flex flex-col gap-0.5">
         <div className="flex items-center gap-2">
-          <span className="text-foreground font-mono text-xs font-semibold">
-            {variable.name}
-          </span>
+          <span className="text-foreground font-mono text-xs font-semibold">{variable.name}</span>
           <ColorSwatch name={variable.name} value={displayValue} />
         </div>
         <span className="text-accent font-mono text-xs">{displayValue}</span>

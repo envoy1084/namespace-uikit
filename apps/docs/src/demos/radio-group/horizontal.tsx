@@ -4,11 +4,7 @@ export function Horizontal() {
   return (
     <div className="flex flex-col gap-4">
       <Label>Subscription plan</Label>
-      <RadioGroup
-        defaultValue="pro"
-        name="plan-orientation"
-        orientation="horizontal"
-      >
+      <RadioGroup defaultValue="pro" name="plan-orientation" orientation="horizontal">
         <Radio value="starter">
           <Radio.Content>
             <Radio.Control>

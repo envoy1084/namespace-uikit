@@ -1,11 +1,5 @@
 "use client";
 
-import type {
-  EditorRecord,
-  ProfileEditorSection,
-  RecordDefinition,
-} from "#/components/name-profile-editor/editor/types";
-
 import { Typography } from "@thenamespace/uikit";
 
 import {
@@ -15,19 +9,18 @@ import {
 import { RecordButton } from "#/components/name-profile-editor/editor/record-button";
 import { sectionLabels } from "#/components/name-profile-editor/editor/record-definitions";
 import { RecordField } from "#/components/name-profile-editor/editor/record-field";
+import type {
+  EditorRecord,
+  ProfileEditorSection,
+  RecordDefinition,
+} from "#/components/name-profile-editor/editor/types";
 import { getRecordIcon } from "#/icons/get-record-icon";
 
-function matchesSearch(
-  record: Pick<RecordDefinition, "label" | "name">,
-  search: string,
-): boolean {
+function matchesSearch(record: Pick<RecordDefinition, "label" | "name">, search: string): boolean {
   const query = search.trim().toLowerCase();
   if (query.length === 0) return true;
 
-  return (
-    record.label.toLowerCase().includes(query) ||
-    record.name.toLowerCase().includes(query)
-  );
+  return record.label.toLowerCase().includes(query) || record.name.toLowerCase().includes(query);
 }
 
 export function RecordSection({
@@ -56,8 +49,7 @@ export function RecordSection({
   );
   const availableRecords = recordsForSection(section).filter(
     (definition) =>
-      !isRecordDefinitionActive(definition, records) &&
-      matchesSearch(definition, search),
+      !isRecordDefinitionActive(definition, records) && matchesSearch(definition, search),
   );
   const hasResults = sectionRecords.length > 0 || availableRecords.length > 0;
 
@@ -99,10 +91,7 @@ export function RecordSection({
       ) : null}
 
       {error === undefined ? null : (
-        <Typography.Paragraph
-          className="text-danger mt-2 text-left text-xs leading-4"
-          role="alert"
-        >
+        <Typography.Paragraph className="text-danger mt-2 text-left text-xs leading-4" role="alert">
           {error}
         </Typography.Paragraph>
       )}

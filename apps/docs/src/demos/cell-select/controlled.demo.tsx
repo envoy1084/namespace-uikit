@@ -39,9 +39,7 @@ export const DemoControlledExample = function Demo() {
           </ListBox>
         </CellSelect.Popover>
       </CellSelect>
-      <p className="text-muted px-1 text-sm">
-        Selected: {selected?.name ?? "None"}
-      </p>
+      <p className="text-muted px-1 text-sm">Selected: {selected?.name ?? "None"}</p>
     </div>
   );
 };

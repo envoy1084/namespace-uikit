@@ -1,7 +1,5 @@
 "use client";
 
-import type { SortDescriptor } from "@thenamespace/uikit";
-
 import { useMemo, useState } from "react";
 
 import type { SortingState } from "@tanstack/react-table";
@@ -14,6 +12,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import type { SortDescriptor } from "@thenamespace/uikit";
 import { Chip, Pagination, Table } from "@thenamespace/uikit";
 
 // --- Data -----------------------------------------------------------------
@@ -175,10 +174,7 @@ export function TanstackTable() {
               >
                 {({ sortDirection }) => (
                   <Table.SortableColumnHeader sortDirection={sortDirection}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
+                    {flexRender(header.column.columnDef.header, header.getContext())}
                   </Table.SortableColumnHeader>
                 )}
               </Table.Column>

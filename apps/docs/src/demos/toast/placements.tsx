@@ -1,19 +1,11 @@
 "use client";
 
 import type { ToastVariants } from "@thenamespace/uikit";
-
 import { Button, Toast, ToastQueue } from "@thenamespace/uikit";
 
 type Placement = NonNullable<ToastVariants["placement"]>;
 
-const placements = [
-  "top start",
-  "top",
-  "top end",
-  "bottom start",
-  "bottom",
-  "bottom end",
-] as const;
+const placements = ["top start", "top", "top end", "bottom start", "bottom", "bottom end"] as const;
 
 // Create a separate queue for each placement
 const placementQueues = Object.fromEntries(
@@ -37,12 +29,7 @@ export function Placements() {
       ))}
       <div className="flex max-w-xs flex-wrap justify-center gap-2">
         {placements.map((p) => (
-          <Button
-            key={p}
-            size="sm"
-            variant="secondary"
-            onPress={() => showToast(p)}
-          >
+          <Button key={p} size="sm" variant="secondary" onPress={() => showToast(p)}>
             {p}
           </Button>
         ))}

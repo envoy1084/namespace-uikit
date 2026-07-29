@@ -1,7 +1,7 @@
+import React, { useState } from "react";
+
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Color } from "react-aria-components/ColorArea";
-
-import React, { useState } from "react";
 
 import { Button } from "@/components/buttons/button";
 import { ColorSwatch } from "@/components/colors/color-swatch";
@@ -32,12 +32,7 @@ export const Default: Story = {
     const [color, setColor] = useState<Color | null>(DEFAULT_COLOR);
 
     return (
-      <ColorField
-        className="w-[280px]"
-        name="color"
-        value={color}
-        onChange={setColor}
-      >
+      <ColorField className="w-[280px]" name="color" value={color} onChange={setColor}>
         <Label>Color</Label>
         <ColorField.Group>
           <ColorField.Prefix>
@@ -53,21 +48,13 @@ export const Default: Story = {
 export const Variants: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <ColorField
-        className="w-[280px]"
-        defaultValue={parseColor("#0485F7")}
-        name="primary-color"
-      >
+      <ColorField className="w-[280px]" defaultValue={parseColor("#0485F7")} name="primary-color">
         <Label>Primary variant</Label>
         <ColorField.Group variant="primary">
           <ColorField.Input />
         </ColorField.Group>
       </ColorField>
-      <ColorField
-        className="w-[280px]"
-        defaultValue={parseColor("#F43F5E")}
-        name="secondary-color"
-      >
+      <ColorField className="w-[280px]" defaultValue={parseColor("#F43F5E")} name="secondary-color">
         <Label>Secondary variant</Label>
         <ColorField.Group variant="secondary">
           <ColorField.Input />
@@ -86,11 +73,7 @@ export const FullWidth: Story = {
           <ColorField.Input />
         </ColorField.Group>
       </ColorField>
-      <ColorField
-        fullWidth
-        defaultValue={parseColor("#8B5CF6")}
-        name="color-with-suffix"
-      >
+      <ColorField fullWidth defaultValue={parseColor("#8B5CF6")} name="color-with-suffix">
         <Label>Theme Color</Label>
         <ColorField.Group>
           <ColorField.Input />
@@ -103,22 +86,14 @@ export const FullWidth: Story = {
 export const WithDescription: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <ColorField
-        className="w-[280px]"
-        defaultValue={parseColor("#3B82F6")}
-        name="color"
-      >
+      <ColorField className="w-[280px]" defaultValue={parseColor("#3B82F6")} name="color">
         <Label>Primary Color</Label>
         <ColorField.Group>
           <ColorField.Input />
         </ColorField.Group>
         <Description>Enter your brand's primary color</Description>
       </ColorField>
-      <ColorField
-        className="w-[280px]"
-        defaultValue={parseColor("#F59E0B")}
-        name="accent-color"
-      >
+      <ColorField className="w-[280px]" defaultValue={parseColor("#F59E0B")} name="accent-color">
         <Label>Accent Color</Label>
         <ColorField.Group>
           <ColorField.Input />
@@ -202,12 +177,7 @@ export const Controlled: Story = {
 
     return (
       <div className="flex flex-col gap-4">
-        <ColorField
-          className="w-[280px]"
-          name="color"
-          value={value}
-          onChange={setValue}
-        >
+        <ColorField className="w-[280px]" name="color" value={value} onChange={setValue}>
           <Label>Color</Label>
           <ColorField.Group>
             <ColorField.Prefix>
@@ -215,21 +185,13 @@ export const Controlled: Story = {
             </ColorField.Prefix>
             <ColorField.Input />
           </ColorField.Group>
-          <Description>
-            Current value: {value ? value.toString("hex") : "(empty)"}
-          </Description>
+          <Description>Current value: {value ? value.toString("hex") : "(empty)"}</Description>
         </ColorField>
         <div className="flex gap-2">
-          <Button
-            variant="tertiary"
-            onPress={() => setValue(parseColor("#EF4444"))}
-          >
+          <Button variant="tertiary" onPress={() => setValue(parseColor("#EF4444"))}>
             Set Red
           </Button>
-          <Button
-            variant="tertiary"
-            onPress={() => setValue(parseColor("#10B981"))}
-          >
+          <Button variant="tertiary" onPress={() => setValue(parseColor("#10B981"))}>
             Set Green
           </Button>
           <Button variant="tertiary" onPress={() => setValue(null)}>
@@ -296,14 +258,8 @@ export const ChannelEditing: Story = {
           </ColorField>
         </div>
         <div className="flex items-center gap-2">
-          <ColorSwatch
-            className="size-8"
-            color={color ?? undefined}
-            size="xs"
-          />
-          <span className="text-sm">
-            Current: {color ? color.toString("hex") : "(empty)"}
-          </span>
+          <ColorSwatch className="size-8" color={color ?? undefined} size="xs" />
+          <span className="text-sm">Current: {color ? color.toString("hex") : "(empty)"}</span>
         </div>
       </div>
     );
@@ -359,11 +315,7 @@ export const RGBChannels: Story = {
           </ColorField>
         </div>
         <div className="flex items-center gap-2">
-          <ColorSwatch
-            className="size-8"
-            color={color ?? undefined}
-            size="xs"
-          />
+          <ColorSwatch className="size-8" color={color ?? undefined} size="xs" />
           <span className="text-sm">Current: {color?.toString("hex")}</span>
         </div>
       </div>
@@ -432,30 +384,15 @@ export const FormExample: Story = {
 export const WithColorPresets: Story = {
   render: () => {
     const [value, setValue] = useState<Color | null>(parseColor("#0485F7"));
-    const presets = [
-      "#EF4444",
-      "#F59E0B",
-      "#10B981",
-      "#3B82F6",
-      "#8B5CF6",
-      "#EC4899",
-    ];
+    const presets = ["#EF4444", "#F59E0B", "#10B981", "#3B82F6", "#8B5CF6", "#EC4899"];
 
     return (
       <div className="flex flex-col gap-4">
-        <ColorField
-          className="w-[280px]"
-          name="color"
-          value={value}
-          onChange={setValue}
-        >
+        <ColorField className="w-[280px]" name="color" value={value} onChange={setValue}>
           <Label>Color</Label>
           <ColorField.Group>
             <ColorField.Prefix>
-              <ColorSwatch
-                color={value?.toString("hex") || "#E4E4E7"}
-                size="xs"
-              />
+              <ColorSwatch color={value?.toString("hex") || "#E4E4E7"} size="xs" />
             </ColorField.Prefix>
             <ColorField.Input />
           </ColorField.Group>

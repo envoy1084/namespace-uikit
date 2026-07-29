@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  DateField,
-  DateRangePicker,
-  Label,
-  RangeCalendar,
-} from "@thenamespace/uikit";
+import { DateField, DateRangePicker, Label, RangeCalendar } from "@thenamespace/uikit";
 
 export function Basic() {
   return (
@@ -37,9 +32,7 @@ export function Basic() {
           </RangeCalendar.Header>
           <RangeCalendar.Grid>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}

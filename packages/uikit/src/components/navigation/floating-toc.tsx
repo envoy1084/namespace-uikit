@@ -37,8 +37,7 @@ interface ContextValue {
 const Context = createContext<ContextValue | null>(null);
 const useFloatingToc = () => {
   const context = useContext(Context);
-  if (!context)
-    throw new Error("FloatingToc parts must be used inside FloatingToc.Root");
+  if (!context) throw new Error("FloatingToc parts must be used inside FloatingToc.Root");
   return context;
 };
 const setRefs =
@@ -74,12 +73,8 @@ function FloatingTocRoot({
   const isOpen = controlledOpen ?? uncontrolledOpen;
   const triggerRef = useRef<HTMLElement | null>(null);
   const isPointerInsideRef = useRef(false);
-  const openTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
-    undefined,
-  );
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
-    undefined,
-  );
+  const openTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const setOpen = useCallback(
     (value: boolean) => {
       if (controlledOpen === undefined) setUncontrolledOpen(value);
@@ -273,10 +268,8 @@ function FloatingTocContent({
     <RacPopover
       {...props}
       className={
-        cn(
-          "floating-toc__content",
-          typeof className === "string" ? className : undefined,
-        ) ?? "floating-toc__content"
+        cn("floating-toc__content", typeof className === "string" ? className : undefined) ??
+        "floating-toc__content"
       }
       data-slot="floating-toc-content"
       isNonModal
@@ -337,20 +330,11 @@ type FloatingTocComponent = typeof FloatingTocRoot & {
   Root: typeof FloatingTocRoot;
   Trigger: typeof FloatingTocTrigger;
 };
-export const FloatingToc: FloatingTocComponent = Object.assign(
-  FloatingTocRoot,
-  {
-    Bar: FloatingTocBar,
-    Content: FloatingTocContent,
-    Item: FloatingTocItem,
-    Root: FloatingTocRoot,
-    Trigger: FloatingTocTrigger,
-  },
-);
-export {
-  FloatingTocBar,
-  FloatingTocContent,
-  FloatingTocItem,
-  FloatingTocRoot,
-  FloatingTocTrigger,
-};
+export const FloatingToc: FloatingTocComponent = Object.assign(FloatingTocRoot, {
+  Bar: FloatingTocBar,
+  Content: FloatingTocContent,
+  Item: FloatingTocItem,
+  Root: FloatingTocRoot,
+  Trigger: FloatingTocTrigger,
+});
+export { FloatingTocBar, FloatingTocContent, FloatingTocItem, FloatingTocRoot, FloatingTocTrigger };

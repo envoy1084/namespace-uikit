@@ -1,9 +1,8 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import { DateField, Description, FieldError, Label } from "@thenamespace/uikit";
 
@@ -25,9 +24,7 @@ export function WithValidation() {
       >
         <Label>Date</Label>
         <DateField.Group>
-          <DateField.Input>
-            {(segment) => <DateField.Segment segment={segment} />}
-          </DateField.Input>
+          <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
         </DateField.Group>
         {isInvalid ? (
           <FieldError>Date must be today or in the future</FieldError>

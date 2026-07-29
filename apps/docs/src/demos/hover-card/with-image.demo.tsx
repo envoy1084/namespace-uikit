@@ -28,11 +28,7 @@ export const DemoWithImageExample = () => (
       Learn more about the{" "}
       <HoverCard openDelay={0}>
         <HoverCard.Trigger>
-          <Link
-            className="underline"
-            href="https://namespace.ninja"
-            target="_blank"
-          >
+          <Link className="underline" href="https://namespace.ninja" target="_blank">
             Neo Brutalism
           </Link>
         </HoverCard.Trigger>

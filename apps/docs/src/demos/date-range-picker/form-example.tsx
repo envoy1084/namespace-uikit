@@ -1,9 +1,8 @@
 "use client";
 
-import type { DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   Button,
@@ -26,9 +25,7 @@ export function FormExample() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const currentDate = today(getLocalTimeZone());
   const isInvalid =
-    value != null &&
-    (value.start.compare(currentDate) < 0 ||
-      value.end.compare(value.start) < 0);
+    value != null && (value.start.compare(currentDate) < 0 || value.end.compare(value.start) < 0);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -86,9 +83,7 @@ export function FormExample() {
             </RangeCalendar.Header>
             <RangeCalendar.Grid>
               <RangeCalendar.GridHeader>
-                {(day) => (
-                  <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-                )}
+                {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
               </RangeCalendar.GridHeader>
               <RangeCalendar.GridBody>
                 {(date) => <RangeCalendar.Cell date={date} />}

@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useEffect, useRef, useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { ArrowUp01Icon, Attachment01Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
@@ -67,9 +66,7 @@ function ComposerDemo() {
         id: `${file.name}-${file.lastModified}-${crypto.randomUUID()}`,
         mimeType: file.type,
         name: file.name,
-        src: file.type.startsWith("image/")
-          ? URL.createObjectURL(file)
-          : undefined,
+        src: file.type.startsWith("image/") ? URL.createObjectURL(file) : undefined,
       })),
     ]);
   return (
@@ -95,9 +92,7 @@ function ComposerDemo() {
                               aria-label="Remove attachment"
                               onPress={() =>
                                 setAttachments((values) =>
-                                  values.filter(
-                                    (value) => value.id !== item.id,
-                                  ),
+                                  values.filter((value) => value.id !== item.id),
                                 )
                               }
                             />
@@ -117,22 +112,14 @@ function ComposerDemo() {
                           aria-label="Attach file"
                           tooltip="Attach file"
                         >
-                          <HugeiconsIcon
-                            aria-hidden
-                            icon={Attachment01Icon}
-                            strokeWidth={2}
-                          />
+                          <HugeiconsIcon aria-hidden icon={Attachment01Icon} strokeWidth={2} />
                         </PromptInput.Action>
                       )}
                     />
                   </PromptInput.ToolbarStart>
                   <PromptInput.ToolbarEnd>
                     <PromptInput.Send aria-label="Send">
-                      <HugeiconsIcon
-                        aria-hidden
-                        icon={ArrowUp01Icon}
-                        strokeWidth={2}
-                      />
+                      <HugeiconsIcon aria-hidden icon={ArrowUp01Icon} strokeWidth={2} />
                     </PromptInput.Send>
                   </PromptInput.ToolbarEnd>
                 </PromptInput.Toolbar>

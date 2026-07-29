@@ -7,10 +7,7 @@ export function EmptyStateDemo() {
   return (
     <Table className="min-h-[200px]">
       <Table.ScrollContainer>
-        <Table.Content
-          aria-label="Empty table"
-          className="h-full min-w-[600px]"
-        >
+        <Table.Content aria-label="Empty table" className="h-full min-w-[600px]">
           <Table.Header>
             <Table.Column isRowHeader>Name</Table.Column>
             <Table.Column>Role</Table.Column>

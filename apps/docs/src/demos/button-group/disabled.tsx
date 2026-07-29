@@ -18,9 +18,7 @@ export function Disabled() {
         </ButtonGroup>
       </div>
       <div className="flex flex-col items-start gap-2">
-        <p className="text-muted text-sm">
-          Group disabled, but one button overrides
-        </p>
+        <p className="text-muted text-sm">Group disabled, but one button overrides</p>
         <ButtonGroup isDisabled>
           <Button>First</Button>
           <Button>

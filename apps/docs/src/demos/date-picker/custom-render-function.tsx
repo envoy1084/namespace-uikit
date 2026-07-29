@@ -9,32 +9,22 @@ export function CustomRenderFunction() {
       name="date"
       render={(props) => <div {...props} data-custom="date-picker" />}
     >
-      <Label
-        render={(props) => <span {...props} data-custom="date-picker-label" />}
-      >
-        Date
-      </Label>
+      <Label render={(props) => <span {...props} data-custom="date-picker-label" />}>Date</Label>
       <DateField.Group
         fullWidth
         render={(props) => <div {...props} data-custom="date-field-group" />}
       >
-        <DateField.Input
-          render={(props) => <div {...props} data-custom="date-field-input" />}
-        >
+        <DateField.Input render={(props) => <div {...props} data-custom="date-field-input" />}>
           {(segment) => (
             <DateField.Segment
-              render={(props) => (
-                <span {...props} data-custom="date-field-segment" />
-              )}
+              render={(props) => <span {...props} data-custom="date-field-segment" />}
               segment={segment}
             />
           )}
         </DateField.Input>
         <DateField.Suffix>
           <DatePicker.Trigger
-            render={(props) => (
-              <button {...props} data-custom="date-picker-trigger" />
-            )}
+            render={(props) => <button {...props} data-custom="date-picker-trigger" />}
           >
             <DatePicker.TriggerIndicator />
           </DatePicker.Trigger>
@@ -54,9 +44,7 @@ export function CustomRenderFunction() {
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
+            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
           </Calendar.Grid>
           <Calendar.YearPickerGrid>
             <Calendar.YearPickerGridBody>

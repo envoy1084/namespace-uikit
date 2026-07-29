@@ -14,12 +14,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const colors = [
-  "var(--chart-4)",
-  "var(--chart-3)",
-  "var(--chart-2)",
-  "var(--chart-1)",
-];
+const colors = ["var(--chart-4)", "var(--chart-3)", "var(--chart-2)", "var(--chart-1)"];
 
 interface PieTooltipProps {
   active?: boolean;
@@ -74,9 +69,7 @@ function Legend({
           />
           <span className="text-muted text-xs">
             {item.name}
-            {suffix !== undefined
-              ? ` (${item.value.toLocaleString()}${suffix})`
-              : ""}
+            {suffix !== undefined ? ` (${item.value.toLocaleString()}${suffix})` : ""}
           </span>
         </div>
       ))}
@@ -135,8 +128,7 @@ export const Donut: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Donut chart — a pie with an inner radius creating a ring shape.",
+        story: "Donut chart — a pie with an inner radius creating a ring shape.",
       },
     },
   },
@@ -161,11 +153,7 @@ export const Donut: Story = {
             <Cells data={traffic} />
           </PieChart.Pie>
           <PieChart.Tooltip
-            content={
-              <PieTooltip
-                valueFormatter={(value) => Number(value).toLocaleString()}
-              />
-            }
+            content={<PieTooltip valueFormatter={(value) => Number(value).toLocaleString()} />}
           />
         </PieChart>
         <Legend data={traffic} suffix="" />
@@ -217,15 +205,11 @@ export const DonutWithLabel: Story = {
                 <Cells data={storage} />
               </PieChart.Pie>
               <PieChart.Tooltip
-                content={
-                  <PieTooltip valueFormatter={(value) => `${value} GB`} />
-                }
+                content={<PieTooltip valueFormatter={(value) => `${value} GB`} />}
               />
             </PieChart>
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-foreground text-2xl font-bold">
-                {total}
-              </span>
+              <span className="text-foreground text-2xl font-bold">{total}</span>
               <span className="text-muted text-xs">GB used</span>
             </div>
           </div>
@@ -290,9 +274,7 @@ export const DonutWithContent: Story = {
                   className="size-3 shrink-0 rounded-full"
                   style={{ backgroundColor: colors[index % colors.length] }}
                 />
-                <span className="text-foreground w-16 text-sm">
-                  {item.name}
-                </span>
+                <span className="text-foreground w-16 text-sm">{item.name}</span>
                 <span className="text-foreground text-sm font-semibold">
                   {item.value.toLocaleString()}
                 </span>
@@ -318,8 +300,7 @@ export const WithBreakdown: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Side-by-side layout with the chart on the left and a breakdown list on the right.",
+        story: "Side-by-side layout with the chart on the left and a breakdown list on the right.",
       },
     },
   },
@@ -349,9 +330,7 @@ export const WithBreakdown: Story = {
               <PieChart.Tooltip content={<PieTooltip />} />
             </PieChart>
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-foreground text-xl font-bold">
-                {total.toLocaleString()}
-              </span>
+              <span className="text-foreground text-xl font-bold">{total.toLocaleString()}</span>
               <span className="text-muted text-[10px]">Total</span>
             </div>
           </div>
@@ -365,9 +344,7 @@ export const WithBreakdown: Story = {
                 <div className="flex flex-1 items-center justify-between">
                   <span className="text-foreground text-sm">{item.name}</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-foreground text-sm font-semibold">
-                      {item.value}
-                    </span>
+                    <span className="text-foreground text-sm font-semibold">{item.value}</span>
                     <span className="text-muted text-xs">
                       ({((item.value / total) * 100).toFixed(1)}%)
                     </span>
@@ -412,9 +389,7 @@ export const CustomTooltip: Story = {
             <PieChart.Tooltip
               content={
                 <PieTooltip
-                  valueFormatter={(value) =>
-                    `${((Number(value) / total) * 100).toFixed(1)}%`
-                  }
+                  valueFormatter={(value) => `${((Number(value) / total) * 100).toFixed(1)}%`}
                 />
               }
             />
@@ -443,17 +418,14 @@ export const NestedDonut: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Nested donut rings — two Pie components at different radii for comparison.",
+        story: "Nested donut rings — two Pie components at different radii for comparison.",
       },
     },
   },
   render: () => (
     <Card className="w-[400px] rounded-2xl">
       <Card.Header className="flex-row items-center justify-between">
-        <Card.Title className="text-base">
-          Revenue: This Year vs Last
-        </Card.Title>
+        <Card.Title className="text-base">Revenue: This Year vs Last</Card.Title>
       </Card.Header>
       <Card.Content className="flex flex-col items-center gap-4">
         <PieChart height={240}>
@@ -487,9 +459,7 @@ export const NestedDonut: Story = {
           </PieChart.Pie>
           <PieChart.Tooltip
             content={
-              <PieTooltip
-                valueFormatter={(value) => `$${Number(value).toLocaleString()}`}
-              />
+              <PieTooltip valueFormatter={(value) => `$${Number(value).toLocaleString()}`} />
             }
           />
         </PieChart>

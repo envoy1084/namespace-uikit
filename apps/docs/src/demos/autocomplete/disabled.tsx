@@ -54,9 +54,7 @@ export function Disabled() {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               {items.map((item) => (
                 <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                   {item.name}
@@ -89,15 +87,9 @@ export function Disabled() {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               {countries.map((country) => (
-                <ListBox.Item
-                  key={country.id}
-                  id={country.id}
-                  textValue={country.name}
-                >
+                <ListBox.Item key={country.id} id={country.id} textValue={country.name}>
                   {country.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>

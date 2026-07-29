@@ -12,9 +12,7 @@ export const DemoCustomIconExample = () => (
         <Icon icon="solar:gallery-outline" />
       </DropZone.Icon>
       <DropZone.Label>Set your profile photo</DropZone.Label>
-      <DropZone.Description>
-        PNG or JPG under 2 MB. Best at 400 x 400 px.
-      </DropZone.Description>
+      <DropZone.Description>PNG or JPG under 2 MB. Best at 400 x 400 px.</DropZone.Description>
       <DropZone.Trigger>Pick Image</DropZone.Trigger>
     </DropZone.Area>
     <DropZone.Input accept="image/png,image/jpeg" />

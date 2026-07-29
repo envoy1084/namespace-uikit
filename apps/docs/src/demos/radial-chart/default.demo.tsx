@@ -67,28 +67,18 @@ export const DemoDefaultExample = () => (
         {activity.map((item) => (
           <div className="flex flex-col" key={item.name}>
             <span className="text-muted text-xs">{item.name}</span>
-            <span className="text-foreground text-sm font-semibold">
-              {item.valueText}
-            </span>
+            <span className="text-foreground text-sm font-semibold">{item.valueText}</span>
           </div>
         ))}
       </div>
       <div className="relative shrink-0">
-        <RadialChart
-          data={activity}
-          height={200}
-          innerRadius="40%"
-          outerRadius="100%"
-          width={200}
-        >
+        <RadialChart data={activity} height={200} innerRadius="40%" outerRadius="100%" width={200}>
           <RadialChart.Bar background cornerRadius={12} dataKey="value" />
           <RadialChart.Tooltip content={<RadialTooltip />} />
         </RadialChart>
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
           <span className="text-muted text-[10px]">Calories</span>
-          <span className="text-foreground text-sm font-semibold">
-            700 kcal
-          </span>
+          <span className="text-foreground text-sm font-semibold">700 kcal</span>
         </div>
       </div>
     </Card.Content>

@@ -24,8 +24,7 @@ function DefaultDemo() {
           </EmptyState.Media>
           <EmptyState.Title>No Projects Yet</EmptyState.Title>
           <EmptyState.Description>
-            You haven&apos;t created any projects yet. Get started by creating
-            your first project.
+            You haven&apos;t created any projects yet. Get started by creating your first project.
           </EmptyState.Description>
         </EmptyState.Header>
         <EmptyState.Content className="flex-row gap-2">
@@ -63,10 +62,7 @@ function WithBackgroundDemo() {
     <div className="w-[420px]">
       <EmptyState className="bg-surface-secondary rounded-2xl">
         <EmptyState.Header>
-          <EmptyState.Media
-            className="bg-surface-tertiary border"
-            variant="icon"
-          >
+          <EmptyState.Media className="bg-surface-tertiary border" variant="icon">
             <Icon icon="lucide:bell" />
           </EmptyState.Media>
           <EmptyState.Title>No Notifications</EmptyState.Title>
@@ -104,8 +100,8 @@ function WithAvatarDemo() {
           </EmptyState.Media>
           <EmptyState.Title>User Offline</EmptyState.Title>
           <EmptyState.Description>
-            This user is currently offline. You can leave a message to notify
-            them or try again later.
+            This user is currently offline. You can leave a message to notify them or try again
+            later.
           </EmptyState.Description>
         </EmptyState.Header>
         <EmptyState.Content>
@@ -158,8 +154,8 @@ function SizesDemo() {
                 </EmptyState.Media>
                 <EmptyState.Title>No Projects Yet</EmptyState.Title>
                 <EmptyState.Description>
-                  You haven&apos;t created any projects yet. Get started by
-                  creating your first project.
+                  You haven&apos;t created any projects yet. Get started by creating your first
+                  project.
                 </EmptyState.Description>
               </EmptyState.Header>
               <EmptyState.Content className="flex-row gap-2">
@@ -199,8 +195,7 @@ function FullHeightDemo() {
           </EmptyState.Media>
           <EmptyState.Title>No Results Found</EmptyState.Title>
           <EmptyState.Description className="max-w-xs text-pretty">
-            We couldn&apos;t find anything matching your search. Try adjusting
-            your filters.
+            We couldn&apos;t find anything matching your search. Try adjusting your filters.
           </EmptyState.Description>
         </EmptyState.Header>
         <EmptyState.Content>

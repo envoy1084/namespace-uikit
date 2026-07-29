@@ -2,14 +2,7 @@
 
 import React from "react";
 
-import {
-  Description,
-  FieldError,
-  Input,
-  Label,
-  TextArea,
-  TextField,
-} from "@thenamespace/uikit";
+import { Description, FieldError, Input, Label, TextArea, TextField } from "@thenamespace/uikit";
 
 export function Validation() {
   const [username, setUsername] = React.useState("");
@@ -36,13 +29,7 @@ export function Validation() {
         )}
       </TextField>
 
-      <TextField
-        isRequired
-        isInvalid={isBioInvalid}
-        name="bio"
-        value={bio}
-        onChange={setBio}
-      >
+      <TextField isRequired isInvalid={isBioInvalid} name="bio" value={bio} onChange={setBio}>
         <Label>Bio</Label>
         <TextArea placeholder="Tell us about yourself..." />
         {isBioInvalid ? (

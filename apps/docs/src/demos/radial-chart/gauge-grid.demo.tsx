@@ -61,16 +61,12 @@ const gauges = [
 export const DemoGaugeGridExample = () => (
   <div className="grid w-[640px] grid-cols-2 gap-3 lg:grid-cols-4">
     {gauges.map((gauge) => {
-      const data = [
-        { fill: gauge.color, name: gauge.label, value: gauge.value },
-      ];
+      const data = [{ fill: gauge.color, name: gauge.label, value: gauge.value }];
       const percent = ((gauge.value / gauge.max) * 100).toFixed(0);
       return (
         <Card className="rounded-2xl" key={gauge.label}>
           <Card.Header className="pb-0">
-            <Card.Title className="text-muted text-xs font-medium">
-              {gauge.label}
-            </Card.Title>
+            <Card.Title className="text-muted text-xs font-medium">{gauge.label}</Card.Title>
           </Card.Header>
           <Card.Content className="flex flex-col items-center">
             <div className="relative">
@@ -90,18 +86,11 @@ export const DemoGaugeGridExample = () => (
                   tick={false}
                   type="number"
                 />
-                <RadialChart.Bar
-                  background
-                  angleAxisId={0}
-                  cornerRadius={12}
-                  dataKey="value"
-                />
+                <RadialChart.Bar background angleAxisId={0} cornerRadius={12} dataKey="value" />
                 <RadialChart.Tooltip content={<RadialTooltip />} />
               </RadialChart>
               <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-foreground text-lg font-bold">
-                  {percent}%
-                </span>
+                <span className="text-foreground text-lg font-bold">{percent}%</span>
               </div>
             </div>
           </Card.Content>

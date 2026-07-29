@@ -6,11 +6,7 @@ import { Calendar, Description } from "@thenamespace/uikit";
 export function ReadOnly() {
   return (
     <div className="flex flex-col items-center gap-4">
-      <Calendar
-        isReadOnly
-        aria-label="Event date"
-        defaultValue={today(getLocalTimeZone())}
-      >
+      <Calendar isReadOnly aria-label="Event date" defaultValue={today(getLocalTimeZone())}>
         <Calendar.Header>
           <Calendar.Heading />
           <Calendar.NavButton slot="previous" />
@@ -20,9 +16,7 @@ export function ReadOnly() {
           <Calendar.GridHeader>
             {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
           </Calendar.GridHeader>
-          <Calendar.GridBody>
-            {(date) => <Calendar.Cell date={date} />}
-          </Calendar.GridBody>
+          <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
         </Calendar.Grid>
       </Calendar>
       <Description className="text-center">Calendar is read-only</Description>

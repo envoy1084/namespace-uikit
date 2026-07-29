@@ -18,8 +18,8 @@ function NonDismissableDemo() {
             </Sheet.Header>
             <Sheet.Body>
               <p className="text-muted text-sm">
-                This sheet cannot be dismissed by clicking outside or dragging.
-                You must use one of the buttons below.
+                This sheet cannot be dismissed by clicking outside or dragging. You must use one of
+                the buttons below.
               </p>
             </Sheet.Body>
             <Sheet.Footer>

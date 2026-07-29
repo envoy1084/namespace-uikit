@@ -13,10 +13,7 @@ export function PopoverInteractive() {
         <Popover.Trigger aria-label="User profile">
           <div className="flex items-center gap-2">
             <Avatar size="sm">
-              <Avatar.Image
-                alt="Sarah Johnson"
-                src="/assets/generated/avatar-1.jpg"
-              />
+              <Avatar.Image alt="Sarah Johnson" src="/assets/generated/avatar-1.jpg" />
               <Avatar.Fallback>SJ</Avatar.Fallback>
             </Avatar>
             <div className="flex flex-col">
@@ -31,10 +28,7 @@ export function PopoverInteractive() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Avatar size="md">
-                    <Avatar.Image
-                      alt="Sarah Johnson"
-                      src="/assets/generated/avatar-1.jpg"
-                    />
+                    <Avatar.Image alt="Sarah Johnson" src="/assets/generated/avatar-1.jpg" />
                     <Avatar.Fallback>SJ</Avatar.Fallback>
                   </Avatar>
                   <div>
@@ -53,8 +47,7 @@ export function PopoverInteractive() {
               </div>
             </Popover.Heading>
             <p className="text-muted mt-3 text-sm">
-              Product designer and creative director. Building beautiful
-              experiences that matter.
+              Product designer and creative director. Building beautiful experiences that matter.
             </p>
             <div className="mt-3 flex gap-4">
               <div>

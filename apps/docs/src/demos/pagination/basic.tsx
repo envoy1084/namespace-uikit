@@ -12,10 +12,7 @@ export function PaginationBasic() {
     <Pagination className="justify-center">
       <Pagination.Content>
         <Pagination.Item>
-          <Pagination.Previous
-            isDisabled={page === 1}
-            onPress={() => setPage((p) => p - 1)}
-          >
+          <Pagination.Previous isDisabled={page === 1} onPress={() => setPage((p) => p - 1)}>
             <Pagination.PreviousIcon />
             <span>Previous</span>
           </Pagination.Previous>
@@ -28,10 +25,7 @@ export function PaginationBasic() {
           </Pagination.Item>
         ))}
         <Pagination.Item>
-          <Pagination.Next
-            isDisabled={page === totalPages}
-            onPress={() => setPage((p) => p + 1)}
-          >
+          <Pagination.Next isDisabled={page === totalPages} onPress={() => setPage((p) => p + 1)}>
             <span>Next</span>
             <Pagination.NextIcon />
           </Pagination.Next>

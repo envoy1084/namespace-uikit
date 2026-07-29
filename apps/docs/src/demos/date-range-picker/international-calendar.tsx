@@ -1,12 +1,7 @@
 "use client";
 
 import { getLocalTimeZone, today } from "@internationalized/date";
-import {
-  DateField,
-  DateRangePicker,
-  Label,
-  RangeCalendar,
-} from "@thenamespace/uikit";
+import { DateField, DateRangePicker, Label, RangeCalendar } from "@thenamespace/uikit";
 import { I18nProvider } from "react-aria-components";
 
 export function InternationalCalendar() {
@@ -47,9 +42,7 @@ export function InternationalCalendar() {
             </RangeCalendar.Header>
             <RangeCalendar.Grid>
               <RangeCalendar.GridHeader>
-                {(day) => (
-                  <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-                )}
+                {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
               </RangeCalendar.GridHeader>
               <RangeCalendar.GridBody>
                 {(date) => <RangeCalendar.Cell date={date} />}

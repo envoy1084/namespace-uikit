@@ -6,12 +6,7 @@ import { ZoomInAreaIcon, ZoomOutAreaIcon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export const DemoCustomIconsExample = () => (
-  <NumberStepper
-    aria-label="Zoom level"
-    defaultValue={100}
-    minValue={0}
-    step={10}
-  >
+  <NumberStepper aria-label="Zoom level" defaultValue={100} minValue={0} step={10}>
     <NumberStepper.Group>
       <NumberStepper.DecrementButton aria-label="Decrease Zoom level">
         <HugeiconsIcon icon={ZoomOutAreaIcon} />

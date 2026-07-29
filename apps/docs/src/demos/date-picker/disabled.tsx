@@ -1,27 +1,14 @@
 "use client";
 
 import { getLocalTimeZone, today } from "@internationalized/date";
-import {
-  Calendar,
-  DateField,
-  DatePicker,
-  Description,
-  Label,
-} from "@thenamespace/uikit";
+import { Calendar, DateField, DatePicker, Description, Label } from "@thenamespace/uikit";
 
 export function Disabled() {
   return (
-    <DatePicker
-      isDisabled
-      className="w-72"
-      name="date"
-      value={today(getLocalTimeZone())}
-    >
+    <DatePicker isDisabled className="w-72" name="date" value={today(getLocalTimeZone())}>
       <Label>Date</Label>
       <DateField.Group fullWidth>
-        <DateField.Input>
-          {(segment) => <DateField.Segment segment={segment} />}
-        </DateField.Input>
+        <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
         <DateField.Suffix>
           <DatePicker.Trigger>
             <DatePicker.TriggerIndicator />
@@ -43,9 +30,7 @@ export function Disabled() {
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
+            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
           </Calendar.Grid>
           <Calendar.YearPickerGrid>
             <Calendar.YearPickerGridBody>

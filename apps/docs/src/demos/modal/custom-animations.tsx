@@ -83,9 +83,7 @@ export function CustomAnimations() {
                   <Modal.CloseTrigger />
                   <Modal.Header>
                     <Modal.Icon className="bg-default text-foreground">
-                      {iconData ? (
-                        <HugeiconsIcon className="size-5" icon={iconData} />
-                      ) : null}
+                      {iconData ? <HugeiconsIcon className="size-5" icon={iconData} /> : null}
                     </Modal.Icon>
                     <Modal.Heading>{name} Animation</Modal.Heading>
                   </Modal.Header>

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Separator } from "./index";
 
@@ -26,9 +26,7 @@ export const Default: Story = {
     <div className="max-w-md">
       <div className="space-y-1">
         <h4 className="text-medium font-medium">Namespace v3 Components</h4>
-        <p className="text-small text-default-400">
-          Beautiful, fast and modern React UI library.
-        </p>
+        <p className="text-small text-default-400">Beautiful, fast and modern React UI library.</p>
       </div>
       <Separator className="my-4" />
       <div className="text-small flex h-5 items-center space-x-4">

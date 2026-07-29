@@ -59,11 +59,7 @@ export function CustomIndicator() {
             <Checkbox.Indicator>
               {({ isIndeterminate }) =>
                 isIndeterminate ? (
-                  <svg
-                    stroke="currentColor"
-                    strokeWidth={3}
-                    viewBox="0 0 24 24"
-                  >
+                  <svg stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
                     <line x1="21" x2="3" y1="12" y2="12" />
                   </svg>
                 ) : null

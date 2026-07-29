@@ -1,13 +1,10 @@
+import { useState } from "react";
+
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Selection } from "react-aria-components";
 
-import { useState } from "react";
-
 import { Button } from "@/components/buttons/button";
-import {
-  DataGrid,
-  type DataGridColumn,
-} from "@/components/collections/data-grid";
+import { DataGrid, type DataGridColumn } from "@/components/collections/data-grid";
 import { ListView } from "@/components/collections/list-view";
 import { Chip } from "@/components/data-display/chip";
 import { Separator } from "@/components/layout/separator";
@@ -52,25 +49,14 @@ function Bar({ clear, count }: { clear: () => void; count: number }) {
           </Button>
         ))}
         <Separator orientation="vertical" />
-        <Button
-          aria-label="Delete"
-          className="bg-danger/10 text-danger"
-          size="sm"
-          variant="ghost"
-        >
+        <Button aria-label="Delete" className="bg-danger/10 text-danger" size="sm" variant="ghost">
           <Icon icon="lucide:trash-2" />
           <span className="action-bar__label">Delete</span>
         </Button>
       </ActionBar.Content>
       <Separator />
       <ActionBar.Suffix>
-        <Button
-          isIconOnly
-          aria-label="Clear selection"
-          size="sm"
-          variant="ghost"
-          onPress={clear}
-        >
+        <Button isIconOnly aria-label="Clear selection" size="sm" variant="ghost" onPress={clear}>
           <Icon icon="lucide:x" />
         </Button>
       </ActionBar.Suffix>
@@ -135,8 +121,7 @@ function WithDataGridDemo() {
   const [selected, setSelected] = useState<Selection>(new Set());
   const count = selected === "all" ? data.length : selected.size;
   const remove = () => {
-    const keys =
-      selected === "all" ? new Set(data.map((item) => item.id)) : selected;
+    const keys = selected === "all" ? new Set(data.map((item) => item.id)) : selected;
     setData((current) => current.filter((item) => !keys.has(item.id)));
     setSelected(new Set());
   };

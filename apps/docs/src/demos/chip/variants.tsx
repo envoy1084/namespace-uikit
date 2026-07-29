@@ -13,9 +13,7 @@ export function ChipVariants() {
       {sizes.map((size, index) => (
         <React.Fragment key={size}>
           <div className="flex flex-col gap-4">
-            <h3 className="text-muted text-sm font-semibold capitalize">
-              {size}
-            </h3>
+            <h3 className="text-muted text-sm font-semibold capitalize">{size}</h3>
             {/* Color labels header */}
             <div className="flex items-center gap-3">
               <div className="w-24 shrink-0" />
@@ -32,9 +30,7 @@ export function ChipVariants() {
             <div className="flex flex-col gap-3">
               {variants.map((variant) => (
                 <div key={variant} className="flex items-center gap-3">
-                  <div className="text-muted w-24 shrink-0 text-sm capitalize">
-                    {variant}
-                  </div>
+                  <div className="text-muted w-24 shrink-0 text-sm capitalize">{variant}</div>
                   {colors.map((color) => (
                     <div
                       key={color}

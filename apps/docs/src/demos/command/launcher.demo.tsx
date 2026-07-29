@@ -33,9 +33,7 @@ function Contents({ minimal = false }: { minimal?: boolean }) {
           <Icon icon="lucide:search" />
         </Command.InputGroup.Prefix>
         <Command.InputGroup.Input
-          placeholder={
-            minimal ? "What do you need?" : "Type a command or search..."
-          }
+          placeholder={minimal ? "What do you need?" : "Type a command or search..."}
         />
         <Command.InputGroup.ClearButton />
         <Command.InputGroup.Suffix>
@@ -93,11 +91,7 @@ function Palette({
         {label} <Kbd>⌘ K</Kbd>
       </Button>
       <Command>
-        <Command.Backdrop
-          isOpen={open}
-          variant={variant}
-          onOpenChange={setOpen}
-        >
+        <Command.Backdrop isOpen={open} variant={variant} onOpenChange={setOpen}>
           <Command.Container size={size}>
             <Command.Dialog>{children ?? <Contents />}</Command.Dialog>
           </Command.Container>
@@ -114,13 +108,7 @@ export const DemoLauncherExample = () => (
       <Command.InputGroup.ClearButton />
     </Command.InputGroup>
     <Command.List>
-      {[
-        "Design Tool",
-        "Project Tracker",
-        "Team Chat",
-        "Calendar",
-        "Settings",
-      ].map((x, i) => (
+      {["Design Tool", "Project Tracker", "Team Chat", "Calendar", "Settings"].map((x, i) => (
         <Command.Item key={x} textValue={x}>
           <span className="flex size-5 items-center justify-center rounded bg-violet-500 text-white">
             <Icon

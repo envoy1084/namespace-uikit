@@ -19,11 +19,7 @@ export function Default() {
           <Dropdown.Item id="edit-file" textValue="Edit file">
             <Label>Edit file</Label>
           </Dropdown.Item>
-          <Dropdown.Item
-            id="delete-file"
-            textValue="Delete file"
-            variant="danger"
-          >
+          <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
             <Label>Delete file</Label>
           </Dropdown.Item>
         </Dropdown.Menu>

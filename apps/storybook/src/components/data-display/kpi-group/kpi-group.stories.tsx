@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { Fragment } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { KPI } from "@thenamespace/uikit/kpi";
 
 import { KPIGroup } from "./index";
@@ -121,11 +120,7 @@ export const WithFromSuffix: Story = {
       <KPIGroup>
         <WithSeparators>
           {horizontal.map((metric, index) => (
-            <Metric
-              {...metric}
-              from={["70,946", "56.14%", "28.62%"][index]}
-              key={metric.title}
-            />
+            <Metric {...metric} from={["70,946", "56.14%", "28.62%"][index]} key={metric.title} />
           ))}
         </WithSeparators>
       </KPIGroup>

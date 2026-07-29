@@ -26,12 +26,7 @@ export const DemoVariantsExample = () => (
     {(["default", "secondary"] as const).map((variant) => (
       <div className="flex flex-col gap-1" key={variant}>
         <span className="text-muted text-xs">{variant}</span>
-        <CellSlider
-          {...decimalProps}
-          aria-label="Spacing"
-          defaultValue={0.5}
-          variant={variant}
-        >
+        <CellSlider {...decimalProps} aria-label="Spacing" defaultValue={0.5} variant={variant}>
           <SliderContents label="Spacing" />
         </CellSlider>
       </div>

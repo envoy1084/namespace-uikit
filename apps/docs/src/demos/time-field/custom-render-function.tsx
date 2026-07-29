@@ -11,9 +11,7 @@ export function CustomRenderFunction() {
     >
       <Label>Time</Label>
       <TimeField.Group>
-        <TimeField.Input>
-          {(segment) => <TimeField.Segment segment={segment} />}
-        </TimeField.Input>
+        <TimeField.Input>{(segment) => <TimeField.Segment segment={segment} />}</TimeField.Input>
       </TimeField.Group>
     </TimeField>
   );

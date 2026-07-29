@@ -21,10 +21,9 @@ export function CustomBackdrop() {
             </Modal.Header>
             <Modal.Body>
               <p>
-                This backdrop features a sophisticated gradient that transitions
-                from a dark color at the bottom to complete transparency at the
-                top, combined with a smooth blur effect. The gradient
-                automatically adapts its intensity for optimal contrast in both
+                This backdrop features a sophisticated gradient that transitions from a dark color
+                at the bottom to complete transparency at the top, combined with a smooth blur
+                effect. The gradient automatically adapts its intensity for optimal contrast in both
                 light and dark modes.
               </p>
             </Modal.Body>

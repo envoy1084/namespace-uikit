@@ -1,7 +1,6 @@
 import type { ButtonProps } from "@thenamespace/uikit";
-import type { VariantProps } from "tailwind-variants";
-
 import { Button, buttonVariants } from "@thenamespace/uikit";
+import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 
 const myButtonVariants = tv({
@@ -25,8 +24,7 @@ const myButtonVariants = tv({
       xl: "h-13 px-10",
     },
     variant: {
-      primary:
-        "text-white dark:bg-white/10 dark:text-white dark:hover:bg-white/15",
+      primary: "text-white dark:bg-white/10 dark:text-white dark:hover:bg-white/15",
     },
   },
 });
@@ -36,12 +34,7 @@ export type MyButtonProps = Omit<ButtonProps, "className"> &
   MyButtonVariants & { className?: string };
 
 function CustomButton({ className, radius, variant, ...props }: MyButtonProps) {
-  return (
-    <Button
-      className={myButtonVariants({ className, radius, variant })}
-      {...props}
-    />
-  );
+  return <Button className={myButtonVariants({ className, radius, variant })} {...props} />;
 }
 
 export function CustomVariants() {

@@ -5,12 +5,7 @@ import { PieChart } from "@thenamespace/uikit";
 import { Card } from "@thenamespace/uikit/card";
 import { ChartTooltip } from "@thenamespace/uikit/chart-tooltip";
 
-const colors = [
-  "var(--chart-4)",
-  "var(--chart-3)",
-  "var(--chart-2)",
-  "var(--chart-1)",
-];
+const colors = ["var(--chart-4)", "var(--chart-3)", "var(--chart-2)", "var(--chart-1)"];
 
 interface PieTooltipProps {
   active?: boolean;
@@ -80,9 +75,7 @@ export const DemoWithBreakdownExample = () => {
             <PieChart.Tooltip content={<PieTooltip />} />
           </PieChart>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-foreground text-xl font-bold">
-              {total.toLocaleString()}
-            </span>
+            <span className="text-foreground text-xl font-bold">{total.toLocaleString()}</span>
             <span className="text-muted text-[10px]">Total</span>
           </div>
         </div>
@@ -96,9 +89,7 @@ export const DemoWithBreakdownExample = () => {
               <div className="flex flex-1 items-center justify-between">
                 <span className="text-foreground text-sm">{item.name}</span>
                 <div className="flex items-center gap-2">
-                  <span className="text-foreground text-sm font-semibold">
-                    {item.value}
-                  </span>
+                  <span className="text-foreground text-sm font-semibold">{item.value}</span>
                   <span className="text-muted text-xs">
                     ({((item.value / total) * 100).toFixed(1)}%)
                   </span>

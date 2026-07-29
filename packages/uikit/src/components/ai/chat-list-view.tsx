@@ -5,19 +5,12 @@ import { createContext, useMemo } from "react";
 
 import { cn } from "@heroui/react";
 
-import {
-  ListView,
-  type ListViewRootProps,
-  type ListViewItemProps,
-} from "../collections/list-view";
+import { ListView, type ListViewRootProps, type ListViewItemProps } from "../collections/list-view";
 
 export type ChatListViewDensity = "comfortable" | "compact";
 
 const DensityContext = createContext<ChatListViewDensity>("comfortable");
-type RootClassFunction = Exclude<
-  ListViewRootProps<object>["className"],
-  string | undefined
->;
+type RootClassFunction = Exclude<ListViewRootProps<object>["className"], string | undefined>;
 type RootClassState = Parameters<RootClassFunction>[0];
 
 const mergeRootClass = <T extends object>(
@@ -42,10 +35,7 @@ function ChatListViewRoot<T extends object>({
   density = "comfortable",
   ...props
 }: ChatListViewRootProps<T>): ReactElement {
-  const rootClass = useMemo(
-    () => `chat-list-view chat-list-view--${density}`,
-    [density],
-  );
+  const rootClass = useMemo(() => `chat-list-view chat-list-view--${density}`, [density]);
 
   return (
     <DensityContext value={density}>

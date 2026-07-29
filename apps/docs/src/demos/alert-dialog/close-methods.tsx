@@ -8,9 +8,8 @@ export function CloseMethods() {
       <div className="flex flex-col gap-2">
         <h3 className="text-lg font-semibold">Using slot="close"</h3>
         <p className="text-muted text-sm">
-          The simplest way to close a dialog. Add <code>slot="close"</code> to
-          any Button component within the dialog. When clicked, it will
-          automatically close the dialog.
+          The simplest way to close a dialog. Add <code>slot="close"</code> to any Button component
+          within the dialog. When clicked, it will automatically close the dialog.
         </p>
         <AlertDialog>
           <Button variant="secondary">Open Dialog</Button>
@@ -23,9 +22,8 @@ export function CloseMethods() {
                 </AlertDialog.Header>
                 <AlertDialog.Body>
                   <p>
-                    Click either button below - both have{" "}
-                    <code>slot="close"</code> and will close the dialog
-                    automatically.
+                    Click either button below - both have <code>slot="close"</code> and will close
+                    the dialog automatically.
                   </p>
                 </AlertDialog.Body>
                 <AlertDialog.Footer>
@@ -43,9 +41,9 @@ export function CloseMethods() {
       <div className="flex flex-col gap-2">
         <h3 className="text-lg font-semibold">Using Dialog render props</h3>
         <p className="text-muted text-sm">
-          Access the <code>close</code> method from the Dialog's render props.
-          This gives you full control over when and how to close the dialog,
-          allowing you to add custom logic before closing.
+          Access the <code>close</code> method from the Dialog's render props. This gives you full
+          control over when and how to close the dialog, allowing you to add custom logic before
+          closing.
         </p>
         <AlertDialog>
           <Button variant="secondary">Open Dialog</Button>
@@ -56,27 +54,20 @@ export function CloseMethods() {
                   <>
                     <AlertDialog.Header>
                       <AlertDialog.Icon status="success" />
-                      <AlertDialog.Heading>
-                        Using Dialog render props
-                      </AlertDialog.Heading>
+                      <AlertDialog.Heading>Using Dialog render props</AlertDialog.Heading>
                     </AlertDialog.Header>
                     <AlertDialog.Body>
                       <p>
-                        The buttons below use the <code>close</code> method from
-                        render props. You can add validation or other logic
-                        before calling <code>renderProps.close()</code>.
+                        The buttons below use the <code>close</code> method from render props. You
+                        can add validation or other logic before calling{" "}
+                        <code>renderProps.close()</code>.
                       </p>
                     </AlertDialog.Body>
                     <AlertDialog.Footer>
-                      <Button
-                        variant="tertiary"
-                        onPress={() => renderProps.close()}
-                      >
+                      <Button variant="tertiary" onPress={() => renderProps.close()}>
                         Cancel
                       </Button>
-                      <Button onPress={() => renderProps.close()}>
-                        Confirm
-                      </Button>
+                      <Button onPress={() => renderProps.close()}>Confirm</Button>
                     </AlertDialog.Footer>
                   </>
                 )}

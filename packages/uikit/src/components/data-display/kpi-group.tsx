@@ -32,10 +32,7 @@ function KPIGroupRoot({
   );
 }
 export interface KPIGroupSeparatorProps extends ComponentPropsWithRef<"span"> {}
-function KPIGroupSeparator({
-  className,
-  ...props
-}: KPIGroupSeparatorProps): ReactElement {
+function KPIGroupSeparator({ className, ...props }: KPIGroupSeparatorProps): ReactElement {
   useContext(Context);
   return (
     <span

@@ -36,12 +36,7 @@ export function WithSwatches() {
         >
           <ColorArea.Thumb />
         </ColorArea>
-        <ColorSlider
-          aria-label="Hue slider"
-          channel="hue"
-          className="gap-1 px-1"
-          colorSpace="hsb"
-        >
+        <ColorSlider aria-label="Hue slider" channel="hue" className="gap-1 px-1" colorSpace="hsb">
           <Label>Hue</Label>
           <ColorSlider.Output className="text-muted" />
           <ColorSlider.Track>

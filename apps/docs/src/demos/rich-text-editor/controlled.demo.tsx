@@ -144,12 +144,7 @@ function Tool({
 }) {
   return (
     <RichTextEditor.ToggleButton command={command} tooltip={tooltip}>
-      <HugeiconsIcon
-        aria-hidden
-        className="size-4"
-        icon={icon}
-        strokeWidth={2}
-      />
+      <HugeiconsIcon aria-hidden className="size-4" icon={icon} strokeWidth={2} />
     </RichTextEditor.ToggleButton>
   );
 }
@@ -158,12 +153,7 @@ function LinkTool() {
   return (
     <RichTextEditor.LinkPopover>
       <RichTextEditor.LinkPopover.Trigger>
-        <HugeiconsIcon
-          aria-hidden
-          className="size-4"
-          icon={Link01Icon}
-          strokeWidth={2}
-        />
+        <HugeiconsIcon aria-hidden className="size-4" icon={Link01Icon} strokeWidth={2} />
       </RichTextEditor.LinkPopover.Trigger>
       <RichTextEditor.LinkPopover.Content>
         <RichTextEditor.LinkPopover.Input />
@@ -187,12 +177,7 @@ function Action({
 }) {
   return (
     <RichTextEditor.ActionButton action={action} tooltip={tooltip}>
-      <HugeiconsIcon
-        aria-hidden
-        className="size-4"
-        icon={icon}
-        strokeWidth={2}
-      />
+      <HugeiconsIcon aria-hidden className="size-4" icon={icon} strokeWidth={2} />
     </RichTextEditor.ActionButton>
   );
 }
@@ -208,16 +193,8 @@ function Toolbar() {
       <RichTextEditor.ToolbarGroup aria-label="Text style">
         <Tool command="bold" icon={TextBoldIcon} tooltip="Bold" />
         <Tool command="italic" icon={TextItalicIcon} tooltip="Italic" />
-        <Tool
-          command="underline"
-          icon={TextUnderlineIcon}
-          tooltip="Underline"
-        />
-        <Tool
-          command="strike"
-          icon={TextStrikethroughIcon}
-          tooltip="Strikethrough"
-        />
+        <Tool command="underline" icon={TextUnderlineIcon} tooltip="Underline" />
+        <Tool command="strike" icon={TextStrikethroughIcon} tooltip="Strikethrough" />
         <Tool command="code" icon={SourceCodeIcon} tooltip="Inline code" />
       </RichTextEditor.ToolbarGroup>
       <RichTextEditor.ToolbarSeparator />
@@ -230,30 +207,14 @@ function Toolbar() {
       </RichTextEditor.ToolbarGroup>
       <RichTextEditor.ToolbarSeparator />
       <RichTextEditor.ToolbarGroup aria-label="Lists and links">
-        <Tool
-          command="bulletList"
-          icon={LeftToRightListBulletIcon}
-          tooltip="Bulleted list"
-        />
-        <Tool
-          command="orderedList"
-          icon={LeftToRightListNumberIcon}
-          tooltip="Numbered list"
-        />
+        <Tool command="bulletList" icon={LeftToRightListBulletIcon} tooltip="Bulleted list" />
+        <Tool command="orderedList" icon={LeftToRightListNumberIcon} tooltip="Numbered list" />
         <LinkTool />
       </RichTextEditor.ToolbarGroup>
       <RichTextEditor.ToolbarSeparator />
       <RichTextEditor.ToolbarGroup aria-label="Clear">
-        <Action
-          action="clearFormatting"
-          icon={EraserIcon}
-          tooltip="Clear formatting"
-        />
-        <Action
-          action="clearContent"
-          icon={Delete02Icon}
-          tooltip="Clear content"
-        />
+        <Action action="clearFormatting" icon={EraserIcon} tooltip="Clear formatting" />
+        <Action action="clearContent" icon={Delete02Icon} tooltip="Clear content" />
       </RichTextEditor.ToolbarGroup>
     </RichTextEditor.Toolbar>
   );
@@ -265,11 +226,7 @@ function BubbleTools() {
       <Tool command="bold" icon={TextBoldIcon} tooltip="Bold" />
       <Tool command="italic" icon={TextItalicIcon} tooltip="Italic" />
       <Tool command="underline" icon={TextUnderlineIcon} tooltip="Underline" />
-      <Tool
-        command="strike"
-        icon={TextStrikethroughIcon}
-        tooltip="Strikethrough"
-      />
+      <Tool command="strike" icon={TextStrikethroughIcon} tooltip="Strikethrough" />
       <LinkTool />
     </RichTextEditor.BubbleMenu>
   );
@@ -308,18 +265,10 @@ export const DemoControlledExample = function Demo() {
   return (
     <div className="flex w-full max-w-[760px] flex-col gap-3">
       <div className="flex flex-wrap items-center gap-2">
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => setValue(controlledArticle)}
-        >
+        <Button size="sm" variant="secondary" onPress={() => setValue(controlledArticle)}>
           Load Guide
         </Button>
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => setValue(releaseNote)}
-        >
+        <Button size="sm" variant="secondary" onPress={() => setValue(releaseNote)}>
           Load Notes
         </Button>
         {stats ? (

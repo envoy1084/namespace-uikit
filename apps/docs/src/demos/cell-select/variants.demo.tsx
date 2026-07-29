@@ -22,19 +22,10 @@ function ThemeItems() {
   ));
 }
 
-function ThemeSelect({
-  variant = "default",
-}: {
-  variant?: "default" | "secondary";
-}) {
+function ThemeSelect({ variant = "default" }: { variant?: "default" | "secondary" }) {
   const [value, setValue] = useState("default");
   return (
-    <CellSelect
-      aria-label="Theme"
-      value={value}
-      variant={variant}
-      onChange={setValue}
-    >
+    <CellSelect aria-label="Theme" value={value} variant={variant} onChange={setValue}>
       <CellSelect.Trigger>
         <CellSelect.Label>Theme</CellSelect.Label>
         <CellSelect.Value />

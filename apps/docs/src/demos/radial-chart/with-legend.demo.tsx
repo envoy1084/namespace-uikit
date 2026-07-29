@@ -46,24 +46,14 @@ export const DemoWithLegendExample = () => (
   <Card className="w-[400px] rounded-2xl">
     <Card.Header>
       <Card.Title className="text-base">Storage Breakdown</Card.Title>
-      <Card.Description className="text-muted text-xs">
-        88 GB of 128 GB used
-      </Card.Description>
+      <Card.Description className="text-muted text-xs">88 GB of 128 GB used</Card.Description>
     </Card.Header>
     <Card.Content className="flex items-center gap-6">
       <div className="relative shrink-0">
-        <RadialChart
-          data={storage}
-          height={180}
-          innerRadius="40%"
-          outerRadius="100%"
-          width={180}
-        >
+        <RadialChart data={storage} height={180} innerRadius="40%" outerRadius="100%" width={180}>
           <RadialChart.Bar background cornerRadius={12} dataKey="value" />
           <RadialChart.Tooltip
-            content={
-              <RadialTooltip valueFormatter={(value) => `${value} GB`} />
-            }
+            content={<RadialTooltip valueFormatter={(value) => `${value} GB`} />}
           />
         </RadialChart>
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
@@ -74,15 +64,10 @@ export const DemoWithLegendExample = () => (
       <div className="flex flex-1 flex-col gap-3">
         {storage.map((item) => (
           <div className="flex items-center gap-3" key={item.name}>
-            <span
-              className="size-3 shrink-0 rounded-full"
-              style={{ backgroundColor: item.fill }}
-            />
+            <span className="size-3 shrink-0 rounded-full" style={{ backgroundColor: item.fill }} />
             <div className="flex flex-1 items-center justify-between">
               <span className="text-foreground text-sm">{item.name}</span>
-              <span className="text-foreground text-sm font-semibold">
-                {item.value} GB
-              </span>
+              <span className="text-foreground text-sm font-semibold">{item.value} GB</span>
             </div>
           </div>
         ))}

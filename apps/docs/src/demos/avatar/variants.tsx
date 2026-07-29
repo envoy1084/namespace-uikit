@@ -31,10 +31,7 @@ export function Variants() {
       <div className="flex items-center gap-3">
         <div className="w-24 shrink-0" />
         {colors.map((color) => (
-          <div
-            key={color}
-            className="flex w-20 shrink-0 items-center justify-center"
-          >
+          <div key={color} className="flex w-20 shrink-0 items-center justify-center">
             <span className="text-muted text-xs capitalize">{color}</span>
           </div>
         ))}
@@ -45,31 +42,17 @@ export function Variants() {
       {/* Variant rows */}
       {variants.map((variant) => (
         <div key={variant.label} className="flex items-center gap-3">
-          <div className="text-muted w-24 shrink-0 text-sm">
-            {variant.label}
-          </div>
+          <div className="text-muted w-24 shrink-0 text-sm">{variant.label}</div>
           {colors.map((color, colorIndex) => (
-            <div
-              key={color}
-              className="flex w-20 shrink-0 items-center justify-center"
-            >
-              <Avatar
-                color={color}
-                variant={variant.type.includes("soft") ? "soft" : undefined}
-              >
+            <div key={color} className="flex w-20 shrink-0 items-center justify-center">
+              <Avatar color={color} variant={variant.type.includes("soft") ? "soft" : undefined}>
                 {variant.type === "img" ? (
                   <>
                     <Avatar.Image
                       alt={`Avatar ${color}`}
-                      src={
-                        Array.isArray(variant.content)
-                          ? variant.content[colorIndex]
-                          : ""
-                      }
+                      src={Array.isArray(variant.content) ? variant.content[colorIndex] : ""}
                     />
-                    <Avatar.Fallback>
-                      {color.charAt(0).toUpperCase()}
-                    </Avatar.Fallback>
+                    <Avatar.Fallback>{color.charAt(0).toUpperCase()}</Avatar.Fallback>
                   </>
                 ) : (
                   <Avatar.Fallback>{variant.content}</Avatar.Fallback>

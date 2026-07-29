@@ -10,10 +10,7 @@ const uploadFile = (): Promise<{ filename: string; size: number }> => {
 
 const createEvent = (): Promise<never> => {
   return new Promise<never>((_, reject) => {
-    setTimeout(
-      () => reject(new Error("Network error. Please try again.")),
-      2000,
-    );
+    setTimeout(() => reject(new Error("Network error. Please try again.")), 2000);
   });
 };
 
@@ -31,10 +28,7 @@ const saveData = (): Promise<{ count: number }> => {
 
 const fetchUser = (): Promise<{ name: string; email: string }> => {
   return new Promise<{ name: string; email: string }>((resolve) => {
-    setTimeout(
-      () => resolve({ email: "john@example.com", name: "John Doe" }),
-      2000,
-    );
+    setTimeout(() => resolve({ email: "john@example.com", name: "John Doe" }), 2000);
   });
 };
 
@@ -58,8 +52,7 @@ export function PromiseDemo() {
               toast.promise(uploadFile(), {
                 error: "Failed to upload file",
                 loading: "Uploading file...",
-                success: (data) =>
-                  `File ${data.filename} uploaded (${data.size}KB)`,
+                success: (data) => `File ${data.filename} uploaded (${data.size}KB)`,
               });
             }}
           >
@@ -111,9 +104,7 @@ export function PromiseDemo() {
       <div className="w-full space-y-3">
         <div className="text-center">
           <h3 className="text-sm font-medium">Manual Loading State</h3>
-          <p className="text-muted text-xs">
-            Manually control loading state with isLoading prop
-          </p>
+          <p className="text-muted text-xs">Manually control loading state with isLoading prop</p>
         </div>
         <div className="flex w-full flex-wrap items-center justify-center gap-4">
           <Button

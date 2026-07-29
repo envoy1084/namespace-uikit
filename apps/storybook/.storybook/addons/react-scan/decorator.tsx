@@ -1,7 +1,6 @@
-import type { Decorator } from "@storybook/react";
-
 import React, { useEffect } from "react";
 
+import type { Decorator } from "@storybook/react";
 import { scan } from "react-scan";
 import { useGlobals } from "storybook/preview-api";
 

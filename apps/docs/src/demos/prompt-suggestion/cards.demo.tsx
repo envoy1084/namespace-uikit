@@ -25,12 +25,9 @@ export const DemoCardsExample = () => (
   <div className="mx-auto w-full max-w-[960px]">
     <PromptSuggestion variant="card">
       <PromptSuggestion.Header>
-        <PromptSuggestion.Title>
-          Starter prompts for everyday work
-        </PromptSuggestion.Title>
+        <PromptSuggestion.Title>Starter prompts for everyday work</PromptSuggestion.Title>
         <PromptSuggestion.Description>
-          Pick one to see what kinds of conversations this template is designed
-          for.
+          Pick one to see what kinds of conversations this template is designed for.
         </PromptSuggestion.Description>
       </PromptSuggestion.Header>
       <PromptSuggestion.Group
@@ -41,9 +38,7 @@ export const DemoCardsExample = () => (
           {prompts.map((prompt) => (
             <PromptSuggestion.Item key={prompt.id}>
               <Card.Header>
-                <PromptSuggestion.ItemTitle>
-                  {prompt.title}
-                </PromptSuggestion.ItemTitle>
+                <PromptSuggestion.ItemTitle>{prompt.title}</PromptSuggestion.ItemTitle>
                 <PromptSuggestion.ItemDescription>
                   {prompt.description}
                 </PromptSuggestion.ItemDescription>

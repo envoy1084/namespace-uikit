@@ -1,20 +1,10 @@
 "use client";
 
-import type { Selection } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
-import {
-  Avatar,
-  Description,
-  Label,
-  ListBox,
-  Surface,
-} from "@thenamespace/uikit";
-import {
-  CheckmarkSquare02Icon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import type { Selection } from "@thenamespace/uikit";
+import { Avatar, Description, Label, ListBox, Surface } from "@thenamespace/uikit";
+import { CheckmarkSquare02Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Controlled() {
   const [selected, setSelected] = useState<Selection>(new Set(["1"]));

@@ -1,11 +1,10 @@
 "use client";
 
-// @demo-title Controlled
-import type { Key } from "react-aria-components";
-
 import { useState } from "react";
 
 import { Segment } from "@thenamespace/uikit";
+// @demo-title Controlled
+import type { Key } from "react-aria-components";
 
 const items = [
   { id: "dashboard", label: "Dashboard" },
@@ -33,8 +32,7 @@ function ControlledDemo() {
         <BasicItems />
       </Segment>
       <span className="text-muted text-sm">
-        Selected:{" "}
-        <strong className="text-foreground">{String(selected)}</strong>
+        Selected: <strong className="text-foreground">{String(selected)}</strong>
       </span>
     </div>
   );

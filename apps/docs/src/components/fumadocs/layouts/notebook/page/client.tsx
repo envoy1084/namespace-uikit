@@ -1,9 +1,6 @@
 // oxlint-disable eslint/no-shadow, jsdoc/check-tag-names, unicorn/consistent-function-scoping
 "use client";
 
-import type { BreadcrumbOptions } from "fumadocs-core/breadcrumb";
-import type * as PageTree from "fumadocs-core/page-tree";
-
 import type { ComponentProps } from "react";
 import {
   Fragment,
@@ -22,9 +19,11 @@ import {
   ArrowRight01Icon,
   HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
+import type { BreadcrumbOptions } from "fumadocs-core/breadcrumb";
 import { getBreadcrumbItemsFromPath } from "fumadocs-core/breadcrumb";
 import { usePathname } from "fumadocs-core/framework";
 import Link from "fumadocs-core/link";
+import type * as PageTree from "fumadocs-core/page-tree";
 import { useActiveAnchor } from "fumadocs-core/toc";
 import { useTOCItems } from "fumadocs-ui/components/toc";
 import {
@@ -46,11 +45,7 @@ const TocPopoverContext = createContext<{
   setOpen: (open: boolean) => void;
 } | null>(null);
 
-export function PageTOCPopover({
-  children,
-  className,
-  ...rest
-}: ComponentProps<"div">) {
+export function PageTOCPopover({ children, className, ...rest }: ComponentProps<"div">) {
   const ref = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const { isNavTransparent } = use(LayoutContext)!;
@@ -58,8 +53,7 @@ export function PageTOCPopover({
   const onClick = useEffectEvent((e: Event) => {
     if (!open) return;
 
-    if (ref.current && !ref.current.contains(e.target as HTMLElement))
-      setOpen(false);
+    if (ref.current && !ref.current.contains(e.target as HTMLElement)) setOpen(false);
   });
 
   useEffect(() => {
@@ -105,10 +99,7 @@ export function PageTOCPopover({
   );
 }
 
-export function PageTOCPopoverTrigger({
-  className,
-  ...props
-}: ComponentProps<"button">) {
+export function PageTOCPopoverTrigger({ className, ...props }: ComponentProps<"button">) {
   const { text } = useI18n();
   const { open } = use(TocPopoverContext)!;
   const items = useTOCItems();
@@ -155,19 +146,13 @@ export function PageTOCPopoverTrigger({
       </span>
       <HugeiconsIcon
         icon={ArrowDown01Icon}
-        className={cn(
-          "mx-0.5 shrink-0 transition-transform",
-          open && "rotate-180",
-        )}
+        className={cn("mx-0.5 shrink-0 transition-transform", open && "rotate-180")}
       />
     </CollapsibleTrigger>
   );
 }
 
-interface ProgressCircleProps extends Omit<
-  React.ComponentProps<"svg">,
-  "strokeWidth"
-> {
+interface ProgressCircleProps extends Omit<React.ComponentProps<"svg">, "strokeWidth"> {
   value: number;
   strokeWidth?: number;
   size?: number;
@@ -250,10 +235,7 @@ export function PageLastUpdate({
   }, [value]);
 
   return (
-    <p
-      {...props}
-      className={cn("text-fd-muted-foreground text-sm", props.className)}
-    >
+    <p {...props} className={cn("text-fd-muted-foreground text-sm", props.className)}>
       {text.lastUpdate} {date}
     </p>
   );
@@ -276,9 +258,7 @@ export function PageFooter({ items, ...props }: FooterProps) {
   const { next, previous } = useMemo(() => {
     if (items) return items;
 
-    const idx = footerList.findIndex((item) =>
-      isActive(item.url, pathname, false),
-    );
+    const idx = footerList.findIndex((item) => isActive(item.url, pathname, false));
 
     if (idx === -1) return {};
 
@@ -321,10 +301,7 @@ function FooterItem({ index, item }: { item: Item; index: 0 | 1 }) {
           index === 1 && "flex-row-reverse",
         )}
       >
-        <HugeiconsIcon
-          className="-mx-1 size-4 shrink-0 rtl:rotate-180"
-          icon={Icon}
-        />
+        <HugeiconsIcon className="-mx-1 size-4 shrink-0 rtl:rotate-180" icon={Icon} />
         <p>{item.name}</p>
       </div>
       <p className="text-fd-muted-foreground truncate">
@@ -357,25 +334,14 @@ export function PageBreadcrumb({
   return (
     <div
       {...props}
-      className={cn(
-        "text-fd-muted-foreground flex items-center gap-1.5 text-sm",
-        props.className,
-      )}
+      className={cn("text-fd-muted-foreground flex items-center gap-1.5 text-sm", props.className)}
     >
       {items.map((item, i) => {
-        const className = cn(
-          "truncate",
-          i === items.length - 1 && "text-fd-primary font-medium",
-        );
+        const className = cn("truncate", i === items.length - 1 && "text-fd-primary font-medium");
 
         return (
           <Fragment key={i}>
-            {i !== 0 && (
-              <HugeiconsIcon
-                icon={ArrowRight01Icon}
-                className="size-3.5 shrink-0"
-              />
-            )}
+            {i !== 0 && <HugeiconsIcon icon={ArrowRight01Icon} className="size-3.5 shrink-0" />}
             {item.url ? (
               <Link
                 className={cn(className, "transition-opacity hover:opacity-80")}

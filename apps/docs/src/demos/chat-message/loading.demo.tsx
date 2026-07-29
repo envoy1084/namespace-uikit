@@ -4,18 +4,14 @@
 import { ChatLoader, ChatMessage, TextShimmer } from "@thenamespace/uikit";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
-  <div className="mx-auto flex w-full max-w-[714px] flex-col gap-8">
-    {children}
-  </div>
+  <div className="mx-auto flex w-full max-w-[714px] flex-col gap-8">{children}</div>
 );
 
 export const DemoLoadingExample = () => (
   <Wrapper>
     <ChatMessage.User>
       <ChatMessage.Bubble>
-        <ChatMessage.Content>
-          What is the weather in San Francisco?
-        </ChatMessage.Content>
+        <ChatMessage.Content>What is the weather in San Francisco?</ChatMessage.Content>
       </ChatMessage.Bubble>
     </ChatMessage.User>
     <ChatMessage.Assistant>

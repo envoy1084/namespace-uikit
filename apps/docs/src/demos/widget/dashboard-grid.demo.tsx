@@ -7,38 +7,17 @@ import { BarChart } from "@thenamespace/uikit/bar-chart";
 import { LineChart } from "@thenamespace/uikit/line-chart";
 import { TrendChip } from "@thenamespace/uikit/trend-chip";
 
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const revenue = months.map((month, index) => ({
   month,
-  revenue: [
-    4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500,
-  ][index],
+  revenue: [4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500][index],
 }));
 
 const traffic = months.map((month, index) => ({
   month,
-  organic: [
-    2000, 15000, 8000, 14000, 15000, 8000, 18000, 18000, 20000, 17000, 22000,
-    15000,
-  ][index],
-  paidAds: [
-    1000, 10000, 12000, 14000, 8000, 9000, 12000, 10000, 5000, 12000, 18000,
-    9000,
-  ][index],
+  organic: [2000, 15000, 8000, 14000, 15000, 8000, 18000, 18000, 20000, 17000, 22000, 15000][index],
+  paidAds: [1000, 10000, 12000, 14000, 8000, 9000, 12000, 10000, 5000, 12000, 18000, 9000][index],
 }));
 
 export const DemoDashboardGridExample = () => (
@@ -62,9 +41,7 @@ export const DemoDashboardGridExample = () => (
           <div className="flex flex-col gap-1" key={item.title}>
             <span className="text-muted text-xs">{item.title}</span>
             <div className="flex items-center gap-2">
-              <span className="text-foreground text-xl font-semibold">
-                {item.value}
-              </span>
+              <span className="text-foreground text-xl font-semibold">{item.value}</span>
               <TrendChip trend={item.trend as "down" | "up"} variant="soft">
                 {item.change}
               </TrendChip>
@@ -107,16 +84,8 @@ export const DemoDashboardGridExample = () => (
           <LineChart.Grid vertical={false} />
           <LineChart.XAxis dataKey="month" />
           <LineChart.YAxis width={30} />
-          <LineChart.Line
-            dataKey="organic"
-            dot={false}
-            stroke="var(--chart-3)"
-          />
-          <LineChart.Line
-            dataKey="paidAds"
-            dot={false}
-            stroke="var(--chart-1)"
-          />
+          <LineChart.Line dataKey="organic" dot={false} stroke="var(--chart-3)" />
+          <LineChart.Line dataKey="paidAds" dot={false} stroke="var(--chart-1)" />
         </LineChart>
       </Widget.Content>
     </Widget>

@@ -35,19 +35,12 @@ function AxisSet() {
   );
 }
 
-function Legend({
-  items,
-}: {
-  items: ReadonlyArray<{ color: string; label: string }>;
-}) {
+function Legend({ items }: { items: ReadonlyArray<{ color: string; label: string }> }) {
   return (
     <div className="flex items-center gap-3">
       {items.map(({ color, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
-          <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: color }}
-          />
+          <span className="size-3 rounded-full" style={{ backgroundColor: color }} />
           <span className="text-muted text-xs">{label}</span>
         </div>
       ))}
@@ -106,10 +99,7 @@ export const DemoCustomTooltipExample = () => (
               !payload.every((entry) => typeof entry.value === "number")
             )
               return null;
-            const total = payload.reduce(
-              (sum, entry) => sum + Number(entry.value ?? 0),
-              0,
-            );
+            const total = payload.reduce((sum, entry) => sum + Number(entry.value ?? 0), 0);
             return (
               <ChartTooltip indicator="line">
                 <ChartTooltip.Header>{label}</ChartTooltip.Header>
@@ -117,9 +107,7 @@ export const DemoCustomTooltipExample = () => (
                   <ChartTooltip.Item key={index}>
                     <ChartTooltip.Indicator color={entry.stroke} />
                     <ChartTooltip.Label>{entry.name}</ChartTooltip.Label>
-                    <ChartTooltip.Value>
-                      {Number(entry.value).toLocaleString()}
-                    </ChartTooltip.Value>
+                    <ChartTooltip.Value>{Number(entry.value).toLocaleString()}</ChartTooltip.Value>
                   </ChartTooltip.Item>
                 ))}
                 <div className="border-separator mt-1 flex items-center justify-between border-t pt-1.5">

@@ -22,15 +22,13 @@ export function Placements() {
                     <HugeiconsIcon icon={Rocket01Icon} className="size-5" />
                   </Modal.Icon>
                   <Modal.Heading>
-                    Placement:{" "}
-                    {placement.charAt(0).toUpperCase() + placement.slice(1)}
+                    Placement: {placement.charAt(0).toUpperCase() + placement.slice(1)}
                   </Modal.Heading>
                 </Modal.Header>
                 <Modal.Body>
                   <p>
-                    This modal uses the <code>{placement}</code> placement
-                    option. Try different placements to see how the modal
-                    positions itself on the screen.
+                    This modal uses the <code>{placement}</code> placement option. Try different
+                    placements to see how the modal positions itself on the screen.
                   </p>
                 </Modal.Body>
                 <Modal.Footer>

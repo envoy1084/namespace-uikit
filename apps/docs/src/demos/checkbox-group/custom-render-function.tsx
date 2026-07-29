@@ -1,18 +1,10 @@
 "use client";
 
-import {
-  Checkbox,
-  CheckboxGroup,
-  Description,
-  Label,
-} from "@thenamespace/uikit";
+import { Checkbox, CheckboxGroup, Description, Label } from "@thenamespace/uikit";
 
 export function CustomRenderFunction() {
   return (
-    <CheckboxGroup
-      name="interests"
-      render={(props) => <div {...props} data-custom="foo" />}
-    >
+    <CheckboxGroup name="interests" render={(props) => <div {...props} data-custom="foo" />}>
       <Label>Select your interests</Label>
       <Description>Choose all that apply</Description>
       <Checkbox value="coding">

@@ -55,9 +55,9 @@ const storeLocations = [
 ];
 
 function StoreLocatorDemo() {
-  const [selected, setSelected] = useState<
-    (typeof storeLocations)[number] | null
-  >(storeLocations[0]!);
+  const [selected, setSelected] = useState<(typeof storeLocations)[number] | null>(
+    storeLocations[0]!,
+  );
   return (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
       <Map center={[-122.678, 45.538]} pitch={18} styles={styles} zoom={12.25}>
@@ -116,10 +116,7 @@ function StoreLocatorDemo() {
               onClick={() => setSelected(location)}
             >
               <span className="flex items-center gap-2">
-                <span
-                  className="size-2 rounded-full"
-                  style={{ backgroundColor: location.color }}
-                />
+                <span className="size-2 rounded-full" style={{ backgroundColor: location.color }} />
                 <span className="text-xs font-medium">{location.name}</span>
               </span>
               <span className="text-muted text-xs">{location.distance}</span>

@@ -21,12 +21,7 @@ function PickerControls() {
       >
         <ColorArea.Thumb />
       </ColorArea>
-      <ColorSlider
-        aria-label="Hue"
-        channel="hue"
-        className="gap-1 px-1"
-        colorSpace="hsb"
-      >
+      <ColorSlider aria-label="Hue" channel="hue" className="gap-1 px-1" colorSpace="hsb">
         <Label>Hue</Label>
         <ColorSlider.Output className="text-muted" />
         <ColorSlider.Track>
@@ -51,9 +46,7 @@ export const DemoControlledExample = function Demo() {
           <PickerControls />
         </CellColorPicker.Popover>
       </CellColorPicker>
-      <p className="text-muted px-1 text-sm">
-        Selected: {color.toString("hex").toUpperCase()}
-      </p>
+      <p className="text-muted px-1 text-sm">Selected: {color.toString("hex").toUpperCase()}</p>
     </div>
   );
 };

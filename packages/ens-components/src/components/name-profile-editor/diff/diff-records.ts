@@ -1,14 +1,13 @@
-import type { ProfileEditorSection } from "#/components/name-profile-editor/editor/types";
-import type {
-  NameProfileRecordChange,
-  NameProfileRecordType,
-} from "#/components/name-profile-editor/types";
-
 import {
   findRecordDefinition,
   sectionLabels,
   sectionOrder,
 } from "#/components/name-profile-editor/editor/record-definitions";
+import type { ProfileEditorSection } from "#/components/name-profile-editor/editor/types";
+import type {
+  NameProfileRecordChange,
+  NameProfileRecordType,
+} from "#/components/name-profile-editor/types";
 
 export type ProfileChangeStatus = "added" | "removed" | "updated";
 
@@ -94,8 +93,7 @@ function createDiffItem(change: NameProfileRecordChange): ProfileDiffItem {
   > = {
     abi: {
       iconName: "abi",
-      label: (item) =>
-        item.type === "abi" ? `ABI ${item.contentType}` : "ABI",
+      label: (item) => (item.type === "abi" ? `ABI ${item.contentType}` : "ABI"),
     },
     data: {
       iconName: "data",
@@ -103,10 +101,7 @@ function createDiffItem(change: NameProfileRecordChange): ProfileDiffItem {
     },
     interface: {
       iconName: "interface",
-      label: (item) =>
-        item.type === "interface"
-          ? `Interface ${item.interfaceId}`
-          : "Interface",
+      label: (item) => (item.type === "interface" ? `Interface ${item.interfaceId}` : "Interface"),
     },
     name: { iconName: "name", label: () => "Name" },
     pubkey: { iconName: "pubkey", label: () => "Public key" },

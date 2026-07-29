@@ -2,11 +2,7 @@ import { ColorSlider, Label } from "@thenamespace/uikit";
 
 export function Basic() {
   return (
-    <ColorSlider
-      channel="hue"
-      className="w-full max-w-xs"
-      defaultValue="hsl(0, 100%, 50%)"
-    >
+    <ColorSlider channel="hue" className="w-full max-w-xs" defaultValue="hsl(0, 100%, 50%)">
       <Label>Hue</Label>
       <ColorSlider.Output />
       <ColorSlider.Track>

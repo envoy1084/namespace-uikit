@@ -38,9 +38,7 @@ export const Default: Story = {
     <div className="mx-auto w-full max-w-[714px]">
       <PromptSuggestion>
         <PromptSuggestion.Header>
-          <PromptSuggestion.Title>
-            What do you want to work on?
-          </PromptSuggestion.Title>
+          <PromptSuggestion.Title>What do you want to work on?</PromptSuggestion.Title>
           <PromptSuggestion.Description>
             Ask a question or start from one of the suggestions below.
           </PromptSuggestion.Description>
@@ -59,12 +57,9 @@ export const Cards: Story = {
     <div className="mx-auto w-full max-w-[960px]">
       <PromptSuggestion variant="card">
         <PromptSuggestion.Header>
-          <PromptSuggestion.Title>
-            Starter prompts for everyday work
-          </PromptSuggestion.Title>
+          <PromptSuggestion.Title>Starter prompts for everyday work</PromptSuggestion.Title>
           <PromptSuggestion.Description>
-            Pick one to see what kinds of conversations this template is
-            designed for.
+            Pick one to see what kinds of conversations this template is designed for.
           </PromptSuggestion.Description>
         </PromptSuggestion.Header>
         <PromptSuggestion.Group
@@ -75,9 +70,7 @@ export const Cards: Story = {
             {prompts.map((prompt) => (
               <PromptSuggestion.Item key={prompt.id}>
                 <Card.Header>
-                  <PromptSuggestion.ItemTitle>
-                    {prompt.title}
-                  </PromptSuggestion.ItemTitle>
+                  <PromptSuggestion.ItemTitle>{prompt.title}</PromptSuggestion.ItemTitle>
                   <PromptSuggestion.ItemDescription>
                     {prompt.description}
                   </PromptSuggestion.ItemDescription>

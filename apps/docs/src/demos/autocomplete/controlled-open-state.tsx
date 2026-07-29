@@ -49,9 +49,7 @@ export function ControlledOpenState() {
                 <SearchField.ClearButton />
               </SearchField.Group>
             </SearchField>
-            <ListBox
-              renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-            >
+            <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
               {items.map((item) => (
                 <ListBox.Item key={item.id} id={item.id} textValue={item.name}>
                   {item.name}
@@ -62,12 +60,8 @@ export function ControlledOpenState() {
           </Autocomplete.Filter>
         </Autocomplete.Popover>
       </Autocomplete>
-      <Button onPress={() => setIsOpen(!isOpen)}>
-        {isOpen ? "Close" : "Open"} Autocomplete
-      </Button>
-      <p className="text-muted text-sm">
-        Autocomplete is {isOpen ? "open" : "closed"}
-      </p>
+      <Button onPress={() => setIsOpen(!isOpen)}>{isOpen ? "Close" : "Open"} Autocomplete</Button>
+      <p className="text-muted text-sm">Autocomplete is {isOpen ? "open" : "closed"}</p>
     </div>
   );
 }

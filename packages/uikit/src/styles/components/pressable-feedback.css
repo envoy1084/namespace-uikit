@@ -131,15 +131,13 @@
   .pressable-feedback__hold-confirm {
     --pressable-feedback-hold-confirm-duration: 2s;
     --pressable-feedback-hold-confirm-release-duration: 0.2s;
-    transition: clip-path
-      var(--pressable-feedback-hold-confirm-release-duration) ease-out;
+    transition: clip-path var(--pressable-feedback-hold-confirm-release-duration) ease-out;
   }
 
   .pressable-feedback__progress-feedback {
     --pressable-feedback-progress-feedback-duration: 2s;
     --pressable-feedback-progress-feedback-release-duration: 0.3s;
-    transition: clip-path
-      var(--pressable-feedback-progress-feedback-release-duration) ease-out;
+    transition: clip-path var(--pressable-feedback-progress-feedback-release-duration) ease-out;
   }
 
   .pressable-feedback__hold-confirm[data-sweep="right"],
@@ -166,8 +164,7 @@
 
   .pressable-feedback__progress-feedback[data-progressing="true"] {
     clip-path: inset(0);
-    transition: clip-path var(--pressable-feedback-progress-feedback-duration)
-      linear;
+    transition: clip-path var(--pressable-feedback-progress-feedback-duration) linear;
   }
 
   .pressable-feedback__hold-confirm[data-complete="true"],

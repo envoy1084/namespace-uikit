@@ -6,11 +6,7 @@ import { useState } from "react";
 import { DataGrid, type DataGridColumn } from "@thenamespace/uikit";
 import { Button } from "@thenamespace/uikit/button";
 import { Chip } from "@thenamespace/uikit/chip";
-import {
-  Cancel01Icon,
-  PencilEdit01Icon,
-  Tick02Icon,
-} from "@thenamespace/uikit/icons";
+import { Cancel01Icon, PencilEdit01Icon, Tick02Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { ListBox } from "@thenamespace/uikit/list-box";
@@ -98,13 +94,7 @@ const featurePriorities = [
   { id: "low", label: "Low" },
 ] as const;
 
-function EditableTitle({
-  onSave,
-  value,
-}: {
-  onSave: (value: string) => void;
-  value: string;
-}) {
+function EditableTitle({ onSave, value }: { onSave: (value: string) => void; value: string }) {
   const [isEditing, setEditing] = useState(false);
   const [draft, setDraft] = useState(value);
   const save = () => {
@@ -130,22 +120,10 @@ function EditableTitle({
       >
         <Input className="h-7 w-[180px] text-sm" />
       </TextField>
-      <Button
-        isIconOnly
-        aria-label="Save"
-        size="sm"
-        variant="ghost"
-        onPress={save}
-      >
+      <Button isIconOnly aria-label="Save" size="sm" variant="ghost" onPress={save}>
         <HugeiconsIcon className="size-3" icon={Tick02Icon} strokeWidth={2} />
       </Button>
-      <Button
-        isIconOnly
-        aria-label="Cancel"
-        size="sm"
-        variant="ghost"
-        onPress={cancel}
-      >
+      <Button isIconOnly aria-label="Cancel" size="sm" variant="ghost" onPress={cancel}>
         <HugeiconsIcon className="size-3" icon={Cancel01Icon} strokeWidth={2} />
       </Button>
     </div>
@@ -160,11 +138,7 @@ function EditableTitle({
         variant="ghost"
         onPress={() => setEditing(true)}
       >
-        <HugeiconsIcon
-          className="size-3"
-          icon={PencilEdit01Icon}
-          strokeWidth={2}
-        />
+        <HugeiconsIcon className="size-3" icon={PencilEdit01Icon} strokeWidth={2} />
       </Button>
     </div>
   );
@@ -174,17 +148,12 @@ export const DemoEditableCellsExample = function Demo() {
   const [data, setData] = useState(features);
   const update = (id: string, values: Partial<Feature>) =>
     setData((current) =>
-      current.map((feature) =>
-        feature.id === id ? { ...feature, ...values } : feature,
-      ),
+      current.map((feature) => (feature.id === id ? { ...feature, ...values } : feature)),
     );
   const editableColumns: DataGridColumn<Feature>[] = [
     {
       cell: (feature) => (
-        <EditableTitle
-          value={feature.title}
-          onSave={(title) => update(feature.id, { title })}
-        />
+        <EditableTitle value={feature.title} onSave={(title) => update(feature.id, { title })} />
       ),
       header: "Feature",
       id: "title",
@@ -206,14 +175,8 @@ export const DemoEditableCellsExample = function Demo() {
         >
           <Select.Trigger>
             <Select.Value>
-              <Chip
-                color={priorityColor[feature.priority]}
-                size="sm"
-                variant="soft"
-              >
-                <Chip.Label className="capitalize">
-                  {feature.priority}
-                </Chip.Label>
+              <Chip color={priorityColor[feature.priority]} size="sm" variant="soft">
+                <Chip.Label className="capitalize">{feature.priority}</Chip.Label>
               </Chip>
             </Select.Value>
             <Select.Indicator />
@@ -221,16 +184,8 @@ export const DemoEditableCellsExample = function Demo() {
           <Select.Popover>
             <ListBox>
               {featurePriorities.map((priority) => (
-                <ListBox.Item
-                  id={priority.id}
-                  key={priority.id}
-                  textValue={priority.label}
-                >
-                  <Chip
-                    color={priorityColor[priority.id]}
-                    size="sm"
-                    variant="soft"
-                  >
+                <ListBox.Item id={priority.id} key={priority.id} textValue={priority.label}>
+                  <Chip color={priorityColor[priority.id]} size="sm" variant="soft">
                     <Chip.Label>{priority.label}</Chip.Label>
                   </Chip>
                   <ListBox.ItemIndicator />
@@ -296,8 +251,7 @@ export const DemoEditableCellsExample = function Demo() {
       <div className="flex flex-col gap-1">
         <h2 className="text-xl font-bold">Feature Flags</h2>
         <p className="text-muted text-sm">
-          Edit titles, change priorities, adjust story points, and toggle
-          features inline.
+          Edit titles, change priorities, adjust story points, and toggle features inline.
         </p>
       </div>
       <DataGrid

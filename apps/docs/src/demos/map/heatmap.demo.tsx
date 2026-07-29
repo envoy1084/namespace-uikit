@@ -143,9 +143,7 @@ function HeatLayer() {
     if (!isLoaded || !map) return;
     const addLayer = () => {
       if (map.getSource(heatmapSourceId)) return;
-      const beforeId = map
-        .getStyle()
-        .layers?.find((layer) => layer.type === "symbol")?.id;
+      const beforeId = map.getStyle().layers?.find((layer) => layer.type === "symbol")?.id;
       map.addSource(heatmapSourceId, { data: heatmapData, type: "geojson" });
       map.addLayer(
         {
@@ -170,15 +168,7 @@ function HeatLayer() {
             ],
             "heatmap-intensity": 0.9,
             "heatmap-opacity": 0.8,
-            "heatmap-radius": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              10,
-              18,
-              14,
-              40,
-            ],
+            "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 10, 18, 14, 40],
             "heatmap-weight": ["get", "weight"],
           },
         },

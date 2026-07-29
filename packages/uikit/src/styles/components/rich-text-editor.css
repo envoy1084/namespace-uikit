@@ -23,19 +23,14 @@
   }
 
   @media (hover: hover) {
-    .rich-text-editor:not([data-disabled="true"])
-      .rich-text-editor__shell:hover {
+    .rich-text-editor:not([data-disabled="true"]) .rich-text-editor__shell:hover {
       border-color: var(--field-border-hover);
     }
   }
 
-  .rich-text-editor:has(.rich-text-editor__prosemirror:focus)
-    .rich-text-editor__shell {
+  .rich-text-editor:has(.rich-text-editor__prosemirror:focus) .rich-text-editor__shell {
     border-color: var(--field-border-focus, var(--field-border, var(--border)));
-    background-color: var(
-      --field-focus,
-      var(--field-background, var(--default))
-    );
+    background-color: var(--field-focus, var(--field-background, var(--default)));
   }
 
   .rich-text-editor__toolbar.toolbar {

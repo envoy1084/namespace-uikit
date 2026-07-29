@@ -1,9 +1,4 @@
-import {
-  Checkbox,
-  CheckboxGroup,
-  Description,
-  Label,
-} from "@thenamespace/uikit";
+import { Checkbox, CheckboxGroup, Description, Label } from "@thenamespace/uikit";
 import {
   Comment01Icon,
   HugeiconsIcon,
@@ -42,11 +37,7 @@ export function FeaturesAndAddOns() {
           <Description>Choose how you want to receive updates</Description>
           <div className="flex flex-col gap-2">
             {addOns.map((addon) => (
-              <Checkbox
-                key={addon.value}
-                value={addon.value}
-                variant="secondary"
-              >
+              <Checkbox key={addon.value} value={addon.value} variant="secondary">
                 <Checkbox.Content
                   className={clsx(
                     "group bg-surface relative flex w-full flex-row items-start justify-start gap-4 rounded-3xl px-5 py-4 transition-all",
@@ -56,10 +47,7 @@ export function FeaturesAndAddOns() {
                   <Checkbox.Control className="absolute top-3 right-4 size-5 rounded-full before:rounded-full">
                     <Checkbox.Indicator />
                   </Checkbox.Control>
-                  <HugeiconsIcon
-                    className="text-accent-soft-foreground size-5"
-                    icon={addon.icon}
-                  />
+                  <HugeiconsIcon className="text-accent-soft-foreground size-5" icon={addon.icon} />
                   <div className="flex flex-col gap-1">
                     <span>{addon.title}</span>
                     <Description>{addon.description}</Description>

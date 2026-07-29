@@ -2,21 +2,8 @@
 
 import { useMemo, useState } from "react";
 
-import {
-  Button,
-  ButtonGroup,
-  Description,
-  Dropdown,
-  Label,
-} from "@thenamespace/uikit";
-import {
-  Bot,
-  Check,
-  ChevronDown,
-  Copy,
-  ExternalLink,
-  FileText,
-} from "lucide-react";
+import { Button, ButtonGroup, Description, Dropdown, Label } from "@thenamespace/uikit";
+import { Bot, Check, ChevronDown, Copy, ExternalLink, FileText } from "lucide-react";
 
 export function PageActions({ markdownUrl }: { markdownUrl: string }) {
   const [copied, setCopied] = useState(false);
@@ -64,12 +51,7 @@ export function PageActions({ markdownUrl }: { markdownUrl: string }) {
         {copied ? "Copied" : "Copy Markdown"}
       </Button>
       <Dropdown isOpen={isOpen} onOpenChange={setOpen}>
-        <Button
-          isIconOnly
-          aria-label="More page actions"
-          size="md"
-          variant="tertiary"
-        >
+        <Button isIconOnly aria-label="More page actions" size="md" variant="tertiary">
           <ButtonGroup.Separator />
           <ChevronDown
             className={`text-fd-muted-foreground size-3.5 transition-transform ${isOpen ? "rotate-180" : ""}`}

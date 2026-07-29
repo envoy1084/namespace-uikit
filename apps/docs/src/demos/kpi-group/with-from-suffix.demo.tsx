@@ -101,11 +101,7 @@ export const DemoWithFromSuffixExample = () => (
     <KPIGroup>
       <WithSeparators>
         {horizontal.map((metric, index) => (
-          <Metric
-            {...metric}
-            from={["70,946", "56.14%", "28.62%"][index]}
-            key={metric.title}
-          />
+          <Metric {...metric} from={["70,946", "56.14%", "28.62%"][index]} key={metric.title} />
         ))}
       </WithSeparators>
     </KPIGroup>

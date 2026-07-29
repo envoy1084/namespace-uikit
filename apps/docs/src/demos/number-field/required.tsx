@@ -11,13 +11,7 @@ export function Required() {
           <NumberField.IncrementButton />
         </NumberField.Group>
       </NumberField>
-      <NumberField
-        isRequired
-        defaultValue={1}
-        maxValue={10}
-        minValue={1}
-        name="rating"
-      >
+      <NumberField isRequired defaultValue={1} maxValue={10} minValue={1} name="rating">
         <Label>Rating</Label>
         <NumberField.Group>
           <NumberField.DecrementButton />

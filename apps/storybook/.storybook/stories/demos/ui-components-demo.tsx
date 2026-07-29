@@ -1,12 +1,6 @@
 import React from "react";
 
-import {
-  Checkbox,
-  Radio,
-  RadioGroup,
-  Spinner,
-  Switch,
-} from "@thenamespace/uikit";
+import { Checkbox, Radio, RadioGroup, Spinner, Switch } from "@thenamespace/uikit";
 
 export function UIComponentsDemo() {
   return (

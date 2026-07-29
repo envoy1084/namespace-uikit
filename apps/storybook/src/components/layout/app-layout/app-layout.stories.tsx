@@ -1,13 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
-import {
-  Avatar,
-  Breadcrumbs,
-  BreadcrumbsItem,
-  Button,
-  Chip,
-  Dropdown,
-} from "@thenamespace/uikit";
+import { Avatar, Breadcrumbs, BreadcrumbsItem, Button, Chip, Dropdown } from "@thenamespace/uikit";
 import {
   AnalyticsUpIcon,
   DashboardSquare01Icon,
@@ -78,9 +70,7 @@ function NavigationMenu({
 }) {
   const items = floating
     ? navigation.map((item) =>
-        item.label === "Analytics"
-          ? { ...item, items: ["Overview", "Reports"] as const }
-          : item,
+        item.label === "Analytics" ? { ...item, items: ["Overview", "Reports"] as const } : item,
       )
     : navigation;
 
@@ -146,22 +136,14 @@ function FooterMenu({
 }) {
   return (
     <Sidebar.Menu aria-label="Footer actions">
-      <Sidebar.MenuItem
-        href="#"
-        id={`${mobile ? "mobile-" : ""}help`}
-        textValue={helpLabel}
-      >
+      <Sidebar.MenuItem href="#" id={`${mobile ? "mobile-" : ""}help`} textValue={helpLabel}>
         <Sidebar.MenuIcon>
           <StoryIcon icon={HelpCircleIcon} />
         </Sidebar.MenuIcon>
         <Sidebar.MenuLabel>{helpLabel}</Sidebar.MenuLabel>
       </Sidebar.MenuItem>
       {showLogout ? (
-        <Sidebar.MenuItem
-          href="#"
-          id={`${mobile ? "mobile-" : ""}logout`}
-          textValue="Log out"
-        >
+        <Sidebar.MenuItem href="#" id={`${mobile ? "mobile-" : ""}logout`} textValue="Log out">
           <Sidebar.MenuIcon>
             <StoryIcon icon={Logout01Icon} />
           </Sidebar.MenuIcon>
@@ -224,12 +206,8 @@ function AccountMenu({ image = false }: { image?: boolean }) {
     <Dropdown>
       <Button isIconOnly aria-label="Account menu" variant="ghost">
         <Avatar className="size-6" color="success" variant="soft">
-          {image ? (
-            <Avatar.Image alt="User avatar" src="/assets/avatars/purple.jpg" />
-          ) : null}
-          <Avatar.Fallback className="text-xs font-semibold">
-            JG
-          </Avatar.Fallback>
+          {image ? <Avatar.Image alt="User avatar" src="/assets/avatars/purple.jpg" /> : null}
+          <Avatar.Fallback className="text-xs font-semibold">JG</Avatar.Fallback>
         </Avatar>
       </Button>
       <Dropdown.Popover className="min-w-[200px]" placement="bottom end">
@@ -282,19 +260,14 @@ function AppNavbar({
           {simpleAccount ? (
             <Button isIconOnly aria-label="Account" variant="ghost">
               <Avatar className="size-6" color="success" variant="soft">
-                <Avatar.Fallback className="text-xs font-semibold">
-                  JG
-                </Avatar.Fallback>
+                <Avatar.Fallback className="text-xs font-semibold">JG</Avatar.Fallback>
               </Avatar>
             </Button>
           ) : (
             <AccountMenu image={avatarImage} />
           )}
           {aside ? (
-            <AppLayout.AsideTrigger
-              closedTooltip="Show details"
-              openTooltip="Hide details"
-            />
+            <AppLayout.AsideTrigger closedTooltip="Show details" openTooltip="Hide details" />
           ) : null}
         </Navbar.Content>
       </Navbar.Header>
@@ -359,18 +332,14 @@ function Demo({
         aside ? (
           <div className="h-full p-5">
             <h2 className="font-semibold">Details</h2>
-            <p className="text-muted mt-2 text-sm">
-              Contextual project information and activity.
-            </p>
+            <p className="text-muted mt-2 text-sm">Contextual project information and activity.</p>
           </div>
         ) : undefined
       }
       asideResizable={asideResizable}
       navbar={<AppNavbar aside={aside} avatarImage={avatarImage} />}
       resizableAutoSaveId={
-        sidebarResizable || asideResizable
-          ? "app-layout-demo:resizable-sidebar"
-          : undefined
+        sidebarResizable || asideResizable ? "app-layout-demo:resizable-sidebar" : undefined
       }
       scrollMode={scrollMode}
       sidebar={<AppSidebar floating={sidebarStory === "compact"} />}
@@ -379,9 +348,7 @@ function Demo({
       sidebarMaxSize={sidebarResizable ? "420px" : 30}
       sidebarMinSize={sidebarResizable ? "220px" : 12}
       sidebarResizable={sidebarResizable}
-      sidebarResizeBehavior={
-        sidebarResizable ? "preserve-pixel-size" : undefined
-      }
+      sidebarResizeBehavior={sidebarResizable ? "preserve-pixel-size" : undefined}
       sidebarVariant={sidebarVariant}
       toolbar={
         toolbar ? (
@@ -396,11 +363,7 @@ function Demo({
         ) : undefined
       }
     >
-      <MainContent
-        description={description}
-        long={scrollMode === "content"}
-        title={title}
-      />
+      <MainContent description={description} long={scrollMode === "content"} title={title} />
     </AppLayout>
   );
 }
@@ -454,9 +417,7 @@ export const InsetDashboard: Story = {
   ),
 };
 export const WithAside: Story = {
-  render: () => (
-    <Demo aside description="Layout with a contextual aside panel." />
-  ),
+  render: () => <Demo aside description="Layout with a contextual aside panel." />,
 };
 export const WithBreadcrumbs: Story = {
   render: () => <Demo description="Application navigation with breadcrumbs." />,
@@ -470,9 +431,7 @@ export const Offcanvas: Story = {
   ),
 };
 export const Complex: Story = {
-  render: () => (
-    <Demo aside description="A complex application shell." toolbar />
-  ),
+  render: () => <Demo aside description="A complex application shell." toolbar />,
 };
 export const ResizableSidebar: Story = {
   name: "Resizable Sidebar",
@@ -489,13 +448,10 @@ export const ResizableSidebar: Story = {
       sidebarResizeBehavior="preserve-pixel-size"
     >
       <div className="flex flex-col gap-4 p-6">
-        <h1 className="text-foreground text-xl font-semibold">
-          Resizable sidebar
-        </h1>
+        <h1 className="text-foreground text-xl font-semibold">Resizable sidebar</h1>
         <p className="text-muted max-w-prose text-sm">
-          Drag the vertical handle between the sidebar and the main area to
-          resize. Reload the page — the layout is persisted via{" "}
-          <code>resizableAutoSaveId</code>.
+          Drag the vertical handle between the sidebar and the main area to resize. Reload the page
+          — the layout is persisted via <code>resizableAutoSaveId</code>.
         </p>
       </div>
     </AppLayout>
@@ -503,9 +459,7 @@ export const ResizableSidebar: Story = {
 };
 export const ResizableAside: Story = {
   name: "Resizable Aside",
-  render: () => (
-    <Demo aside asideResizable description="Drag the aside handle to resize." />
-  ),
+  render: () => <Demo aside asideResizable description="Drag the aside handle to resize." />,
 };
 export const ContentScrollMode: Story = {
   name: "Content Scroll Mode",
@@ -518,7 +472,5 @@ export const ContentScrollMode: Story = {
 };
 export const WithToolbar: Story = {
   name: "With Toolbar",
-  render: () => (
-    <Demo description="Application layout with a toolbar." toolbar />
-  ),
+  render: () => <Demo description="Application layout with a toolbar." toolbar />,
 };

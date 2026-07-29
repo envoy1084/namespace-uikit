@@ -34,9 +34,7 @@ export function AllowsEmptyCollection() {
               <SearchField.ClearButton />
             </SearchField.Group>
           </SearchField>
-          <ListBox
-            renderEmptyState={() => <EmptyState>No results found</EmptyState>}
-          />
+          <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>} />
         </Autocomplete.Filter>
       </Autocomplete.Popover>
     </Autocomplete>

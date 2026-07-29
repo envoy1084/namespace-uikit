@@ -70,10 +70,7 @@ export const DemoControlledExample = function Demo() {
         ))}
       </CheckboxButtonGroup>
       <p className="text-muted text-sm">
-        Selected:{" "}
-        <span className="text-foreground font-medium">
-          {value.join(", ") || "None"}
-        </span>
+        Selected: <span className="text-foreground font-medium">{value.join(", ") || "None"}</span>
       </p>
     </div>
   );

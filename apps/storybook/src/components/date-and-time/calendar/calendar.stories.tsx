@@ -1,8 +1,6 @@
-import type { DateValue } from "@internationalized/date";
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React, { useState } from "react";
 
+import type { DateValue } from "@internationalized/date";
 import {
   getLocalTimeZone,
   isToday,
@@ -12,6 +10,7 @@ import {
   startOfWeek,
   today,
 } from "@internationalized/date";
+import type { Meta, StoryObj } from "@storybook/react";
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { I18nProvider, useLocale } from "react-aria-components/I18nProvider";
@@ -55,9 +54,7 @@ type Story = StoryObj<typeof Calendar>;
 /* -------------------------------------------------------------------------------------------------
  * Helper component to render a basic calendar structure
  * -----------------------------------------------------------------------------------------------*/
-const CalendarTemplate = (
-  props: Omit<React.ComponentProps<typeof Calendar>, "children">,
-) => (
+const CalendarTemplate = (props: Omit<React.ComponentProps<typeof Calendar>, "children">) => (
   <Calendar {...props}>
     <Calendar.Header>
       <Calendar.Heading />
@@ -68,9 +65,7 @@ const CalendarTemplate = (
       <Calendar.GridHeader>
         {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
       </Calendar.GridHeader>
-      <Calendar.GridBody>
-        {(date) => <Calendar.Cell date={date} />}
-      </Calendar.GridBody>
+      <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
     </Calendar.Grid>
   </Calendar>
 );
@@ -94,9 +89,7 @@ const CalendarTemplateWithYearPicker = (
       <Calendar.GridHeader>
         {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
       </Calendar.GridHeader>
-      <Calendar.GridBody>
-        {(date) => <Calendar.Cell date={date} />}
-      </Calendar.GridBody>
+      <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
     </Calendar.Grid>
     <Calendar.YearPickerGrid>
       <Calendar.YearPickerGridBody>
@@ -114,27 +107,19 @@ export const Default: Story = {
 };
 
 export const WithYearPicker: Story = {
-  render: (args) => (
-    <CalendarTemplateWithYearPicker {...args} aria-label="Event date" />
-  ),
+  render: (args) => <CalendarTemplateWithYearPicker {...args} aria-label="Event date" />,
 };
 
 export const DefaultValue: Story = {
   render: (args) => (
-    <CalendarTemplate
-      {...args}
-      aria-label="Event date"
-      defaultValue={parseDate("2025-02-14")}
-    />
+    <CalendarTemplate {...args} aria-label="Event date" defaultValue={parseDate("2025-02-14")} />
   ),
 };
 
 export const Controlled: Story = {
   render: (args) => {
     const [value, setValue] = useState<DateValue | null>(null);
-    const [focusedDate, setFocusedDate] = useState<DateValue>(
-      parseDate("2025-12-25"),
-    );
+    const [focusedDate, setFocusedDate] = useState<DateValue>(parseDate("2025-12-25"));
     const { locale } = useLocale();
 
     return (
@@ -163,9 +148,7 @@ export const Controlled: Story = {
           </Button>
           <Button
             onPress={() => {
-              const nextMonthStart = startOfMonth(
-                today(getLocalTimeZone()).add({ months: 1 }),
-              );
+              const nextMonthStart = startOfMonth(today(getLocalTimeZone()).add({ months: 1 }));
 
               setValue(nextMonthStart);
               setFocusedDate(nextMonthStart);
@@ -227,12 +210,7 @@ export const MinMaxDates: Story = {
 
     return (
       <div className="flex flex-col items-center gap-4">
-        <Calendar
-          {...args}
-          aria-label="Appointment date"
-          maxValue={maxDate}
-          minValue={minDate}
-        >
+        <Calendar {...args} aria-label="Appointment date" maxValue={maxDate} minValue={minDate}>
           <Calendar.Header>
             <Calendar.NavButton slot="previous" />
             <Calendar.YearPickerTrigger>
@@ -245,9 +223,7 @@ export const MinMaxDates: Story = {
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
+            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
           </Calendar.Grid>
           <Calendar.YearPickerGrid>
             <Calendar.YearPickerGridBody>
@@ -277,9 +253,7 @@ export const UnavailableDates: Story = {
           aria-label="Appointment date"
           isDateUnavailable={isDateUnavailable}
         />
-        <Description className="text-center">
-          Weekends are unavailable
-        </Description>
+        <Description className="text-center">Weekends are unavailable</Description>
       </div>
     );
   },
@@ -310,9 +284,7 @@ export const MultipleSelection: Story = {
           onChange={setValue}
         />
         <Description className="text-center">
-          {value?.length
-            ? `${value.length} date(s) selected`
-            : "Select multiple dates"}
+          {value?.length ? `${value.length} date(s) selected` : "Select multiple dates"}
         </Description>
       </div>
     );
@@ -339,11 +311,7 @@ export const CustomUnavailableDates: Story = {
 
     return (
       <div className="flex flex-col items-center gap-4">
-        <CalendarTemplate
-          {...args}
-          aria-label="Event date"
-          isDateUnavailable={isDateUnavailable}
-        />
+        <CalendarTemplate {...args} aria-label="Event date" isDateUnavailable={isDateUnavailable} />
         <Description className="text-center">
           Feb 14, Feb 17, and Mar 17 are unavailable
         </Description>
@@ -382,9 +350,7 @@ export const ReadOnly: Story = {
 
 export const Invalid: Story = {
   render: (args) => {
-    const [value, setValue] = useState<DateValue | null>(
-      parseDate("2025-01-15"),
-    );
+    const [value, setValue] = useState<DateValue | null>(parseDate("2025-01-15"));
     const minDate = today(getLocalTimeZone());
     const isInvalid = value !== null && value.compare(minDate) < 0;
 
@@ -398,13 +364,9 @@ export const Invalid: Story = {
           onChange={setValue}
         />
         {isInvalid ? (
-          <p className="text-danger text-sm">
-            Date must be today or in the future
-          </p>
+          <p className="text-danger text-sm">Date must be today or in the future</p>
         ) : (
-          <Description className="text-center">
-            Select a future date
-          </Description>
+          <Description className="text-center">Select a future date</Description>
         )}
       </div>
     );
@@ -413,9 +375,7 @@ export const Invalid: Story = {
 
 export const FocusedValue: Story = {
   render: (args) => {
-    const [focusedDate, setFocusedDate] = useState<DateValue>(
-      parseDate("2025-06-15"),
-    );
+    const [focusedDate, setFocusedDate] = useState<DateValue>(parseDate("2025-06-15"));
 
     return (
       <div className="flex flex-col items-center gap-4">
@@ -425,9 +385,7 @@ export const FocusedValue: Story = {
           focusedValue={focusedDate}
           onFocusChange={setFocusedDate}
         />
-        <Description className="text-center">
-          Focused: {focusedDate.toString()}
-        </Description>
+        <Description className="text-center">Focused: {focusedDate.toString()}</Description>
         <div className="flex flex-wrap justify-center gap-2">
           <Button
             size="sm"
@@ -477,8 +435,7 @@ export const WithIndicators: Story = {
               {({ formattedDate }) => (
                 <>
                   {formattedDate}
-                  {(isToday(date, getLocalTimeZone()) ||
-                    datesWithEvents.has(date.day)) && (
+                  {(isToday(date, getLocalTimeZone()) || datesWithEvents.has(date.day)) && (
                     <Calendar.CellIndicator />
                   )}
                 </>
@@ -493,11 +450,7 @@ export const WithIndicators: Story = {
 
 export const TodayIndicator: Story = {
   render: (args) => (
-    <Calendar
-      {...args}
-      aria-label="Event date"
-      defaultValue={today(getLocalTimeZone())}
-    >
+    <Calendar {...args} aria-label="Event date" defaultValue={today(getLocalTimeZone())}>
       <Calendar.Header>
         <Calendar.NavButton slot="previous" />
         <Calendar.Heading />
@@ -513,9 +466,7 @@ export const TodayIndicator: Story = {
               {({ formattedDate }) => (
                 <>
                   {formattedDate}
-                  {isToday(date, getLocalTimeZone()) && (
-                    <Calendar.CellIndicator />
-                  )}
+                  {isToday(date, getLocalTimeZone()) && <Calendar.CellIndicator />}
                 </>
               )}
             </Calendar.Cell>
@@ -545,9 +496,7 @@ export const MultipleMonths: Story = {
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
+            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
           </Calendar.Grid>
         </div>
         <div className="w-64">
@@ -560,9 +509,7 @@ export const MultipleMonths: Story = {
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
+            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
           </Calendar.Grid>
         </div>
       </div>
@@ -599,11 +546,7 @@ export const DayView: Story = {
           <Select.Popover>
             <ListBox>
               {dayViewOptions.map((option) => (
-                <ListBox.Item
-                  key={option.id}
-                  id={option.id}
-                  textValue={option.name}
-                >
+                <ListBox.Item key={option.id} id={option.id} textValue={option.name}>
                   {option.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
@@ -622,9 +565,7 @@ export const DayView: Story = {
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
+            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
           </Calendar.Grid>
         </Calendar>
       </div>
@@ -661,11 +602,7 @@ export const WeekView: Story = {
           <Select.Popover>
             <ListBox>
               {weekViewOptions.map((option) => (
-                <ListBox.Item
-                  key={option.id}
-                  id={option.id}
-                  textValue={option.name}
-                >
+                <ListBox.Item key={option.id} id={option.id} textValue={option.name}>
                   {option.name}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
@@ -684,9 +621,7 @@ export const WeekView: Story = {
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
+            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
           </Calendar.Grid>
         </Calendar>
       </div>
@@ -725,9 +660,7 @@ export const ThreeMonths: Story = {
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
+            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
           </Calendar.Grid>
         </div>
         <div className="w-64">
@@ -740,9 +673,7 @@ export const ThreeMonths: Story = {
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
+            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
           </Calendar.Grid>
         </div>
         <div className="w-64">
@@ -755,9 +686,7 @@ export const ThreeMonths: Story = {
             <Calendar.GridHeader>
               {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
             </Calendar.GridHeader>
-            <Calendar.GridBody>
-              {(date) => <Calendar.Cell date={date} />}
-            </Calendar.GridBody>
+            <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
           </Calendar.Grid>
         </div>
       </div>
@@ -803,9 +732,9 @@ export const BookingCalendar: Story = {
                   {({ formattedDate, isUnavailable }) => (
                     <>
                       {formattedDate}
-                      {!isUnavailable &&
-                        !isWeekend(date, locale) &&
-                        bookedDates.has(date.day) && <Calendar.CellIndicator />}
+                      {!isUnavailable && !isWeekend(date, locale) && bookedDates.has(date.day) && (
+                        <Calendar.CellIndicator />
+                      )}
                     </>
                   )}
                 </Calendar.Cell>
@@ -819,8 +748,7 @@ export const BookingCalendar: Story = {
               <span className="bg-muted size-2 rounded-full" /> Has bookings
             </span>
             <span className="flex items-center gap-1">
-              <span className="bg-default size-2 rounded-full" />{" "}
-              Weekend/Unavailable
+              <span className="bg-default size-2 rounded-full" /> Weekend/Unavailable
             </span>
           </div>
           {selectedDate ? (
@@ -849,9 +777,7 @@ export const YearPicker: Story = {
         <Calendar.GridHeader>
           {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
         </Calendar.GridHeader>
-        <Calendar.GridBody>
-          {(date) => <Calendar.Cell date={date} />}
-        </Calendar.GridBody>
+        <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
       </Calendar.Grid>
       <Calendar.YearPickerGrid>
         <Calendar.YearPickerGridBody>
@@ -877,9 +803,7 @@ export const YearPickerStyledCells: Story = {
         <Calendar.GridHeader>
           {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
         </Calendar.GridHeader>
-        <Calendar.GridBody>
-          {(date) => <Calendar.Cell date={date} />}
-        </Calendar.GridBody>
+        <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
       </Calendar.Grid>
       <Calendar.YearPickerGrid>
         <Calendar.YearPickerGridBody>
@@ -914,9 +838,7 @@ export const YearPickerCustomCells: Story = {
         <Calendar.GridHeader>
           {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
         </Calendar.GridHeader>
-        <Calendar.GridBody>
-          {(date) => <Calendar.Cell date={date} />}
-        </Calendar.GridBody>
+        <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
       </Calendar.Grid>
       <Calendar.YearPickerGrid>
         <Calendar.YearPickerGridBody>
@@ -925,13 +847,7 @@ export const YearPickerCustomCells: Story = {
               <span className="inline-flex items-center gap-1">
                 <span>{year}</span>
                 {isCurrentYear ? (
-                  <span
-                    className={
-                      isSelected ? "text-accent-foreground" : "text-accent"
-                    }
-                  >
-                    Now
-                  </span>
+                  <span className={isSelected ? "text-accent-foreground" : "text-accent"}>Now</span>
                 ) : null}
               </span>
             </Calendar.YearPickerCell>
@@ -958,9 +874,7 @@ export const CustomNavIcons: Story = {
         <Calendar.GridHeader>
           {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
         </Calendar.GridHeader>
-        <Calendar.GridBody>
-          {(date) => <Calendar.Cell date={date} />}
-        </Calendar.GridBody>
+        <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
       </Calendar.Grid>
     </Calendar>
   ),

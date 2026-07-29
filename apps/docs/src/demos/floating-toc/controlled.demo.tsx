@@ -21,11 +21,7 @@ function ControlledDemo() {
   return (
     <div className="px-10 py-24">
       <div className="mb-6 flex items-center gap-3">
-        <Button
-          onPress={() => setOpen((value) => !value)}
-          size="sm"
-          variant="outline"
-        >
+        <Button onPress={() => setOpen((value) => !value)} size="sm" variant="outline">
           {open ? "Close" : "Open"} TOC
         </Button>
         <span className="text-muted inline-block w-24 text-sm">

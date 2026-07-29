@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta } from "@storybook/react";
 
 import { Separator } from "@/components/layout/separator";
 import { Icon } from "@/icon";
@@ -106,9 +106,7 @@ const VariantsTemplate = (props: ChipProps) => {
       {sizes.map((size, index) => (
         <React.Fragment key={size}>
           <div className="flex flex-col gap-4">
-            <h3 className="text-muted text-sm font-semibold capitalize">
-              {size}
-            </h3>
+            <h3 className="text-muted text-sm font-semibold capitalize">{size}</h3>
             {/* Color labels header */}
             <div className="flex items-center gap-3">
               <div className="w-24 shrink-0" />
@@ -125,21 +123,14 @@ const VariantsTemplate = (props: ChipProps) => {
             <div className="flex flex-col gap-3">
               {variants.map((variant) => (
                 <div key={variant} className="flex items-center gap-3">
-                  <div className="text-muted w-24 shrink-0 text-sm capitalize">
-                    {variant}
-                  </div>
+                  <div className="text-muted w-24 shrink-0 text-sm capitalize">{variant}</div>
                   {colors.map((color) => (
                     <div
                       key={color}
                       className="flex shrink-0 items-center justify-center"
                       style={{ width: "130px" }}
                     >
-                      <Chip
-                        {...props}
-                        color={color}
-                        size={size}
-                        variant={variant}
-                      >
+                      <Chip {...props} color={color} size={size} variant={variant}>
                         <Icon icon="hugeicons:circle-dashed" />
                         <Chip.Label>Label</Chip.Label>
                         <Icon icon="hugeicons:circle-dashed" />

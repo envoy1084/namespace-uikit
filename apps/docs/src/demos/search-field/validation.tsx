@@ -16,11 +16,7 @@ export function Validation() {
         <Label>Search</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input
-            className="w-[280px]"
-            placeholder="Search..."
-            value="invalid@query"
-          />
+          <SearchField.Input className="w-[280px]" placeholder="Search..." value="invalid@query" />
           <SearchField.ClearButton />
         </SearchField.Group>
         <FieldError>Invalid characters in search query</FieldError>

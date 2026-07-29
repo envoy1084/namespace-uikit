@@ -37,30 +37,17 @@ export function FormExample() {
 
   return (
     <Form className="flex w-[280px] flex-col gap-4" onSubmit={handleSubmit}>
-      <SearchField
-        isRequired
-        isInvalid={isInvalid}
-        name="search"
-        value={value}
-        onChange={setValue}
-      >
+      <SearchField isRequired isInvalid={isInvalid} name="search" value={value} onChange={setValue}>
         <Label>Search products</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />
-          <SearchField.Input
-            className="w-full"
-            placeholder="Search products..."
-          />
+          <SearchField.Input className="w-full" placeholder="Search products..." />
           <SearchField.ClearButton />
         </SearchField.Group>
         {isInvalid ? (
-          <FieldError>
-            Search query must be at least {MIN_LENGTH} characters
-          </FieldError>
+          <FieldError>Search query must be at least {MIN_LENGTH} characters</FieldError>
         ) : (
-          <Description>
-            Enter at least {MIN_LENGTH} characters to search
-          </Description>
+          <Description>Enter at least {MIN_LENGTH} characters to search</Description>
         )}
       </SearchField>
       <Button

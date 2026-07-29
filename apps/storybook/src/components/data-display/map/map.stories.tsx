@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useEffect, useMemo, useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { Avatar } from "@thenamespace/uikit/avatar";
 import { Card } from "@thenamespace/uikit/card";
 import {
@@ -181,17 +180,10 @@ const defaultStops: DefaultStop[] = [
 ];
 
 function DefaultMapDemo() {
-  const [selected, setSelected] = useState<DefaultStop | null>(
-    defaultStops[1]!,
-  );
+  const [selected, setSelected] = useState<DefaultStop | null>(defaultStops[1]!);
   return (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
-      <Map
-        center={[-122.3927, 37.7816]}
-        pitch={26}
-        styles={styles}
-        zoom={13.25}
-      >
+      <Map center={[-122.3927, 37.7816]} pitch={26} styles={styles} zoom={13.25}>
         <Map.Route coordinates={defaultRoute} />
         {defaultStops.map((stop) => (
           <Map.Marker
@@ -205,9 +197,7 @@ function DefaultMapDemo() {
                 color={stop.kind === "start" ? "#22c55e" : undefined}
                 ringColor={stop.kind === "start" ? "#bbf7d0" : undefined}
               />
-              <Map.MarkerLabel>
-                {stop.kind === "start" ? "Start" : stop.label}
-              </Map.MarkerLabel>
+              <Map.MarkerLabel>{stop.kind === "start" ? "Start" : stop.label}</Map.MarkerLabel>
             </Map.MarkerContent>
             <Map.MarkerTooltip>
               <span className="font-medium">{stop.label}</span>
@@ -264,9 +254,9 @@ export const Default: Story = {
 };
 
 function StoreLocatorDemo() {
-  const [selected, setSelected] = useState<
-    (typeof storeLocations)[number] | null
-  >(storeLocations[0]!);
+  const [selected, setSelected] = useState<(typeof storeLocations)[number] | null>(
+    storeLocations[0]!,
+  );
   return (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
       <Map center={[-122.678, 45.538]} pitch={18} styles={styles} zoom={12.25}>
@@ -325,10 +315,7 @@ function StoreLocatorDemo() {
               onClick={() => setSelected(location)}
             >
               <span className="flex items-center gap-2">
-                <span
-                  className="size-2 rounded-full"
-                  style={{ backgroundColor: location.color }}
-                />
+                <span className="size-2 rounded-full" style={{ backgroundColor: location.color }} />
                 <span className="text-xs font-medium">{location.name}</span>
               </span>
               <span className="text-muted text-xs">{location.distance}</span>
@@ -446,18 +433,13 @@ const fleetVehicles = [
 ];
 
 function FleetDispatchDemo() {
-  const [selected, setSelected] = useState<
-    (typeof fleetVehicles)[number] | null
-  >(fleetVehicles[0]!);
+  const [selected, setSelected] = useState<(typeof fleetVehicles)[number] | null>(
+    fleetVehicles[0]!,
+  );
   return (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
       <Map center={[-122.342, 47.628]} pitch={32} styles={styles} zoom={13}>
-        <Map.Route
-          color="#4285f4"
-          coordinates={fleetRoute}
-          opacity={0.78}
-          width={4}
-        />
+        <Map.Route color="#4285f4" coordinates={fleetRoute} opacity={0.78} width={4} />
         {fleetVehicles.map((vehicle) => (
           <Map.Marker
             key={vehicle.unit}
@@ -541,8 +523,7 @@ const eventStations = [
   {
     Icon: StreetFoodIcon,
     color: "#f97316",
-    details:
-      "North row is above forecast; two vendors are opening overflow lines.",
+    details: "North row is above forecast; two vendors are opening overflow lines.",
     id: "food",
     label: "Food row",
     latitude: 37.7672,
@@ -597,17 +578,12 @@ const eventStations = [
 ];
 
 function EventOperationsDemo() {
-  const [selected, setSelected] = useState<
-    (typeof eventStations)[number] | null
-  >(eventStations[0]!);
+  const [selected, setSelected] = useState<(typeof eventStations)[number] | null>(
+    eventStations[0]!,
+  );
   return (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
-      <Map
-        center={[-122.4817, 37.7689]}
-        pitch={20}
-        styles={styles}
-        zoom={14.35}
-      >
+      <Map center={[-122.4817, 37.7689]} pitch={20} styles={styles} zoom={14.35}>
         {eventStations.map((station) => {
           const isSelected = selected?.id === station.id;
           return (
@@ -623,11 +599,7 @@ function EventOperationsDemo() {
                   data-selected={isSelected || undefined}
                   style={{ backgroundColor: station.color }}
                 >
-                  <HugeiconsIcon
-                    aria-hidden
-                    className="size-4"
-                    icon={station.Icon}
-                  />
+                  <HugeiconsIcon aria-hidden className="size-4" icon={station.Icon} />
                 </span>
                 <Map.MarkerLabel>{station.label}</Map.MarkerLabel>
               </Map.MarkerContent>
@@ -695,11 +667,7 @@ function EventOperationsDemo() {
                     className="flex size-5 items-center justify-center rounded-full text-white"
                     style={{ backgroundColor: station.color }}
                   >
-                    <HugeiconsIcon
-                      aria-hidden
-                      className="size-3"
-                      icon={station.Icon}
-                    />
+                    <HugeiconsIcon aria-hidden className="size-3" icon={station.Icon} />
                   </span>
                   <span className="text-xs font-medium">{station.label}</span>
                 </span>
@@ -821,9 +789,7 @@ function CoverageLayer() {
     if (!isLoaded || !map) return;
     const addLayers = () => {
       if (map.getSource(coverageSourceId)) return;
-      const beforeId = map
-        .getStyle()
-        .layers?.find((layer) => layer.type === "symbol")?.id;
+      const beforeId = map.getStyle().layers?.find((layer) => layer.type === "symbol")?.id;
       map.addSource(coverageSourceId, { data: coverageData, type: "geojson" });
       map.addLayer(
         {
@@ -865,20 +831,14 @@ export const CoverageZones: Story = {
       <Map center={[-97.748, 30.254]} pitch={18} styles={styles} zoom={10.9}>
         <CoverageLayer />
         {coverageZones.map((zone) => (
-          <Map.Marker
-            key={zone.name}
-            latitude={zone.latitude}
-            longitude={zone.longitude}
-          >
+          <Map.Marker key={zone.name} latitude={zone.latitude} longitude={zone.longitude}>
             <Map.MarkerContent>
               <Map.MarkerDot color={zone.color} />
               <Map.MarkerLabel>{zone.volume}</Map.MarkerLabel>
             </Map.MarkerContent>
             <Map.MarkerTooltip>
               <span className="font-medium">{zone.name}</span>
-              <span className="text-background/70 ml-1">
-                {zone.volume} covered
-              </span>
+              <span className="text-background/70 ml-1">{zone.volume} covered</span>
             </Map.MarkerTooltip>
           </Map.Marker>
         ))}
@@ -894,15 +854,9 @@ export const CoverageZones: Story = {
         </Card.Header>
         <Card.Content className="gap-2">
           {coverageZones.map((zone) => (
-            <div
-              className="flex items-center justify-between text-xs"
-              key={zone.name}
-            >
+            <div className="flex items-center justify-between text-xs" key={zone.name}>
               <span className="flex items-center gap-2">
-                <span
-                  className="size-2 rounded-full"
-                  style={{ backgroundColor: zone.color }}
-                />
+                <span className="size-2 rounded-full" style={{ backgroundColor: zone.color }} />
                 {zone.name}
               </span>
               <span className="text-muted">{zone.volume}</span>
@@ -929,9 +883,7 @@ const airports = [
   { code: "HND", latitude: 35.5494, longitude: 139.7798, name: "Tokyo" },
   { code: "SYD", latitude: -33.9399, longitude: 151.1753, name: "Sydney" },
 ];
-const airportByCode = Object.fromEntries(
-  airports.map((airport) => [airport.code, airport]),
-);
+const airportByCode = Object.fromEntries(airports.map((airport) => [airport.code, airport]));
 const flightOperations = [
   {
     color: "#4285f4",
@@ -1000,12 +952,7 @@ const flights = flightOperations.map((flight) => {
 export const FlightPaths: Story = {
   render: () => (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
-      <Map
-        center={[24, 28]}
-        projection={{ type: "globe" }}
-        styles={styles}
-        zoom={1.9}
-      >
+      <Map center={[24, 28]} projection={{ type: "globe" }} styles={styles} zoom={1.9}>
         <Map.Arc
           curvature={0.34}
           data={flights}
@@ -1017,11 +964,7 @@ export const FlightPaths: Story = {
           }}
         />
         {airports.map((airport) => (
-          <Map.Marker
-            key={airport.code}
-            latitude={airport.latitude}
-            longitude={airport.longitude}
-          >
+          <Map.Marker key={airport.code} latitude={airport.latitude} longitude={airport.longitude}>
             <Map.MarkerContent>
               <Map.MarkerDot color="#4285f4" />
               <Map.MarkerLabel>{airport.code}</Map.MarkerLabel>
@@ -1059,10 +1002,7 @@ export const FlightPaths: Story = {
           </div>
           <div className="space-y-1">
             {flights.slice(0, 3).map((flight) => (
-              <div
-                className="flex items-center justify-between text-xs"
-                key={flight.id}
-              >
+              <div className="flex items-center justify-between text-xs" key={flight.id}>
                 <span className="flex items-center gap-2">
                   <span
                     className="h-0.5 w-4 rounded-full"
@@ -1321,30 +1261,18 @@ const newsroomPointColor = [
 ];
 
 function GlobalNewsroomDemo() {
-  const [selected, setSelected] = useState(
-    newsroomData.features[5]!.properties,
-  );
+  const [selected, setSelected] = useState(newsroomData.features[5]!.properties);
   const pointPaint = useMemo(
     () => ({
       "circle-radius": ["case", ["==", ["get", "id"], selected.id], 8, 6],
-      "circle-stroke-color": [
-        "case",
-        ["==", ["get", "id"], selected.id],
-        "#111827",
-        "#ffffff",
-      ],
+      "circle-stroke-color": ["case", ["==", ["get", "id"], selected.id], "#111827", "#ffffff"],
       "circle-stroke-width": 2,
     }),
     [selected.id],
   );
   return (
     <div className="relative h-[500px] w-full overflow-hidden rounded-lg border">
-      <Map
-        center={[-58, 13]}
-        projection={{ type: "globe" }}
-        styles={styles}
-        zoom={2.1}
-      >
+      <Map center={[-58, 13]} projection={{ type: "globe" }} styles={styles} zoom={2.1}>
         <Map.ClusterLayer
           clusterColors={["#4285f4", "#8b5cf6", "#f97316"]}
           clusterRadius={58}
@@ -1352,9 +1280,7 @@ function GlobalNewsroomDemo() {
           data={newsroomData}
           pointColor={newsroomPointColor}
           pointPaint={pointPaint}
-          onPointClick={(feature) =>
-            setSelected(feature.properties as typeof selected)
-          }
+          onPointClick={(feature) => setSelected(feature.properties as typeof selected)}
         />
       </Map>
       <Card className="bg-overlay shadow-overlay absolute bottom-3 left-1/2 z-10 w-[calc(100%-24px)] max-w-[380px] -translate-x-1/2 gap-3 p-4">
@@ -1366,27 +1292,19 @@ function GlobalNewsroomDemo() {
         </Card.Header>
         <Card.Content className="grid grid-cols-2 gap-3 text-xs">
           <span>
-            <strong className="text-foreground block text-base">
-              {selected.status}
-            </strong>
+            <strong className="text-foreground block text-base">{selected.status}</strong>
             Status
           </span>
           <span>
-            <strong className="text-foreground block text-base">
-              {selected.audience}
-            </strong>
+            <strong className="text-foreground block text-base">{selected.audience}</strong>
             Reach
           </span>
           <span>
-            <strong className="text-foreground block text-base">
-              {selected.updated}
-            </strong>
+            <strong className="text-foreground block text-base">{selected.updated}</strong>
             Updated
           </span>
           <span>
-            <strong className="text-foreground block text-base">
-              {selected.reporter}
-            </strong>
+            <strong className="text-foreground block text-base">{selected.reporter}</strong>
             Reporter
           </span>
         </Card.Content>
@@ -1549,12 +1467,8 @@ function IncidentMonitorDemo() {
     coordinates: [number, number];
     properties: (typeof incidentData.features)[number]["properties"];
   } | null>(null);
-  const critical = incidents.filter(
-    (incident) => incident.severity === "critical",
-  ).length;
-  const warning = incidents.filter(
-    (incident) => incident.severity === "warning",
-  ).length;
+  const critical = incidents.filter((incident) => incident.severity === "critical").length;
+  const warning = incidents.filter((incident) => incident.severity === "warning").length;
   return (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
       <Map center={[-73.985, 40.728]} pitch={18} styles={styles} zoom={10.7}>
@@ -1615,30 +1529,21 @@ function IncidentMonitorDemo() {
         <Card.Content className="gap-3">
           <div className="grid grid-cols-3 gap-3 text-xs">
             <span>
-              <strong className="text-foreground block text-base">
-                {incidents.length}
-              </strong>
+              <strong className="text-foreground block text-base">{incidents.length}</strong>
               Open
             </span>
             <span>
-              <strong className="text-foreground block text-base">
-                {critical}
-              </strong>
+              <strong className="text-foreground block text-base">{critical}</strong>
               Critical
             </span>
             <span>
-              <strong className="text-foreground block text-base">
-                {warning}
-              </strong>
+              <strong className="text-foreground block text-base">{warning}</strong>
               Warning
             </span>
           </div>
           <div className="space-y-1">
             {(["critical", "warning", "info"] as const).map((severity) => (
-              <div
-                className="flex items-center justify-between text-xs"
-                key={severity}
-              >
+              <div className="flex items-center justify-between text-xs" key={severity}>
                 <span className="flex items-center gap-2 capitalize">
                   <span
                     className="size-2 rounded-full"
@@ -1647,11 +1552,7 @@ function IncidentMonitorDemo() {
                   {severity}
                 </span>
                 <span className="text-muted">
-                  {
-                    incidents.filter(
-                      (incident) => incident.severity === severity,
-                    ).length
-                  }
+                  {incidents.filter((incident) => incident.severity === severity).length}
                 </span>
               </div>
             ))}
@@ -1803,18 +1704,9 @@ const visitorClusters = [
 export const LiveVisitors: Story = {
   render: () => (
     <div className="relative h-[500px] w-full overflow-hidden rounded-lg border">
-      <Map
-        center={[18, 34]}
-        projection={{ type: "globe" }}
-        styles={styles}
-        zoom={2.5}
-      >
+      <Map center={[18, 34]} projection={{ type: "globe" }} styles={styles} zoom={2.5}>
         {visitors.map((visitor) => (
-          <Map.Marker
-            key={visitor.city}
-            latitude={visitor.latitude}
-            longitude={visitor.longitude}
-          >
+          <Map.Marker key={visitor.city} latitude={visitor.latitude} longitude={visitor.longitude}>
             <Map.MarkerContent>
               <Avatar className="ring-2 ring-white" size="sm">
                 <Avatar.Image alt={visitor.name} src={visitor.avatar} />
@@ -1925,18 +1817,14 @@ const properties = [
 ];
 
 function PropertyListingsDemo() {
-  const [selectedId, setSelectedId] = useState<string | null>(
-    properties[1]!.id,
-  );
+  const [selectedId, setSelectedId] = useState<string | null>(properties[1]!.id);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const selected =
-    properties.find((property) => property.id === selectedId) ?? null;
+  const selected = properties.find((property) => property.id === selectedId) ?? null;
   return (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
       <Map center={[-122.431, 37.773]} styles={styles} zoom={12}>
         {properties.map((property) => {
-          const active =
-            property.id === selectedId || property.id === hoveredId;
+          const active = property.id === selectedId || property.id === hoveredId;
           return (
             <Map.Marker
               key={property.id}
@@ -1981,9 +1869,7 @@ function PropertyListingsDemo() {
       <Card className="bg-overlay shadow-overlay absolute top-3 left-3 z-10 w-[250px] gap-3 p-4">
         <Card.Header>
           <Card.Title className="text-sm">For sale</Card.Title>
-          <Card.Description>
-            {properties.length} homes in San Francisco
-          </Card.Description>
+          <Card.Description>{properties.length} homes in San Francisco</Card.Description>
         </Card.Header>
         <Card.Content className="gap-1">
           {properties.map((property) => (
@@ -1996,9 +1882,7 @@ function PropertyListingsDemo() {
               onMouseLeave={() => setHoveredId(null)}
             >
               <span className="min-w-0">
-                <span className="block truncate text-xs font-medium">
-                  {property.name}
-                </span>
+                <span className="block truncate text-xs font-medium">{property.name}</span>
                 <span className="text-muted block text-xs">
                   {property.beds} bd · {property.baths} ba
                 </span>
@@ -2037,15 +1921,9 @@ const trackingDestination = trackingRoute[trackingRoute.length - 1]!;
 const trackingSegments = trackingRoute
   .slice(1)
   .map((point, index) =>
-    Math.hypot(
-      point[0] - trackingRoute[index]![0],
-      point[1] - trackingRoute[index]![1],
-    ),
+    Math.hypot(point[0] - trackingRoute[index]![0], point[1] - trackingRoute[index]![1]),
   );
-const trackingDistance = trackingSegments.reduce(
-  (total, distance) => total + distance,
-  0,
-);
+const trackingDistance = trackingSegments.reduce((total, distance) => total + distance, 0);
 const trackingPosition = (progress: number) => {
   let remaining = progress * trackingDistance;
   for (let index = 0; index < trackingSegments.length; index++) {
@@ -2056,10 +1934,10 @@ const trackingPosition = (progress: number) => {
       const to = trackingRoute[index + 1]!;
       return {
         index,
-        point: [
-          from[0] + (to[0] - from[0]) * ratio,
-          from[1] + (to[1] - from[1]) * ratio,
-        ] as [number, number],
+        point: [from[0] + (to[0] - from[0]) * ratio, from[1] + (to[1] - from[1]) * ratio] as [
+          number,
+          number,
+        ],
       };
     }
     remaining -= distance;
@@ -2093,22 +1971,14 @@ function TrackingDemo() {
           opacity={0.6}
           width={3}
         />
-        <Map.Route
-          color="#4285f4"
-          coordinates={completedRoute}
-          opacity={0.9}
-          width={4}
-        />
+        <Map.Route color="#4285f4" coordinates={completedRoute} opacity={0.9} width={4} />
         <Map.Marker latitude={point[1]} longitude={point[0]}>
           <Map.MarkerContent>
             <Map.MarkerDot color="#4285f4" />
             <Map.MarkerLabel>Courier</Map.MarkerLabel>
           </Map.MarkerContent>
         </Map.Marker>
-        <Map.Marker
-          latitude={trackingDestination[1]}
-          longitude={trackingDestination[0]}
-        >
+        <Map.Marker latitude={trackingDestination[1]} longitude={trackingDestination[0]}>
           <Map.MarkerContent>
             <Map.MarkerDot color="#22c55e" />
             <Map.MarkerLabel>Drop-off</Map.MarkerLabel>
@@ -2122,10 +1992,7 @@ function TrackingDemo() {
       <Card className="bg-overlay shadow-overlay absolute top-3 left-3 z-10 w-[250px] gap-3 p-4">
         <Card.Header className="flex-row items-center gap-3">
           <Avatar size="sm">
-            <Avatar.Image
-              alt="Noah the courier"
-              src={`${avatarRoot}/green.jpg`}
-            />
+            <Avatar.Image alt="Noah the courier" src={`${avatarRoot}/green.jpg`} />
             <Avatar.Fallback>NO</Avatar.Fallback>
           </Avatar>
           <div className="min-w-0">
@@ -2210,9 +2077,7 @@ function HeatLayer() {
     if (!isLoaded || !map) return;
     const addLayer = () => {
       if (map.getSource(heatmapSourceId)) return;
-      const beforeId = map
-        .getStyle()
-        .layers?.find((layer) => layer.type === "symbol")?.id;
+      const beforeId = map.getStyle().layers?.find((layer) => layer.type === "symbol")?.id;
       map.addSource(heatmapSourceId, { data: heatmapData, type: "geojson" });
       map.addLayer(
         {
@@ -2237,15 +2102,7 @@ function HeatLayer() {
             ],
             "heatmap-intensity": 0.9,
             "heatmap-opacity": 0.8,
-            "heatmap-radius": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              10,
-              18,
-              14,
-              40,
-            ],
+            "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 10, 18, 14, 40],
             "heatmap-weight": ["get", "weight"],
           },
         },

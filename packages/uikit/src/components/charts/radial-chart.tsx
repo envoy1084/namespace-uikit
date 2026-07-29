@@ -14,10 +14,7 @@ import {
 
 import { ChartTooltip } from "./chart-tooltip";
 
-export interface RadialChartRootProps extends Omit<
-  HTMLAttributes<HTMLDivElement>,
-  "children"
-> {
+export interface RadialChartRootProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
   barSize?: number;
   children: ReactNode;
   data: Record<string, number | string>[];
@@ -45,12 +42,7 @@ function RadialChartRoot({
   ...props
 }: RadialChartRootProps): ReactElement {
   return (
-    <div
-      ref={ref}
-      {...props}
-      className={cn("radial-chart", className)}
-      data-slot="radial-chart"
-    >
+    <div ref={ref} {...props} className={cn("radial-chart", className)} data-slot="radial-chart">
       <ResponsiveContainer height={height} width={width}>
         <RechartsRadialBarChart
           barSize={barSize}
@@ -78,14 +70,11 @@ type RadialChartComponent = typeof RadialChartRoot & {
   TooltipContent: typeof ChartTooltip.Content;
 };
 
-export const RadialChart: RadialChartComponent = Object.assign(
-  RadialChartRoot,
-  {
-    AngleAxis: PolarAngleAxis,
-    Bar: RadialBar,
-    Cell,
-    Root: RadialChartRoot,
-    Tooltip,
-    TooltipContent: ChartTooltip.Content,
-  },
-);
+export const RadialChart: RadialChartComponent = Object.assign(RadialChartRoot, {
+  AngleAxis: PolarAngleAxis,
+  Bar: RadialBar,
+  Cell,
+  Root: RadialChartRoot,
+  Tooltip,
+  TooltipContent: ChartTooltip.Content,
+});

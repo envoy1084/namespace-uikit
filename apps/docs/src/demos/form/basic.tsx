@@ -9,10 +9,7 @@ import {
   Label,
   TextField,
 } from "@thenamespace/uikit";
-import {
-  CheckmarkSquare02Icon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import { CheckmarkSquare02Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Basic() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -68,9 +65,7 @@ export function Basic() {
       >
         <Label>Password</Label>
         <Input placeholder="Enter your password" />
-        <Description>
-          Must be at least 8 characters with 1 uppercase and 1 number
-        </Description>
+        <Description>Must be at least 8 characters with 1 uppercase and 1 number</Description>
         <FieldError />
       </TextField>
 

@@ -17,18 +17,9 @@ export const DemoDefaultExample = () => (
     </ChatMessage.Content>
     <ChatMessageActions>
       <ChatMessageActions.Copy aria-label="Copy" tooltip="Copy" />
-      <ChatMessageActions.ThumbsUp
-        aria-label="Good response"
-        tooltip="Good response"
-      />
-      <ChatMessageActions.ThumbsDown
-        aria-label="Bad response"
-        tooltip="Bad response"
-      />
-      <ChatMessageActions.Regenerate
-        aria-label="Regenerate"
-        tooltip="Regenerate"
-      />
+      <ChatMessageActions.ThumbsUp aria-label="Good response" tooltip="Good response" />
+      <ChatMessageActions.ThumbsDown aria-label="Bad response" tooltip="Bad response" />
+      <ChatMessageActions.Regenerate aria-label="Regenerate" tooltip="Regenerate" />
       <ChatMessageActions.Menu aria-label="More actions" tooltip="More" />
     </ChatMessageActions>
   </Assistant>

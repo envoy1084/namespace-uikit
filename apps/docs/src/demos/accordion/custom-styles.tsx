@@ -3,15 +3,13 @@ import { ArrowDown01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 const items = [
   {
-    content:
-      "Stay informed about your account activity with real-time notifications. ",
+    content: "Stay informed about your account activity with real-time notifications. ",
     iconUrl: "/assets/docs/3dicons/bell-small.png",
     subtitle: "Receive account activity updates",
     title: "Set Up Notifications",
   },
   {
-    content:
-      "Enhance your browsing experience by installing our official browser extension",
+    content: "Enhance your browsing experience by installing our official browser extension",
     iconUrl: "/assets/docs/3dicons/compass-small.png",
     subtitle: "Connect you browser to your account",
     title: "Set up Browser Extension",
@@ -27,10 +25,7 @@ const items = [
 
 export function CustomStyles() {
   return (
-    <Accordion
-      className="bg-surface-1/10 w-full max-w-md rounded-2xl"
-      variant="surface"
-    >
+    <Accordion className="bg-surface-1/10 w-full max-w-md rounded-2xl" variant="surface">
       {items.map((item, index) => (
         <Accordion.Item
           key={index}
@@ -51,9 +46,7 @@ export function CustomStyles() {
               ) : null}
               <div className="flex flex-col gap-0">
                 <span className="leading-5 font-medium">{item.title}</span>
-                <span className="text-muted/80 leading-6 font-normal">
-                  {item.subtitle}
-                </span>
+                <span className="text-muted/80 leading-6 font-normal">{item.subtitle}</span>
               </div>
               <Accordion.Indicator className="text-muted/50 [&>svg]:size-4">
                 <HugeiconsIcon icon={ArrowDown01Icon} />
@@ -61,9 +54,7 @@ export function CustomStyles() {
             </Accordion.Trigger>
           </Accordion.Heading>
           <Accordion.Panel>
-            <Accordion.Body className="text-muted/80">
-              {item.content}
-            </Accordion.Body>
+            <Accordion.Body className="text-muted/80">{item.content}</Accordion.Body>
           </Accordion.Panel>
         </Accordion.Item>
       ))}

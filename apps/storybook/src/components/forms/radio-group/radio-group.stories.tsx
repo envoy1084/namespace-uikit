@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { cx } from "tailwind-variants";
 
 import { Button } from "@/components/buttons/button";
@@ -68,11 +67,7 @@ export const Variants: Story = {
     <div className="flex flex-col gap-8 px-4">
       <div className="flex flex-col gap-2">
         <p className="text-muted text-sm font-medium">Primary variant</p>
-        <RadioGroup
-          defaultValue="option1"
-          name="primary-plan"
-          variant="primary"
-        >
+        <RadioGroup defaultValue="option1" name="primary-plan" variant="primary">
           <Radio value="option1">
             <Radio.Content>
               <Radio.Control>
@@ -95,11 +90,7 @@ export const Variants: Story = {
       </div>
       <div className="flex flex-col gap-2">
         <p className="text-muted text-sm font-medium">Secondary variant</p>
-        <RadioGroup
-          defaultValue="option1"
-          name="secondary-plan"
-          variant="secondary"
-        >
+        <RadioGroup defaultValue="option1" name="secondary-plan" variant="secondary">
           <Radio value="option1">
             <Radio.Content>
               <Radio.Control>
@@ -107,9 +98,7 @@ export const Variants: Story = {
               </Radio.Control>
               Option 1
             </Radio.Content>
-            <Description>
-              Lower emphasis variant for use in surfaces
-            </Description>
+            <Description>Lower emphasis variant for use in surfaces</Description>
           </Radio>
           <Radio value="option2">
             <Radio.Content>
@@ -166,9 +155,7 @@ export const WithCustomIndicator: Story = {
               <Radio.Indicator>
                 {({ isSelected }) =>
                   isSelected ? (
-                    <span className="text-background text-xs leading-none">
-                      ✓
-                    </span>
+                    <span className="text-background text-xs leading-none">✓</span>
                   ) : null
                 }
               </Radio.Indicator>
@@ -183,9 +170,7 @@ export const WithCustomIndicator: Story = {
               <Radio.Indicator>
                 {({ isSelected }) =>
                   isSelected ? (
-                    <span className="text-background text-xs leading-none">
-                      ✓
-                    </span>
+                    <span className="text-background text-xs leading-none">✓</span>
                   ) : null
                 }
               </Radio.Indicator>
@@ -200,9 +185,7 @@ export const WithCustomIndicator: Story = {
               <Radio.Indicator>
                 {({ isSelected }) =>
                   isSelected ? (
-                    <span className="text-background text-xs leading-none">
-                      ✓
-                    </span>
+                    <span className="text-background text-xs leading-none">✓</span>
                   ) : null
                 }
               </Radio.Indicator>
@@ -220,11 +203,7 @@ export const Orientation: Story = {
   render: () => (
     <div className="flex flex-col gap-4 px-4">
       <Label>Subscription plan</Label>
-      <RadioGroup
-        defaultValue="pro"
-        name="plan-orientation"
-        orientation="horizontal"
-      >
+      <RadioGroup defaultValue="pro" name="plan-orientation" orientation="horizontal">
         <Radio value="starter">
           <Radio.Content>
             <Radio.Control>
@@ -405,9 +384,7 @@ export const Disabled: Story = {
     <div className="px-4">
       <RadioGroup isDisabled defaultValue="pro" name="plan-disabled">
         <Label>Subscription plan</Label>
-        <Description>
-          Plan changes are temporarily paused while we roll out updates.
-        </Description>
+        <Description>Plan changes are temporarily paused while we roll out updates.</Description>
         <Radio value="starter">
           <Radio.Content>
             <Radio.Control>
@@ -505,9 +482,7 @@ export const DeliveryAndPaymentExample: Story = {
                       <span>{option.title}</span>
                       <Description>{option.description}</Description>
                     </div>
-                    <span className="text-sm font-semibold">
-                      {option.price}
-                    </span>
+                    <span className="text-sm font-semibold">{option.price}</span>
                   </Radio.Content>
                 </Radio>
               ))}

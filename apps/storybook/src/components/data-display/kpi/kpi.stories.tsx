@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
 import { Link } from "@thenamespace/uikit/link";
 import { NumberValue } from "@thenamespace/uikit/number-value";
 import { TrendChip } from "@thenamespace/uikit/trend-chip";
@@ -117,9 +116,7 @@ export const WithIcon: Story = {
               maximumFractionDigits={0}
               value={card.value}
             />
-            <KPI.Trend trend={card.trend as "down" | "neutral" | "up"}>
-              {card.change}
-            </KPI.Trend>
+            <KPI.Trend trend={card.trend as "down" | "neutral" | "up"}>{card.change}</KPI.Trend>
           </KPI.Content>
         </KPI>
       ))}
@@ -147,11 +144,7 @@ export const WithProgress: Story = {
             <KPI.Title>{card.title}</KPI.Title>
           </KPI.Header>
           <KPI.Content>
-            <KPI.Value
-              maximumFractionDigits={0}
-              style="percent"
-              value={card.value}
-            />
+            <KPI.Value maximumFractionDigits={0} style="percent" value={card.value} />
             <KPI.Progress
               status={card.status as "danger" | "success" | "warning"}
               value={card.progress}
@@ -191,19 +184,13 @@ export const WithActions: Story = {
           <KPI.Content>
             <KPI.Value
               maximumFractionDigits={1}
-              {...(card.title !== "Load Time"
-                ? { style: "percent" as const }
-                : {})}
+              {...(card.title !== "Load Time" ? { style: "percent" as const } : {})}
               value={card.value}
             >
-              {card.title === "Load Time" ? (
-                <NumberValue.Suffix>ms</NumberValue.Suffix>
-              ) : undefined}
+              {card.title === "Load Time" ? <NumberValue.Suffix>ms</NumberValue.Suffix> : undefined}
             </KPI.Value>
             {card.trend ? (
-              <KPI.Trend trend={card.status === "danger" ? "down" : "up"}>
-                {card.trend}
-              </KPI.Trend>
+              <KPI.Trend trend={card.status === "danger" ? "down" : "up"}>{card.trend}</KPI.Trend>
             ) : (
               <KPI.Progress status="warning" value={56} />
             )}
@@ -269,12 +256,7 @@ export const WithChartBottom: Story = {
           <KPI.Title>Total Revenue</KPI.Title>
         </KPI.Header>
         <KPI.Content>
-          <KPI.Value
-            currency="USD"
-            maximumFractionDigits={0}
-            style="currency"
-            value={228451}
-          />
+          <KPI.Value currency="USD" maximumFractionDigits={0} style="currency" value={228451} />
           <KPI.Trend trend="up">+3.3%</KPI.Trend>
         </KPI.Content>
         <KPI.Chart color="var(--color-success)" data={up} />
@@ -298,11 +280,7 @@ export const WithChartBottom: Story = {
         </KPI.Header>
         <KPI.Actions aria-label="Active Users actions" />
         <KPI.Content>
-          <KPI.Value
-            maximumFractionDigits={0}
-            notation="compact"
-            value={97859}
-          />
+          <KPI.Value maximumFractionDigits={0} notation="compact" value={97859} />
           <KPI.Trend trend="neutral">10.9%</KPI.Trend>
         </KPI.Content>
         <KPI.Chart color="var(--color-accent)" data={up} height={60} />
@@ -343,27 +321,17 @@ export const WithChartInline: Story = {
               <KPI.Value
                 className="text-3xl"
                 maximumFractionDigits={card.title === "Bounce Rate" ? 1 : 0}
-                {...(card.title === "Bounce Rate"
-                  ? { style: "percent" as const }
-                  : {})}
+                {...(card.title === "Bounce Rate" ? { style: "percent" as const } : {})}
                 value={card.value}
               />
               <div className="flex items-center gap-1.5">
-                <TrendChip
-                  trend={card.trend as "down" | "up"}
-                  variant="tertiary"
-                >
+                <TrendChip trend={card.trend as "down" | "up"} variant="tertiary">
                   {card.change}
                   <TrendChip.Suffix>{card.suffix}</TrendChip.Suffix>
                 </TrendChip>
               </div>
             </div>
-            <KPI.Chart
-              color={card.color}
-              data={card.data}
-              height={70}
-              strokeWidth={1.5}
-            />
+            <KPI.Chart color={card.color} data={card.data} height={70} strokeWidth={1.5} />
           </KPI.Content>
         </KPI>
       ))}

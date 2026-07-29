@@ -2,14 +2,7 @@
 "use client";
 
 // @demo-title Resizable Sidebar
-import {
-  Avatar,
-  Breadcrumbs,
-  BreadcrumbsItem,
-  Button,
-  Chip,
-  Dropdown,
-} from "@thenamespace/uikit";
+import { Avatar, Breadcrumbs, BreadcrumbsItem, Button, Chip, Dropdown } from "@thenamespace/uikit";
 import { AppLayout, Navbar, Sidebar } from "@thenamespace/uikit";
 import {
   AnalyticsUpIcon,
@@ -70,9 +63,7 @@ function NavigationMenu({
 }) {
   const items = floating
     ? navigation.map((item) =>
-        item.label === "Analytics"
-          ? { ...item, items: ["Overview", "Reports"] as const }
-          : item,
+        item.label === "Analytics" ? { ...item, items: ["Overview", "Reports"] as const } : item,
       )
     : navigation;
 
@@ -138,22 +129,14 @@ function FooterMenu({
 }) {
   return (
     <Sidebar.Menu aria-label="Footer actions">
-      <Sidebar.MenuItem
-        href="#"
-        id={`${mobile ? "mobile-" : ""}help`}
-        textValue={helpLabel}
-      >
+      <Sidebar.MenuItem href="#" id={`${mobile ? "mobile-" : ""}help`} textValue={helpLabel}>
         <Sidebar.MenuIcon>
           <StoryIcon icon={HelpCircleIcon} />
         </Sidebar.MenuIcon>
         <Sidebar.MenuLabel>{helpLabel}</Sidebar.MenuLabel>
       </Sidebar.MenuItem>
       {showLogout ? (
-        <Sidebar.MenuItem
-          href="#"
-          id={`${mobile ? "mobile-" : ""}logout`}
-          textValue="Log out"
-        >
+        <Sidebar.MenuItem href="#" id={`${mobile ? "mobile-" : ""}logout`} textValue="Log out">
           <Sidebar.MenuIcon>
             <StoryIcon icon={Logout01Icon} />
           </Sidebar.MenuIcon>
@@ -216,12 +199,8 @@ function AccountMenu({ image = false }: { image?: boolean }) {
     <Dropdown>
       <Button isIconOnly aria-label="Account menu" variant="ghost">
         <Avatar className="size-6" color="success" variant="soft">
-          {image ? (
-            <Avatar.Image alt="User avatar" src="/assets/avatars/purple.jpg" />
-          ) : null}
-          <Avatar.Fallback className="text-xs font-semibold">
-            JG
-          </Avatar.Fallback>
+          {image ? <Avatar.Image alt="User avatar" src="/assets/avatars/purple.jpg" /> : null}
+          <Avatar.Fallback className="text-xs font-semibold">JG</Avatar.Fallback>
         </Avatar>
       </Button>
       <Dropdown.Popover className="min-w-[200px]" placement="bottom end">
@@ -274,19 +253,14 @@ function AppNavbar({
           {simpleAccount ? (
             <Button isIconOnly aria-label="Account" variant="ghost">
               <Avatar className="size-6" color="success" variant="soft">
-                <Avatar.Fallback className="text-xs font-semibold">
-                  JG
-                </Avatar.Fallback>
+                <Avatar.Fallback className="text-xs font-semibold">JG</Avatar.Fallback>
               </Avatar>
             </Button>
           ) : (
             <AccountMenu image={avatarImage} />
           )}
           {aside ? (
-            <AppLayout.AsideTrigger
-              closedTooltip="Show details"
-              openTooltip="Hide details"
-            />
+            <AppLayout.AsideTrigger closedTooltip="Show details" openTooltip="Hide details" />
           ) : null}
         </Navbar.Content>
       </Navbar.Header>
@@ -307,13 +281,10 @@ export const DemoResizableSidebarExample = () => (
     sidebarResizeBehavior="preserve-pixel-size"
   >
     <div className="flex flex-col gap-4 p-6">
-      <h1 className="text-foreground text-xl font-semibold">
-        Resizable sidebar
-      </h1>
+      <h1 className="text-foreground text-xl font-semibold">Resizable sidebar</h1>
       <p className="text-muted max-w-prose text-sm">
-        Drag the vertical handle between the sidebar and the main area to
-        resize. Reload the page — the layout is persisted via{" "}
-        <code>resizableAutoSaveId</code>.
+        Drag the vertical handle between the sidebar and the main area to resize. Reload the page —
+        the layout is persisted via <code>resizableAutoSaveId</code>.
       </p>
     </div>
   </AppLayout>

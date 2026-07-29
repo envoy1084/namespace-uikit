@@ -1,9 +1,8 @@
 "use client";
 
-import type { Key } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { Key } from "@thenamespace/uikit";
 import {
   Autocomplete,
   Description,
@@ -60,9 +59,7 @@ export function EmailRecipients() {
               return defaultChildren;
             }
 
-            const selectedItemsKeys = state.selectedItems.map(
-              (item) => item.key,
-            );
+            const selectedItemsKeys = state.selectedItems.map((item) => item.key);
 
             return (
               <TagGroup size="sm" onRemove={onRemoveTags}>
@@ -95,17 +92,9 @@ export function EmailRecipients() {
               <SearchField.ClearButton />
             </SearchField.Group>
           </SearchField>
-          <ListBox
-            renderEmptyState={() => (
-              <EmptyState>No recipients found</EmptyState>
-            )}
-          >
+          <ListBox renderEmptyState={() => <EmptyState>No recipients found</EmptyState>}>
             {emails.map((email) => (
-              <ListBox.Item
-                key={email.id}
-                id={email.id}
-                textValue={email.email}
-              >
+              <ListBox.Item key={email.id} id={email.id} textValue={email.email}>
                 <div className="flex flex-col">
                   <Label>{email.name}</Label>
                   <Description>{email.email}</Description>

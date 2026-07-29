@@ -36,9 +36,8 @@ function ControlledDemo() {
               </Sheet.Header>
               <Sheet.Body>
                 <p className="text-muted text-sm">
-                  This sheet is controlled via <code>isOpen</code> and{" "}
-                  <code>onOpenChange</code> props. The parent manages the state
-                  externally.
+                  This sheet is controlled via <code>isOpen</code> and <code>onOpenChange</code>{" "}
+                  props. The parent manages the state externally.
                 </p>
               </Sheet.Body>
               <Sheet.Footer>

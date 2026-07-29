@@ -1,16 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import type { EmblaCarouselType } from "embla-carousel";
-
 import { useEffect, useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
+import type { EmblaCarouselType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 
 import { Carousel } from "./index";
 
 const images = Array.from(
   { length: 6 },
-  (_, index) =>
-    `/assets/components-images/shoes/product-view/${index + 1}.jpeg`,
+  (_, index) => `/assets/components-images/shoes/product-view/${index + 1}.jpeg`,
 );
 const imageAlts = [
   "Sneakers front view",
@@ -65,12 +63,7 @@ export const Default: Story = {
       <Carousel.Dots />
       <Carousel.Thumbnails>
         {images.map((src, index) => (
-          <Carousel.Thumbnail
-            alt={imageAlts[index]}
-            index={index}
-            key={src}
-            src={src}
-          />
+          <Carousel.Thumbnail alt={imageAlts[index]} index={index} key={src} src={src} />
         ))}
       </Carousel.Thumbnails>
     </Carousel>
@@ -87,12 +80,7 @@ export const ModalType: Story = {
       <Carousel.Next />
       <Carousel.Thumbnails>
         {images.map((src, index) => (
-          <Carousel.Thumbnail
-            alt={imageAlts[index]}
-            index={index}
-            key={src}
-            src={src}
-          />
+          <Carousel.Thumbnail alt={imageAlts[index]} index={index} key={src} src={src} />
         ))}
       </Carousel.Thumbnails>
     </Carousel>

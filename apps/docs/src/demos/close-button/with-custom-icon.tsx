@@ -1,9 +1,5 @@
 import { CloseButton } from "@thenamespace/uikit";
-import {
-  CancelCircleIcon,
-  Cancel01Icon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import { CancelCircleIcon, Cancel01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function WithCustomIcon() {
   return (

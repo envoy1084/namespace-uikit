@@ -52,14 +52,9 @@
     opacity: var(--disabled-opacity);
     pointer-events: none;
   }
+  .segment .segment__item:not([data-selected="true"]):not([data-disabled="true"]):hover,
   .segment
-    .segment__item:not([data-selected="true"]):not(
-      [data-disabled="true"]
-    ):hover,
-  .segment
-    .segment__item[data-hovered="true"]:not([data-selected="true"]):not(
-      [data-disabled="true"]
-    ) {
+    .segment__item[data-hovered="true"]:not([data-selected="true"]):not([data-disabled="true"]) {
     background-color: transparent;
     color: var(--foreground);
     opacity: 1;

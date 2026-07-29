@@ -21,9 +21,7 @@ export function XProfileDemo() {
               <span className="text-sm leading-4 font-semibold">Namespace</span>
               <VerifiedBadgeIcon height={18} width={18} />
             </div>
-            <span className="text-muted text-sm tracking-tight">
-              @thenamespace
-            </span>
+            <span className="text-muted text-sm tracking-tight">@thenamespace</span>
           </div>
         </div>
       </Card.Header>

@@ -55,13 +55,9 @@ export const DemoDefaultExample = () => (
                 <ChartTooltip.Header>{label}</ChartTooltip.Header>
                 {payload.map((entry) => (
                   <ChartTooltip.Item key={String(entry.dataKey)}>
-                    <ChartTooltip.Indicator
-                      color={entry.color ?? entry.stroke}
-                    />
+                    <ChartTooltip.Indicator color={entry.color ?? entry.stroke} />
                     <ChartTooltip.Label>{entry.name}</ChartTooltip.Label>
-                    <ChartTooltip.Value>
-                      ${Number(entry.value).toLocaleString()}
-                    </ChartTooltip.Value>
+                    <ChartTooltip.Value>${Number(entry.value).toLocaleString()}</ChartTooltip.Value>
                   </ChartTooltip.Item>
                 ))}
               </ChartTooltip>

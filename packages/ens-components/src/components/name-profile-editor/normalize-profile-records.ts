@@ -1,14 +1,3 @@
-import type { NormalizeProfilePublicKeyError } from "#/components/name-profile-editor/normalize-profile-public-key";
-import type {
-  NameProfileAbiRecord,
-  NameProfileAddressRecord,
-  NameProfileDataRecord,
-  NameProfileFormValues,
-  NameProfileInterfaceRecord,
-  NameProfileTextRecord,
-} from "#/components/name-profile-editor/types";
-import type { ProfileTextRecordValidationError } from "#/components/name-profile-editor/validate-profile-text-record";
-
 import { getCoderByCoinType } from "@ensdomains/address-encoder";
 import {
   decode as decodeContentHash,
@@ -20,7 +9,17 @@ import { err, ok, type Result } from "neverthrow";
 import { getAddress, isAddress, isHex, size, zeroAddress } from "viem";
 import { normalize as normalizeName } from "viem/ens";
 
+import type { NormalizeProfilePublicKeyError } from "#/components/name-profile-editor/normalize-profile-public-key";
 import { normalizeProfilePublicKey } from "#/components/name-profile-editor/normalize-profile-public-key";
+import type {
+  NameProfileAbiRecord,
+  NameProfileAddressRecord,
+  NameProfileDataRecord,
+  NameProfileFormValues,
+  NameProfileInterfaceRecord,
+  NameProfileTextRecord,
+} from "#/components/name-profile-editor/types";
+import type { ProfileTextRecordValidationError } from "#/components/name-profile-editor/validate-profile-text-record";
 import { normalizeProfileTextValue } from "#/components/name-profile-editor/validate-profile-text-record";
 
 const MAX_UINT256 = (1n << 256n) - 1n;
@@ -72,9 +71,7 @@ export type NormalizeProfileRecordsResult = Result<
 >;
 
 function isByteHex(value: unknown): value is `0x${string}` {
-  return (
-    isHex(value, { strict: true }) && (value.length - "0x".length) % 2 === 0
-  );
+  return isHex(value, { strict: true }) && (value.length - "0x".length) % 2 === 0;
 }
 
 function compareStrings(left: string, right: string): number {
@@ -91,10 +88,7 @@ function compareUnsignedIntegerStrings(left: string, right: string): number {
   return 0;
 }
 
-function sortValues<T>(
-  values: readonly T[],
-  compare: (left: T, right: T) => number,
-): T[] {
+function sortValues<T>(values: readonly T[], compare: (left: T, right: T) => number): T[] {
   return values.reduce<T[]>((sorted, value) => {
     const index = sorted.findIndex((existing) => compare(value, existing) < 0);
     if (index === -1) return sorted.concat(value);
@@ -189,9 +183,7 @@ function normalizeAddressRecords(
   );
 }
 
-function normalizeContenthash(
-  contenthash: string,
-): Result<string, NormalizeProfileRecordsError> {
+function normalizeContenthash(contenthash: string): Result<string, NormalizeProfileRecordsError> {
   const value = contenthash.trim();
   if (value.length === 0 || value === "0x") return ok("");
 
@@ -245,11 +237,7 @@ function normalizeDataRecords(
     if (value !== "0x") normalized.push({ key, value: value.toLowerCase() });
   }
 
-  return ok(
-    sortValues(normalized, (left, right) =>
-      compareStrings(left.key, right.key),
-    ),
-  );
+  return ok(sortValues(normalized, (left, right) => compareStrings(left.key, right.key)));
 }
 
 function normalizeInterfaceRecords(
@@ -280,15 +268,11 @@ function normalizeInterfaceRecords(
   }
 
   return ok(
-    sortValues(normalized, (left, right) =>
-      compareStrings(left.interfaceId, right.interfaceId),
-    ),
+    sortValues(normalized, (left, right) => compareStrings(left.interfaceId, right.interfaceId)),
   );
 }
 
-function normalizeNameRecord(
-  name: string,
-): Result<string, NormalizeProfileRecordsError> {
+function normalizeNameRecord(name: string): Result<string, NormalizeProfileRecordsError> {
   const value = name.trim();
   if (value.length === 0) return ok("");
 
@@ -321,11 +305,7 @@ function normalizeTextRecords(
     }
   }
 
-  return ok(
-    sortValues(normalized, (left, right) =>
-      compareStrings(left.key, right.key),
-    ),
-  );
+  return ok(sortValues(normalized, (left, right) => compareStrings(left.key, right.key)));
 }
 
 function normalizeProfileRecordsInternal(

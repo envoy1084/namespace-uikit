@@ -4,31 +4,12 @@
 import { Widget } from "@thenamespace/uikit";
 import { LineChart } from "@thenamespace/uikit/line-chart";
 
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const traffic = months.map((month, index) => ({
   month,
-  organic: [
-    2000, 15000, 8000, 14000, 15000, 8000, 18000, 18000, 20000, 17000, 22000,
-    15000,
-  ][index],
-  paidAds: [
-    1000, 10000, 12000, 14000, 8000, 9000, 12000, 10000, 5000, 12000, 18000,
-    9000,
-  ][index],
+  organic: [2000, 15000, 8000, 14000, 15000, 8000, 18000, 18000, 20000, 17000, 22000, 15000][index],
+  paidAds: [1000, 10000, 12000, 14000, 8000, 9000, 12000, 10000, 5000, 12000, 18000, 9000][index],
 }));
 
 export const DemoWithLineChartExample = () => (
@@ -45,9 +26,7 @@ export const DemoWithLineChartExample = () => (
         <LineChart.Grid vertical={false} />
         <LineChart.XAxis dataKey="month" tickMargin={8} />
         <LineChart.YAxis
-          tickFormatter={(value) =>
-            value >= 1000 ? `${(value / 1000).toFixed(0)}k` : `${value}`
-          }
+          tickFormatter={(value) => (value >= 1000 ? `${(value / 1000).toFixed(0)}k` : `${value}`)}
           width={30}
         />
         <LineChart.Tooltip content={<LineChart.TooltipContent />} />

@@ -8,19 +8,13 @@ import { HugeiconsIcon } from "@hugeicons/react";
 
 export type InlineSelectRootProps = ComponentProps<typeof Select>;
 
-function InlineSelectRoot({
-  children,
-  className,
-  ...props
-}: InlineSelectRootProps): ReactElement {
+function InlineSelectRoot({ children, className, ...props }: InlineSelectRootProps): ReactElement {
   return (
     <Select
       {...props}
       className={(renderProps) =>
-        cn(
-          "inline-select",
-          typeof className === "function" ? className(renderProps) : className,
-        ) ?? "inline-select"
+        cn("inline-select", typeof className === "function" ? className(renderProps) : className) ??
+        "inline-select"
       }
       data-slot="inline-select"
     >
@@ -75,9 +69,7 @@ function InlineSelectValue({
   );
 }
 
-export type InlineSelectIndicatorProps = ComponentProps<
-  typeof Select.Indicator
->;
+export type InlineSelectIndicatorProps = ComponentProps<typeof Select.Indicator>;
 
 function InlineSelectIndicator({
   children,
@@ -87,18 +79,11 @@ function InlineSelectIndicator({
   return (
     <Select.Indicator
       {...props}
-      className={
-        cn("inline-select__indicator", className) ?? "inline-select__indicator"
-      }
+      className={cn("inline-select__indicator", className) ?? "inline-select__indicator"}
       data-slot="inline-select-indicator"
     >
       {children === undefined ? (
-        <HugeiconsIcon
-          aria-hidden
-          icon={UnfoldMoreIcon}
-          size={12}
-          strokeWidth={2}
-        />
+        <HugeiconsIcon aria-hidden icon={UnfoldMoreIcon} size={12} strokeWidth={2} />
       ) : (
         children
       )}
@@ -139,13 +124,10 @@ type InlineSelectComponent = typeof InlineSelectRoot & {
   Value: typeof InlineSelectValue;
 };
 
-export const InlineSelect: InlineSelectComponent = Object.assign(
-  InlineSelectRoot,
-  {
-    Indicator: InlineSelectIndicator,
-    Popover: InlineSelectPopover,
-    Root: InlineSelectRoot,
-    Trigger: InlineSelectTrigger,
-    Value: InlineSelectValue,
-  },
-);
+export const InlineSelect: InlineSelectComponent = Object.assign(InlineSelectRoot, {
+  Indicator: InlineSelectIndicator,
+  Popover: InlineSelectPopover,
+  Root: InlineSelectRoot,
+  Trigger: InlineSelectTrigger,
+  Value: InlineSelectValue,
+});

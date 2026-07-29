@@ -9,8 +9,7 @@ const buttonVariants = ["primary", "secondary", "tertiary", "outline"] as const;
 export const DemoWithCustomButtonsExample = () => (
   <div className="flex max-w-xl flex-col items-center gap-5">
     <p className="text-muted text-sm">
-      Using Namespace UIKit Button (isIconOnly) as custom increment/decrement
-      buttons.
+      Using Namespace UIKit Button (isIconOnly) as custom increment/decrement buttons.
     </p>
     <div className="grid grid-cols-4 gap-5">
       {[false, true].flatMap((withoutBackground) =>
@@ -18,18 +17,10 @@ export const DemoWithCustomButtonsExample = () => (
           const suffix = withoutBackground ? " no bg" : "";
 
           return (
-            <div
-              className="flex flex-col items-center gap-2"
-              key={`${variant}-${suffix}`}
-            >
+            <div className="flex flex-col items-center gap-2" key={`${variant}-${suffix}`}>
               <span className="text-muted text-xs">{variant}</span>
-              <NumberStepper
-                aria-label={`Quantity ${variant}${suffix}`}
-                defaultValue={1}
-              >
-                <NumberStepper.Group
-                  className={withoutBackground ? "bg-transparent" : undefined}
-                >
+              <NumberStepper aria-label={`Quantity ${variant}${suffix}`} defaultValue={1}>
+                <NumberStepper.Group className={withoutBackground ? "bg-transparent" : undefined}>
                   <Button
                     aria-label={`Decrease Quantity ${variant}${suffix}`}
                     className="rounded-full"

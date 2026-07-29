@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React, { useState } from "react";
+
+import type { Meta } from "@storybook/react";
 
 import { Icon } from "@/icon";
 
@@ -37,11 +37,7 @@ const Template = ({ isDisabled, size, variant }: ToggleButton["RootProps"]) => (
       <Icon icon="hugeicons:heart" />
       Like
     </ToggleButton>
-    <ToggleButton
-      isDisabled={isDisabled}
-      size={size}
-      variant={variant ?? "ghost"}
-    >
+    <ToggleButton isDisabled={isDisabled} size={size} variant={variant ?? "ghost"}>
       <Icon icon="hugeicons:heart" />
       Like
     </ToggleButton>
@@ -70,12 +66,7 @@ const VariantsTemplate = ({ isDisabled, size }: ToggleButton["RootProps"]) => (
           <Icon icon="hugeicons:heart" />
           Like
         </ToggleButton>
-        <ToggleButton
-          defaultSelected
-          isDisabled={isDisabled}
-          size={size}
-          variant="ghost"
-        >
+        <ToggleButton defaultSelected isDisabled={isDisabled} size={size} variant="ghost">
           <Icon icon="hugeicons:heart-fill" />
           Like
         </ToggleButton>
@@ -114,26 +105,12 @@ const SizesTemplate = () => (
   </div>
 );
 
-const IconOnlyTemplate = ({
-  isDisabled,
-  size,
-  variant,
-}: ToggleButton["RootProps"]) => (
+const IconOnlyTemplate = ({ isDisabled, size, variant }: ToggleButton["RootProps"]) => (
   <div className="flex gap-3">
-    <ToggleButton
-      isIconOnly
-      isDisabled={isDisabled}
-      size={size}
-      variant={variant}
-    >
+    <ToggleButton isIconOnly isDisabled={isDisabled} size={size} variant={variant}>
       <Icon icon="hugeicons:heart" />
     </ToggleButton>
-    <ToggleButton
-      isIconOnly
-      isDisabled={isDisabled}
-      size={size}
-      variant={variant ?? "ghost"}
-    >
+    <ToggleButton isIconOnly isDisabled={isDisabled} size={size} variant={variant ?? "ghost"}>
       <Icon icon="hugeicons:bookmark" />
     </ToggleButton>
   </div>
@@ -148,19 +125,14 @@ const ControlledTemplate = () => {
         <ToggleButton isSelected={isSelected} onChange={setIsSelected}>
           {({ isSelected: selected }) => (
             <>
-              <Icon
-                icon={selected ? "hugeicons:heart-fill" : "hugeicons:heart"}
-              />
+              <Icon icon={selected ? "hugeicons:heart-fill" : "hugeicons:heart"} />
               {selected ? "Liked" : "Like"}
             </>
           )}
         </ToggleButton>
       </div>
       <p className="text-muted text-sm">
-        Status:{" "}
-        <span className="font-medium">
-          {isSelected ? "Selected" : "Not selected"}
-        </span>
+        Status: <span className="font-medium">{isSelected ? "Selected" : "Not selected"}</span>
       </p>
     </div>
   );
@@ -189,40 +161,21 @@ const RealWorldTemplate = () => {
       <ToggleButton isSelected={liked} size="sm" onChange={setLiked}>
         {({ isSelected }) => (
           <>
-            <Icon
-              icon={isSelected ? "hugeicons:heart-fill" : "hugeicons:heart"}
-            />
+            <Icon icon={isSelected ? "hugeicons:heart-fill" : "hugeicons:heart"} />
             Like
           </>
         )}
       </ToggleButton>
-      <ToggleButton
-        isSelected={bookmarked}
-        size="sm"
-        variant="ghost"
-        onChange={setBookmarked}
-      >
+      <ToggleButton isSelected={bookmarked} size="sm" variant="ghost" onChange={setBookmarked}>
         {({ isSelected }) => (
           <>
-            <Icon
-              icon={
-                isSelected ? "hugeicons:bookmark-fill" : "hugeicons:bookmark"
-              }
-            />
+            <Icon icon={isSelected ? "hugeicons:bookmark-fill" : "hugeicons:bookmark"} />
             Save
           </>
         )}
       </ToggleButton>
-      <ToggleButton
-        isIconOnly
-        isSelected={pinned}
-        size="sm"
-        variant="ghost"
-        onChange={setPinned}
-      >
-        {({ isSelected }) => (
-          <Icon icon={isSelected ? "hugeicons:pin-fill" : "hugeicons:pin"} />
-        )}
+      <ToggleButton isIconOnly isSelected={pinned} size="sm" variant="ghost" onChange={setPinned}>
+        {({ isSelected }) => <Icon icon={isSelected ? "hugeicons:pin-fill" : "hugeicons:pin"} />}
       </ToggleButton>
     </div>
   );

@@ -10,8 +10,8 @@ export const DemoDefaultExample = () => (
       <ChainOfThought.Content>
         <ChainOfThought.Steps>
           <ChainOfThought.Step label="Search">
-            Looked up Namespace UIKit chat template patterns for message layout
-            and composer spacing.
+            Looked up Namespace UIKit chat template patterns for message layout and composer
+            spacing.
           </ChainOfThought.Step>
           <ChainOfThought.Step label="Plan">
             Mapped the template structure to SDK-agnostic compound components.

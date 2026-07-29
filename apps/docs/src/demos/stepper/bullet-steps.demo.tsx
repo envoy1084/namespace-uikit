@@ -25,9 +25,7 @@ function steps({
   descriptions?: boolean;
   withIcons?: boolean;
 }) {
-  const data = descriptions
-    ? detailed
-    : basic.map((title) => [title, ""] as const);
+  const data = descriptions ? detailed : basic.map((title) => [title, ""] as const);
   return data.map(([title, description], index) => (
     <Stepper.Step key={title}>
       <Stepper.Indicator>
@@ -39,9 +37,7 @@ function steps({
       </Stepper.Indicator>
       <Stepper.Content>
         <Stepper.Title>{title}</Stepper.Title>
-        {description ? (
-          <Stepper.Description>{description}</Stepper.Description>
-        ) : null}
+        {description ? <Stepper.Description>{description}</Stepper.Description> : null}
       </Stepper.Content>
       <Stepper.Separator />
     </Stepper.Step>
@@ -70,11 +66,7 @@ function BulletDemo() {
         </Stepper>
       </div>
       <div className="w-[280px]">
-        <Stepper
-          currentStep={step}
-          onStepChange={setStep}
-          orientation="vertical"
-        >
+        <Stepper currentStep={step} onStepChange={setStep} orientation="vertical">
           {steps({ descriptions: true })}
         </Stepper>
       </div>

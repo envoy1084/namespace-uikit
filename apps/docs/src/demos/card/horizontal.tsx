@@ -15,19 +15,14 @@ export function Horizontal() {
         <Card.Header className="gap-1">
           <Card.Title className="pr-8">Become an ACME Creator!</Card.Title>
           <Card.Description>
-            Lorem ipsum dolor sit amet consectetur. Sed arcu donec id aliquam
-            dolor sed amet faucibus etiam.
+            Lorem ipsum dolor sit amet consectetur. Sed arcu donec id aliquam dolor sed amet
+            faucibus etiam.
           </Card.Description>
-          <CloseButton
-            aria-label="Close banner"
-            className="absolute top-3 right-3"
-          />
+          <CloseButton aria-label="Close banner" className="absolute top-3 right-3" />
         </Card.Header>
         <Card.Footer className="mt-auto flex w-full flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col">
-            <span className="text-foreground text-sm font-medium">
-              Only 10 spots
-            </span>
+            <span className="text-foreground text-sm font-medium">Only 10 spots</span>
             <span className="text-muted text-xs">Submission ends Oct 10.</span>
           </div>
           <Button className="w-full sm:w-auto">Apply Now</Button>

@@ -5,9 +5,7 @@ import { NumberStepper } from "@thenamespace/uikit";
 
 export const DemoReversedLayoutExample = () => (
   <div className="flex flex-col items-center gap-3">
-    <p className="text-muted text-sm">
-      Reversed order — plus on the left, minus on the right.
-    </p>
+    <p className="text-muted text-sm">Reversed order — plus on the left, minus on the right.</p>
     <NumberStepper aria-label="Quantity" defaultValue={1}>
       <NumberStepper.Group>
         <NumberStepper.IncrementButton aria-label="Increase Quantity" />

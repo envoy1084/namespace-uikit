@@ -10,13 +10,7 @@ interface ComponentItemProps {
   title: string;
 }
 
-function ComponentImagePair({
-  alt,
-  imageName,
-}: {
-  alt: string;
-  imageName: string;
-}) {
+function ComponentImagePair({ alt, imageName }: { alt: string; imageName: string }) {
   return (
     <>
       <Image
@@ -39,12 +33,7 @@ function ComponentImagePair({
   );
 }
 
-export function ComponentItem({
-  className,
-  href,
-  imageName,
-  title,
-}: ComponentItemProps) {
+export function ComponentItem({ className, href, imageName, title }: ComponentItemProps) {
   return (
     <div className={cn("flex flex-col gap-[9px]", className)}>
       <div className="order-1 sm:order-2">

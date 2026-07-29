@@ -18,16 +18,10 @@ export const DemoControlledExample = function Demo() {
   const [selected, setSelected] = useState(true);
   return (
     <div className="flex w-[252px] flex-col gap-2">
-      <CellSwitch
-        aria-label="Animations"
-        isSelected={selected}
-        onChange={setSelected}
-      >
+      <CellSwitch aria-label="Animations" isSelected={selected} onChange={setSelected}>
         <SwitchContents label="Animations" />
       </CellSwitch>
-      <p className="text-muted px-1 text-sm">
-        Animations: {selected ? "On" : "Off"}
-      </p>
+      <p className="text-muted px-1 text-sm">Animations: {selected ? "On" : "Off"}</p>
     </div>
   );
 };

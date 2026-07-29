@@ -14,10 +14,7 @@ import {
 
 import { ChartTooltip } from "./chart-tooltip";
 
-export interface PieChartRootProps extends Omit<
-  HTMLAttributes<HTMLDivElement>,
-  "children"
-> {
+export interface PieChartRootProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
   children: ReactNode;
   height?: number;
   ref?: Ref<HTMLDivElement>;
@@ -33,12 +30,7 @@ function PieChartRoot({
   ...props
 }: PieChartRootProps): ReactElement {
   return (
-    <div
-      ref={ref}
-      {...props}
-      className={cn("pie-chart", className)}
-      data-slot="pie-chart"
-    >
+    <div ref={ref} {...props} className={cn("pie-chart", className)} data-slot="pie-chart">
       <ResponsiveContainer height={height} width={width}>
         <RechartsPieChart>{children}</RechartsPieChart>
       </ResponsiveContainer>

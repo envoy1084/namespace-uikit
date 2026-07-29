@@ -21,16 +21,14 @@ export function XProfileDemo() {
               <span className="text-sm leading-4 font-semibold">Namespace</span>
               <VerifiedBadgeIcon height={18} width={18} />
             </div>
-            <span className="text-muted text-sm tracking-tight">
-              @namespace_eth
-            </span>
+            <span className="text-muted text-sm tracking-tight">@namespace_eth</span>
           </div>
         </div>
       </Card.Header>
       <Card.Content className="flex-row text-left">
         <p className="pl-px text-sm font-medium">
-          Growing ENS through Partnerships, Integrations, and making Subname
-          registrations easy for humans and agents.
+          Growing ENS through Partnerships, Integrations, and making Subname registrations easy for
+          humans and agents.
           <br />
           <br />
           <span aria-label="confetti" role="img">

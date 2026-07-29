@@ -1,9 +1,8 @@
 "use client";
 
-import type { CalendarDate, DateValue } from "@internationalized/date";
-
 import { useState } from "react";
 
+import type { CalendarDate, DateValue } from "@internationalized/date";
 import { getLocalTimeZone, isWeekend, today } from "@internationalized/date";
 import { Button, Calendar } from "@thenamespace/uikit";
 import { useLocale } from "react-aria-components";
@@ -44,9 +43,7 @@ export function BookingCalendar() {
                     {formattedDate}
                     {!isUnavailable &&
                       !isWeekend(date, locale) &&
-                      bookedDates.includes(date.day) && (
-                        <Calendar.CellIndicator />
-                      )}
+                      bookedDates.includes(date.day) && <Calendar.CellIndicator />}
                   </>
                 )}
               </Calendar.Cell>
@@ -61,8 +58,7 @@ export function BookingCalendar() {
             <span className="bg-muted size-2 rounded-full" /> Has bookings
           </span>
           <span className="flex items-center gap-1">
-            <span className="bg-default size-2 rounded-full" />{" "}
-            Weekend/Unavailable
+            <span className="bg-default size-2 rounded-full" /> Weekend/Unavailable
           </span>
         </div>
         {selectedDate ? (

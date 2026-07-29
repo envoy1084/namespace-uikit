@@ -1,9 +1,8 @@
 "use client";
 
-import type { ScrollShadowVisibility } from "@thenamespace/uikit";
-
 import { useState } from "react";
 
+import type { ScrollShadowVisibility } from "@thenamespace/uikit";
 import { Card, ScrollShadow } from "@thenamespace/uikit";
 
 const images = [
@@ -13,10 +12,8 @@ const images = [
 ];
 
 export default function VisibilityChange() {
-  const [verticalState, setVerticalState] =
-    useState<ScrollShadowVisibility>("none");
-  const [horizontalState, setHorizontalState] =
-    useState<ScrollShadowVisibility>("none");
+  const [verticalState, setVerticalState] = useState<ScrollShadowVisibility>("none");
+  const [horizontalState, setHorizontalState] = useState<ScrollShadowVisibility>("none");
 
   const getRandomImage = (idx: number) => {
     return images[idx % images.length];
@@ -26,9 +23,7 @@ export default function VisibilityChange() {
     <div className="w-full sm:max-w-sm">
       <div className="mb-8 flex flex-col gap-2">
         <div className="bg-default rounded p-4">
-          <p className="text-sm font-semibold">
-            Vertical Shadow State: {verticalState}
-          </p>
+          <p className="text-sm font-semibold">Vertical Shadow State: {verticalState}</p>
         </div>
         <div className="w-full">
           <ScrollShadow
@@ -39,10 +34,9 @@ export default function VisibilityChange() {
             <div className="space-y-4">
               {Array.from({ length: 10 }).map((_, idx) => (
                 <p key={`scroll-shadow-lorem-content-${idx}`}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                  Morbi accumsan cursus enim, sed ultricies sapien.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus non
+                  risus hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed porttitor
+                  quam. Morbi accumsan cursus enim, sed ultricies sapien.
                 </p>
               ))}
             </div>
@@ -52,9 +46,7 @@ export default function VisibilityChange() {
 
       <div className="flex flex-col gap-2">
         <div className="bg-default rounded p-4">
-          <p className="text-sm font-semibold">
-            Horizontal Shadow State: {horizontalState}
-          </p>
+          <p className="text-sm font-semibold">Horizontal Shadow State: {horizontalState}</p>
         </div>
         <div className="w-full">
           <ScrollShadow
@@ -76,12 +68,8 @@ export default function VisibilityChange() {
                     src={getRandomImage(idx)}
                   />
                   <div className="flex flex-1 flex-col justify-center gap-1">
-                    <Card.Title className="text-sm">
-                      Bridging the Future
-                    </Card.Title>
-                    <Card.Description className="text-xs">
-                      Today, 6:30 PM
-                    </Card.Description>
+                    <Card.Title className="text-sm">Bridging the Future</Card.Title>
+                    <Card.Description className="text-xs">Today, 6:30 PM</Card.Description>
                   </div>
                 </Card>
               ))}

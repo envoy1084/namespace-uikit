@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { ChartTooltip } from "@/components/charts/chart-tooltip";
 import { Card } from "@/components/layout/card";
@@ -32,32 +32,17 @@ const trafficData = [
   { month: "Dec", organic: 15000, paidAds: 9000 },
 ];
 
-const revenueData = [
-  4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500,
-].map((revenue, index) => ({
-  month: [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ][index]!,
-  revenue,
-}));
+const revenueData = [4200, 5800, 4900, 7200, 6100, 8400, 7800, 9200, 8600, 10200, 9800, 11500].map(
+  (revenue, index) => ({
+    month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][
+      index
+    ]!,
+    revenue,
+  }),
+);
 
-const sparkUp = [30, 35, 28, 42, 38, 45, 50, 48, 55, 60, 58, 65].map(
-  (value) => ({ value }),
-);
-const sparkDown = [65, 60, 62, 55, 58, 52, 50, 48, 45, 42, 44, 40].map(
-  (value) => ({ value }),
-);
+const sparkUp = [30, 35, 28, 42, 38, 45, 50, 48, 55, 60, 58, 65].map((value) => ({ value }));
+const sparkDown = [65, 60, 62, 55, 58, 52, 50, 48, 45, 42, 44, 40].map((value) => ({ value }));
 
 function Legend({
   items,
@@ -69,11 +54,7 @@ function Legend({
       {items.map(({ color, dashed, label }) => (
         <div className="flex items-center gap-1.5" key={label}>
           <span
-            className={
-              dashed
-                ? "h-0 w-3 border-t-2 border-dashed"
-                : "size-3 rounded-full"
-            }
+            className={dashed ? "h-0 w-3 border-t-2 border-dashed" : "size-3 rounded-full"}
             style={dashed ? { borderColor: color } : { backgroundColor: color }}
           />
           <span className="text-muted text-xs">{label}</span>
@@ -165,47 +146,45 @@ const portfolioRanges = {
     balance: "$24,801.32",
     change: "$42.10 (0.17%)",
     data: [
-      24759, 24820, 24690, 24780, 24650, 24730, 24860, 24710, 24840, 24770,
-      24900, 24680, 24810, 24750, 24801,
+      24759, 24820, 24690, 24780, 24650, 24730, 24860, 24710, 24840, 24770, 24900, 24680, 24810,
+      24750, 24801,
     ],
   },
   "1D": {
     balance: "$24,801.32",
     change: "$312.55 (1.28%)",
     data: [
-      24490, 24680, 24350, 24520, 24750, 24410, 24600, 24380, 24720, 24550,
-      24830, 24460, 24690, 24580, 24801,
+      24490, 24680, 24350, 24520, 24750, 24410, 24600, 24380, 24720, 24550, 24830, 24460, 24690,
+      24580, 24801,
     ],
   },
   "1W": {
     balance: "$24,801.32",
     change: "$842.18 (3.51%)",
-    data: [
-      23960, 24100, 23850, 24200, 24050, 24350, 24500, 24400, 24650, 24801,
-    ],
+    data: [23960, 24100, 23850, 24200, 24050, 24350, 24500, 24400, 24650, 24801],
   },
   "1M": {
     balance: "$24,801.32",
     change: "$1,242.77 (5.32%)",
     data: [
-      18000, 17500, 17800, 18200, 19000, 18500, 19200, 20500, 20000, 21000,
-      20800, 22000, 21500, 22800, 24801,
+      18000, 17500, 17800, 18200, 19000, 18500, 19200, 20500, 20000, 21000, 20800, 22000, 21500,
+      22800, 24801,
     ],
   },
   "1Y": {
     balance: "$24,801.32",
     change: "$8,401.32 (51.2%)",
     data: [
-      16400, 15200, 17100, 16800, 18500, 19200, 18000, 20100, 21500, 19800,
-      22400, 23100, 21800, 24200, 24801,
+      16400, 15200, 17100, 16800, 18500, 19200, 18000, 20100, 21500, 19800, 22400, 23100, 21800,
+      24200, 24801,
     ],
   },
   ALL: {
     balance: "$24,801.32",
     change: "$19,801.32 (396%)",
     data: [
-      5000, 6200, 5800, 7500, 9200, 8400, 11000, 12800, 14500, 13200, 16800,
-      18500, 20100, 22400, 24801,
+      5000, 6200, 5800, 7500, 9200, 8400, 11000, 12800, 14500, 13200, 16800, 18500, 20100, 22400,
+      24801,
     ],
   },
 } as const;
@@ -221,18 +200,12 @@ function PortfolioExample() {
           <Card.Title className="text-base">Portfolio</Card.Title>
           <div className="flex flex-col gap-0.5">
             <span className="text-muted text-xs">Total balance</span>
-            <span className="text-foreground text-2xl font-semibold">
-              {current.balance}
-            </span>
-            <span className="text-xs font-medium text-green-500">
-              {current.change}
-            </span>
+            <span className="text-foreground text-2xl font-semibold">{current.balance}</span>
+            <span className="text-xs font-medium text-green-500">{current.change}</span>
           </div>
         </div>
         <div className="bg-default flex rounded-lg p-0.5">
-          {(
-            Object.keys(portfolioRanges) as Array<keyof typeof portfolioRanges>
-          ).map((key) => (
+          {(Object.keys(portfolioRanges) as Array<keyof typeof portfolioRanges>).map((key) => (
             <button
               className={
                 range === key
@@ -328,9 +301,7 @@ export const KPIWithChart: Story = {
           </Card.Header>
           <Card.Content className="grid grid-cols-[1fr_1fr] items-end">
             <div className="flex flex-col gap-1">
-              <span className="text-foreground text-3xl font-semibold">
-                {kpi.value}
-              </span>
+              <span className="text-foreground text-3xl font-semibold">{kpi.value}</span>
               <span
                 className={
                   kpi.direction === "up"
@@ -366,8 +337,7 @@ export const StatsWithChart: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Stats row — the dashboard-demo pattern with stat cards + chart below.",
+        story: "Stats row — the dashboard-demo pattern with stat cards + chart below.",
       },
     },
   },
@@ -383,14 +353,10 @@ export const StatsWithChart: Story = {
           {stats.map((stat) => (
             <Card className="gap-1 rounded-2xl" key={stat.label}>
               <Card.Header>
-                <Card.Description className="text-sm font-medium">
-                  {stat.label}
-                </Card.Description>
+                <Card.Description className="text-sm font-medium">{stat.label}</Card.Description>
               </Card.Header>
               <Card.Content className="flex flex-row items-center gap-2">
-                <span className="text-foreground flex-1 text-2xl font-semibold">
-                  {stat.value}
-                </span>
+                <span className="text-foreground flex-1 text-2xl font-semibold">{stat.value}</span>
                 <span
                   className={
                     stat.trend === "up"
@@ -423,9 +389,7 @@ export const StatsWithChart: Story = {
               <LineChart.Tooltip
                 content={
                   <LineChart.TooltipContent
-                    valueFormatter={(value) =>
-                      `$${Number(value).toLocaleString()}`
-                    }
+                    valueFormatter={(value) => `$${Number(value).toLocaleString()}`}
                   />
                 }
               />
@@ -439,12 +403,8 @@ export const StatsWithChart: Story = {
 
 const multiData = trafficData.map((item, index) => ({
   ...item,
-  directTraffic: [
-    800, 1500, 2200, 1800, 2600, 2000, 3100, 2800, 3500, 3200, 4000, 3700,
-  ][index]!,
-  referral: [
-    500, 1200, 2100, 2800, 3200, 2600, 4100, 3800, 4500, 5200, 5800, 5100,
-  ][index]!,
+  directTraffic: [800, 1500, 2200, 1800, 2600, 2000, 3100, 2800, 3500, 3200, 4000, 3700][index]!,
+  referral: [500, 1200, 2100, 2800, 3200, 2600, 4100, 3800, 4500, 5200, 5800, 5100][index]!,
 }));
 const multiSeries = [
   { color: "var(--chart-4)", key: "organic", label: "Organic" },
@@ -457,8 +417,7 @@ export const MultiLineChartColors: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Multi-line with all four chart colors and line indicators tooltip.",
+        story: "Multi-line with all four chart colors and line indicators tooltip.",
       },
     },
   },
@@ -482,9 +441,7 @@ export const MultiLineChartColors: Story = {
               type="monotone"
             />
           ))}
-          <LineChart.Tooltip
-            content={<LineChart.TooltipContent indicator="line" />}
-          />
+          <LineChart.Tooltip content={<LineChart.TooltipContent indicator="line" />} />
         </LineChart>
       </Card.Content>
     </Card>
@@ -534,8 +491,7 @@ export const CustomTooltip: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Custom tooltip with total row — demonstrates fully custom composition.",
+        story: "Custom tooltip with total row — demonstrates fully custom composition.",
       },
     },
   },
@@ -572,10 +528,7 @@ export const CustomTooltip: Story = {
           <LineChart.Tooltip
             content={({ active, label, payload }) => {
               if (!active || !payload?.length) return null;
-              const total = payload.reduce(
-                (sum, entry) => sum + Number(entry.value ?? 0),
-                0,
-              );
+              const total = payload.reduce((sum, entry) => sum + Number(entry.value ?? 0), 0);
               return (
                 <ChartTooltip indicator="line">
                   <ChartTooltip.Header>{label}</ChartTooltip.Header>
@@ -589,9 +542,7 @@ export const CustomTooltip: Story = {
                     </ChartTooltip.Item>
                   ))}
                   <div className="border-separator mt-1 flex items-center justify-between border-t pt-1.5">
-                    <span className="text-muted text-xs font-medium">
-                      Total
-                    </span>
+                    <span className="text-muted text-xs font-medium">Total</span>
                     <span className="text-foreground text-xs font-semibold">
                       {total.toLocaleString()}
                     </span>
@@ -650,10 +601,7 @@ export const DashedComparison: Story = {
     const data = revenueData.map((item, index) => ({
       actual: item.revenue,
       month: item.month,
-      target: [
-        5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000,
-        10500,
-      ][index]!,
+      target: [5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000, 10500][index]!,
     }));
     return (
       <Card className="w-[520px] rounded-2xl">
@@ -689,9 +637,7 @@ export const DashedComparison: Story = {
             <LineChart.Tooltip
               content={
                 <LineChart.TooltipContent
-                  valueFormatter={(value) =>
-                    `$${Number(value).toLocaleString()}`
-                  }
+                  valueFormatter={(value) => `$${Number(value).toLocaleString()}`}
                 />
               }
             />

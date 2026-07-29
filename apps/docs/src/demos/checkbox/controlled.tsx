@@ -9,11 +9,7 @@ export function Controlled() {
 
   return (
     <div className="flex flex-col gap-3">
-      <Checkbox
-        id="email-notifications"
-        isSelected={isSelected}
-        onChange={setIsSelected}
-      >
+      <Checkbox id="email-notifications" isSelected={isSelected} onChange={setIsSelected}>
         <Checkbox.Content>
           <Checkbox.Control>
             <Checkbox.Indicator />
@@ -22,10 +18,7 @@ export function Controlled() {
         </Checkbox.Content>
       </Checkbox>
       <p className="text-muted text-sm">
-        Status:{" "}
-        <span className="font-medium">
-          {isSelected ? "Enabled" : "Disabled"}
-        </span>
+        Status: <span className="font-medium">{isSelected ? "Enabled" : "Disabled"}</span>
       </p>
     </div>
   );

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { useState } from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { EmojiReactionButton } from "./index";
 
@@ -46,9 +46,7 @@ export const Default: Story = {
           >
             <EmojiReactionButton.Emoji>{emoji}</EmojiReactionButton.Emoji>
             {item.count > 0 ? (
-              <EmojiReactionButton.Count>
-                {item.count}
-              </EmojiReactionButton.Count>
+              <EmojiReactionButton.Count>{item.count}</EmojiReactionButton.Count>
             ) : null}
           </EmojiReactionButton>
         ))}

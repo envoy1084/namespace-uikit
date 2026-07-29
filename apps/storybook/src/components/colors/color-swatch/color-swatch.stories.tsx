@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta } from "@storybook/react";
 
 import type { ColorSwatchProps } from "./index";
 import { ColorSwatch } from "./index";
@@ -75,31 +75,11 @@ const TransparencyTemplate = (_props: ColorSwatchProps) => (
 
 const WithColorNameTemplate = (_props: ColorSwatchProps) => (
   <div className="flex items-center gap-3">
-    <ColorSwatch
-      aria-label="Primary color"
-      color="#0485F7"
-      colorName="Primary blue"
-    />
-    <ColorSwatch
-      aria-label="Danger color"
-      color="#EF4444"
-      colorName="Danger red"
-    />
-    <ColorSwatch
-      aria-label="Warning color"
-      color="#F59E0B"
-      colorName="Warning amber"
-    />
-    <ColorSwatch
-      aria-label="Success color"
-      color="#10B981"
-      colorName="Success green"
-    />
-    <ColorSwatch
-      aria-label="Accent color"
-      color="#D946EF"
-      colorName="Accent fuchsia"
-    />
+    <ColorSwatch aria-label="Primary color" color="#0485F7" colorName="Primary blue" />
+    <ColorSwatch aria-label="Danger color" color="#EF4444" colorName="Danger red" />
+    <ColorSwatch aria-label="Warning color" color="#F59E0B" colorName="Warning amber" />
+    <ColorSwatch aria-label="Success color" color="#10B981" colorName="Success green" />
+    <ColorSwatch aria-label="Accent color" color="#D946EF" colorName="Accent fuchsia" />
   </div>
 );
 
@@ -171,20 +151,13 @@ const AllVariantsTemplate = (_props: ColorSwatchProps) => {
     <div className="flex flex-col gap-6">
       {shapes.map((shape) => (
         <div key={shape} className="flex flex-col gap-3">
-          <h3 className="text-muted text-sm font-semibold capitalize">
-            {shape}
-          </h3>
+          <h3 className="text-muted text-sm font-semibold capitalize">{shape}</h3>
           <div className="flex flex-col gap-3">
             {sizes.map((size) => (
               <div key={size} className="flex items-center gap-3">
                 <div className="text-muted w-12 text-sm">{size}</div>
                 {colors.map((color) => (
-                  <ColorSwatch
-                    key={color}
-                    color={color}
-                    shape={shape}
-                    size={size}
-                  />
+                  <ColorSwatch key={color} color={color} shape={shape} size={size} />
                 ))}
               </div>
             ))}

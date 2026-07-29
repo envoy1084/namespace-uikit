@@ -18,9 +18,7 @@ export function MultipleMonths() {
           </RangeCalendar.Header>
           <RangeCalendar.Grid>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}
@@ -30,17 +28,12 @@ export function MultipleMonths() {
         <div className="w-64">
           <RangeCalendar.Header>
             <div className="size-6" />
-            <RangeCalendar.Heading
-              className="flex-none"
-              offset={{ months: 1 }}
-            />
+            <RangeCalendar.Heading className="flex-none" offset={{ months: 1 }} />
             <RangeCalendar.NavButton slot="next" />
           </RangeCalendar.Header>
           <RangeCalendar.Grid offset={{ months: 1 }}>
             <RangeCalendar.GridHeader>
-              {(day) => (
-                <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>
-              )}
+              {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
             </RangeCalendar.GridHeader>
             <RangeCalendar.GridBody>
               {(date) => <RangeCalendar.Cell date={date} />}

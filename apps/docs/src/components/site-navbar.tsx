@@ -1,15 +1,13 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
+
+import { usePathname, useRouter } from "next/navigation";
 
 import { Navbar, type NavbarPosition } from "@thenamespace/uikit";
 import LinkRoot from "fumadocs-core/link";
 
-import {
-  LargeSearchToggle,
-  SearchToggle,
-} from "@/components/fumadocs/ui/search-toggle";
+import { LargeSearchToggle, SearchToggle } from "@/components/fumadocs/ui/search-toggle";
 import { ThemeToggle } from "@/components/fumadocs/ui/theme-toggle";
 import { GitHubLink } from "@/components/github-link";
 import { NamespaceLogo } from "@/components/namespace-logo";
@@ -35,11 +33,7 @@ export interface SiteNavbarProps {
   position?: NavbarPosition;
 }
 
-export function SiteNavbar({
-  className,
-  mobileAction,
-  position = "sticky",
-}: SiteNavbarProps) {
+export function SiteNavbar({ className, mobileAction, position = "sticky" }: SiteNavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -78,18 +72,12 @@ export function SiteNavbar({
         <Navbar.Spacer />
 
         <Navbar.Content>
-          <LargeSearchToggle
-            hideIfDisabled
-            className="hidden w-64 lg:inline-flex"
-          />
+          <LargeSearchToggle hideIfDisabled className="hidden w-64 lg:inline-flex" />
           <SearchToggle hideIfDisabled className="lg:hidden" />
           <div className="hidden sm:block">
             <GitHubLink />
           </div>
-          <ThemeToggle
-            className="hidden sm:inline-flex"
-            mode="light-dark-system"
-          />
+          <ThemeToggle className="hidden sm:inline-flex" mode="light-dark-system" />
           {mobileAction}
           <Navbar.MenuToggle className="md:hidden" />
         </Navbar.Content>

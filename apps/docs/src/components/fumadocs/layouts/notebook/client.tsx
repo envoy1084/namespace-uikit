@@ -1,43 +1,19 @@
 // oxlint-disable eslint/no-shadow, jsdoc/check-tag-names, unicorn/consistent-function-scoping
 "use client";
 
-import type { SidebarTabWithProps } from "fumadocs-ui/components/sidebar/tabs/dropdown";
-
-import type {
-  LinkItemType,
-  MenuItemType,
-} from "@/components/fumadocs/ui/link-item";
-
-import type {
-  ComponentProps,
-  HTMLAttributes,
-  PointerEvent,
-  ReactNode,
-} from "react";
-import {
-  Fragment,
-  createContext,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import type { ComponentProps, HTMLAttributes, PointerEvent, ReactNode } from "react";
+import { Fragment, createContext, useContext, useMemo, useRef, useState } from "react";
 
 import { ArrowDown01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { usePathname } from "fumadocs-core/framework";
 import Link from "fumadocs-core/link";
 import { useSidebar } from "fumadocs-ui/components/sidebar/base";
-import {
-  SidebarTabsDropdown,
-  isTabActive,
-} from "fumadocs-ui/components/sidebar/tabs/dropdown";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "fumadocs-ui/components/ui/popover";
+import type { SidebarTabWithProps } from "fumadocs-ui/components/sidebar/tabs/dropdown";
+import { SidebarTabsDropdown, isTabActive } from "fumadocs-ui/components/sidebar/tabs/dropdown";
+import { Popover, PopoverContent, PopoverTrigger } from "fumadocs-ui/components/ui/popover";
 import { useIsScrollTop } from "fumadocs-ui/utils/use-is-scroll-top";
 
+import type { LinkItemType, MenuItemType } from "@/components/fumadocs/ui/link-item";
 import { LinkItem } from "@/components/fumadocs/ui/link-item";
 import { cn } from "@/utils/cn";
 
@@ -62,10 +38,8 @@ export function LayoutContextProvider({
   navTransparentMode?: "always" | "top" | "none";
   children: ReactNode;
 }) {
-  const isTop =
-    useIsScrollTop({ enabled: navTransparentMode === "top" }) ?? true;
-  const isNavTransparent =
-    navTransparentMode === "top" ? isTop : navTransparentMode === "always";
+  const isTop = useIsScrollTop({ enabled: navTransparentMode === "top" }) ?? true;
+  const isNavTransparent = navTransparentMode === "top" ? isTop : navTransparentMode === "always";
 
   return (
     <LayoutContext
@@ -95,12 +69,7 @@ export function LayoutHeader(props: ComponentProps<"header">) {
   );
 }
 
-export function LayoutBody({
-  children,
-  className,
-  style,
-  ...props
-}: ComponentProps<"div">) {
+export function LayoutBody({ children, className, style, ...props }: ComponentProps<"div">) {
   const context = useContext(LayoutContext);
   const navMode = context?.navMode ?? "auto";
   const { collapsed } = useSidebar();
@@ -118,10 +87,8 @@ export function LayoutBody({
       style={
         {
           "--fd-docs-row-1": "var(--fd-banner-height, 0px)",
-          "--fd-docs-row-2":
-            "calc(var(--fd-docs-row-1) + var(--fd-header-height))",
-          "--fd-docs-row-3":
-            "calc(var(--fd-docs-row-2) + var(--fd-toc-popover-height))",
+          "--fd-docs-row-2": "calc(var(--fd-docs-row-1) + var(--fd-header-height))",
+          "--fd-docs-row-3": "calc(var(--fd-docs-row-2) + var(--fd-toc-popover-height))",
           "--fd-sidebar-col": collapsed ? "0px" : "var(--fd-sidebar-width)",
           gridTemplate:
             navMode === "top"
@@ -163,9 +130,7 @@ function getDocsFrameworkPrefix(pathname: string): string[] | null {
 }
 
 function prefixesEqual(a: string[], b: string[]): boolean {
-  return (
-    a.length === b.length && a.every((segment, index) => segment === b[index])
-  );
+  return a.length === b.length && a.every((segment, index) => segment === b[index]);
 }
 
 /**
@@ -245,20 +210,13 @@ export function LayoutHeaderTabs({
   }, [options, pathname, filterByPathname]);
 
   const selectedIdx = useMemo(() => {
-    return filteredOptions?.findLastIndex((option) =>
-      isTabActive(option, pathname),
-    );
+    return filteredOptions?.findLastIndex((option) => isTabActive(option, pathname));
   }, [filteredOptions, pathname]);
 
   return (
     <div className={cn("flex flex-row items-end gap-6", className)} {...props}>
       {filteredOptions?.map((option, i) => {
-        const {
-          props: { className, ...rest } = {},
-          title,
-          unlisted,
-          url,
-        } = option;
+        const { props: { className, ...rest } = {}, title, unlisted, url } = option;
         const isSelected = selectedIdx === i;
 
         return (
@@ -345,8 +303,7 @@ function NavbarLinkItemMenu({
     <Popover
       open={open}
       onOpenChange={(value) => {
-        if (freezeUntil.current === null || Date.now() >= freezeUntil.current)
-          setOpen(value);
+        if (freezeUntil.current === null || Date.now() >= freezeUntil.current) setOpen(value);
       }}
     >
       <PopoverTrigger
@@ -358,11 +315,7 @@ function NavbarLinkItemMenu({
         onPointerLeave={onPointerLeave}
         {...props}
       >
-        {item.url ? (
-          <LinkItem item={item as { url: string }}>{item.text}</LinkItem>
-        ) : (
-          item.text
-        )}
+        {item.url ? <LinkItem item={item as { url: string }}>{item.text}</LinkItem> : item.text}
         <HugeiconsIcon icon={ArrowDown01Icon} className="size-3" />
       </PopoverTrigger>
       <PopoverContent
@@ -371,8 +324,7 @@ function NavbarLinkItemMenu({
         onPointerLeave={onPointerLeave}
       >
         {item.items.map((child, i) => {
-          if (child.type === "custom")
-            return <Fragment key={i}>{child.children}</Fragment>;
+          if (child.type === "custom") return <Fragment key={i}>{child.children}</Fragment>;
 
           return (
             <LinkItem

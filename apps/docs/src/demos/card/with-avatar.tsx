@@ -36,10 +36,7 @@ export function WithAvatar() {
         </Card.Header>
         <Card.Footer className="flex gap-2">
           <Avatar aria-label="John's profile picture" className="size-5">
-            <Avatar.Image
-              alt="John's avatar - blue themed"
-              src="/assets/avatars/blue.jpg"
-            />
+            <Avatar.Image alt="John's avatar - blue themed" src="/assets/avatars/blue.jpg" />
             <Avatar.Fallback className="text-xs">B</Avatar.Fallback>
           </Avatar>
           <span className="text-xs">By John</span>

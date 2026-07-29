@@ -1,10 +1,7 @@
 "use client";
 
 import { AlertDialog, Button } from "@thenamespace/uikit";
-import {
-  InformationCircleIcon,
-  HugeiconsIcon,
-} from "@thenamespace/uikit/icons";
+import { InformationCircleIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function DismissBehavior() {
   return (
@@ -12,10 +9,9 @@ export function DismissBehavior() {
       <div className="flex flex-col gap-2">
         <h3 className="text-lg font-semibold">isDismissable</h3>
         <p className="text-muted text-sm">
-          Controls whether the alert dialog can be dismissed by clicking the
-          overlay backdrop. Alert dialogs typically require explicit action, so
-          this defaults to <code>false</code>. Set to <code>true</code> for less
-          critical confirmations.
+          Controls whether the alert dialog can be dismissed by clicking the overlay backdrop. Alert
+          dialogs typically require explicit action, so this defaults to <code>false</code>. Set to{" "}
+          <code>true</code> for less critical confirmations.
         </p>
         <AlertDialog>
           <Button variant="secondary">Open Alert Dialog</Button>
@@ -25,22 +21,17 @@ export function DismissBehavior() {
                 <AlertDialog.CloseTrigger />
                 <AlertDialog.Header>
                   <AlertDialog.Icon status="danger">
-                    <HugeiconsIcon
-                      icon={InformationCircleIcon}
-                      className="size-5"
-                    />
+                    <HugeiconsIcon icon={InformationCircleIcon} className="size-5" />
                   </AlertDialog.Icon>
-                  <AlertDialog.Heading>
-                    isDismissable = false
-                  </AlertDialog.Heading>
+                  <AlertDialog.Heading>isDismissable = false</AlertDialog.Heading>
                   <p className="text-muted text-sm leading-5">
                     Clicking the backdrop won't close this alert dialog
                   </p>
                 </AlertDialog.Header>
                 <AlertDialog.Body>
                   <p>
-                    Try clicking outside this alert dialog on the overlay - it
-                    won't close. You must use the action buttons to dismiss it.
+                    Try clicking outside this alert dialog on the overlay - it won't close. You must
+                    use the action buttons to dismiss it.
                   </p>
                 </AlertDialog.Body>
                 <AlertDialog.Footer>
@@ -58,10 +49,9 @@ export function DismissBehavior() {
       <div className="flex flex-col gap-2">
         <h3 className="text-lg font-semibold">isKeyboardDismissDisabled</h3>
         <p className="text-muted text-sm">
-          Controls whether the ESC key can dismiss the alert dialog. Alert
-          dialogs typically require explicit action, so this defaults to{" "}
-          <code>true</code>. When set to <code>false</code>, the ESC key will be
-          enabled.
+          Controls whether the ESC key can dismiss the alert dialog. Alert dialogs typically require
+          explicit action, so this defaults to <code>true</code>. When set to <code>false</code>,
+          the ESC key will be enabled.
         </p>
         <AlertDialog>
           <Button variant="secondary">Open Alert Dialog</Button>
@@ -71,22 +61,15 @@ export function DismissBehavior() {
                 <AlertDialog.CloseTrigger />
                 <AlertDialog.Header>
                   <AlertDialog.Icon status="accent">
-                    <HugeiconsIcon
-                      icon={InformationCircleIcon}
-                      className="size-5"
-                    />
+                    <HugeiconsIcon icon={InformationCircleIcon} className="size-5" />
                   </AlertDialog.Icon>
-                  <AlertDialog.Heading>
-                    isKeyboardDismissDisabled = true
-                  </AlertDialog.Heading>
-                  <p className="text-muted text-sm leading-5">
-                    ESC key is disabled
-                  </p>
+                  <AlertDialog.Heading>isKeyboardDismissDisabled = true</AlertDialog.Heading>
+                  <p className="text-muted text-sm leading-5">ESC key is disabled</p>
                 </AlertDialog.Header>
                 <AlertDialog.Body>
                   <p>
-                    Press ESC - nothing happens. You must use the action buttons
-                    to dismiss this alert dialog.
+                    Press ESC - nothing happens. You must use the action buttons to dismiss this
+                    alert dialog.
                   </p>
                 </AlertDialog.Body>
                 <AlertDialog.Footer>

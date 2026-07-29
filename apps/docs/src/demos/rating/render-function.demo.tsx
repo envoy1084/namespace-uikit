@@ -18,9 +18,7 @@ export const DemoRenderFunctionExample = function Demo() {
               <span
                 className="flex size-5"
                 style={{
-                  color: isActive
-                    ? "var(--color-warning)"
-                    : "var(--color-muted)",
+                  color: isActive ? "var(--color-warning)" : "var(--color-muted)",
                 }}
               >
                 {isActive ? <StarIcon /> : <Icon icon="solar:star-linear" />}
@@ -30,9 +28,7 @@ export const DemoRenderFunctionExample = function Demo() {
         ))}
       </Rating>
       <span className="text-muted text-sm">
-        {value === 0
-          ? "No rating"
-          : `${value} ${value === 1 ? "star" : "stars"}`}
+        {value === 0 ? "No rating" : `${value} ${value === 1 ? "star" : "stars"}`}
       </span>
     </div>
   );

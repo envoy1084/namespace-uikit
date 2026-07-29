@@ -48,10 +48,7 @@ export function SegmentRoot({
   const context = useMemo(
     () => ({
       indicatorClass:
-        cn(
-          "segment__indicator",
-          variant === "ghost" && "segment__indicator--ghost",
-        ) ?? "",
+        cn("segment__indicator", variant === "ghost" && "segment__indicator--ghost") ?? "",
       itemClass:
         cn(
           "segment__item",
@@ -73,19 +70,13 @@ export function SegmentRoot({
     <Context value={context}>
       <ToggleButtonGroup
         {...props}
-        {...(defaultSelectedKey != null
-          ? { defaultSelectedKeys: [defaultSelectedKey] }
-          : {})}
+        {...(defaultSelectedKey != null ? { defaultSelectedKeys: [defaultSelectedKey] } : {})}
         {...(isDisabled != null ? { isDisabled } : {})}
         {...(selectedKey != null ? { selectedKeys: [selectedKey] } : {})}
         disallowEmptySelection
         className={
-          cn(
-            "segment",
-            `segment--${size}`,
-            variant === "ghost" && "segment--ghost",
-            className,
-          ) ?? ""
+          cn("segment", `segment--${size}`, variant === "ghost" && "segment--ghost", className) ??
+          ""
         }
         data-slot="segment"
         orientation="horizontal"
@@ -98,16 +89,10 @@ export function SegmentRoot({
   );
 }
 
-export interface SegmentItemProps extends ComponentPropsWithRef<
-  typeof ToggleButton
-> {
+export interface SegmentItemProps extends ComponentPropsWithRef<typeof ToggleButton> {
   className?: string;
 }
-export function SegmentItem({
-  children,
-  className,
-  ...props
-}: SegmentItemProps): ReactElement {
+export function SegmentItem({ children, className, ...props }: SegmentItemProps): ReactElement {
   const context = useContext(Context);
   return (
     <ToggleButton
@@ -117,10 +102,7 @@ export function SegmentItem({
     >
       {(renderProps) => (
         <>
-          <SelectionIndicator
-            className={context.indicatorClass}
-            data-slot="segment-indicator"
-          />
+          <SelectionIndicator className={context.indicatorClass} data-slot="segment-indicator" />
           {typeof children === "function" ? children(renderProps) : children}
         </>
       )}
@@ -129,10 +111,7 @@ export function SegmentItem({
 }
 
 export type SegmentSeparatorProps = ComponentPropsWithRef<"span">;
-export function SegmentSeparator({
-  className,
-  ...props
-}: SegmentSeparatorProps): ReactElement {
+export function SegmentSeparator({ className, ...props }: SegmentSeparatorProps): ReactElement {
   return (
     <span
       {...props}

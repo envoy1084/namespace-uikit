@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import type { Placement } from "react-aria-components";
-
 import { useState } from "react";
 
+import type { Meta, StoryObj } from "@storybook/react";
 import { ArrowRight01Icon, Building03Icon } from "@thenamespace/uikit/icons";
 import { HugeiconsIcon } from "@thenamespace/uikit/icons";
+import type { Placement } from "react-aria-components";
 
 import { ListBox } from "@/components/collections/list-box";
 
@@ -89,12 +88,7 @@ export const CustomIndicator: Story = {
         <InlineSelect.Trigger>
           <InlineSelect.Value />
           <InlineSelect.Indicator>
-            <HugeiconsIcon
-              aria-hidden
-              icon={ArrowRight01Icon}
-              size={12}
-              strokeWidth={2}
-            />
+            <HugeiconsIcon aria-hidden icon={ArrowRight01Icon} size={12} strokeWidth={2} />
           </InlineSelect.Indicator>
         </InlineSelect.Trigger>
         <InlineSelect.Popover className="w-[124px]">
@@ -130,9 +124,7 @@ const teams = [
 
 function TeamIcon({ color, letter }: { color: string; letter: string }) {
   return (
-    <div
-      className={`${color} flex size-5 shrink-0 items-center justify-center rounded`}
-    >
+    <div className={`${color} flex size-5 shrink-0 items-center justify-center rounded`}>
       <span className="text-[10px] font-bold text-white">{letter}</span>
     </div>
   );
@@ -201,14 +193,8 @@ export const Placements: Story = {
           <InlineSelect.Popover placement={value}>
             <ListBox>
               {placements.map((placement) => (
-                <ListBox.Item
-                  id={placement}
-                  key={placement}
-                  textValue={placement}
-                >
-                  {placement === "bottom end"
-                    ? "bottom end (default)"
-                    : placement}
+                <ListBox.Item id={placement} key={placement} textValue={placement}>
+                  {placement === "bottom end" ? "bottom end (default)" : placement}
                   <ListBox.ItemIndicator />
                 </ListBox.Item>
               ))}

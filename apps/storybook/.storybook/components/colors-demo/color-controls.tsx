@@ -42,10 +42,7 @@ function HueSlider({ chroma, className, onChange, value }: HueSliderProps) {
     (clientX: number) => {
       if (!trackRef.current) return value;
       const rect = trackRef.current.getBoundingClientRect();
-      const percentage = Math.max(
-        0,
-        Math.min(1, (clientX - rect.left) / rect.width),
-      );
+      const percentage = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
 
       return Math.round(percentage * 360);
     },
@@ -165,10 +162,7 @@ function ChromaSlider({ className, hue, onChange, value }: ChromaSliderProps) {
     (clientX: number) => {
       if (!trackRef.current) return value;
       const rect = trackRef.current.getBoundingClientRect();
-      const percentage = Math.max(
-        0,
-        Math.min(1, (clientX - rect.left) / rect.width),
-      );
+      const percentage = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
 
       // Round to 4 decimal places for finer control with smaller max
       return Math.round(percentage * MAX_CHROMA * 10000) / 10000;
@@ -282,9 +276,7 @@ export function ColorControls({
     <div className="flex items-center justify-start gap-8 p-4">
       {/* Base Tone Slider */}
       <div className="flex items-center gap-3">
-        <Label className="text-foreground text-sm font-medium whitespace-nowrap">
-          Base tone
-        </Label>
+        <Label className="text-foreground text-sm font-medium whitespace-nowrap">Base tone</Label>
         <HueSlider
           chroma={grayChroma}
           className="w-[240px]"

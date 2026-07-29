@@ -25,15 +25,10 @@ function StepperContent({
 
 export const DemoWithLabelExample = () => (
   <div className="flex flex-col items-center gap-3">
-    <p className="text-muted text-sm">
-      With Label and Description using OSS form primitives.
-    </p>
+    <p className="text-muted text-sm">With Label and Description using OSS form primitives.</p>
     <NumberStepper defaultValue={1} maxValue={10} minValue={1}>
       <Label>Guests</Label>
-      <StepperContent
-        decrementLabel="Decrease Guests"
-        incrementLabel="Increase Guests"
-      />
+      <StepperContent decrementLabel="Decrease Guests" incrementLabel="Increase Guests" />
       <Description>Maximum 10 guests per reservation</Description>
     </NumberStepper>
   </div>

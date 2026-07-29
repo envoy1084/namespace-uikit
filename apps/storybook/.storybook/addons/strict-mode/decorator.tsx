@@ -1,7 +1,6 @@
-import type { Decorator } from "@storybook/react";
-
 import React, { StrictMode } from "react";
 
+import type { Decorator } from "@storybook/react";
 import { useGlobals } from "storybook/preview-api";
 
 import { STRICT_MODE_GLOBAL_TYPE_ID } from "./constants";

@@ -8,9 +8,7 @@ export function WithSuffixIcon() {
     <TimeField className="w-[256px]" name="time">
       <Label>Time</Label>
       <TimeField.Group>
-        <TimeField.Input>
-          {(segment) => <TimeField.Segment segment={segment} />}
-        </TimeField.Input>
+        <TimeField.Input>{(segment) => <TimeField.Segment segment={segment} />}</TimeField.Input>
         <TimeField.Suffix>
           <HugeiconsIcon icon={Clock01Icon} className="text-muted size-4" />
         </TimeField.Suffix>

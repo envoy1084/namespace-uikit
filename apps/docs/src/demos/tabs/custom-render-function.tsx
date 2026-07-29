@@ -6,10 +6,7 @@ import { Tabs } from "@thenamespace/uikit";
 
 export function CustomRenderFunction() {
   return (
-    <Tabs
-      className="w-full max-w-md"
-      render={(props) => <div {...props} data-custom="foo" />}
-    >
+    <Tabs className="w-full max-w-md" render={(props) => <div {...props} data-custom="foo" />}>
       <Tabs.ListContainer>
         <Tabs.List aria-label="Options">
           <Tabs.Tab
@@ -28,11 +25,7 @@ export function CustomRenderFunction() {
             Components
             <Tabs.Indicator />
           </Tabs.Tab>
-          <Tabs.Tab
-            href="/themes"
-            id="themes"
-            render={(domProps: any) => <Link {...domProps} />}
-          >
+          <Tabs.Tab href="/themes" id="themes" render={(domProps: any) => <Link {...domProps} />}>
             Themes
             <Tabs.Indicator />
           </Tabs.Tab>

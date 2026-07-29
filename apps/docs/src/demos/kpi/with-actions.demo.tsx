@@ -34,19 +34,13 @@ export const DemoWithActionsExample = () => (
         <KPI.Content>
           <KPI.Value
             maximumFractionDigits={1}
-            {...(card.title !== "Load Time"
-              ? { style: "percent" as const }
-              : {})}
+            {...(card.title !== "Load Time" ? { style: "percent" as const } : {})}
             value={card.value}
           >
-            {card.title === "Load Time" ? (
-              <NumberValue.Suffix>ms</NumberValue.Suffix>
-            ) : undefined}
+            {card.title === "Load Time" ? <NumberValue.Suffix>ms</NumberValue.Suffix> : undefined}
           </KPI.Value>
           {card.trend ? (
-            <KPI.Trend trend={card.status === "danger" ? "down" : "up"}>
-              {card.trend}
-            </KPI.Trend>
+            <KPI.Trend trend={card.status === "danger" ? "down" : "up"}>{card.trend}</KPI.Trend>
           ) : (
             <KPI.Progress status="warning" value={56} />
           )}

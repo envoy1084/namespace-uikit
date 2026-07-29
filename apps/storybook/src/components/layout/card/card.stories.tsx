@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import React from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@/components/buttons/button";
 import { CloseButton } from "@/components/buttons/close-button";
@@ -56,8 +56,8 @@ export const Default: Story = {
       <Card.Header>
         <Card.Title>Become an Acme Creator!</Card.Title>
         <Card.Description>
-          Visit the Acme Creator Hub to sign up today and start earning credits
-          from your fans and followers.
+          Visit the Acme Creator Hub to sign up today and start earning credits from your fans and
+          followers.
         </Card.Description>
       </Card.Header>
       <Card.Footer>
@@ -81,9 +81,7 @@ export const Variants: Story = {
       <Card className="w-[320px]" variant="transparent">
         <Card.Header>
           <Card.Title>Transparent</Card.Title>
-          <Card.Description>
-            Minimal prominence with transparent background
-          </Card.Description>
+          <Card.Description>Minimal prominence with transparent background</Card.Description>
         </Card.Header>
         <Card.Content>
           <p>Use for less important content or nested cards</p>
@@ -93,9 +91,7 @@ export const Variants: Story = {
       <Card className="w-[320px]" variant="default">
         <Card.Header>
           <Card.Title>Default</Card.Title>
-          <Card.Description>
-            Standard card appearance (bg-surface)
-          </Card.Description>
+          <Card.Description>Standard card appearance (bg-surface)</Card.Description>
         </Card.Header>
         <Card.Content>
           <p>The default card variant for most use cases</p>
@@ -105,9 +101,7 @@ export const Variants: Story = {
       <Card className="w-[320px]" variant="secondary">
         <Card.Header>
           <Card.Title>Secondary</Card.Title>
-          <Card.Description>
-            Medium prominence (bg-surface-secondary)
-          </Card.Description>
+          <Card.Description>Medium prominence (bg-surface-secondary)</Card.Description>
         </Card.Header>
         <Card.Content>
           <p>Use to draw moderate attention</p>
@@ -117,9 +111,7 @@ export const Variants: Story = {
       <Card className="w-[320px]" variant="tertiary">
         <Card.Header>
           <Card.Title>Tertiary</Card.Title>
-          <Card.Description>
-            Higher prominence (bg-surface-tertiary)
-          </Card.Description>
+          <Card.Description>Higher prominence (bg-surface-tertiary)</Card.Description>
         </Card.Header>
         <Card.Content>
           <p>Use for primary or featured content</p>
@@ -142,9 +134,8 @@ export const Horizontal: Story = {
         <Card.Header className="gap-1">
           <Card.Title>Get the new Porsche 911 golden edition</Card.Title>
           <Card.Description>
-            Experience unmatched luxury and performance with the Porsche 911
-            Golden Edition—where sleek design meets cutting-edge tech and pure
-            driving thrill.
+            Experience unmatched luxury and performance with the Porsche 911 Golden Edition—where
+            sleek design meets cutting-edge tech and pure driving thrill.
           </Card.Description>
         </Card.Header>
         <Card.Footer className="mt-auto flex w-full flex-row items-center justify-between">
@@ -155,10 +146,7 @@ export const Horizontal: Story = {
             >
               $36,799
             </span>
-            <span
-              aria-label="Available stock: 11 units"
-              className="text-muted text-xs"
-            >
+            <span aria-label="Available stock: 11 units" className="text-muted text-xs">
               11 available
             </span>
           </div>
@@ -205,10 +193,7 @@ export const WithAvatar: Story = {
         </Card.Header>
         <Card.Footer className="flex gap-2">
           <Avatar aria-label="John's profile picture" className="size-5">
-            <Avatar.Image
-              alt="John's avatar - blue themed"
-              src="/assets/avatars/blue.jpg"
-            />
+            <Avatar.Image alt="John's avatar - blue themed" src="/assets/avatars/blue.jpg" />
             <Avatar.Fallback className="text-xs">B</Avatar.Fallback>
           </Avatar>
           <span className="text-xs">By John</span>
@@ -226,10 +211,7 @@ export const WithImages: Story = {
     <div className="flex w-full items-center justify-center">
       <div className="grid w-full max-w-2xl grid-cols-12 gap-4 p-4">
         {/* Row 1: Large Product Card - Available Soon */}
-        <Card
-          className="col-span-12 flex h-auto min-h-[152px] flex-col sm:flex-row"
-          {...args}
-        >
+        <Card className="col-span-12 flex h-auto min-h-[152px] flex-col sm:flex-row" {...args}>
           <div className="relative h-[140px] w-full shrink-0 overflow-hidden rounded-2xl sm:h-[120px] sm:w-[120px]">
             <img
               alt="Cherries"
@@ -242,22 +224,15 @@ export const WithImages: Story = {
             <Card.Header className="gap-1">
               <Card.Title className="pr-8">Become an ACME Creator!</Card.Title>
               <Card.Description>
-                Lorem ipsum dolor sit amet consectetur. Sed arcu donec id
-                aliquam dolor sed amet faucibus etiam.
+                Lorem ipsum dolor sit amet consectetur. Sed arcu donec id aliquam dolor sed amet
+                faucibus etiam.
               </Card.Description>
-              <CloseButton
-                aria-label="Close banner"
-                className="absolute top-3 right-3"
-              />
+              <CloseButton aria-label="Close banner" className="absolute top-3 right-3" />
             </Card.Header>
             <Card.Footer className="mt-auto flex w-full flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex flex-col">
-                <span className="text-foreground text-sm font-medium">
-                  Only 10 spots
-                </span>
-                <span className="text-muted text-xs">
-                  Submission ends Oct 10.
-                </span>
+                <span className="text-foreground text-sm font-medium">Only 10 spots</span>
+                <span className="text-muted text-xs">Submission ends Oct 10.</span>
               </div>
               <Button className="w-full sm:w-auto">Apply Now</Button>
             </Card.Footer>
@@ -281,9 +256,7 @@ export const WithImages: Story = {
                   role="img"
                 />
                 <div className="flex flex-col gap-1">
-                  <span className="text-muted text-xs font-medium uppercase">
-                    PAYMENT
-                  </span>
+                  <span className="text-muted text-xs font-medium uppercase">PAYMENT</span>
                   <Card.Title className="pr-8 text-sm sm:text-base">
                     You can now withdraw on crypto
                   </Card.Title>
@@ -293,11 +266,7 @@ export const WithImages: Story = {
                 </div>
               </Card.Header>
               <Card.Footer>
-                <Link
-                  aria-label="Go to settings"
-                  href="#"
-                  rel="noopener noreferrer"
-                >
+                <Link aria-label="Go to settings" href="#" rel="noopener noreferrer">
                   Go to settings
                   <Link.Icon aria-hidden="true" />
                 </Link>
@@ -348,10 +317,7 @@ export const WithImages: Story = {
             </div>
           </div>
           {/* Right Column */}
-          <Card
-            className="col-span-12 min-h-[200px] rounded-3xl lg:col-span-6"
-            {...args}
-          >
+          <Card className="col-span-12 min-h-[200px] rounded-3xl lg:col-span-6" {...args}>
             {/* Background image */}
             <img
               alt="NEO Home Robot"
@@ -378,8 +344,7 @@ export const WithImages: Story = {
               <div
                 className="absolute inset-0 h-[100%] rounded-b-[inherit] backdrop-blur-sm"
                 style={{
-                  WebkitMaskImage:
-                    "linear-gradient(to top, black 30%, transparent)",
+                  WebkitMaskImage: "linear-gradient(to top, black 30%, transparent)",
                   maskImage: "linear-gradient(to top, black 30%, transparent)",
                   maskRepeat: "no-repeat",
                   maskSize: "100% 100%",
@@ -389,16 +354,10 @@ export const WithImages: Story = {
             {/* Footer */}
             <Card.Footer className="z-10 mt-auto flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-black">
-                  Available soon
-                </div>
+                <div className="text-sm font-medium text-black">Available soon</div>
                 <div className="text-xs text-black/60">Get notified</div>
               </div>
-              <Button
-                className="bg-white text-black"
-                size="sm"
-                variant="tertiary"
-              >
+              <Button className="bg-white text-black" size="sm" variant="tertiary">
                 Notify me
               </Button>
             </Card.Footer>
@@ -427,8 +386,7 @@ export const WithImages: Story = {
               <div
                 className="absolute inset-0 h-[100%] rounded-b-[inherit] backdrop-blur-sm"
                 style={{
-                  WebkitMaskImage:
-                    "linear-gradient(to top, black 30%, transparent)",
+                  WebkitMaskImage: "linear-gradient(to top, black 30%, transparent)",
                   maskImage: "linear-gradient(to top, black 30%, transparent)",
                   maskRepeat: "no-repeat",
                   maskSize: "100% 100%",
@@ -437,18 +395,10 @@ export const WithImages: Story = {
             </div>
             <Card.Footer className="z-10 mt-auto flex items-end justify-between">
               <div>
-                <div className="text-base font-medium text-black sm:text-lg">
-                  NEO
-                </div>
-                <div className="text-xs font-medium text-black/50 sm:text-sm">
-                  $499/m
-                </div>
+                <div className="text-base font-medium text-black sm:text-lg">NEO</div>
+                <div className="text-xs font-medium text-black/50 sm:text-sm">$499/m</div>
               </div>
-              <Button
-                className="bg-white text-black"
-                size="sm"
-                variant="tertiary"
-              >
+              <Button className="bg-white text-black" size="sm" variant="tertiary">
                 Get now
               </Button>
             </Card.Footer>
@@ -466,9 +416,7 @@ export const WithImages: Story = {
               />
               <div className="flex flex-1 flex-col justify-center gap-1">
                 <Card.Title className="text-sm">Bridging the Future</Card.Title>
-                <Card.Description className="text-xs">
-                  Today, 6:30 PM
-                </Card.Description>
+                <Card.Description className="text-xs">Today, 6:30 PM</Card.Description>
               </div>
             </Card>
             {/* 2 */}
@@ -481,9 +429,7 @@ export const WithImages: Story = {
               />
               <div className="flex flex-1 flex-col justify-center gap-1">
                 <Card.Title className="text-sm">Avocado Hackathon</Card.Title>
-                <Card.Description className="text-xs">
-                  Wed, 4:30 PM
-                </Card.Description>
+                <Card.Description className="text-xs">Wed, 4:30 PM</Card.Description>
               </div>
             </Card>
             {/* 3 */}
@@ -495,12 +441,8 @@ export const WithImages: Story = {
                 src="/assets/docs/oranges.jpeg"
               />
               <div className="flex flex-1 flex-col justify-center gap-1">
-                <Card.Title className="text-sm">
-                  Sound Electro | Beyond art
-                </Card.Title>
-                <Card.Description className="text-xs">
-                  Fri, 8:00 PM
-                </Card.Description>
+                <Card.Title className="text-sm">Sound Electro | Beyond art</Card.Title>
+                <Card.Description className="text-xs">Fri, 8:00 PM</Card.Description>
               </div>
             </Card>
           </div>
@@ -516,9 +458,7 @@ export const WithForm: Story = {
       <Card className="w-full max-w-md" {...args}>
         <Card.Header>
           <Card.Title>Login</Card.Title>
-          <Card.Description>
-            Enter your credentials to access your account
-          </Card.Description>
+          <Card.Description>Enter your credentials to access your account</Card.Description>
         </Card.Header>
         <Form onSubmit={handleCardFormSubmit}>
           <Card.Content>

@@ -4,11 +4,7 @@ import { InputGroup, Spinner, TextField } from "@thenamespace/uikit";
 
 export function WithLoadingSuffix() {
   return (
-    <TextField
-      className="w-full max-w-[280px]"
-      defaultValue="Sending..."
-      name="status"
-    >
+    <TextField className="w-full max-w-[280px]" defaultValue="Sending..." name="status">
       <InputGroup>
         <InputGroup.Input className="w-full max-w-[280px]" />
         <InputGroup.Suffix>

@@ -113,18 +113,13 @@ const fleetVehicles = [
 ];
 
 function FleetDispatchDemo() {
-  const [selected, setSelected] = useState<
-    (typeof fleetVehicles)[number] | null
-  >(fleetVehicles[0]!);
+  const [selected, setSelected] = useState<(typeof fleetVehicles)[number] | null>(
+    fleetVehicles[0]!,
+  );
   return (
     <div className="relative h-[420px] w-full overflow-hidden rounded-lg border">
       <Map center={[-122.342, 47.628]} pitch={32} styles={styles} zoom={13}>
-        <Map.Route
-          color="#4285f4"
-          coordinates={fleetRoute}
-          opacity={0.78}
-          width={4}
-        />
+        <Map.Route color="#4285f4" coordinates={fleetRoute} opacity={0.78} width={4} />
         {fleetVehicles.map((vehicle) => (
           <Map.Marker
             key={vehicle.unit}

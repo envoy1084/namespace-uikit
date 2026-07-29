@@ -8,23 +8,13 @@ import { Icon } from "@/demos/icon";
 
 const Glyph = ({ icon }: { icon: string }) => <Icon icon={icon} />;
 
-const Arrow = () => (
-  <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />
-);
+const Arrow = () => <Icon className="text-muted size-4" icon="solar:alt-arrow-right-linear" />;
 
 export const DemoPressableExample = () => (
   <div className="w-[500px] space-y-4 rounded-2xl p-6">
     {[
-      [
-        "Account settings",
-        "Manage your account preferences",
-        "solar:user-linear",
-      ],
-      [
-        "Security",
-        "Passwords and two-factor authentication",
-        "solar:key-linear",
-      ],
+      ["Account settings", "Manage your account preferences", "solar:user-linear"],
+      ["Security", "Passwords and two-factor authentication", "solar:key-linear"],
     ].map(([title, description, icon]) => (
       <ItemCard
         className="relative w-full cursor-pointer overflow-hidden"

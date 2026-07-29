@@ -2,12 +2,7 @@
 
 import React from "react";
 
-import {
-  Description,
-  FieldError,
-  Label,
-  SearchField,
-} from "@thenamespace/uikit";
+import { Description, FieldError, Label, SearchField } from "@thenamespace/uikit";
 
 export function WithValidation() {
   const [value, setValue] = React.useState("");
@@ -15,13 +10,7 @@ export function WithValidation() {
 
   return (
     <div className="flex flex-col gap-4">
-      <SearchField
-        isRequired
-        isInvalid={isInvalid}
-        name="search"
-        value={value}
-        onChange={setValue}
-      >
+      <SearchField isRequired isInvalid={isInvalid} name="search" value={value} onChange={setValue}>
         <Label>Search</Label>
         <SearchField.Group>
           <SearchField.SearchIcon />

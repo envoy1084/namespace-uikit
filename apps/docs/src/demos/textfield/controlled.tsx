@@ -2,13 +2,7 @@
 
 import React from "react";
 
-import {
-  Description,
-  Input,
-  Label,
-  TextArea,
-  TextField,
-} from "@thenamespace/uikit";
+import { Description, Input, Label, TextArea, TextField } from "@thenamespace/uikit";
 
 export function Controlled() {
   const [name, setName] = React.useState("");

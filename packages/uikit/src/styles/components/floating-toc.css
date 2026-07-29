@@ -50,8 +50,8 @@
     background-color: var(--accent);
     height: var(--floating-toc-bar-active-height);
     width: calc(
-      var(--floating-toc-bar-active-width) -
-        (var(--floating-toc-level, 1) - 1) * var(--floating-toc-bar-level-step)
+      var(--floating-toc-bar-active-width) - (var(--floating-toc-level, 1) - 1) *
+        var(--floating-toc-bar-level-step)
     );
   }
   .floating-toc__content {
@@ -83,8 +83,7 @@
     padding-block: 0.375rem;
     padding-inline: 0.75rem;
     padding-inline-start: calc(
-      0.75rem + (var(--floating-toc-level, 1) - 1) *
-        var(--floating-toc-item-indent)
+      0.75rem + (var(--floating-toc-level, 1) - 1) * var(--floating-toc-item-indent)
     );
     position: relative;
     text-align: start;
