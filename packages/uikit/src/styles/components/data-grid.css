@@ -4,8 +4,24 @@
     --data-grid-drag-handle-column-width: 32px;
     --data-grid-tree-toggle-size: 24px;
     --data-grid-tree-gap: 4px;
+    --data-grid-pinned-cell-background: var(--surface);
+    --data-grid-row-hover-background: color-mix(
+      in oklab,
+      var(--surface) 40%,
+      var(--surface-secondary)
+    );
+    --data-grid-row-selected-background: color-mix(
+      in oklab,
+      var(--surface) 10%,
+      var(--surface-secondary)
+    );
     position: relative;
     width: 100%;
+  }
+  .data-grid.table-root--secondary {
+    --data-grid-pinned-cell-background: var(--background);
+    --data-grid-row-hover-background: color-mix(in oklab, var(--default) 50%, var(--background));
+    --data-grid-row-selected-background: color-mix(in oklab, var(--surface) 10%, var(--background));
   }
   .data-grid__drag-handle-column,
   .data-grid__drag-handle-cell {
@@ -95,7 +111,45 @@
   }
   [data-slot="data-grid"] .table__cell[data-pinned],
   [data-slot="data-grid"] .data-grid__selection-cell[data-pinned] {
-    background: var(--surface);
+    background: var(--data-grid-pinned-cell-background);
+  }
+  @media (hover: hover) {
+    [data-slot="data-grid"] .table__row:hover .table__cell,
+    [data-slot="data-grid"] .table__row[data-hovered="true"] .table__cell {
+      background: var(--data-grid-row-hover-background);
+    }
+  }
+  [data-slot="data-grid"] .table__row[data-selected="true"] .table__cell {
+    background: var(--data-grid-row-selected-background);
+  }
+  [data-slot="data-grid"] .table__row[data-drop-target="true"] .table__cell {
+    background: var(--accent-soft);
+  }
+  [data-slot="data-grid"] .table__content:not(table) .table__column {
+    align-items: center;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+  }
+  [data-slot="data-grid"] .table__content:not(table) .table__cell {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+  }
+  [data-slot="data-grid"][data-vertical-align="top"] .table__content:not(table) .table__cell {
+    align-items: flex-start;
+  }
+  [data-slot="data-grid"][data-vertical-align="middle"] .table__content:not(table) .table__cell {
+    align-items: center;
+  }
+  [data-slot="data-grid"][data-vertical-align="bottom"] .table__content:not(table) .table__cell {
+    align-items: flex-end;
+  }
+  [data-slot="data-grid"] .table__content:not(table) [data-align="end"] {
+    justify-content: flex-end;
+  }
+  [data-slot="data-grid"] .table__content:not(table) [data-align="center"] {
+    justify-content: center;
   }
   .data-grid__tree-cell {
     align-items: center;

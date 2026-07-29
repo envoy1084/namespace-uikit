@@ -216,10 +216,11 @@ function DataGridInner<T extends object>({
   const columnStateKey = columns
     .map((column) => `${column.id}:${column.isHidden ? "hidden" : "visible"}`)
     .join("|");
+  const visibleColumnDisplay = virtualized ? "flex" : "table-cell";
   const columnVisibilityStyles = Object.fromEntries(
     columns.map((column, index) => [
       `--data-grid-column-${index}-display`,
-      column.isHidden ? "none" : "table-cell",
+      column.isHidden ? "none" : visibleColumnDisplay,
     ]),
   ) as CSSProperties;
   const hasDragHandle = Boolean(activeDragHooks);
