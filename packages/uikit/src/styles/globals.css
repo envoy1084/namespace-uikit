@@ -61,6 +61,7 @@
 @import "./components/sheet.css";
 @import "./components/sidebar.css";
 @import "./components/stepper.css";
+@import "./components/toast.css";
 @import "./components/rich-text-editor.css";
 @import "./components/number-stepper.css";
 @import "./components/chart-tooltip.css";
