@@ -15,8 +15,10 @@ export default defineConfig({
     },
   },
   iconUrl: "/namespace.svg",
-  logoUrl: "/namespace.svg",
-  ogImageUrl: "https://ens-components.vercel.app/images/ens-components-og.png",
+  logoUrl: {
+    dark: "/ens-components-logo-dark.svg",
+    light: "/ens-components-logo-light.svg",
+  },
   renderStrategy: "partial-static",
   sidebar: {
     "/docs": [
@@ -36,6 +38,7 @@ export default defineConfig({
           page("Error Handling", "guides/error-handling"),
           page("Queries", "guides/queries"),
           page("Transactions", "guides/transactions"),
+          page("Batching", "guides/batching"),
           page("Custom Configuration", "guides/custom-configuration"),
           page("Component Customization", "guides/component-customization"),
         ],
@@ -129,12 +132,18 @@ export default defineConfig({
         ],
       },
       {
-        text: "Icons",
+        text: "Miscellaneous",
         collapsed: true,
         items: [page("Record Icons", "icons/icons")],
       },
     ],
   },
+  socials: [
+    {
+      icon: "github",
+      link: "https://github.com/thenamespace/uikit/tree/main/packages/ens-components",
+    },
+  ],
   title: "ENS Components",
   titleTemplate: "%s · ENS Components",
   topNav: [
