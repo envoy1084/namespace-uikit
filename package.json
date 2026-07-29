@@ -5,22 +5,22 @@
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
-    "build": "node scripts/run-turbo.mjs run build",
+    "build": "turbo run build",
     "changeset": "changeset",
-    "check": "pnpm format:check && pnpm lint && node scripts/run-turbo.mjs run typecheck build",
-    "ci:publish": "node scripts/run-turbo.mjs run build --filter=@thenamespace/uikit && changeset publish",
+    "check": "pnpm format:check && pnpm lint && turbo run typecheck build",
+    "ci:publish": "turbo run build --filter=@thenamespace/uikit && changeset publish",
     "ci:version": "changeset version",
     "commitlint:edit": "commitlint --strict --edit",
     "commitlint:last": "commitlint --strict --last",
     "commitlint:range": "node scripts/commitlint-range.mjs",
-    "dev": "node scripts/run-turbo.mjs run dev",
+    "dev": "turbo run dev",
     "format": "oxfmt . --write --no-error-on-unmatched-pattern",
     "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
     "lint": "oxlint . --no-error-on-unmatched-pattern",
     "lint:check": "pnpm lint",
     "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern",
     "prepare": "lefthook install",
-    "typecheck": "node scripts/run-turbo.mjs run typecheck"
+    "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
     "@changesets/changelog-github": "0.7.0",
