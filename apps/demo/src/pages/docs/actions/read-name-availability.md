@@ -9,13 +9,13 @@ Validates a label or name and reads `ETHRegistrar.isAvailable`.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { readNameAvailability } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [availability.ts]
 const result = await readNameAvailability(publicClient, {
   input: "example",
   registrarAddress,
@@ -27,7 +27,15 @@ console.log(result.value);
 
 ## Parameters
 
-```ts
+### publicClient
+
+`PublicClient`
+
+The Viem client used to read the registrar.
+
+### parameters
+
+```ts [types.ts]
 interface ReadNameAvailabilityParameters {
   input: string | null | undefined;
   registrarAddress: Address;
@@ -41,20 +49,22 @@ interface ReadNameAvailabilityParameters {
 The result is `true` only when the normalized second-level `.eth` name can be
 registered.
 
-## Errors
+## Error
 
 Input and address validation return uppercase error codes. RPC failures return
 `CONTRACT_READ_FAILED`.
 
-## Prepare the Read
+## Prepare
 
 Use `prepareNameAvailabilityRead` when composing the request yourself:
 
-```ts
+```ts [prepare.ts]
 const prepared = prepareNameAvailabilityRead({
   input: "example",
   registrarAddress,
 });
 ```
 
-It returns `Result<PreparedNameAvailabilityRead, PrepareNameAvailabilityReadError>`.
+It returns
+`Result<PreparedNameAvailabilityRead, PrepareNameAvailabilityReadError>`. See
+[Batching](/docs/guides/batching) for prepared read execution.

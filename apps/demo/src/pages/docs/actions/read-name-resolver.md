@@ -9,13 +9,13 @@ Calls `UniversalResolverV2.findResolver` for a normalized ENS name.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { readNameResolver } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [resolver.ts]
 const result = await readNameResolver(publicClient, {
   input: "example.eth",
   universalResolverAddress,
@@ -26,7 +26,15 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### publicClient
+
+`PublicClient`
+
+The Viem client used to call Universal Resolver v2.
+
+### parameters
+
+```ts [types.ts]
 interface ReadNameResolverParameters {
   input: string | null | undefined;
   universalResolverAddress: Address;
@@ -37,7 +45,7 @@ interface ReadNameResolverParameters {
 
 `ResultAsync<NameResolverResult, ReadNameResolverErrorType>`
 
-```ts
+```ts [result.ts]
 interface NameResolverResult {
   name: string;
   node: Hex;
@@ -46,7 +54,13 @@ interface NameResolverResult {
 }
 ```
 
-## Prepare the Read
+## Error
+
+Returns name and address validation codes, resolver lookup codes, or
+`CONTRACT_READ_FAILED`.
+
+## Prepare
 
 `prepareNameResolverRead` returns the ABI-inferred request and normalized-name
-metadata without accessing an RPC endpoint.
+metadata without accessing an RPC endpoint. See
+[Batching](/docs/guides/batching).

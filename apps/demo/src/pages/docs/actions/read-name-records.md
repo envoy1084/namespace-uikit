@@ -10,13 +10,13 @@ Resolver, and decodes the result into profile form values.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { readNameRecords } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [records.ts]
 const result = await readNameRecords(publicClient, {
   input: "example.eth",
   records: {
@@ -32,7 +32,15 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### publicClient
+
+`PublicClient`
+
+The Viem client used for Universal Resolver calls.
+
+### parameters
+
+```ts [types.ts]
 interface ReadNameRecordsParameters {
   input: string | null | undefined;
   records: NameRecordSelection;
@@ -50,7 +58,13 @@ address, normalized selection, and decoded `NameProfileFormValues`.
 Universal Resolver calls execute independently so each request can complete
 its own CCIP Read flow.
 
-## Prepare the Read
+## Error
+
+Returns selection and name validation codes, resolver response decoding codes,
+or `CONTRACT_READ_FAILED`.
+
+## Prepare
 
 `prepareNameRecordsRead` returns one typed Universal Resolver request per
-selected record.
+selected record. Execute these requests individually to preserve each CCIP Read
+flow. See [Batching](/docs/guides/batching).

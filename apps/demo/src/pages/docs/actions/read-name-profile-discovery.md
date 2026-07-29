@@ -10,13 +10,13 @@ keys present on a name.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { readNameProfileDiscovery } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [profile-discovery.ts]
 const result = await readNameProfileDiscovery({
   indexerUrl: "https://graphql.ens.dev/graphql",
   input: "example.eth",
@@ -28,7 +28,9 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### parameters
+
+```ts [types.ts]
 interface ReadNameProfileDiscoveryParameters {
   indexerUrl: string;
   input: string | null | undefined;
@@ -45,7 +47,12 @@ text keys and coin types, ABI content types, interface IDs, and indexer state.
 Record values are not returned. Use
 [`readNameRecords`](/docs/actions/read-name-records) to resolve them onchain.
 
-## Prepare the Read
+## Error
+
+Returns name and URL validation codes, `GRAPHQL_READ_FAILED`, or an indexer
+response error.
+
+## Prepare
 
 `prepareNameProfileDiscoveryRead` returns a `PreparedGraphQLRead` without
-sending a request.
+sending a request. GraphQL reads are not included in contract multicalls.

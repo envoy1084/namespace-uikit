@@ -9,13 +9,13 @@ Submits `ReverseRegistrar.setName` on the configured L1 reverse registrar.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { setL1PrimaryName } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [set-primary-name.ts]
 const result = await setL1PrimaryName(walletClient, publicClient, {
   account,
   chain,
@@ -28,7 +28,21 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### walletClient
+
+`WalletClient`
+
+The connected Viem wallet client.
+
+### publicClient
+
+`PublicClient`
+
+The Viem client used for simulation and confirmation.
+
+### parameters
+
+```ts [types.ts]
 interface SetL1PrimaryNameParameters extends ExecuteContractWriteParameters {
   account: Address;
   input: string | null | undefined;
@@ -40,6 +54,12 @@ interface SetL1PrimaryNameParameters extends ExecuteContractWriteParameters {
 
 `ResultAsync<ExecuteContractWritesResult, SetL1PrimaryNameErrorType>`
 
-## Prepare the Write
+## Error
 
-`prepareSetL1PrimaryNameWrite` returns the prepared reverse registrar call.
+Returns name, account, registrar, simulation, wallet, or confirmation error
+codes.
+
+## Prepare
+
+`prepareSetL1PrimaryNameWrite` returns the prepared reverse registrar call. See
+[Batching](/docs/guides/batching).

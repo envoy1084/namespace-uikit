@@ -10,13 +10,13 @@ allowance.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { readNameRenewalPaymentStatus } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [payment-status.ts]
 const result = await readNameRenewalPaymentStatus(publicClient, {
   account,
   duration: 31_536_000n,
@@ -31,7 +31,15 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### publicClient
+
+`PublicClient`
+
+The Viem client used for the multicall.
+
+### parameters
+
+```ts [types.ts]
 interface ReadNameRenewalPaymentStatusParameters {
   account: Address;
   duration: bigint;
@@ -49,6 +57,11 @@ interface ReadNameRenewalPaymentStatusParameters {
 The result contains the current and new expiry, quote, decimals, balance,
 allowance, and sufficiency flags.
 
-## Prepare the Read
+## Error
 
-`prepareNameRenewalPaymentStatusRead` returns the complete multicall plan.
+Returns input, account, contract, renewability, or payment-state error codes.
+
+## Prepare
+
+`prepareNameRenewalPaymentStatusRead` returns the complete multicall plan. See
+[Batching](/docs/guides/batching).

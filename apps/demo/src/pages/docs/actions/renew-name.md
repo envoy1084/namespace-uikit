@@ -9,13 +9,13 @@ Validates and submits `ETHRegistrar.renew`.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { renewName } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [renew.ts]
 const result = await renewName(walletClient, publicClient, {
   account,
   chain,
@@ -31,7 +31,21 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### walletClient
+
+`WalletClient`
+
+The connected Viem wallet client.
+
+### publicClient
+
+`PublicClient`
+
+The Viem client used for simulation and confirmation.
+
+### parameters
+
+```ts [types.ts]
 interface RenewNameParameters extends ExecuteContractWriteParameters {
   account: Address;
   duration: bigint;
@@ -46,6 +60,12 @@ interface RenewNameParameters extends ExecuteContractWriteParameters {
 
 `ResultAsync<ExecuteContractWritesResult, RenewNameErrorType>`
 
-## Prepare the Write
+## Error
 
-Use `prepareRenewNameWrite` to batch token approval and renewal.
+Returns name, duration, payment, simulation, wallet, confirmation, or revert
+error codes.
+
+## Prepare
+
+Use `prepareRenewNameWrite` to batch token approval and renewal. See
+[Batching](/docs/guides/batching).

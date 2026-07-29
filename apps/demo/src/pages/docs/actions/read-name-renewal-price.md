@@ -10,13 +10,13 @@ decimals in one multicall.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { readNameRenewalPrice } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [renewal-price.ts]
 const result = await readNameRenewalPrice(publicClient, {
   duration: 31_536_000n,
   ethRegistryAddress,
@@ -30,7 +30,15 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### publicClient
+
+`PublicClient`
+
+The Viem client used for the multicall.
+
+### parameters
+
+```ts [types.ts]
 interface ReadNameRenewalPriceParameters {
   duration: bigint;
   ethRegistryAddress: Address;
@@ -47,7 +55,11 @@ interface ReadNameRenewalPriceParameters {
 The result contains `currentExpiry`, `newExpiry`, `duration`, `total`, and
 `decimals`.
 
-## Prepare the Read
+## Error
+
+Returns input, duration, contract, renewability, or contract-read error codes.
+
+## Prepare
 
 `prepareNameRenewalPriceRead` returns the renewability, expiry, price, and token
-decimal multicall plan.
+decimal multicall plan. See [Batching](/docs/guides/batching).

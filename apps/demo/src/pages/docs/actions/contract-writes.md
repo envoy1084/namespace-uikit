@@ -7,7 +7,9 @@ description: Typed contract-write plans used by ENS Components executors.
 
 `PreparedContractWrite` is an immutable, validated execution plan.
 
-```ts
+## Type
+
+```ts [types.ts]
 interface PreparedContractWrite<TRequest, TKind, TMetadata> {
   account: Address;
   call: {
@@ -21,12 +23,16 @@ interface PreparedContractWrite<TRequest, TKind, TMetadata> {
 }
 ```
 
+## Usage
+
 Compose prepared writes in dependency order, then pass the non-empty array to
 [`executeContractWrites`](/docs/actions/execute-contract-writes).
 
-```ts
+```ts [calls.ts]
 const calls = [approval.value, registration.value] as const;
 ```
 
 All calls in one execution must use the same account. The executor receives
 the chain separately.
+
+See [Batching](/docs/guides/batching) for complete read and write examples.

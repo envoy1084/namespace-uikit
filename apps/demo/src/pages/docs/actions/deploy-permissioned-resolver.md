@@ -9,13 +9,13 @@ Simulates and submits `VerifiableFactory.deployProxy`.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { deployPermissionedResolver } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [deploy-resolver.ts]
 const result = await deployPermissionedResolver(walletClient, publicClient, {
   account,
   chain,
@@ -30,7 +30,21 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### walletClient
+
+`WalletClient`
+
+The connected Viem wallet client.
+
+### publicClient
+
+`PublicClient`
+
+The Viem client used to predict, simulate, and confirm deployment.
+
+### parameters
+
+```ts [types.ts]
 interface DeployPermissionedResolverParameters extends ExecuteContractWriteParameters {
   account: Address;
   factoryAddress: Address;
@@ -46,7 +60,13 @@ interface DeployPermissionedResolverParameters extends ExecuteContractWriteParam
 
 The exact deployment is simulated before the wallet is opened.
 
-## Prepare the Write
+## Error
+
+Returns address, salt, deployment, simulation, wallet, or confirmation error
+codes.
+
+## Prepare
 
 `preparePermissionedResolverDeploymentWrite` returns the predicted resolver
-address and prepared factory call for atomic or sequential composition.
+address and prepared factory call for atomic or sequential composition. See
+[Batching](/docs/guides/batching).

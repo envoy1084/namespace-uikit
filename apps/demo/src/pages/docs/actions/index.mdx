@@ -3,15 +3,17 @@ title: Actions
 description: Framework-independent ENS v2 reads, writes, and prepared calls.
 ---
 
+import { Card, Cards } from "vocs";
+
 # Actions
 
-Actions are framework-independent functions for reading and writing ENS v2
-contracts. Direct actions validate and execute a request. Prepare functions
-validate the same input and return a typed plan for custom execution or batching.
+Actions are framework-independent functions for reading and writing ENS v2.
+Direct actions validate and execute a request. Prepare functions return a typed
+plan without accessing a network or opening a wallet.
 
 ## Import
 
-```ts
+```ts [actions.ts]
 import {
   prepareNameAvailabilityRead,
   readNameAvailability,
@@ -23,7 +25,34 @@ Direct actions return Neverthrow `ResultAsync` values. Prepare functions return
 `Result` values with string-literal error unions and do not execute network
 requests.
 
-## Available actions
+<Cards>
+  <Card
+    title="Read actions"
+    description="Read availability, pricing, profiles, records, and permissions."
+    icon="search"
+    to="/docs/actions/read-name-availability"
+  />
+  <Card
+    title="Write actions"
+    description="Commit, register, renew, approve, and update ENS state."
+    icon="pen-line"
+    to="/docs/actions/register-name"
+  />
+  <Card
+    title="Contract executors"
+    description="Execute prepared reads and writes with typed results."
+    icon="terminal"
+    to="/docs/actions/contract-reads"
+  />
+  <Card
+    title="Batching"
+    description="Compose prepared reads and dependent write calls."
+    icon="layers"
+    to="/docs/guides/batching"
+  />
+</Cards>
+
+## Read Actions
 
 - [`readCommitmentStatus`](/docs/actions/read-commitment-status)
 - [`readNameAvailability`](/docs/actions/read-name-availability)
@@ -37,6 +66,9 @@ requests.
 - [`readNameResolver`](/docs/actions/read-name-resolver)
 - [`readPermissionedResolverSupport`](/docs/actions/read-permissioned-resolver-support)
 - [`readPermissionedResolverVerification`](/docs/actions/read-permissioned-resolver-verification)
+
+## Write Actions
+
 - [`approvePaymentToken`](/docs/actions/approve-payment-token)
 - [`commitName`](/docs/actions/commit-name)
 - [`deployPermissionedResolver`](/docs/actions/deploy-permissioned-resolver)
@@ -46,9 +78,17 @@ requests.
 - [`setL1PrimaryName`](/docs/actions/set-l1-primary-name)
 - [`setL2PrimaryName`](/docs/actions/set-l2-primary-name)
 - [`updateNameProfileRecords`](/docs/actions/update-name-profile-records)
+
+## Executors
+
 - [Contract Reads](/docs/actions/contract-reads)
 - [GraphQL Reads](/docs/actions/graphql-reads)
 - [Contract Writes](/docs/actions/contract-writes)
 - [Contract Write Status](/docs/actions/contract-write-status)
 - [`executeContractWrites`](/docs/actions/execute-contract-writes)
 - [`supportsAtomicBatchCalls`](/docs/actions/supports-atomic-batch-calls)
+
+:::tip
+Use [Batching](/docs/guides/batching) when composing multiple prepared reads or
+dependent writes.
+:::

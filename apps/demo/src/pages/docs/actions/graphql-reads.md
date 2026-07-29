@@ -5,18 +5,17 @@ description: Execute prepared GraphQL reads with Neverthrow errors.
 
 # GraphQL Reads
 
-`PreparedGraphQLRead` describes a request, variables, response decoder, and
-metadata without sending a network request.
+Executes GraphQL requests returned by prepare discovery actions.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { executeGraphQLRead } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [profile-discovery.ts]
 const prepared = prepareNameProfileDiscoveryRead({
   indexerUrl: "https://graphql.ens.dev/graphql",
   input: "example.eth",
@@ -27,13 +26,27 @@ if (prepared.isOk()) {
 }
 ```
 
-## executeGraphQLRead
+## Parameters
 
-Executes one prepared GraphQL request with `fetch`, checks the HTTP and GraphQL
-responses, then decodes the result.
+### prepared
 
-```ts
-executeGraphQLRead(prepared, { signal });
-```
+`PreparedGraphQLRead`
 
-The result is `Result<value, "GRAPHQL_READ_FAILED" | decodeError>`.
+The URL, document, variables, response decoder, and metadata returned by a
+prepare action.
+
+### options
+
+`{ signal?: AbortSignal }`
+
+Optional fetch cancellation.
+
+## Return Type
+
+`ResultAsync<TResult, "GRAPHQL_READ_FAILED" | TDecodeError>`
+
+## Error
+
+HTTP, GraphQL, network, and unexpected response failures return
+`GRAPHQL_READ_FAILED`. The prepared decoder can return additional domain error
+codes.

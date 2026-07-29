@@ -9,13 +9,13 @@ Recreates the commitment inputs and submits `ETHRegistrar.register`.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { registerName } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [register.ts]
 const result = await registerName(walletClient, publicClient, {
   account,
   chain,
@@ -35,7 +35,21 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### walletClient
+
+`WalletClient`
+
+The connected Viem wallet client.
+
+### publicClient
+
+`PublicClient`
+
+The Viem client used for simulation and confirmation.
+
+### parameters
+
+```ts [types.ts]
 interface RegisterNameParameters
   extends MakeNameCommitmentParameters, ExecuteContractWriteParameters {
   account: Address;
@@ -48,7 +62,13 @@ interface RegisterNameParameters
 
 `ResultAsync<ExecuteContractWritesResult, RegisterNameErrorType>`
 
-## Prepare the Write
+## Error
+
+Returns name, commitment, payment, simulation, wallet, confirmation, or revert
+error codes.
+
+## Prepare
 
 Use `prepareRegisterNameWrite` when composing registration with token approval,
-forward resolution, or primary-name updates.
+forward resolution, or primary-name updates. See
+[Batching](/docs/guides/batching).

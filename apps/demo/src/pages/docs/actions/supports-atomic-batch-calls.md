@@ -9,13 +9,13 @@ Checks whether a connected wallet supports atomic EIP-5792 calls on a chain.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { supportsAtomicBatchCalls } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [capabilities.ts]
 const result = await supportsAtomicBatchCalls(walletClient, {
   account,
   chainId: 11155111,
@@ -28,12 +28,23 @@ if (result.isOk() && result.value) {
 
 ## Parameters
 
-```ts
-interface SupportsAtomicBatchCallsParameters {
-  account: Address;
-  chainId: number;
-}
-```
+### walletClient
+
+`WalletClient`
+
+The connected Viem wallet client.
+
+### account
+
+`Address`
+
+The wallet account whose capabilities are queried.
+
+### chainId
+
+`number`
+
+The target chain ID.
 
 The result is `true` when `wallet_getCapabilities` reports the atomic status
 as `ready` or `supported`.
@@ -48,7 +59,7 @@ The result is `false` when the wallet:
 
 `ResultAsync<boolean, SupportsAtomicBatchCallsError>`
 
-## Errors
+## Error
 
 - `CAPABILITIES_REQUEST_FAILED`
 - `INVALID_ACCOUNT_ADDRESS`
@@ -56,3 +67,6 @@ The result is `false` when the wallet:
 
 An unsupported capabilities method is a valid `false` result. Other provider
 and transport failures return `CAPABILITIES_REQUEST_FAILED`.
+
+See [Batching](/docs/guides/batching) for automatic and forced atomic
+strategies.

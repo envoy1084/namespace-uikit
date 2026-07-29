@@ -9,13 +9,13 @@ Reads the full ERC-20 payment state required to register an available name.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { readNameRegistrationPaymentStatus } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [payment-status.ts]
 const result = await readNameRegistrationPaymentStatus(publicClient, {
   account,
   duration: 31_536_000n,
@@ -29,7 +29,15 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### publicClient
+
+`PublicClient`
+
+The Viem client used for the multicall.
+
+### parameters
+
+```ts [types.ts]
 interface ReadNameRegistrationPaymentStatusParameters {
   account: Address;
   duration: bigint;
@@ -46,7 +54,12 @@ interface ReadNameRegistrationPaymentStatusParameters {
 The result contains `base`, `premium`, `total`, `decimals`, `balance`,
 `allowance`, `hasSufficientBalance`, and `hasSufficientAllowance`.
 
-## Prepare the Read
+## Error
+
+Returns input, account, contract, availability, or payment-state error codes.
+
+## Prepare
 
 `prepareNameRegistrationPaymentStatusRead` returns one multicall plan containing
-availability, price, decimals, balance, and allowance reads.
+availability, price, decimals, balance, and allowance reads. See
+[Batching](/docs/guides/batching).

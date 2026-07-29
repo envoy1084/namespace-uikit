@@ -9,13 +9,13 @@ Submits `PermissionedResolver.setAddr` for SLIP-44 coin type `60`.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { setAddressRecord } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [set-address.ts]
 const result = await setAddressRecord(walletClient, publicClient, {
   account,
   chain,
@@ -29,7 +29,21 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### walletClient
+
+`WalletClient`
+
+The connected Viem wallet client.
+
+### publicClient
+
+`PublicClient`
+
+The Viem client used for simulation and confirmation.
+
+### parameters
+
+```ts [types.ts]
 interface SetAddressRecordParameters extends ExecuteContractWriteParameters {
   account: Address;
   input: string | null | undefined;
@@ -42,7 +56,13 @@ interface SetAddressRecordParameters extends ExecuteContractWriteParameters {
 
 `ResultAsync<ExecuteContractWritesResult, SetAddressRecordErrorType>`
 
-## Prepare the Write
+## Error
+
+Returns name, address, resolver, simulation, wallet, or confirmation error
+codes.
+
+## Prepare
 
 `prepareSetAddressRecordWrite` returns the prepared resolver call. Compose it
-with reverse-name writes when setting a primary name.
+with reverse-name writes when setting a primary name. See
+[Batching](/docs/guides/batching).

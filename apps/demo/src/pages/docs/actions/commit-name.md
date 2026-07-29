@@ -10,13 +10,13 @@ Builds the commitment from the registration inputs and submits
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { commitName } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [commit.ts]
 const result = await commitName(walletClient, publicClient, {
   account,
   chain,
@@ -35,7 +35,21 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### walletClient
+
+`WalletClient`
+
+The connected Viem wallet client.
+
+### publicClient
+
+`PublicClient`
+
+The Viem client used for simulation and confirmation.
+
+### parameters
+
+```ts [types.ts]
 interface CommitNameParameters
   extends MakeNameCommitmentParameters, ExecuteContractWriteParameters {
   account: Address;
@@ -49,7 +63,13 @@ Persist every commitment-bound input unchanged for registration.
 
 `ResultAsync<ExecuteContractWritesResult, CommitNameErrorType>`
 
-## Prepare the Write
+## Error
+
+Returns commitment input, simulation, wallet, submission, confirmation, or
+revert error codes.
+
+## Prepare
 
 `prepareCommitNameWrite` returns the commitment hash, normalized label, and
-prepared call. Use it when batching resolver deployment and commitment.
+prepared call. Use it when batching resolver deployment and commitment. See
+[Batching](/docs/guides/batching).

@@ -8,18 +8,15 @@ description: Execute one or more prepared ENS contract writes.
 Executes prepared writes using one transaction, an EIP-5792 atomic batch, or
 an ordered transaction sequence.
 
-Use `executeContractWrite` for one prepared call. Domain actions such as
-`registerName` use this single-write executor internally.
-
 ## Import
 
-```ts
-import { executeContractWrites } from "ens-components/actions";
+```ts [import.ts]
+import { executeContractWrite, executeContractWrites } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [execute.ts]
 const result = await executeContractWrites(walletClient, publicClient, {
   calls: [resolverDeployment, commitment],
   chain,
@@ -33,16 +30,54 @@ const result = await executeContractWrites(walletClient, publicClient, {
 
 ## Parameters
 
-```ts
-interface ExecuteContractWritesParameters {
-  calls: readonly [PreparedContractWrite, ...PreparedContractWrite[]];
-  chain: Chain;
-  confirmation?: "confirmed" | "submitted";
-  onProgress?: (progress: ContractWriteProgress) => Promise<void> | void;
-  strategy?: "atomic" | "auto" | "sequential" | "single";
-  timeout?: number;
-}
-```
+### walletClient
+
+`WalletClient`
+
+The Viem wallet client used for capability checks and submission.
+
+### publicClient
+
+`PublicClient`
+
+The Viem public client used for simulation and confirmation.
+
+### calls
+
+`readonly [PreparedContractWrite, ...PreparedContractWrite[]]`
+
+One or more calls in dependency order. Every call must use the same account.
+
+### chain
+
+`Chain`
+
+The chain used for wallet submission and confirmation.
+
+### confirmation
+
+`"confirmed" | "submitted" | undefined`
+
+Defaults to `"confirmed"`. The submitted mode returns after final submission.
+
+### onProgress
+
+`(progress: ContractWriteProgress) => Promise<void> | void`
+
+Receives signing, submitted, and confirmed progress. Observer errors do not
+change the chain result.
+
+### strategy
+
+`"atomic" | "auto" | "sequential" | "single" | undefined`
+
+Defaults to `"auto"`.
+
+### timeout
+
+`number | undefined`
+
+Maximum wait time in milliseconds for receipts and atomic call status.
 
 `executeContractWrite` accepts one `PreparedContractWrite` plus the same
 parameters without `calls` and `strategy`.
@@ -56,18 +91,6 @@ parameters without `calls` and `strategy`.
 | `sequential` | Confirms each dependent call before submitting the next.                                            |
 | `auto`       | Uses `single` for one call, otherwise detects atomic wallet support and falls back to `sequential`. |
 
-All calls must use the same prepared `account`. `confirmation` defaults to
-`confirmed`; `submitted` returns after the final submission. Earlier calls in
-a sequential execution are still confirmed before dependent calls are sent.
-`timeout` applies to transaction receipt and atomic call-status waits.
-
-The result is discriminated by `strategy`. Every confirmed strategy contains
-prepared transactions and receipts. Atomic results additionally contain a
-`callsId` and the wallet-reported transaction hashes.
-
-`onProgress` reports signing, submitted, and confirmed states. Observer errors
-do not change the chain result.
-
 ## Return Type
 
 `ResultAsync<ExecuteContractWritesResult, ExecuteContractWritesError>`
@@ -75,7 +98,7 @@ do not change the chain result.
 The result is discriminated by `strategy` and contains submitted transactions.
 Atomic results also contain `callsId` and wallet-reported transaction hashes.
 
-## Errors
+## Error
 
 Errors are uppercase codes covering invalid composition, wallet capability
 checks, submission, call-status polling, receipt confirmation, and reverts.
@@ -83,3 +106,11 @@ checks, submission, call-status polling, receipt confirmation, and reverts.
 `PARTIAL_BATCH_FAILED` means at least one sequential call confirmed before a
 later call failed. Confirmed progress events remain available to the caller.
 Atomic batches cannot report partial completion.
+
+## executeContractWrite
+
+Use `executeContractWrite` for exactly one `PreparedContractWrite`. It accepts
+the same execution options without `calls` and `strategy`.
+
+See [Batching](/docs/guides/batching) for composition patterns and strategy
+guidance.

@@ -10,13 +10,13 @@ records.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { readNameProfilePermissions } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [permissions.ts]
 const result = await readNameProfilePermissions(publicClient, {
   account,
   input: "example.eth",
@@ -33,7 +33,15 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### publicClient
+
+`PublicClient`
+
+The Viem client used to read the resolver.
+
+### parameters
+
+```ts [types.ts]
 interface ReadNameProfilePermissionsParameters {
   account: Address;
   input: string | null | undefined;
@@ -51,6 +59,12 @@ map keyed by `getNameProfilePermissionId(request)`.
 
 Use `canEditNameProfileRecord(result, request)` to read a permission directly.
 
-## Prepare the Read
+## Error
 
-`prepareNameProfilePermissionsRead` returns the deduplicated EAC multicall plan.
+Returns input, account, resolver, or permission-request validation codes.
+Execution failures return `CONTRACT_READ_FAILED`.
+
+## Prepare
+
+`prepareNameProfilePermissionsRead` returns the deduplicated EAC multicall
+plan. See [Batching](/docs/guides/batching).

@@ -10,13 +10,13 @@ commitment ages in one multicall.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { readCommitmentStatus } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [commitment-status.ts]
 const result = await readCommitmentStatus(publicClient, {
   commitment,
   registrarAddress,
@@ -27,7 +27,15 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### publicClient
+
+`PublicClient`
+
+The Viem client used to read the registrar.
+
+### parameters
+
+```ts [types.ts]
 interface ReadCommitmentStatusParameters {
   commitment: Hex;
   registrarAddress: Address;
@@ -38,7 +46,7 @@ interface ReadCommitmentStatusParameters {
 
 `ResultAsync<CommitmentTiming, ReadCommitmentStatusErrorType>`
 
-```ts
+```ts [result.ts]
 interface CommitmentTiming {
   maximumAge: bigint;
   minimumAge: bigint;
@@ -48,7 +56,11 @@ interface CommitmentTiming {
 
 `submittedAt` is zero when the commitment does not exist.
 
-## Prepare the Read
+## Error
+
+Returns input validation codes or `CONTRACT_READ_FAILED`.
+
+## Prepare
 
 `prepareCommitmentStatusRead` returns a `PreparedCommitmentStatusRead` plan for
-manual multicall execution.
+manual multicall execution. See [Batching](/docs/guides/batching).

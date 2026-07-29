@@ -9,13 +9,13 @@ Validates and submits `ERC20.approve`.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { approvePaymentToken } from "ens-components/actions";
 ```
 
 ## Usage
 
-```ts
+```ts [approve.ts]
 const result = await approvePaymentToken(walletClient, publicClient, {
   account,
   amount,
@@ -29,7 +29,21 @@ if (result.isErr()) throw result.error;
 
 ## Parameters
 
-```ts
+### walletClient
+
+`WalletClient`
+
+The connected Viem wallet client.
+
+### publicClient
+
+`PublicClient`
+
+The Viem client used for simulation and confirmation.
+
+### parameters
+
+```ts [types.ts]
 interface ApprovePaymentTokenParameters extends ExecuteContractWriteParameters {
   account: Address;
   amount: bigint;
@@ -47,7 +61,13 @@ interface ApprovePaymentTokenParameters extends ExecuteContractWriteParameters {
 The action submits one standard transaction and waits for confirmation by
 default.
 
-## Prepare the Write
+## Error
+
+Returns validation, simulation, wallet, submission, confirmation, or revert
+error codes.
+
+## Prepare
 
 Use `preparePaymentTokenApprovalWrite` when including the approval in
-[`executeContractWrites`](/docs/actions/execute-contract-writes).
+[`executeContractWrites`](/docs/actions/execute-contract-writes). See
+[Batching](/docs/guides/batching).
