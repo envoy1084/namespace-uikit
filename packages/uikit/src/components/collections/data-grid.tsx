@@ -9,6 +9,12 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import type { DragAndDropHooks, Key, Selection, SortDescriptor } from "react-aria-components";
 import { TableLayout, useDragAndDrop, Virtualizer } from "react-aria-components";
 
+export type {
+  Selection as DataGridSelection,
+  SortDescriptor as DataGridSortDescriptor,
+  SortDirection as DataGridSortDirection,
+} from "react-aria-components";
+
 export type DataGridAlign = "center" | "end" | "start";
 export type DataGridPinned = "end" | "start";
 export type DataGridVerticalAlign = "bottom" | "middle" | "top";
@@ -17,7 +23,7 @@ export type DataGridColumnSize = number | `${number}` | `${number}%` | `${number
 export type DataGridStaticColumnSize = Exclude<DataGridColumnSize, `${number}fr`>;
 
 export interface DataGridColumn<T extends object> {
-  accessorKey?: keyof T;
+  accessorKey?: keyof T & string;
   align?: DataGridAlign;
   allowsResizing?: boolean;
   allowsSorting?: boolean;
@@ -490,21 +496,20 @@ function DataGridInner<T extends object>({
     tableContent
   );
   const root = (
-    <div
+    <Table
       ref={rootRef}
       className={cn("data-grid", className) ?? "data-grid"}
       data-slot="data-grid"
       data-vertical-align={verticalAlign}
       style={columnVisibilityStyles}
+      variant={variant}
     >
-      <Table variant={variant}>
-        <Table.ScrollContainer
-          {...(scrollContainerClassName ? { className: scrollContainerClassName } : {})}
-        >
-          {resizable}
-        </Table.ScrollContainer>
-      </Table>
-    </div>
+      <Table.ScrollContainer
+        {...(scrollContainerClassName ? { className: scrollContainerClassName } : {})}
+      >
+        {resizable}
+      </Table.ScrollContainer>
+    </Table>
   );
   return virtualized ? (
     <Virtualizer layout={TableLayout} layoutOptions={{ headingHeight, rowHeight }}>
