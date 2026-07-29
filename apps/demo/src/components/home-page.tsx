@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
+import { useState } from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -26,39 +26,6 @@ const lightColorScheme = { colorScheme: "light" } as const;
 export function HomePage() {
   const [queryClient] = useState(() => new QueryClient());
 
-  useLayoutEffect(() => {
-    const root = document.documentElement;
-    const previousColorScheme = root.style.colorScheme;
-    const previousTheme = root.getAttribute("data-vocs-theme");
-
-    const applyLightScheme = () => {
-      if (root.style.colorScheme !== "light") {
-        root.style.colorScheme = "light";
-      }
-      if (root.getAttribute("data-vocs-theme") !== "light") {
-        root.setAttribute("data-vocs-theme", "light");
-      }
-    };
-
-    applyLightScheme();
-
-    const observer = new MutationObserver(applyLightScheme);
-    observer.observe(root, {
-      attributeFilter: ["data-vocs-theme", "style"],
-      attributes: true,
-    });
-
-    return () => {
-      observer.disconnect();
-      root.style.colorScheme = previousColorScheme;
-      if (previousTheme === null) {
-        root.removeAttribute("data-vocs-theme");
-      } else {
-        root.setAttribute("data-vocs-theme", previousTheme);
-      }
-    };
-  }, []);
-
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
@@ -66,6 +33,7 @@ export function HomePage() {
           <RainbowKitProvider>
             <div
               className="min-h-screen overflow-hidden bg-[#f4f4f4] font-sans text-[#1f1f1f]"
+              data-theme="light"
               style={lightColorScheme}
             >
               <AppNavbar />
