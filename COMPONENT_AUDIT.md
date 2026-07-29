@@ -343,16 +343,42 @@ needs to be proven:
 
 ### Core audit checklist
 
-- [ ] Compare all 85 local docs pages with the corresponding official MDX in
+- [x] Compare all 85 local docs pages with the corresponding official MDX in
       `.repos/heroui/apps/docs/content/docs/en/react/components`.
-- [ ] Verify that every official example is present locally or intentionally linked to a composing
+- [x] Verify that every official example is present locally or intentionally linked to a composing
       component.
-- [ ] Verify import paths and public exports against `.repos/heroui/packages/react/src/components`.
-- [ ] Verify prop/API tables, slots, data attributes, accessibility notes, and controlled examples.
-- [ ] Verify the 17 composition primitives have discoverable rendered coverage; add focused stories
+- [x] Verify import paths and public exports against `.repos/heroui/packages/react/src/components`.
+- [x] Verify prop/API tables, slots, data attributes, accessibility notes, and controlled examples.
+- [x] Verify the 17 composition primitives have discoverable rendered coverage; add focused stories
       where parent stories do not make the primitive behavior testable.
-- [ ] Browser-test high-interaction core components: calendars, color controls, collection controls,
+- [x] Browser-test high-interaction core components: calendars, color controls, collection controls,
       menus, overlays, sliders, tabs, toasts, toggle controls, and keyboard focus management.
+
+### Composition primitive coverage
+
+These entry points intentionally have no standalone official source story. Their public parts are
+rendered and interaction-tested through the parent stories below; `rac` is the only non-rendering
+type/helper entry point.
+
+| Entry point            | Local docs                                                         | Discoverable rendered coverage                                                                     |
+| ---------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| `calendar-year-picker` | [docs](apps/docs/content/docs/components/calendar-year-picker.mdx) | Calendar `With Year Picker` (`components-date-and-time-calendar--with-year-picker`)                |
+| `color-input-group`    | [docs](apps/docs/content/docs/components/color-input-group.mdx)    | Color Field `With Color Presets` (`components-colors-colorfield--with-color-presets`)              |
+| `date-input-group`     | [docs](apps/docs/content/docs/components/date-input-group.mdx)     | Date Field `With Prefix And Suffix` (`components-date-and-time-datefield--with-prefix-and-suffix`) |
+| `description`          | [docs](apps/docs/content/docs/components/description.mdx)          | Tag Group validation and Color/Date Field descriptions                                             |
+| `error-message`        | [docs](apps/docs/content/docs/components/error-message.mdx)        | Tag Group `With Error Message` (`components-collections-taggroup--with-error-message`)             |
+| `field-error`          | [docs](apps/docs/content/docs/components/field-error.mdx)          | Search Field `With Validation` (`components-forms-searchfield--with-validation`)                   |
+| `form`                 | [docs](apps/docs/content/docs/components/form.mdx)                 | Color Field and Search Field `Form Example` stories                                                |
+| `header`               | [docs](apps/docs/content/docs/components/header.mdx)               | ListBox `With Sections` (`components-collections-listbox--with-sections`)                          |
+| `label`                | [docs](apps/docs/content/docs/components/label.mdx)                | Tag Group, Color Field, Date Field, and Radio Group stories                                        |
+| `list-box-item`        | [docs](apps/docs/content/docs/components/list-box-item.mdx)        | ListBox `Default` and `Multi Select` stories                                                       |
+| `list-box-section`     | [docs](apps/docs/content/docs/components/list-box-section.mdx)     | ListBox `With Sections` (`components-collections-listbox--with-sections`)                          |
+| `menu`                 | [docs](apps/docs/content/docs/components/menu.mdx)                 | Dropdown `With Submenus` (`components-collections-dropdown--with-submenus`)                        |
+| `menu-item`            | [docs](apps/docs/content/docs/components/menu-item.mdx)            | Dropdown selection and nested-menu stories                                                         |
+| `menu-section`         | [docs](apps/docs/content/docs/components/menu-section.mdx)         | Dropdown `With Sections` (`components-collections-dropdown--with-sections`)                        |
+| `rac`                  | [docs](apps/docs/content/docs/components/rac.mdx)                  | Non-rendering React Aria types/helpers; export and typecheck coverage                              |
+| `radio`                | [docs](apps/docs/content/docs/components/radio.mdx)                | Radio Group `Delivery And Payment Example`                                                         |
+| `tag`                  | [docs](apps/docs/content/docs/components/tag.mdx)                  | Tag Group selection, validation, and removal stories                                               |
 
 ### Core inventory and first parity batch evidence
 
@@ -413,6 +439,19 @@ needs to be proven:
   Dropdown keyboard disclosure; and Slider keyboard adjustment.
 - Batch validation passed: docs and Storybook lint (warnings only), both TypeScript checks, the
   173-page production docs build, and the complete Storybook production build.
+
+### Core composition batch evidence
+
+- Proved rendered coverage for all 16 visual composition entry points through their official parent
+  stories. No focused duplicate stories are needed; the parent docs are linked directly from each
+  primitive page and the coverage map above names the exact testable story.
+- Confirmed `rac` is correctly source/type-only and therefore has no meaningful rendered story.
+- Browser-verified Color Input Group editing through Color Field, Date Input Group segment editing
+  with prefix/suffix composition, and Form/Field Error validation through Search Field. The
+  Calendar Year Picker, Description, Error Message, Header, Label, ListBox, Menu, Radio, and Tag
+  primitives were already exercised in the three core interaction batches.
+- Docs lint (warnings only), TypeScript, and the 173-page production build pass for the completed
+  composition batch.
 
 ## Package and upgrade baseline
 
