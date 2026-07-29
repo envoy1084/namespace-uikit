@@ -35,7 +35,7 @@ export function AppNavbar() {
           </a>
         </Navbar.Brand>
         <Navbar.Spacer />
-        <Navbar.Content className="mr-2 hidden lg:flex">
+        <Navbar.Content className="mr-2 hidden lg:!flex">
           <Dropdown>
             <Button size="sm" variant="tertiary">
               Components
