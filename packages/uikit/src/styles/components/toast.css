@@ -1,5 +1,0 @@
-@layer components {
-  .toast {
-    box-shadow: var(--surface-shadow);
-  }
-}
