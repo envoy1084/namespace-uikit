@@ -5,12 +5,7 @@
   "changelog": ["@changesets/changelog-github", { "repo": "thenamespace/uikit" }],
   "commit": false,
   "fixed": [],
-  "ignore": [
-    "@thenamespace/storybook",
-    "ens-components",
-    "@thenamespace/docs",
-    "@thenamespace/demo"
-  ],
+  "ignore": ["@thenamespace/storybook", "@thenamespace/docs"],
   "linked": [],
   "updateInternalDependencies": "patch"
 }
