@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { ConnectButton as RainbowKitConnectButton } from "@rainbow-me/rainbowkit";
 import { Button, Dropdown, Label } from "@thenamespace/uikit";
 import {
   CheckIcon,
@@ -8,7 +7,8 @@ import {
   HugeiconsIcon,
   LogoutSquare01Icon,
 } from "@thenamespace/uikit/icons";
-import { useDisconnect } from "wagmi";
+import { useConnect, useConnection, useDisconnect, useSwitchChain } from "wagmi";
+import { sepolia } from "wagmi/chains";
 
 import { truncateAddress } from "../lib/helpers";
 import { WalletAvatar } from "./wallet-avatar";
@@ -77,35 +77,44 @@ function AccountDropdown({ address, onDisconnect }: AccountDropdownProps) {
 }
 
 export function ConnectButton() {
+  const connection = useConnection();
+  const { connect, connectors, isPending } = useConnect();
   const { disconnect } = useDisconnect();
+  const { isPending: isSwitchingChain, switchChain } = useSwitchChain();
 
-  return (
-    <RainbowKitConnectButton.Custom>
-      {({ account, authenticationStatus, chain, mounted, openChainModal, openConnectModal }) => {
-        const ready = mounted && authenticationStatus !== "loading";
-        const connected =
-          ready &&
-          account &&
-          chain &&
-          (!authenticationStatus || authenticationStatus === "authenticated");
+  if (!connection.isConnected || !connection.address) {
+    return (
+      <Dropdown>
+        <Button isDisabled={isPending}>Connect wallet</Button>
+        <Dropdown.Popover className="min-w-56" placement="bottom end">
+          <Dropdown.Menu aria-label="Choose a wallet">
+            {connectors.map((connector) => (
+              <Dropdown.Item
+                id={connector.id}
+                key={connector.uid}
+                onAction={() => connect({ connector })}
+                textValue={connector.name}
+              >
+                <Label>{connector.name}</Label>
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown.Popover>
+      </Dropdown>
+    );
+  }
 
-        return (
-          <div
-            aria-hidden={!ready}
-            className={ready ? undefined : "pointer-events-none opacity-0 select-none"}
-          >
-            {!connected ? (
-              <Button onPress={openConnectModal}>Connect wallet</Button>
-            ) : chain.unsupported ? (
-              <Button onPress={openChainModal} variant="danger-soft">
-                Wrong network
-              </Button>
-            ) : (
-              <AccountDropdown address={account.address} onDisconnect={disconnect} />
-            )}
-          </div>
-        );
-      }}
-    </RainbowKitConnectButton.Custom>
-  );
+  if (connection.chainId !== sepolia.id) {
+    return (
+      <Button
+        isDisabled={isSwitchingChain}
+        onPress={() => switchChain({ chainId: sepolia.id })}
+        variant="danger-soft"
+      >
+        Switch to Sepolia
+      </Button>
+    );
+  }
+
+  return <AccountDropdown address={connection.address} onDisconnect={disconnect} />;
 }

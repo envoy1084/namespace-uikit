@@ -1,24 +1,31 @@
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - "@thenamespace/*"
+dedupePeerDependents: true
+resolvePeersFromWorkspaceRoot: true
 blockExoticSubdeps: true
+overrides:
+  use-sync-external-store: "1.6.0"
 packages:
   - "apps/*"
   - "packages/*"
 allowBuilds:
   "@parcel/watcher": false
+  bufferutil: false
   es5-ext: false
   esbuild: true
+  keccak: false
   lefthook: true
   sharp: true
+  utf-8-validate: false
   vue-demi: false
 catalog:
   "@heroui/react": "3.2.1"
   "@heroui/styles": "3.2.1"
   "oxfmt": "0.56.0"
   "oxlint": "1.71.0"
-  "react": "19.2.7"
-  "react-dom": "19.2.7"
+  "react": "19.2.8"
+  "react-dom": "19.2.8"
   "tailwindcss": "4.3.2"
   "@tailwindcss/cli": "4.3.2"
   "@tailwindcss/vite": "4.3.2"
@@ -27,7 +34,7 @@ catalog:
   "@tanstack/router-cli": "1.167.18"
   "@tanstack/react-query": "5.101.2"
   "viem": "2.55.0"
-  "wagmi": "^3.7.1"
+  "wagmi": "3.7.1"
   "@types/react": "19.2.17"
   "@types/node": "26.1.1"
   "@types/react-dom": "19.2.3"

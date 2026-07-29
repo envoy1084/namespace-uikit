@@ -119,7 +119,9 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "tsdown": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "viem": "catalog:",
+    "wagmi": "catalog:"
   },
   "peerDependencies": {
     "@tanstack/react-query": "5.101.2",

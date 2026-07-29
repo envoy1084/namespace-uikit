@@ -1,19 +1,15 @@
-import { getDefaultConfig } from "@rainbow-me/rainbowkit";
+import { createConfig, http } from "wagmi";
 import { sepolia } from "wagmi/chains";
+import { injected } from "wagmi/connectors";
 
-const walletConnectProjectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
-
-if (!walletConnectProjectId) {
-  throw new Error(
-    "VITE_WALLETCONNECT_PROJECT_ID is required. Add it to apps/demo/.env.local or the deployment environment.",
-  );
-}
-
-export const wagmiConfig = getDefaultConfig({
-  appName: "ENS Components Demo",
-  projectId: walletConnectProjectId,
+export const wagmiConfig = createConfig({
   chains: [sepolia],
+  connectors: [injected()],
+  multiInjectedProviderDiscovery: false,
   ssr: true,
+  transports: {
+    [sepolia.id]: http(),
+  },
 });
 
 declare module "wagmi" {
