@@ -73,11 +73,11 @@ export function SiteNavbar({ className, mobileAction, position = "sticky" }: Sit
 
         <LargeSearchToggle
           hideIfDisabled
-          className="absolute left-1/2 hidden w-full max-w-sm -translate-x-1/2 rounded-xl ps-2.5 lg:inline-flex"
+          className="absolute left-1/2 hidden w-full max-w-sm -translate-x-1/2 rounded-xl ps-2.5 md:inline-flex"
         />
 
         <Navbar.Content>
-          <SearchToggle hideIfDisabled className="lg:hidden" />
+          <SearchToggle hideIfDisabled className="md:hidden" />
           <div className="hidden sm:block">
             <GitHubLink />
           </div>
