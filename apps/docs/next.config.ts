@@ -5,6 +5,25 @@ import { createMDX } from "fumadocs-mdx/next";
 const cdnUrl = process.env.NEXT_PUBLIC_CDN_URL?.replace(/\/$/, "");
 
 const config: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        hostname: "heroui-assets.nyc3.cdn.digitaloceanspaces.com",
+        pathname: "/**",
+        protocol: "https",
+      },
+      {
+        hostname: "img.heroui.chat",
+        pathname: "/**",
+        protocol: "https",
+      },
+      {
+        hostname: "avatars.githubusercontent.com",
+        pathname: "/**",
+        protocol: "https",
+      },
+    ],
+  },
   reactStrictMode: true,
   async redirects() {
     return [

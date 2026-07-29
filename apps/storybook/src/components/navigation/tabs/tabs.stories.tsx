@@ -54,6 +54,42 @@ const DefaultTemplate = (args: Story["args"]) => {
   );
 };
 
+const overflowItems = [
+  { id: "overview", label: "Overview" },
+  { id: "analytics", label: "Analytics" },
+  { id: "reports", label: "Reports" },
+  { id: "performance", label: "Performance" },
+  { id: "engagement", label: "Engagement" },
+  { id: "audience", label: "Audience" },
+  { id: "acquisition", label: "Acquisition" },
+  { id: "retention", label: "Retention" },
+  { id: "settings", label: "Settings" },
+];
+
+const OverflowTemplate = (args: Story["args"]) => {
+  return (
+    <div className="w-[400px]">
+      <Tabs {...args}>
+        <Tabs.ListContainer>
+          <Tabs.List aria-label="Overflow options">
+            {overflowItems.map((item) => (
+              <Tabs.Tab key={item.id} id={item.id}>
+                {item.label}
+                <Tabs.Indicator />
+              </Tabs.Tab>
+            ))}
+          </Tabs.List>
+        </Tabs.ListContainer>
+        {overflowItems.map((item) => (
+          <Tabs.Panel key={item.id} className="pt-4" id={item.id}>
+            <p>{item.label} panel content.</p>
+          </Tabs.Panel>
+        ))}
+      </Tabs>
+    </div>
+  );
+};
+
 const VerticalTemplate = (args: Story["args"]) => {
   return (
     <div className="w-[600px]">
@@ -453,6 +489,13 @@ export const Default: Story = {
     children: null,
   },
   render: DefaultTemplate,
+};
+
+export const Overflow: Story = {
+  args: {
+    children: null,
+  },
+  render: OverflowTemplate,
 };
 
 export const Vertical: Story = {

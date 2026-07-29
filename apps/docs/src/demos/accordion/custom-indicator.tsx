@@ -4,7 +4,13 @@ import React from "react";
 
 import type { Key } from "@thenamespace/uikit";
 import { Accordion } from "@thenamespace/uikit";
-import { ArrowDown01Icon, Remove01Icon, Add01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
+import {
+  Add01Icon,
+  ChevronsDownIcon,
+  CircleChevronDownIcon,
+  HugeiconsIcon,
+  Remove01Icon,
+} from "@thenamespace/uikit/icons";
 
 export function CustomIndicator() {
   const [expandedKeys, setExpandedKeys] = React.useState<Set<Key>>(new Set([""]));
@@ -42,7 +48,7 @@ export function CustomIndicator() {
           <Accordion.Trigger>
             Using Caret Icon
             <Accordion.Indicator>
-              <HugeiconsIcon icon={ArrowDown01Icon} />
+              <HugeiconsIcon icon={CircleChevronDownIcon} />
             </Accordion.Indicator>
           </Accordion.Trigger>
         </Accordion.Heading>
@@ -59,7 +65,7 @@ export function CustomIndicator() {
           <Accordion.Trigger>
             Using Arrow Icon
             <Accordion.Indicator>
-              <HugeiconsIcon icon={ArrowDown01Icon} />
+              <HugeiconsIcon icon={ChevronsDownIcon} />
             </Accordion.Indicator>
           </Accordion.Trigger>
         </Accordion.Heading>

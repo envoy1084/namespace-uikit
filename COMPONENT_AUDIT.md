@@ -1,6 +1,6 @@
 # HeroUI fidelity audit
 
-Last updated: 2026-07-29
+Last updated: 2026-07-30
 
 This is the working checklist for verifying Namespace UIKit against:
 
@@ -353,6 +353,32 @@ needs to be proven:
       where parent stories do not make the primitive behavior testable.
 - [ ] Browser-test high-interaction core components: calendars, color controls, collection controls,
       menus, overlays, sliders, tabs, toasts, toggle controls, and keyboard focus management.
+
+### Core inventory and first parity batch evidence
+
+- All 85 official component directories have a matching package subpath export and source entry.
+  Eighty-four are thin `@heroui/react/<component>` re-exports. `empty-state` is the intentional
+  exception because Namespace exposes the HeroUI Pro compound Empty State under that public name.
+- All 67 components with an official source story now have the exact same exported story names
+  locally. Namespace also has the separate Pro Empty State story, giving 68 same-slug local core
+  story files. The 17 remaining source directories have no official standalone story either.
+- The 71 official English component MDX pages have matching local heading and
+  `ComponentPreview` inventories. All 595 official documented examples are registered locally, and
+  all 1,073 preview references across the combined OSS/Pro docs resolve to a demo.
+- Restored the newly documented Avatar custom-image composition, all current Tabs demos, Tabs
+  overflow docs/story coverage, and the Radio Group delivery/payment demo. Added the image host
+  allowlist required by the official Next.js `Image` example.
+- Corrected the Spinner API table to its actual `accent` default and removed three undocumented
+  ComboBox open-state rows so the current API inventories match the official snapshot.
+- Reviewed the first ten drift-bearing demo families. Most differences are intentional
+  Gravity-to-Hugeicons, offline asset, Namespace copy, formatting, or equivalent-expression
+  substitutions. Fixed real regressions in Accordion custom styles and indicators and restored the
+  ComboBox indicator size class to the icon instead of the trigger.
+- Browser-verified Tabs overflow chevrons and selection: scrolling to the final tab and selecting
+  Settings renders the expected panel. The local accessibility tree exposes the complete nine-tab
+  list and both scroll controls without console errors.
+- Batch validation passed: docs and Storybook lint (warnings only), both TypeScript checks, the
+  173-page production docs build, and the complete Storybook production build.
 
 ## Package and upgrade baseline
 

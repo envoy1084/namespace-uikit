@@ -3,7 +3,7 @@ import { ArrowDown01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 const items = [
   {
-    content: "Stay informed about your account activity with real-time notifications. ",
+    content: "Stay informed about your account activity with real-time notifications.",
     iconUrl: "/assets/docs/3dicons/bell-small.png",
     subtitle: "Receive account activity updates",
     title: "Set Up Notifications",
@@ -11,7 +11,7 @@ const items = [
   {
     content: "Enhance your browsing experience by installing our official browser extension",
     iconUrl: "/assets/docs/3dicons/compass-small.png",
-    subtitle: "Connect you browser to your account",
+    subtitle: "Connect your browser to your account",
     title: "Set up Browser Extension",
   },
   {
@@ -26,9 +26,9 @@ const items = [
 export function CustomStyles() {
   return (
     <Accordion className="bg-surface-1/10 w-full max-w-md rounded-2xl" variant="surface">
-      {items.map((item, index) => (
+      {items.map((item) => (
         <Accordion.Item
-          key={index}
+          key={item.title}
           className={cn(
             "group/item",
             "first:[&_[data-slot=accordion-trigger]]:rounded-t-2xl", // First trigger we want to round the top
@@ -36,7 +36,7 @@ export function CustomStyles() {
           )}
         >
           <Accordion.Heading>
-            <Accordion.Trigger className="hover:bgsurface group flex items-center gap-2 transition-none">
+            <Accordion.Trigger className="hover:bg-surface group flex items-center gap-2 transition-none">
               {item.iconUrl ? (
                 <img
                   alt={item.title}

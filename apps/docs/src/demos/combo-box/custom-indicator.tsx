@@ -9,8 +9,8 @@ export function CustomIndicator() {
       <Label>Favorite Animal</Label>
       <ComboBox.InputGroup>
         <Input placeholder="Search animals..." />
-        <ComboBox.Trigger className="size-3">
-          <HugeiconsIcon icon={UnfoldMoreIcon} />
+        <ComboBox.Trigger>
+          <HugeiconsIcon className="size-3" icon={UnfoldMoreIcon} />
         </ComboBox.Trigger>
       </ComboBox.InputGroup>
       <ComboBox.Popover>
