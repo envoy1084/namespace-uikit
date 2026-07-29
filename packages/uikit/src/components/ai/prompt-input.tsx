@@ -54,6 +54,42 @@ const cls = (base: string, className: unknown): string =>
   cn(base, typeof className === "string" ? className : undefined) ?? base;
 const running = (status: PromptInputStatus): boolean =>
   status === "submitted" || status === "streaming";
+const TEXTAREA_MIN_HEIGHT = 48;
+const TEXTAREA_CLASS =
+  "prompt-input__textarea border-0 bg-transparent shadow-none outline-none ring-0 hover:border-transparent hover:bg-transparent focus:border-transparent focus:bg-transparent focus:shadow-none focus:ring-0 focus-visible:ring-0 data-[focused=true]:border-transparent data-[hovered=true]:border-transparent data-[focused=true]:bg-transparent data-[hovered=true]:bg-transparent data-[focused=true]:shadow-none data-[focused=true]:ring-0";
+
+const cssNumber = (value: string): number => {
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+};
+const verticalPadding = (element: HTMLTextAreaElement): number => {
+  const style = getComputedStyle(element);
+  return cssNumber(style.paddingTop) + cssNumber(style.paddingBottom);
+};
+const lineHeight = (element: HTMLTextAreaElement): number => {
+  const style = getComputedStyle(element);
+  const parsed = Number.parseFloat(style.lineHeight);
+  if (Number.isFinite(parsed) && parsed > 0) return parsed;
+  const fontSize = Number.parseFloat(style.fontSize);
+  return Number.isFinite(fontSize) && fontSize > 0 ? fontSize * 1.2 : 20;
+};
+const naturalScrollHeight = (element: HTMLTextAreaElement): number => {
+  const { height, maxHeight, minHeight } = element.style;
+  element.style.height = "0px";
+  element.style.minHeight = "0px";
+  element.style.maxHeight = "none";
+  const scrollHeight = element.scrollHeight;
+  element.style.height = height;
+  element.style.minHeight = minHeight;
+  element.style.maxHeight = maxHeight;
+  return scrollHeight;
+};
+const shouldExpandTextarea = (element: HTMLTextAreaElement): boolean => {
+  if (element.value.includes("\n")) return true;
+  if (element.clientWidth === 0) return false;
+  const contentHeight = Math.max(0, naturalScrollHeight(element) - verticalPadding(element));
+  return contentHeight > lineHeight(element) * 1.5;
+};
 export interface PromptInputRootProps extends ComponentPropsWithRef<"div"> {
   allowSubmitWhileRunning?: boolean;
   isDisabled?: boolean;
@@ -134,7 +170,10 @@ export function PromptInputRoot({
   return (
     <Context value={context}>
       <div
-        className={cls(`prompt-input prompt-input--${size}`, className)}
+        className={cls(
+          size === "md" ? "prompt-input" : `prompt-input prompt-input--${size}`,
+          className,
+        )}
         data-disabled={isDisabled || undefined}
         data-expanded={(layout !== "stacked" && expanded) || undefined}
         data-layout={layout}
@@ -162,7 +201,7 @@ export function PromptInputShell({
     // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       className={cls(
-        `prompt-input__shell prompt-input__shell--${state.layout} prompt-input__shell--${state.variant}`,
+        `prompt-input__shell${state.layout === "stacked" ? "" : ` prompt-input__shell--${state.layout}`} prompt-input__shell--${state.variant}`,
         className,
       )}
       data-slot="prompt-input-shell"
@@ -226,24 +265,42 @@ export function PromptInputTextArea({
   ...props
 }: PromptInputTextAreaProps): ReactElement {
   const state = usePrompt();
+  const { expanded, layout, maxHeight, setExpanded } = state;
   const resize = useCallback(
     (element: HTMLTextAreaElement | null) => {
       if (!element || disableAutosize) return;
-      const hasAttachments = Boolean(
-        element
-          .closest('[data-slot="prompt-input-shell"]')
-          ?.querySelector('[data-slot="prompt-input-attachments"] > *'),
-      );
-      const shouldExpand =
-        hasAttachments ||
-        element.value.includes("\n") ||
-        element.scrollHeight > element.clientHeight + 8;
-      if (state.layout !== "stacked") state.setExpanded(shouldExpand || Boolean(element.value));
+      const value = element.value;
+      if (layout !== "stacked") {
+        const hasAttachments = Boolean(
+          element
+            .closest('[data-slot="prompt-input-shell"]')
+            ?.querySelector('[data-slot="prompt-input-attachments"] > *'),
+        );
+        const hasValue = value.length > 0;
+        const shouldExpand = hasAttachments || (hasValue && shouldExpandTextarea(element));
+        if (shouldExpand && !expanded) {
+          setExpanded(true);
+          return;
+        }
+        if (!hasValue && !hasAttachments && expanded) {
+          setExpanded(false);
+          return;
+        }
+        if (!expanded && !hasAttachments) {
+          element.style.height = `${Math.max(
+            TEXTAREA_MIN_HEIGHT,
+            lineHeight(element) + verticalPadding(element),
+          )}px`;
+          return;
+        }
+      }
       element.style.height = "auto";
-      const max = typeof state.maxHeight === "number" ? `${state.maxHeight}px` : state.maxHeight;
-      element.style.height = `min(${element.scrollHeight}px, ${max})`;
+      element.style.height =
+        typeof maxHeight === "number"
+          ? `${Math.min(element.scrollHeight, maxHeight)}px`
+          : `min(${element.scrollHeight}px, ${maxHeight})`;
     },
-    [disableAutosize, state],
+    [disableAutosize, expanded, layout, maxHeight, setExpanded],
   );
   useLayoutEffect(
     () => resize(state.textareaRef.current),
@@ -261,7 +318,7 @@ export function PromptInputTextArea({
       ref={state.textareaRef}
       fullWidth
       aria-label={props["aria-label"] ?? "Message input"}
-      className={cls("prompt-input__textarea", className)}
+      className={cls(TEXTAREA_CLASS, className)}
       data-slot="prompt-input-textarea"
       disabled={state.disabled || (state.lockInputOnRun && running(state.status))}
       placeholder={props.placeholder ?? "What do you want to know?"}

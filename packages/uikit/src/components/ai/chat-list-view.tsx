@@ -62,14 +62,9 @@ export function ChatListViewItem({
 }: ChatListViewItemProps): ReactElement {
   return (
     <ListView.Item
-      className={(state) =>
-        cn(
-          "chat-list-view__item",
-          typeof className === "function" ? className(state) : className,
-        ) ?? "chat-list-view__item"
-      }
       data-slot="chat-list-view-item"
       {...props}
+      {...(className === undefined ? {} : { className })}
     >
       {children}
     </ListView.Item>
@@ -83,9 +78,9 @@ export function ChatListViewItemContent({
 }: ComponentPropsWithRef<"div">): ReactElement {
   return (
     <ListView.ItemContent
-      className={cn("chat-list-view__item-content", className)}
       data-slot="chat-list-view-item-content"
       {...props}
+      {...(className === undefined ? {} : { className })}
     >
       {children}
     </ListView.ItemContent>

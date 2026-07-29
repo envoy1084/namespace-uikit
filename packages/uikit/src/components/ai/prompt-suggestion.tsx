@@ -2,7 +2,8 @@
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
 import { createContext, createElement, useContext } from "react";
 
-import { Button, Card, cn } from "@heroui/react";
+import { Card, cn, IconChevronRight } from "@heroui/react";
+import { Button as AriaButton } from "react-aria-components";
 export type PromptSuggestionVariant = "card" | "pill";
 const Context = createContext<PromptSuggestionVariant>("pill");
 const cls = (base: string, className: unknown): string =>
@@ -93,7 +94,7 @@ export function PromptSuggestionItems({
   );
 }
 export interface PromptSuggestionItemProps extends Omit<
-  ComponentPropsWithRef<typeof Button>,
+  ComponentPropsWithRef<typeof AriaButton>,
   "children"
 > {
   children: ReactNode;
@@ -117,18 +118,14 @@ export function PromptSuggestionItem({
       </Card>
     );
   return (
-    <Button
+    <AriaButton
       className={cls("prompt-suggestion__item prompt-suggestion__item--pill", className)}
       data-slot="prompt-suggestion-item"
       {...props}
     >
       <span className="prompt-suggestion__item-label">{children}</span>
-      {showEndIcon ? (
-        <span aria-hidden className="prompt-suggestion__item-end-icon">
-          →
-        </span>
-      ) : null}
-    </Button>
+      {showEndIcon ? <IconChevronRight className="prompt-suggestion__item-end-icon" /> : null}
+    </AriaButton>
   );
 }
 export function PromptSuggestionItemTitle({
@@ -150,7 +147,6 @@ export function PromptSuggestionItemDescription({
   return (
     <Card.Description
       className={cls("prompt-suggestion__item-description", className)}
-      data-slot="prompt-suggestion-item-description"
       {...props}
     />
   );

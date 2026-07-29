@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { Copy01Icon, HugeiconsIcon, ThumbsUpIcon } from "@thenamespace/uikit/icons";
 
 import { ChatMessage, ChatMessageActions } from "./index";
 const meta = {
@@ -49,12 +50,12 @@ export const CustomIcons: Story = {
       <ChatMessageActions>
         <ChatMessageActions.Copy aria-label="Copy" tooltip="Copy">
           <ChatMessageActions.CopyIcon>
-            <span className="text-accent size-4">C</span>
+            <HugeiconsIcon className="text-accent size-4" icon={Copy01Icon} />
           </ChatMessageActions.CopyIcon>
         </ChatMessageActions.Copy>
         <ChatMessageActions.ThumbsUp aria-label="Good response" tooltip="Good response">
           <ChatMessageActions.ThumbsUpIcon>
-            <span className="text-success size-4">★</span>
+            <HugeiconsIcon className="text-success size-4" icon={ThumbsUpIcon} />
           </ChatMessageActions.ThumbsUpIcon>
         </ChatMessageActions.ThumbsUp>
       </ChatMessageActions>

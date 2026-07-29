@@ -1,6 +1,6 @@
 "use client";
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";
-import { createContext, useContext, useMemo } from "react";
+import { cloneElement, createContext, isValidElement, useContext, useMemo } from "react";
 
 import { Button, cn, Disclosure } from "@heroui/react";
 import {
@@ -119,7 +119,7 @@ export function ChatToolRoot({
               {triggerPrefix || toolName ? (
                 <span className="chat-tool__trigger-label">
                   {triggerPrefix}
-                  {toolName ? <strong>{toolName}</strong> : null}
+                  {toolName ? <span className="font-medium">{toolName}</span> : null}
                 </span>
               ) : null}
             </ChatToolTrigger>
@@ -162,7 +162,7 @@ export function ChatToolTrigger({
   return (
     <Disclosure.Heading>
       <Disclosure.Trigger
-        className={cls("chat-tool__trigger", className)}
+        className={cls(`chat-tool__trigger${state.expandable ? "" : " cursor-default"}`, className)}
         data-expandable={state.expandable ? undefined : "false"}
         data-slot="chat-tool-trigger"
         isDisabled={Boolean(isDisabled || !state.expandable)}
@@ -192,17 +192,28 @@ export function ChatToolStatusIcon({
         : state === "requires-action"
           ? AlertCircleIcon
           : Wrench01Icon;
+  const color =
+    state === "output-available"
+      ? "text-success"
+      : state === "output-error"
+        ? "text-danger"
+        : state === "requires-action"
+          ? "text-warning"
+          : "";
+  if (children && isValidElement(children))
+    return cloneElement(children as ReactElement<{ className?: string; "data-slot"?: string }>, {
+      className: cls(`size-3.5 shrink-0 ${color}`, className),
+      "data-slot": "chat-tool-status-icon",
+    });
   return (
-    <span
-      className={cls(
-        `chat-tool__status ${state === "output-available" ? "text-success" : state === "output-error" ? "text-danger" : state === "requires-action" ? "text-warning" : ""}`,
-        className,
-      )}
-      data-slot="chat-tool-status"
-    >
-      {children ?? (
-        <HugeiconsIcon aria-hidden className="size-3.5 shrink-0" icon={icon} strokeWidth={2} />
-      )}
+    <span className="chat-tool__status" data-slot="chat-tool-status">
+      <HugeiconsIcon
+        aria-hidden
+        className={cls(`size-3.5 shrink-0 ${color}`, className)}
+        data-slot="chat-tool-status-icon"
+        icon={icon}
+        strokeWidth={2}
+      />
     </span>
   );
 }

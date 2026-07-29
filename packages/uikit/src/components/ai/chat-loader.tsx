@@ -19,16 +19,18 @@ export function ChatLoaderDots({
   size = "md",
   ...props
 }: LoaderProps): ReactElement {
+  const sizeClass = size === "md" ? "" : ` chat-loader__dots--${size}`;
+  const dotSizeClass = size === "md" ? "" : ` chat-loader__dot--${size}`;
   return (
     <span
-      className={cls(`chat-loader__dots chat-loader__dots--${size}`, className)}
+      className={cls(`chat-loader__dots${sizeClass}`, className)}
       data-slot="chat-loader-dots"
       {...aria(label)}
       {...props}
     >
-      <span className="chat-loader__dot" />
-      <span className="chat-loader__dot" />
-      <span className="chat-loader__dot" />
+      <span className={`chat-loader__dot${dotSizeClass}`} />
+      <span className={`chat-loader__dot${dotSizeClass}`} />
+      <span className={`chat-loader__dot${dotSizeClass}`} />
       {label ? <span className="sr-only">{label}</span> : null}
     </span>
   );
@@ -39,9 +41,10 @@ export function ChatLoaderPulse({
   size = "md",
   ...props
 }: LoaderProps): ReactElement {
+  const sizeClass = size === "md" ? "" : ` chat-loader__pulse--${size}`;
   return (
     <span
-      className={cls(`chat-loader__pulse chat-loader__pulse--${size}`, className)}
+      className={cls(`chat-loader__pulse${sizeClass}`, className)}
       data-slot="chat-loader-pulse"
       {...aria(label)}
       {...props}
@@ -84,7 +87,7 @@ export function ChatLoaderSkeleton({
       <div
         aria-busy="true"
         aria-label={label}
-        className={cls("chat-loader chat-loader__skeleton", className)}
+        className={cls("chat-loader__skeleton", className)}
         data-slot="chat-loader-skeleton"
         role={label ? "status" : undefined}
         {...props}
@@ -108,12 +111,10 @@ export function ChatLoaderSkeletonAvatar({
   ...props
 }: ComponentPropsWithRef<"div">): ReactElement {
   const size = useContext(Context);
+  const sizeClass = size === "md" ? "" : ` chat-loader__skeleton-avatar--${size}`;
   return (
     <div
-      className={cls(
-        `chat-loader__avatar chat-loader__skeleton-avatar chat-loader__skeleton-avatar--${size}`,
-        className,
-      )}
+      className={cls(`chat-loader__skeleton-avatar${sizeClass}`, className)}
       data-slot="chat-loader-skeleton-avatar"
       {...props}
     />
@@ -125,7 +126,7 @@ export function ChatLoaderSkeletonBlock({
 }: ComponentPropsWithRef<"div">): ReactElement {
   return (
     <div
-      className={cls("chat-loader__content chat-loader__skeleton-block", className)}
+      className={cls("chat-loader__skeleton-block", className)}
       data-slot="chat-loader-skeleton-block"
       {...props}
     />
@@ -136,12 +137,10 @@ export function ChatLoaderSkeletonLine({
   ...props
 }: ComponentPropsWithRef<"div">): ReactElement {
   const size = useContext(Context);
+  const sizeClass = size === "md" ? "" : ` chat-loader__skeleton-line--${size}`;
   return (
     <div
-      className={cls(
-        `chat-loader__line chat-loader__skeleton-line chat-loader__skeleton-line--${size}`,
-        className,
-      )}
+      className={cls(`chat-loader__skeleton-line${sizeClass}`, className)}
       data-slot="chat-loader-skeleton-line"
       {...props}
     />

@@ -43,65 +43,59 @@ function ComposerDemo() {
       })),
     ]);
   return (
-    <div className="max-w-xl">
+    <PromptInput className="max-w-xl">
       <ChatAttachmentInput onFilesSelected={add}>
         <ChatAttachmentInput.Dropzone
           render={(dropProps) => (
-            <PromptInput>
-              <PromptInput.Shell {...dropProps}>
-                <PromptInput.Content>
-                  {attachments.length ? (
-                    <PromptInput.Attachments>
-                      <ChatAttachmentGroup>
-                        {attachments.map((item) => (
-                          <ChatAttachment
-                            key={item.id}
-                            mimeType={item.mimeType}
-                            name={item.name}
-                            src={item.src}
-                          >
-                            <ChatAttachment.Preview />
-                            <ChatAttachment.Remove
-                              aria-label="Remove attachment"
-                              onPress={() =>
-                                setAttachments((values) =>
-                                  values.filter((value) => value.id !== item.id),
-                                )
-                              }
-                            />
-                          </ChatAttachment>
-                        ))}
-                      </ChatAttachmentGroup>
-                    </PromptInput.Attachments>
-                  ) : null}
-                  <PromptInput.TextArea placeholder="Ask about your files..." />
-                </PromptInput.Content>
-                <PromptInput.Toolbar>
-                  <PromptInput.ToolbarStart>
-                    <ChatAttachmentInput.Trigger
-                      render={(props) => (
-                        <PromptInput.Action
-                          {...props}
-                          aria-label="Attach file"
-                          tooltip="Attach file"
+            <PromptInput.Shell {...dropProps}>
+              <PromptInput.Content>
+                {attachments.length ? (
+                  <PromptInput.Attachments>
+                    <ChatAttachmentGroup>
+                      {attachments.map((item) => (
+                        <ChatAttachment
+                          key={item.id}
+                          mimeType={item.mimeType}
+                          name={item.name}
+                          src={item.src}
                         >
-                          <HugeiconsIcon aria-hidden icon={Attachment01Icon} strokeWidth={2} />
-                        </PromptInput.Action>
-                      )}
-                    />
-                  </PromptInput.ToolbarStart>
-                  <PromptInput.ToolbarEnd>
-                    <PromptInput.Send aria-label="Send">
-                      <HugeiconsIcon aria-hidden icon={ArrowUp01Icon} strokeWidth={2} />
-                    </PromptInput.Send>
-                  </PromptInput.ToolbarEnd>
-                </PromptInput.Toolbar>
-              </PromptInput.Shell>
-            </PromptInput>
+                          <ChatAttachment.Preview />
+                          <ChatAttachment.Remove
+                            aria-label="Remove attachment"
+                            onPress={() =>
+                              setAttachments((values) =>
+                                values.filter((value) => value.id !== item.id),
+                              )
+                            }
+                          />
+                        </ChatAttachment>
+                      ))}
+                    </ChatAttachmentGroup>
+                  </PromptInput.Attachments>
+                ) : null}
+                <PromptInput.TextArea placeholder="Ask about your files..." />
+              </PromptInput.Content>
+              <PromptInput.Toolbar>
+                <PromptInput.ToolbarStart>
+                  <ChatAttachmentInput.Trigger
+                    render={(props) => (
+                      <PromptInput.Action {...props} aria-label="Attach file" tooltip="Attach file">
+                        <HugeiconsIcon aria-hidden icon={Attachment01Icon} strokeWidth={2} />
+                      </PromptInput.Action>
+                    )}
+                  />
+                </PromptInput.ToolbarStart>
+                <PromptInput.ToolbarEnd>
+                  <PromptInput.Send aria-label="Send">
+                    <HugeiconsIcon aria-hidden icon={ArrowUp01Icon} strokeWidth={2} />
+                  </PromptInput.Send>
+                </PromptInput.ToolbarEnd>
+              </PromptInput.Toolbar>
+            </PromptInput.Shell>
           )}
         />
       </ChatAttachmentInput>
-    </div>
+    </PromptInput>
   );
 }
 
