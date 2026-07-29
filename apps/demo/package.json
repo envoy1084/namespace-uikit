@@ -5,6 +5,7 @@
   "scripts": {
     "build": "vocs build",
     "dev": "vocs dev --port 3000",
+    "prebuild": "pnpm --filter @thenamespace/uikit build && pnpm --filter ens-components build",
     "preview": "vocs preview",
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },
