@@ -1,3 +1,4 @@
+/* oxlint-disable react/no-danger -- Shiki escapes source and returns trusted highlighted markup. */
 "use client";
 
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from "react";

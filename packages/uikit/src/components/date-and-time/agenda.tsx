@@ -1,3 +1,4 @@
+/* oxlint-disable jsx-a11y/no-static-element-interactions -- The day column is a pointer-drag surface; nested events provide keyboard interaction. */
 "use client";
 
 import type {
@@ -572,6 +573,8 @@ function AgendaTimeGrid({
     (_, index) => agenda.startHour + index,
   );
   return (
+    // This pointer-drag surface creates timed events; nested events provide keyboard interaction.
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       {...props}
       className={cn("agenda__time-grid", `agenda__time-grid--${agenda.view}`, className)}
