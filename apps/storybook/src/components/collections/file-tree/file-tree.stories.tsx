@@ -4,6 +4,12 @@ import { useTreeData } from "@react-stately/data";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Collection, type Selection } from "react-aria-components";
 
+import { Button } from "@/components/buttons/button";
+import { Dropdown } from "@/components/collections/dropdown";
+import { Label } from "@/components/forms/label";
+import { SearchField } from "@/components/forms/search-field";
+import { Separator } from "@/components/layout/separator";
+import { Header } from "@/components/typography/header";
 import { Icon } from "@/icon";
 
 import { FileTree, useFileTree, useFileTreeDrag, type FileTreeItemRenderProps } from "./index";
@@ -21,14 +27,19 @@ const FolderIcon = ({ isExpanded }: FileTreeItemRenderProps) => (
   <Icon icon={isExpanded ? "lucide:folder-open" : "lucide:folder"} />
 );
 const FileIcon = () => <Icon icon="lucide:file-code-2" />;
-const project = [
+interface ProjectNode {
+  children?: ProjectNode[];
+  id: string;
+  name: string;
+}
+const project: ProjectNode[] = [
   {
     children: [
       {
         children: [
           { id: "button", name: "button.tsx" },
           { id: "card", name: "card.tsx" },
-          { id: "modal", name: "modal.tsx" },
+          { id: "button-css", name: "button.css" },
         ],
         id: "components",
         name: "components",
@@ -49,10 +60,153 @@ const project = [
   { id: "package", name: "package.json" },
   { id: "tsconfig", name: "tsconfig.json" },
   { id: "readme", name: "README.md" },
+  { id: "env", name: ".env" },
 ];
-type ProjectNode = (typeof project)[number] & {
-  children?: ProjectNode[];
-};
+const dragProject: ProjectNode[] = [
+  {
+    children: [
+      {
+        children: [
+          { id: "drag-button", name: "button.tsx" },
+          { id: "drag-card", name: "card.tsx" },
+          { id: "drag-modal", name: "modal.tsx" },
+        ],
+        id: "drag-components",
+        name: "components",
+      },
+      {
+        children: [
+          { id: "drag-compose", name: "compose.ts" },
+          { id: "drag-cn", name: "cn.ts" },
+        ],
+        id: "drag-utils",
+        name: "utils",
+      },
+      { id: "drag-index", name: "index.ts" },
+    ],
+    id: "drag-src",
+    name: "src",
+  },
+  { id: "drag-package", name: "package.json" },
+  { id: "drag-tsconfig", name: "tsconfig.json" },
+  { id: "drag-readme", name: "README.md" },
+];
+
+const defaultProject: ProjectNode[] = [
+  {
+    children: [
+      {
+        children: [
+          { id: "frontend-package", name: "package.json" },
+          { id: "frontend-tsconfig", name: "tsconfig.json" },
+          {
+            children: [
+              {
+                children: [
+                  { id: "frontend-layout", name: "layout.tsx" },
+                  { id: "frontend-page", name: "page.tsx" },
+                ],
+                id: "frontend-app",
+                name: "app",
+              },
+            ],
+            id: "frontend-src",
+            name: "src",
+          },
+        ],
+        id: "frontend",
+        name: "frontend",
+      },
+      {
+        children: [
+          { id: "api-package", name: "package.json" },
+          {
+            children: [
+              { id: "api-index", name: "index.ts" },
+              { id: "api-routes", name: "routes.ts" },
+            ],
+            id: "api-src",
+            name: "src",
+          },
+        ],
+        id: "api",
+        name: "api",
+      },
+    ],
+    id: "apps",
+    name: "apps",
+  },
+  {
+    children: [
+      {
+        children: [
+          { id: "react-package", name: "package.json" },
+          {
+            children: [
+              {
+                children: [{ id: "react-index", name: "index.ts" }],
+                id: "react-components",
+                name: "components",
+              },
+            ],
+            id: "react-src",
+            name: "src",
+          },
+        ],
+        id: "react",
+        name: "react",
+      },
+    ],
+    id: "packages",
+    name: "packages",
+  },
+  {
+    children: [
+      {
+        children: [
+          {
+            children: [{ id: "skill-file", name: "SKILL.md" }],
+            id: "heroui-react",
+            name: "heroui-react",
+          },
+        ],
+        id: "skills",
+        name: "skills",
+      },
+    ],
+    id: "claude",
+    name: ".claude",
+  },
+  { id: "root-readme", name: "README.md" },
+  { id: "agents", name: "AGENTS.md" },
+  { id: "root-package", name: "package.json" },
+  { id: "root-tsconfig", name: "tsconfig.json" },
+];
+
+const renderStaticNode = (node: ProjectNode): React.JSX.Element => (
+  <FileTree.Item id={node.id} key={node.id} textValue={node.name} title={node.name}>
+    {node.children?.map(renderStaticNode)}
+  </FileTree.Item>
+);
+
+function DefaultTree({
+  className = "w-[300px]",
+  reduceMotion,
+}: {
+  className?: string;
+  reduceMotion?: boolean;
+}) {
+  return (
+    <FileTree
+      aria-label="Project structure"
+      className={className}
+      defaultExpandedKeys={["apps", "frontend", "api", "packages", "react", "claude"]}
+      reduceMotion={reduceMotion}
+    >
+      {defaultProject.map(renderStaticNode)}
+    </FileTree>
+  );
+}
 
 function StaticTree({
   className = "w-[300px]",
@@ -80,7 +234,7 @@ function StaticTree({
   );
   return (
     <FileTree
-      aria-label="Project structure"
+      aria-label={icons ? "Project with icons" : "Project structure"}
       className={className}
       defaultExpandedKeys={["src", "components", "utils"]}
       reduceMotion={reduceMotion}
@@ -92,7 +246,7 @@ function StaticTree({
   );
 }
 
-export const Default: Story = { render: () => <StaticTree /> };
+export const Default: Story = { render: () => <DefaultTree /> };
 export const WithIcons: Story = { render: () => <StaticTree icons /> };
 
 function MultipleSelectionDemo() {
@@ -146,13 +300,60 @@ const renderDynamicNode = (node: ProjectNode): React.JSX.Element => (
     {node.children ? <Collection items={node.children}>{renderDynamicNode}</Collection> : null}
   </FileTree.Item>
 );
+const dynamicProject: ProjectNode[] = [
+  {
+    children: [
+      {
+        children: [
+          { id: "dynamic-layout", name: "layout.tsx" },
+          { id: "dynamic-page", name: "page.tsx" },
+          { id: "dynamic-css", name: "globals.css" },
+        ],
+        id: "dynamic-frontend",
+        name: "frontend",
+      },
+      {
+        children: [
+          { id: "dynamic-api-index", name: "index.ts" },
+          { id: "dynamic-api-routes", name: "routes.ts" },
+        ],
+        id: "dynamic-api",
+        name: "api",
+      },
+    ],
+    id: "dynamic-apps",
+    name: "apps",
+  },
+  {
+    children: [
+      {
+        children: [
+          { id: "dynamic-react-index", name: "index.ts" },
+          { id: "dynamic-react-package", name: "package.json" },
+        ],
+        id: "dynamic-react",
+        name: "react",
+      },
+    ],
+    id: "dynamic-packages",
+    name: "packages",
+  },
+  { id: "dynamic-readme", name: "README.md" },
+  { id: "dynamic-agents", name: "AGENTS.md" },
+  { id: "dynamic-package", name: "package.json" },
+];
 function DynamicCollectionDemo() {
   return (
     <FileTree
       aria-label="Dynamic file tree"
       className="max-h-[380px] w-[300px]"
-      defaultExpandedKeys={["src", "components", "utils"]}
-      items={project}
+      defaultExpandedKeys={[
+        "dynamic-apps",
+        "dynamic-frontend",
+        "dynamic-packages",
+        "dynamic-react",
+      ]}
+      items={dynamicProject}
     >
       {renderDynamicNode}
     </FileTree>
@@ -222,6 +423,7 @@ interface ReviewNode {
   id: string;
   name: string;
 }
+const reviewExtensions = [".jsonc", ".ts", ".tsx"];
 const reviewTree: ReviewNode[] = [
   {
     id: "apps",
@@ -235,35 +437,146 @@ const reviewTree: ReviewNode[] = [
             id: "api-src",
             name: "src",
             children: [
-              { id: "routes", name: "routes.ts", ext: ".ts" },
+              { id: "api-lib", name: "lib" },
+              { id: "api-routes", name: "routes" },
+              {
+                id: "api-tests",
+                name: "tests",
+                children: [
+                  {
+                    id: "api-tests-middlewares",
+                    name: "middlewares",
+                    children: [
+                      {
+                        ext: ".ts",
+                        id: "cli-auth-middleware-spec",
+                        name: "cliAuthMiddleware.spec.ts",
+                      },
+                    ],
+                  },
+                  {
+                    id: "api-tests-routes",
+                    name: "routes",
+                    children: [
+                      {
+                        ext: ".ts",
+                        id: "license-key-spec",
+                        name: "license-key.spec.ts",
+                      },
+                    ],
+                  },
+                  {
+                    id: "api-tests-services",
+                    name: "services",
+                    children: [
+                      {
+                        ext: ".ts",
+                        id: "project-service-spec",
+                        name: "projectService.spec.ts",
+                      },
+                    ],
+                  },
+                  {
+                    id: "api-tests-utils",
+                    name: "utils",
+                    children: [{ ext: ".ts", id: "email-spec", name: "email.spec.ts" }],
+                  },
+                ],
+              },
               { id: "auth", name: "auth.ts", ext: ".ts" },
+              { id: "api-index-review", name: "index.ts", ext: ".ts" },
               { id: "openapi", name: "openapi.ts", ext: ".ts" },
             ],
           },
+          { ext: ".jsonc", id: "wrangler", name: "wrangler.jsonc" },
         ],
       },
       {
         id: "frontend",
         name: "frontend/src",
         children: [
-          { id: "sidebar", name: "dashboard-sidebar.tsx", ext: ".tsx" },
-          { id: "editor", name: "team-name-editor.tsx", ext: ".tsx" },
+          {
+            children: [
+              { id: "frontend-dashboard", name: "dashboard" },
+              { id: "frontend-invite-token", name: "invite/[token]" },
+            ],
+            id: "frontend-app-review",
+            name: "app",
+          },
+          {
+            children: [
+              {
+                children: [
+                  {
+                    ext: ".tsx",
+                    id: "dashboard-sidebar",
+                    name: "dashboard-sidebar.tsx",
+                  },
+                ],
+                id: "frontend-components-dashboard",
+                name: "dashboard",
+              },
+              {
+                children: [
+                  {
+                    ext: ".tsx",
+                    id: "create-license-key-modal",
+                    name: "create-license-key-modal.tsx",
+                  },
+                ],
+                id: "frontend-components-license-keys",
+                name: "license-keys",
+              },
+              {
+                children: [
+                  {
+                    ext: ".tsx",
+                    id: "team-name-editor",
+                    name: "team-name-editor.tsx",
+                  },
+                ],
+                id: "frontend-components-teams",
+                name: "teams",
+              },
+            ],
+            id: "frontend-components-review",
+            name: "components",
+          },
+          {
+            children: [
+              {
+                ext: ".ts",
+                id: "license-key-api",
+                name: "license-key-api.ts",
+              },
+            ],
+            id: "frontend-lib-review",
+            name: "lib",
+          },
         ],
       },
     ],
   },
-  { id: "readme-review", name: "README.md", ext: ".md" },
 ];
 function PRFileReviewDemo() {
   const { expandableKeys, filterTree, leaves } = useFileTree({
     items: reviewTree,
   });
   const extensions = useMemo(
-    () => [...new Set(leaves.map((leaf) => leaf.ext).filter(Boolean))] as string[],
+    () => reviewExtensions.filter((extension) => leaves.some((leaf) => leaf.ext === extension)),
     [leaves],
   );
   const [query, setQuery] = useState("");
-  const [enabled] = useState(new Set(extensions));
+  const [selectedFilters, setSelectedFilters] = useState<Selection>(
+    new Set([".jsonc", ".ts", ".tsx"]),
+  );
+  const enabled = useMemo(
+    () =>
+      selectedFilters === "all"
+        ? new Set(extensions)
+        : new Set([...selectedFilters].filter((key): key is string => extensions.includes(key))),
+    [extensions, selectedFilters],
+  );
   const filtered = useMemo(
     () =>
       filterTree(
@@ -284,16 +597,55 @@ function PRFileReviewDemo() {
     </FileTree.Item>
   );
   return (
-    <div className="flex w-[310px] flex-col gap-3">
-      <label className="bg-default flex items-center gap-2 rounded-lg px-3 py-2 text-sm">
-        <Icon icon="lucide:search" />
-        <input
-          className="w-full bg-transparent outline-none"
-          placeholder="Filter files..."
+    <div className="flex w-[360px] flex-col gap-3">
+      <div className="flex items-center gap-2">
+        <SearchField
+          aria-label="Filter files"
+          className="min-w-0 flex-1"
           value={query}
-          onChange={(event) => setQuery(event.target.value)}
-        />
-      </label>
+          onChange={setQuery}
+        >
+          <SearchField.Group>
+            <SearchField.SearchIcon />
+            <SearchField.Input placeholder="Filter files" />
+            <SearchField.ClearButton />
+          </SearchField.Group>
+        </SearchField>
+        <Dropdown>
+          <Button aria-label="File extensions" isIconOnly variant="tertiary">
+            <Icon icon="lucide:list-filter" />
+          </Button>
+          <Dropdown.Popover className="min-w-[220px]">
+            <Dropdown.Menu
+              aria-label="File extensions"
+              selectedKeys={selectedFilters}
+              selectionMode="multiple"
+              onSelectionChange={setSelectedFilters}
+            >
+              <Dropdown.Section>
+                <Header>File extensions</Header>
+                {extensions.map((extension) => (
+                  <Dropdown.Item id={extension} key={extension} textValue={extension}>
+                    <Dropdown.ItemIndicator />
+                    <Label>{extension}</Label>
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Section>
+              <Separator />
+              <Dropdown.Section>
+                <Dropdown.Item id="deleted" textValue="Deleted files">
+                  <Dropdown.ItemIndicator />
+                  <Label>Deleted files</Label>
+                </Dropdown.Item>
+                <Dropdown.Item id="viewed" textValue="Viewed files">
+                  <Dropdown.ItemIndicator />
+                  <Label>Viewed files</Label>
+                </Dropdown.Item>
+              </Dropdown.Section>
+            </Dropdown.Menu>
+          </Dropdown.Popover>
+        </Dropdown>
+      </div>
       <FileTree
         aria-label="PR changed files"
         defaultExpandedKeys={expandableKeys}
@@ -310,7 +662,7 @@ export const PRFileReview: Story = {
   render: () => <PRFileReviewDemo />,
 };
 export const ReducedMotion: Story = {
-  render: () => <StaticTree reduceMotion />,
+  render: () => <DefaultTree className="max-h-[420px] w-80" reduceMotion />,
 };
 
 interface IncludedNode extends ProjectNode {
@@ -377,10 +729,10 @@ function WithCheckboxesDemo() {
       <FileTree.Item
         icon={FolderIcon}
         id="root"
-        textValue="thenamespace/uikit"
+        textValue="heroui-inc/heroui.pro"
         title={
           <span className="inline-flex w-full justify-between">
-            <span>thenamespace/uikit</span>
+            <span>heroui-inc/heroui.pro</span>
             <span className="text-muted text-xs">1664 included</span>
           </span>
         }
@@ -393,7 +745,7 @@ function WithCheckboxesDemo() {
 export const WithCheckboxes: Story = { render: () => <WithCheckboxesDemo /> };
 
 function DragAndDropDemo() {
-  const tree = useTreeData({ initialItems: project });
+  const tree = useTreeData({ initialItems: dragProject });
   const { dragAndDropHooks } = useFileTreeDrag({ tree });
   const renderNode = (node: (typeof tree.items)[number]): React.JSX.Element => {
     const hasChildren = Boolean(node.children?.length);
@@ -412,7 +764,7 @@ function DragAndDropDemo() {
     <FileTree
       aria-label="Draggable file tree"
       className="w-[300px]"
-      defaultExpandedKeys={["src", "components", "utils"]}
+      defaultExpandedKeys={["drag-src", "drag-components", "drag-utils"]}
       dragAndDropHooks={dragAndDropHooks}
       items={tree.items}
       renderEmptyState={() => <div>No files</div>}

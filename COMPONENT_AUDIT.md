@@ -43,7 +43,7 @@ catalog.
 | [Carousel](https://heroui.pro/docs/react/components/carousel)                           | [source](packages/uikit/src/components/data-display/carousel.tsx)         | [docs](apps/docs/content/docs/components/carousel.mdx)              | [6/6](https://storybook.heroui.pro/?path=/docs/components-carousel--docs) · [local](apps/storybook/src/components/data-display/carousel/carousel.stories.tsx)                                 | ⬜ Inventory |                                                                                                      |
 | [Data Grid](https://heroui.pro/docs/react/components/data-grid)                         | [source](packages/uikit/src/components/collections/data-grid.tsx)         | [docs](apps/docs/content/docs/components/data-grid.mdx)             | [12/12](https://storybook.heroui.pro/?path=/docs/components-datagrid--docs) · [local](apps/storybook/src/components/collections/data-grid/data-grid.stories.tsx)                              |      🛠 Fixed | Fixed extra wrapper/style regression and missing documented type exports. Final matrix pass remains. |
 | [Empty State](https://heroui.pro/docs/react/components/empty-state)                     | [source](packages/uikit/src/components/feedback/empty-state.tsx)          | [docs](apps/docs/content/docs/components/empty-state.mdx)           | [8/8](https://storybook.heroui.pro/?path=/docs/components-emptystate--docs) · [local](apps/storybook/src/components/feedback/empty-state/empty-state.stories.tsx)                             | ⬜ Inventory | Also present in HeroUI OSS snapshot.                                                                 |
-| [File Tree](https://heroui.pro/docs/react/components/file-tree)                         | [source](packages/uikit/src/components/collections/file-tree.tsx)         | [docs](apps/docs/content/docs/components/file-tree.mdx)             | [11/11](https://storybook.heroui.pro/?path=/docs/components-filetree--docs) · [local](apps/storybook/src/components/collections/file-tree/file-tree.stories.tsx)                              | ⬜ Inventory | Keyboard, selection, reduced motion, checkbox and drag/drop states.                                  |
+| [File Tree](https://heroui.pro/docs/react/components/file-tree)                         | [source](packages/uikit/src/components/collections/file-tree.tsx)         | [docs](apps/docs/content/docs/components/file-tree.mdx)             | [11/11](https://storybook.heroui.pro/?path=/docs/components-filetree--docs) · [local](apps/storybook/src/components/collections/file-tree/file-tree.stories.tsx)                              |      🛠 Fixed | Reconciled all fixtures and rebuilt PR review controls/tree. Final drag/drop matrix remains.         |
 | [Floating TOC](https://heroui.pro/docs/react/components/floating-toc)                   | [source](packages/uikit/src/components/navigation/floating-toc.tsx)       | [docs](apps/docs/content/docs/components/floating-toc.mdx)          | [10/10](https://storybook.heroui.pro/?path=/docs/components-floatingtoc--docs) · [local](apps/storybook/src/components/navigation/floating-toc/floating-toc.stories.tsx)                      | ⬜ Inventory | Hover/press modes and virtualization.                                                                |
 | [Hover Card](https://heroui.pro/docs/react/components/hover-card)                       | [source](packages/uikit/src/components/overlays/hover-card.tsx)           | [docs](apps/docs/content/docs/components/hover-card.mdx)            | [6/6](https://storybook.heroui.pro/?path=/docs/components-hovercard--docs) · [local](apps/storybook/src/components/overlays/hover-card/hover-card.stories.tsx)                                | ⬜ Inventory | Hover delays, placement and controlled state.                                                        |
 | [Kanban](https://heroui.pro/docs/react/components/kanban)                               | [source](packages/uikit/src/components/collections/kanban.tsx)            | [docs](apps/docs/content/docs/components/kanban.mdx)                | [4/4](https://storybook.heroui.pro/?path=/docs/components-kanban--docs) · [local](apps/storybook/src/components/collections/kanban/kanban.stories.tsx)                                        | ⬜ Inventory | Drag/drop and keyboard operation.                                                                    |
@@ -113,6 +113,23 @@ catalog.
   `DataGridSortDirection` exports and aligned `accessorKey` to `keyof T & string`.
 - Final verification still required: pointer resizing, narrow-viewport pinned scrolling, async
   sentinel loading, and dark/reduced-motion captures.
+
+### File Tree evidence
+
+- The live Pro docs hierarchy, anatomy, CSS-class tables, API references, and all 11 Storybook
+  entries match the local inventory.
+- Reconciled stale Default, With Icons, Dynamic Collection, Reduced Motion, Drag And Drop, and With
+  Checkboxes fixtures with the live examples.
+- Rebuilt PR File Review with the complete live file hierarchy, accessible search field, extension
+  multi-select menu, and identical default expansion/filter state.
+- Browser snapshots now match upstream exactly for all 11 stories. Paired interactions also match
+  for multiple selection, query filtering, extension filtering, custom indicators, expansion, and
+  checkbox selection.
+- Local `reduceMotion` correctly disables the indicator transition. The current live Pro story
+  renders the same accessibility tree but still reports a CSS rotation transition, so the local
+  behavior follows the documented API rather than copying that upstream reduced-motion defect.
+- Final verification still required: pointer and keyboard drag/drop across nesting levels, dark
+  mode, and narrow/touch captures.
 
 ## HeroUI OSS/core audit
 
