@@ -380,6 +380,22 @@ needs to be proven:
 - Batch validation passed: docs and Storybook lint (warnings only), both TypeScript checks, the
   173-page production docs build, and the complete Storybook production build.
 
+### Core interaction batch two evidence
+
+- Source-reviewed Drawer, Input Group/Input, ListBox, Modal, Pagination, Radio Group, Select,
+  Switch, and Table demos against the official snapshot. Their remaining source differences are
+  intentional icon-library, offline-asset, Namespace-copy, formatter, or equivalent-expression
+  substitutions.
+- Corrected the shared `gravity-ui:check` compatibility mapping and the affected ListBox/Switch
+  demos to use Hugeicons' plain check glyph. They previously rendered a boxed checkmark, which did
+  not match the official examples.
+- Browser-verified ListBox multiple selection; Input Group password reveal/hide; custom-portal
+  Modal and Drawer open, Escape dismissal, and focus return; controlled Pagination navigation;
+  delivery/payment Radio Group selection; custom-value Select open/selection; Switch state
+  changes; and nested Table row disclosure.
+- Batch validation passed: docs and Storybook lint (warnings only), both TypeScript checks, the
+  173-page production docs build, and the complete Storybook production build.
+
 ## Package and upgrade baseline
 
 - [x] HeroUI packages aligned on `3.2.2`.

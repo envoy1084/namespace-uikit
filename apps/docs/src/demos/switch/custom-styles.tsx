@@ -1,7 +1,7 @@
 "use client";
 
 import { Switch } from "@thenamespace/uikit";
-import { CheckmarkSquare02Icon, PowerServiceIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
+import { CheckIcon, PowerServiceIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function CustomStyles() {
   return (
@@ -16,7 +16,7 @@ export function CustomStyles() {
             >
               <Switch.Icon>
                 {isSelected ? (
-                  <HugeiconsIcon icon={CheckmarkSquare02Icon} className="size-4 text-cyan-600" />
+                  <HugeiconsIcon icon={CheckIcon} className="size-4 text-cyan-600" />
                 ) : (
                   <HugeiconsIcon icon={PowerServiceIcon} className="size-4 text-blue-600" />
                 )}

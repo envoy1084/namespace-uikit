@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import type { Selection } from "@thenamespace/uikit";
 import { Avatar, Description, Label, ListBox, Surface } from "@thenamespace/uikit";
-import { CheckmarkSquare02Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
+import { CheckIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 export function Controlled() {
   const [selected, setSelected] = useState<Selection>(new Set(["1"]));
@@ -32,10 +32,7 @@ export function Controlled() {
             <ListBox.ItemIndicator>
               {({ isSelected }) =>
                 isSelected ? (
-                  <HugeiconsIcon
-                    icon={CheckmarkSquare02Icon}
-                    className="text-accent-soft-foreground size-4"
-                  />
+                  <HugeiconsIcon icon={CheckIcon} className="text-accent-soft-foreground size-4" />
                 ) : null
               }
             </ListBox.ItemIndicator>
@@ -52,10 +49,7 @@ export function Controlled() {
             <ListBox.ItemIndicator>
               {({ isSelected }) =>
                 isSelected ? (
-                  <HugeiconsIcon
-                    icon={CheckmarkSquare02Icon}
-                    className="text-accent-soft-foreground size-4"
-                  />
+                  <HugeiconsIcon icon={CheckIcon} className="text-accent-soft-foreground size-4" />
                 ) : null
               }
             </ListBox.ItemIndicator>
@@ -72,10 +66,7 @@ export function Controlled() {
             <ListBox.ItemIndicator>
               {({ isSelected }) =>
                 isSelected ? (
-                  <HugeiconsIcon
-                    icon={CheckmarkSquare02Icon}
-                    className="text-accent-soft-foreground size-4"
-                  />
+                  <HugeiconsIcon icon={CheckIcon} className="text-accent-soft-foreground size-4" />
                 ) : null
               }
             </ListBox.ItemIndicator>

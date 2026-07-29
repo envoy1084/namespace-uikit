@@ -4,7 +4,7 @@ import { Switch } from "@thenamespace/uikit";
 import {
   Notification01Icon,
   NotificationOff01Icon,
-  CheckmarkSquare02Icon,
+  CheckIcon,
   Mic01Icon,
   MicOff01Icon,
   Moon02Icon,
@@ -19,7 +19,7 @@ export function WithIcons() {
   const icons = {
     check: {
       off: PowerServiceIcon,
-      on: CheckmarkSquare02Icon,
+      on: CheckIcon,
       selectedControlClass: "bg-green-500/80",
     },
     darkMode: {
