@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react";
 
-import { Icon } from "@iconify/react";
 import type { Selection, SortDescriptor } from "@thenamespace/uikit";
 import { Avatar, Button, Checkbox, Chip, Table } from "@thenamespace/uikit";
+
+import { Icon } from "@/demos/icon";
 
 interface User {
   id: number;

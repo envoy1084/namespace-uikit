@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
 import { Pagination } from "@thenamespace/uikit";
+
+import { Icon } from "@/demos/icon";
 
 export function PaginationCustomIcons() {
   const [page, setPage] = useState(1);

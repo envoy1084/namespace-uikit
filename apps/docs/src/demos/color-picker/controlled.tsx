@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
 import {
   Button,
   ColorArea,
@@ -14,6 +13,8 @@ import {
   Label,
   parseColor,
 } from "@thenamespace/uikit";
+
+import { Icon } from "@/demos/icon";
 
 export function Controlled() {
   const [color, setColor] = useState(parseColor("#325578"));

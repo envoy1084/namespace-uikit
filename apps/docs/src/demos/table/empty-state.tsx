@@ -1,7 +1,8 @@
 "use client";
 
-import { Icon } from "@iconify/react";
 import { EmptyState, Table } from "@thenamespace/uikit";
+
+import { Icon } from "@/demos/icon";
 
 export function EmptyStateDemo() {
   return (

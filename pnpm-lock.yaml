@@ -116,9 +116,6 @@ importers:
       '@heroui/styles':
         specifier: 'catalog:'
         version: 3.2.2(tailwind-merge@3.6.0)(tailwindcss@4.3.3)
-      '@iconify/react':
-        specifier: 6.0.2
-        version: 6.0.2(react@19.2.8)
       '@internationalized/date':
         specifier: 'catalog:'
         version: 3.12.2
@@ -1192,11 +1189,6 @@ packages:
 
   '@iarna/toml@2.2.5':
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
-
-  '@iconify/react@6.0.2':
-    resolution: {integrity: sha512-SMmC2sactfpJD427WJEDN6PMyznTFMhByK9yLW0gOTtnjzzbsi/Ke/XqsumsavFPwNiXs8jSiYeZTmLCLwO+Fg==}
-    peerDependencies:
-      react: '>=16'
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -8395,11 +8387,6 @@ snapshots:
   '@humanwhocodes/retry@0.4.3': {}
 
   '@iarna/toml@2.2.5': {}
-
-  '@iconify/react@6.0.2(react@19.2.8)':
-    dependencies:
-      '@iconify/types': 2.0.0
-      react: 19.2.8
 
   '@iconify/types@2.0.0': {}
 

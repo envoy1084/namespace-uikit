@@ -85,7 +85,7 @@ export default () => (
 <CollapsibleCode lang="tsx" code={`"use client";
 
 import { Accordion, cn } from "@thenamespace/uikit";
-import { Icon } from "@iconify/react";
+import { ArrowDown01Icon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 const items = [
 {
@@ -138,7 +138,7 @@ export function CustomStyles() {
                 <span className="text-muted/80 font-normal leading-6">{item.subtitle}</span>
               </div>
               <Accordion.Indicator className="text-muted/50 [&>svg]:size-4">
-                <Icon icon="hugeicons:chevron-down" />
+                <HugeiconsIcon icon={ArrowDown01Icon} />
               </Accordion.Indicator>
             </Accordion.Trigger>
           </Accordion.Heading>

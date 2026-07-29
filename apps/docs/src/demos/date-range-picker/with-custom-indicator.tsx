@@ -1,7 +1,8 @@
 "use client";
 
-import { Icon } from "@iconify/react";
 import { DateField, DateRangePicker, Description, Label, RangeCalendar } from "@thenamespace/uikit";
+
+import { Icon } from "@/demos/icon";
 
 export function WithCustomIndicator() {
   return (

@@ -3,7 +3,7 @@
 import { Avatar, Button, Card, CloseButton } from "@thenamespace/uikit";
 
 import { useDictionary } from "@/components/demo/dictionary";
-import { Iconify } from "@/components/iconify";
+import { Icon } from "@/demos/icon";
 
 export function AlertDialogDemo() {
   const { demos } = useDictionary();
@@ -14,7 +14,7 @@ export function AlertDialogDemo() {
       <Card.Header className="flex w-full items-start justify-center gap-2 px-1">
         <Avatar color="warning" variant="soft">
           <Avatar.Fallback>
-            <Iconify className="text-lg" icon="hugeicons:floppy-disk" />
+            <Icon className="text-lg" icon="hugeicons:floppy-disk" />
           </Avatar.Fallback>
         </Avatar>
         <Card.Title>{t.title}</Card.Title>

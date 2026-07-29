@@ -3,7 +3,7 @@
 import { Avatar, Button, Card, CloseButton, Separator } from "@thenamespace/uikit";
 
 import { useDictionary } from "@/components/demo/dictionary";
-import { Iconify } from "@/components/iconify";
+import { Icon } from "@/demos/icon";
 import { AppleIcon } from "@/icons/apple";
 import { GoogleIcon } from "@/icons/google";
 
@@ -16,7 +16,7 @@ export function LoginDemo() {
       <Card.Header className="flex w-full items-center justify-center gap-2">
         <Avatar>
           <Avatar.Fallback>
-            <Iconify icon="hugeicons:person" />
+            <Icon icon="hugeicons:person" />
           </Avatar.Fallback>
         </Avatar>
         <Card.Title>{t.title}</Card.Title>

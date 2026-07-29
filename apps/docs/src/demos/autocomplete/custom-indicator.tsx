@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
 import type { Key } from "@thenamespace/uikit";
 import {
   Autocomplete,
@@ -12,6 +11,8 @@ import {
   SearchField,
   useFilter,
 } from "@thenamespace/uikit";
+
+import { Icon } from "@/demos/icon";
 
 export function CustomIndicator() {
   const [selectedKey, setSelectedKey] = useState<Key | null>(null);

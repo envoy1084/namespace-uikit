@@ -2,7 +2,6 @@
 
 import React from "react";
 
-import { Icon } from "@iconify/react";
 import {
   Button,
   Disclosure,
@@ -17,6 +16,8 @@ import {
   HugeiconsIcon,
 } from "@thenamespace/uikit/icons";
 import { cn } from "tailwind-variants";
+
+import { Icon } from "@/demos/icon";
 
 export function Controlled() {
   const [expandedKeys, setExpandedKeys] = React.useState(new Set<string | number>(["preview"]));

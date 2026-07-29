@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 
-import { Icon } from "@iconify/react";
 import type { Selection } from "@thenamespace/uikit";
 import { Button, Table, cn } from "@thenamespace/uikit";
+
+import { Icon } from "@/demos/icon";
 
 export function ExpandableRows() {
   type Row = {

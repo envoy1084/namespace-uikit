@@ -1,6 +1,7 @@
-import { Icon } from "@iconify/react";
 import { Description, Label, Radio, RadioGroup } from "@thenamespace/uikit";
 import clsx from "clsx";
+
+import { Icon } from "@/demos/icon";
 
 export function DeliveryAndPayment() {
   const deliveryOptions = [

@@ -2,10 +2,11 @@
 
 import React from "react";
 
-import { Icon } from "@iconify/react";
 import { Button, Disclosure, DisclosureGroup, Separator } from "@thenamespace/uikit";
 import { QrCodeIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { cn } from "tailwind-variants";
+
+import { Icon } from "@/demos/icon";
 
 export function Basic() {
   const [expandedKeys, setExpandedKeys] = React.useState(new Set<string | number>(["preview"]));

@@ -3,7 +3,7 @@
 import { Description, Header, Kbd, Label, ListBox, Separator, Surface } from "@thenamespace/uikit";
 
 import { useDictionary } from "@/components/demo/dictionary";
-import { Iconify } from "@/components/iconify";
+import { Icon } from "@/demos/icon";
 
 export function ListBoxDemo() {
   const { demos } = useDictionary();
@@ -16,7 +16,7 @@ export function ListBoxDemo() {
           <Header>{t.actions}</Header>
           <ListBox.Item id="new-file" textValue={t.newFile}>
             <div className="flex h-8 items-start justify-center pt-px">
-              <Iconify className="text-muted size-4 shrink-0" icon="hugeicons:square-plus" />
+              <Icon className="text-muted size-4 shrink-0" icon="hugeicons:square-plus" />
             </div>
             <div className="flex flex-col">
               <Label>{t.newFile}</Label>
@@ -29,7 +29,7 @@ export function ListBoxDemo() {
           </ListBox.Item>
           <ListBox.Item id="edit-file" textValue={t.editFile}>
             <div className="flex h-8 items-start justify-center pt-px">
-              <Iconify className="text-muted size-4 shrink-0" icon="hugeicons:pencil" />
+              <Icon className="text-muted size-4 shrink-0" icon="hugeicons:pencil" />
             </div>
             <div className="flex flex-col">
               <Label>{t.editFile}</Label>
@@ -46,7 +46,7 @@ export function ListBoxDemo() {
           <Header>{t.dangerZone}</Header>
           <ListBox.Item id="delete-file" textValue={t.deleteFile} variant="danger">
             <div className="flex h-8 items-start justify-center pt-px">
-              <Iconify className="text-danger size-4 shrink-0" icon="hugeicons:trash-bin" />
+              <Icon className="text-danger size-4 shrink-0" icon="hugeicons:trash-bin" />
             </div>
             <div className="flex flex-col">
               <Label>{t.deleteFile}</Label>

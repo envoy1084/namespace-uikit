@@ -1,5 +1,6 @@
-import { Icon } from "@iconify/react";
 import { Button } from "@thenamespace/uikit";
+
+import { Icon } from "@/demos/icon";
 
 export function Social() {
   return (

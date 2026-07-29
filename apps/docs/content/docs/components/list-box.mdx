@@ -309,14 +309,14 @@ function ControlledListBox() {
 
 ```tsx
 import { ListBox, ListBoxItemIndicator } from "@thenamespace/uikit";
-import { Icon } from "@iconify/react";
+import { CheckIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
 
 <ListBox aria-label="Options" selectionMode="multiple">
   <ListBox.Item id="1" textValue="Option 1">
     Option 1
     <ListBox.ItemIndicator>
       {({ isSelected }) =>
-        isSelected ? <Icon icon="hugeicons:check" /> : null
+        isSelected ? <HugeiconsIcon icon={CheckIcon} /> : null
       }
     </ListBox.ItemIndicator>
   </ListBox.Item>

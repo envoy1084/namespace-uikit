@@ -2,9 +2,10 @@
 
 import React from "react";
 
-import { Icon } from "@iconify/react";
 import { Button, Disclosure } from "@thenamespace/uikit";
 import { QrCodeIcon, HugeiconsIcon } from "@thenamespace/uikit/icons";
+
+import { Icon } from "@/demos/icon";
 
 export function CustomRenderFunction() {
   const [isExpanded, setIsExpanded] = React.useState(true);
