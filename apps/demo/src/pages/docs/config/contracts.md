@@ -8,7 +8,15 @@ description: Configure contract addresses and ABIs for an ENS v2 deployment.
 `EnsContracts` contains every contract used by package components, hooks, and
 actions.
 
-```ts
+## Import
+
+```ts [import.ts]
+import { testnetContracts } from "ens-components";
+```
+
+## Type
+
+```ts [types.ts]
 interface EnsContracts {
   readonly ethRegistrar: Contract<typeof ethRegistrarAbi>;
   readonly ethRegistry: Contract<typeof ethRegistryAbi>;
@@ -24,7 +32,7 @@ interface EnsContracts {
 Each contract entry has `address` and `abi` properties. The exported ABIs are
 JSON ABI arrays with literal types.
 
-## Testnet addresses
+## Testnet Contracts
 
 | Contract                             | Sepolia address                              |
 | ------------------------------------ | -------------------------------------------- |
@@ -36,8 +44,7 @@ JSON ABI arrays with literal types.
 | L1 Reverse Registrar                 | `0xA0a1AbcDAe1a2a4A2EF8e9113Ff0e02DD81DC0C6` |
 | L2 Reverse Registrar                 | `0xEb8269Fb39290F31C4c29CEc548807cA2133AbB4` |
 
-Import `testnetContracts` to inspect or reuse the built-in contract set.
-
-```ts
-import { testnetContracts } from "ens-components";
-```
+:::warning
+Custom contracts must implement the ABI and behavior expected by ENS
+Components. The configuration layer does not adapt ENS v1 contracts.
+:::

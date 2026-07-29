@@ -5,14 +5,14 @@ description: Handle ENS Components action, query, mutation, and component errors
 
 # Error Handling
 
-ENS Components uses stable string error codes. Components format these codes
-for users. Hooks and actions leave error presentation to the caller.
+ENS Components uses stable uppercase error codes. Branch on codes in
+application logic and format them only at the rendering boundary.
 
 ## Actions
 
 Prepared actions and executors return Neverthrow `Result` values.
 
-```ts
+```ts [renew.ts]
 const prepared = prepareRenewNameWrite({
   account,
   duration,
@@ -34,7 +34,7 @@ network, simulation, submission, and confirmation failures.
 
 Query and mutation hooks reject with the same string codes.
 
-```tsx
+```tsx [availability.tsx]
 const query = useNameAvailability({ input: name });
 
 if (query.isError) {
@@ -44,7 +44,7 @@ if (query.isError) {
 
 `formatError` accepts `unknown` and optional interpolation data.
 
-```ts
+```ts [format-error.ts]
 import { formatError } from "ens-components";
 
 formatError("NAME_NOT_AVAILABLE", { name: "example.eth" });
@@ -58,7 +58,7 @@ result at the rendering boundary.
 Component `events.onError` callbacks include the failed phase and, when
 available, the submitted transaction hash.
 
-```tsx
+```tsx [registration-events.tsx]
 <NameRegistration
   events={{
     onError(event) {
@@ -69,3 +69,9 @@ available, the submitted transaction hash.
 ```
 
 Callback errors do not change an already-confirmed onchain result.
+
+:::warning[Sequential writes]
+A sequential batch can confirm earlier calls before a later call fails. Handle
+`PARTIAL_BATCH_FAILED` using the confirmed progress reported by the executor.
+See [Batching](/docs/guides/batching).
+:::

@@ -5,19 +5,38 @@ description: Install ENS Components and its required peer dependencies.
 
 # Installation
 
-Install ENS Components with Wagmi, Viem, and TanStack Query.
+Install ENS Components and its peer dependencies.
+
+:::code-group
 
 ```bash
 npm install ens-components @tanstack/react-query@5.101.2 viem@^2.55.0 wagmi@^3.7.1
 ```
 
-Import the package stylesheet once from the application root.
+```bash [pnpm]
+pnpm add ens-components @tanstack/react-query@5.101.2 viem@^2.55.0 wagmi@^3.7.1
+```
 
-```tsx
+```bash [yarn]
+yarn add ens-components @tanstack/react-query@5.101.2 viem@^2.55.0 wagmi@^3.7.1
+```
+
+```bash [bun]
+bun add ens-components @tanstack/react-query@5.101.2 viem@^2.55.0 wagmi@^3.7.1
+```
+
+:::
+
+Import the stylesheet once from your application entry point.
+
+```tsx [main.tsx]
 import "ens-components/styles.css";
 ```
 
-## Requirements
+ENS Components ships compiled styles. Tailwind CSS is not required in the
+consumer application.
+
+## Peer dependencies
 
 | Package              | Supported version |
 | -------------------- | ----------------- |
@@ -27,10 +46,7 @@ import "ens-components/styles.css";
 | Viem                 | `>=2.55.0 <3`     |
 | Wagmi                | `>=3.7.1 <4`      |
 
-No Tailwind CSS configuration is required. ENS Components ships compiled
-component styles and imports the required UI kit styles.
-
-## Package entry points
+## Entry points
 
 | Import path                 | Contents                                       |
 | --------------------------- | ---------------------------------------------- |
@@ -39,5 +55,10 @@ component styles and imports the required UI kit styles.
 | `ens-components/actions`    | Prepared reads, prepared writes, and executors |
 | `ens-components/icons`      | ENS record and payment-token icons             |
 | `ens-components/styles.css` | Compiled package styles                        |
+
+:::tip
+Import from the narrow `hooks`, `actions`, and `icons` entry points when using
+those APIs. This keeps application imports explicit and tree-shakeable.
+:::
 
 Continue to [Getting Started](/docs/getting-started).

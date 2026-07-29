@@ -5,11 +5,12 @@ description: Provide ENS chain, contract, indexer, and payment-token configurati
 
 # EnsProvider
 
-Provides an `EnsConfig` to ENS Components hooks and components.
+Provides ENS chain, contract, indexer, and payment-token configuration to
+components and hooks.
 
 ## Import
 
-```ts
+```ts [import.ts]
 import { EnsProvider } from "ens-components";
 ```
 
@@ -18,7 +19,7 @@ import { EnsProvider } from "ens-components";
 Create the configuration with `createEnsConfig`, then place `EnsProvider`
 inside `WagmiProvider` and `QueryClientProvider`.
 
-```tsx
+```tsx [providers.tsx]
 import { QueryClientProvider } from "@tanstack/react-query";
 import { createEnsConfig, EnsProvider } from "ens-components";
 import { WagmiProvider } from "wagmi";
@@ -36,16 +37,23 @@ The Wagmi configuration must include the chain selected by `EnsProvider`.
 
 ## Props
 
-| Prop       | Type        | Required | Description                                    |
-| ---------- | ----------- | -------- | ---------------------------------------------- |
-| `children` | `ReactNode` | Yes      | Subtree that can access ENS configuration.     |
-| `config`   | `EnsConfig` | Yes      | Chain, contracts, indexer, and payment tokens. |
+### children
+
+`ReactNode`
+
+The subtree that can access ENS configuration.
+
+### config
+
+`EnsConfig`
+
+The chain, contracts, indexer, and payment tokens used by ENS Components.
 
 ## useEnsConfig
 
 Returns the nearest provider configuration.
 
-```tsx
+```tsx [current-chain.tsx]
 import { useEnsConfig } from "ens-components";
 
 function CurrentEnsChain() {

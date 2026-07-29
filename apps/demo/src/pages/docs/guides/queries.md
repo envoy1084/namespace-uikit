@@ -8,7 +8,7 @@ description: Configure ENS Components TanStack Query hooks.
 Read hooks return standard TanStack Query results and accept query options
 under the `query` property.
 
-```tsx
+```tsx [profile.tsx]
 const profile = useNameProfile({
   input: name,
   query: {
@@ -27,7 +27,7 @@ All other supported `UseQueryOptions` values can be passed through `query`.
 
 Use `select` to transform cached data for a component.
 
-```tsx
+```tsx [select-resolver.tsx]
 const resolverAddress = useNameProfile({
   input: name,
   query: {
@@ -50,10 +50,15 @@ chain, contract overrides, and normalized inputs that affect the result.
 
 Use TanStack Query APIs for invalidation and cache inspection.
 
-```ts
+```ts [invalidate.ts]
 await queryClient.invalidateQueries({
   queryKey: ["ens"],
 });
 ```
 
 The first query-key segment is always `"ens"`.
+
+:::tip
+Use actions instead of hooks when your application already owns a query layer
+or needs to run outside React.
+:::

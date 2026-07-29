@@ -7,54 +7,52 @@ import { Card, Cards } from "vocs";
 
 # ENS Components
 
-ENS Components provides React components, TanStack Query hooks, and typed
-contract actions for ENS v2.
-
-Use the components for complete user flows. Use hooks for application-specific
-interfaces. Use actions when the caller should own query and transaction
-orchestration.
-
-## Features
-
-- Register and renew second-level `.eth` names.
-- Read and update resolver records.
-- Discover resolver capabilities and record permissions.
-- Compose registration, approval, resolver, and primary-name transactions.
-- Execute writes as single transactions, atomic EIP-5792 batches, or ordered
-  sequences.
-- Configure contracts and payment tokens for an ENS deployment.
+ENS Components is a React library for integrating ENS v2. It includes complete
+components, TanStack Query hooks, and framework-independent actions.
 
 <Cards>
   <Card
-    title="Installation"
-    description="Install the package and its peer dependencies."
+    title="Get started"
+    description="Install the package and render your first ENS component."
     icon="download"
-    to="/docs/installation"
-  />
-  <Card
-    title="Getting Started"
-    description="Configure providers and render your first ENS component."
-    icon="play"
     to="/docs/getting-started"
   />
   <Card
     title="Components"
-    description="Add complete registration, renewal, and profile flows."
+    description="Use complete registration, renewal, and profile flows."
     icon="blocks"
     to="/docs/components"
   />
   <Card
     title="Hooks"
-    description="Build custom interfaces on top of typed ENS queries and mutations."
+    description="Build custom React interfaces with typed queries and mutations."
     icon="braces"
     to="/docs/hooks"
   />
+  <Card
+    title="Actions"
+    description="Prepare and execute ENS reads and writes outside React."
+    icon="terminal"
+    to="/docs/actions"
+  />
 </Cards>
 
-## Network support
+## Choose an API
 
+| API        | Best for                                   |
+| ---------- | ------------------------------------------ |
+| Components | Complete, accessible ENS user flows        |
+| Hooks      | Custom React interfaces                    |
+| Actions    | Custom orchestration or code outside React |
+
+All three layers use the same ENS configuration and stable string error codes.
+See [Choosing an API](/docs/guides/choosing-an-api) for a detailed comparison.
+
+:::info[ENS v2 network support]
 The built-in `testnet` configuration targets the ENS v2 Sepolia deployment.
-Mainnet is reserved until an ENS v2 mainnet deployment is available.
+The `mainnet` preset is reserved until an ENS v2 mainnet deployment is
+available.
+:::
 
 Use a [custom configuration](/docs/guides/custom-configuration) for another
 compatible deployment.

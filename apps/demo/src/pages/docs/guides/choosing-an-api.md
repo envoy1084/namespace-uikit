@@ -5,7 +5,8 @@ description: Choose between ENS Components components, hooks, and actions.
 
 # Choosing an API
 
-ENS Components exposes each ENS workflow at three levels.
+ENS Components exposes ENS workflows at three levels. Start with the highest
+level that gives your application enough control.
 
 | API        | Use when                                          |
 | ---------- | ------------------------------------------------- |
@@ -18,7 +19,7 @@ ENS Components exposes each ENS workflow at three levels.
 Components manage form state, validation, transaction ordering, confirmation,
 errors, and success states.
 
-```tsx
+```tsx [renew-name.tsx]
 import { NameRenewal } from "ens-components";
 
 <NameRenewal defaultInput="example.eth" />;
@@ -27,11 +28,16 @@ import { NameRenewal } from "ens-components";
 Use slots, messages, events, and presentation props to integrate them with the
 host application.
 
+:::tip
+Start with a component when the package already covers the complete flow.
+Moving to hooks later does not change the underlying ENS configuration.
+:::
+
 ## Hooks
 
 Hooks combine prepared actions with Wagmi clients and TanStack Query.
 
-```tsx
+```tsx [renewal-price.tsx]
 import { useNameRenewalPrice } from "ens-components/hooks";
 
 const renewal = useNameRenewalPrice({
@@ -44,10 +50,10 @@ Use hooks when the application should own rendering but not RPC orchestration.
 
 ## Actions
 
-Actions validate inputs and return typed read or write plans. Preparation does
-not submit a transaction.
+Actions validate and execute reads or writes without React. Every direct action
+also has a prepare function for custom execution and batching.
 
-```ts
+```ts [availability.ts]
 import { executeContractRead, prepareNameAvailabilityRead } from "ens-components/actions";
 
 const prepared = prepareNameAvailabilityRead({
@@ -61,4 +67,6 @@ if (prepared.isOk()) {
 ```
 
 Use actions in state machines, servers, workers, or applications with their
-own query layer.
+own orchestration.
+
+See [Batching](/docs/guides/batching) to compose prepared reads and writes.

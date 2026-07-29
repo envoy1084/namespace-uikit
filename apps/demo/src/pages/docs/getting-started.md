@@ -5,12 +5,16 @@ description: Configure Wagmi, TanStack Query, and ENS Components.
 
 # Getting Started
 
-## Create the configurations
+Follow these steps to render `NameRegistration` with the built-in ENS v2
+testnet configuration.
 
-Create a Wagmi config that includes the chain selected by ENS Components.
+::::steps
 
-```ts
-// config.ts
+### Create the configurations
+
+Your Wagmi configuration must include the same chain as the ENS configuration.
+
+```ts [config.ts]
 import { QueryClient } from "@tanstack/react-query";
 import { createEnsConfig } from "ens-components";
 import { http, createConfig } from "wagmi";
@@ -27,13 +31,12 @@ export const queryClient = new QueryClient();
 export const ensConfig = createEnsConfig("testnet");
 ```
 
-## Add the providers
+### Add the providers
 
 `EnsProvider` must be inside both `WagmiProvider` and
 `QueryClientProvider`.
 
-```tsx
-// providers.tsx
+```tsx [providers.tsx]
 import { QueryClientProvider } from "@tanstack/react-query";
 import { EnsProvider } from "ens-components";
 import { WagmiProvider } from "wagmi";
@@ -51,12 +54,17 @@ export function Providers({ children }: { children: React.ReactNode }) {
 }
 ```
 
-The connected wallet must be on the configured ENS chain before it can submit
-transactions.
+### Import the styles
 
-## Render a component
+Import the compiled package styles once from your application entry point.
 
-```tsx
+```tsx [main.tsx]
+import "ens-components/styles.css";
+```
+
+### Render a component
+
+```tsx [register-name.tsx]
 import { NameRegistration } from "ens-components";
 
 export function RegisterName() {
@@ -67,11 +75,18 @@ export function RegisterName() {
 The default presentation renders a trigger and opens the flow in a dialog.
 Use `presentation="inline"` to render it directly.
 
+::::
+
+:::info
+The connected wallet must be on the chain selected by `EnsProvider` before it
+can submit a transaction.
+:::
+
 ## Build a custom interface
 
-Hooks expose the same ENS operations without the packaged interface.
+Use hooks when your application owns the interface.
 
-```tsx
+```tsx [availability.tsx]
 import { useNameAvailability } from "ens-components/hooks";
 
 export function Availability({ name }: { name: string }) {
@@ -83,5 +98,5 @@ export function Availability({ name }: { name: string }) {
 }
 ```
 
-See [Choosing an API](/docs/guides/choosing-an-api) for the differences
-between components, hooks, and actions.
+See [Choosing an API](/docs/guides/choosing-an-api) to choose between
+components, hooks, and actions.

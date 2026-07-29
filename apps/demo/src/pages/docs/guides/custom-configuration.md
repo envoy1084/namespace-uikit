@@ -5,10 +5,10 @@ description: Configure ENS Components for a compatible ENS deployment.
 
 # Custom Configuration
 
-Pass a named preset or a complete `EnsConfig` to `createEnsConfig`.
-Configuration objects are not merged with presets.
+Use a complete `EnsConfig` for a compatible ENS v2 deployment that is not
+covered by a named preset.
 
-```ts
+```ts [ens.ts]
 import { createEnsConfig, testnetContracts } from "ens-components";
 import { sepolia } from "viem/chains";
 
@@ -18,6 +18,11 @@ const config = createEnsConfig({
   indexerUrl: "https://graphql.ens.dev/graphql",
 });
 ```
+
+:::warning
+Raw configurations are not merged with a preset. Provide every required
+contract and at least one payment token.
+:::
 
 ## Required contracts
 

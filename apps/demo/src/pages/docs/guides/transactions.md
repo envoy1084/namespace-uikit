@@ -11,7 +11,7 @@ Write actions separate validation and encoding from wallet execution.
 
 Each `prepare*Write` action returns a typed `PreparedContractWrite`.
 
-```ts
+```ts [prepare-renewal.ts]
 const renewal = prepareRenewNameWrite({
   account,
   duration: 31_557_600n,
@@ -23,40 +23,37 @@ const renewal = prepareRenewNameWrite({
 
 Preparation does not prompt the wallet.
 
-## Execute calls
+## Execute one call
 
-Pass one or more prepared writes to `executeContractWrites`.
+Direct domain actions prepare and execute one call.
 
-```ts
-if (renewal.isOk()) {
-  const result = await executeContractWrites(walletClient, publicClient, {
-    calls: [renewal.value],
-    chain,
-    strategy: "auto",
-  });
-}
+```ts [renew-name.ts]
+const result = await renewName(walletClient, publicClient, {
+  account,
+  chain,
+  duration,
+  input: "example.eth",
+  paymentTokenAddress,
+  referrer,
+  registrarAddress,
+});
 ```
 
-| Strategy     | Behavior                                                   |
-| ------------ | ---------------------------------------------------------- |
-| `single`     | Requires exactly one call and sends one transaction.       |
-| `atomic`     | Requires EIP-5792 atomic batch support.                    |
-| `sequential` | Sends and confirms calls in order.                         |
-| `auto`       | Uses atomic batching when supported, otherwise sequential. |
+Use [`executeContractWrite`](/docs/actions/execute-contract-writes) when you
+already have a prepared call.
 
 ## Confirmation
 
 `confirmation: "confirmed"` waits for receipts. `"submitted"` returns after
 wallet submission. Components use confirmed results before advancing.
 
-## Partial failure
-
-Atomic batches either complete or revert together. Sequential execution can
-confirm earlier calls before a later call fails. Handle
-`PARTIAL_BATCH_FAILED` by inspecting confirmed hashes before retrying.
-
 ## React
 
 Use [`useExecuteContractWrites`](/docs/hooks/use-execute-contract-writes) for
 arbitrary prepared calls. Operation-specific mutation hooks prepare and
 execute one write.
+
+:::info
+To compose multiple dependent writes, choose an execution strategy, or use
+EIP-5792 atomic calls, see [Batching](/docs/guides/batching).
+:::

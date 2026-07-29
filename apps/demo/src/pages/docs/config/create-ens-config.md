@@ -5,11 +5,11 @@ description: Create the chain, contract, indexer, and payment-token configuratio
 
 # createEnsConfig
 
-Creates an `EnsConfig` from a named preset or a complete configuration object.
+Creates the configuration consumed by `EnsProvider`.
 
 ## Import
 
-```ts
+```ts [ens.ts]
 import { createEnsConfig } from "ens-components";
 ```
 
@@ -34,7 +34,7 @@ throws because ENS v2 mainnet is not supported.
 
 `EnsConfig`
 
-```ts
+```ts [types.ts]
 interface EnsConfig {
   readonly chain: Chain;
   readonly contracts: EnsContracts;
@@ -44,6 +44,16 @@ interface EnsConfig {
 
 A raw configuration is returned unchanged. It is not merged with a preset.
 
-## Return type
+## Return Type
 
 `EnsConfig`
+
+## Error
+
+`createEnsConfig("mainnet")` throws until an ENS v2 mainnet deployment is
+available. Invalid raw configuration values fail with a configuration error.
+
+:::tip
+Use the `testnet` preset unless you are integrating another compatible ENS v2
+deployment.
+:::
