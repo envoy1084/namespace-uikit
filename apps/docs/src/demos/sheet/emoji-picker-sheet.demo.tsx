@@ -8,18 +8,8 @@ import { Sheet } from "@thenamespace/uikit";
 import { Button } from "@thenamespace/uikit/button";
 import { EmojiPicker, EMOJI_SKIN_TONES } from "@thenamespace/uikit/emoji-picker";
 import { EmptyState } from "@thenamespace/uikit/empty-state";
-import {
-  Basketball01Icon,
-  Car01Icon,
-  CurrencyIcon,
-  Flag01Icon,
-  FlowerIcon,
-  HandPointingRight01Icon,
-  Idea01Icon,
-  SmileIcon,
-  SpoonAndForkIcon,
-} from "@thenamespace/uikit/icons";
-import { HugeiconsIcon, type IconSvgElement } from "@thenamespace/uikit/icons";
+import { SmileIcon } from "@thenamespace/uikit/icons";
+import { HugeiconsIcon } from "@thenamespace/uikit/icons";
 import { Input } from "@thenamespace/uikit/input";
 import { ScrollShadow } from "@thenamespace/uikit/scroll-shadow";
 import { SearchField } from "@thenamespace/uikit/search-field";
@@ -32,6 +22,10 @@ const snapPoints = ["148px", "355px", 1];
 const sheetEmojiData = emojiDataSource.filter(
   (emoji) => typeof emoji.label === "string" && !emoji.label.startsWith("regional indicator"),
 );
+const withEmojiUnicode = (emoji: (typeof sheetEmojiData)[number], unicode: string) => ({
+  ...emoji,
+  unicode,
+});
 
 const sheetEmojiGroups = {
   activities: 6,
@@ -46,23 +40,19 @@ const sheetEmojiGroups = {
 } as const;
 
 const sheetEmojiCategories: Array<{
-  icon: IconSvgElement;
+  icon: string;
   id: keyof typeof sheetEmojiGroups;
   label: string;
 }> = [
-  { icon: SmileIcon, id: "smileys-emotion", label: "Smileys & Emotion" },
-  {
-    icon: HandPointingRight01Icon,
-    id: "people-body",
-    label: "People & Body",
-  },
-  { icon: FlowerIcon, id: "animals-nature", label: "Animals & Nature" },
-  { icon: SpoonAndForkIcon, id: "food-drink", label: "Food & Drink" },
-  { icon: Basketball01Icon, id: "activities", label: "Activities" },
-  { icon: Car01Icon, id: "travel-places", label: "Travel & Places" },
-  { icon: Idea01Icon, id: "objects", label: "Objects" },
-  { icon: CurrencyIcon, id: "symbols", label: "Symbols" },
-  { icon: Flag01Icon, id: "flags", label: "Flags" },
+  { icon: "😀", id: "smileys-emotion", label: "Smileys & Emotion" },
+  { icon: "👋", id: "people-body", label: "People & Body" },
+  { icon: "🐱", id: "animals-nature", label: "Animals & Nature" },
+  { icon: "🍕", id: "food-drink", label: "Food & Drink" },
+  { icon: "⚽", id: "activities", label: "Activities" },
+  { icon: "🚗", id: "travel-places", label: "Travel & Places" },
+  { icon: "💡", id: "objects", label: "Objects" },
+  { icon: "🔣", id: "symbols", label: "Symbols" },
+  { icon: "🏁", id: "flags", label: "Flags" },
 ];
 
 function SheetEmojiPicker({ onEmojiSelect }: { onEmojiSelect?: (emoji: string) => void }) {
@@ -77,7 +67,7 @@ function SheetEmojiPicker({ onEmojiSelect }: { onEmojiSelect?: (emoji: string) =
     return data.map((emoji) => {
       const skin = emoji.skins?.[skinIndex];
 
-      return skin ? { ...emoji, unicode: skin.unicode } : emoji;
+      return skin ? withEmojiUnicode(emoji, skin.unicode) : emoji;
     });
   }, [tone]);
   const groupStarts = useMemo(() => {
@@ -171,7 +161,9 @@ function SheetEmojiPicker({ onEmojiSelect }: { onEmojiSelect?: (emoji: string) =
                     variant="ghost"
                     onPress={() => scrollToGroup(id)}
                   >
-                    <HugeiconsIcon aria-hidden icon={icon} size={16} />
+                    <span aria-hidden className="text-base leading-none">
+                      {icon}
+                    </span>
                   </Button>
                   <Tooltip.Content placement="top">
                     <p>{label}</p>
@@ -188,9 +180,7 @@ function SheetEmojiPicker({ onEmojiSelect }: { onEmojiSelect?: (emoji: string) =
 
 function EmojiPickerSheetDemo() {
   const emojiSheetSnapPoints = ["355px", 1];
-  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
-    emojiSheetSnapPoints[0]!,
-  );
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>("355px");
   const [isOpen, setIsOpen] = useState(false);
   const [emoji, setEmoji] = useState("😀");
 

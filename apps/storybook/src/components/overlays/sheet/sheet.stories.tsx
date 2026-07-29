@@ -12,23 +12,15 @@ import {
   ArrowRight01Icon,
   ArrowTurnBackwardIcon,
   ArrowTurnForwardIcon,
-  Basketball01Icon,
   Bookmark01Icon,
-  Car01Icon,
   Clock01Icon,
   Copy01Icon,
-  CurrencyIcon,
-  Flag01Icon,
-  FlowerIcon,
-  HandPointingRight01Icon,
-  Idea01Icon,
   Link01Icon,
   Mail01Icon,
   MoreHorizontalIcon,
   Notification01Icon,
   PinIcon,
   SmileIcon,
-  SpoonAndForkIcon,
   Task01Icon,
   TextIcon,
 } from "@thenamespace/uikit/icons";
@@ -147,7 +139,7 @@ export const Placements: Story = { render: () => <PlacementsDemo /> };
 const snapPoints = ["148px", "355px", 1];
 
 function SnapPointsDemo() {
-  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(snapPoints[0]!);
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>("148px");
 
   return (
     <Sheet
@@ -175,11 +167,11 @@ function SnapPointsDemo() {
                   148px, 355px, and full height. The overlay fades in as you reach the highest
                   point.
                 </p>
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <p className="text-muted text-sm" key={index}>
-                    {index === 0
+                {Array.from({ length: 6 }, (_, index) => index + 1).map((level) => (
+                  <p className="text-muted text-sm" key={level}>
+                    {level === 1
                       ? "Drag the handle up to reveal more content and see the overlay fade in."
-                      : `More content at this level (${index + 1}).`}
+                      : `More content at this level (${level}).`}
                   </p>
                 ))}
               </div>
@@ -196,9 +188,7 @@ export const SnapPoints: Story = { render: () => <SnapPointsDemo /> };
 const sequentialPoints = ["148px", "355px", 1];
 
 function SnapPointsSequentialDemo() {
-  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
-    sequentialPoints[0]!,
-  );
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>("148px");
 
   return (
     <Sheet
@@ -243,9 +233,7 @@ export const SnapPointsSequential: Story = {
 const customFadePoints = ["150px", "300px", "450px", 1];
 
 function SnapPointsCustomFadeDemo() {
-  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
-    customFadePoints[0]!,
-  );
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>("150px");
 
   return (
     <Sheet
@@ -382,10 +370,10 @@ function ScrollableContentDemo() {
               <Sheet.Heading>Terms &amp; Conditions</Sheet.Heading>
             </Sheet.Header>
             <Sheet.Body>
-              {Array.from({ length: 20 }).map((_, index) => (
-                <p className="text-muted mb-3 text-sm" key={index}>
-                  Paragraph {index + 1}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
+              {Array.from({ length: 20 }, (_, index) => index + 1).map((paragraphNumber) => (
+                <p className="text-muted mb-3 text-sm" key={paragraphNumber}>
+                  Paragraph {paragraphNumber}: Lorem ipsum dolor sit amet, consectetur adipiscing
+                  elit. Nullam pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
                   hendrerit risus, sed porttitor quam. Donec nec vestibulum libero.
                 </p>
               ))}
@@ -672,6 +660,10 @@ export const Nested: Story = { render: () => <NestedDemo /> };
 const sheetEmojiData = emojiDataSource.filter(
   (emoji) => typeof emoji.label === "string" && !emoji.label.startsWith("regional indicator"),
 );
+const withEmojiUnicode = (emoji: (typeof sheetEmojiData)[number], unicode: string) => ({
+  ...emoji,
+  unicode,
+});
 const sheetEmojiGroups = {
   activities: 6,
   "animals-nature": 3,
@@ -684,23 +676,19 @@ const sheetEmojiGroups = {
   "travel-places": 5,
 } as const;
 const sheetEmojiCategories: Array<{
-  icon: IconSvgElement;
+  icon: string;
   id: keyof typeof sheetEmojiGroups;
   label: string;
 }> = [
-  { icon: SmileIcon, id: "smileys-emotion", label: "Smileys & Emotion" },
-  {
-    icon: HandPointingRight01Icon,
-    id: "people-body",
-    label: "People & Body",
-  },
-  { icon: FlowerIcon, id: "animals-nature", label: "Animals & Nature" },
-  { icon: SpoonAndForkIcon, id: "food-drink", label: "Food & Drink" },
-  { icon: Basketball01Icon, id: "activities", label: "Activities" },
-  { icon: Car01Icon, id: "travel-places", label: "Travel & Places" },
-  { icon: Idea01Icon, id: "objects", label: "Objects" },
-  { icon: CurrencyIcon, id: "symbols", label: "Symbols" },
-  { icon: Flag01Icon, id: "flags", label: "Flags" },
+  { icon: "😀", id: "smileys-emotion", label: "Smileys & Emotion" },
+  { icon: "👋", id: "people-body", label: "People & Body" },
+  { icon: "🐱", id: "animals-nature", label: "Animals & Nature" },
+  { icon: "🍕", id: "food-drink", label: "Food & Drink" },
+  { icon: "⚽", id: "activities", label: "Activities" },
+  { icon: "🚗", id: "travel-places", label: "Travel & Places" },
+  { icon: "💡", id: "objects", label: "Objects" },
+  { icon: "🔣", id: "symbols", label: "Symbols" },
+  { icon: "🏁", id: "flags", label: "Flags" },
 ];
 
 function SheetEmojiPicker({ onEmojiSelect }: { onEmojiSelect?: (emoji: string) => void }) {
@@ -715,7 +703,7 @@ function SheetEmojiPicker({ onEmojiSelect }: { onEmojiSelect?: (emoji: string) =
     return data.map((emoji) => {
       const skin = emoji.skins?.[skinIndex];
 
-      return skin ? { ...emoji, unicode: skin.unicode } : emoji;
+      return skin ? withEmojiUnicode(emoji, skin.unicode) : emoji;
     });
   }, [tone]);
   const groupStarts = useMemo(() => {
@@ -809,7 +797,9 @@ function SheetEmojiPicker({ onEmojiSelect }: { onEmojiSelect?: (emoji: string) =
                     variant="ghost"
                     onPress={() => scrollToGroup(id)}
                   >
-                    <HugeiconsIcon aria-hidden icon={icon} size={16} />
+                    <span aria-hidden className="text-base leading-none">
+                      {icon}
+                    </span>
                   </Button>
                   <Tooltip.Content placement="top">
                     <p>{label}</p>
@@ -826,9 +816,7 @@ function SheetEmojiPicker({ onEmojiSelect }: { onEmojiSelect?: (emoji: string) =
 
 function EmojiPickerSheetDemo() {
   const emojiSheetSnapPoints = ["355px", 1];
-  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
-    emojiSheetSnapPoints[0]!,
-  );
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>("355px");
   const [isOpen, setIsOpen] = useState(false);
   const [emoji, setEmoji] = useState("😀");
 
@@ -878,9 +866,7 @@ function ActionIcon({ icon }: { icon: IconSvgElement }) {
 
 function SlackMessageActionsDemo() {
   const sheetSnapPoints = ["355px", 1];
-  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
-    sheetSnapPoints[0]!,
-  );
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>("355px");
   const [showMore, setShowMore] = useState(false);
   const [reactions, setReactions] = useState<Record<string, { count: number; selected: boolean }>>(
     {},
@@ -1085,9 +1071,7 @@ export const SlackMessageActions: Story = {
 
 function ProfessionsPickerDemo() {
   const occupationSnapPoints = ["355px", 1];
-  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>(
-    occupationSnapPoints[0]!,
-  );
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>("355px");
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<string | null>(null);

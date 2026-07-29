@@ -14,8 +14,12 @@ import {
   forwardRef,
   useCallback,
   useContext,
+  useEffect,
+  useImperativeHandle,
   useMemo,
+  useRef,
   useState,
+  type RefObject,
 } from "react";
 
 import { CloseButton, cn } from "@heroui/react";
@@ -29,9 +33,12 @@ interface SheetContextValue {
   close: () => void;
   isDetached: boolean;
   isDismissable: boolean;
+  isOpen: boolean;
   open: () => void;
   placement: SheetPlacement;
+  shouldAutoFocus: boolean;
   snapPoints: SheetSnapPoint[] | undefined;
+  triggerRef: RefObject<HTMLElement | null>;
 }
 
 const SheetContext = createContext<SheetContextValue | null>(null);
@@ -104,7 +111,7 @@ function SheetRootBase({
   repositionInputs,
   scrollLockTimeout,
   setBackgroundColorOnScale,
-  shouldAutoFocus,
+  shouldAutoFocus = false,
   shouldScaleBackground,
   snapPoints,
   snapToSequentialPoint,
@@ -112,23 +119,69 @@ function SheetRootBase({
   const Root = isNested ? Vaul.NestedRoot : Vaul.Root;
   const [localOpen, setLocalOpen] = useState(defaultOpen ?? false);
   const openState = isOpen ?? localOpen;
+  const effectOpenRef = useRef(openState);
+  const previousOpenRef = useRef(openState);
+  const returnFocusRef = useRef<HTMLElement>(null);
+  const triggerRef = useRef<HTMLElement>(null);
+  const captureReturnFocus = useCallback(() => {
+    if (typeof document !== "undefined" && document.activeElement instanceof HTMLElement)
+      returnFocusRef.current = document.activeElement;
+    else returnFocusRef.current = triggerRef.current;
+  }, []);
+  if (openState && !previousOpenRef.current) captureReturnFocus();
+  previousOpenRef.current = openState;
   const setOpen = useCallback(
     (nextOpen: boolean) => {
+      if (nextOpen) captureReturnFocus();
       if (isOpen === undefined) setLocalOpen(nextOpen);
       onOpenChange?.(nextOpen);
     },
-    [isOpen, onOpenChange],
+    [captureReturnFocus, isOpen, onOpenChange],
   );
+  const handleAnimationEnd = useCallback(
+    (nextOpen: boolean) => {
+      if (!nextOpen)
+        (returnFocusRef.current ?? triggerRef.current)?.focus({
+          preventScroll: true,
+        });
+      onAnimationEnd?.(nextOpen);
+    },
+    [onAnimationEnd],
+  );
+  useEffect(() => {
+    const wasOpen = effectOpenRef.current;
+
+    effectOpenRef.current = openState;
+
+    if (!wasOpen || openState) return;
+
+    let secondFrame = 0;
+    const firstFrame = requestAnimationFrame(() => {
+      secondFrame = requestAnimationFrame(() =>
+        (returnFocusRef.current ?? triggerRef.current)?.focus({
+          preventScroll: true,
+        }),
+      );
+    });
+
+    return () => {
+      cancelAnimationFrame(firstFrame);
+      cancelAnimationFrame(secondFrame);
+    };
+  }, [openState]);
   const context = useMemo(
     () => ({
       close: () => setOpen(false),
       isDetached,
       isDismissable,
+      isOpen: openState,
       open: () => setOpen(true),
       placement,
+      shouldAutoFocus,
       snapPoints,
+      triggerRef,
     }),
-    [isDetached, isDismissable, placement, setOpen, snapPoints],
+    [isDetached, isDismissable, openState, placement, setOpen, shouldAutoFocus, snapPoints],
   );
   const rootProps = {
     activeSnapPoint,
@@ -144,7 +197,7 @@ function SheetRootBase({
     handleOnly: isHandleOnly,
     modal: isModal,
     noBodyStyles,
-    onAnimationEnd,
+    onAnimationEnd: handleAnimationEnd,
     onClose,
     onDrag,
     onOpenChange: setOpen,
@@ -175,16 +228,19 @@ export function SheetNestedRoot(props: SheetRootProps): ReactElement {
   return <SheetRootBase {...props} isNested />;
 }
 
-type PressableElement = ReactElement<{ onPress?: () => void }>;
+type PressableElement = ReactElement<{
+  onPress?: () => void;
+  ref?: React.Ref<HTMLElement>;
+}>;
 
 export interface SheetTriggerProps {
   children: PressableElement;
 }
 
 export function SheetTrigger({ children }: SheetTriggerProps): ReactElement {
-  const { open } = useSheetContext();
+  const { open, triggerRef } = useSheetContext();
 
-  return cloneElement(children, { onPress: open });
+  return cloneElement(children, { onPress: open, ref: triggerRef });
 }
 
 export interface SheetCloseProps {
@@ -252,7 +308,17 @@ export const SheetDialog: ForwardRefExoticComponent<SheetDialogProps> = forwardR
   HTMLElement,
   SheetDialogProps
 >(function SheetDialog({ className, ...props }, ref) {
-  const { placement } = useSheetContext();
+  const { isOpen, placement, shouldAutoFocus } = useSheetContext();
+  const dialogRef = useRef<HTMLElement>(null);
+
+  useImperativeHandle(ref, () => dialogRef.current as HTMLElement, []);
+  useEffect(() => {
+    if (!isOpen || shouldAutoFocus) return;
+
+    const frame = requestAnimationFrame(() => dialogRef.current?.focus({ preventScroll: true }));
+
+    return () => cancelAnimationFrame(frame);
+  }, [isOpen, shouldAutoFocus]);
 
   return (
     <Dialog
@@ -260,7 +326,7 @@ export const SheetDialog: ForwardRefExoticComponent<SheetDialogProps> = forwardR
       className={cn("sheet__dialog", `sheet__dialog--${placement}`, className) ?? "sheet__dialog"}
       data-placement={placement}
       data-slot="sheet-dialog"
-      ref={ref}
+      ref={dialogRef}
     />
   );
 });

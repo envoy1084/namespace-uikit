@@ -94,7 +94,7 @@ catalog.
 | [Sidebar](https://heroui.pro/docs/react/components/sidebar)                             | [source](packages/uikit/src/components/navigation/sidebar.tsx)            | [docs](apps/docs/content/docs/components/sidebar.mdx)               | [16/16](https://storybook.heroui.pro/?path=/docs/components-sidebar--docs) · [local](apps/storybook/src/components/navigation/sidebar/sidebar.stories.tsx)                                    | ⬜ Inventory | Pro catalog says 15 variants; live Storybook has 16. Responsive, collapse and reduced motion.        |
 | [Stepper](https://heroui.pro/docs/react/components/stepper)                             | [source](packages/uikit/src/components/navigation/stepper.tsx)            | [docs](apps/docs/content/docs/components/stepper.mdx)               | [19/19](https://storybook.heroui.pro/?path=/docs/components-stepper--docs) · [local](apps/storybook/src/components/navigation/stepper/stepper.stories.tsx)                                    | ⬜ Inventory | Controlled selection, orientations, status and motion.                                               |
 | [Emoji Picker](https://heroui.pro/docs/react/components/emoji-picker)                   | [source](packages/uikit/src/components/overlays/emoji-picker.tsx)         | [docs](apps/docs/content/docs/components/emoji-picker.mdx)          | [4/4](https://storybook.heroui.pro/?path=/docs/components-emojipicker--docs) · [local](apps/storybook/src/components/overlays/emoji-picker/emoji-picker.stories.tsx)                          | ⬜ Inventory | Search, keyboard grid navigation and selection.                                                      |
-| [Sheet](https://heroui.pro/docs/react/components/sheet)                                 | [source](packages/uikit/src/components/overlays/sheet.tsx)                | [docs](apps/docs/content/docs/components/sheet.mdx)                 | [16/16](https://storybook.heroui.pro/?path=/docs/components-sheet--docs) · [local](apps/storybook/src/components/overlays/sheet/sheet.stories.tsx)                                            | ⬜ Inventory | Drag, snap points, nested sheets, focus, dismissal and motion.                                       |
+| [Sheet](https://heroui.pro/docs/react/components/sheet)                                 | [source](packages/uikit/src/components/overlays/sheet.tsx)                | [docs](apps/docs/content/docs/components/sheet.mdx)                 | [16/16](https://storybook.heroui.pro/?path=/docs/components-sheet--docs) · [local](apps/storybook/src/components/overlays/sheet/sheet.stories.tsx)                                            |      🛠 Fixed | Restored focus lifecycle and category glyph parity. Final touch/reduced-motion matrix remains.       |
 
 ### Data Grid evidence
 
@@ -145,6 +145,26 @@ catalog.
   compatibility aliases.
 - Final verification still required: pointer/touch drag and drop within and across columns, drop
   placeholder height during motion, narrow horizontal scrolling, and dark/reduced-motion captures.
+
+### Sheet evidence
+
+- The live Pro docs hierarchy, CSS hooks, API tables, and all 16 Storybook entries match the local
+  inventory.
+- Initial accessibility snapshots match upstream for all 16 stories. Open dialog content matches
+  across placements, backdrop variants, snap modes, forms, controlled/detached/handle modes,
+  nested sheets, and composed examples.
+- Fixed focus management exposed by the latest Vaul/Radix stack: dialog focus is established on
+  every open (including nested sheets), and focus returns to the actual opener after close,
+  drag-to-dismiss, controlled close, nested back, and selection close.
+- Replaced stale outline category icons in Emoji Picker Sheet with the live Pro emoji glyphs and
+  synchronized the generated docs source.
+- Paired interactions match for open/close, controlled state, nested focus cycles, emoji selection,
+  profession search/select, pointer drag-to-dismiss, and snap dragging.
+- Current Radix uses `aria-hidden` while the deployed Pro build uses `inert` for background
+  siblings. Only hidden-background accessibility snapshots differ; active dialog focus, semantics,
+  and visible rendering match.
+- Final verification still required: real touch, side-placement thresholds, custom fade
+  transitions, dark mode, and reduced motion.
 
 ## HeroUI OSS/core audit
 
