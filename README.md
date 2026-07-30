@@ -2,13 +2,15 @@
 
 Namespace UI Kit is the Namespace design-system package built on [HeroUI v3](https://heroui.com/). It preserves HeroUI's accessible React component APIs while applying Namespace theme colors and providing shared hooks, utilities, and icons.
 
+[Documentation](https://namespace-uikit.vercel.app/) · [Storybook](https://namespace-uikit-storybook.vercel.app/)
+
 ## Repository
 
 This pnpm and Turborepo monorepo contains:
 
 - [`packages/uikit`](./packages/uikit) — the publishable `@thenamespace/uikit` package.
-- [`apps/docs`](./apps/docs) — the documentation site and component demos.
-- [`apps/storybook`](./apps/storybook) — the component catalogue and visual development environment.
+- [`apps/docs`](./apps/docs) — the [documentation site](https://namespace-uikit.vercel.app/) and component demos.
+- [`apps/storybook`](./apps/storybook) — the [component catalogue](https://namespace-uikit-storybook.vercel.app/) and visual development environment.
 
 See the [package README](./packages/uikit/README.md) for installation, imports, theming, component subpaths, and API usage.
 
@@ -65,7 +67,7 @@ import { Button, Card } from "@thenamespace/uikit";
 import { Input } from "@thenamespace/uikit/input";
 ```
 
-Component behavior and composition follow the [HeroUI component documentation](https://heroui.com/en/docs/react/components).
+Explore every component, example, and API in the [Namespace UI Kit documentation](https://namespace-uikit.vercel.app/) or browse the complete [Storybook catalogue](https://namespace-uikit-storybook.vercel.app/).
 
 ## Theme development
 
