@@ -3,7 +3,7 @@ import { source } from "@/lib/source";
 import componentMeta from "../../content/docs/components/meta.json";
 import { ComponentItem } from "./component-item";
 
-function groups() {
+const componentGroups = (() => {
   const result = new Map<string, string[]>();
   let category = "Components";
 
@@ -20,10 +20,10 @@ function groups() {
   }
 
   return result;
-}
+})();
 
 export function ComponentsCategory({ category }: { category: string }) {
-  const slugs = groups().get(category) ?? [];
+  const slugs = componentGroups.get(category) ?? [];
 
   return (
     <div className="not-prose flex flex-col gap-12">
