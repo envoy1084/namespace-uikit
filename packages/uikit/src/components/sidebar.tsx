@@ -32,8 +32,8 @@ import {
   TreeSection,
 } from "react-aria-components";
 
-import { IconChevronRight } from "../../heroui-icons";
-import { Sheet } from "../overlays/sheet";
+import { IconChevronRight } from "../heroui-icons";
+import { Sheet } from "./sheet";
 
 export type SidebarSide = "left" | "right";
 export type SidebarVariant = "floating" | "inset" | "sidebar";

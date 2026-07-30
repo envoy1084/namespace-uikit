@@ -58,6 +58,14 @@
       "types": "./dist/utils.d.mts",
       "import": "./dist/utils.mjs"
     },
+    "./*": {
+      "@thenamespace/source": {
+        "types": "./src/components/*.tsx",
+        "import": "./src/components/*.tsx"
+      },
+      "types": "./dist/components/*.d.mts",
+      "import": "./dist/components/*.mjs"
+    },
     "./styles": {
       "@thenamespace/source": "./src/styles/globals.css",
       "style": "./dist/styles.css",

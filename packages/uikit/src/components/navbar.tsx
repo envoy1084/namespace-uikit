@@ -15,7 +15,7 @@ import { cn, Separator } from "@heroui/react";
 import { handleLinkClick, useRouter } from "@react-aria/utils";
 import { ToggleButton } from "react-aria-components";
 
-import { useAppLayout } from "../layout/app-layout";
+import { useAppLayout } from "./app-layout";
 
 export type NavbarPosition = "floating" | "static" | "sticky";
 export type NavbarSize = "lg" | "md" | "sm";

@@ -17,15 +17,15 @@ import { Menu01Icon, PanelRightIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { PanelImperativeHandle } from "react-resizable-panels";
 
+import { Resizable } from "./resizable";
+import { Sheet } from "./sheet";
 import {
   Sidebar,
   useSidebar,
   type SidebarCollapsible,
   type SidebarSide,
   type SidebarVariant,
-} from "../navigation/sidebar";
-import { Sheet } from "../overlays/sheet";
-import { Resizable } from "./resizable";
+} from "./sidebar";
 
 export interface AppLayoutContextValue {
   isAsideOpen: boolean;

@@ -58,7 +58,7 @@ export default defineConfig({
       },
     },
     {
-      files: ["packages/uikit/src/components/date-and-time/agenda.tsx"],
+      files: ["packages/uikit/src/components/agenda.tsx"],
       rules: {
         "jsx-a11y/no-noninteractive-element-interactions": "off",
       },

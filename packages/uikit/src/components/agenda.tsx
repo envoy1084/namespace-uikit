@@ -42,7 +42,7 @@ import {
 } from "motion/react";
 import { useLocale } from "react-aria-components";
 
-import { Segment } from "../buttons/segment";
+import { Segment } from "./segment";
 
 export type AgendaView = "day" | "month" | "week";
 export type AgendaEventStatus = "confirmed" | "unconfirmed";

@@ -5,7 +5,7 @@ import { createContext, useMemo } from "react";
 
 import { cn } from "@heroui/react";
 
-import { ListView, type ListViewRootProps, type ListViewItemProps } from "../collections/list-view";
+import { ListView, type ListViewRootProps, type ListViewItemProps } from "./list-view";
 
 export type ChatListViewDensity = "comfortable" | "compact";
 

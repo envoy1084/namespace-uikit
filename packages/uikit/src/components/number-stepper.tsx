@@ -20,7 +20,7 @@ import {
   NumberFieldStateContext,
 } from "react-aria-components";
 
-import { IconMinus, IconPlus } from "../../heroui-icons";
+import { IconMinus, IconPlus } from "../heroui-icons";
 
 export type NumberStepperSize = "sm" | "md" | "lg";
 

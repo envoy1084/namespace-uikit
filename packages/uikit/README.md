@@ -117,19 +117,15 @@ For the three overlapping names `CircleDashedIcon`, `DangerIcon`, and `ExternalL
 - [HeroUI styling](https://www.heroui.com/docs/handbook/styling)
 - [HeroUI composition](https://www.heroui.com/docs/handbook/composition)
 
-Namespace UI Kit targets HeroUI v3. Component source is organized by domain under
-`src/components` (`ai`, `buttons`, `charts`, `collections`, `colors`,
-`data-display`, `date-and-time`, `feedback`, `forms`, `layout`, `navigation`,
-`overlays`, `typography`, and `utilities`). Each domain re-exports its components
-and component-owned helper hooks through its `index.ts`.
+Namespace UI Kit targets HeroUI v3. All component source files live directly in
+`src/components`, and `src/components/index.ts` exposes the root barrel.
 
-Public component imports intentionally remain one level deep regardless of their
-source group. For example, `src/components/date-and-time/agenda.tsx` is published
-as `@thenamespace/uikit/agenda`, not `@thenamespace/uikit/date-and-time/agenda`.
-When adding a component, place it in the appropriate domain and export it from
-that domain's `index.ts`. Edit `package.template.json` for package metadata and
-fixed exports, then run `pnpm generate:package` from this package (or simply run
-the build) to construct `package.json` with the flat source and distribution
-mappings. The generator validates duplicate component names, and the build
-discovers grouped component entries automatically. The current generated version
-is preserved so Changesets version bumps remain intact during release builds.
+Public component imports are one level deep. For example,
+`src/components/agenda.tsx` is published as `@thenamespace/uikit/agenda`.
+When adding a component, place its TSX file directly in `src/components` and
+export it from `src/components/index.ts`. Edit `package.template.json` for package
+metadata and fixed exports, then run `pnpm generate:package` from this package (or
+simply run the build) to construct `package.json`. A source-aware wildcard maps
+every public component subpath to its flat source and distribution entry, keeping
+the published manifest compact. The current generated version is preserved so
+Changesets version bumps remain intact during release builds.

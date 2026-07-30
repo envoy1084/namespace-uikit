@@ -19,13 +19,20 @@ function repositoryRoot() {
   return existsSync(join(cwd, "packages/uikit")) ? cwd : resolve(cwd, "../..");
 }
 
-function componentGroup(root: string, component: string) {
-  const directory = join(root, "packages/uikit/src/components");
+function findStoryFile(root: string, component: string) {
+  const directory = join(root, "apps/storybook/src/components");
 
   for (const group of readdirSync(directory)) {
     const groupDirectory = join(directory, group);
     if (!statSync(groupDirectory).isDirectory()) continue;
-    if (existsSync(join(groupDirectory, `${component}.tsx`))) return group;
+
+    const candidates = [
+      join(groupDirectory, component, `${component}.stories.tsx`),
+      join(groupDirectory, `${component}.stories.tsx`),
+    ];
+    const storyFile = candidates.find((file) => existsSync(file));
+
+    if (storyFile) return storyFile;
   }
 }
 
@@ -50,9 +57,9 @@ function storybookPath(title: string) {
 export function getComponentResourceLinks(slug: string): ComponentResourceLinks | undefined {
   const root = repositoryRoot();
   const sourceName = sourceAliases[slug] ?? slug;
-  const group = componentGroup(root, sourceName);
+  const sourceFile = join(root, "packages/uikit/src/components", `${sourceName}.tsx`);
 
-  if (!group) return;
+  if (!existsSync(sourceFile)) return;
 
   const repositoryUrl = (
     process.env.NEXT_PUBLIC_GITHUB_REPOSITORY_URL ?? "https://github.com/thenamespace/uikit"
@@ -65,11 +72,7 @@ export function getComponentResourceLinks(slug: string): ComponentResourceLinks 
   const docsSource = readFileSync(docsFile, "utf8");
   const reactAria = frontmatterValue(docsSource, "rac");
   const localStyle = join(root, "packages/uikit/src/styles/components", `${sourceName}.css`);
-  const storyFiles = [
-    join(root, "apps/storybook/src/components", group, sourceName, `${sourceName}.stories.tsx`),
-    join(root, "apps/storybook/src/components", group, `${sourceName}.stories.tsx`),
-  ];
-  const storyFile = storyFiles.find((file) => existsSync(file));
+  const storyFile = findStoryFile(root, sourceName);
   let storybook: string | undefined;
 
   if (storyFile) {
@@ -88,7 +91,7 @@ export function getComponentResourceLinks(slug: string): ComponentResourceLinks 
 
   return {
     reactAria: reactAria ? `https://react-aria.adobe.com/${reactAria}` : undefined,
-    source: `${repositoryUrl}/blob/main/packages/uikit/src/components/${group}/${sourceName}.tsx`,
+    source: `${repositoryUrl}/blob/main/packages/uikit/src/components/${sourceName}.tsx`,
     storybook,
     styles,
   };

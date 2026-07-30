@@ -5,16 +5,12 @@ import defineReactConfig from "klarity/tsdown/react";
 
 const componentEntries = Object.fromEntries(
   readdirSync("src/components", { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .flatMap((group) =>
-      readdirSync(`src/components/${group.name}`, { withFileTypes: true })
-        .filter((entry) => entry.isFile() && entry.name.endsWith(".tsx"))
-        .map((entry) => {
-          const name = basename(entry.name, extname(entry.name));
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".tsx"))
+    .map((entry) => {
+      const name = basename(entry.name, extname(entry.name));
 
-          return [`components/${name}`, `src/components/${group.name}/${entry.name}`];
-        }),
-    ),
+      return [`components/${name}`, `src/components/${entry.name}`];
+    }),
 );
 
 export default defineReactConfig({

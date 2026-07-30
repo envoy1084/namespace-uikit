@@ -9,51 +9,11 @@ const packageJsonPath = path.join(packageRoot, "package.json");
 const isCheck = process.argv.includes("--check");
 
 const readComponents = async () => {
-  const groups = (await readdir(componentsRoot, { withFileTypes: true }))
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
+  return (await readdir(componentsRoot, { withFileTypes: true }))
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".tsx"))
+    .map((entry) => entry.name.slice(0, -".tsx".length))
     .toSorted();
-  const components = (
-    await Promise.all(
-      groups.map(async (group) => {
-        const groupPath = path.join(componentsRoot, group);
-        const files = (await readdir(groupPath, { withFileTypes: true }))
-          .filter((entry) => entry.isFile() && entry.name.endsWith(".tsx"))
-          .map((entry) => entry.name)
-          .toSorted();
-
-        return files.map((file) => ({
-          group,
-          name: file.slice(0, -".tsx".length),
-        }));
-      }),
-    )
-  ).flat();
-  const names = new Map();
-
-  for (const component of components) {
-    const previousGroup = names.get(component.name);
-
-    if (previousGroup) {
-      throw new Error(
-        `Duplicate component subpath "${component.name}" in ${previousGroup} and ${component.group}`,
-      );
-    }
-
-    names.set(component.name, component.group);
-  }
-
-  return components.toSorted((left, right) => left.name.localeCompare(right.name));
 };
-
-const componentExport = ({ group, name }) => ({
-  "@thenamespace/source": {
-    types: `./src/components/${group}/${name}.tsx`,
-    import: `./src/components/${group}/${name}.tsx`,
-  },
-  types: `./dist/components/${name}.d.mts`,
-  import: `./dist/components/${name}.mjs`,
-});
 
 const packageTemplateSource = await readFile(packageTemplatePath, "utf8");
 const packageJson = JSON.parse(packageTemplateSource);
@@ -68,7 +28,15 @@ if (currentPackageJson?.version) {
 
 const components = await readComponents();
 const fixedExports = packageJson.exports;
-const requiredFixedExports = [".", "./icons", "./hooks", "./utils", "./styles", "./styles.css"];
+const requiredFixedExports = [
+  ".",
+  "./icons",
+  "./hooks",
+  "./utils",
+  "./*",
+  "./styles",
+  "./styles.css",
+];
 
 for (const exportPath of requiredFixedExports) {
   if (!fixedExports?.[exportPath]) {
@@ -81,13 +49,7 @@ packageJson.exports = {
   "./icons": fixedExports["./icons"],
   "./hooks": fixedExports["./hooks"],
   "./utils": fixedExports["./utils"],
-  ...Object.fromEntries(
-    components.map((component) => [`./${component.name}`, componentExport(component)]),
-  ),
-  "./*": {
-    types: "./dist/components/*.d.mts",
-    import: "./dist/components/*.mjs",
-  },
+  "./*": fixedExports["./*"],
   "./styles": fixedExports["./styles"],
   "./styles.css": fixedExports["./styles.css"],
   "./package.json": "./package.json",

@@ -4,7 +4,7 @@ import { cloneElement, createContext, isValidElement, useContext, useMemo } from
 
 import { cn, Disclosure } from "@heroui/react";
 
-import { HoverCard } from "../overlays/hover-card";
+import { HoverCard } from "./hover-card";
 export type ChatSourceType = "document" | "url";
 interface SourceContext {
   description?: string | undefined;

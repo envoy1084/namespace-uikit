@@ -17,7 +17,7 @@ import type { EmblaCarouselType, EmblaOptionsType, EmblaPluginType } from "embla
 import useEmblaCarousel from "embla-carousel-react";
 import { Button as RacButton } from "react-aria-components";
 
-import { IconChevronLeft, IconChevronRight } from "../../heroui-icons";
+import { IconChevronLeft, IconChevronRight } from "../heroui-icons";
 
 type CarouselType = "in-place" | "miniatures" | "modal";
 interface ContextValue {
