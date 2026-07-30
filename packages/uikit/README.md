@@ -123,9 +123,7 @@ Namespace UI Kit targets HeroUI v3. All component source files live directly in
 Public component imports are one level deep. For example,
 `src/components/agenda.tsx` is published as `@thenamespace/uikit/agenda`.
 When adding a component, place its TSX file directly in `src/components` and
-export it from `src/components/index.ts`. Edit `package.template.json` for package
-metadata and fixed exports, then run `pnpm generate:package` from this package (or
-simply run the build) to construct `package.json`. A source-aware wildcard maps
-every public component subpath to its flat source and distribution entry, keeping
-the published manifest compact. The current generated version is preserved so
-Changesets version bumps remain intact during release builds.
+export it from `src/components/index.ts`. The source-aware wildcard in
+`package.json` maps every public component subpath to its flat source and
+distribution entry, keeping the published manifest compact without a generation
+step.

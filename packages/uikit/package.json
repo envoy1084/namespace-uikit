@@ -89,15 +89,14 @@
     "access": "public"
   },
   "scripts": {
-    "build": "pnpm generate:package && pnpm check:package && tsdown --config tsdown.config.ts",
-    "check:package": "node scripts/generate-package-exports.mjs --check && node scripts/check-dependency-alignment.mjs",
-    "dev": "pnpm generate:package && tsdown --config tsdown.config.ts --watch",
+    "build": "pnpm check:package && tsdown --config tsdown.config.ts",
+    "check:package": "node scripts/check-dependency-alignment.mjs",
+    "dev": "tsdown --config tsdown.config.ts --watch",
     "format": "oxfmt . --write --no-error-on-unmatched-pattern",
     "format:check": "oxfmt . --check --no-error-on-unmatched-pattern",
-    "generate:package": "node scripts/generate-package-exports.mjs",
     "lint": "oxlint . --no-error-on-unmatched-pattern",
     "lint:fix": "oxlint . --fix --no-error-on-unmatched-pattern",
-    "prepack": "pnpm generate:package && pnpm check:package",
+    "prepack": "pnpm check:package",
     "typecheck": "tsc -p tsconfig.json --pretty false"
   },
   "dependencies": {
