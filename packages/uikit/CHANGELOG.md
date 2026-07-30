@@ -1,5 +1,21 @@
 # @thenamespace/uikit
 
+## 0.3.0
+
+### Minor Changes
+
+- [`f6de9a6`](https://github.com/thenamespace/uikit/commit/f6de9a62b9d777e68d54d80b2532bd91e76fcc2a) Thanks [@envoy1084](https://github.com/envoy1084)! - Upgrade the HeroUI-backed and custom component suite, standardize project icons on Huge Icons, and
+  fix component behavior and styling across data grids, feedback, navigation, AI, and application
+  layout components. Flatten component sources while preserving the existing one-level package
+  subpath imports through a compact wildcard export.
+
+### Patch Changes
+
+- [`98b7690`](https://github.com/thenamespace/uikit/commit/98b76907c4b0cda45ebfcc63bfb13e608390c219) Thanks [@envoy1084](https://github.com/envoy1084)! - Upgrade HeroUI to 3.2.2 and align the React Aria dependency family with React Aria Components 1.19.
+
+- [`cf0b4eb`](https://github.com/thenamespace/uikit/commit/cf0b4ebe8e45441b6e57ae2d971d2594fd628304) Thanks [@envoy1084](https://github.com/envoy1084)! - Align HeroUI and React Aria foundation packages as exact peers, broaden the supported React 19 and
+  Tailwind CSS 4 ranges, and remove the stylesheet's external font request.
+
 ## 0.2.1
 
 ### Patch Changes
